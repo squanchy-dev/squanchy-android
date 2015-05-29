@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="text_size_10">10sp</dimen>
+    <dimen name="text_size_11_24">11.24sp</dimen>
+    <dimen name="text_size_micro">12sp</dimen>
+    <dimen name="text_size_13">13sp</dimen>
+    <dimen name="text_size_13_74">13.74sp</dimen>
+    <dimen name="text_size_small">14sp</dimen>
+    <dimen name="text_size_15">15sp</dimen>
+    <dimen name="text_size_16">16sp</dimen>
+    <dimen name="text_size_medium">17sp</dimen>
+    <dimen name="text_size_20">20sp</dimen>
+    <dimen name="text_size_large">22sp</dimen>
+    <dimen name="text_size_23">23sp</dimen>
+    <dimen name="text_size_24">24sp</dimen>
+    <dimen name="text_size_40">40sp</dimen>
+    <dimen name="text_size_45">45sp</dimen>
+    <dimen name="text_size_48">48sp</dimen>
+    <dimen name="text_size_34">34sp</dimen>
+    <dimen name="action_bar_height">56dp</dimen>
+    <dimen name="logo_bottom_margin">125dp</dimen>
+    <dimen name="exp_list_indicator_bounds_left">100dp</dimen>
+    <dimen name="exp_list_indicator_bounds_right">60dp</dimen>
+    <dimen name="my_schedule_list_top_padding">18dp</dimen>
+    <dimen name="status_bar_height">24dp</dimen>
+    <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="toolbar_statusbar_height">56dp</dimen>
+    <dimen name="top_shadow_height">72dp</dimen>
+
+    <dimen name="drawer_header_height">156dp</dimen>
+    <dimen name="drawer_list_weight">260dp</dimen>
+    <dimen name="filter_item_padding">13dp</dimen>
+
+</resources>

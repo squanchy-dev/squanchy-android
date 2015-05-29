@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--CREATE TABLES-->
+    <!--==============================================================-->
+    <string name="create_table_type">
+        CREATE TABLE table_type (
+        _id				        INTEGER,
+        name				    TEXT,
+        type_icon_url		    TEXT,
+        _order                  DOUBLE,
+        _deleted                BOOLEAN
+        )
+    </string>
+
+    <string name="create_table_speaker">
+        CREATE TABLE table_speaker (
+        _id				        INTEGER,
+        first_name				TEXT,
+        last_name		        TEXT,
+        avatar_image_url		TEXT,
+        organization			TEXT,
+        job_title				TEXT,
+        charact				    TEXT,
+        twitter_name		    TEXT,
+        web_site			    TEXT,
+        _order                  DOUBLE,
+        _deleted                BOOLEAN
+        )
+    </string>
+
+    <string name="create_table_level">
+        CREATE TABLE table_level (
+        _id				        INTEGER,
+        level_name				TEXT,
+        _order                  DOUBLE,
+        _deleted                BOOLEAN
+        )
+    </string>
+
+    <string name="create_table_track">
+        CREATE TABLE table_track (
+        _id				        INTEGER,
+        track_name				TEXT,
+        _order                  DOUBLE,
+        _deleted                BOOLEAN
+        )
+    </string>
+
+    <string name="create_table_location">
+        CREATE TABLE table_location (
+        _id				        INTEGER,
+        location_name			TEXT,
+        address				    TEXT,
+        number				    TEXT,
+        lat				        DOUBLE,
+        lon				        DOUBLE,
+        _order				    DOUBLE,
+        _deleted 				BOOLEAN
+        )
+    </string>
+
+    <string name="create_table_house_plans">
+        CREATE TABLE table_house_plans (
+        _id				        INTEGER,
+        plan_name    			TEXT,
+        plan_image_url		    TEXT,
+        _order				    DOUBLE,
+        _deleted 				BOOLEAN
+        )
+    </string>
+
+    <string name="create_table_info">
+        CREATE TABLE table_info (
+        _id				        INTEGER,
+        info_title        		TEXT,
+        info_content			TEXT,
+        _order				    DOUBLE,
+        _deleted 				BOOLEAN
+        )
+    </string>
+
+    <string name="create_table_poi">
+        CREATE TABLE table_poi (
+        _id				        INTEGER,
+        poi_name        		TEXT,
+        poi_description			TEXT,
+        image_url               TEXT,
+        detail_url              TEXT,
+        _order				    DOUBLE,
+        _deleted 				BOOLEAN
+        )
+    </string>
+
+    <string name="create_table_event">
+        CREATE TABLE table_event (
+        _id				        INTEGER,
+        _date			        INTEGER,
+        _from			        INTEGER,
+        _to				        INTEGER,
+        _type			        INTEGER,
+        _name			        TEXT,
+        _track			        INTEGER,
+        _experience_level		TEXT,
+        _place				    TEXT,
+        _description			TEXT,
+        _link                   TEXT,
+        _event_class			INTEGER,
+        _favorite       		INTEGER,
+        _order                  DOUBLE,
+        _deleted                BOOLEAN
+        )
+    </string>
+
+    <string name="create_table_event_and_speaker">
+        CREATE TABLE table_event_and_speaker (
+        _event_id		         INTEGER,
+        _speaker_id			     INTEGER
+        )
+    </string>
+
+    <string name="create_table_favorite_events">
+        CREATE TABLE table_favorite_events (
+        _event_id		         INTEGER
+        )
+    </string>
+
+    <!--==============================================================-->
+
+
+    <!--INSERT-->
+    <!--==============================================================-->
+    <string name="insert_event_speaker">
+        INSERT INTO table_event_and_speaker (_event_id, _speaker_id)
+        VALUES (?,?)
+    </string>
+
+    <string name="insert_favorite_event">
+        INSERT INTO table_favorite_events (_event_id)
+        VALUES (?)
+    </string>
+
+    <!--==============================================================-->
+
+
+    <!--UPDATE -->
+    <!--==============================================================-->
+    <string name="update_event_favorite">
+        UPDATE table_event
+        SET _favorite=?
+        WHERE _id=?
+    </string>
+
+    <!--==============================================================-->
+
+    <!--DELETE  -->
+    <!--==============================================================-->
+    <string name="delete_event_favorite">
+        DELETE FROM table_favorite_events
+        WHERE _event_id=?
+    </string>
+
+    <string name="delete_event_and_speaker">
+        DELETE FROM table_event_and_speaker
+    </string>
+
+    <string name="delete_event_and_speaker_by_speaker_id">
+        DELETE FROM table_event_and_speaker
+        WHERE _speaker_id =?
+    </string>
+
+    <string name="delete_event_and_speaker_by_event_id">
+        DELETE FROM table_event_and_speaker
+        WHERE _event_id =?
+    </string>
+
+    <string name="delete_table_type">
+        DROP TABLE IF EXISTS table_type
+    </string>
+
+    <string name="delete_table_speaker">
+        DROP TABLE IF EXISTS table_speaker
+    </string>
+
+    <string name="delete_table_level">
+        DROP TABLE IF EXISTS table_level
+    </string>
+
+    <string name="delete_table_track">
+        DROP TABLE IF EXISTS table_track
+    </string>
+
+    <string name="delete_table_location">
+        DROP TABLE IF EXISTS table_location
+    </string>
+
+    <string name="delete_table_house_plans">
+        DROP TABLE IF EXISTS table_house_plans
+    </string>
+
+    <string name="delete_table_info">
+        DROP TABLE IF EXISTS table_info
+    </string>
+
+    <string name="delete_table_poi">
+        DROP TABLE IF EXISTS table_poi
+    </string>
+
+    <string name="delete_table_event">
+        DROP TABLE IF EXISTS table_event
+    </string>
+
+    <string name="delete_table_event_and_speaker">
+        DROP TABLE IF EXISTS table_event_and_speaker
+    </string>
+
+    <string name="delete_table_favorite_events">
+        DROP TABLE IF EXISTS table_favorite_events
+    </string>
+
+    <!--==============================================================-->
+
+    <!--SELECT-->
+    <!--==============================================================-->
+
+    <string name="select_speaker_events">
+        SELECT _event_id
+        FROM table_event_and_speaker
+        WHERE _speaker_id=?
+    </string>
+
+    <string name="select_speaker_events_ids">
+        SELECT _event_id
+        FROM table_event_and_speaker
+    </string>
+
+    <string name="select_event_speakers">
+        SELECT _speaker_id
+        FROM table_event_and_speaker
+        WHERE _event_id=?
+    </string>
+
+    <string name="select_events_by_class">
+        SELECT *
+        FROM table_event
+        WHERE _event_class=?
+        ORDER BY _order
+    </string>
+
+    <string name="select_events_by_class_and_date">
+        SELECT *
+        FROM table_event
+        WHERE _event_class=? and _date=?
+        ORDER BY _id, _order
+    </string>
+
+    <string name="select_date_distinct">
+        SELECT DISTINCT _date
+        FROM table_event
+        ORDER BY _date
+    </string>
+
+    <string name="select_favorite_date_distinct">
+        SELECT DISTINCT _date
+        FROM table_event
+        WHERE _favorite=1
+        ORDER BY _date
+    </string>
+
+    <string name="select_date_distinct_by_class">
+        SELECT DISTINCT _date
+        FROM table_event
+        WHERE _event_class=?
+        ORDER BY _date
+    </string>
+
+    <string name="select_date_distinct_by_class_and_expLevel_ids">
+        SELECT DISTINCT _date
+        FROM table_event
+        WHERE _event_class=? and _experience_level IN (%s)
+        ORDER BY _date
+    </string>
+
+    <string name="select_date_distinct_by_class_and_track_ids">
+        SELECT DISTINCT _date
+        FROM table_event
+        WHERE _event_class=? and _track IN (%s)
+        ORDER BY _date
+    </string>
+
+    <string name="select_date_distinct_by_class_and_expLevel_ids_and_track_ids" formatted = "false">
+        SELECT DISTINCT _date
+        FROM table_event
+        WHERE _event_class=? and _experience_level IN (%s) and _track IN (%s)
+        ORDER BY _date
+    </string>
+
+    <string name="select_favorite_events">
+        SELECT _event_id
+        FROM table_favorite_events
+        ORDER BY _event_id
+    </string>
+
+    <string name="select_distinct_time_range">
+        SELECT _from, _to, _date
+        FROM table_event
+        WHERE _event_class=? and _date=?
+        GROUP BY  _from, _to
+        ORDER BY  _from, _to
+    </string>
+
+    <string name="select_distinct_time_range_by_expLevel_ids">
+        SELECT _from, _to, _date
+        FROM table_event
+        WHERE _event_class=? and _date=? and _experience_level IN (%s)
+        GROUP BY  _from, _to
+        ORDER BY  _from, _to
+    </string>
+
+    <string name="select_distinct_time_range_by_track_ids">
+        SELECT _from, _to, _date
+        FROM table_event
+        WHERE _event_class=? and _date=? and _track IN (%s)
+        GROUP BY  _from, _to
+        ORDER BY  _from, _to
+    </string>
+
+    <string name="select_distinct_time_range_by_expLevel_and_track_ids" formatted = "false">
+        SELECT _from, _to, _date
+        FROM table_event
+        WHERE _event_class=? and _date=? and _experience_level IN (%s) and _track IN (%s)
+        GROUP BY  _from, _to
+        ORDER BY  _from, _to
+    </string>
+
+
+    <string name="select_distinct_time_range_by_event_ids">
+        SELECT _from, _to, _date
+        FROM table_event
+        WHERE _id IN (%s)
+        GROUP BY _date, _from, _to
+        ORDER BY _date, _from, _to
+    </string>
+
+    <string name="select_events_by_ids">
+        SELECT *
+        FROM table_event
+        WHERE _id IN (%s)
+        ORDER BY _order
+    </string>
+
+    <string name="select_events_by_ids_and_date">
+        SELECT *
+        FROM table_event
+        WHERE _id IN (%s) AND _date=?
+        ORDER BY _order
+    </string>
+
+    <string name="select_program_items_by_date">
+        SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class,
+        e._favorite, e._experience_level, t.track_name, l.level_name,
+        s.first_name|| \' \' ||s.last_name AS _speaker_name
+
+        FROM table_event AS e
+        LEFT JOIN table_track AS t ON e._track=t._id
+        LEFT JOIN table_level AS l ON e._experience_level=l._id
+
+        LEFT JOIN table_speaker AS s ON s._id IN (
+        SELECT _speaker_id
+        FROM table_event_and_speaker
+        WHERE _event_id=e._id
+        )
+
+        WHERE e._event_class=? and e._date=?
+        ORDER BY e._id, e._order
+    </string>
+
+    <string name="select_program_items_by_date_and_track_ids">
+        SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class,
+        e._favorite, e._experience_level, t.track_name, l.level_name,
+        s.first_name|| \' \' ||s.last_name AS _speaker_name
+
+        FROM table_event AS e
+        LEFT JOIN table_track AS t ON e._track=t._id
+        LEFT JOIN table_level AS l ON e._experience_level=l._id
+
+        LEFT JOIN table_speaker AS s ON s._id IN (
+        SELECT _speaker_id
+        FROM table_event_and_speaker
+        WHERE _event_id=e._id
+        )
+
+        WHERE e._event_class=? and e._date=? and e._track IN (%s)
+        ORDER BY e._id, e._order
+    </string>
+
+    <string name="select_program_items_by_date_and_expLevel_ids">
+        SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class,
+        e._favorite, e._experience_level, t.track_name, l.level_name,
+        s.first_name|| \' \' ||s.last_name AS _speaker_name
+
+        FROM table_event AS e
+        LEFT JOIN table_track AS t ON e._track=t._id
+        LEFT JOIN table_level AS l ON e._experience_level=l._id
+
+        LEFT JOIN table_speaker AS s ON s._id IN (
+        SELECT _speaker_id
+        FROM table_event_and_speaker
+        WHERE _event_id=e._id
+        )
+
+        WHERE e._event_class=? and e._date=? and e._experience_level IN (%s)
+        ORDER BY e._id, e._order
+    </string>
+
+    <string name="select_program_items_by_date_and_track_ids_and_expLevel_ids" formatted = "false">
+        SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class,
+        e._favorite, e._experience_level, t.track_name, l.level_name,
+        s.first_name|| \' \' ||s.last_name AS _speaker_name
+
+        FROM table_event AS e
+        LEFT JOIN table_track AS t ON e._track=t._id
+        LEFT JOIN table_level AS l ON e._experience_level=l._id
+
+        LEFT JOIN table_speaker AS s ON s._id IN (
+        SELECT _speaker_id
+        FROM table_event_and_speaker
+        WHERE _event_id=e._id
+        )
+
+        WHERE e._event_class=? and e._date=? and e._track IN (%s) and e._experience_level IN (%s)
+        ORDER BY e._id, e._order
+    </string>
+
+    <string name="select_events_partly_class_and_date">
+        SELECT e._id, e._date, e._from, e._to, e._type, e._experience_level,
+               e._name, e._place, e._event_class, e._favorite
+        FROM table_event AS e
+        WHERE _event_class=? and _date=?
+        ORDER BY _id, e._order
+    </string>
+
+    <string name="select_speakers_ordered_by_name">
+        SELECT *
+        FROM table_speaker
+        ORDER BY first_name|| \' \' ||last_name COLLATE NOCASE, _order
+    </string>
+
+</resources>

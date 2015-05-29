@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/holderPoi"
+                android:paddingTop="8dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="250dp">
+    <RelativeLayout
+        android:background="@drawable/bg_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.ls.drupalconapp.ui.view.VolleyImageView
+            android:layout_width="match_parent"
+            android:adjustViewBounds="true"
+            android:layout_height="168dip"
+            android:background="@color/gray_light"
+            android:id="@+id/imgPoi"
+            android:scaleType="centerCrop"
+            android:layout_alignParentTop="true">
+        </com.ls.drupalconapp.ui.view.VolleyImageView>
+
+        <com.ls.drupalconapp.ui.view.MediumFontTextView
+            android:id="@+id/txtDescription"
+            android:textColor="#333333"
+            android:maxLines="4"
+            android:textSize="@dimen/text_size_micro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imgPoi"
+            android:paddingTop="20dp"
+            android:paddingRight="16dp"
+            android:paddingLeft="16dp"/>
+
+        <com.ls.drupalconapp.ui.view.RegularFontTextView
+            android:id="@+id/txtTitle"
+            android:textColor="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_large"
+            android:layout_above="@+id/txtDescription"
+            android:paddingBottom="10dp"
+            android:paddingRight="16dp"
+            android:paddingLeft="16dp"/>
+
+        <com.ls.drupalconapp.ui.view.MediumFontTextView
+            android:id="@+id/txtLearnMore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/title_color"
+            android:paddingTop="23dp"
+            android:paddingBottom="25dp"
+            android:paddingRight="24dp"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/text_size_16"
+            android:text="@string/learn_more"
+            android:layout_below="@+id/txtDescription"/>
+
+    </RelativeLayout>
+</FrameLayout>

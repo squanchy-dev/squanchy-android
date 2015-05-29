@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray_light"/>
+
+    <LinearLayout
+        android:id="@+id/layoutGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="24dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:paddingRight="16dp"
+        android:background="@drawable/selector_light"
+        android:clickable="true">
+
+        <com.ls.drupalconapp.ui.view.RegularFontTextView
+            android:id="@+id/lblListHeader"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            tools:text="Lorem ipsum"
+            android:textSize="@dimen/text_size_medium"
+            android:textColor="#333333"
+            android:gravity="center_vertical"/>
+
+        <CheckBox
+            android:id="@+id/checkBoxGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/group_indicator"
+            android:clickable="false"/>
+
+    </LinearLayout>
+
+</LinearLayout>

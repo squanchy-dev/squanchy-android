@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.ls.drupalconapp.ui.view.MediumFontTextView
+        android:id="@+id/txtTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_medium"
+        android:textColor="#333333"
+        android:text="ALALAL"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:layout_gravity="center_vertical"/>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_divider"
+        android:layout_gravity="bottom"/>
+
+</FrameLayout>

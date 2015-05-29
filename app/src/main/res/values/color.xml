@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="transparent">#00000000</color>
+    <color name="white">#ffffffff</color>
+    <color name="white_dark">#f8f8f8</color>
+    <color name="selector_color">#eeeeee</color>
+    <color name="color_divider">#d0d0d0</color>
+    <color name="white_dirty">#ffe6e6e6</color>
+    <color name="white_gray">#ffcccccc</color>
+
+    <color name="white_transparent">#33ffffff</color>
+    <color name="bg_dialog_btn">#EF343B</color>
+    <color name="add_to_schedule_color">#ef343b</color>
+    <color name="btn_show_room_color">#bd2d37</color>
+    <color name="gray_light">#ABABAB</color>
+    <color name="gray_x_light">#CCCCCC</color>
+    <color name="gray_dark">#666666</color>
+    <color name="white_semi_transparent">#88FFFFFF</color>
+
+    <color name="black">#ff373737</color>
+    <color name="black_40_trans">#4D000000</color>
+    <color name="gray_20_trans">#33d7d7d7</color>
+</resources>

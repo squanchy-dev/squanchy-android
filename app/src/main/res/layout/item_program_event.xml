@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/holderEventDetails"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <LinearLayout
+            android:id="@+id/holderReportName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:duplicateParentState="true"
+            android:background="@drawable/selector_list_item">
+
+        <com.ls.drupalconapp.ui.view.MediumFontTextView
+                android:id="@+id/txtName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size_small"
+                android:textColor="#333333"
+                android:gravity="center_vertical"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:layout_gravity="center_vertical"/>
+
+        <ImageView
+                android:id="@+id/btnFavorite"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="centerInside"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_star_red"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/holderSpeakerInfo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="4dp"
+            android:layout_below="@+id/holderReportName"
+            android:duplicateParentState="true"
+            android:background="@drawable/selector_list_item">
+
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+            <com.ls.drupalconapp.ui.view.MediumFontTextView
+                    android:id="@+id/txtSpeakerPlaceHolder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:text="@string/speaker"
+                    android:textColor="#999999"
+                    android:textSize="@dimen/text_size_micro"/>
+
+            <com.ls.drupalconapp.ui.view.MediumFontTextView
+                    android:id="@+id/txtSpeaker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:textColor="#666666"
+                    android:textSize="@dimen/text_size_micro"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+            <com.ls.drupalconapp.ui.view.MediumFontTextView
+                    android:id="@+id/txtTrackPlaceHolder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:text="@string/track"
+                    android:textColor="#999999"
+                    android:textSize="@dimen/text_size_micro"/>
+
+            <com.ls.drupalconapp.ui.view.MediumFontTextView
+                    android:id="@+id/txtTrack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:textColor="#666666"
+                    android:textSize="@dimen/text_size_micro"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+            <com.ls.drupalconapp.ui.view.MediumFontTextView
+                    android:id="@+id/txtExpLevelPlaceHolder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/experience_level"
+                    android:textColor="#999999"
+                    android:textSize="@dimen/text_size_micro"/>
+
+            <com.ls.drupalconapp.ui.view.MediumFontTextView
+                    android:id="@+id/txtExpLevel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#666666"
+                    android:textSize="@dimen/text_size_micro"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

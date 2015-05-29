@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:background="@android:color/white">
+
+    <com.ls.drupalconapp.ui.view.MediumFontTextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/txtTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/title_color"
+        android:textSize="@dimen/text_size_small"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="4dp"
+        tools:text="Lorem ipsum"
+        android:visibility="gone"/>
+</FrameLayout>

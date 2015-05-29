@@ -1,0 +1,59 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:id="@+id/mainFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/toolBar"/>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/title_color"
+                android:layout_below="@+id/viewStatusBar"/>
+
+            <View
+                android:id="@+id/viewStatusBar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/status_bar_height"
+                android:background="@color/title_color"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/leftDrawer"
+            android:layout_width="288dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:scrollbarThumbVertical="@drawable/custom_scroll_style"
+            android:background="@android:color/white"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp"
+            android:listSelector="@color/transparent"
+            android:splitMotionEvents="false"/>
+
+    </android.support.v4.widget.DrawerLayout>
+
+    <!--status bar view-->
+    <View
+        android:id="@+id/viewStatusBarTrans"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/status_bar_height"
+        android:background="@color/black_40_trans"
+        android:visibility="gone"/>
+
+</RelativeLayout>

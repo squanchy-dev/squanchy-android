@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="@dimen/action_bar_height"
+        android:layout_height="@dimen/action_bar_height"
+        android:layout_weight="0"
+        android:src="@drawable/ic_arrow_back"
+        android:scaleType="centerInside"
+        android:background="@drawable/selector_ic_back_ac_bar"/>
+
+    <com.ls.drupalconapp.ui.view.MediumFontTextView
+        android:id="@+id/txtScreenTitle"
+        android:layout_width="wrap_content"
+        android:layout_weight="2"
+        android:layout_height="@dimen/action_bar_height"
+        android:gravity="left|center_vertical"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_medium"
+        android:visibility="invisible"
+        android:singleLine="true"
+        android:paddingRight="20dp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:id="@+id/button_holder"
+        android:layout_weight="0"
+        android:gravity="right"
+        android:layout_height="@dimen/action_bar_height">
+        <ProgressBar
+            android:id="@+id/action_bar_indicator"
+            android:layout_width="30dp"
+            android:visibility="gone"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="5dp"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:padding="15dp"
+            android:id="@+id/btnShare"
+            android:adjustViewBounds="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_share"
+            android:background="@drawable/selector_ic_back_ac_bar"/>
+    </LinearLayout>
+
+</LinearLayout>

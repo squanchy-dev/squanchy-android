@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <com.ls.drupalconapp.ui.view.MediumFontTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/filter"
+        android:textColor="#333333"
+        android:textSize="@dimen/text_size_medium"/>
+
+    <ExpandableListView
+        android:id="@+id/listView"
+        android:groupIndicator="@null"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbarThumbVertical="@drawable/custom_scroll_style"
+        android:layout_weight="1.0"/>
+
+    <LinearLayout
+        android:id="@+id/btnHolder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"/>
+
+        <com.ls.drupalconapp.ui.view.MediumFontTextView
+            android:id="@+id/btnClear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="78dp"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/text_size_small"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="@string/clear"
+            android:background="@drawable/selector_light"/>
+
+        <com.ls.drupalconapp.ui.view.MediumFontTextView
+            android:id="@+id/btnApply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="78dp"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/text_size_small"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="@string/apply"
+            android:background="@drawable/selector_light"/>
+    </LinearLayout>
+</LinearLayout>

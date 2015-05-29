@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <com.astuetz.PagerSlidingTabStrip
+        android:id="@+id/pager_tab_strip"
+        android:layout_width="match_parent"
+        android:layout_height="48dip"
+        android:textSize= "13sp"
+        android:textColor= "#FFF"
+        android:textStyle = "normal"
+        android:background="@color/title_color"
+        app:pstsDividerColor="#00000000"
+        app:pstsIndicatorColor="@color/white"
+        app:pstsTextStyle = "normal"
+        app:pstsTabPaddingLeftRight ="35dp"
+        app:pstsTextSelectedStyle  ="normal"
+        app:pstsIndicatorHeight="3dp" />
+
+    <View
+        android:id="@+id/tabView"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:visibility="gone"
+        android:background="@color/title_color"/>
+
+    <android.support.v4.view.ViewPager
+        android:layout_below="@+id/pager_tab_strip"
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </android.support.v4.view.ViewPager>
+
+    <TextView
+        android:id="@+id/txtNoEvents"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:textSize="@dimen/text_size_medium"
+        android:textColor="@color/gray_x_light"
+        android:text="@string/no_events"/>
+
+    <ImageView
+        android:id="@+id/emptyIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_empty_icon"/>
+
+</RelativeLayout>

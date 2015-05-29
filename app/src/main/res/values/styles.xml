@@ -1,0 +1,31 @@
+<resources>
+
+    <style name="DrupalConAppActionBarTextStyle" >
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
+
+    <style name="ThemeNoActionBar" parent="@style/android:Theme.Holo.Light">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+    </style>
+
+    <style name="ToolbarItem" parent="@style/android:Theme.Holo.Light">
+        <item name="android:background">@drawable/selector_toolbar</item>
+    </style>
+
+    <style name="DrupalConTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimaryDark">@color/title_color_dark</item>
+        <item name="colorAccent">@color/gray_light</item>
+        <item name="colorPrimary">@color/title_color</item>
+        <item name="colorControlNormal">@color/color_divider</item>
+    </style>
+
+    <style name="DrupalConDetailsTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimaryDark">@color/title_color_dark</item>
+        <item name="colorAccent">@color/gray_light</item>
+        <item name="colorPrimary">@color/title_color</item>
+        <item name="colorControlNormal">@color/white</item>
+    </style>
+
+</resources>
