@@ -53,7 +53,7 @@ public class LocationFragment extends Fragment implements CustomMapFragment.OnAc
     @Override
     public void onActivityCreated(GoogleMap googleMap) {
         if(googleMap != null) {
-			DatabaseManager dbManager = new DatabaseManager(getActivity());
+			DatabaseManager dbManager = DatabaseManager.instance();
 			List<Location> locations = dbManager.getLocations();
 
 			for(int i=0; i<locations.size(); i++){

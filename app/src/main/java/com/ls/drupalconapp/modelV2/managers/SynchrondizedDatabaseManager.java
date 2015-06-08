@@ -2,7 +2,10 @@ package com.ls.drupalconapp.modelV2.managers;
 
 import com.ls.drupal.AbstractBaseDrupalEntity;
 import com.ls.drupal.DrupalClient;
-import com.ls.druplaproject.model.data.base.DatabaseFacade;
+import com.ls.drupalconapp.model.DatabaseManager;
+import com.ls.drupalconapp.model.database.DatabaseFacade;
+import com.ls.drupalconapp.model.database.ILAPIDBFacade;
+
 
 /**
  * Created on 25.05.2015. Use for database-based storage only
@@ -15,7 +18,7 @@ public abstract class SynchrondizedDatabaseManager<ClassToManage, FetchRequestTo
 
     @Override
     protected final boolean storeResponse(ClassToManage response, TagClass tag) {
-        DatabaseFacade facade = DatabaseFacade.instance();
+        ILAPIDBFacade facade = DatabaseManager.instance().getFacade();
         synchronized (facade) {
             try {
                 facade.open();
@@ -34,7 +37,7 @@ public abstract class SynchrondizedDatabaseManager<ClassToManage, FetchRequestTo
 
     @Override
     protected ClassToManage restoreResponse(TagClass tag) {
-        DatabaseFacade facade = DatabaseFacade.instance();
+        ILAPIDBFacade facade = DatabaseManager.instance().getFacade();
         synchronized (facade) {
             try {
                 facade.open();

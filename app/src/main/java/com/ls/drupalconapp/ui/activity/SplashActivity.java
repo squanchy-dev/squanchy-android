@@ -81,7 +81,7 @@ public class SplashActivity extends FragmentActivity {
     }
 
     private void checkForDatabaseUpdate() {
-        DatabaseManager databaseManager = new DatabaseManager(SplashActivity.this);
+        DatabaseManager databaseManager = DatabaseManager.instance();
         ILAPIDBFacade facade = databaseManager.getFacade();
         facade.open();
 

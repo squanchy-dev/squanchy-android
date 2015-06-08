@@ -429,7 +429,7 @@ public class DownloadManager {
 			onDownloadError();
 			return;
 		}
-		DatabaseManager databaseManager = new DatabaseManager(mContext);
+		DatabaseManager databaseManager = DatabaseManager.instance();
 		ILAPIDBFacade facade = databaseManager.getFacade();
 
 		try {

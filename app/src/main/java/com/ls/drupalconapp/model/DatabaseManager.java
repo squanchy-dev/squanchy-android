@@ -20,6 +20,29 @@ import java.util.List;
  */
 public class DatabaseManager {
 
+    private static DatabaseManager instance;
+    public static DatabaseManager instance(Context theContext)
+    {
+        if (instance == null)
+        {
+            instance = new DatabaseManager(theContext);
+        }
+
+        return instance;
+    }
+
+
+    public static DatabaseManager instance()
+    {
+        if (instance == null)
+        {
+            throw new IllegalStateException("Called method on uninitialized database manager");
+        }
+
+        return instance;
+    }
+
+
     private TypeDao mTypeDao;
     private SpeakerDao mSpeakerDao;
     private LevelDao mLevelDao;
@@ -29,7 +52,7 @@ public class DatabaseManager {
     private EventDao mEventDao;
     private InfoDao mInfoDao;
 
-    public DatabaseManager(Context context) {
+    private DatabaseManager(Context context) {
         mTypeDao = new TypeDao(context);
         mLevelDao = new LevelDao(context);
         mTrackDao = new TrackDao(context);

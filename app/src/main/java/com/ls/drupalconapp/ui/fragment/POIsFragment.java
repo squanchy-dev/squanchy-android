@@ -78,8 +78,7 @@ public class POIsFragment extends Fragment {
 
             @Override
             protected List<POI> doInBackground(Void... params) {
-                Context context = App.getContext();
-                DatabaseManager databaseManager = new DatabaseManager(context);
+                DatabaseManager databaseManager = DatabaseManager.instance();
                 List<POI> pois = databaseManager.getPOIs();
                 return pois;
             }

@@ -85,7 +85,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 			ANIMATION_DURATION = 750;
 		}
 
-		dbManager = new DatabaseManager(SpeakerDetailsActivity.this);
+		dbManager = DatabaseManager.instance();
 
 		handleExtras(getIntent());
 		initToolbar();

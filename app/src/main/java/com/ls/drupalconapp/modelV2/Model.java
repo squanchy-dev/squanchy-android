@@ -8,7 +8,6 @@ import com.android.volley.toolbox.HttpClientStack;
 import com.android.volley.toolbox.HttpStack;
 import com.android.volley.toolbox.HurlStack;
 import com.ls.drupal.DrupalClient;
-import com.ls.drupalconapp.modelV2.managers.HURLCookieStore;
 import com.ls.drupalconapp.modelV2.managers.LoginManager;
 import com.ls.http.base.BaseRequest;
 import com.ls.http.base.ResponseData;

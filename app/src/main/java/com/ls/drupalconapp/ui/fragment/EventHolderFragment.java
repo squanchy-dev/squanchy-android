@@ -220,7 +220,7 @@ public class EventHolderFragment extends Fragment {
 		mNoFavorites = view.findViewById(R.id.emptyIcon);
 		mDayIdList = new ArrayList<>();
 
-		mDatabaseManager = new DatabaseManager(view.getContext());
+		mDatabaseManager = DatabaseManager.instance();
 		new PerformLoadData().execute();
 	}
 

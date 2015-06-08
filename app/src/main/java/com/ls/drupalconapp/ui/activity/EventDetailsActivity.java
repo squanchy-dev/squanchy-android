@@ -91,7 +91,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
 		if (apiVersion >= Build.VERSION_CODES.LOLLIPOP) {
 			ANIMATION_DURATION = 750;
 		}
-		dbManager = new DatabaseManager(this);
+		dbManager = DatabaseManager.instance();
 		favoriteReceiverManager.register(this);
 		dataUpdateManager.register(this);
 		scheduleManager = new ScheduleManager(this);

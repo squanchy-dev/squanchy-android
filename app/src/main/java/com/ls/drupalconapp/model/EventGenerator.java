@@ -37,7 +37,7 @@ public class EventGenerator {
 
     public List<EventListItem> generate(long day, int eventClass,
             @NotNull EventItemCreator eventItemCreator) {
-        DatabaseManager databaseManager = new DatabaseManager(mContext);
+        DatabaseManager databaseManager = DatabaseManager.instance();
         List<EventListItem> eventListItems = databaseManager.getEventItems(eventClass, day);
 
 //        if (eventClass == Event.SOCIALS_CLASS){
@@ -50,7 +50,7 @@ public class EventGenerator {
 
     public List<EventListItem> generate(long day, int eventClass, List<Long> levelIds, List<Long> trackIds,
                                         @NotNull EventItemCreator eventItemCreator) {
-        DatabaseManager databaseManager = new DatabaseManager(mContext);
+        DatabaseManager databaseManager = DatabaseManager.instance();
         List<EventListItem> eventListItems = databaseManager.getProgramItemsByLevelTrackIds(eventClass, day, levelIds, trackIds);
 
         List<TimeRange> ranges = databaseManager.getTimeRangesDistinct(eventClass, day, levelIds, trackIds);
@@ -58,7 +58,7 @@ public class EventGenerator {
     }
 
     public List<EventListItem> generateForFavorites(long day, @NotNull EventItemCreator eventItemCreator) {
-        DatabaseManager databaseManager = new DatabaseManager(mContext);
+        DatabaseManager databaseManager = DatabaseManager.instance();
 
         List<Long> favoriteEventIds = databaseManager.getFavoriteEvents();
         List<Event> events = databaseManager.getEventsByIdsAndDay(favoriteEventIds, day);

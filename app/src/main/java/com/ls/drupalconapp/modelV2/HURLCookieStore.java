@@ -1,4 +1,4 @@
-package com.ls.drupalconapp.modelV2.managers;
+package com.ls.drupalconapp.modelV2;
 
 import android.content.Context;
 import android.content.SharedPreferences;

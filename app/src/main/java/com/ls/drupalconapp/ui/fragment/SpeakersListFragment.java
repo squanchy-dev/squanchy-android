@@ -124,8 +124,7 @@ public class SpeakersListFragment extends Fragment
 
 			@Override
 			protected List<Speaker> doInBackground(Void... params) {
-				Context context = App.getContext();
-				DatabaseManager databaseManager = new DatabaseManager(context);
+				DatabaseManager databaseManager = DatabaseManager.instance();
 				return databaseManager.getSpeakers();
 			}
 

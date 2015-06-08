@@ -86,7 +86,7 @@ public class AboutActivity extends ActionBarActivity {
 	}
 
 	private void initViews() {
-		DatabaseManager dbManager = new DatabaseManager(this);
+		DatabaseManager dbManager = DatabaseManager.instance();
 		infoItems = dbManager.getInfo();
 
 		ListView listMenu = (ListView) findViewById(R.id.listView);

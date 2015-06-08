@@ -52,7 +52,7 @@ public class NewEventsAdapter extends BaseAdapter {
         mInflater = LayoutInflater.from(context);
         mData = data;
         mEventMode = mode;
-        databaseManager = new DatabaseManager(context);
+        databaseManager = DatabaseManager.instance();
 		mClickListener = clickListener;
     }
 
