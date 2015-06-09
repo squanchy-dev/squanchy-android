@@ -1,5 +1,12 @@
 package com.ls.drupalconapp.modelV2;
 
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.http.AndroidHttpClient;
+import android.os.Build;
+import android.os.Environment;
+
 import com.android.volley.Network;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.BasicNetwork;
@@ -8,19 +15,19 @@ import com.android.volley.toolbox.HttpClientStack;
 import com.android.volley.toolbox.HttpStack;
 import com.android.volley.toolbox.HurlStack;
 import com.ls.drupal.DrupalClient;
+import com.ls.drupalconapp.modelV2.managers.BofsManager;
+import com.ls.drupalconapp.modelV2.managers.InfoManager;
 import com.ls.drupalconapp.modelV2.managers.LevelsManager;
+import com.ls.drupalconapp.modelV2.managers.LocationManager;
 import com.ls.drupalconapp.modelV2.managers.LoginManager;
+import com.ls.drupalconapp.modelV2.managers.PoisManager;
+import com.ls.drupalconapp.modelV2.managers.SessionsManager;
+import com.ls.drupalconapp.modelV2.managers.SocialManager;
+import com.ls.drupalconapp.modelV2.managers.SpeakerManager;
 import com.ls.drupalconapp.modelV2.managers.TracksManager;
 import com.ls.drupalconapp.modelV2.managers.TypesManager;
 import com.ls.http.base.BaseRequest;
 import com.ls.http.base.ResponseData;
-
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.net.http.AndroidHttpClient;
-import android.os.Build;
-import android.os.Environment;
 
 import java.io.File;
 import java.net.CookieHandler;
@@ -66,8 +73,13 @@ public class Model {
     private TypesManager typesManager;
     private LevelsManager levelsManager;
     private TracksManager tracksManager;
-
-
+    private SpeakerManager speakerManager;
+    private LocationManager locationmanager;
+    private SocialManager socialManager;
+    private SessionsManager sessionsManager;
+    private BofsManager bofsManager;
+    private PoisManager poisManager;
+    private InfoManager infoManager;
 
     public DrupalClient getClient() {
         return client;
@@ -97,6 +109,35 @@ public class Model {
         return tracksManager;
     }
 
+
+    public SpeakerManager getSpeakerManager() {
+        return speakerManager;
+    }
+
+    public LocationManager getLocationmanager() {
+        return locationmanager;
+    }
+
+    public SocialManager getSocialManager() {
+        return socialManager;
+    }
+
+    public BofsManager getBofsManager() {
+        return bofsManager;
+    }
+
+    public PoisManager getPoisManager() {
+        return poisManager;
+    }
+
+    public InfoManager getInfoManager() {
+        return infoManager;
+    }
+
+    public SessionsManager getSessionsManager() {
+        return sessionsManager;
+    }
+
     /**
      * NOTE: login is performed in synchroneus way so you must never call it from UI thread.
      * @param userName
@@ -118,6 +159,12 @@ public class Model {
         typesManager = new TypesManager(client);
         levelsManager = new LevelsManager(client);
         tracksManager = new TracksManager(client);
+        speakerManager = new SpeakerManager(client);
+        locationmanager = new LocationManager(client);
+        socialManager = new SocialManager(client);
+        bofsManager = new BofsManager(client);
+        poisManager = new PoisManager(client);
+        infoManager = new InfoManager(client);
     }
 
 
@@ -178,7 +225,4 @@ public class Model {
 
         return queue;
     }
-
-
-
 }

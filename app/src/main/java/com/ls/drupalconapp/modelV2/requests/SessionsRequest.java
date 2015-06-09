@@ -2,23 +2,20 @@ package com.ls.drupalconapp.modelV2.requests;
 
 import com.ls.drupal.AbstractDrupalEntityContainer;
 import com.ls.drupal.DrupalClient;
-import com.ls.drupalconapp.model.data.Speaker;
+import com.ls.drupalconapp.model.data.Track;
 import com.ls.http.base.BaseRequest;
 
 import java.util.Map;
 
-/**
- * Created on 08.06.2015.
- */
-public class SpeakersRequest extends AbstractDrupalEntityContainer<Speaker.Holder> {
+public class SessionsRequest extends AbstractDrupalEntityContainer<Track.Holder> {
 
-    public SpeakersRequest(DrupalClient client) {
-        super(client, new Speaker.Holder());
+    public SessionsRequest(DrupalClient client) {
+        super(client, new Track.Holder());
     }
 
     @Override
     protected String getPath() {
-        return "getSpeakers";
+        return "getSessions";
     }
 
     @Override
@@ -31,3 +28,4 @@ public class SpeakersRequest extends AbstractDrupalEntityContainer<Speaker.Holde
         return null;
     }
 }
+

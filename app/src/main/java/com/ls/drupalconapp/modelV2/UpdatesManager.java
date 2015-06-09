@@ -1,5 +1,8 @@
 package com.ls.drupalconapp.modelV2;
 
+import android.os.AsyncTask;
+import android.text.TextUtils;
+
 import com.ls.drupal.DrupalClient;
 import com.ls.drupalconapp.model.DatabaseManager;
 import com.ls.drupalconapp.model.PreferencesManager;
@@ -12,9 +15,6 @@ import com.ls.http.base.RequestConfig;
 import com.ls.http.base.ResponseData;
 
 import org.jetbrains.annotations.NotNull;
-
-import android.os.AsyncTask;
-import android.text.TextUtils;
 
 import java.util.List;
 
@@ -124,38 +124,38 @@ public class UpdatesManager {
                 manager = Model.instance().getTracksManager();
                 break;
 
-//            case HttpFactory.SPEAKERS_REQUEST_ID:
-//                loadSpeakers();
-//                break;
-//
-//            case HttpFactory.LOCATIONS_REQUEST_ID:
-//                loadLocations();
-//                break;
-//
+            case HttpFactory.SPEAKERS_REQUEST_ID:
+                manager = Model.instance().getSpeakerManager();
+                break;
+
+            case HttpFactory.LOCATIONS_REQUEST_ID:
+                manager = Model.instance().getLocationmanager();
+                break;
+
 //            case HttpFactory.HOUSE_PLANS_REQUEST_ID:
 //                loadHousePlans();
 //                break;
-//
-//            case HttpFactory.PROGRAMS_REQUEST_ID:
-//                loadPrograms();
-//                break;
-//
-//            case HttpFactory.BOFS_REQUEST_ID:
-//                loadBoFses();
-//                break;
-//
-//            case HttpFactory.SOCIALS_REQUEST_ID:
-//                loadSocials();
-//                break;
-//
-//            case HttpFactory.POIS_REQUEST_ID:
-//                loadPOIs();
-//                break;
-//
-//            case HttpFactory.INFO_REQUEST_ID:
-//                loadInfo();
-//                break;
-//
+
+            case HttpFactory.PROGRAMS_REQUEST_ID:
+                manager = Model.instance().getSessionsManager();
+                break;
+
+            case HttpFactory.BOFS_REQUEST_ID:
+                manager = Model.instance().getBofsManager();
+                break;
+
+            case HttpFactory.SOCIALS_REQUEST_ID:
+                manager = Model.instance().getSocialManager();
+                break;
+
+            case HttpFactory.POIS_REQUEST_ID:
+                manager = Model.instance().getPoisManager();
+                break;
+
+            case HttpFactory.INFO_REQUEST_ID:
+                manager = Model.instance().getInfoManager();
+                break;
+
 //            case HttpFactory.TWITTER_REQUEST_ID:
 //                loadTwitter();
 //                break;

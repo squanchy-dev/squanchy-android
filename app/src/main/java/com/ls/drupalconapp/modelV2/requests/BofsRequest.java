@@ -2,23 +2,20 @@ package com.ls.drupalconapp.modelV2.requests;
 
 import com.ls.drupal.AbstractDrupalEntityContainer;
 import com.ls.drupal.DrupalClient;
-import com.ls.drupalconapp.model.data.Speaker;
+import com.ls.drupalconapp.model.data.Event;
 import com.ls.http.base.BaseRequest;
 
 import java.util.Map;
 
-/**
- * Created on 08.06.2015.
- */
-public class SpeakersRequest extends AbstractDrupalEntityContainer<Speaker.Holder> {
+public class BofsRequest extends AbstractDrupalEntityContainer<Event.Holder> {
 
-    public SpeakersRequest(DrupalClient client) {
-        super(client, new Speaker.Holder());
+    public BofsRequest(DrupalClient client) {
+        super(client, new Event.Holder());
     }
 
     @Override
     protected String getPath() {
-        return "getSpeakers";
+        return "getBofs";
     }
 
     @Override
