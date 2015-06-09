@@ -8,7 +8,10 @@ import com.android.volley.toolbox.HttpClientStack;
 import com.android.volley.toolbox.HttpStack;
 import com.android.volley.toolbox.HurlStack;
 import com.ls.drupal.DrupalClient;
+import com.ls.drupalconapp.modelV2.managers.LevelsManager;
 import com.ls.drupalconapp.modelV2.managers.LoginManager;
+import com.ls.drupalconapp.modelV2.managers.TracksManager;
+import com.ls.drupalconapp.modelV2.managers.TypesManager;
 import com.ls.http.base.BaseRequest;
 import com.ls.http.base.ResponseData;
 
@@ -57,6 +60,14 @@ public class Model {
     private CookieStore cookieStore;
     private RequestQueue queue;
 
+    /**
+     * Managers
+     */
+    private TypesManager typesManager;
+    private LevelsManager levelsManager;
+    private TracksManager tracksManager;
+
+
 
     public DrupalClient getClient() {
         return client;
@@ -72,6 +83,18 @@ public class Model {
 
     public CookieStore getCookieStore() {
         return cookieStore;
+    }
+
+    public TypesManager getTypesManager() {
+        return typesManager;
+    }
+
+    public LevelsManager getLevelsManager() {
+        return levelsManager;
+    }
+
+    public TracksManager getTracksManager() {
+        return tracksManager;
     }
 
     /**
@@ -92,6 +115,9 @@ public class Model {
         queue = createNewQueue(context);
         client = new DrupalClient(ApplicationConfig.BASE_URL,queue, BaseRequest.RequestFormat.JSON,loginManager);
 
+        typesManager = new TypesManager(client);
+        levelsManager = new LevelsManager(client);
+        tracksManager = new TracksManager(client);
     }
 
 
