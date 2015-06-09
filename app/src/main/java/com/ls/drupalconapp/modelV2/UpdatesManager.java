@@ -26,6 +26,9 @@ public class UpdatesManager {
     private UpdateDate mUpdateDate;
     private DrupalClient mClient;
 
+    public static final String IF_MODIFIED_SINCE_HEADER= "If-Modified-Since";
+    public static final String LAST_MODIFIED_HEADER= "Last-Modified";
+
     public UpdatesManager(@NotNull DrupalClient client)
     {
         mClient = client;
@@ -57,6 +60,7 @@ public class UpdatesManager {
         config.setResponseFormat(BaseRequest.ResponseFormat.JSON);
         config.setResponseClassSpecifier(UpdateDate.class);
         BaseRequest checkForUpdatesRequest = new BaseRequest(BaseRequest.RequestMethod.GET,ApplicationConfig.BASE_URL+"checkUpdates",config);
+        checkForUpdatesRequest.addRequestHeader(IF_MODIFIED_SINCE_HEADER, PreferencesManager.getInstance().getLastUpdateDate());
         ResponseData updatesData = mClient.performRequest(checkForUpdatesRequest, true);
         UpdateDate updateDate = (UpdateDate)updatesData.getData();
 
@@ -64,6 +68,7 @@ public class UpdatesManager {
         {
             return false;
         }
+        updateDate.setTime(updatesData.getHeaders().get(LAST_MODIFIED_HEADER));
         return loadData(updateDate);
     }
 

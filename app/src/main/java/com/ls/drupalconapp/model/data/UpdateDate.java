@@ -18,6 +18,9 @@ public class UpdateDate {
         return mTime;
     }
 
+    public void setTime(String time) {
+        mTime = time;
+    }
 
     public List<Integer> getIdsForUpdate() {
         return idsForUpdate;
