@@ -58,6 +58,7 @@ public class UpdatesManager {
     {
         RequestConfig config = new RequestConfig();
         config.setResponseFormat(BaseRequest.ResponseFormat.JSON);
+        config.setRequestFormat(BaseRequest.RequestFormat.JSON);
         config.setResponseClassSpecifier(UpdateDate.class);
         BaseRequest checkForUpdatesRequest = new BaseRequest(BaseRequest.RequestMethod.GET,ApplicationConfig.BASE_URL+"checkUpdates",config);
         checkForUpdatesRequest.addRequestHeader(IF_MODIFIED_SINCE_HEADER, PreferencesManager.getInstance().getLastUpdateDate());
