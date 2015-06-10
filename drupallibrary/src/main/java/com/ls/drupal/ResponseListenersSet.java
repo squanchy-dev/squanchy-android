@@ -51,6 +51,11 @@ public class ResponseListenersSet {
         boolean result = false;
         List<ListenerHolder> listenersList = listeners.get(request);
 
+        if(listener== null)
+        {
+            return true;
+        }
+
         if(listenersList == null)
         {
             listenersList = new LinkedList<ListenerHolder>();
