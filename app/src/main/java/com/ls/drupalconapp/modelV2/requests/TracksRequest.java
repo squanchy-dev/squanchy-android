@@ -18,7 +18,7 @@ public class TracksRequest extends AbstractDrupalEntityContainer<Track.Holder> {
 
     @Override
     protected String getPath() {
-        return "tracks";
+        return "getTracks";
     }
 
     @Override

@@ -18,7 +18,7 @@ public class LevelsRequest extends AbstractDrupalEntityContainer<Level.Holder> {
 
     @Override
     protected String getPath() {
-        return "levels";
+        return "getLevels";
     }
 
     @Override

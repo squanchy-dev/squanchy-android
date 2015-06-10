@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created on 09.06.2015.
  */
-public class TracksManager  extends SynchronousItemManager<Track.Holder,Object,String>{
+public class TracksManager extends SynchronousItemManager<Track.Holder,Object,String>{
 
     public TracksManager(DrupalClient client) {
         super(client);
@@ -32,8 +32,7 @@ public class TracksManager  extends SynchronousItemManager<Track.Holder,Object,S
         DatabaseManager databaseManager = DatabaseManager.instance();
         List<Track> tracks = requestResponse.getTracks();
 
-        if(tracks == null)
-        {
+        if (tracks == null) {
             return false;
         }
 
