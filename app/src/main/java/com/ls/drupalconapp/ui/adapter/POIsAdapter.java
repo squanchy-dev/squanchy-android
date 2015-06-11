@@ -11,8 +11,7 @@ import android.widget.TextView;
 
 import com.ls.drupalconapp.R;
 import com.ls.drupalconapp.model.data.POI;
-import com.ls.drupalconapp.model.http.ImageManager;
-import com.ls.drupalconapp.ui.view.VolleyImageView;
+import com.ls.util.image.DrupalImageView;
 
 import java.util.List;
 
@@ -54,7 +53,7 @@ public class POIsAdapter extends BaseAdapter{
             row = mInflater.inflate(R.layout.item_poi, parent, false);
 
             holder = new ViewHolder();
-            holder.imgPoi = (VolleyImageView) row.findViewById(R.id.imgPoi);
+            holder.imgPoi = (DrupalImageView) row.findViewById(R.id.imgPoi);
             holder.txtTitle = (TextView) row.findViewById(R.id.txtTitle);
             holder.txtDescription = (TextView) row.findViewById(R.id.txtDescription);
             holder.txtLearnMore = (TextView) row.findViewById(R.id.txtLearnMore);
@@ -71,7 +70,7 @@ public class POIsAdapter extends BaseAdapter{
             holder = (ViewHolder) row.getTag();
         }
 
-        holder.imgPoi.setImageUrl(poi.getImageURL(), ImageManager.loader());
+        holder.imgPoi.setImageWithURL(poi.getImageURL());
         holder.txtTitle.setText(poi.getName());
         holder.txtDescription.setText(poi.getDescription());
 
@@ -86,7 +85,7 @@ public class POIsAdapter extends BaseAdapter{
 
     private class ViewHolder {
 
-        VolleyImageView imgPoi;
+        DrupalImageView imgPoi;
         TextView txtTitle;
         TextView txtDescription;
         TextView txtLearnMore;

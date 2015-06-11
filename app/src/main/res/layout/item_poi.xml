@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.ls.drupalconapp.ui.view.VolleyImageView
+        <com.ls.util.image.DrupalImageView
             android:layout_width="match_parent"
             android:adjustViewBounds="true"
             android:layout_height="168dip"
@@ -20,7 +20,7 @@
             android:id="@+id/imgPoi"
             android:scaleType="centerCrop"
             android:layout_alignParentTop="true">
-        </com.ls.drupalconapp.ui.view.VolleyImageView>
+        </com.ls.util.image.DrupalImageView>
 
         <com.ls.drupalconapp.ui.view.MediumFontTextView
             android:id="@+id/txtDescription"
