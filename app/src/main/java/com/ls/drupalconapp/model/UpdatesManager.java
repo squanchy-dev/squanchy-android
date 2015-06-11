@@ -1,10 +1,12 @@
 package com.ls.drupalconapp.model;
 
 import com.ls.drupal.DrupalClient;
+import com.ls.drupalconapp.app.App;
 import com.ls.drupalconapp.model.data.UpdateDate;
 import com.ls.drupalconapp.model.database.ILAPIDBFacade;
 import com.ls.drupalconapp.model.managers.SynchronousItemManager;
 import com.ls.drupalconapp.ui.drawer.DrawerManager;
+import com.ls.drupalconapp.ui.receiver.DataUpdateManager;
 import com.ls.http.base.BaseRequest;
 import com.ls.http.base.RequestConfig;
 import com.ls.http.base.ResponseData;
@@ -125,6 +127,7 @@ public class UpdatesManager {
                     if (updateDate != null && !TextUtils.isEmpty(updateDate.getTime())) {
                         PreferencesManager.getInstance().saveLastUpdateDate(updateDate.getTime());
                     }
+                    DataUpdateManager.updateData(App.getContext(), updateIds);
                 }
                 return result;
             } finally {

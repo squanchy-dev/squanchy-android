@@ -9,6 +9,8 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 /**
  * Created by Kuhta on 26.09.2014.
  */
@@ -33,9 +35,17 @@ public class DataUpdateManager {
 		LocalBroadcastManager.getInstance(context).unregisterReceiver(dataUpdateReceiver);
 	}
 
-	public static void updateData(Context context, int[] requestIds) {
+	public static void updateData(Context context, List<Integer> requestIds) {
 		Intent intent = new Intent(ACTION_DATA_UPDATED);
-        intent.putExtra(ACTION_DATA_EXTRA, requestIds);
+
+		int[]idsArary = new int[requestIds.size()];
+		int counter = 0;
+		for(Integer id:requestIds)
+		{
+			idsArary[counter] = id;
+			counter++;
+		}
+        intent.putExtra(ACTION_DATA_EXTRA, idsArary);
 		LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 	}
 
