@@ -1,7 +1,7 @@
 package com.ls.drupalconapp.ui.activity;
 
-import com.ls.drupalconapp.modelV2.Model;
-import com.ls.drupalconapp.modelV2.UpdatesManager;
+import com.ls.drupalconapp.model.Model;
+import com.ls.drupalconapp.model.UpdatesManager;
 
 import android.content.ComponentCallbacks2;
 

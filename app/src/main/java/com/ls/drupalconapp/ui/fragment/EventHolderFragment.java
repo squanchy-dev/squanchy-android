@@ -1,6 +1,21 @@
 package com.ls.drupalconapp.ui.fragment;
 
 
+import com.astuetz.PagerSlidingTabStrip;
+import com.ls.drupalconapp.R;
+import com.ls.drupalconapp.model.DatabaseManager;
+import com.ls.drupalconapp.model.PreferencesManager;
+import com.ls.drupalconapp.model.UpdatesManager;
+import com.ls.drupalconapp.ui.activity.MainActivity;
+import com.ls.drupalconapp.ui.adapter.BaseEventDaysPagerAdapter;
+import com.ls.drupalconapp.ui.dialog.FilterDialog;
+import com.ls.drupalconapp.ui.drawer.DrawerManager;
+import com.ls.drupalconapp.ui.receiver.DataUpdateManager;
+import com.ls.drupalconapp.ui.receiver.FavoriteReceiverManager;
+import com.ls.utils.DateUtils;
+
+import org.jetbrains.annotations.NotNull;
+
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -14,21 +29,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.astuetz.PagerSlidingTabStrip;
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.model.DatabaseManager;
-import com.ls.drupalconapp.model.PreferencesManager;
-import com.ls.drupalconapp.model.http.HttpFactory;
-import com.ls.drupalconapp.ui.activity.MainActivity;
-import com.ls.drupalconapp.ui.adapter.BaseEventDaysPagerAdapter;
-import com.ls.drupalconapp.ui.dialog.FilterDialog;
-import com.ls.drupalconapp.ui.drawer.DrawerManager;
-import com.ls.drupalconapp.ui.receiver.DataUpdateManager;
-import com.ls.drupalconapp.ui.receiver.FavoriteReceiverManager;
-import com.ls.utils.DateUtils;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +73,7 @@ public class EventHolderFragment extends Fragment {
 			}
 
 			for (int id : requestIds) {
-				int eventModePos = HttpFactory.convertEventIdToEventModePos(id);
+				int eventModePos = UpdatesManager.convertEventIdToEventModePos(id);
 				if (eventModePos == mEventMode.ordinal()) {
 					updateData();
 					break;

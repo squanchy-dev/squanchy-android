@@ -5,17 +5,14 @@ import android.content.Context;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
-import com.ls.drupalconapp.R;
+
 import com.ls.drupalconapp.model.AppDatabaseInfo;
 import com.ls.drupalconapp.model.DatabaseManager;
 import com.ls.drupalconapp.model.PreferencesManager;
 import com.ls.drupalconapp.model.database.LAPIDBRegister;
 import com.ls.drupalconapp.model.http.ImageManager;
-import com.ls.drupalconapp.model.http.RequestManager;
-import com.ls.drupalconapp.modelV2.Model;
+import com.ls.drupalconapp.model.Model;
 import com.ls.drupalconapp.ui.view.FontHelper;
-
-import java.util.HashMap;
 
 public class App extends Application {
     private static Context mContext;
@@ -29,7 +26,6 @@ public class App extends Application {
 
         LAPIDBRegister.getInstance().register(mContext, new AppDatabaseInfo(mContext));
         PreferencesManager.initializeInstance(mContext);
-        RequestManager.initializeWith(mContext);
         ImageManager.initializeWith(mContext);
         DatabaseManager.instance(mContext);
         Model.instance(mContext);

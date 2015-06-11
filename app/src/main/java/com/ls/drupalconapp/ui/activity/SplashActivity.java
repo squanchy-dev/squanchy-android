@@ -10,9 +10,9 @@ import com.ls.drupalconapp.R;
 import com.ls.drupalconapp.model.DatabaseManager;
 import com.ls.drupalconapp.model.PreferencesManager;
 import com.ls.drupalconapp.model.database.ILAPIDBFacade;
-import com.ls.drupalconapp.modelV2.DownloadCallback;
-import com.ls.drupalconapp.modelV2.Model;
-import com.ls.drupalconapp.modelV2.UpdatesManager;
+import com.ls.drupalconapp.model.UpdateCallback;
+import com.ls.drupalconapp.model.Model;
+import com.ls.drupalconapp.model.UpdatesManager;
 import com.ls.utils.AnalyticsManager;
 
 import java.util.TimeZone;
@@ -60,7 +60,7 @@ public class SplashActivity extends FragmentActivity {
 //        });
 
         UpdatesManager manager = Model.instance().getUpdatesManager();
-        manager.startLoading(new DownloadCallback() {
+        manager.startLoading(new UpdateCallback() {
             @Override
             public void onDownloadSuccess() {
                 Log.e("TEST", "onDownloadSuccess");
