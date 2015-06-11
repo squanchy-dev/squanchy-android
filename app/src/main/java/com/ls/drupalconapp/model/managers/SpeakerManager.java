@@ -43,6 +43,6 @@ public class SpeakerManager extends SynchronousItemManager<Speaker.Holder, Objec
             }
         }
 
-        return false;
+        return true;
     }
 }

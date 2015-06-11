@@ -118,7 +118,7 @@ public class Model {
         return speakerManager;
     }
 
-    public LocationManager getLocationmanager() {
+    public LocationManager getLocationManager() {
         return locationmanager;
     }
 

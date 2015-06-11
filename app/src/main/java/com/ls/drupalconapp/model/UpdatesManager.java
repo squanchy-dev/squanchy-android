@@ -1,5 +1,8 @@
 package com.ls.drupalconapp.model;
 
+import android.os.AsyncTask;
+import android.text.TextUtils;
+
 import com.ls.drupal.DrupalClient;
 import com.ls.drupalconapp.app.App;
 import com.ls.drupalconapp.model.data.UpdateDate;
@@ -13,9 +16,6 @@ import com.ls.http.base.ResponseData;
 import com.ls.utils.ApplicationConfig;
 
 import org.jetbrains.annotations.NotNull;
-
-import android.os.AsyncTask;
-import android.text.TextUtils;
 
 import java.util.List;
 
@@ -39,16 +39,15 @@ public class UpdatesManager {
 
     private DrupalClient mClient;
 
-    public static final String IF_MODIFIED_SINCE_HEADER= "If-Modified-Since";
-    public static final String LAST_MODIFIED_HEADER= "Last-Modified";
+    public static final String IF_MODIFIED_SINCE_HEADER = "If-Modified-Since";
+    public static final String LAST_MODIFIED_HEADER = "Last-Modified";
 
-    public UpdatesManager(@NotNull DrupalClient client)
-    {
+    public UpdatesManager(@NotNull DrupalClient client) {
         mClient = client;
     }
 
     public void startLoading(@NotNull final UpdateCallback callback) {
-        new AsyncTask<Void,Void,Boolean>(){
+        new AsyncTask<Void, Void, Boolean>() {
 
             @Override
             protected Boolean doInBackground(Void... params) {
@@ -57,14 +56,12 @@ public class UpdatesManager {
 
             @Override
             protected void onPostExecute(Boolean success) {
-                if(callback == null)
-                {
+                if (callback == null) {
                     return;
                 }
-                if(success)
-                {
+                if (success) {
                     callback.onDownloadSuccess();
-                }else{
+                } else {
                     callback.onDownloadError();
                 }
             }
@@ -83,19 +80,17 @@ public class UpdatesManager {
         return 0;
     }
 
-    private boolean doPerformLoading()
-    {
+    private boolean doPerformLoading() {
         RequestConfig config = new RequestConfig();
         config.setResponseFormat(BaseRequest.ResponseFormat.JSON);
         config.setRequestFormat(BaseRequest.RequestFormat.JSON);
         config.setResponseClassSpecifier(UpdateDate.class);
-        BaseRequest checkForUpdatesRequest = new BaseRequest(BaseRequest.RequestMethod.GET, ApplicationConfig.BASE_URL+"checkUpdates",config);
+        BaseRequest checkForUpdatesRequest = new BaseRequest(BaseRequest.RequestMethod.GET, ApplicationConfig.BASE_URL + "checkUpdates", config);
         checkForUpdatesRequest.addRequestHeader(IF_MODIFIED_SINCE_HEADER, PreferencesManager.getInstance().getLastUpdateDate());
         ResponseData updatesData = mClient.performRequest(checkForUpdatesRequest, true);
-        UpdateDate updateDate = (UpdateDate)updatesData.getData();
+        UpdateDate updateDate = (UpdateDate) updatesData.getData();
 
-        if(updateDate == null)
-        {
+        if (updateDate == null) {
             return false;
         }
         updateDate.setTime(updatesData.getHeaders().get(LAST_MODIFIED_HEADER));
@@ -105,8 +100,7 @@ public class UpdatesManager {
     private boolean loadData(UpdateDate updateDate) {
 
         List<Integer> updateIds = updateDate.getIdsForUpdate();
-        if(updateIds == null ||updateIds.isEmpty())
-        {
+        if (updateIds == null || updateIds.isEmpty()) {
             return true;
         }
 
@@ -116,10 +110,9 @@ public class UpdatesManager {
                 facade.open();
                 facade.beginTransactions();
                 boolean result = true;
-                for (Integer i : updateIds){
+                for (Integer i : updateIds) {
                     result = sendRequestById(i);
-                    if(!result)
-                    {
+                    if (!result) {
                         break;
                     }
                 }
@@ -139,10 +132,10 @@ public class UpdatesManager {
 
     }
 
-    private boolean sendRequestById(int id){
+    private boolean sendRequestById(int id) {
 
         SynchronousItemManager manager = null;
-        switch (id){
+        switch (id) {
             case TYPES_REQUEST_ID:
                 manager = Model.instance().getTypesManager();
                 break;
@@ -160,12 +153,8 @@ public class UpdatesManager {
                 break;
 
             case LOCATIONS_REQUEST_ID:
-                manager = Model.instance().getLocationmanager();
+                manager = Model.instance().getLocationManager();
                 break;
-
-//            case HOUSE_PLANS_REQUEST_ID:
-//                loadHousePlans();
-//                break;
 
             case PROGRAMS_REQUEST_ID:
                 manager = Model.instance().getSessionsManager();
@@ -186,15 +175,11 @@ public class UpdatesManager {
             case INFO_REQUEST_ID:
                 manager = Model.instance().getInfoManager();
                 break;
-
-//            case TWITTER_REQUEST_ID:
-//                loadTwitter();
-//                break;
-
+            default:
+                return true;
         }
 
-        if(manager != null)
-        {
+        if (manager != null) {
             return manager.fetchData();
         }
 
