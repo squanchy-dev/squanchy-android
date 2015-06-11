@@ -130,6 +130,7 @@ public class DrupalImageView extends ImageView {
         }
 
         this.setImageDrawable(null);
+        this.applyNoImageDrawableIfNeeded();
 
         if(TextUtils.isEmpty(imagePath))
         {
