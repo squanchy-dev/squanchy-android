@@ -94,6 +94,7 @@ public class UpdatesManager {
             return false;
         }
         updateDate.setTime(updatesData.getHeaders().get(LAST_MODIFIED_HEADER));
+        //TODO for Roman: return updated request id's list in case of success or null in case of failure (instead of boolean) and notify in post execute method of async task
         return loadData(updateDate);
     }
 
