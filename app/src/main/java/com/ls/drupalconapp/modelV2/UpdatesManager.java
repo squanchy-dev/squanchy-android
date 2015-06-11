@@ -23,7 +23,6 @@ import java.util.List;
  */
 public class UpdatesManager {
 
-    private UpdateDate mUpdateDate;
     private DrupalClient mClient;
 
     public static final String IF_MODIFIED_SINCE_HEADER= "If-Modified-Since";

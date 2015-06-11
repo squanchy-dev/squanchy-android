@@ -6,6 +6,7 @@ import com.ls.drupalconapp.model.http.utils.RequestHelper;
 
 import android.content.Context;
 
+@Deprecated
 public class RequestManager {
 
     private static RequestManager mInstance;

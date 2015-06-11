@@ -7,6 +7,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONObject;
 
+@Deprecated
 public class DCJsonObjectRequest extends JsonObjectRequest {
 
 	public DCJsonObjectRequest(int method, String url, JSONObject jsonRequest, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {

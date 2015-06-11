@@ -59,7 +59,7 @@ public class SplashActivity extends FragmentActivity {
 //            }
 //        });
 
-        UpdatesManager manager = new UpdatesManager(Model.instance().getClient());
+        UpdatesManager manager = Model.instance().getUpdatesManager();
         manager.startLoading(new DownloadCallback() {
             @Override
             public void onDownloadSuccess() {

@@ -7,6 +7,7 @@ import com.ls.utils.DomenUtils;
 /**
  * Created by Yakiv M. on 19.09.2014.
  */
+@Deprecated //Use requests instead
 public class HttpUtils {
 
     public static final String LIVE_SCHEME = "http";

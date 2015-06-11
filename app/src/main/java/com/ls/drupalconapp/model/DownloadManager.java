@@ -39,9 +39,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+
 /**
  * Created by Yakiv M. on 19.09.2014.
  */
+@Deprecated //Use UpdatesManager instead
 public class DownloadManager {
 
     /**

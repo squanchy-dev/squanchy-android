@@ -13,6 +13,7 @@ import android.support.v4.util.LruCache;
 /**
  * Created by Yakiv M. on 22.09.2014.
  */
+@Deprecated //Use Drupal image view instead
 public class ImageManager {
 
     private static ImageManager mInstance;

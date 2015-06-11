@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import java.io.StringReader;
 import java.lang.reflect.Type;
 
+@Deprecated
 public abstract class JsonSerializable {
 
 	public String toJson() {

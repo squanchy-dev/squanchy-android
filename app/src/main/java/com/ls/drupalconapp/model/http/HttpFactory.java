@@ -18,6 +18,7 @@ import java.util.Map;
 /**
  * Created by Yakiv M. on 19.09.2014.
  */
+@Deprecated //Use requests instead
 public class HttpFactory {
 
     public static final String CHECK_UPDATES_REQUEST = "check_updates";

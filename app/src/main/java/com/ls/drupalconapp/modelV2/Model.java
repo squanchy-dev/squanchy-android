@@ -15,6 +15,7 @@ import com.android.volley.toolbox.HttpClientStack;
 import com.android.volley.toolbox.HttpStack;
 import com.android.volley.toolbox.HurlStack;
 import com.ls.drupal.DrupalClient;
+import com.ls.drupalconapp.model.http.utils.RedirectHurlStack;
 import com.ls.drupalconapp.modelV2.managers.BofsManager;
 import com.ls.drupalconapp.modelV2.managers.InfoManager;
 import com.ls.drupalconapp.modelV2.managers.LevelsManager;
@@ -80,6 +81,7 @@ public class Model {
     private BofsManager bofsManager;
     private PoisManager poisManager;
     private InfoManager infoManager;
+    private UpdatesManager updatesManager;
 
     public DrupalClient getClient() {
         return client;
@@ -138,6 +140,10 @@ public class Model {
         return sessionsManager;
     }
 
+    public UpdatesManager getUpdatesManager() {
+        return updatesManager;
+    }
+
     /**
      * NOTE: login is performed in synchroneus way so you must never call it from UI thread.
      * @param userName
@@ -165,6 +171,9 @@ public class Model {
         bofsManager = new BofsManager(client);
         poisManager = new PoisManager(client);
         infoManager = new InfoManager(client);
+        sessionsManager = new SessionsManager(client);
+
+        updatesManager = new UpdatesManager(client);
     }
 
 
@@ -187,7 +196,7 @@ public class Model {
         }
 
         if (Build.VERSION.SDK_INT >= 9) {
-            stack = new HurlStack();
+            stack =  new RedirectHurlStack();
 
         } else {
             stack = new HttpClientStack(AndroidHttpClient.newInstance(userAgent));
