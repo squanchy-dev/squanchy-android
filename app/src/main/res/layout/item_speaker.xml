@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/holderSpeaker"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="72dp">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/holderSpeaker"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="72dp">
 
     <com.ls.drupalconapp.ui.view.RegularFontTextView
         android:id="@+id/txtFirstLetter"
@@ -22,12 +23,13 @@
         android:paddingLeft="41dp"
         android:layout_height="match_parent">
 
-        <com.ls.drupalconapp.ui.view.CircleNetworkImageView
+        <com.ls.drupalconapp.ui.view.CircleDrupalImageView
                 android:id="@+id/imgPhoto"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_margin="16dp"
                 android:layout_centerVertical="true"
+                app:noImageResource="@drawable/ic_default_avatar_small"
                 android:scaleType="centerCrop"/>
 
         <LinearLayout

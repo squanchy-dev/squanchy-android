@@ -133,14 +133,15 @@
 
             </LinearLayout>
 
-            <com.ls.drupalconapp.ui.view.CircleNetworkImageView
+            <com.ls.drupalconapp.ui.view.CircleDrupalImageView
                 android:id="@+id/imgPhoto"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
-                android:scaleType="fitXY"
                 android:layout_marginLeft="24dp"
                 android:layout_marginRight="24dp"
-                android:layout_marginTop="100dp"/>
+                android:layout_marginTop="100dp"
+                android:scaleType="fitXY"
+                app:noImageResource="@drawable/ic_default_avatar_small" />
 
         </RelativeLayout>
 

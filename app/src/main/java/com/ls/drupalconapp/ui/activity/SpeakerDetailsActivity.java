@@ -26,9 +26,8 @@ import com.ls.drupalconapp.R;
 import com.ls.drupalconapp.model.DatabaseManager;
 import com.ls.drupalconapp.model.data.Speaker;
 import com.ls.drupalconapp.model.data.SpeakerDetailsEvent;
-import com.ls.drupalconapp.model.http.ImageManager;
 import com.ls.drupalconapp.ui.receiver.DataUpdateManager;
-import com.ls.drupalconapp.ui.view.CircleNetworkImageView;
+import com.ls.drupalconapp.ui.view.CircleDrupalImageView;
 import com.ls.drupalconapp.ui.view.NotifyingScrollView;
 import com.ls.utils.AnalyticsManager;
 import com.ls.utils.DateUtils;
@@ -217,10 +216,9 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 		mSpeaker = speaker;
 
 		// Speaker image
-		CircleNetworkImageView imgPhoto = (CircleNetworkImageView) findViewById(R.id.imgPhoto);
-		imgPhoto.setDefaultImageResId(R.drawable.ic_default_avatar_medium);
-		imgPhoto.setErrorImageResId(R.drawable.ic_default_avatar_medium);
-		imgPhoto.setImageUrl(mSpeaker.getAvatarImageUrl(), ImageManager.loader());
+		CircleDrupalImageView imgPhoto = (CircleDrupalImageView) findViewById(R.id.imgPhoto);
+		String imageUrl = mSpeaker.getAvatarImageUrl();
+		imgPhoto.setImageWithURL(imageUrl);
 
 		// Speaker name
 		String speakerName = TextUtils.isEmpty(mSpeaker.getFirstName()) ? "" : mSpeaker.getFirstName() + " ";

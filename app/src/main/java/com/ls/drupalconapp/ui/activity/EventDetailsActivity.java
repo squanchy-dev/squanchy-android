@@ -30,10 +30,9 @@ import com.ls.drupalconapp.model.PreferencesManager;
 import com.ls.drupalconapp.model.data.EventDetailsEvent;
 import com.ls.drupalconapp.model.data.Level;
 import com.ls.drupalconapp.model.data.Speaker;
-import com.ls.drupalconapp.model.http.ImageManager;
 import com.ls.drupalconapp.ui.receiver.DataUpdateManager;
 import com.ls.drupalconapp.ui.receiver.FavoriteReceiverManager;
-import com.ls.drupalconapp.ui.view.CircleNetworkImageView;
+import com.ls.drupalconapp.ui.view.CircleDrupalImageView;
 import com.ls.drupalconapp.ui.view.NotifyingScrollView;
 import com.ls.utils.AnalyticsManager;
 import com.ls.utils.DateUtils;
@@ -374,11 +373,9 @@ public class EventDetailsActivity extends StackKeeperActivity {
 
 	private void fillSpeakerView(final Speaker speaker, View speakerView) {
 		// Speaker image
+		CircleDrupalImageView imgPhoto = (CircleDrupalImageView) findViewById(R.id.imgPhoto);
 		String imageUrl = speaker.getAvatarImageUrl();
-		CircleNetworkImageView imgPhoto = (CircleNetworkImageView) speakerView.findViewById(R.id.imgPhoto);
-		imgPhoto.setDefaultImageResId(R.drawable.ic_default_avatar_small);
-		imgPhoto.setErrorImageResId(R.drawable.ic_default_avatar_small);
-		imgPhoto.setImageUrl(imageUrl, ImageManager.loader());
+		imgPhoto.setImageWithURL(imageUrl);
 
 		//Speaker name
 		((TextView) speakerView.findViewById(R.id.txtName)).setText(speaker.getFirstName() + " " + speaker.getLastName());

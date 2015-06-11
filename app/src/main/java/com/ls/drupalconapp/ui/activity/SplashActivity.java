@@ -4,15 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.ls.drupalconapp.R;
 import com.ls.drupalconapp.model.DatabaseManager;
-import com.ls.drupalconapp.model.PreferencesManager;
-import com.ls.drupalconapp.model.database.ILAPIDBFacade;
-import com.ls.drupalconapp.model.UpdateCallback;
 import com.ls.drupalconapp.model.Model;
+import com.ls.drupalconapp.model.PreferencesManager;
+import com.ls.drupalconapp.model.UpdateCallback;
 import com.ls.drupalconapp.model.UpdatesManager;
+import com.ls.drupalconapp.model.database.ILAPIDBFacade;
+import com.ls.util.L;
 import com.ls.utils.AnalyticsManager;
 
 import java.util.TimeZone;
@@ -31,13 +31,13 @@ public class SplashActivity extends FragmentActivity {
         manager.startLoading(new UpdateCallback() {
             @Override
             public void onDownloadSuccess() {
-                Log.e("TEST", "onDownloadSuccess");
+                L.e("onDownloadSuccess");
                 startMainActivity();
             }
 
             @Override
             public void onDownloadError() {
-                Log.e("TEST", "onDownloadError");
+                L.e("onDownloadError");
             }
         });
     }

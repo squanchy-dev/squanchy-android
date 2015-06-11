@@ -12,9 +12,8 @@ import android.widget.TextView;
 
 import com.ls.drupalconapp.R;
 import com.ls.drupalconapp.model.data.Speaker;
-import com.ls.drupalconapp.model.http.ImageManager;
 import com.ls.drupalconapp.ui.fragment.SpeakersListFragment;
-import com.ls.drupalconapp.ui.view.CircleNetworkImageView;
+import com.ls.drupalconapp.ui.view.CircleDrupalImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +25,6 @@ public class SpeakersAdapter extends BaseAdapter implements Filterable {
 	private List<Speaker> mSpeakersFiltered;
 	private SparseBooleanArray mLetterPositions;
 	private SpeakerFilter mFilter = new SpeakerFilter();
-
-	private int mFilteredItemsCount = 0;
 
 	public SpeakersAdapter(Context context, List<Speaker> speakersList, SparseBooleanArray letterPositions) {
 		mInflater = LayoutInflater.from(context);
@@ -66,7 +63,7 @@ public class SpeakersAdapter extends BaseAdapter implements Filterable {
 			row = mInflater.inflate(R.layout.item_speaker, parent, false);
 
 			holder = new ViewHolder();
-			holder.imgPhoto = (CircleNetworkImageView) row.findViewById(R.id.imgPhoto);
+			holder.imgPhoto = (CircleDrupalImageView) row.findViewById(R.id.imgPhoto);
 			holder.txtName = (TextView) row.findViewById(R.id.txtName);
 			holder.txtOrgAndJobTitle = (TextView) row.findViewById(R.id.txtOrgAndJobTitle);
 			holder.txtFirstLetter = (TextView) row.findViewById(R.id.txtFirstLetter);
@@ -84,9 +81,7 @@ public class SpeakersAdapter extends BaseAdapter implements Filterable {
 
 	private void fillView(ViewHolder holder, Speaker speaker, int position) {
 		String imageUrl = speaker.getAvatarImageUrl();
-		holder.imgPhoto.setDefaultImageResId(R.drawable.ic_default_avatar_small);
-		holder.imgPhoto.setErrorImageResId(R.drawable.ic_default_avatar_small);
-		holder.imgPhoto.setImageUrl(imageUrl, ImageManager.loader());
+		holder.imgPhoto.setImageWithURL(imageUrl);
 
 		String organization = speaker.getOrganization();
 		String jobTitle = speaker.getJobTitle();
@@ -120,7 +115,7 @@ public class SpeakersAdapter extends BaseAdapter implements Filterable {
 
 	private class ViewHolder {
 
-		CircleNetworkImageView imgPhoto;
+		CircleDrupalImageView imgPhoto;
 		TextView txtName;
 		TextView txtOrgAndJobTitle;
 		TextView txtFirstLetter;
