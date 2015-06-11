@@ -27,38 +27,6 @@ public class SplashActivity extends FragmentActivity {
         AnalyticsManager.sendEvent(this, "Application", R.string.action_open);
 
         checkForDatabaseUpdate();
-//        DownloadManager downloadManager = new DownloadManager();
-//        downloadManager.startLoading(getBaseContext(), new DownloadCallback() {
-//            @Override
-//            public void onDownloadSuccess(UpdateDate updateDate) {
-//				if (!NetworkUtils.isOn(SplashActivity.this)) {
-//					DialogHelper.showAllowStateLoss(SplashActivity.this, NoConnectionDialog.TAG, new NoConnectionDialog());
-//					return;
-//				}
-//
-//				if (updateDate != null && !TextUtils.isEmpty(updateDate.getTime())) {
-//					PreferencesManager.getInstance().saveLastUpdateDate(updateDate.getTime());
-//				}
-//
-//				startMainActivity();
-//			}
-//
-//            @Override
-//            public void onDownloadError() {
-//                if (PreferencesManager.getInstance().getLastUpdateDate().equals("") && !isFinishing()) {
-//                    DialogHelper.showAllowStateLoss(
-//                            SplashActivity.this,
-//                            NoConnectionDialog.TAG,
-//                            new NoConnectionDialog()
-//                    );
-//                } else if (!isFinishing()) {
-//                    startMainActivity();
-//                } else {
-//                    finish();
-//                }
-//            }
-//        });
-
         UpdatesManager manager = Model.instance().getUpdatesManager();
         manager.startLoading(new UpdateCallback() {
             @Override

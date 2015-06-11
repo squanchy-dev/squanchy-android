@@ -15,7 +15,7 @@ public class SocialRequest extends AbstractDrupalEntityContainer<Event.Holder> {
 
     @Override
     protected String getPath() {
-        return "getSessions";
+        return "getSocialEvents";
     }
 
     @Override

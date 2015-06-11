@@ -4,7 +4,7 @@ import com.ls.drupal.AbstractBaseDrupalEntity;
 import com.ls.drupal.DrupalClient;
 import com.ls.drupalconapp.model.PreferencesManager;
 import com.ls.drupalconapp.model.data.InfoItem;
-import com.ls.drupalconapp.model.requests.TracksRequest;
+import com.ls.drupalconapp.model.requests.InfoRequest;
 
 public class InfoManager extends SynchronousItemManager<InfoItem.General, Object, String> {
 
@@ -14,7 +14,7 @@ public class InfoManager extends SynchronousItemManager<InfoItem.General, Object
 
     @Override
     protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client, Object requestParams) {
-        return new TracksRequest(client);
+        return new InfoRequest(client);
     }
 
     @Override
