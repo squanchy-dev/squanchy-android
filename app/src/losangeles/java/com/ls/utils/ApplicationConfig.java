@@ -1,4 +1,4 @@
-package com.ls.drupalconapp.model;
+package com.ls.utils;
 
 /**
  * Created on 29.05.2015.

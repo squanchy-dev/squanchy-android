@@ -10,6 +10,7 @@ import com.ls.drupalconapp.ui.receiver.DataUpdateManager;
 import com.ls.http.base.BaseRequest;
 import com.ls.http.base.RequestConfig;
 import com.ls.http.base.ResponseData;
+import com.ls.utils.ApplicationConfig;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -88,7 +89,7 @@ public class UpdatesManager {
         config.setResponseFormat(BaseRequest.ResponseFormat.JSON);
         config.setRequestFormat(BaseRequest.RequestFormat.JSON);
         config.setResponseClassSpecifier(UpdateDate.class);
-        BaseRequest checkForUpdatesRequest = new BaseRequest(BaseRequest.RequestMethod.GET,ApplicationConfig.BASE_URL+"checkUpdates",config);
+        BaseRequest checkForUpdatesRequest = new BaseRequest(BaseRequest.RequestMethod.GET, ApplicationConfig.BASE_URL+"checkUpdates",config);
         checkForUpdatesRequest.addRequestHeader(IF_MODIFIED_SINCE_HEADER, PreferencesManager.getInstance().getLastUpdateDate());
         ResponseData updatesData = mClient.performRequest(checkForUpdatesRequest, true);
         UpdateDate updateDate = (UpdateDate)updatesData.getData();

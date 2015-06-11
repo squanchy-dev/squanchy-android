@@ -14,6 +14,7 @@ import java.util.List;
 /**
  * Created by Kuhta on 26.09.2014.
  */
+@Deprecated //Implement UpdateManager listeners instead (Using observer holder)
 public class DataUpdateManager {
 	public static final String ACTION_DATA_UPDATED = "ACTION_DATA_UPDATED";
     public static final String ACTION_DATA_EXTRA = "ACTION_DATA_EXTRA";
