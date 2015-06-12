@@ -4,21 +4,10 @@ import com.ls.drupalconapp.model.AppDatabaseInfo;
 import com.ls.drupalconapp.model.data.InfoItem;
 import com.ls.drupalconapp.model.database.AbstractEntityDAO;
 
-import android.content.Context;
-
-
-/**
- * Created by Yakiv M. on 25.04.14.
- */
 
 public class InfoDao extends AbstractEntityDAO<InfoItem, Long> {
 
     public static final String TABLE_NAME = "table_info";
-    private final Context mContext;
-
-    public InfoDao(Context context) {
-        mContext = context;
-    }
 
     @Override
     protected String getSearchCondition() {

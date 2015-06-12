@@ -4,8 +4,6 @@ import com.ls.drupalconapp.model.AppDatabaseInfo;
 import com.ls.drupalconapp.model.data.Type;
 import com.ls.drupalconapp.model.database.AbstractEntityDAO;
 
-import android.content.Context;
-
 
 /**
  * Created by Yakiv M. on 25.04.14.
@@ -14,10 +12,8 @@ import android.content.Context;
 public class TypeDao extends AbstractEntityDAO<Type, Long> {
 
     public static final String TABLE_NAME = "table_type";
-    private final Context mContext;
 
-    public TypeDao(Context context) {
-        mContext = context;
+    public TypeDao() {
     }
 
     @Override

@@ -2,16 +2,20 @@ package com.ls.drupalconapp.model.managers;
 
 import com.ls.drupal.AbstractBaseDrupalEntity;
 import com.ls.drupal.DrupalClient;
-import com.ls.drupalconapp.model.DatabaseManager;
+import com.ls.drupalconapp.model.dao.TrackDao;
 import com.ls.drupalconapp.model.data.Track;
 import com.ls.drupalconapp.model.requests.TracksRequest;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
  * Created on 09.06.2015.
  */
-public class TracksManager extends SynchronousItemManager<Track.Holder,Object,String>{
+public class TracksManager extends SynchronousItemManager<Track.Holder, Object, String> {
+
+    private TrackDao mTrackDao;
 
     public TracksManager(DrupalClient client) {
         super(client);
@@ -29,22 +33,30 @@ public class TracksManager extends SynchronousItemManager<Track.Holder,Object,St
 
     @Override
     protected boolean storeResponse(Track.Holder requestResponse, String tag) {
-        DatabaseManager databaseManager = DatabaseManager.instance();
         List<Track> tracks = requestResponse.getTracks();
+        if (tracks == null) return false;
 
-        if (tracks == null) {
-            return false;
-        }
+        mTrackDao = new TrackDao();
+        mTrackDao.saveOrUpdateDataSafe(tracks);
 
-        databaseManager.saveTracks(tracks);
-
-        for (Track track : tracks){
-            if(track != null) {
+        for (Track track : tracks) {
+            if (track != null) {
                 if (track.isDeleted()) {
-                    databaseManager.deleteTrack(track);
+                    mTrackDao.deleteDataSafe(track.getId());
                 }
             }
         }
         return true;
+    }
+
+    public List<Track> getTracks() {
+        List<Track> tracks = mTrackDao.getAllSafe();
+        Collections.sort(tracks, new Comparator<Track>() {
+            @Override
+            public int compare(Track track, Track track2) {
+                return Double.compare(track.getOrder(), track2.getOrder());
+            }
+        });
+        return tracks;
     }
 }

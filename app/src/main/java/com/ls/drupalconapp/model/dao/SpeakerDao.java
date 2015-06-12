@@ -1,18 +1,14 @@
 package com.ls.drupalconapp.model.dao;
 
+import android.content.Context;
+
 import com.ls.drupalconapp.R;
 import com.ls.drupalconapp.model.AppDatabaseInfo;
 import com.ls.drupalconapp.model.data.Speaker;
 import com.ls.drupalconapp.model.database.AbstractEntityDAO;
 
-import android.content.Context;
-
 import java.util.List;
 
-
-/**
- * Created by Yakiv M. on 25.04.14.
- */
 
 public class SpeakerDao extends AbstractEntityDAO<Speaker, Long> {
 

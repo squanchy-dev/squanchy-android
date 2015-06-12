@@ -2,16 +2,15 @@ package com.ls.drupalconapp.model.managers;
 
 import com.ls.drupal.AbstractBaseDrupalEntity;
 import com.ls.drupal.DrupalClient;
-import com.ls.drupalconapp.model.DatabaseManager;
+import com.ls.drupalconapp.model.dao.TypeDao;
 import com.ls.drupalconapp.model.data.Type;
 import com.ls.drupalconapp.model.requests.TypesRequest;
 
 import java.util.List;
 
-/**
- * Created on 08.06.2015.
- */
-public class TypesManager extends SynchronousItemManager<Type.Holder,Object,String> {
+public class TypesManager extends SynchronousItemManager<Type.Holder, Object, String> {
+
+    private TypeDao mTypeDao;
 
     public TypesManager(DrupalClient client) {
         super(client);
@@ -29,23 +28,23 @@ public class TypesManager extends SynchronousItemManager<Type.Holder,Object,Stri
 
     @Override
     protected boolean storeResponse(Type.Holder requestResponse, String tag) {
-        DatabaseManager databaseManager = DatabaseManager.instance();
         List<Type> types = requestResponse.getTypes();
+        if (types == null) return false;
 
-        if(types == null)
-        {
-            return false;
-        }
+        mTypeDao = new TypeDao();
+        mTypeDao.saveOrUpdateDataSafe(types);
 
-        databaseManager.saveTypes(types);
-
-        for (Type type : types){
+        for (Type type : types) {
             if (type != null) {
                 if (type.isDeleted()) {
-                    databaseManager.deleteType(type);
+                    mTypeDao.deleteDataSafe(type.getId());
                 }
             }
         }
         return true;
+    }
+
+    public List<Type> getTypes() {
+        return mTypeDao.getAllSafe();
     }
 }

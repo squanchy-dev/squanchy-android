@@ -4,21 +4,10 @@ import com.ls.drupalconapp.model.AppDatabaseInfo;
 import com.ls.drupalconapp.model.data.Location;
 import com.ls.drupalconapp.model.database.AbstractEntityDAO;
 
-import android.content.Context;
-
-
-/**
- * Created by Yakiv M. on 25.04.14.
- */
 
 public class LocationDao extends AbstractEntityDAO<Location, Long> {
 
     public static final String TABLE_NAME = "table_location";
-    private final Context mContext;
-
-    public LocationDao(Context context) {
-        mContext = context;
-    }
 
     @Override
     protected String getSearchCondition() {

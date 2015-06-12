@@ -2,7 +2,6 @@ package com.ls.drupalconapp.model.managers;
 
 import com.ls.drupal.AbstractBaseDrupalEntity;
 import com.ls.drupal.DrupalClient;
-import com.ls.drupalconapp.model.DatabaseManager;
 import com.ls.drupalconapp.model.data.Event;
 import com.ls.drupalconapp.model.requests.SessionsRequest;
 
@@ -11,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class SessionsManager extends SynchronousItemManager<Event.Holder, Object, String> {
+public class SessionsManager extends EventManager {
 
     public SessionsManager(DrupalClient client) {
         super(client);
@@ -29,14 +28,12 @@ public class SessionsManager extends SynchronousItemManager<Event.Holder, Object
 
     @Override
     protected boolean storeResponse(Event.Holder requestResponse, String tag) {
-        DatabaseManager databaseManager = DatabaseManager.instance();
-        List<Long> ids = databaseManager.getFavoriteEvents();
         List<Event.Day> sessions = requestResponse.getDays();
-
         if (sessions == null) {
             return false;
         }
 
+        List<Long> ids = mEventDao.selectFavoriteEventsSafe();
         SimpleDateFormat format = new SimpleDateFormat("d-MM-yyyy");
 
         for (Event.Day day : sessions) {
@@ -54,11 +51,11 @@ public class SessionsManager extends SynchronousItemManager<Event.Holder, Object
                             }
                         }
 
-                        databaseManager.saveEvent(event);
-                        databaseManager.saveEventSpeakers(event);
+                        mEventDao.saveOrUpdateSafe(event);
+                        saveEventSpeakers(event);
 
                         if (event.isDeleted()) {
-                            databaseManager.deleteEvent(event);
+                            deleteEvent(event);
                         }
 
                     }

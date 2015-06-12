@@ -2,13 +2,17 @@ package com.ls.drupalconapp.model.managers;
 
 import com.ls.drupal.AbstractBaseDrupalEntity;
 import com.ls.drupal.DrupalClient;
-import com.ls.drupalconapp.model.DatabaseManager;
+import com.ls.drupalconapp.model.dao.POIDao;
 import com.ls.drupalconapp.model.data.POI;
 import com.ls.drupalconapp.model.requests.PoisRequest;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
-public class PoisManager extends SynchronousItemManager<POI.Holder,Object,String>{
+public class PoisManager extends SynchronousItemManager<POI.Holder, Object, String> {
+
+    private POIDao mPOIDao;
 
     public PoisManager(DrupalClient client) {
         super(client);
@@ -26,23 +30,33 @@ public class PoisManager extends SynchronousItemManager<POI.Holder,Object,String
 
     @Override
     protected boolean storeResponse(POI.Holder requestResponse, String tag) {
-        DatabaseManager databaseManager = DatabaseManager.instance();
         List<POI> pois = requestResponse.getPOIs();
-
         if (pois == null) {
             return false;
         }
 
-        databaseManager.savePOIs(pois);
+        mPOIDao = new POIDao();
+        mPOIDao.saveOrUpdateDataSafe(pois);
 
-        for (POI poi : pois){
-            if(poi != null) {
+        for (POI poi : pois) {
+            if (poi != null) {
                 if (poi.isDeleted()) {
-                    databaseManager.deletePOI(poi);
+                    mPOIDao.saveOrUpdateDataSafe(pois);
                 }
             }
         }
         return true;
+    }
+
+    public List<POI> getPOIs() {
+        List<POI> pois = mPOIDao.getAllSafe();
+        Collections.sort(pois, new Comparator<POI>() {
+            @Override
+            public int compare(POI poi, POI poi2) {
+                return Double.compare(poi.getOrder(), poi2.getOrder());
+            }
+        });
+        return pois;
     }
 }
 

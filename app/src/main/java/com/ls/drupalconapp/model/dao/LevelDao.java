@@ -4,21 +4,10 @@ import com.ls.drupalconapp.model.AppDatabaseInfo;
 import com.ls.drupalconapp.model.data.Level;
 import com.ls.drupalconapp.model.database.AbstractEntityDAO;
 
-import android.content.Context;
-
-
-/**
- * Created by Yakiv M. on 25.04.14.
- */
 
 public class LevelDao extends AbstractEntityDAO<Level, Long> {
 
     public static final String TABLE_NAME = "table_level";
-    private final Context mContext;
-
-    public LevelDao(Context context) {
-        mContext = context;
-    }
 
     @Override
     protected String getSearchCondition() {

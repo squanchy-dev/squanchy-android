@@ -2,7 +2,7 @@ package com.ls.drupalconapp.model.managers;
 
 import com.ls.drupal.AbstractBaseDrupalEntity;
 import com.ls.drupal.DrupalClient;
-import com.ls.drupalconapp.model.DatabaseManager;
+import com.ls.drupalconapp.model.dao.LevelDao;
 import com.ls.drupalconapp.model.data.Level;
 import com.ls.drupalconapp.model.requests.LevelsRequest;
 
@@ -11,7 +11,9 @@ import java.util.List;
 /**
  * Created on 09.06.2015.
  */
-public class LevelsManager  extends SynchronousItemManager<Level.Holder,Object,String> {
+public class LevelsManager extends SynchronousItemManager<Level.Holder, Object, String> {
+
+    private LevelDao mLevelDao;
 
     public LevelsManager(DrupalClient client) {
         super(client);
@@ -29,21 +31,30 @@ public class LevelsManager  extends SynchronousItemManager<Level.Holder,Object,S
 
     @Override
     protected boolean storeResponse(Level.Holder requestResponse, String tag) {
-        DatabaseManager databaseManager = DatabaseManager.instance();
         List<Level> levels = requestResponse.getLevels();
-        if(levels == null)
-        {
+        if (levels == null) {
             return false;
         }
-        databaseManager.saveLevels(levels);
 
-        for (Level level : levels){
+        mLevelDao = new LevelDao();
+        mLevelDao.saveOrUpdateDataSafe(levels);
+
+        for (Level level : levels) {
             if (level != null) {
                 if (level.isDeleted()) {
-                    databaseManager.deleteLevel(level);
+                    deleteLevel(level);
                 }
             }
         }
         return true;
+    }
+
+    public Level getLevel(long levelId) {
+        List<Level> data = mLevelDao.getDataSafe(levelId);
+        return data.size() > 0 ? data.get(0) : null;
+    }
+
+    public void deleteLevel(Level level) {
+        mLevelDao.deleteDataSafe(level.getId());
     }
 }

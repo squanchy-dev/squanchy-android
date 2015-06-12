@@ -1,5 +1,7 @@
 package com.ls.drupalconapp.model;
 
+import android.content.Context;
+
 import com.ls.drupalconapp.model.dao.EventDao;
 import com.ls.drupalconapp.model.dao.InfoDao;
 import com.ls.drupalconapp.model.dao.LevelDao;
@@ -25,8 +27,6 @@ import com.ls.drupalconapp.ui.adapter.item.EventListItem;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import android.content.Context;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -70,14 +70,14 @@ public class DatabaseManager {
     private InfoDao mInfoDao;
 
     private DatabaseManager(Context context) {
-        mTypeDao = new TypeDao(context);
-        mLevelDao = new LevelDao(context);
-        mTrackDao = new TrackDao(context);
+        mTypeDao = new TypeDao();
+        mLevelDao = new LevelDao();
+        mTrackDao = new TrackDao();
         mSpeakerDao = new SpeakerDao(context);
-        mLocationDao = new LocationDao(context);
+        mLocationDao = new LocationDao();
         mEventDao = new EventDao(context);
-        mPOIDao = new POIDao(context);
-        mInfoDao = new InfoDao(context);
+        mPOIDao = new POIDao();
+        mInfoDao = new InfoDao();
     }
 
     public List<Type> getTypes() {
