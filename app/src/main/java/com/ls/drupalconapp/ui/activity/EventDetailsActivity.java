@@ -1,5 +1,22 @@
 package com.ls.drupalconapp.ui.activity;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+
+import com.ls.drupalconapp.R;
+import com.ls.drupalconapp.model.DatabaseManager;
+import com.ls.drupalconapp.model.Model;
+import com.ls.drupalconapp.model.PreferencesManager;
+import com.ls.drupalconapp.model.UpdatesManager;
+import com.ls.drupalconapp.model.data.EventDetailsEvent;
+import com.ls.drupalconapp.model.data.Level;
+import com.ls.drupalconapp.model.data.Speaker;
+import com.ls.drupalconapp.ui.receiver.FavoriteReceiverManager;
+import com.ls.drupalconapp.ui.view.CircleDrupalImageView;
+import com.ls.drupalconapp.ui.view.NotifyingScrollView;
+import com.ls.utils.AnalyticsManager;
+import com.ls.utils.DateUtils;
+import com.ls.utils.ScheduleManager;
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -22,21 +39,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.model.DatabaseManager;
-import com.ls.drupalconapp.model.PreferencesManager;
-import com.ls.drupalconapp.model.data.EventDetailsEvent;
-import com.ls.drupalconapp.model.data.Level;
-import com.ls.drupalconapp.model.data.Speaker;
-import com.ls.drupalconapp.ui.receiver.DataUpdateManager;
-import com.ls.drupalconapp.ui.receiver.FavoriteReceiverManager;
-import com.ls.drupalconapp.ui.view.CircleDrupalImageView;
-import com.ls.drupalconapp.ui.view.NotifyingScrollView;
-import com.ls.utils.AnalyticsManager;
-import com.ls.utils.DateUtils;
-import com.ls.utils.ScheduleManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -73,13 +75,14 @@ public class EventDetailsActivity extends StackKeeperActivity {
 				}
 			});
 
-	private DataUpdateManager dataUpdateManager = new DataUpdateManager(new DataUpdateManager.DataUpdatedListener() {
+	private UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener()
+	{
 		@Override
-		public void onDataUpdated(int[] requestIds) {
+		public void onDataUpdated(List<Integer> requestIds) {
 			Log.d("UPDATED", "EventDetailsActivity");
 			loadEventFromDb();
 		}
-	});
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +95,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
 		}
 		dbManager = DatabaseManager.instance();
 		favoriteReceiverManager.register(this);
-		dataUpdateManager.register(this);
+		Model.instance().getUpdatesManager().registerUpdateListener(updateListener);
 		scheduleManager = new ScheduleManager(this);
 
 		handleExtras(getIntent());
@@ -127,7 +130,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 		favoriteReceiverManager.unregister(this);
-		dataUpdateManager.unregister(this);
+		Model.instance().getUpdatesManager().unregisterUpdateListener(updateListener);
 	}
 
 	@Override
@@ -373,7 +376,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
 
 	private void fillSpeakerView(final Speaker speaker, View speakerView) {
 		// Speaker image
-		CircleDrupalImageView imgPhoto = (CircleDrupalImageView) findViewById(R.id.imgPhoto);
+		CircleDrupalImageView imgPhoto = (CircleDrupalImageView) speakerView.findViewById(R.id.imgPhoto);
 		String imageUrl = speaker.getAvatarImageUrl();
 		imgPhoto.setImageWithURL(imageUrl);
 

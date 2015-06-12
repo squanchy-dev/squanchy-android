@@ -1,5 +1,7 @@
 package com.ls.drupalconapp.ui.fragment;
 
+import com.ls.drupalconapp.R;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
@@ -7,8 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.Toast;
-
-import com.ls.drupalconapp.R;
 
 public class RefreshFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
 

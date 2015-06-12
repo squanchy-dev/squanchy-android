@@ -1,10 +1,8 @@
 package com.ls.drupalconapp.app;
 
-import android.app.Application;
-import android.content.Context;
-
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
+
 import com.ls.drupal.DrupalClient;
 import com.ls.drupalconapp.model.AppDatabaseInfo;
 import com.ls.drupalconapp.model.DatabaseManager;
@@ -14,6 +12,9 @@ import com.ls.drupalconapp.model.database.LAPIDBRegister;
 import com.ls.drupalconapp.ui.view.FontHelper;
 import com.ls.http.base.BaseRequest;
 import com.ls.util.image.DrupalImageView;
+
+import android.app.Application;
+import android.content.Context;
 
 public class App extends Application {
     private static Context mContext;

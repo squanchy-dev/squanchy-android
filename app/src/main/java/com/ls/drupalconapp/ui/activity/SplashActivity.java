@@ -1,10 +1,5 @@
 package com.ls.drupalconapp.ui.activity;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.text.TextUtils;
-
 import com.ls.drupalconapp.R;
 import com.ls.drupalconapp.model.DatabaseManager;
 import com.ls.drupalconapp.model.Model;
@@ -14,6 +9,11 @@ import com.ls.drupalconapp.model.UpdatesManager;
 import com.ls.drupalconapp.model.database.ILAPIDBFacade;
 import com.ls.util.L;
 import com.ls.utils.AnalyticsManager;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
 
 import java.util.TimeZone;
 

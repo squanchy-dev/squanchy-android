@@ -1,5 +1,9 @@
 package com.ls.drupalconapp.ui.adapter;
 
+import com.ls.drupalconapp.R;
+import com.ls.drupalconapp.model.data.Level;
+import com.ls.drupalconapp.model.data.Track;
+
 import android.content.Context;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
@@ -9,10 +13,6 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
-
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.model.data.Level;
-import com.ls.drupalconapp.model.data.Track;
 
 import java.util.ArrayList;
 import java.util.HashMap;

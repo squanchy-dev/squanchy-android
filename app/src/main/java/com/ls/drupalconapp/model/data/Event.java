@@ -6,10 +6,10 @@ import com.ls.drupalconapp.model.database.AbstractEntity;
 import com.ls.drupalconapp.model.database.AbstractEntityDAO;
 import com.ls.utils.CursorStringParser;
 
+import org.jetbrains.annotations.NotNull;
+
 import android.content.ContentValues;
 import android.database.Cursor;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

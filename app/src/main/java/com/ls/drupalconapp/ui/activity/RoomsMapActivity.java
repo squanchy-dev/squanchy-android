@@ -1,5 +1,8 @@
 package com.ls.drupalconapp.ui.activity;
 
+import com.ls.drupalconapp.R;
+import com.ls.utils.UIUtils;
+
 import android.app.ActionBar;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -7,9 +10,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-
-import com.ls.drupalconapp.R;
-import com.ls.utils.UIUtils;
 
 public class RoomsMapActivity extends StateActivity {
 

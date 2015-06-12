@@ -1,5 +1,10 @@
 package com.ls.drupalconapp.ui.adapter;
 
+import com.ls.drupalconapp.R;
+import com.ls.drupalconapp.model.data.Speaker;
+import com.ls.drupalconapp.ui.fragment.SpeakersListFragment;
+import com.ls.drupalconapp.ui.view.CircleDrupalImageView;
+
 import android.content.Context;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -9,11 +14,6 @@ import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
-
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.model.data.Speaker;
-import com.ls.drupalconapp.ui.fragment.SpeakersListFragment;
-import com.ls.drupalconapp.ui.view.CircleDrupalImageView;
 
 import java.util.ArrayList;
 import java.util.List;

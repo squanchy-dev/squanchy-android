@@ -1,12 +1,5 @@
 package com.ls.drupalconapp.model;
 
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.net.http.AndroidHttpClient;
-import android.os.Build;
-import android.os.Environment;
-
 import com.android.volley.Network;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.BasicNetwork;
@@ -31,6 +24,13 @@ import com.ls.drupalconapp.model.managers.TypesManager;
 import com.ls.http.base.BaseRequest;
 import com.ls.http.base.ResponseData;
 import com.ls.utils.ApplicationConfig;
+
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.http.AndroidHttpClient;
+import android.os.Build;
+import android.os.Environment;
 
 import java.io.File;
 import java.net.CookieHandler;

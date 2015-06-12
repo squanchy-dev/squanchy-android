@@ -1,14 +1,14 @@
 package com.ls.drupalconapp.ui.adapter;
 
 
+import com.ls.drupalconapp.model.data.Event;
+import com.ls.drupalconapp.ui.drawer.DrawerManager;
+import com.ls.drupalconapp.ui.fragment.EventFragment;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
-
-import com.ls.drupalconapp.model.data.Event;
-import com.ls.drupalconapp.ui.drawer.DrawerManager;
-import com.ls.drupalconapp.ui.fragment.EventFragment;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

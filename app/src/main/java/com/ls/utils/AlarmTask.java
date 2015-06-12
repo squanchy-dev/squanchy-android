@@ -1,13 +1,12 @@
 package com.ls.utils;
 
+import com.ls.drupalconapp.model.data.EventDetailsEvent;
+import com.ls.services.NotifyService;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.model.data.EventDetailsEvent;
-import com.ls.services.NotifyService;
 
 import java.util.Calendar;
 

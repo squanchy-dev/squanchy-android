@@ -1,7 +1,13 @@
 package com.ls.drupalconapp.ui.fragment;
 
 
-import android.content.Context;
+import com.ls.drupalconapp.R;
+import com.ls.drupalconapp.model.DatabaseManager;
+import com.ls.drupalconapp.model.Model;
+import com.ls.drupalconapp.model.UpdatesManager;
+import com.ls.drupalconapp.model.data.POI;
+import com.ls.drupalconapp.ui.adapter.POIsAdapter;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,13 +18,6 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.app.App;
-import com.ls.drupalconapp.model.DatabaseManager;
-import com.ls.drupalconapp.model.data.POI;
-import com.ls.drupalconapp.ui.adapter.POIsAdapter;
-import com.ls.drupalconapp.ui.receiver.DataUpdateManager;
-
 import java.util.List;
 
 public class POIsFragment extends Fragment {
@@ -27,14 +26,15 @@ public class POIsFragment extends Fragment {
     private POIsAdapter mPoIsAdapter;
     private ProgressBar progressBar;
 
-    private DataUpdateManager dataUpdateManager = new DataUpdateManager(new DataUpdateManager.DataUpdatedListener() {
+    private UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener()
+    {
         @Override
-        public void onDataUpdated(int[] requestIds) {
+        public void onDataUpdated(List<Integer> requestIds) {
             Log.d("UPDATED", "POIsFragment");
             progressBar.setVisibility(View.GONE);
             initView();
         }
-    });
+    };
 
     public POIsFragment() {
         // Required empty public constructor
@@ -57,13 +57,13 @@ public class POIsFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initView();
-        dataUpdateManager.register(getActivity());
+        Model.instance().getUpdatesManager().registerUpdateListener(updateListener);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        dataUpdateManager.unregister(getActivity());
+        Model.instance().getUpdatesManager().unregisterUpdateListener(updateListener);
     }
 
     private void initView() {

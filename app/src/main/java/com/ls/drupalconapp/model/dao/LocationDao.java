@@ -1,7 +1,6 @@
 package com.ls.drupalconapp.model.dao;
 
 import com.ls.drupalconapp.model.AppDatabaseInfo;
-import com.ls.drupalconapp.model.data.Level;
 import com.ls.drupalconapp.model.data.Location;
 import com.ls.drupalconapp.model.database.AbstractEntityDAO;
 

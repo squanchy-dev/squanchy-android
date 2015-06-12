@@ -1,5 +1,7 @@
 package com.ls.utils;
 
+import com.ls.drupalconapp.ui.view.utils.MultiFontsTypefaceSpan;
+
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -15,10 +17,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
-import com.ls.drupalconapp.ui.view.utils.MultiFontsTypefaceSpan;
-
 import java.io.IOException;
-import java.io.InputStream;
 
 public class UIUtils {
 

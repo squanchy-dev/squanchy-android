@@ -1,8 +1,8 @@
 package com.ls.utils;
 
-import android.support.annotation.Nullable;
-
 import org.jetbrains.annotations.NotNull;
+
+import android.support.annotation.Nullable;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

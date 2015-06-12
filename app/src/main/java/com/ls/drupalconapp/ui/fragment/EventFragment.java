@@ -1,17 +1,5 @@
 package com.ls.drupalconapp.ui.fragment;
 
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.util.SparseIntArray;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-
 import com.ls.drupalconapp.R;
 import com.ls.drupalconapp.model.EventGenerator;
 import com.ls.drupalconapp.model.data.Event;
@@ -23,6 +11,18 @@ import com.ls.drupalconapp.ui.adapter.item.EventListItem;
 import com.ls.drupalconapp.ui.adapter.item.SimpleTimeRangeCreator;
 import com.ls.drupalconapp.ui.adapter.item.TimeRangeItem;
 import com.ls.drupalconapp.ui.drawer.DrawerManager;
+
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.util.SparseIntArray;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

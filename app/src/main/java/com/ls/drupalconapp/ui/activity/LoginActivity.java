@@ -1,5 +1,9 @@
 package com.ls.drupalconapp.ui.activity;
 
+import com.ls.drupalconapp.R;
+import com.ls.drupalconapp.ui.dialog.LoadingDialog;
+import com.ls.utils.UIUtils;
+
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
@@ -7,10 +11,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.ui.dialog.LoadingDialog;
-import com.ls.utils.UIUtils;
 
 // not used for now
 public class LoginActivity extends StateActivity {

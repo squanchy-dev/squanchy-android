@@ -1,11 +1,12 @@
 package com.ls.drupalconapp.ui.receiver;
 
+import org.jetbrains.annotations.NotNull;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by Kuhta on 26.09.2014.

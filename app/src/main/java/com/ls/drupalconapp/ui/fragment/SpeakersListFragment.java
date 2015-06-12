@@ -1,5 +1,13 @@
 package com.ls.drupalconapp.ui.fragment;
 
+import com.ls.drupalconapp.R;
+import com.ls.drupalconapp.model.DatabaseManager;
+import com.ls.drupalconapp.model.Model;
+import com.ls.drupalconapp.model.UpdatesManager;
+import com.ls.drupalconapp.model.data.Speaker;
+import com.ls.drupalconapp.ui.activity.SpeakerDetailsActivity;
+import com.ls.drupalconapp.ui.adapter.SpeakersAdapter;
+
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -18,14 +26,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.app.App;
-import com.ls.drupalconapp.model.DatabaseManager;
-import com.ls.drupalconapp.model.data.Speaker;
-import com.ls.drupalconapp.ui.activity.SpeakerDetailsActivity;
-import com.ls.drupalconapp.ui.adapter.SpeakersAdapter;
-import com.ls.drupalconapp.ui.receiver.DataUpdateManager;
-
 import java.util.List;
 
 public class SpeakersListFragment extends Fragment
@@ -39,13 +39,14 @@ public class SpeakersListFragment extends Fragment
 
 	private ProgressBar mProgressBar;
 
-	private DataUpdateManager dataUpdateManager = new DataUpdateManager(new DataUpdateManager.DataUpdatedListener() {
+	private UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener()
+	{
 		@Override
-		public void onDataUpdated(int[] requestIds) {
+		public void onDataUpdated(List<Integer> requestIds) {
 			Log.d("UPDATED", "SpeakersListFragment");
 			initView();
 		}
-	});
+	};
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -61,14 +62,14 @@ public class SpeakersListFragment extends Fragment
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		dataUpdateManager.register(getActivity());
+		Model.instance().getUpdatesManager().registerUpdateListener(updateListener);
 		initView();
 	}
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		dataUpdateManager.unregister(getActivity());
+		Model.instance().getUpdatesManager().unregisterUpdateListener(updateListener);
 	}
 
 	@Override

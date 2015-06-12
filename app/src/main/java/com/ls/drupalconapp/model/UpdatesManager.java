@@ -1,22 +1,22 @@
 package com.ls.drupalconapp.model;
 
-import android.os.AsyncTask;
-import android.text.TextUtils;
-
 import com.ls.drupal.DrupalClient;
-import com.ls.drupalconapp.app.App;
 import com.ls.drupalconapp.model.data.UpdateDate;
 import com.ls.drupalconapp.model.database.ILAPIDBFacade;
 import com.ls.drupalconapp.model.managers.SynchronousItemManager;
 import com.ls.drupalconapp.ui.drawer.DrawerManager;
-import com.ls.drupalconapp.ui.receiver.DataUpdateManager;
 import com.ls.http.base.BaseRequest;
 import com.ls.http.base.RequestConfig;
 import com.ls.http.base.ResponseData;
+import com.ls.util.ObserverHolder;
 import com.ls.utils.ApplicationConfig;
 
 import org.jetbrains.annotations.NotNull;
 
+import android.os.AsyncTask;
+import android.text.TextUtils;
+
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -38,35 +38,10 @@ public class UpdatesManager {
     public static final int TWITTER_REQUEST_ID = 12;
 
     private DrupalClient mClient;
+    private ObserverHolder<DataUpdatedListener> mUpdateListeners;
 
     public static final String IF_MODIFIED_SINCE_HEADER = "If-Modified-Since";
     public static final String LAST_MODIFIED_HEADER = "Last-Modified";
-
-    public UpdatesManager(@NotNull DrupalClient client) {
-        mClient = client;
-    }
-
-    public void startLoading(@NotNull final UpdateCallback callback) {
-        new AsyncTask<Void, Void, Boolean>() {
-
-            @Override
-            protected Boolean doInBackground(Void... params) {
-                return doPerformLoading();
-            }
-
-            @Override
-            protected void onPostExecute(Boolean success) {
-                if (callback == null) {
-                    return;
-                }
-                if (success) {
-                    callback.onDownloadSuccess();
-                } else {
-                    callback.onDownloadError();
-                }
-            }
-        }.execute();
-    }
 
     public static int convertEventIdToEventModePos(int eventModePos) {
         switch (eventModePos) {
@@ -80,7 +55,60 @@ public class UpdatesManager {
         return 0;
     }
 
-    private boolean doPerformLoading() {
+    public UpdatesManager(@NotNull DrupalClient client) {
+        mUpdateListeners = new ObserverHolder<>();
+        mClient = client;
+    }
+
+    public void startLoading(@NotNull final UpdateCallback callback) {
+        new AsyncTask<Void, Void, List<Integer>>() {
+
+            @Override
+            protected List<Integer> doInBackground(Void... params) {
+                return doPerformLoading();
+            }
+
+            @Override
+            protected void onPostExecute(final List<Integer> result) {
+                if (result != null) {
+                    mUpdateListeners.notifyAllObservers(new ObserverHolder.ObserverNotifier<DataUpdatedListener>() {
+                        @Override
+                        public void onNotify(DataUpdatedListener observer) {
+                            observer.onDataUpdated(result);
+                        }
+                    });
+                }
+
+                if (callback == null) {
+                    return;
+                }
+                if (result != null) {
+                    callback.onDownloadSuccess();
+                    mUpdateListeners.notifyAllObservers(new ObserverHolder.ObserverNotifier<DataUpdatedListener>() {
+                        @Override
+                        public void onNotify(DataUpdatedListener observer) {
+                            observer.onDataUpdated(result);
+                        }
+                    });
+                } else {
+                    callback.onDownloadError();
+                }
+            }
+        }.execute();
+    }
+
+    public void registerUpdateListener(DataUpdatedListener listener) {
+        this.mUpdateListeners.registerObserver(listener);
+    }
+
+    public void unregisterUpdateListener(DataUpdatedListener listener) {
+        this.mUpdateListeners.unregisterObserver(listener);
+    }
+
+    /**
+     * @return return updated request id's list in case of success or null in case of failure
+     */
+    private List<Integer> doPerformLoading() {
         RequestConfig config = new RequestConfig();
         config.setResponseFormat(BaseRequest.ResponseFormat.JSON);
         config.setRequestFormat(BaseRequest.RequestFormat.JSON);
@@ -91,51 +119,49 @@ public class UpdatesManager {
         UpdateDate updateDate = (UpdateDate) updatesData.getData();
 
         if (updateDate == null) {
-            return false;
+            return new LinkedList<>();
         }
         updateDate.setTime(updatesData.getHeaders().get(LAST_MODIFIED_HEADER));
-        //TODO for Roman: return updated request id's list in case of success or null in case of failure (instead of boolean) and notify in post execute method of async task
         return loadData(updateDate);
     }
 
-    private boolean loadData(UpdateDate updateDate) {
+    private List<Integer> loadData(UpdateDate updateDate) {
 
         List<Integer> updateIds = updateDate.getIdsForUpdate();
         if (updateIds == null || updateIds.isEmpty()) {
-            return true;
+            return new LinkedList<>();
         }
 
         ILAPIDBFacade facade = DatabaseManager.instance().getFacade();
-        synchronized (facade) {
-            try {
-                facade.open();
-                facade.beginTransactions();
-                boolean result = true;
-                for (Integer i : updateIds) {
-                    result = sendRequestById(i);
-                    if (!result) {
-                        break;
-                    }
+
+        try {
+            facade.open();
+            facade.beginTransactions();
+            boolean success = true;
+            for (Integer i : updateIds) {
+                success = sendRequestById(i);
+                if (!success) {
+                    break;
                 }
-                if (result) {
-                    facade.setTransactionSuccesfull();
-                    if (updateDate != null && !TextUtils.isEmpty(updateDate.getTime())) {
-                        PreferencesManager.getInstance().saveLastUpdateDate(updateDate.getTime());
-                    }
-                    DataUpdateManager.updateData(App.getContext(), updateIds);
-                }
-                return result;
-            } finally {
-                facade.endTransactions();
-                facade.close();
             }
+            if (success) {
+                facade.setTransactionSuccesfull();
+                if (updateDate != null && !TextUtils.isEmpty(updateDate.getTime())) {
+                    PreferencesManager.getInstance().saveLastUpdateDate(updateDate.getTime());
+                }
+            }
+            return success ? updateIds : null;
+        } finally {
+            facade.endTransactions();
+            facade.close();
         }
+
 
     }
 
     private boolean sendRequestById(int id) {
 
-        SynchronousItemManager manager = null;
+        SynchronousItemManager manager;
         switch (id) {
             case TYPES_REQUEST_ID:
                 manager = Model.instance().getTypesManager();
@@ -185,5 +211,10 @@ public class UpdatesManager {
         }
 
         return false;
+    }
+
+    public interface DataUpdatedListener {
+
+        void onDataUpdated(List<Integer> requestIds);
     }
 }

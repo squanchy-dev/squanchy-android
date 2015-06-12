@@ -1,5 +1,11 @@
 package com.ls.drupalconapp.ui.dialog;
 
+import com.ls.drupalconapp.R;
+import com.ls.drupalconapp.model.PreferencesManager;
+import com.ls.drupalconapp.model.data.Level;
+import com.ls.drupalconapp.model.data.Track;
+import com.ls.drupalconapp.ui.adapter.FilterDialogAdapter;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -11,12 +17,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
-
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.model.PreferencesManager;
-import com.ls.drupalconapp.model.data.Level;
-import com.ls.drupalconapp.model.data.Track;
-import com.ls.drupalconapp.ui.adapter.FilterDialogAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;

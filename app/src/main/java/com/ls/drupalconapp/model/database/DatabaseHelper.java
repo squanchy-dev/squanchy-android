@@ -1,11 +1,11 @@
 package com.ls.drupalconapp.model.database;
 
 
+import com.ls.drupalconapp.model.PreferencesManager;
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import com.ls.drupalconapp.model.PreferencesManager;
 
 import java.util.Iterator;
 

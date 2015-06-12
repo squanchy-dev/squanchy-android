@@ -1,5 +1,9 @@
 package com.ls.drupalconapp.ui.adapter;
 
+import com.ls.drupalconapp.R;
+import com.ls.drupalconapp.model.data.POI;
+import com.ls.util.image.DrupalImageView;
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -8,10 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.model.data.POI;
-import com.ls.util.image.DrupalImageView;
 
 import java.util.List;
 

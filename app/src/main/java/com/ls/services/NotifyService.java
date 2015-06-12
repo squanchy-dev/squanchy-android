@@ -1,16 +1,16 @@
 package com.ls.services;
 
+import com.ls.drupalconapp.R;
+import com.ls.drupalconapp.ui.activity.EventDetailsActivity;
+import com.ls.drupalconapp.ui.activity.MainActivity;
+import com.ls.utils.AlarmTask;
+
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.util.Log;
-
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.ui.activity.EventDetailsActivity;
-import com.ls.drupalconapp.ui.activity.MainActivity;
-import com.ls.utils.AlarmTask;
 
 public class NotifyService extends IntentService{
 

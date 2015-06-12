@@ -4,13 +4,13 @@ package com.ls.drupalconapp.ui.fragment;
 import com.astuetz.PagerSlidingTabStrip;
 import com.ls.drupalconapp.R;
 import com.ls.drupalconapp.model.DatabaseManager;
+import com.ls.drupalconapp.model.Model;
 import com.ls.drupalconapp.model.PreferencesManager;
 import com.ls.drupalconapp.model.UpdatesManager;
 import com.ls.drupalconapp.ui.activity.MainActivity;
 import com.ls.drupalconapp.ui.adapter.BaseEventDaysPagerAdapter;
 import com.ls.drupalconapp.ui.dialog.FilterDialog;
 import com.ls.drupalconapp.ui.drawer.DrawerManager;
-import com.ls.drupalconapp.ui.receiver.DataUpdateManager;
 import com.ls.drupalconapp.ui.receiver.FavoriteReceiverManager;
 import com.ls.utils.DateUtils;
 
@@ -53,9 +53,10 @@ public class EventHolderFragment extends Fragment {
 	private View mNoFavorites;
 	private List<Long> mDayIdList;
 
-	private DataUpdateManager dataUpdateManager = new DataUpdateManager(new DataUpdateManager.DataUpdatedListener() {
+	private UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener()
+	{
 		@Override
-		public void onDataUpdated(int[] requestIds) {
+		public void onDataUpdated(List<Integer> requestIds) {
 			Log.d("UPDATED", "EventHolderFragment");
 
 			Activity activity = getActivity();
@@ -80,7 +81,7 @@ public class EventHolderFragment extends Fragment {
 				}
 			}
 		}
-	});
+	};
 
 	private FavoriteReceiverManager favoriteReceiverManager = new FavoriteReceiverManager(
 			new FavoriteReceiverManager.FavoriteUpdatedListener() {
@@ -164,7 +165,7 @@ public class EventHolderFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		dataUpdateManager.register(getActivity());
+		Model.instance().getUpdatesManager().registerUpdateListener(updateListener);
 		favoriteReceiverManager.register(getActivity());
 
 		initData();
@@ -174,7 +175,7 @@ public class EventHolderFragment extends Fragment {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		dataUpdateManager.unregister(getActivity());
+		Model.instance().getUpdatesManager().unregisterUpdateListener(updateListener);
 		favoriteReceiverManager.unregister(getActivity());
 	}
 

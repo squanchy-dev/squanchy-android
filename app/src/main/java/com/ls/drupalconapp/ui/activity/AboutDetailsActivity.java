@@ -1,5 +1,12 @@
 package com.ls.drupalconapp.ui.activity;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+
+import com.ls.drupalconapp.R;
+import com.ls.drupalconapp.model.Model;
+import com.ls.drupalconapp.model.UpdatesManager;
+import com.ls.utils.AnalyticsManager;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -8,10 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.ui.receiver.DataUpdateManager;
-import com.ls.utils.AnalyticsManager;
+import java.util.List;
 
 public class AboutDetailsActivity extends StateActivity {
 
@@ -19,12 +23,14 @@ public class AboutDetailsActivity extends StateActivity {
 	public static final String EXTRA_DETAILS_CONTENT = "EXTRA_DETAILS_CONTENT";
 	public static final String EXTRA_DETAILS_TITLE = "EXTRA_DETAILS_TITLE";
 
-	private DataUpdateManager dataUpdateManager = new DataUpdateManager(new DataUpdateManager.DataUpdatedListener() {
+	private UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener()
+	{
 		@Override
-		public void onDataUpdated(int[] requestIds) {
+		public void onDataUpdated(List<Integer> requestIds) {
 			Log.d("UPDATED", "AboutDetailsActivity");
 		}
-	});
+	};
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +43,7 @@ public class AboutDetailsActivity extends StateActivity {
 		initView(aboutContent);
 		initStatusBar();
 		initToolbar(aboutTitle);
-		dataUpdateManager.register(this);
+		Model.instance().getUpdatesManager().registerUpdateListener(updateListener);
 
 		AnalyticsManager.sendEvent(this, R.string.about_category, R.string.action_open, id);
 
@@ -58,7 +64,7 @@ public class AboutDetailsActivity extends StateActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		dataUpdateManager.unregister(this);
+		Model.instance().getUpdatesManager().unregisterUpdateListener(updateListener);
 	}
 
 	@Override

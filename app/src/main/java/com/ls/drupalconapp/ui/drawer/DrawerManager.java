@@ -1,15 +1,15 @@
 package com.ls.drupalconapp.ui.drawer;
 
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-
 import com.ls.drupalconapp.ui.fragment.EventHolderFragment;
 import com.ls.drupalconapp.ui.fragment.LocationFragment;
 import com.ls.drupalconapp.ui.fragment.SpeakersListFragment;
 
 import org.jetbrains.annotations.NotNull;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
 public class DrawerManager {
 

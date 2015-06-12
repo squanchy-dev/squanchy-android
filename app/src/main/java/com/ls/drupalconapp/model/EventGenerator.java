@@ -1,7 +1,5 @@
 package com.ls.drupalconapp.model;
 
-import android.content.Context;
-
 import com.ls.drupalconapp.R;
 import com.ls.drupalconapp.app.App;
 import com.ls.drupalconapp.model.data.Event;
@@ -16,6 +14,8 @@ import com.ls.drupalconapp.ui.adapter.item.ProgramItem;
 import com.ls.drupalconapp.ui.adapter.item.TimeRangeItem;
 
 import org.jetbrains.annotations.NotNull;
+
+import android.content.Context;
 
 import java.util.ArrayList;
 import java.util.Calendar;

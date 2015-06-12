@@ -1,5 +1,20 @@
 package com.ls.drupalconapp.ui.activity;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+
+import com.ls.drupalconapp.R;
+import com.ls.drupalconapp.model.DatabaseManager;
+import com.ls.drupalconapp.model.Model;
+import com.ls.drupalconapp.model.UpdatesManager;
+import com.ls.drupalconapp.model.data.Speaker;
+import com.ls.drupalconapp.model.data.SpeakerDetailsEvent;
+import com.ls.drupalconapp.ui.view.CircleDrupalImageView;
+import com.ls.drupalconapp.ui.view.NotifyingScrollView;
+import com.ls.utils.AnalyticsManager;
+import com.ls.utils.DateUtils;
+import com.ls.utils.UIUtils;
+import com.nirhart.parallaxscroll.views.ParallaxScrollView;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -20,19 +35,6 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.model.DatabaseManager;
-import com.ls.drupalconapp.model.data.Speaker;
-import com.ls.drupalconapp.model.data.SpeakerDetailsEvent;
-import com.ls.drupalconapp.ui.receiver.DataUpdateManager;
-import com.ls.drupalconapp.ui.view.CircleDrupalImageView;
-import com.ls.drupalconapp.ui.view.NotifyingScrollView;
-import com.ls.utils.AnalyticsManager;
-import com.ls.utils.DateUtils;
-import com.ls.utils.UIUtils;
-import com.nirhart.parallaxscroll.views.ParallaxScrollView;
 
 import java.util.List;
 
@@ -66,13 +68,14 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 	private boolean isWebViewLoaded;
 	private boolean isDataLoaded;
 
-	private DataUpdateManager dataUpdateManager = new DataUpdateManager(new DataUpdateManager.DataUpdatedListener() {
+	private UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener()
+	{
 		@Override
-		public void onDataUpdated(int[] requestIds) {
+		public void onDataUpdated(List<Integer> requestIds) {
 			Log.d("UPDATED", "SpeakerDetailsActivity");
 			loadSpeakerFromDb();
 		}
-	});
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -90,13 +93,13 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 		initToolbar();
 		initView();
 		loadSpeakerFromDb();
-		dataUpdateManager.register(this);
+		Model.instance().getUpdatesManager().registerUpdateListener(updateListener);
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		dataUpdateManager.unregister(this);
+		Model.instance().getUpdatesManager().unregisterUpdateListener(updateListener);
 	}
 
 	@Override

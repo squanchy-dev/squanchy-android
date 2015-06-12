@@ -1,7 +1,24 @@
 package com.ls.drupalconapp.model;
 
-import com.ls.drupalconapp.model.dao.*;
-import com.ls.drupalconapp.model.data.*;
+import com.ls.drupalconapp.model.dao.EventDao;
+import com.ls.drupalconapp.model.dao.InfoDao;
+import com.ls.drupalconapp.model.dao.LevelDao;
+import com.ls.drupalconapp.model.dao.LocationDao;
+import com.ls.drupalconapp.model.dao.POIDao;
+import com.ls.drupalconapp.model.dao.SpeakerDao;
+import com.ls.drupalconapp.model.dao.TrackDao;
+import com.ls.drupalconapp.model.dao.TypeDao;
+import com.ls.drupalconapp.model.data.Event;
+import com.ls.drupalconapp.model.data.EventDetailsEvent;
+import com.ls.drupalconapp.model.data.InfoItem;
+import com.ls.drupalconapp.model.data.Level;
+import com.ls.drupalconapp.model.data.Location;
+import com.ls.drupalconapp.model.data.POI;
+import com.ls.drupalconapp.model.data.Speaker;
+import com.ls.drupalconapp.model.data.SpeakerDetailsEvent;
+import com.ls.drupalconapp.model.data.TimeRange;
+import com.ls.drupalconapp.model.data.Track;
+import com.ls.drupalconapp.model.data.Type;
 import com.ls.drupalconapp.model.database.ILAPIDBFacade;
 import com.ls.drupalconapp.model.database.LAPIDBRegister;
 import com.ls.drupalconapp.ui.adapter.item.EventListItem;
