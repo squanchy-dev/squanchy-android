@@ -26,7 +26,6 @@ import android.widget.TextView;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.model.DatabaseManager;
 import com.ls.drupalconapp.model.Model;
 import com.ls.drupalconapp.model.PreferencesManager;
 import com.ls.drupalconapp.model.UpdatesManager;
@@ -54,7 +53,6 @@ public class EventDetailsActivity extends StackKeeperActivity {
 	private static int ANIMATION_DURATION = 250;
 
 	private boolean mIsAddedToSchedule = false;
-	private DatabaseManager dbManager;
 	private ScheduleManager scheduleManager;
 	private long mEventId = -1;
 	private EventDetailsEvent mEvent;
@@ -95,7 +93,6 @@ public class EventDetailsActivity extends StackKeeperActivity {
 		if (apiVersion >= Build.VERSION_CODES.LOLLIPOP) {
 			ANIMATION_DURATION = 750;
 		}
-		dbManager = DatabaseManager.instance();
 		favoriteReceiverManager.register(this);
 		Model.instance().getUpdatesManager().registerUpdateListener(updateListener);
 		scheduleManager = new ScheduleManager(this);

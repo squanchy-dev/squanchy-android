@@ -25,7 +25,6 @@ import android.widget.Toast;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.ls.drupalconapp.R;
 import com.ls.drupalconapp.app.App;
-import com.ls.drupalconapp.model.DatabaseManager;
 import com.ls.drupalconapp.model.Model;
 import com.ls.drupalconapp.model.UpdatesManager;
 import com.ls.drupalconapp.model.dao.EventDao;
@@ -62,7 +61,6 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 	//ActionBar flags
 	private boolean isTransparentBbSet = true;
 	private boolean isTitleBgSet = false;
-	private DatabaseManager dbManager;
 	private SpeakerManager mSpeakerManager;
 
 	private View mViewToolbar;
@@ -91,9 +89,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 			ANIMATION_DURATION = 750;
 		}
 
-		dbManager = DatabaseManager.instance();
 		mSpeakerManager = new SpeakerManager(Model.instance().getClient());
-
 		handleExtras(getIntent());
 		initToolbar();
 		initView();

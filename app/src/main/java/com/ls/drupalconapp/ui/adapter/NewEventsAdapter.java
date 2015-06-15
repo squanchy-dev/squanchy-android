@@ -1,8 +1,18 @@
 package com.ls.drupalconapp.ui.adapter;
 
+import android.content.Context;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
 import com.ls.drupalconapp.R;
 import com.ls.drupalconapp.app.App;
-import com.ls.drupalconapp.model.DatabaseManager;
 import com.ls.drupalconapp.model.data.Event;
 import com.ls.drupalconapp.model.data.Level;
 import com.ls.drupalconapp.model.data.Type;
@@ -15,27 +25,13 @@ import com.ls.drupalconapp.ui.adapter.item.TimeRangeItem;
 import com.ls.drupalconapp.ui.drawer.DrawerManager;
 import com.ls.utils.DateUtils;
 
-import android.content.Context;
-import android.util.TypedValue;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class NewEventsAdapter extends BaseAdapter {
 
 	private Context mContext;
-	private SimpleDateFormat mDateFormat = new SimpleDateFormat("dd/MM");
 	private List<EventListItem> mData;
 	private LayoutInflater mInflater;
-	private DatabaseManager databaseManager;
 
     private DrawerManager.EventMode mEventMode;
 
@@ -43,7 +39,7 @@ public class NewEventsAdapter extends BaseAdapter {
 	private OnClickListener mClickListener;
 
 	public interface OnClickListener {
-		public void onClick(int position);
+		void onClick(int position);
 	}
 
 
@@ -52,7 +48,6 @@ public class NewEventsAdapter extends BaseAdapter {
         mInflater = LayoutInflater.from(context);
         mData = data;
         mEventMode = mode;
-        databaseManager = DatabaseManager.instance();
 		mClickListener = clickListener;
     }
 

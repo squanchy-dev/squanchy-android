@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.model.DatabaseManager;
 import com.ls.drupalconapp.model.Model;
 import com.ls.drupalconapp.model.PreferencesManager;
 import com.ls.drupalconapp.model.UpdatesManager;
@@ -43,7 +42,6 @@ public class EventHolderFragment extends Fragment {
 	private static final String EXTRAS_ARG_MODE = "EXTRAS_ARG_MODE";
 	private static final int ANIMATION_DURATION = 250;
 
-	private DatabaseManager mDatabaseManager;
 	private ViewPager mViewPager;
 	private View mTabView;
 	private PagerSlidingTabStrip mPagerTabs;
@@ -225,7 +223,6 @@ public class EventHolderFragment extends Fragment {
 		mNoFavorites = view.findViewById(R.id.emptyIcon);
 		mDayIdList = new ArrayList<>();
 
-		mDatabaseManager = DatabaseManager.instance();
 		new PerformLoadData().execute();
 	}
 
@@ -297,18 +294,6 @@ public class EventHolderFragment extends Fragment {
 				break;
 			}
 			item++;
-		}
-	}
-
-	private List<Long> getProgramDays(List<Long> levelIds, List<Long> trackIds) {
-		if (levelIds.isEmpty() & trackIds.isEmpty()) {
-			return mDatabaseManager.getProgramDays();
-		} else if (!levelIds.isEmpty() & !trackIds.isEmpty()) {
-			return mDatabaseManager.getProgramDaysByTrackAndLevelIds(levelIds, trackIds);
-		} else if (!levelIds.isEmpty() & trackIds.isEmpty()) {
-			return mDatabaseManager.getProgramDaysByLevelIds(levelIds);
-		} else {
-			return mDatabaseManager.getProgramDaysByTrackIds(trackIds);
 		}
 	}
 
