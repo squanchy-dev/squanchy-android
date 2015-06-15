@@ -89,7 +89,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 			ANIMATION_DURATION = 750;
 		}
 
-		mSpeakerManager = new SpeakerManager(Model.instance().getClient());
+		mSpeakerManager = Model.instance().getSpeakerManager();
 		handleExtras(getIntent());
 		initToolbar();
 		initView();

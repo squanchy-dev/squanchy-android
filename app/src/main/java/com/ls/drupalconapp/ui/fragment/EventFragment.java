@@ -111,7 +111,7 @@ public class EventFragment extends Fragment implements NewEventsAdapter.OnClickL
 			protected List<EventListItem> doInBackground(Void... params) {
 				FragmentActivity activity = getActivity();
 				if (activity != null) {
-					return getEventItems(activity);
+					return getEventItems();
 				} else {
 					return new ArrayList<EventListItem>();
 				}
@@ -130,9 +130,9 @@ public class EventFragment extends Fragment implements NewEventsAdapter.OnClickL
 		}.execute();
 	}
 
-	private List<EventListItem> getEventItems(FragmentActivity activity) {
+	private List<EventListItem> getEventItems() {
 		List<EventListItem> eventList = new ArrayList<>();
-		EventGenerator generator = new EventGenerator(activity.getBaseContext());
+		EventGenerator generator = new EventGenerator();
 		switch (mEventMode) {
 			case Program:
 				eventList.addAll(generator.generate(mDay, Event.PROGRAM_CLASS, levelIds, trackIds, new SimpleTimeRangeCreator()));
@@ -156,7 +156,7 @@ public class EventFragment extends Fragment implements NewEventsAdapter.OnClickL
 			protected List<EventListItem> doInBackground(Void... params) {
 				FragmentActivity activity = getActivity();
 				if (activity != null) {
-					EventGenerator generator = new EventGenerator(activity.getBaseContext());
+					EventGenerator generator = new EventGenerator();
 					return generator.generateForFavorites(mDay);
 				} else {
 					return new ArrayList<EventListItem>();

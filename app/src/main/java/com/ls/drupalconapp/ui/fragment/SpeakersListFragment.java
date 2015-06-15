@@ -125,7 +125,7 @@ public class SpeakersListFragment extends Fragment
 
 			@Override
 			protected List<Speaker> doInBackground(Void... params) {
-				SpeakerManager manager = new SpeakerManager(Model.instance().getClient());
+				SpeakerManager manager = Model.instance().getSpeakerManager();
 				return manager.getSpeakers();
 			}
 

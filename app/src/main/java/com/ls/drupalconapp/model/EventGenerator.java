@@ -1,16 +1,16 @@
 package com.ls.drupalconapp.model;
 
-import android.content.Context;
-
 import com.ls.drupalconapp.R;
 import com.ls.drupalconapp.app.App;
-import com.ls.drupalconapp.model.dao.EventDao;
 import com.ls.drupalconapp.model.data.Event;
 import com.ls.drupalconapp.model.data.Speaker;
 import com.ls.drupalconapp.model.data.TimeRange;
 import com.ls.drupalconapp.model.data.Track;
 import com.ls.drupalconapp.model.data.Type;
+import com.ls.drupalconapp.model.managers.BofsManager;
 import com.ls.drupalconapp.model.managers.EventManager;
+import com.ls.drupalconapp.model.managers.ProgramManager;
+import com.ls.drupalconapp.model.managers.SocialManager;
 import com.ls.drupalconapp.model.managers.SpeakerManager;
 import com.ls.drupalconapp.model.managers.TracksManager;
 import com.ls.drupalconapp.ui.adapter.item.EventItemCreator;
@@ -28,44 +28,42 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by Yakiv M. on 25.09.2014.
- */
 public class EventGenerator {
 
-    private Context mContext;
-    private EventDao mEventDao;
+    private EventManager mEventManager;
+    private BofsManager mBofsManager;
+    private SocialManager mSocialManager;
+    private ProgramManager mProgramManager;
 
-    public EventGenerator(@NotNull Context context) {
-        mContext = context;
-        EventManager manager = new EventManager(Model.instance().getClient());
-        mEventDao = manager.getEventDao();
+    public EventGenerator() {
+        mEventManager = Model.instance().getEventManager();
+        mBofsManager = Model.instance().getBofsManager();
+        mSocialManager = Model.instance().getSocialManager();
+        mProgramManager = Model.instance().getProgramManager();
     }
 
     public List<EventListItem> generate(long day, int eventClass, @NotNull EventItemCreator eventItemCreator) {
-        List<TimeRange> ranges = mEventDao.selectDistrictTimeRangeSafe(eventClass, day);
+        List<TimeRange> ranges = mEventManager.getDistrictTimeRangeSafe(eventClass, day);
+
         List<EventListItem> eventListItems;
         if (eventClass == Event.SOCIALS_CLASS) {
-            eventListItems = mEventDao.selectSocialItemsSafe(eventClass, day);
+            eventListItems = mSocialManager.getSocialItemsSafe(day);
         } else {
-            eventListItems = mEventDao.selectBofsItemsSafe(eventClass, day);
+            eventListItems = mBofsManager.getBofsItemsSafe(day);
         }
 
         return getEventItems(eventItemCreator, eventListItems, ranges);
     }
 
     public List<EventListItem> generate(long day, int eventClass, List<Long> levelIds, List<Long> trackIds, @NotNull EventItemCreator eventItemCreator) {
-        List<EventListItem> eventListItems = mEventDao.selectProgramItemsSafe(eventClass, day, levelIds, trackIds);
-        List<TimeRange> ranges = mEventDao.selectDistrictTimeRangeByLevelTrackIdsSafe(eventClass, day, levelIds, trackIds);
+        List<EventListItem> eventListItems = mProgramManager.getProgramItemsSafe(eventClass, day, levelIds, trackIds);
+        List<TimeRange> ranges = mEventManager.getDistrictTimeRangeSafe(eventClass, day, levelIds, trackIds);
         return getEventItems(eventItemCreator, eventListItems, ranges);
     }
 
     public List<EventListItem> generateForFavorites(long day) {
-        List<Long> favoriteEventIds = mEventDao.selectFavoriteEventsSafe();
-        List<Event> events = mEventDao.selectEventsByIdsAndDaySafe(favoriteEventIds, day);
-        List<EventListItem> eventListItems = fetchEventItems(events);
-
-        return sortFavorites(eventListItems);
+        List<Event> events = mEventManager.getEventsByIdsAndDaySafe(day);
+        return sortFavorites(fetchEventItems(events));
     }
 
     private List<EventListItem> sortFavorites(List<EventListItem> eventListItems) {
@@ -157,12 +155,12 @@ public class EventGenerator {
     }
 
     private List<EventListItem> fetchEventItems(List<Event> events) {
-        SpeakerManager speakerManager = new SpeakerManager(Model.instance().getClient());
-        TracksManager tracksManager = new TracksManager(Model.instance().getClient());
+        SpeakerManager speakerManager = Model.instance().getSpeakerManager();
+        TracksManager tracksManager = Model.instance().getTracksManager();
         List<EventListItem> result = new ArrayList<>();
 
         for (Event event : events) {
-            List<Long> speakersIds = mEventDao.selectEventSpeakersSafe(event.getId());
+            List<Long> speakersIds = mEventManager.getEventSpeakerSafe(event.getId());
             List<Speaker> speakers = new ArrayList<Speaker>();
             List<String> speakersNames = new ArrayList<>();
 

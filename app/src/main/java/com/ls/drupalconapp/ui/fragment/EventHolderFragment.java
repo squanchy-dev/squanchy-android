@@ -21,7 +21,7 @@ import com.ls.drupalconapp.model.Model;
 import com.ls.drupalconapp.model.PreferencesManager;
 import com.ls.drupalconapp.model.UpdatesManager;
 import com.ls.drupalconapp.model.managers.BofsManager;
-import com.ls.drupalconapp.model.managers.EventManager;
+import com.ls.drupalconapp.model.managers.FavoriteManager;
 import com.ls.drupalconapp.model.managers.ProgramManager;
 import com.ls.drupalconapp.model.managers.SocialManager;
 import com.ls.drupalconapp.ui.activity.MainActivity;
@@ -235,19 +235,19 @@ public class EventHolderFragment extends Fragment {
 		protected String doInBackground(String... params) {
 			switch (mEventMode) {
 				case Bofs:
-					BofsManager bofsManager = new BofsManager(Model.instance().getClient());
+					BofsManager bofsManager = Model.instance().getBofsManager();
 					mDayIdList.addAll(bofsManager.getBofsDays());
 					break;
 				case Social:
-					SocialManager socialManager = new SocialManager(Model.instance().getClient());
+					SocialManager socialManager = Model.instance().getSocialManager();
 					mDayIdList.addAll(socialManager.getSocialsDays());
 					break;
 				case Favorites:
-					EventManager eventManager = new EventManager(Model.instance().getClient());
-					mDayIdList.addAll(eventManager.getFavoriteEventDays());
+					FavoriteManager favoriteManager = Model.instance().getFavoriteManager();
+					mDayIdList.addAll(favoriteManager.getFavoriteEventDays());
 					break;
 				default:
-					ProgramManager programManager = new ProgramManager(Model.instance().getClient());
+					ProgramManager programManager = Model.instance().getProgramManager();
 					mDayIdList.addAll(programManager.getProgramDays());
 					break;
 			}

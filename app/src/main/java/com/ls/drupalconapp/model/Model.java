@@ -1,5 +1,12 @@
 package com.ls.drupalconapp.model;
 
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.http.AndroidHttpClient;
+import android.os.Build;
+import android.os.Environment;
+
 import com.android.volley.Network;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.BasicNetwork;
@@ -8,9 +15,13 @@ import com.android.volley.toolbox.HttpClientStack;
 import com.android.volley.toolbox.HttpStack;
 import com.android.volley.toolbox.HurlStack;
 import com.ls.drupal.DrupalClient;
+import com.ls.drupalconapp.model.database.ILAPIDBFacade;
+import com.ls.drupalconapp.model.database.LAPIDBRegister;
 import com.ls.drupalconapp.model.http.hurl.HURLCookieStore;
 import com.ls.drupalconapp.model.http.hurl.RedirectHurlStack;
 import com.ls.drupalconapp.model.managers.BofsManager;
+import com.ls.drupalconapp.model.managers.EventManager;
+import com.ls.drupalconapp.model.managers.FavoriteManager;
 import com.ls.drupalconapp.model.managers.InfoManager;
 import com.ls.drupalconapp.model.managers.LevelsManager;
 import com.ls.drupalconapp.model.managers.LocationManager;
@@ -24,13 +35,6 @@ import com.ls.drupalconapp.model.managers.TypesManager;
 import com.ls.http.base.BaseRequest;
 import com.ls.http.base.ResponseData;
 import com.ls.utils.ApplicationConfig;
-
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.net.http.AndroidHttpClient;
-import android.os.Build;
-import android.os.Environment;
 
 import java.io.File;
 import java.net.CookieHandler;
@@ -83,7 +87,9 @@ public class Model {
     private BofsManager bofsManager;
     private PoisManager poisManager;
     private InfoManager infoManager;
+    private EventManager eventManager;
     private UpdatesManager updatesManager;
+    private FavoriteManager favoriteManager;
 
     public DrupalClient getClient() {
         return client;
@@ -146,6 +152,14 @@ public class Model {
         return updatesManager;
     }
 
+    public EventManager getEventManager() {
+        return eventManager;
+    }
+
+    public FavoriteManager getFavoriteManager() {
+        return favoriteManager;
+    }
+
     /**
      * NOTE: login is performed in synchroneus way so you must never call it from UI thread.
      * @param userName
@@ -174,6 +188,8 @@ public class Model {
         poisManager = new PoisManager(client);
         infoManager = new InfoManager(client);
         programManager = new ProgramManager(client);
+        eventManager = new EventManager(client);
+        favoriteManager = new FavoriteManager();
 
         updatesManager = new UpdatesManager(client);
     }
@@ -235,5 +251,21 @@ public class Model {
         queue.start();
 
         return queue;
+    }
+
+    protected void clearAllDao() {
+        eventManager.clear();
+        infoManager.clear();
+        levelsManager.clear();
+        locationmanager.clear();
+        poisManager.clear();
+        socialManager.clear();
+        speakerManager.clear();
+        tracksManager.clear();
+        typesManager.clear();
+    }
+
+    protected ILAPIDBFacade getFacade() {
+        return LAPIDBRegister.getInstance().lookup(AppDatabaseInfo.DATABASE_NAME);
     }
 }

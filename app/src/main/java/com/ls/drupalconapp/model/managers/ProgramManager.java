@@ -5,6 +5,7 @@ import com.ls.drupal.DrupalClient;
 import com.ls.drupalconapp.model.PreferencesManager;
 import com.ls.drupalconapp.model.data.Event;
 import com.ls.drupalconapp.model.requests.SessionsRequest;
+import com.ls.drupalconapp.ui.adapter.item.EventListItem;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -83,5 +84,9 @@ public class ProgramManager extends EventManager {
         } else {
             return mEventDao.selectDistrictDateByTrackIdsSafe(Event.PROGRAM_CLASS, trackIds);
         }
+    }
+
+    public List<EventListItem> getProgramItemsSafe(int eventClass, long day, List<Long> levelIds, List<Long> trackIds) {
+        return mEventDao.selectProgramItemsSafe(eventClass, day, levelIds, trackIds);
     }
 }

@@ -53,12 +53,12 @@ public class LevelsManager extends SynchronousItemManager<Level.Holder, Object, 
         return data.size() > 0 ? data.get(0) : null;
     }
 
-    public void deleteLevel(Level level) {
-        mLevelDao.deleteDataSafe(level.getId());
+    public List<Level> getLevels() {
+        return mLevelDao.getAllSafe();
     }
 
-    public LevelDao getlevelDao() {
-        return mLevelDao;
+    public void deleteLevel(Level level) {
+        mLevelDao.deleteDataSafe(level.getId());
     }
 
     public void clear() {

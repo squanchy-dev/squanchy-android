@@ -4,6 +4,7 @@ import com.ls.drupal.AbstractBaseDrupalEntity;
 import com.ls.drupal.DrupalClient;
 import com.ls.drupalconapp.model.data.Event;
 import com.ls.drupalconapp.model.requests.SocialRequest;
+import com.ls.drupalconapp.ui.adapter.item.EventListItem;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -67,5 +68,9 @@ public class SocialManager extends EventManager {
 
     public List<Long> getSocialsDays() {
         return mEventDao.selectDistrictDateSafe(Event.SOCIALS_CLASS);
+    }
+
+    public List<EventListItem> getSocialItemsSafe(long day) {
+        return mEventDao.selectSocialItemsSafe(Event.SOCIALS_CLASS, day);
     }
 }

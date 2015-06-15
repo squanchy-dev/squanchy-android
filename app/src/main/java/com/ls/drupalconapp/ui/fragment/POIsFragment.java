@@ -78,7 +78,7 @@ public class POIsFragment extends Fragment {
 
             @Override
             protected List<POI> doInBackground(Void... params) {
-                PoisManager poisManager = new PoisManager(Model.instance().getClient());
+                PoisManager poisManager = Model.instance().getPoisManager();
                 return poisManager.getPOIs();
             }
 

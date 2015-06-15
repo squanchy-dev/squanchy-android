@@ -33,6 +33,7 @@ import com.ls.drupalconapp.model.data.EventDetailsEvent;
 import com.ls.drupalconapp.model.data.Level;
 import com.ls.drupalconapp.model.data.Speaker;
 import com.ls.drupalconapp.model.managers.EventManager;
+import com.ls.drupalconapp.model.managers.FavoriteManager;
 import com.ls.drupalconapp.model.managers.SpeakerManager;
 import com.ls.drupalconapp.ui.receiver.FavoriteReceiverManager;
 import com.ls.drupalconapp.ui.view.CircleDrupalImageView;
@@ -223,8 +224,8 @@ public class EventDetailsActivity extends StackKeeperActivity {
 		new AsyncTask<Void, Void, EventDetailsEvent>() {
 			@Override
 			protected EventDetailsEvent doInBackground(Void... params) {
-				EventManager manager = new EventManager(Model.instance().getClient());
-				return manager.getEventDao().getEventById(mEventId);
+				EventManager manager = Model.instance().getEventManager();
+				return manager.getEventById(mEventId);
 			}
 
 			@Override
@@ -338,7 +339,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
 		new AsyncTask<Void, Void, List<Speaker>>() {
 			@Override
 			protected List<Speaker> doInBackground(Void... params) {
-				SpeakerManager manager = new SpeakerManager(Model.instance().getClient());
+				SpeakerManager manager = Model.instance().getSpeakerManager();
 				return manager.getSpeakersByEventId(mEventId);
 			}
 
@@ -418,7 +419,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
 		new AsyncTask<Void, Void, Void>() {
 			@Override
 			protected Void doInBackground(Void... params) {
-				EventManager manager = new EventManager(Model.instance().getClient());
+				FavoriteManager manager = new FavoriteManager();
 				manager.setFavoriteEvent(mEventId, mIsAddedToSchedule);
 				return null;
 			}

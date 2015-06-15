@@ -55,7 +55,7 @@ public class LocationFragment extends Fragment implements CustomMapFragment.OnAc
     @Override
     public void onActivityCreated(GoogleMap googleMap) {
         if(googleMap != null) {
-            LocationManager locationManager = new LocationManager(Model.instance().getClient());
+            LocationManager locationManager = Model.instance().getLocationManager();
 			List<Location> locations = locationManager.getLocations();
 
 			for(int i=0; i<locations.size(); i++){

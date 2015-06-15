@@ -89,7 +89,7 @@ public class AboutActivity extends ActionBarActivity {
     }
 
     private void initViews() {
-        InfoManager infoManager = new InfoManager(Model.instance().getClient());
+        InfoManager infoManager = Model.instance().getInfoManager();
         infoItems = infoManager.getInfo();
 
         ListView listMenu = (ListView) findViewById(R.id.listView);

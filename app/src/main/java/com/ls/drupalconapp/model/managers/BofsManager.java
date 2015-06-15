@@ -4,6 +4,7 @@ import com.ls.drupal.AbstractBaseDrupalEntity;
 import com.ls.drupal.DrupalClient;
 import com.ls.drupalconapp.model.data.Event;
 import com.ls.drupalconapp.model.requests.BofsRequest;
+import com.ls.drupalconapp.ui.adapter.item.EventListItem;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -68,5 +69,9 @@ public class BofsManager extends EventManager{
 
     public List<Long> getBofsDays() {
         return mEventDao.selectDistrictDateSafe(Event.BOFS_CLASS);
+    }
+
+    public List<EventListItem> getBofsItemsSafe(long day) {
+        return mEventDao.selectBofsItemsSafe(Event.BOFS_CLASS, day);
     }
 }

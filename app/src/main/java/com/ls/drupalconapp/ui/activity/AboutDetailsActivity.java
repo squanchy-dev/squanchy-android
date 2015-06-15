@@ -89,7 +89,7 @@ public class AboutDetailsActivity extends StateActivity {
 		int currentApiVersion = android.os.Build.VERSION.SDK_INT;
 		if (currentApiVersion >= Build.VERSION_CODES.LOLLIPOP) {
 			getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-			findViewById(R.id.viewStatusBarTrans).setVisibility(View.VISIBLE);
+			findViewById(R.id.viewStatusBar).setVisibility(View.VISIBLE);
 		}
 	}
 

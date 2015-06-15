@@ -6,17 +6,7 @@ import android.text.TextUtils;
 import com.ls.drupal.DrupalClient;
 import com.ls.drupalconapp.model.data.UpdateDate;
 import com.ls.drupalconapp.model.database.ILAPIDBFacade;
-import com.ls.drupalconapp.model.database.LAPIDBRegister;
-import com.ls.drupalconapp.model.managers.EventManager;
-import com.ls.drupalconapp.model.managers.InfoManager;
-import com.ls.drupalconapp.model.managers.LevelsManager;
-import com.ls.drupalconapp.model.managers.LocationManager;
-import com.ls.drupalconapp.model.managers.PoisManager;
-import com.ls.drupalconapp.model.managers.SocialManager;
-import com.ls.drupalconapp.model.managers.SpeakerManager;
 import com.ls.drupalconapp.model.managers.SynchronousItemManager;
-import com.ls.drupalconapp.model.managers.TracksManager;
-import com.ls.drupalconapp.model.managers.TypesManager;
 import com.ls.drupalconapp.ui.drawer.DrawerManager;
 import com.ls.http.base.BaseRequest;
 import com.ls.http.base.RequestConfig;
@@ -143,8 +133,7 @@ public class UpdatesManager {
             return new LinkedList<>();
         }
 
-        ILAPIDBFacade facade = getFacade();
-
+        ILAPIDBFacade facade = Model.instance().getFacade();
         try {
             facade.open();
             facade.beginTransactions();
@@ -224,52 +213,25 @@ public class UpdatesManager {
         return false;
     }
 
+    public interface DataUpdatedListener {
+
+        void onDataUpdated(List<Integer> requestIds);
+    }
+
     public void checkForDatabaseUpdate() {
-        ILAPIDBFacade facade = getFacade();
+        ILAPIDBFacade facade = Model.instance().getFacade();
         facade.open();
 
         String timeZone = TimeZone.getDefault().getID();
         if (!TextUtils.isEmpty(timeZone)) {
             String prefTimeZone = PreferencesManager.getInstance().getTimeZoneId();
             if (!timeZone.equals(prefTimeZone)) {
-                clearAllDao();
+                Model.instance().clearAllDao();
                 PreferencesManager.getInstance().saveLastUpdateDate("");
             }
             PreferencesManager.getInstance().saveTimeZoneId(timeZone);
         }
 
         facade.close();
-    }
-
-    private void clearAllDao() {
-        DrupalClient client = Model.instance().getClient();
-        EventManager eventManager = new EventManager(client);
-        InfoManager infoManager = new InfoManager(client);
-        LevelsManager levelsManager = new LevelsManager(client);
-        LocationManager locationManager = new LocationManager(client);
-        PoisManager poisManager = new PoisManager(client);
-        SocialManager socialManager = new SocialManager(client);
-        SpeakerManager speakerManager = new SpeakerManager(client);
-        TracksManager tracksManager = new TracksManager(client);
-        TypesManager typesManager = new TypesManager(client);
-
-        eventManager.clear();
-        infoManager.clear();
-        levelsManager.clear();
-        locationManager.clear();
-        poisManager.clear();
-        socialManager.clear();
-        speakerManager.clear();
-        tracksManager.clear();
-        typesManager.clear();
-    }
-
-    public ILAPIDBFacade getFacade() {
-        return LAPIDBRegister.getInstance().lookup(AppDatabaseInfo.DATABASE_NAME);
-    }
-
-    public interface DataUpdatedListener {
-
-        void onDataUpdated(List<Integer> requestIds);
     }
 }

@@ -186,7 +186,7 @@ public class MainActivity extends StateActivity implements FilterDialog.OnChecke
 		new AsyncTask<Void, Void, List<EventListItem>>() {
 			@Override
 			protected List<EventListItem> doInBackground(Void... params) {
-				TracksManager tracksManager = new TracksManager(Model.instance().getClient());
+				TracksManager tracksManager = Model.instance().getTracksManager();
 				List<Track> trackList = tracksManager.getTracks();
 				List<Level> levelList = tracksManager.getLevels();
 

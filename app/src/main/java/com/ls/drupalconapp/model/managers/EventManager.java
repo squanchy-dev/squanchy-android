@@ -5,6 +5,8 @@ import com.ls.drupal.DrupalClient;
 import com.ls.drupalconapp.app.App;
 import com.ls.drupalconapp.model.dao.EventDao;
 import com.ls.drupalconapp.model.data.Event;
+import com.ls.drupalconapp.model.data.EventDetailsEvent;
+import com.ls.drupalconapp.model.data.TimeRange;
 
 import java.util.List;
 
@@ -48,16 +50,26 @@ public class EventManager extends SynchronousItemManager<Event.Holder, Object, S
         mEventDao.deleteEventAndSpeakerByEvent(data.getId());
     }
 
-    public EventDao getEventDao() {
-        return mEventDao;
+    public EventDetailsEvent getEventById(long id) {
+        return mEventDao.getEventById(id);
     }
 
-    public List<Long> getFavoriteEventDays() {
-        return mEventDao.selectDistrictFavoriteDateSafe();
+    public List<TimeRange> getDistrictTimeRangeSafe(int eventClass, long day) {
+        return mEventDao.selectDistrictTimeRangeSafe(eventClass, day);
     }
 
-    public void setFavoriteEvent(long eventId, boolean isFavorite) {
-        mEventDao.setFavoriteSafe(eventId, isFavorite);
+    public List<TimeRange> getDistrictTimeRangeSafe(int eventClass, long day, List<Long> levelIds, List<Long> trackIds) {
+        return mEventDao.selectDistrictTimeRangeByLevelTrackIdsSafe(eventClass, day, levelIds, trackIds);
+    }
+
+    public List<Long> getEventSpeakerSafe(long id) {
+        return mEventDao.selectEventSpeakersSafe(id);
+    }
+
+    public List<Event> getEventsByIdsAndDaySafe(long day) {
+        FavoriteManager favoriteManager = new FavoriteManager();
+        List<Long> favoriteEventIds = favoriteManager.getFavoriteEventsSafe();
+        return mEventDao.selectEventsByIdsAndDaySafe(favoriteEventIds, day);
     }
 
     public void clear() {
