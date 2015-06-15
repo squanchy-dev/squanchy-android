@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ListView;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
@@ -99,7 +100,7 @@ public class MainActivity extends StateActivity implements FilterDialog.OnChecke
 	private void initStatusBar() {
 		int currentApiVersion = android.os.Build.VERSION.SDK_INT;
 		if (currentApiVersion >= Build.VERSION_CODES.LOLLIPOP) {
-			getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+			getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
 			mStatusBar = findViewById(R.id.viewStatusBar);
 			mStatusBar.setBackgroundColor(getResources().getColor(R.color.title_color));
