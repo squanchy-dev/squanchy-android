@@ -1,9 +1,22 @@
 package com.ls.drupalconapp.model;
 
+import android.os.AsyncTask;
+import android.text.TextUtils;
+
 import com.ls.drupal.DrupalClient;
 import com.ls.drupalconapp.model.data.UpdateDate;
 import com.ls.drupalconapp.model.database.ILAPIDBFacade;
+import com.ls.drupalconapp.model.database.LAPIDBRegister;
+import com.ls.drupalconapp.model.managers.EventManager;
+import com.ls.drupalconapp.model.managers.InfoManager;
+import com.ls.drupalconapp.model.managers.LevelsManager;
+import com.ls.drupalconapp.model.managers.LocationManager;
+import com.ls.drupalconapp.model.managers.PoisManager;
+import com.ls.drupalconapp.model.managers.SocialManager;
+import com.ls.drupalconapp.model.managers.SpeakerManager;
 import com.ls.drupalconapp.model.managers.SynchronousItemManager;
+import com.ls.drupalconapp.model.managers.TracksManager;
+import com.ls.drupalconapp.model.managers.TypesManager;
 import com.ls.drupalconapp.ui.drawer.DrawerManager;
 import com.ls.http.base.BaseRequest;
 import com.ls.http.base.RequestConfig;
@@ -13,11 +26,9 @@ import com.ls.utils.ApplicationConfig;
 
 import org.jetbrains.annotations.NotNull;
 
-import android.os.AsyncTask;
-import android.text.TextUtils;
-
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Created by Yakiv M. on 19.09.2014.
@@ -132,7 +143,7 @@ public class UpdatesManager {
             return new LinkedList<>();
         }
 
-        ILAPIDBFacade facade = DatabaseManager.instance().getFacade();
+        ILAPIDBFacade facade = getFacade();
 
         try {
             facade.open();
@@ -146,7 +157,7 @@ public class UpdatesManager {
             }
             if (success) {
                 facade.setTransactionSuccesfull();
-                if (updateDate != null && !TextUtils.isEmpty(updateDate.getTime())) {
+                if (!TextUtils.isEmpty(updateDate.getTime())) {
                     PreferencesManager.getInstance().saveLastUpdateDate(updateDate.getTime());
                 }
             }
@@ -184,7 +195,7 @@ public class UpdatesManager {
                 break;
 
             case PROGRAMS_REQUEST_ID:
-                manager = Model.instance().getSessionsManager();
+                manager = Model.instance().getProgramManager();
                 break;
 
             case BOFS_REQUEST_ID:
@@ -211,6 +222,50 @@ public class UpdatesManager {
         }
 
         return false;
+    }
+
+    public void checkForDatabaseUpdate() {
+        ILAPIDBFacade facade = getFacade();
+        facade.open();
+
+        String timeZone = TimeZone.getDefault().getID();
+        if (!TextUtils.isEmpty(timeZone)) {
+            String prefTimeZone = PreferencesManager.getInstance().getTimeZoneId();
+            if (!timeZone.equals(prefTimeZone)) {
+                clearAllDao();
+                PreferencesManager.getInstance().saveLastUpdateDate("");
+            }
+            PreferencesManager.getInstance().saveTimeZoneId(timeZone);
+        }
+
+        facade.close();
+    }
+
+    private void clearAllDao() {
+        DrupalClient client = Model.instance().getClient();
+        EventManager eventManager = new EventManager(client);
+        InfoManager infoManager = new InfoManager(client);
+        LevelsManager levelsManager = new LevelsManager(client);
+        LocationManager locationManager = new LocationManager(client);
+        PoisManager poisManager = new PoisManager(client);
+        SocialManager socialManager = new SocialManager(client);
+        SpeakerManager speakerManager = new SpeakerManager(client);
+        TracksManager tracksManager = new TracksManager(client);
+        TypesManager typesManager = new TypesManager(client);
+
+        eventManager.clear();
+        infoManager.clear();
+        levelsManager.clear();
+        locationManager.clear();
+        poisManager.clear();
+        socialManager.clear();
+        speakerManager.clear();
+        tracksManager.clear();
+        typesManager.clear();
+    }
+
+    public ILAPIDBFacade getFacade() {
+        return LAPIDBRegister.getInstance().lookup(AppDatabaseInfo.DATABASE_NAME);
     }
 
     public interface DataUpdatedListener {

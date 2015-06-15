@@ -1,17 +1,5 @@
 package com.ls.drupalconapp.ui.fragment;
 
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.model.EventGenerator;
-import com.ls.drupalconapp.model.data.Event;
-import com.ls.drupalconapp.model.data.Type;
-import com.ls.drupalconapp.ui.activity.EventDetailsActivity;
-import com.ls.drupalconapp.ui.adapter.NewEventsAdapter;
-import com.ls.drupalconapp.ui.adapter.item.DateTimeRangeCreator;
-import com.ls.drupalconapp.ui.adapter.item.EventListItem;
-import com.ls.drupalconapp.ui.adapter.item.SimpleTimeRangeCreator;
-import com.ls.drupalconapp.ui.adapter.item.TimeRangeItem;
-import com.ls.drupalconapp.ui.drawer.DrawerManager;
-
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,6 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+
+import com.ls.drupalconapp.R;
+import com.ls.drupalconapp.model.EventGenerator;
+import com.ls.drupalconapp.model.data.Event;
+import com.ls.drupalconapp.model.data.Type;
+import com.ls.drupalconapp.ui.activity.EventDetailsActivity;
+import com.ls.drupalconapp.ui.adapter.NewEventsAdapter;
+import com.ls.drupalconapp.ui.adapter.item.EventListItem;
+import com.ls.drupalconapp.ui.adapter.item.SimpleTimeRangeCreator;
+import com.ls.drupalconapp.ui.adapter.item.TimeRangeItem;
+import com.ls.drupalconapp.ui.drawer.DrawerManager;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -145,7 +144,7 @@ public class EventFragment extends Fragment implements NewEventsAdapter.OnClickL
 				eventList.addAll(generator.generate(mDay, Event.SOCIALS_CLASS, new SimpleTimeRangeCreator()));
 				break;
 			case Favorites:
-				eventList.addAll(generator.generateForFavorites(mDay, new DateTimeRangeCreator()));
+				eventList.addAll(generator.generateForFavorites(mDay));
 				break;
 		}
 		return eventList;
@@ -158,7 +157,7 @@ public class EventFragment extends Fragment implements NewEventsAdapter.OnClickL
 				FragmentActivity activity = getActivity();
 				if (activity != null) {
 					EventGenerator generator = new EventGenerator(activity.getBaseContext());
-					return generator.generateForFavorites(mDay, new DateTimeRangeCreator());
+					return generator.generateForFavorites(mDay);
 				} else {
 					return new ArrayList<EventListItem>();
 				}

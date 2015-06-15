@@ -17,6 +17,7 @@ public class LevelsManager extends SynchronousItemManager<Level.Holder, Object, 
 
     public LevelsManager(DrupalClient client) {
         super(client);
+        mLevelDao = new LevelDao();
     }
 
     @Override
@@ -36,9 +37,7 @@ public class LevelsManager extends SynchronousItemManager<Level.Holder, Object, 
             return false;
         }
 
-        mLevelDao = new LevelDao();
         mLevelDao.saveOrUpdateDataSafe(levels);
-
         for (Level level : levels) {
             if (level != null) {
                 if (level.isDeleted()) {
@@ -56,5 +55,13 @@ public class LevelsManager extends SynchronousItemManager<Level.Holder, Object, 
 
     public void deleteLevel(Level level) {
         mLevelDao.deleteDataSafe(level.getId());
+    }
+
+    public LevelDao getlevelDao() {
+        return mLevelDao;
+    }
+
+    public void clear() {
+        mLevelDao.deleteAll();
     }
 }

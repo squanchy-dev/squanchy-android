@@ -1,22 +1,5 @@
 package com.ls.drupalconapp.ui.activity;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.model.DatabaseManager;
-import com.ls.drupalconapp.model.Model;
-import com.ls.drupalconapp.model.PreferencesManager;
-import com.ls.drupalconapp.model.UpdatesManager;
-import com.ls.drupalconapp.model.data.EventDetailsEvent;
-import com.ls.drupalconapp.model.data.Level;
-import com.ls.drupalconapp.model.data.Speaker;
-import com.ls.drupalconapp.ui.receiver.FavoriteReceiverManager;
-import com.ls.drupalconapp.ui.view.CircleDrupalImageView;
-import com.ls.drupalconapp.ui.view.NotifyingScrollView;
-import com.ls.utils.AnalyticsManager;
-import com.ls.utils.DateUtils;
-import com.ls.utils.ScheduleManager;
-
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -39,6 +22,24 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.ls.drupalconapp.R;
+import com.ls.drupalconapp.model.DatabaseManager;
+import com.ls.drupalconapp.model.Model;
+import com.ls.drupalconapp.model.PreferencesManager;
+import com.ls.drupalconapp.model.UpdatesManager;
+import com.ls.drupalconapp.model.data.EventDetailsEvent;
+import com.ls.drupalconapp.model.data.Level;
+import com.ls.drupalconapp.model.data.Speaker;
+import com.ls.drupalconapp.model.managers.EventManager;
+import com.ls.drupalconapp.model.managers.SpeakerManager;
+import com.ls.drupalconapp.ui.receiver.FavoriteReceiverManager;
+import com.ls.drupalconapp.ui.view.CircleDrupalImageView;
+import com.ls.drupalconapp.ui.view.NotifyingScrollView;
+import com.ls.utils.AnalyticsManager;
+import com.ls.utils.DateUtils;
+import com.ls.utils.ScheduleManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -224,7 +225,8 @@ public class EventDetailsActivity extends StackKeeperActivity {
 		new AsyncTask<Void, Void, EventDetailsEvent>() {
 			@Override
 			protected EventDetailsEvent doInBackground(Void... params) {
-				return dbManager.getEventById(mEventId);
+				EventManager manager = new EventManager(Model.instance().getClient());
+				return manager.getEventDao().getEventById(mEventId);
 			}
 
 			@Override
@@ -338,7 +340,8 @@ public class EventDetailsActivity extends StackKeeperActivity {
 		new AsyncTask<Void, Void, List<Speaker>>() {
 			@Override
 			protected List<Speaker> doInBackground(Void... params) {
-				return dbManager.getSpeakersByEventId(mEventId);
+				SpeakerManager manager = new SpeakerManager(Model.instance().getClient());
+				return manager.getSpeakersByEventId(mEventId);
 			}
 
 			@Override
@@ -417,7 +420,8 @@ public class EventDetailsActivity extends StackKeeperActivity {
 		new AsyncTask<Void, Void, Void>() {
 			@Override
 			protected Void doInBackground(Void... params) {
-				dbManager.setFavoriteEvent(mEventId, mIsAddedToSchedule);
+				EventManager manager = new EventManager(Model.instance().getClient());
+				manager.setFavoriteEvent(mEventId, mIsAddedToSchedule);
 				return null;
 			}
 		}.execute();

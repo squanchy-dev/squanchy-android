@@ -17,6 +17,7 @@ public class InfoManager extends SynchronousItemManager<InfoItem.General, Object
 
     public InfoManager(DrupalClient client) {
         super(client);
+        mInfoDao = new InfoDao();
     }
 
     @Override
@@ -36,9 +37,8 @@ public class InfoManager extends SynchronousItemManager<InfoItem.General, Object
             return false;
         }
 
-        mInfoDao = new InfoDao();
-        mInfoDao.saveOrUpdateDataSafe(infoList);
 
+        mInfoDao.saveOrUpdateDataSafe(infoList);
         for (InfoItem info : infoList) {
             if (info != null) {
                 if (info.isDeleted()) {
@@ -62,5 +62,9 @@ public class InfoManager extends SynchronousItemManager<InfoItem.General, Object
         });
 
         return infoItems;
+    }
+
+    public void clear() {
+        mInfoDao.deleteAll();
     }
 }

@@ -16,7 +16,7 @@ import com.ls.drupalconapp.model.managers.LevelsManager;
 import com.ls.drupalconapp.model.managers.LocationManager;
 import com.ls.drupalconapp.model.managers.LoginManager;
 import com.ls.drupalconapp.model.managers.PoisManager;
-import com.ls.drupalconapp.model.managers.SessionsManager;
+import com.ls.drupalconapp.model.managers.ProgramManager;
 import com.ls.drupalconapp.model.managers.SocialManager;
 import com.ls.drupalconapp.model.managers.SpeakerManager;
 import com.ls.drupalconapp.model.managers.TracksManager;
@@ -79,7 +79,7 @@ public class Model {
     private SpeakerManager speakerManager;
     private LocationManager locationmanager;
     private SocialManager socialManager;
-    private SessionsManager sessionsManager;
+    private ProgramManager programManager;
     private BofsManager bofsManager;
     private PoisManager poisManager;
     private InfoManager infoManager;
@@ -138,8 +138,8 @@ public class Model {
         return infoManager;
     }
 
-    public SessionsManager getSessionsManager() {
-        return sessionsManager;
+    public ProgramManager getProgramManager() {
+        return programManager;
     }
 
     public UpdatesManager getUpdatesManager() {
@@ -173,7 +173,7 @@ public class Model {
         bofsManager = new BofsManager(client);
         poisManager = new PoisManager(client);
         infoManager = new InfoManager(client);
-        sessionsManager = new SessionsManager(client);
+        programManager = new ProgramManager(client);
 
         updatesManager = new UpdatesManager(client);
     }

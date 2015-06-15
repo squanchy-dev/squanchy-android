@@ -1,11 +1,5 @@
 package com.ls.drupalconapp.ui.activity;
 
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.model.DatabaseManager;
-import com.ls.drupalconapp.model.Model;
-import com.ls.drupalconapp.model.UpdatesManager;
-import com.ls.drupalconapp.model.data.InfoItem;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
@@ -20,6 +14,12 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.ls.drupalconapp.R;
+import com.ls.drupalconapp.model.Model;
+import com.ls.drupalconapp.model.UpdatesManager;
+import com.ls.drupalconapp.model.data.InfoItem;
+import com.ls.drupalconapp.model.managers.InfoManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,8 +88,8 @@ public class AboutActivity extends ActionBarActivity {
     }
 
     private void initViews() {
-        DatabaseManager dbManager = DatabaseManager.instance();
-        infoItems = dbManager.getInfo();
+        InfoManager infoManager = new InfoManager(Model.instance().getClient());
+        infoItems = infoManager.getInfo();
 
         ListView listMenu = (ListView) findViewById(R.id.listView);
         listMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {

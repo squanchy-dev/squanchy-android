@@ -2,7 +2,9 @@ package com.ls.drupalconapp.model.managers;
 
 import com.ls.drupal.AbstractBaseDrupalEntity;
 import com.ls.drupal.DrupalClient;
+import com.ls.drupalconapp.model.Model;
 import com.ls.drupalconapp.model.dao.TrackDao;
+import com.ls.drupalconapp.model.data.Level;
 import com.ls.drupalconapp.model.data.Track;
 import com.ls.drupalconapp.model.requests.TracksRequest;
 
@@ -19,6 +21,7 @@ public class TracksManager extends SynchronousItemManager<Track.Holder, Object, 
 
     public TracksManager(DrupalClient client) {
         super(client);
+        mTrackDao = new TrackDao();
     }
 
     @Override
@@ -36,9 +39,7 @@ public class TracksManager extends SynchronousItemManager<Track.Holder, Object, 
         List<Track> tracks = requestResponse.getTracks();
         if (tracks == null) return false;
 
-        mTrackDao = new TrackDao();
         mTrackDao.saveOrUpdateDataSafe(tracks);
-
         for (Track track : tracks) {
             if (track != null) {
                 if (track.isDeleted()) {
@@ -58,5 +59,28 @@ public class TracksManager extends SynchronousItemManager<Track.Holder, Object, 
             }
         });
         return tracks;
+    }
+
+    public Track getTrack(long trackId) {
+        List<Track> data = mTrackDao.getDataSafe(trackId);
+        return data.size() > 0 ? data.get(0) : null;
+    }
+
+    public List<Level> getLevels() {
+        LevelsManager levelDao = new LevelsManager(Model.instance().getClient());
+
+        List<Level> levels = levelDao.getlevelDao().getAllSafe();
+        Collections.sort(levels, new Comparator<Level>() {
+            @Override
+            public int compare(Level level, Level level2) {
+                return Double.compare(level.getOrder(), level2.getOrder());
+            }
+        });
+
+        return levels;
+    }
+
+    public void clear() {
+        mTrackDao.deleteAll();
     }
 }

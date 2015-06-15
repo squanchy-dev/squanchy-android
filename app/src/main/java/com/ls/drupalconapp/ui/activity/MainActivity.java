@@ -1,23 +1,5 @@
 package com.ls.drupalconapp.ui.activity;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.app.App;
-import com.ls.drupalconapp.model.DatabaseManager;
-import com.ls.drupalconapp.model.PreferencesManager;
-import com.ls.drupalconapp.model.data.Level;
-import com.ls.drupalconapp.model.data.Track;
-import com.ls.drupalconapp.ui.adapter.item.EventListItem;
-import com.ls.drupalconapp.ui.dialog.FilterDialog;
-import com.ls.drupalconapp.ui.drawer.DrawerAdapter;
-import com.ls.drupalconapp.ui.drawer.DrawerManager;
-import com.ls.drupalconapp.ui.drawer.DrawerMenu;
-import com.ls.drupalconapp.ui.drawer.DrawerMenuItem;
-import com.ls.utils.AnalyticsManager;
-import com.ls.utils.KeyboardUtils;
-import com.ls.utils.ScheduleManager;
-
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -28,6 +10,24 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
+
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.ls.drupalconapp.R;
+import com.ls.drupalconapp.app.App;
+import com.ls.drupalconapp.model.Model;
+import com.ls.drupalconapp.model.PreferencesManager;
+import com.ls.drupalconapp.model.data.Level;
+import com.ls.drupalconapp.model.data.Track;
+import com.ls.drupalconapp.model.managers.TracksManager;
+import com.ls.drupalconapp.ui.adapter.item.EventListItem;
+import com.ls.drupalconapp.ui.dialog.FilterDialog;
+import com.ls.drupalconapp.ui.drawer.DrawerAdapter;
+import com.ls.drupalconapp.ui.drawer.DrawerManager;
+import com.ls.drupalconapp.ui.drawer.DrawerMenu;
+import com.ls.drupalconapp.ui.drawer.DrawerMenuItem;
+import com.ls.utils.AnalyticsManager;
+import com.ls.utils.KeyboardUtils;
+import com.ls.utils.ScheduleManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -185,9 +185,9 @@ public class MainActivity extends StateActivity implements FilterDialog.OnChecke
 		new AsyncTask<Void, Void, List<EventListItem>>() {
 			@Override
 			protected List<EventListItem> doInBackground(Void... params) {
-				DatabaseManager databaseManager = DatabaseManager.instance();
-				List<Track> trackList = databaseManager.getTracks();
-				List<Level> levelList = databaseManager.getLevels();
+				TracksManager tracksManager = new TracksManager(Model.instance().getClient());
+				List<Track> trackList = tracksManager.getTracks();
+				List<Level> levelList = tracksManager.getLevels();
 
 				Collections.sort(trackList, new Comparator<Track>() {
 					@Override

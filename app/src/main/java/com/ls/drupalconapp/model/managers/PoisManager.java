@@ -16,6 +16,7 @@ public class PoisManager extends SynchronousItemManager<POI.Holder, Object, Stri
 
     public PoisManager(DrupalClient client) {
         super(client);
+        mPOIDao = new POIDao();
     }
 
     @Override
@@ -35,9 +36,7 @@ public class PoisManager extends SynchronousItemManager<POI.Holder, Object, Stri
             return false;
         }
 
-        mPOIDao = new POIDao();
         mPOIDao.saveOrUpdateDataSafe(pois);
-
         for (POI poi : pois) {
             if (poi != null) {
                 if (poi.isDeleted()) {
@@ -57,6 +56,10 @@ public class PoisManager extends SynchronousItemManager<POI.Holder, Object, Stri
             }
         });
         return pois;
+    }
+
+    public void clear() {
+        mPOIDao.clearData();
     }
 }
 

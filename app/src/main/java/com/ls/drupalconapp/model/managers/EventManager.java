@@ -10,7 +10,7 @@ import java.util.List;
 
 public class EventManager extends SynchronousItemManager<Event.Holder, Object, String> {
 
-    public EventDao mEventDao;
+    protected EventDao mEventDao;
 
     public EventManager(DrupalClient client) {
         super(client);
@@ -46,5 +46,21 @@ public class EventManager extends SynchronousItemManager<Event.Holder, Object, S
     public void deleteEvent(Event data) {
         mEventDao.deleteDataSafe(data.getId());
         mEventDao.deleteEventAndSpeakerByEvent(data.getId());
+    }
+
+    public EventDao getEventDao() {
+        return mEventDao;
+    }
+
+    public List<Long> getFavoriteEventDays() {
+        return mEventDao.selectDistrictFavoriteDateSafe();
+    }
+
+    public void setFavoriteEvent(long eventId, boolean isFavorite) {
+        mEventDao.setFavoriteSafe(eventId, isFavorite);
+    }
+
+    public void clear() {
+        mEventDao.deleteAll();
     }
 }

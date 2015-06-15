@@ -1,21 +1,6 @@
 package com.ls.drupalconapp.ui.fragment;
 
 
-import com.astuetz.PagerSlidingTabStrip;
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.model.DatabaseManager;
-import com.ls.drupalconapp.model.Model;
-import com.ls.drupalconapp.model.PreferencesManager;
-import com.ls.drupalconapp.model.UpdatesManager;
-import com.ls.drupalconapp.ui.activity.MainActivity;
-import com.ls.drupalconapp.ui.adapter.BaseEventDaysPagerAdapter;
-import com.ls.drupalconapp.ui.dialog.FilterDialog;
-import com.ls.drupalconapp.ui.drawer.DrawerManager;
-import com.ls.drupalconapp.ui.receiver.FavoriteReceiverManager;
-import com.ls.utils.DateUtils;
-
-import org.jetbrains.annotations.NotNull;
-
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -29,6 +14,25 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.astuetz.PagerSlidingTabStrip;
+import com.ls.drupalconapp.R;
+import com.ls.drupalconapp.model.DatabaseManager;
+import com.ls.drupalconapp.model.Model;
+import com.ls.drupalconapp.model.PreferencesManager;
+import com.ls.drupalconapp.model.UpdatesManager;
+import com.ls.drupalconapp.model.managers.BofsManager;
+import com.ls.drupalconapp.model.managers.EventManager;
+import com.ls.drupalconapp.model.managers.ProgramManager;
+import com.ls.drupalconapp.model.managers.SocialManager;
+import com.ls.drupalconapp.ui.activity.MainActivity;
+import com.ls.drupalconapp.ui.adapter.BaseEventDaysPagerAdapter;
+import com.ls.drupalconapp.ui.dialog.FilterDialog;
+import com.ls.drupalconapp.ui.drawer.DrawerManager;
+import com.ls.drupalconapp.ui.receiver.FavoriteReceiverManager;
+import com.ls.utils.DateUtils;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -234,16 +238,20 @@ public class EventHolderFragment extends Fragment {
 		protected String doInBackground(String... params) {
 			switch (mEventMode) {
 				case Bofs:
-					mDayIdList.addAll(mDatabaseManager.getBofsDays());
+					BofsManager bofsManager = new BofsManager(Model.instance().getClient());
+					mDayIdList.addAll(bofsManager.getBofsDays());
 					break;
 				case Social:
-					mDayIdList.addAll(mDatabaseManager.getSocialsDays());
+					SocialManager socialManager = new SocialManager(Model.instance().getClient());
+					mDayIdList.addAll(socialManager.getSocialsDays());
 					break;
 				case Favorites:
-					mDayIdList.addAll(mDatabaseManager.getFavoriteEventDays());
+					EventManager eventManager = new EventManager(Model.instance().getClient());
+					mDayIdList.addAll(eventManager.getFavoriteEventDays());
 					break;
 				default:
-					mDayIdList.addAll(getProgramDays(mLevelIds, mTrackIds));
+					ProgramManager programManager = new ProgramManager(Model.instance().getClient());
+					mDayIdList.addAll(programManager.getProgramDays());
 					break;
 			}
 			return null;

@@ -1,13 +1,6 @@
 package com.ls.drupalconapp.ui.fragment;
 
 
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.model.DatabaseManager;
-import com.ls.drupalconapp.model.Model;
-import com.ls.drupalconapp.model.UpdatesManager;
-import com.ls.drupalconapp.model.data.POI;
-import com.ls.drupalconapp.ui.adapter.POIsAdapter;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+
+import com.ls.drupalconapp.R;
+import com.ls.drupalconapp.model.Model;
+import com.ls.drupalconapp.model.UpdatesManager;
+import com.ls.drupalconapp.model.data.POI;
+import com.ls.drupalconapp.model.managers.PoisManager;
+import com.ls.drupalconapp.ui.adapter.POIsAdapter;
 
 import java.util.List;
 
@@ -78,9 +78,8 @@ public class POIsFragment extends Fragment {
 
             @Override
             protected List<POI> doInBackground(Void... params) {
-                DatabaseManager databaseManager = DatabaseManager.instance();
-                List<POI> pois = databaseManager.getPOIs();
-                return pois;
+                PoisManager poisManager = new PoisManager(Model.instance().getClient());
+                return poisManager.getPOIs();
             }
 
             @Override

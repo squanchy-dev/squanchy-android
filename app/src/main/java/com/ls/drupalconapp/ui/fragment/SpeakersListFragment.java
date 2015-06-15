@@ -1,13 +1,5 @@
 package com.ls.drupalconapp.ui.fragment;
 
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.model.DatabaseManager;
-import com.ls.drupalconapp.model.Model;
-import com.ls.drupalconapp.model.UpdatesManager;
-import com.ls.drupalconapp.model.data.Speaker;
-import com.ls.drupalconapp.ui.activity.SpeakerDetailsActivity;
-import com.ls.drupalconapp.ui.adapter.SpeakersAdapter;
-
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -25,6 +17,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.ls.drupalconapp.R;
+import com.ls.drupalconapp.model.Model;
+import com.ls.drupalconapp.model.UpdatesManager;
+import com.ls.drupalconapp.model.data.Speaker;
+import com.ls.drupalconapp.model.managers.SpeakerManager;
+import com.ls.drupalconapp.ui.activity.SpeakerDetailsActivity;
+import com.ls.drupalconapp.ui.adapter.SpeakersAdapter;
 
 import java.util.List;
 
@@ -125,8 +125,8 @@ public class SpeakersListFragment extends Fragment
 
 			@Override
 			protected List<Speaker> doInBackground(Void... params) {
-				DatabaseManager databaseManager = DatabaseManager.instance();
-				return databaseManager.getSpeakers();
+				SpeakerManager manager = new SpeakerManager(Model.instance().getClient());
+				return manager.getSpeakers();
 			}
 
 			@Override

@@ -64,4 +64,8 @@ public class SocialManager extends EventManager {
         }
         return true;
     }
+
+    public List<Long> getSocialsDays() {
+        return mEventDao.selectDistrictDateSafe(Event.SOCIALS_CLASS);
+    }
 }

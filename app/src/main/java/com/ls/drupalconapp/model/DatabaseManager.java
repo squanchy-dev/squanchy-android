@@ -265,7 +265,6 @@ public class DatabaseManager {
         if (eventClass == Event.SOCIALS_CLASS) {
             return mEventDao.selectSocialItemsSafe(eventClass, date);
         }
-
         return mEventDao.selectBofsItemsSafe(eventClass, date);
     }
 

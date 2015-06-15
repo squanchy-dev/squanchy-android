@@ -1,20 +1,5 @@
 package com.ls.drupalconapp.ui.activity;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.model.DatabaseManager;
-import com.ls.drupalconapp.model.Model;
-import com.ls.drupalconapp.model.UpdatesManager;
-import com.ls.drupalconapp.model.data.Speaker;
-import com.ls.drupalconapp.model.data.SpeakerDetailsEvent;
-import com.ls.drupalconapp.ui.view.CircleDrupalImageView;
-import com.ls.drupalconapp.ui.view.NotifyingScrollView;
-import com.ls.utils.AnalyticsManager;
-import com.ls.utils.DateUtils;
-import com.ls.utils.UIUtils;
-import com.nirhart.parallaxscroll.views.ParallaxScrollView;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -35,6 +20,23 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.ls.drupalconapp.R;
+import com.ls.drupalconapp.app.App;
+import com.ls.drupalconapp.model.DatabaseManager;
+import com.ls.drupalconapp.model.Model;
+import com.ls.drupalconapp.model.UpdatesManager;
+import com.ls.drupalconapp.model.dao.EventDao;
+import com.ls.drupalconapp.model.data.Speaker;
+import com.ls.drupalconapp.model.data.SpeakerDetailsEvent;
+import com.ls.drupalconapp.model.managers.SpeakerManager;
+import com.ls.drupalconapp.ui.view.CircleDrupalImageView;
+import com.ls.drupalconapp.ui.view.NotifyingScrollView;
+import com.ls.utils.AnalyticsManager;
+import com.ls.utils.DateUtils;
+import com.ls.utils.UIUtils;
+import com.nirhart.parallaxscroll.views.ParallaxScrollView;
 
 import java.util.List;
 
@@ -60,6 +62,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 	private boolean isTransparentBbSet = true;
 	private boolean isTitleBgSet = false;
 	private DatabaseManager dbManager;
+	private SpeakerManager mSpeakerManager;
 
 	private View mViewToolbar;
 	private TextView mTitle;
@@ -88,6 +91,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 		}
 
 		dbManager = DatabaseManager.instance();
+		mSpeakerManager = new SpeakerManager(Model.instance().getClient());
 
 		handleExtras(getIntent());
 		initToolbar();
@@ -201,7 +205,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 		new AsyncTask<Void, Void, Speaker>() {
 			@Override
 			protected Speaker doInBackground(Void... params) {
-				return dbManager.getSpeakerById(mSpeakerId);
+				return mSpeakerManager.getSpeakerById(mSpeakerId);
 			}
 
 			@Override
@@ -293,7 +297,8 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 		new AsyncTask<Void, Void, List<SpeakerDetailsEvent>>() {
 			@Override
 			protected List<SpeakerDetailsEvent> doInBackground(Void... params) {
-				return dbManager.getEventsBySpeakerId(speaker.getId());
+				EventDao eventDao = new EventDao(App.getContext());
+				return eventDao.getEventsBySpeakerId(speaker.getId());
 			}
 
 			@Override

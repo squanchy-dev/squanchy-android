@@ -16,6 +16,7 @@ public class SpeakerManager extends SynchronousItemManager<Speaker.Holder, Objec
 
     public SpeakerManager(DrupalClient client) {
         super(client);
+        mSpeakerDao = new SpeakerDao(App.getContext());
     }
 
     @Override
@@ -36,9 +37,7 @@ public class SpeakerManager extends SynchronousItemManager<Speaker.Holder, Objec
         }
 
         EventDao eventDao = new EventDao(App.getContext());
-        mSpeakerDao = new SpeakerDao(App.getContext());
         mSpeakerDao.saveOrUpdateDataSafe(speakers);
-
         for (Speaker speaker : speakers) {
             if (speaker != null) {
                 if (speaker.isDeleted()) {
@@ -57,5 +56,17 @@ public class SpeakerManager extends SynchronousItemManager<Speaker.Holder, Objec
 
     public List<Speaker> getSpeakers(long speakerId) {
         return mSpeakerDao.getDataSafe(speakerId);
+    }
+
+    public List<Speaker> getSpeakersByEventId(long eventId) {
+        return mSpeakerDao.getSpeakersByEventId(eventId);
+    }
+
+    public Speaker getSpeakerById(long id) {
+        return mSpeakerDao.getSpeakerById(id).get(0);
+    }
+
+    public void clear() {
+        mSpeakerDao.deleteAll();
     }
 }

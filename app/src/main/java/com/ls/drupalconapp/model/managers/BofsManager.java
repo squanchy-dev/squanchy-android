@@ -65,4 +65,8 @@ public class BofsManager extends EventManager{
         }
         return true;
     }
+
+    public List<Long> getBofsDays() {
+        return mEventDao.selectDistrictDateSafe(Event.BOFS_CLASS);
+    }
 }

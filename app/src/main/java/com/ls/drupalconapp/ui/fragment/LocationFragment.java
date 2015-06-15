@@ -1,18 +1,5 @@
 package com.ls.drupalconapp.ui.fragment;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.UiSettings;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.model.DatabaseManager;
-import com.ls.drupalconapp.model.Model;
-import com.ls.drupalconapp.model.UpdatesManager;
-import com.ls.drupalconapp.model.data.Location;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -21,6 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.ls.drupalconapp.R;
+import com.ls.drupalconapp.model.Model;
+import com.ls.drupalconapp.model.UpdatesManager;
+import com.ls.drupalconapp.model.data.Location;
+import com.ls.drupalconapp.model.managers.LocationManager;
 
 import java.util.List;
 
@@ -56,8 +55,8 @@ public class LocationFragment extends Fragment implements CustomMapFragment.OnAc
     @Override
     public void onActivityCreated(GoogleMap googleMap) {
         if(googleMap != null) {
-			DatabaseManager dbManager = DatabaseManager.instance();
-			List<Location> locations = dbManager.getLocations();
+            LocationManager locationManager = new LocationManager(Model.instance().getClient());
+			List<Location> locations = locationManager.getLocations();
 
 			for(int i=0; i<locations.size(); i++){
 				Location location = locations.get(i);

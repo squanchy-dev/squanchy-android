@@ -13,6 +13,7 @@ public class LocationManager extends SynchronousItemManager<Location.Holder, Obj
     private LocationDao mLocationDao;
     public LocationManager(DrupalClient client) {
         super(client);
+        mLocationDao = new LocationDao();
     }
 
     @Override
@@ -32,9 +33,7 @@ public class LocationManager extends SynchronousItemManager<Location.Holder, Obj
             return false;
         }
 
-        mLocationDao = new LocationDao();
         mLocationDao.saveOrUpdateDataSafe(locations);
-
         for (Location location : locations) {
             if (location != null) {
                 if (location.isDeleted()) {
@@ -47,5 +46,9 @@ public class LocationManager extends SynchronousItemManager<Location.Holder, Obj
 
     public List<Location> getLocations() {
         return mLocationDao.getAllSafe();
+    }
+
+    public void clear() {
+        mLocationDao.deleteAll();
     }
 }

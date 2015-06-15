@@ -1,12 +1,18 @@
 package com.ls.drupalconapp.model;
 
+import android.content.Context;
+
 import com.ls.drupalconapp.R;
 import com.ls.drupalconapp.app.App;
+import com.ls.drupalconapp.model.dao.EventDao;
 import com.ls.drupalconapp.model.data.Event;
 import com.ls.drupalconapp.model.data.Speaker;
 import com.ls.drupalconapp.model.data.TimeRange;
 import com.ls.drupalconapp.model.data.Track;
 import com.ls.drupalconapp.model.data.Type;
+import com.ls.drupalconapp.model.managers.EventManager;
+import com.ls.drupalconapp.model.managers.SpeakerManager;
+import com.ls.drupalconapp.model.managers.TracksManager;
 import com.ls.drupalconapp.ui.adapter.item.EventItemCreator;
 import com.ls.drupalconapp.ui.adapter.item.EventListItem;
 import com.ls.drupalconapp.ui.adapter.item.HeaderItem;
@@ -14,8 +20,6 @@ import com.ls.drupalconapp.ui.adapter.item.ProgramItem;
 import com.ls.drupalconapp.ui.adapter.item.TimeRangeItem;
 
 import org.jetbrains.annotations.NotNull;
-
-import android.content.Context;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,48 +34,44 @@ import java.util.List;
 public class EventGenerator {
 
     private Context mContext;
+    private EventDao mEventDao;
 
     public EventGenerator(@NotNull Context context) {
         mContext = context;
+        EventManager manager = new EventManager(Model.instance().getClient());
+        mEventDao = manager.getEventDao();
     }
 
-    public List<EventListItem> generate(long day, int eventClass,
-            @NotNull EventItemCreator eventItemCreator) {
-        DatabaseManager databaseManager = DatabaseManager.instance();
-        List<EventListItem> eventListItems = databaseManager.getEventItems(eventClass, day);
+    public List<EventListItem> generate(long day, int eventClass, @NotNull EventItemCreator eventItemCreator) {
+        List<TimeRange> ranges = mEventDao.selectDistrictTimeRangeSafe(eventClass, day);
+        List<EventListItem> eventListItems;
+        if (eventClass == Event.SOCIALS_CLASS) {
+            eventListItems = mEventDao.selectSocialItemsSafe(eventClass, day);
+        } else {
+            eventListItems = mEventDao.selectBofsItemsSafe(eventClass, day);
+        }
 
-//        if (eventClass == Event.SOCIALS_CLASS){
-//            return  eventListItems;
-//        }
-
-        List<TimeRange> ranges = databaseManager.getTimeRangesDistinct(eventClass, day);
         return getEventItems(eventItemCreator, eventListItems, ranges);
     }
 
-    public List<EventListItem> generate(long day, int eventClass, List<Long> levelIds, List<Long> trackIds,
-                                        @NotNull EventItemCreator eventItemCreator) {
-        DatabaseManager databaseManager = DatabaseManager.instance();
-        List<EventListItem> eventListItems = databaseManager.getProgramItemsByLevelTrackIds(eventClass, day, levelIds, trackIds);
-
-        List<TimeRange> ranges = databaseManager.getTimeRangesDistinct(eventClass, day, levelIds, trackIds);
+    public List<EventListItem> generate(long day, int eventClass, List<Long> levelIds, List<Long> trackIds, @NotNull EventItemCreator eventItemCreator) {
+        List<EventListItem> eventListItems = mEventDao.selectProgramItemsSafe(eventClass, day, levelIds, trackIds);
+        List<TimeRange> ranges = mEventDao.selectDistrictTimeRangeByLevelTrackIdsSafe(eventClass, day, levelIds, trackIds);
         return getEventItems(eventItemCreator, eventListItems, ranges);
     }
 
-    public List<EventListItem> generateForFavorites(long day, @NotNull EventItemCreator eventItemCreator) {
-        DatabaseManager databaseManager = DatabaseManager.instance();
-
-        List<Long> favoriteEventIds = databaseManager.getFavoriteEvents();
-        List<Event> events = databaseManager.getEventsByIdsAndDay(favoriteEventIds, day);
-        List<EventListItem> eventListItems = fetchEventItems(events, databaseManager);
+    public List<EventListItem> generateForFavorites(long day) {
+        List<Long> favoriteEventIds = mEventDao.selectFavoriteEventsSafe();
+        List<Event> events = mEventDao.selectEventsByIdsAndDaySafe(favoriteEventIds, day);
+        List<EventListItem> eventListItems = fetchEventItems(events);
 
         return sortFavorites(eventListItems);
     }
 
-    private List<EventListItem> sortFavorites(List<EventListItem> eventListItems){
-
+    private List<EventListItem> sortFavorites(List<EventListItem> eventListItems) {
         List<EventListItem> result = new ArrayList<EventListItem>();
 
-        if (eventListItems.isEmpty()){
+        if (eventListItems.isEmpty()) {
             return result;
         }
 
@@ -79,18 +79,18 @@ public class EventGenerator {
         List<EventListItem> bofs = new ArrayList<EventListItem>();
         List<EventListItem> socials = new ArrayList<EventListItem>();
 
-        for (EventListItem eventListItem : eventListItems){
+        for (EventListItem eventListItem : eventListItems) {
             Event event = eventListItem.getEvent();
-            if (Event.PROGRAM_CLASS == event.getEventClass()){
+            if (Event.PROGRAM_CLASS == event.getEventClass()) {
                 schedules.add(eventListItem);
-            } else if (Event.BOFS_CLASS == event.getEventClass()){
+            } else if (Event.BOFS_CLASS == event.getEventClass()) {
                 bofs.add(eventListItem);
             } else if (Event.SOCIALS_CLASS == event.getEventClass()) {
                 socials.add(eventListItem);
             }
         }
 
-        if (!schedules.isEmpty()){
+        if (!schedules.isEmpty()) {
             Collections.sort(schedules, new Comparator<EventListItem>() {
                 @Override
                 public int compare(EventListItem eventListItem, EventListItem eventListItem2) {
@@ -98,10 +98,10 @@ public class EventGenerator {
                 }
             });
             schedules.add(0, new HeaderItem(App.getContext().getString(R.string.Schedule)));
-            schedules.get(schedules.size()-1).setLast(true);
+            schedules.get(schedules.size() - 1).setLast(true);
         }
 
-        if (!bofs.isEmpty()){
+        if (!bofs.isEmpty()) {
             Collections.sort(bofs, new Comparator<EventListItem>() {
                 @Override
                 public int compare(EventListItem eventListItem, EventListItem eventListItem2) {
@@ -109,10 +109,10 @@ public class EventGenerator {
                 }
             });
             bofs.add(0, new HeaderItem(App.getContext().getString(R.string.bofs)));
-            bofs.get(bofs.size()-1).setLast(true);
+            bofs.get(bofs.size() - 1).setLast(true);
         }
 
-        if (!socials.isEmpty()){
+        if (!socials.isEmpty()) {
             Collections.sort(socials, new Comparator<EventListItem>() {
                 @Override
                 public int compare(EventListItem eventListItem, EventListItem eventListItem2) {
@@ -120,7 +120,7 @@ public class EventGenerator {
                 }
             });
             socials.add(0, new HeaderItem(App.getContext().getString(R.string.social_events)));
-            socials.get(socials.size()-1).setLast(true);
+            socials.get(socials.size() - 1).setLast(true);
         }
 
         result.addAll(schedules);
@@ -131,7 +131,7 @@ public class EventGenerator {
     }
 
     private List<EventListItem> getEventItems(EventItemCreator eventItemCreator,
-            List<EventListItem> events, List<TimeRange> ranges) {
+                                              List<EventListItem> events, List<TimeRange> ranges) {
 
         List<EventListItem> result = new ArrayList<EventListItem>();
 
@@ -156,22 +156,21 @@ public class EventGenerator {
         return result;
     }
 
-    private List<EventListItem> fetchEventItems(List<Event> events,
-            DatabaseManager databaseManager) {
-        List<EventListItem> result = new ArrayList<EventListItem>();
+    private List<EventListItem> fetchEventItems(List<Event> events) {
+        SpeakerManager speakerManager = new SpeakerManager(Model.instance().getClient());
+        TracksManager tracksManager = new TracksManager(Model.instance().getClient());
+        List<EventListItem> result = new ArrayList<>();
 
         for (Event event : events) {
-
-            List<Long> speakersIds = databaseManager.getEventSpeakers(event.getId());
+            List<Long> speakersIds = mEventDao.selectEventSpeakersSafe(event.getId());
             List<Speaker> speakers = new ArrayList<Speaker>();
-            List<String> speakersNames = new ArrayList<String>();
+            List<String> speakersNames = new ArrayList<>();
 
             for (Long id : speakersIds) {
-                speakers.addAll(databaseManager.getSpeakers(id));
+                speakers.addAll(speakerManager.getSpeakers(id));
             }
 
-            Track track = databaseManager.getTrack(event.getTrack());
-
+            Track track = tracksManager.getTrack(event.getTrack());
             TimeRangeItem item = new TimeRangeItem();
             item.setEvent(event);
             item.setFromTime(event.getFromTime());
@@ -183,15 +182,13 @@ public class EventGenerator {
             }
 
             item.setSpeakers(speakersNames);
-
             result.add(item);
         }
-
         return result;
     }
 
     private List<EventListItem> generateEventItems(List<EventListItem> eventListItems,
-            EventItemCreator eventItemCreator) {
+                                                   EventItemCreator eventItemCreator) {
         List<EventListItem> result = new ArrayList<EventListItem>();
 
         if (eventListItems.size() > 0) {
@@ -216,7 +213,7 @@ public class EventGenerator {
                 case Type.SPEACH:
                 case Type.SPEACH_OF_DAY:
 
-                    if (eventListItems.get(0) instanceof ProgramItem){
+                    if (eventListItems.get(0) instanceof ProgramItem) {
                         ProgramItem firstItem = (ProgramItem) eventListItems.get(0);
                         timeRangeItem.setSpeakers(firstItem.getSpeakers());
                         timeRangeItem.setTrack(firstItem.getTrack());
@@ -253,7 +250,7 @@ public class EventGenerator {
         return result;
     }
 
-    private Date parseEventDate(Calendar fromTime, long dateTime){
+    private Date parseEventDate(Calendar fromTime, long dateTime) {
 
         Calendar monthYear = Calendar.getInstance();
         monthYear.setTimeInMillis(dateTime);
@@ -263,7 +260,7 @@ public class EventGenerator {
         time.set(Calendar.HOUR_OF_DAY, fromTime.get(Calendar.HOUR_OF_DAY));
         time.set(Calendar.MINUTE, fromTime.get(Calendar.MINUTE));
 
-        return  new Date(time.getTimeInMillis());
+        return new Date(time.getTimeInMillis());
     }
 
 }
