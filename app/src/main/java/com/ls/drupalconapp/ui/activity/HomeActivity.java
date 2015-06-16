@@ -1,5 +1,6 @@
 package com.ls.drupalconapp.ui.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -35,12 +36,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class MainActivity extends StateActivity implements FilterDialog.OnCheckedPositionsPass {
+public class HomeActivity extends StateActivity implements FilterDialog.OnCheckedPositionsPass {
 
 	private DrawerManager mFrManager;
 	private DrawerAdapter mAdapter;
-	private List<Long> levelIds = new ArrayList<>();
-	private List<Long> trackIds = new ArrayList<>();
 	private String mPresentTitle;
 	private int mSelectedItem = 0;
 	private int mLastSelectedItem = 0;
@@ -52,6 +51,14 @@ public class MainActivity extends StateActivity implements FilterDialog.OnChecke
 
 	public FilterDialog mFilterDialog;
 	public boolean mIsDrawerItemClicked;
+
+	private List<Long> levelIds = new ArrayList<>();
+	private List<Long> trackIds = new ArrayList<>();
+
+	public static void startThisActivity(Activity activity) {
+		Intent intent = new Intent(activity, HomeActivity.class);
+		activity.startActivity(intent);
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +110,7 @@ public class MainActivity extends StateActivity implements FilterDialog.OnChecke
 			getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
 			mStatusBar = findViewById(R.id.viewStatusBar);
-			mStatusBar.setBackgroundColor(getResources().getColor(R.color.title_color));
+			mStatusBar.setBackgroundColor(getResources().getColor(R.color.primary));
 			mStatusBar.setVisibility(View.VISIBLE);
 			findViewById(R.id.viewStatusBarTrans).setVisibility(View.VISIBLE);
 		}
@@ -113,7 +120,7 @@ public class MainActivity extends StateActivity implements FilterDialog.OnChecke
 		mPresentTitle = DrawerMenu.MENU_STRING_ARRAY[0];
 		mToolbar = (Toolbar) findViewById(R.id.toolBar);
 		if (mToolbar != null) {
-			mToolbar.setBackgroundColor(getResources().getColor(R.color.title_color));
+			mToolbar.setBackgroundColor(getResources().getColor(R.color.primary));
 			mToolbar.setTitle(mPresentTitle);
 			setSupportActionBar(mToolbar);
 		}
@@ -133,27 +140,27 @@ public class MainActivity extends StateActivity implements FilterDialog.OnChecke
 
 	private void initDrawerListener() {
 		mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
-			@Override
-			public void onDrawerSlide(View drawerView, float slideOffset) {
-				KeyboardUtils.hideKeyboard(getCurrentFocus());
-			}
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                KeyboardUtils.hideKeyboard(getCurrentFocus());
+            }
 
-			@Override
-			public void onDrawerOpened(View drawerView) {
-			}
+            @Override
+            public void onDrawerOpened(View drawerView) {
+            }
 
-			@Override
-			public void onDrawerClosed(View drawerView) {
-				if (mIsDrawerItemClicked) {
-					mIsDrawerItemClicked = false;
-					changeFragment();
-				}
-			}
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                if (mIsDrawerItemClicked) {
+                    mIsDrawerItemClicked = false;
+                    changeFragment();
+                }
+            }
 
-			@Override
-			public void onDrawerStateChanged(int newState) {
-			}
-		});
+            @Override
+            public void onDrawerStateChanged(int newState) {
+            }
+        });
 	}
 
 	private void initNavigationDrawerList() {
@@ -265,11 +272,9 @@ public class MainActivity extends StateActivity implements FilterDialog.OnChecke
 				mAdapter.notifyDataSetChanged();
 
 				if (mSelectedItem == DrawerManager.EventMode.Location.ordinal()) {
-					if (mStatusBar != null) mStatusBar.setBackgroundColor(getResources().getColor(R.color.location_color));
-					mToolbar.setBackgroundColor(getResources().getColor(R.color.location_color));
+                    displayLocationTheme();
 				} else {
-					if (mStatusBar != null) mStatusBar.setBackgroundColor(getResources().getColor(R.color.title_color));
-					mToolbar.setBackgroundColor(getResources().getColor(R.color.title_color));
+                    displayDefaultTheme();
 				}
 			}
 		}
@@ -281,6 +286,20 @@ public class MainActivity extends StateActivity implements FilterDialog.OnChecke
 		AnalyticsManager.sendEvent(this, App.getContext().getString(R.string.Schedule) + " screen", R.string.action_open);
 		mFrManager.setFragment(DrawerManager.EventMode.Program);
 	}
+
+	private void displayDefaultTheme() {
+        if (mStatusBar != null && mToolbar != null) {
+            mStatusBar.setBackgroundColor(getResources().getColor(R.color.primary));
+            mToolbar.setBackgroundColor(getResources().getColor(R.color.primary));
+        }
+    }
+
+    private void displayLocationTheme() {
+        if (mStatusBar != null) {
+            mStatusBar.setBackgroundColor(getResources().getColor(R.color.secondary));
+            mToolbar.setBackgroundColor(getResources().getColor(R.color.secondary));
+        }
+    }
 
 	@Override
 	public void onCheckedPositionsPass(List<List<Long>> selectedIds) {

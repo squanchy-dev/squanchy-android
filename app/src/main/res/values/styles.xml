@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="DrupalConAppActionBarTextStyle" >
+    <style name="DrupalConAppActionBarTextStyle">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
     </style>
@@ -14,17 +14,17 @@
         <item name="android:background">@drawable/selector_toolbar</item>
     </style>
 
-    <style name="DrupalConTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimaryDark">@color/title_color_dark</item>
+    <style name="DrupalConHomeTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/gray_light</item>
-        <item name="colorPrimary">@color/title_color</item>
-        <item name="colorControlNormal">@color/color_divider</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorControlNormal">@color/grey_200</item>
     </style>
 
     <style name="DrupalConDetailsTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimaryDark">@color/title_color_dark</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/gray_light</item>
-        <item name="colorPrimary">@color/title_color</item>
+        <item name="colorPrimary">@color/primary</item>
         <item name="colorControlNormal">@color/white</item>
     </style>
 

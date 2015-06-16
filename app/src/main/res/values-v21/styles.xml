@@ -4,18 +4,18 @@
         <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
     </style>
 
-    <style name="DrupalConTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimaryDark">@color/title_color_dark</item>
+    <style name="DrupalConHomeTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/gray_light</item>
-        <item name="colorPrimary">@color/title_color</item>
+        <item name="colorPrimary">@color/primary</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="colorControlNormal">@color/color_divider</item>
+        <item name="colorControlNormal">@color/grey_200</item>
     </style>
 
     <style name="DrupalConDetailsTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimaryDark">@color/title_color_dark</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/gray_light</item>
-        <item name="colorPrimary">@color/title_color</item>
+        <item name="colorPrimary">@color/primary</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="colorControlNormal">@color/white</item>
     </style>

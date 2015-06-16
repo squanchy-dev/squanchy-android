@@ -97,7 +97,7 @@ public class AboutDetailsActivity extends StateActivity {
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
 		if (toolbar != null) {
 			toolbar.setTitle(title);
-			findViewById(R.id.layoutToolbar).setBackgroundColor(getResources().getColor(R.color.title_color));
+			findViewById(R.id.layoutToolbar).setBackgroundColor(getResources().getColor(R.color.primary));
 			setSupportActionBar(toolbar);
 			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		}

@@ -9,13 +9,13 @@
         android:id="@+id/layoutToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/title_color">
+        android:background="@color/primary">
 
         <View
             android:id="@+id/viewStatusBar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/status_bar_height"
-            android:background="@color/title_color"
+            android:background="@color/primary"
             android:visibility="gone"/>
 
         <android.support.v7.widget.Toolbar

@@ -24,7 +24,7 @@ import com.ls.drupalconapp.model.managers.BofsManager;
 import com.ls.drupalconapp.model.managers.FavoriteManager;
 import com.ls.drupalconapp.model.managers.ProgramManager;
 import com.ls.drupalconapp.model.managers.SocialManager;
-import com.ls.drupalconapp.ui.activity.MainActivity;
+import com.ls.drupalconapp.ui.activity.HomeActivity;
 import com.ls.drupalconapp.ui.adapter.BaseEventDaysPagerAdapter;
 import com.ls.drupalconapp.ui.dialog.FilterDialog;
 import com.ls.drupalconapp.ui.drawer.DrawerManager;
@@ -48,7 +48,7 @@ public class EventHolderFragment extends Fragment {
 	private BaseEventDaysPagerAdapter mAdapter;
 	private List<Long> mLevelIds = new ArrayList<>();
 	private List<Long> mTrackIds = new ArrayList<>();
-	private MainActivity mainActivity;
+	private HomeActivity homeActivity;
 
 	private DrawerManager.EventMode mEventMode;
 	private View mTxtNoEvents;
@@ -62,15 +62,15 @@ public class EventHolderFragment extends Fragment {
 			Log.d("UPDATED", "EventHolderFragment");
 
 			Activity activity = getActivity();
-			if (activity instanceof MainActivity) {
-				((MainActivity) activity).initFilterDialog();
+			if (activity instanceof HomeActivity) {
+				((HomeActivity) activity).initFilterDialog();
 
-				FilterDialog filterDialog = ((MainActivity) activity).mFilterDialog;
+				FilterDialog filterDialog = ((HomeActivity) activity).mFilterDialog;
 				if (filterDialog != null) {
 					filterDialog.clearFilter();
 
-					if (((MainActivity) activity).mFilterDialog.isAdded()) {
-						((MainActivity) activity).mFilterDialog.dismissAllowingStateLoss();
+					if (((HomeActivity) activity).mFilterDialog.isAdded()) {
+						((HomeActivity) activity).mFilterDialog.dismissAllowingStateLoss();
 					}
 				}
 			}
@@ -118,7 +118,7 @@ public class EventHolderFragment extends Fragment {
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		mainActivity = (MainActivity) activity;
+		homeActivity = (HomeActivity) activity;
 	}
 
 	@Override
@@ -156,10 +156,10 @@ public class EventHolderFragment extends Fragment {
 
 	private void showFilter() {
 		Activity activity = getActivity();
-		if (activity instanceof MainActivity) {
+		if (activity instanceof HomeActivity) {
 
-			if (!((MainActivity) activity).mFilterDialog.isAdded()) {
-				((MainActivity) activity).mFilterDialog.show(getActivity().getSupportFragmentManager(), "filter");
+			if (!((HomeActivity) activity).mFilterDialog.isAdded()) {
+				((HomeActivity) activity).mFilterDialog.show(getActivity().getSupportFragmentManager(), "filter");
 			}
 		}
 	}
@@ -186,8 +186,8 @@ public class EventHolderFragment extends Fragment {
 		if (bundle == null) {
 			return;
 		}
-		mLevelIds = mainActivity.getLevelIds();
-		mTrackIds = mainActivity.getTrackIds();
+		mLevelIds = homeActivity.getLevelIds();
+		mTrackIds = homeActivity.getTrackIds();
 
 		int eventPos = bundle.getInt(EXTRAS_ARG_MODE, DrawerManager.EventMode.Program.ordinal());
 		mEventMode = DrawerManager.EventMode.values()[eventPos];

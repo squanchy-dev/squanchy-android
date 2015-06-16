@@ -14,7 +14,7 @@
         android:layout_marginLeft="21dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:textColor="@color/title_color"
+        android:textColor="@color/primary"
         android:textSize="@dimen/text_size_large"/>
 
     <RelativeLayout
@@ -72,7 +72,7 @@
                 android:layout_marginLeft="58dp"
                 android:layout_height="1px"
                 android:layout_gravity="right"
-                android:background="@color/color_divider"/>
+                android:background="@color/grey_200"/>
 
     </FrameLayout>
 

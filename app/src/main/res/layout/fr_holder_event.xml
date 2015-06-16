@@ -13,7 +13,7 @@
         android:textSize= "13sp"
         android:textColor= "#FFF"
         android:textStyle = "normal"
-        android:background="@color/title_color"
+        android:background="@color/primary"
         app:pstsDividerColor="#00000000"
         app:pstsIndicatorColor="@color/white"
         app:pstsTextStyle = "normal"
@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:visibility="gone"
-        android:background="@color/title_color"/>
+        android:background="@color/primary"/>
 
     <android.support.v4.view.ViewPager
         android:layout_below="@+id/pager_tab_strip"

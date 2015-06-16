@@ -1,8 +1,5 @@
 package com.ls.drupalconapp.ui.drawer;
 
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.app.App;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.ls.drupalconapp.R;
+import com.ls.drupalconapp.app.App;
 
 import java.util.List;
 
@@ -63,7 +63,7 @@ public class DrawerAdapter extends BaseAdapter {
 
 		if (position == selectedPos) {
 			image.setImageResource(item.getSelIconRes());
-			txtName.setTextColor(App.getContext().getResources().getColor(R.color.selector_nav_drawer));
+			txtName.setTextColor(App.getContext().getResources().getColor(R.color.primary));
 		} else {
 			image.setImageResource(item.getIconRes());
 		}

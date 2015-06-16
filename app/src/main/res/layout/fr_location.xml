@@ -12,7 +12,7 @@
         android:paddingLeft="28dp"
         android:paddingRight="16dp"
         android:paddingBottom="23dp"
-        android:background="@color/location_color">
+        android:background="@color/secondary">
 
         <com.ls.drupalconapp.ui.view.RegularFontTextView
             android:id="@+id/txtPlace"

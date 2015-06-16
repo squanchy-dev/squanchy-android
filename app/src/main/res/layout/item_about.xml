@@ -19,7 +19,7 @@
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/color_divider"
+        android:background="@color/grey_200"
         android:layout_gravity="bottom"/>
 
 </FrameLayout>

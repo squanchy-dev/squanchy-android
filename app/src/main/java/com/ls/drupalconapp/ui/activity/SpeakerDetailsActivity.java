@@ -382,7 +382,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 		int verCoordinate = locations[1];
 
 		if (mActionBarBottomCoordinate > verCoordinate && !isTitleBgSet) {
-			mToolbar.setBackgroundColor(getResources().getColor(R.color.title_color));
+			mToolbar.setBackgroundColor(getResources().getColor(R.color.primary));
 			isTitleBgSet = true;
 			isTransparentBbSet = false;
 

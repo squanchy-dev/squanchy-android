@@ -1,6 +1,6 @@
 package com.ls.drupalconapp.ui.activity;
 
-import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
@@ -19,10 +19,27 @@ public class SplashActivity extends FragmentActivity {
         setContentView(R.layout.ac_splash);
 
         AnalyticsManager.sendEvent(this, "Application", R.string.action_open);
+        performSplash();
+    }
 
-        UpdatesManager manager = Model.instance().getUpdatesManager();
-        manager.checkForDatabaseUpdate();
+    private void performSplash() {
+        final UpdatesManager manager = Model.instance().getUpdatesManager();
+        new AsyncTask<Void, Void, UpdatesManager>() {
+            @Override
+            protected UpdatesManager doInBackground(Void... params) {
+                manager.checkForDatabaseUpdate();
+                return manager;
+            }
 
+            @Override
+            protected void onPostExecute(UpdatesManager manager) {
+                loadData(manager);
+            }
+        }.execute();
+
+    }
+
+    private void loadData(UpdatesManager manager) {
         manager.startLoading(new UpdateCallback() {
             @Override
             public void onDownloadSuccess() {
@@ -38,8 +55,7 @@ public class SplashActivity extends FragmentActivity {
     }
 
     private void startMainActivity() {
-        Intent intent = new Intent(getBaseContext(), MainActivity.class);
-        startActivity(intent);
+        HomeActivity.startThisActivity(this);
         finish();
     }
 }

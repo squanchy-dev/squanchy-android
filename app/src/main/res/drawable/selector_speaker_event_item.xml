@@ -4,6 +4,6 @@
         android:enterFadeDuration="@android:integer/config_mediumAnimTime"
         android:exitFadeDuration="@android:integer/config_mediumAnimTime">
 
-    <item android:state_pressed="true" android:drawable="@color/color_divider"/>
+    <item android:state_pressed="true" android:drawable="@color/grey_200"/>
     <item android:drawable="@android:color/white"/>
 </selector>

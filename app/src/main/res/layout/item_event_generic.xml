@@ -7,7 +7,7 @@
 
     <FrameLayout
         android:id="@+id/dark_background"
-        android:background="@color/white_dark"
+        android:background="@color/grey_100"
         android:layout_width="88dp"
         android:layout_height="match_parent"/>
 
@@ -168,7 +168,7 @@
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="2px"
-        android:background="@color/color_divider"
+        android:background="@color/grey_200"
         android:visibility="gone"
         android:layout_gravity="bottom"/>
 
@@ -177,6 +177,6 @@
         android:layout_width="match_parent"
         android:layout_height="2px"
         android:layout_marginLeft="96dp"
-        android:background="@color/color_divider"
+        android:background="@color/grey_200"
         android:layout_gravity="bottom"/>
 </FrameLayout>

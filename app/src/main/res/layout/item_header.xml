@@ -10,7 +10,7 @@
         android:id="@+id/txtTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/title_color"
+        android:textColor="@color/primary"
         android:textSize="@dimen/text_size_small"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"

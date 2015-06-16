@@ -162,7 +162,7 @@
             android:id="@+id/viewToolbar"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:background="@color/title_color"/>
+            android:background="@color/primary"/>
 
         <View
             android:id="@+id/viewStatusBarTrans"

@@ -102,7 +102,7 @@ public class LoginActivity extends StateActivity {
     }
 
     private void startMainActivity() {
-        Intent intent = new Intent(getBaseContext(), MainActivity.class);
+        Intent intent = new Intent(getBaseContext(), HomeActivity.class);
         startActivity(intent);
     }
 

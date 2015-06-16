@@ -49,7 +49,7 @@
                     android:id="@+id/holderTrack"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/location_color"
+                    android:background="@color/secondary"
                     android:paddingTop="21dp"
                     android:paddingBottom="22dp"
                     android:paddingRight="16dp"
@@ -135,7 +135,7 @@
                         android:layout_height="1px"
                         android:layout_marginLeft="72dp"
                         android:layout_gravity="bottom|right"
-                        android:background="@color/color_divider"/>
+                        android:background="@color/grey_200"/>
                 </FrameLayout>
 
                 <LinearLayout
@@ -153,7 +153,7 @@
                     android:layout_marginLeft="72dp"
                     android:layout_above="@+id/webViewDescription"
                     android:layout_alignParentRight="true"
-                    android:background="@color/color_divider"/>
+                    android:background="@color/grey_200"/>
 
                 <View
                     android:id="@+id/generalDivider"
@@ -162,7 +162,7 @@
                     android:layout_marginLeft="72dp"
                     android:layout_above="@+id/webViewDescription"
                     android:layout_alignParentRight="true"
-                    android:background="@color/color_divider"/>
+                    android:background="@color/grey_200"/>
 
                 <FrameLayout
                     android:layout_below="@+id/holderSpeakers"
@@ -236,7 +236,7 @@
             android:id="@+id/viewToolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_statusbar_height"
-            android:background="@color/location_color"
+            android:background="@color/secondary"
             android:visibility="visible"/>
 
         <ImageView

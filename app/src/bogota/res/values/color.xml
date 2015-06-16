@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="title_color_dark">#ff05913f</color>
-    <color name="title_color">#05ae43</color>
-    <color name="selector_nav_drawer">#05ae43</color>
-    <color name="location_color">#05ae43</color>
-    <color name="location_color_dark">#05ae43</color>
-    <color name="speaker_title">#05ae43</color>
-
+    <color name="primary_dark">#ff05913f</color>
+    <color name="primary">#05ae43</color>
+    <color name="secondary">#05ae43</color>
+    <color name="secondary_dark">#05ae43</color>
+    <color name="additional">#05ae43</color>
 </resources>
