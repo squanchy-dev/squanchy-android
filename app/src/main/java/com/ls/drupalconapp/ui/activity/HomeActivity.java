@@ -17,7 +17,6 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.ls.drupalconapp.R;
 import com.ls.drupalconapp.app.App;
 import com.ls.drupalconapp.model.Model;
-import com.ls.drupalconapp.model.PreferencesManager;
 import com.ls.drupalconapp.model.data.Level;
 import com.ls.drupalconapp.model.data.Track;
 import com.ls.drupalconapp.model.managers.TracksManager;
@@ -31,7 +30,6 @@ import com.ls.utils.AnalyticsManager;
 import com.ls.utils.KeyboardUtils;
 import com.ls.utils.ScheduleManager;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -52,9 +50,6 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnChecke
 	public FilterDialog mFilterDialog;
 	public boolean mIsDrawerItemClicked;
 
-	private List<Long> levelIds = new ArrayList<>();
-	private List<Long> trackIds = new ArrayList<>();
-
 	public static void startThisActivity(Activity activity) {
 		Intent intent = new Intent(activity, HomeActivity.class);
 		activity.startActivity(intent);
@@ -67,8 +62,8 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnChecke
 
 		initStatusBar();
 		initToolbar();
-		loadFilter();
 		initNavigationDrawer();
+		initNavigationDrawerList();
 		initFilterDialog();
 
 		initFragmentManager();
@@ -133,34 +128,30 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnChecke
 		mDrawerLayout.setDrawerListener(drawerToggle);
 		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 		mDrawerLayout.closeDrawers();
-		initDrawerListener();
-		drawerToggle.syncState();
-		initNavigationDrawerList();
-	}
-
-	private void initDrawerListener() {
 		mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-                KeyboardUtils.hideKeyboard(getCurrentFocus());
-            }
+			@Override
+			public void onDrawerSlide(View drawerView, float slideOffset) {
+				KeyboardUtils.hideKeyboard(getCurrentFocus());
+			}
 
-            @Override
-            public void onDrawerOpened(View drawerView) {
-            }
+			@Override
+			public void onDrawerOpened(View drawerView) {
+			}
 
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                if (mIsDrawerItemClicked) {
-                    mIsDrawerItemClicked = false;
-                    changeFragment();
-                }
-            }
+			@Override
+			public void onDrawerClosed(View drawerView) {
+				if (mIsDrawerItemClicked) {
+					mIsDrawerItemClicked = false;
+					changeFragment();
+				}
+			}
 
-            @Override
-            public void onDrawerStateChanged(int newState) {
-            }
-        });
+			@Override
+			public void onDrawerStateChanged(int newState) {
+			}
+		});
+
+		drawerToggle.syncState();
 	}
 
 	private void initNavigationDrawerList() {
@@ -173,20 +164,12 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnChecke
 			}
 		});
 
-		ListView listMenu = (ListView) findViewById(R.id.leftDrawer);
-		listMenu.addHeaderView(
+		ListView listView = (ListView) findViewById(R.id.leftDrawer);
+		listView.addHeaderView(
 				getLayoutInflater().inflate(R.layout.nav_drawer_header, null),
 				null,
 				false);
-		listMenu.setAdapter(mAdapter);
-	}
-
-	private void loadFilter() {
-		List<Long> expLevels = PreferencesManager.getInstance().loadExpLevel();
-		List<Long> tracks = PreferencesManager.getInstance().loadTracks();
-
-		levelIds.addAll(expLevels);
-		trackIds.addAll(tracks);
+		listView.setAdapter(mAdapter);
 	}
 
 	public void initFilterDialog() {
@@ -265,17 +248,18 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnChecke
 			if (!item.isGroup() && mFrManager != null) {
 				mFrManager.setFragment(DrawerManager.EventMode.values()[mSelectedItem]);
 				mPresentTitle = DrawerMenu.MENU_STRING_ARRAY[mSelectedItem];
-				AnalyticsManager.sendEvent(this, mPresentTitle + " screen", R.string.action_open);
 				mToolbar.setTitle(mPresentTitle);
 
 				mAdapter.setSelectedPos(mSelectedItem);
 				mAdapter.notifyDataSetChanged();
 
 				if (mSelectedItem == DrawerManager.EventMode.Location.ordinal()) {
-                    displayLocationTheme();
+					displayLocationTheme();
 				} else {
-                    displayDefaultTheme();
+					displayDefaultTheme();
 				}
+
+				AnalyticsManager.sendEvent(this, mPresentTitle + " screen", R.string.action_open);
 			}
 		}
 		mLastSelectedItem = mSelectedItem;
@@ -302,31 +286,7 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnChecke
     }
 
 	@Override
-	public void onCheckedPositionsPass(List<List<Long>> selectedIds) {
-		if (selectedIds == null || selectedIds.size() == 0) {
-			return;
-		}
-		List<Long> levelIds = new ArrayList<>();
-		List<Long> trackIds = new ArrayList<>();
-
-		for (int i = 0; i < selectedIds.size(); i++) {
-			List<Long> ids = selectedIds.get(i);
-			if (i == 0) {
-				levelIds.addAll(ids);
-			} else if (i == 1) {
-				trackIds.addAll(ids);
-			}
-		}
-		this.levelIds = levelIds;
-		this.trackIds = trackIds;
+	public void onNewFilterApplied() {
 		mFrManager.reloadPrograms();
-	}
-
-	public List<Long> getLevelIds() {
-		return levelIds;
-	}
-
-	public List<Long> getTrackIds() {
-		return trackIds;
 	}
 }

@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -46,9 +45,6 @@ public class EventHolderFragment extends Fragment {
 	private View mTabView;
 	private PagerSlidingTabStrip mPagerTabs;
 	private BaseEventDaysPagerAdapter mAdapter;
-	private List<Long> mLevelIds = new ArrayList<>();
-	private List<Long> mTrackIds = new ArrayList<>();
-	private HomeActivity homeActivity;
 
 	private DrawerManager.EventMode mEventMode;
 	private View mTxtNoEvents;
@@ -59,29 +55,7 @@ public class EventHolderFragment extends Fragment {
 	{
 		@Override
 		public void onDataUpdated(List<Integer> requestIds) {
-			Log.d("UPDATED", "EventHolderFragment");
-
-			Activity activity = getActivity();
-			if (activity instanceof HomeActivity) {
-				((HomeActivity) activity).initFilterDialog();
-
-				FilterDialog filterDialog = ((HomeActivity) activity).mFilterDialog;
-				if (filterDialog != null) {
-					filterDialog.clearFilter();
-
-					if (((HomeActivity) activity).mFilterDialog.isAdded()) {
-						((HomeActivity) activity).mFilterDialog.dismissAllowingStateLoss();
-					}
-				}
-			}
-
-			for (int id : requestIds) {
-				int eventModePos = UpdatesManager.convertEventIdToEventModePos(id);
-				if (eventModePos == mEventMode.ordinal()) {
-					updateData();
-					break;
-				}
-			}
+            performDataUpdate(requestIds);
 		}
 	};
 
@@ -89,43 +63,23 @@ public class EventHolderFragment extends Fragment {
 			new FavoriteReceiverManager.FavoriteUpdatedListener() {
 				@Override
 				public void onFavoriteUpdated(long eventId, boolean isFavorite) {
-					if (getView() == null) {
-						return;
-					}
-					if (mEventMode == DrawerManager.EventMode.Favorites) {
-						updateData();
-					}
-				}
+                    performFavoriteUpdate();
+                }
 			});
 
 	public static EventHolderFragment newInstance(int modePos) {
 		EventHolderFragment fragment = new EventHolderFragment();
-		Bundle args = new Bundle();
-		args.putInt(EXTRAS_ARG_MODE, modePos);
-		fragment.setArguments(args);
+		Bundle bundle = new Bundle();
+		bundle.putInt(EXTRAS_ARG_MODE, modePos);
+		fragment.setArguments(bundle);
 
 		return fragment;
 	}
 
-	public List<Long> getmLevelIds() {
-		return mLevelIds;
-	}
-
-	public List<Long> getmTrackIds() {
-		return mTrackIds;
-	}
-
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-		homeActivity = (HomeActivity) activity;
-	}
-
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-							 Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fr_holder_event, container, false);
-	}
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fr_holder_event, container, false);
+    }
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -153,17 +107,6 @@ public class EventHolderFragment extends Fragment {
 		return true;
 	}
 
-
-	private void showFilter() {
-		Activity activity = getActivity();
-		if (activity instanceof HomeActivity) {
-
-			if (!((HomeActivity) activity).mFilterDialog.isAdded()) {
-				((HomeActivity) activity).mFilterDialog.show(getActivity().getSupportFragmentManager(), "filter");
-			}
-		}
-	}
-
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -183,22 +126,11 @@ public class EventHolderFragment extends Fragment {
 
 	private void initData() {
 		Bundle bundle = getArguments();
-		if (bundle == null) {
-			return;
+		if (bundle != null) {
+            int eventPos = bundle.getInt(EXTRAS_ARG_MODE, DrawerManager.EventMode.Program.ordinal());
+            mEventMode = DrawerManager.EventMode.values()[eventPos];
 		}
-		mLevelIds = homeActivity.getLevelIds();
-		mTrackIds = homeActivity.getTrackIds();
-
-		int eventPos = bundle.getInt(EXTRAS_ARG_MODE, DrawerManager.EventMode.Program.ordinal());
-		mEventMode = DrawerManager.EventMode.values()[eventPos];
 	}
-
-    /*
-	 * Call this method in onCreate() in your fragment
-     */
-//    protected void setMode(int mode) {
-//        mMode = mode;
-//    }
 
 	private void initView() {
 		View view = getView();
@@ -206,16 +138,13 @@ public class EventHolderFragment extends Fragment {
 			return;
 		}
 
-		mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
 		mAdapter = new BaseEventDaysPagerAdapter(getChildFragmentManager());
+		mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
 		mViewPager.setAdapter(mAdapter);
-		mViewPager.setAlpha(0);
-
 		mTabView = view.findViewById(R.id.tabView);
-		mTabView.setAlpha(1);
 
-		mPagerTabs = (PagerSlidingTabStrip) getView().findViewById(R.id.pager_tab_strip);
 		Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Regular.ttf");
+		mPagerTabs = (PagerSlidingTabStrip) getView().findViewById(R.id.pager_tab_strip);
 		mPagerTabs.setTypeface(typeface, 0);
 		mPagerTabs.setViewPager(mViewPager);
 
@@ -282,7 +211,6 @@ public class EventHolderFragment extends Fragment {
 
 		mAdapter.setData(mDayIdList, mEventMode);
 		switchToCurrentDay(mDayIdList);
-		mViewPager.animate().alpha(1.0f).setDuration(ANIMATION_DURATION).start();
 		mTabView.animate().alpha(0).setDuration(ANIMATION_DURATION).start();
 	}
 
@@ -303,13 +231,20 @@ public class EventHolderFragment extends Fragment {
 		initView();
 	}
 
+	private void showFilter() {
+		Activity activity = getActivity();
+		if (activity instanceof HomeActivity) {
+
+			if (!((HomeActivity) activity).mFilterDialog.isAdded()) {
+				((HomeActivity) activity).mFilterDialog.show(getActivity().getSupportFragmentManager(), "filter");
+			}
+		}
+	}
+
 	private void updateFilterState(@NotNull MenuItem filter) {
 		boolean isFilterUsed = false;
 		List<Long> levelIds = PreferencesManager.getInstance().loadExpLevel();
 		List<Long> trackIds = PreferencesManager.getInstance().loadTracks();
-
-		mLevelIds.addAll(levelIds);
-		mTrackIds.addAll(trackIds);
 
 		if (!levelIds.isEmpty() || !trackIds.isEmpty()) {
 			isFilterUsed = true;
@@ -321,4 +256,37 @@ public class EventHolderFragment extends Fragment {
 			filter.setIcon(getResources().getDrawable(R.drawable.ic_filter_empty));
 		}
 	}
+
+	//TODO bag logic, need to be refactored +tested by Charles
+	private void performDataUpdate(List<Integer> requestIds) {
+		Activity activity = getActivity();
+		if (activity instanceof HomeActivity) {
+			((HomeActivity) activity).initFilterDialog();
+
+			FilterDialog filterDialog = ((HomeActivity) activity).mFilterDialog;
+			if (filterDialog != null) {
+				filterDialog.clearFilter();
+
+				if (((HomeActivity) activity).mFilterDialog.isAdded()) {
+					((HomeActivity) activity).mFilterDialog.dismissAllowingStateLoss();
+				}
+			}
+		}
+
+		for (int id : requestIds) {
+			int eventModePos = UpdatesManager.convertEventIdToEventModePos(id);
+			if (eventModePos == mEventMode.ordinal()) {
+				updateData();
+				break;
+			}
+		}
+	}
+
+    private void performFavoriteUpdate() {
+        if (getView() != null) {
+            if (mEventMode == DrawerManager.EventMode.Favorites) {
+                updateData();
+            }
+        }
+    }
 }

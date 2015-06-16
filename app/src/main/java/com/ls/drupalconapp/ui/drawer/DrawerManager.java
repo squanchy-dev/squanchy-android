@@ -1,19 +1,19 @@
 package com.ls.drupalconapp.ui.drawer;
 
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+
 import com.ls.drupalconapp.ui.fragment.EventHolderFragment;
 import com.ls.drupalconapp.ui.fragment.LocationFragment;
 import com.ls.drupalconapp.ui.fragment.SpeakersListFragment;
 
 import org.jetbrains.annotations.NotNull;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-
 public class DrawerManager {
 
-	public static enum EventMode {Program, Bofs, Social, Speakers, Favorites, Location, About}
+	public enum EventMode {Program, Bofs, Social, Speakers, Favorites, Location, About}
 
 	private FragmentManager fragmentManager;
 	private int fragmentHolderId;
@@ -47,14 +47,14 @@ public class DrawerManager {
 				fragmentTag = EventHolderFragment.TAG;
 				break;
 
-			case Speakers:
-				fragment = new SpeakersListFragment();
-				fragmentTag = SpeakersListFragment.TAG;
-				break;
-
 			case Favorites:
 				fragment = EventHolderFragment.newInstance(EventMode.Favorites.ordinal());
 				fragmentTag = EventHolderFragment.TAG;
+				break;
+
+			case Speakers:
+				fragment = new SpeakersListFragment();
+				fragmentTag = SpeakersListFragment.TAG;
 				break;
 
 			case Location:

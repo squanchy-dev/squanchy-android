@@ -1,15 +1,10 @@
 package com.ls.drupalconapp.ui.dialog;
 
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.model.PreferencesManager;
-import com.ls.drupalconapp.model.data.Level;
-import com.ls.drupalconapp.model.data.Track;
-import com.ls.drupalconapp.ui.adapter.FilterDialogAdapter;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -18,13 +13,17 @@ import android.view.Window;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
+import com.ls.drupalconapp.R;
+import com.ls.drupalconapp.model.PreferencesManager;
+import com.ls.drupalconapp.model.data.Level;
+import com.ls.drupalconapp.model.data.Track;
+import com.ls.drupalconapp.ui.adapter.FilterDialogAdapter;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class FilterDialog extends DialogFragment {
-
-	public static final String TAG = "FilterDialog";
 
 	private static final String ARG_TRACKS = "ARG_TRACKS";
 	private static final String ARG_EXP_LEVEL = "ARG_EXP_LEVEL";
@@ -33,13 +32,12 @@ public class FilterDialog extends DialogFragment {
 	private static List<Track> mTrackList;
 	private static List<List<Long>> mSelectedIds;
 
+    private OnCheckedPositionsPass mListener;
 	private FilterDialogAdapter mAdapter;
 
 	public interface OnCheckedPositionsPass {
-		public void onCheckedPositionsPass(List<List<Long>> selectedIds);
+		void onNewFilterApplied();
 	}
-
-	OnCheckedPositionsPass dataPasser;
 
 	public static FilterDialog newInstance(String[] tracks, String[] expLevels) {
 		FilterDialog filterDialog = new FilterDialog();
@@ -59,7 +57,7 @@ public class FilterDialog extends DialogFragment {
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		dataPasser = (OnCheckedPositionsPass) activity;
+		mListener = (OnCheckedPositionsPass) activity;
 	}
 
 	public void setData(List<Level> levelList, List<Track> trackList) {
@@ -101,40 +99,38 @@ public class FilterDialog extends DialogFragment {
 		listDataHeader.add(getActivity().getString(R.string.exp_levels));
 		listDataHeader.add(getActivity().getString(R.string.tracks));
 
-		HashMap<String, String[]> listDataChild = new HashMap<String, String[]>();
+		HashMap<String, String[]> listDataChild = new HashMap<>();
 		listDataChild.put(listDataHeader.get(0), expLevels);
 		listDataChild.put(listDataHeader.get(1), tracks);
 
 		mAdapter = new FilterDialogAdapter(getActivity(), listDataHeader, listDataChild);
 		mAdapter.setData(mLevelList, mTrackList);
 		mAdapter.setListener(new FilterDialogAdapter.Listener() {
-			@Override
-			public void onGroupClicked(int groupPosition) {
-				if (listView.isGroupExpanded(groupPosition)) {
-					listView.collapseGroup(groupPosition);
-				} else {
-					listView.expandGroup(groupPosition);
-				}
-			}
+            @Override
+            public void onGroupClicked(int groupPosition) {
+                if (listView.isGroupExpanded(groupPosition)) {
+                    listView.collapseGroup(groupPosition);
+                } else {
+                    listView.expandGroup(groupPosition);
+                }
+            }
 
-			@Override
-			public void onChildClicked(int groupPosition, int childPosition) {
-				mAdapter.setClicked(groupPosition, childPosition);
-			}
-		});
+            @Override
+            public void onChildClicked(int groupPosition, int childPosition) {
+                mAdapter.setClicked(groupPosition, childPosition);
+            }
+        });
 
 		listView.setAdapter(mAdapter);
-		mSelectedIds = loadSelectedIds();
-		if (mSelectedIds != null) {
-			mAdapter.setCheckedPositions(mSelectedIds);
+        mSelectedIds = loadSelectedIds();
+        mAdapter.setCheckedPositions(mSelectedIds);
 
-			for (int i = 0; i < mSelectedIds.size(); i++) {
-				List<Long> ids = mSelectedIds.get(i);
-				if (!ids.isEmpty()) {
-					listView.expandGroup(i);
-				}
-			}
-		}
+        for (int i = 0; i < mSelectedIds.size(); i++) {
+            List<Long> ids = mSelectedIds.get(i);
+            if (!ids.isEmpty()) {
+                listView.expandGroup(i);
+            }
+        }
 
 		TextView apply = (TextView) dialogView.findViewById(R.id.btnApply);
 		apply.setOnClickListener(new View.OnClickListener() {
@@ -155,7 +151,6 @@ public class FilterDialog extends DialogFragment {
 		});
 
 		builder.setView(dialogView);
-
 		Dialog result = builder.create();
 		result.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
@@ -163,22 +158,19 @@ public class FilterDialog extends DialogFragment {
 	}
 
 	private void applyFilter() {
-		mSelectedIds = mAdapter.getSelectedIds();
-		saveSelectedItems(mSelectedIds);
-		if (dataPasser != null) {
-			dataPasser.onCheckedPositionsPass(mSelectedIds);
+		saveSelectedItems(mAdapter.getSelectedIds());
+		if (mListener != null) {
+			mListener.onNewFilterApplied();
 		}
 	}
 
 	public void clearFilter() {
-		if (mSelectedIds != null) {
-			clearSelectedItems();
-			saveSelectedItems(mSelectedIds);
-			if (dataPasser != null) {
-				dataPasser.onCheckedPositionsPass(mSelectedIds);
-			}
-		}
-	}
+        clearSelectedItems();
+        saveSelectedItems(mSelectedIds);
+        if (mListener != null) {
+            mListener.onNewFilterApplied();
+        }
+    }
 
 	private void clearSelectedItems() {
 		if (mSelectedIds != null && !mSelectedIds.isEmpty()) {
@@ -194,6 +186,7 @@ public class FilterDialog extends DialogFragment {
 		}
 	}
 
+	@NonNull
 	private List<List<Long>> loadSelectedIds() {
 		List<List<Long>> selectedIds = new ArrayList<>();
 		selectedIds.add(PreferencesManager.getInstance().loadExpLevel());

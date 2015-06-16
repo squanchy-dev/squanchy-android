@@ -5,34 +5,21 @@
              android:layout_height="match_parent"
              android:background="@android:color/white">
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
-
-    <FrameLayout
-        android:id="@+id/dark_background"
-        android:visibility="gone"
-        android:background="@color/grey_100"
-        android:layout_width="88dp"
-        android:layout_height="25dp"/>
-
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"
-        android:clipToPadding="false"
-        android:listSelector="@android:color/transparent"
-        android:scrollbarThumbVertical="@drawable/custom_scroll_style"
-        android:splitMotionEvents="false"/>
+        android:layout_height="match_parent"/>
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:background="@drawable/event_list_shadow"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
 
 </FrameLayout>

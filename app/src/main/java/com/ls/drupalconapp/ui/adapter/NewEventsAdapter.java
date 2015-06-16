@@ -25,6 +25,7 @@ import com.ls.drupalconapp.ui.adapter.item.TimeRangeItem;
 import com.ls.drupalconapp.ui.drawer.DrawerManager;
 import com.ls.utils.DateUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NewEventsAdapter extends BaseAdapter {
@@ -34,21 +35,17 @@ public class NewEventsAdapter extends BaseAdapter {
 	private LayoutInflater mInflater;
 
     private DrawerManager.EventMode mEventMode;
+	private Listener mListener;
 
-    private View.OnClickListener favoriteAdditionAction;
-	private OnClickListener mClickListener;
-
-	public interface OnClickListener {
+	public interface Listener {
 		void onClick(int position);
 	}
 
 
-    public NewEventsAdapter(Context context, List<EventListItem> data, DrawerManager.EventMode mode, OnClickListener clickListener) {
+    public NewEventsAdapter(Context context) {
 		mContext = context;
         mInflater = LayoutInflater.from(context);
-        mData = data;
-        mEventMode = mode;
-		mClickListener = clickListener;
+        mData = new ArrayList<>();
     }
 
     @Override
@@ -74,6 +71,17 @@ public class NewEventsAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         return position;
+    }
+
+    public void setData(List<EventListItem> data, DrawerManager.EventMode mode) {
+        data.clear();
+        mData.addAll(data);
+        mEventMode = mode;
+        notifyDataSetChanged();
+    }
+
+    public void setOnClickListener(Listener listener) {
+        mListener = listener;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -298,7 +306,7 @@ public class NewEventsAdapter extends BaseAdapter {
 		holder.layoutRoot.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				mClickListener.onClick(position);
+				mListener.onClick(position);
 			}
 		});
 		initEventClickAbility(holder.layoutRoot, holder.txtPlace, event, position);
@@ -413,33 +421,11 @@ public class NewEventsAdapter extends BaseAdapter {
 			layoutRoot.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					mClickListener.onClick(position);
+					mListener.onClick(position);
 				}
 			});
 		}
 	}
-
-    private void initFavoriteButton(final ImageView btnFavorite, final Event event) {
-        btnFavorite.setImageResource(event.isFavorite()
-                ? R.drawable.selector_favorite_checked
-                : R.drawable.selector_favorite_unchecked);
-
-        btnFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean isFavorite = !event.isFavorite();
-                btnFavorite.setImageResource(isFavorite
-                        ? R.drawable.selector_favorite_checked
-                        : R.drawable.selector_favorite_unchecked);
-
-                event.setFavorite(isFavorite);
-
-                if (favoriteAdditionAction != null) {
-                    favoriteAdditionAction.onClick(v);
-                }
-            }
-        });
-    }
 
     public void setData(List<EventListItem> data) {
         mData = data;
@@ -460,10 +446,6 @@ public class NewEventsAdapter extends BaseAdapter {
                 return;
             }
         }
-    }
-
-    public void setFavoriteAdditionAction(View.OnClickListener favoriteAdditionAction) {
-        this.favoriteAdditionAction = favoriteAdditionAction;
     }
 
     private static class HeaderHolder {
