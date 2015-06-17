@@ -9,8 +9,7 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"
-        android:scrollbarThumbVertical="@drawable/custom_scroll_style">
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -135,7 +134,7 @@
                         android:layout_height="1px"
                         android:layout_marginLeft="72dp"
                         android:layout_gravity="bottom|right"
-                        android:background="@color/grey_200"/>
+                        android:background="@color/white_200"/>
                 </FrameLayout>
 
                 <LinearLayout
@@ -153,7 +152,7 @@
                     android:layout_marginLeft="72dp"
                     android:layout_above="@+id/webViewDescription"
                     android:layout_alignParentRight="true"
-                    android:background="@color/grey_200"/>
+                    android:background="@color/white_200"/>
 
                 <View
                     android:id="@+id/generalDivider"
@@ -162,7 +161,7 @@
                     android:layout_marginLeft="72dp"
                     android:layout_above="@+id/webViewDescription"
                     android:layout_alignParentRight="true"
-                    android:background="@color/grey_200"/>
+                    android:background="@color/white_200"/>
 
                 <FrameLayout
                     android:layout_below="@+id/holderSpeakers"

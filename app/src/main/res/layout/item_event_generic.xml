@@ -7,7 +7,7 @@
 
     <FrameLayout
         android:id="@+id/dark_background"
-        android:background="@color/grey_100"
+        android:background="@color/white_100"
         android:layout_width="88dp"
         android:layout_height="match_parent"/>
 
@@ -15,7 +15,7 @@
         android:id="@+id/layoutRoot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/selector_white_trans"
+        android:background="@drawable/selector_light"
         android:clickable="true">
 
         <LinearLayout

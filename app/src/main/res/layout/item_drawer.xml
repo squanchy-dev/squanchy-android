@@ -40,7 +40,7 @@
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/grey_200"
+        android:background="@color/white_200"
         android:visibility="gone"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"/>

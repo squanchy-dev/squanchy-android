@@ -12,8 +12,7 @@
         android:layout_height="match_parent"
         android:background="@android:color/white"
         android:fillViewport="true"
-        app:parallax_views_num="1"
-        android:scrollbarThumbVertical="@drawable/custom_scroll_style">
+        app:parallax_views_num="1">
 
         <RelativeLayout
             android:layout_width="match_parent"

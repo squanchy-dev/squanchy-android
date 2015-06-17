@@ -12,7 +12,7 @@
         android:layout_height="1dp"
         android:layout_gravity="bottom"
         android:layout_marginLeft="16dp"
-        android:background="@color/grey_200"/>
+        android:background="@color/white_200"/>
 
     <LinearLayout
         android:layout_width="match_parent"

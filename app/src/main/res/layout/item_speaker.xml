@@ -72,7 +72,7 @@
                 android:layout_marginLeft="58dp"
                 android:layout_height="1px"
                 android:layout_gravity="right"
-                android:background="@color/grey_200"/>
+                android:background="@color/white_200"/>
 
     </FrameLayout>
 

@@ -27,8 +27,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbarThumbVertical="@drawable/custom_scroll_style">
+        android:layout_height="match_parent">
 
         <WebView
             android:id="@+id/web_view"

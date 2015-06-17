@@ -4,12 +4,9 @@
     <color name="transparent">#00000000</color>
 
     <color name="white">#ffffffff</color>
-
-    <color name="grey_100">#f8f8f8</color>
-    <color name="grey_150">#eeeeee</color>
-    <color name="grey_200">#d0d0d0</color>
-    <color name="grey_250">#ffe6e6e6</color>
-    <color name="grey_300">#ffcccccc</color>
+    <color name="white_100">#fff5f5f5</color>
+    <color name="white_200">#ffebebeb</color>
+    <color name="white_300">#ffe1e1e1</color>
 
     <color name="white_transparent">#33ffffff</color>
     <color name="btn_show_room_color">#bd2d37</color>

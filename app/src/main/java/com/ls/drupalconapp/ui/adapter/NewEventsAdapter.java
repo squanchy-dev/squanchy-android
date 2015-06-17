@@ -409,7 +409,7 @@ public class NewEventsAdapter extends BaseAdapter {
 
 	private void initEventClickAbility(View layoutRoot, TextView txtPlace, Event event, final int position) {
 		Context context = layoutRoot.getContext();
-		layoutRoot.setBackgroundResource(R.drawable.selector_white_trans);
+		layoutRoot.setBackgroundResource(R.drawable.selector_light);
 		txtPlace.setMaxLines(1);
 
 		long eventType = event.getType();

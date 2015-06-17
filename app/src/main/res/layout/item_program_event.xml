@@ -12,7 +12,7 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:duplicateParentState="true"
-            android:background="@drawable/selector_list_item">
+            android:background="@drawable/selector_light">
 
         <com.ls.drupalconapp.ui.view.MediumFontTextView
                 android:id="@+id/txtName"
@@ -46,7 +46,7 @@
             android:paddingBottom="4dp"
             android:layout_below="@+id/holderReportName"
             android:duplicateParentState="true"
-            android:background="@drawable/selector_list_item">
+            android:background="@drawable/selector_light">
 
         <LinearLayout
                 android:layout_width="0dp"

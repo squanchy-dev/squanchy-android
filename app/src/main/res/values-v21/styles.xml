@@ -9,7 +9,7 @@
         <item name="colorAccent">@color/gray_light</item>
         <item name="colorPrimary">@color/primary</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="colorControlNormal">@color/grey_200</item>
+        <item name="colorControlNormal">@color/white_200</item>
     </style>
 
     <style name="DrupalConDetailsTheme" parent="Theme.AppCompat.NoActionBar">

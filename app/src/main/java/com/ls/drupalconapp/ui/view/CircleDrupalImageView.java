@@ -1,7 +1,5 @@
 package com.ls.drupalconapp.ui.view;
 
-import com.ls.util.image.DrupalImageView;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -13,6 +11,8 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+
+import com.ls.util.image.DrupalImageView;
 
 public class CircleDrupalImageView extends DrupalImageView {
 
@@ -38,13 +38,14 @@ public class CircleDrupalImageView extends DrupalImageView {
         if (getWidth() == 0 || getHeight() == 0) {
             return;
         }
+
         Bitmap b = ((BitmapDrawable) drawable).getBitmap();
-        Bitmap bitmap = b.copy(Bitmap.Config.ARGB_8888, true);
-
-        int w = getWidth(), h = getHeight();
-
-        Bitmap roundBitmap = getCroppedBitmap(bitmap, w);
-        canvas.drawBitmap(roundBitmap, 0, 0, null);
+        if (b != null) {
+            Bitmap bitmap = b.copy(Bitmap.Config.ARGB_8888, true);
+            int w = getWidth(), h = getHeight();
+            Bitmap roundBitmap = getCroppedBitmap(bitmap, w);
+            canvas.drawBitmap(roundBitmap, 0, 0, null);
+        }
     }
 
     public static Bitmap getCroppedBitmap(Bitmap bmp, int radius) {
