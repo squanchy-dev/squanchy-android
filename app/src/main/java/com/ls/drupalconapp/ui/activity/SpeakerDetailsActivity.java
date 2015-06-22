@@ -413,9 +413,6 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 				String url = mSpeaker.getWebSite();
 				openBrowser(url);
 				break;
-			case R.id.logo:
-				finish();
-				break;
 		}
 	}
 

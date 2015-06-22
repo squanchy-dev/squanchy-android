@@ -6,7 +6,7 @@
 
     <style name="DrupalConHomeTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimaryDark">@color/primary_dark</item>
-        <item name="colorAccent">@color/gray_light</item>
+        <item name="colorAccent">@color/grey_100</item>
         <item name="colorPrimary">@color/primary</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="colorControlNormal">@color/white_200</item>
@@ -14,7 +14,7 @@
 
     <style name="DrupalConDetailsTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimaryDark">@color/primary_dark</item>
-        <item name="colorAccent">@color/gray_light</item>
+        <item name="colorAccent">@color/grey_100</item>
         <item name="colorPrimary">@color/primary</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="colorControlNormal">@color/white</item>

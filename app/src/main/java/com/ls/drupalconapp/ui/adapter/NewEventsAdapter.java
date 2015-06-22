@@ -414,7 +414,7 @@ public class NewEventsAdapter extends BaseAdapter {
 
 		long eventType = event.getType();
 		if (eventType == Type.FREE_SLOT || eventType == Type.COFFEBREAK || eventType == Type.LUNCH || eventType == Type.REGISTRATION) {
-			layoutRoot.setBackgroundColor(context.getResources().getColor(R.color.gray_20_trans));
+			layoutRoot.setBackgroundColor(context.getResources().getColor(R.color.black_20_trans));
 			txtPlace.setMaxLines(3);
 			layoutRoot.setClickable(false);
 		} else {

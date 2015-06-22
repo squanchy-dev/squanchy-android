@@ -42,7 +42,7 @@
         android:layout_centerInParent="true"
         android:visibility="gone"
         android:textSize="@dimen/text_size_medium"
-        android:textColor="@color/gray_x_light"
+        android:textColor="@color/grey_100"
         android:text="@string/no_events"/>
 
     <ImageView

@@ -76,7 +76,7 @@
                             android:paddingTop="8dip"
                             android:layout_alignParentBottom="true"
                             android:textSize="@dimen/text_size_small"
-                            android:textColor="@color/white_semi_transparent"/>
+                            android:textColor="@color/white_300"/>
                     </RelativeLayout>
                 </FrameLayout>
 
@@ -100,7 +100,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/txtTrack"
-                            android:textColor="#333333"
+                            android:textColor="@color/grey_400"
                             android:textSize="@dimen/text_size_15"/>
 
                         <LinearLayout
@@ -115,7 +115,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="bottom"
                                 android:id="@+id/txtExpLevel"
-                                android:textColor="#333333"
+                                android:textColor="@color/grey_400"
                                 android:textSize="@dimen/text_size_15"/>
 
                             <ImageView
@@ -184,7 +184,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:sl_shadowRadius="2dp"
-                    app:sl_shadowColor="#AA000000"
+                    app:sl_shadowColor="@color/black_90_trans"
                     app:sl_dx="0dp"
                     app:sl_dy="0.5dp"
                     app:sl_cornerRadius="56dp"
@@ -248,7 +248,7 @@
             android:id="@+id/viewStatusBarTrans"
             android:layout_width="match_parent"
             android:layout_height="@dimen/status_bar_height"
-            android:background="@color/black_40_trans"
+            android:background="@color/black_90_trans"
             android:visibility="gone"/>
 
         <android.support.v7.widget.Toolbar

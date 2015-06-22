@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:adjustViewBounds="true"
             android:layout_height="168dip"
-            android:background="@color/gray_light"
+            android:background="@color/grey_100"
             android:id="@+id/imgPoi"
             android:scaleType="centerCrop"
             android:layout_alignParentTop="true">

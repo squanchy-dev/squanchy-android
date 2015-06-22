@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="transparent">#00000000</color>
+    <color name="black_100">#ff373737</color>
+
+    <color name="black_90_trans">#1A000000</color>
+    <color name="black_20_trans">#33d7d7d7</color>
 
     <color name="white">#ffffffff</color>
     <color name="white_100">#fff5f5f5</color>
     <color name="white_200">#ffebebeb</color>
     <color name="white_300">#ffe1e1e1</color>
 
-    <color name="white_transparent">#33ffffff</color>
-    <color name="btn_show_room_color">#bd2d37</color>
-    <color name="gray_light">#ABABAB</color>
-    <color name="gray_x_light">#CCCCCC</color>
-    <color name="gray_dark">#666666</color>
-    <color name="white_semi_transparent">#88FFFFFF</color>
+    <color name="grey_100">#ABABAB</color>
+    <color name="grey_200">#ff919191</color>
+    <color name="grey_400">#6a6a6a</color>
 
-    <color name="black">#ff373737</color>
-    <color name="black_40_trans">#4D000000</color>
-    <color name="gray_20_trans">#33d7d7d7</color>
 </resources>

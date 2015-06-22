@@ -10,20 +10,16 @@
         <item name="android:windowActionBar">false</item>
     </style>
 
-    <style name="ToolbarItem" parent="@style/android:Theme.Holo.Light">
-        <item name="android:background">@drawable/selector_toolbar</item>
-    </style>
-
     <style name="DrupalConHomeTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimaryDark">@color/primary_dark</item>
-        <item name="colorAccent">@color/gray_light</item>
+        <item name="colorAccent">@color/grey_100</item>
         <item name="colorPrimary">@color/primary</item>
         <item name="colorControlNormal">@color/white_200</item>
     </style>
 
     <style name="DrupalConDetailsTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimaryDark">@color/primary_dark</item>
-        <item name="colorAccent">@color/gray_light</item>
+        <item name="colorAccent">@color/grey_100</item>
         <item name="colorPrimary">@color/primary</item>
         <item name="colorControlNormal">@color/white</item>
     </style>

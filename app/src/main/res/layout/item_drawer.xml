@@ -31,7 +31,7 @@
             android:singleLine="true"
             android:ellipsize="end"
             android:textSize="@dimen/text_size_small"
-            android:textColor="#6a6a6a"
+            android:textColor="@color/grey_200"
             tools:text="Schedule"
             android:layout_gravity="center"/>
     </LinearLayout>

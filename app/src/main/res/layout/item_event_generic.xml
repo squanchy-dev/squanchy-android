@@ -36,7 +36,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     tools:text="03:30"
-                    android:textColor="#5b5b5b"
+                    android:textColor="@color/grey_400"
                     android:textSize="@dimen/text_size_13_74"/>
 
                 <com.ls.drupalconapp.ui.view.RegularFontTextView
@@ -46,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     tools:text="to 04:30"
-                    android:textColor="#949494"
+                    android:textColor="@color/grey_200"
                     android:textSize="@dimen/text_size_11_24"/>
 
 
@@ -75,7 +75,7 @@
                     android:id="@+id/txtTitle"
                     android:text="Dinner with Drupal"
                     android:clickable="false"
-                    android:textColor="#333333"
+                    android:textColor="@color/black_100"
                     android:textSize="@dimen/text_size_medium"/>
 
                 <LinearLayout
@@ -92,7 +92,7 @@
                         android:layout_height="wrap_content"
                         android:singleLine="true"
                         android:text="Coding and development"
-                        android:textColor="#949494"
+                        android:textColor="@color/grey_200"
                         android:textSize="@dimen/text_size_micro"/>
                 </LinearLayout>
 
@@ -118,7 +118,7 @@
                         android:singleLine="true"
                         android:layout_marginLeft="6dp"
                         android:text="Jane Doe, John Doe"
-                        android:textColor="#949494"
+                        android:textColor="@color/grey_200"
                         android:textSize="@dimen/text_size_micro"/>
                 </LinearLayout>
 
@@ -143,7 +143,7 @@
                         android:layout_gravity="top"
                         android:layout_marginLeft="6dp"
                         tools:text="Onyx Lounge"
-                        android:textColor="#949494"
+                        android:textColor="@color/grey_200"
                         android:textSize="@dimen/text_size_micro"/>
                 </LinearLayout>
 
@@ -168,7 +168,7 @@
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="2px"
-        android:background="@color/grey_200"
+        android:background="@color/white_200"
         android:visibility="gone"
         android:layout_gravity="bottom"/>
 
@@ -177,6 +177,6 @@
         android:layout_width="match_parent"
         android:layout_height="2px"
         android:layout_marginLeft="96dp"
-        android:background="@color/grey_200"
+        android:background="@color/white_200"
         android:layout_gravity="bottom"/>
 </FrameLayout>

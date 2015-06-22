@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:layout_gravity="right|center_vertical"
-    android:layout_width="wrap_content"
     android:orientation="horizontal">
 
     <ProgressBar
         android:id="@+id/action_bar_indicator"
         android:layout_width="30dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:visibility="gone"
         android:layout_marginRight="5dp"
-        android:layout_height="wrap_content"/>
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/icFilter"
         android:layout_width="62dp"
-        android:paddingRight="16dp"
-        android:paddingLeft="16dp"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
-        android:src="@drawable/ic_filter"
-        style="@style/ToolbarItem"/>
+        android:background="@drawable/selector_toolbar"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:src="@drawable/ic_filter"/>
 </LinearLayout>

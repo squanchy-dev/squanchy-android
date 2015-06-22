@@ -45,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_15"
                     tools:text="Lorem ipsum"
-                    android:textColor="#333333"/>
+                    android:textColor="@color/black_100"/>
 
             <com.ls.drupalconapp.ui.view.RegularFontTextView
                     android:id="@+id/txtOrgAndJobTitle"
@@ -55,7 +55,7 @@
                     android:paddingRight="16dp"
                     android:textSize="@dimen/text_size_13"
                     tools:text="Lorem ipsum"
-                    android:textColor="#949494"/>
+                    android:textColor="@color/grey_200"/>
 
         </LinearLayout>
     </RelativeLayout>
@@ -73,7 +73,6 @@
                 android:layout_height="1px"
                 android:layout_gravity="right"
                 android:background="@color/white_200"/>
-
     </FrameLayout>
 
 </RelativeLayout>

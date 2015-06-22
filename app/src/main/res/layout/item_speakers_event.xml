@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_16"
             tools:text="Title"
-            android:textColor="#333333"
+            android:textColor="@color/grey_400"
             android:gravity="center_vertical"
             android:textStyle="bold"
             android:layout_marginTop="12dp"
@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/track"
-            android:textColor="#606060"
+            android:textColor="@color/grey_400"
             android:textSize="@dimen/text_size_small"
             android:layout_marginBottom="3dp"
             android:visibility="gone"/>
@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="Exp Level:"
-                android:textColor="#606060"
+                android:textColor="@color/grey_400"
                 android:visibility="gone"
                 android:textSize="@dimen/text_size_small"
                 android:layout_gravity="center"/>
