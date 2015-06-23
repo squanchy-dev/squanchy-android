@@ -30,20 +30,20 @@ import java.util.List;
 
 public class NewEventsAdapter extends BaseAdapter {
 
-	private Context mContext;
-	private List<EventListItem> mData;
-	private LayoutInflater mInflater;
+    private Context mContext;
+    private List<EventListItem> mData;
+    private LayoutInflater mInflater;
 
     private DrawerManager.EventMode mEventMode;
-	private Listener mListener;
+    private Listener mListener;
 
-	public interface Listener {
-		void onClick(int position);
-	}
+    public interface Listener {
+        void onClick(int position);
+    }
 
 
     public NewEventsAdapter(Context context) {
-		mContext = context;
+        mContext = context;
         mInflater = LayoutInflater.from(context);
         mData = new ArrayList<>();
     }
@@ -96,7 +96,7 @@ public class NewEventsAdapter extends BaseAdapter {
             resultView = initProgramView(position, convertView, parent);
         } else if (itemViewType == EventListItem.TYPE_SOCIAL) {
             resultView = initSocialView(position, convertView, parent);
-        } else if (itemViewType == EventListItem.TYPE_HEADER){
+        } else if (itemViewType == EventListItem.TYPE_HEADER) {
             resultView = initHeaderView(position, convertView, parent);
         } else {
             resultView = new View(mInflater.getContext());
@@ -120,20 +120,19 @@ public class NewEventsAdapter extends BaseAdapter {
 
         final HeaderItem item = (HeaderItem) getItem(position);
         holder.txtTitle.setText(item.getTitle());
-		holder.txtTitle.setVisibility(View.VISIBLE);
+        holder.txtTitle.setVisibility(View.VISIBLE);
 
         return resultView;
     }
 
     public View initTimeRangeView(final int position, View convertView, ViewGroup parent) {
         View resultView = convertView;
-        TimeRangeHolder holder = null;
+        TimeRangeHolder holder;
 
         if (resultView == null) {
-            resultView = mInflater.inflate(R.layout.item_event_generic, parent, false);
-
+            resultView = mInflater.inflate(R.layout.item_event, parent, false);
             holder = new TimeRangeHolder();
-			holder.layoutRoot = (RelativeLayout) resultView.findViewById(R.id.layoutRoot);
+            holder.layoutRoot = (LinearLayout) resultView.findViewById(R.id.layoutRoot);
             holder.divider = resultView.findViewById(R.id.divider);
             holder.marginDivider = resultView.findViewById(R.id.margin_divider);
             holder.icon = (ImageView) resultView.findViewById(R.id.imgEventIcon);
@@ -152,30 +151,33 @@ public class NewEventsAdapter extends BaseAdapter {
             holder = (TimeRangeHolder) resultView.getTag();
         }
 
-        final TimeRangeItem item = (TimeRangeItem) getItem(position);
-        final Event event = item.getEvent();
-
-        if (!item.getSpeakers().isEmpty()){
-            item.getSpeakers().size();
+        TimeRangeItem timeRange = (TimeRangeItem) getItem(position);
+        Event event = timeRange.getEvent();
+        if (!timeRange.getSpeakers().isEmpty()) {
+            timeRange.getSpeakers().size();
         }
 
-		String fromTime = item.getFromTime();
-		String toTime = item.getToTime();
+        String fromTime = timeRange.getFromTime();
+        String toTime = timeRange.getToTime();
 
-		if (android.text.format.DateFormat.is24HourFormat(mContext)) {
-			if (fromTime != null && toTime != null) {
-				fromTime = DateUtils.convertDateTo24Format(fromTime);
-				toTime = DateUtils.convertDateTo24Format(toTime);
-			}
-		}
+        if (android.text.format.DateFormat.is24HourFormat(mContext)) {
+            if (fromTime != null && toTime != null) {
+                fromTime = DateUtils.convertDateTo24Format(fromTime);
+                toTime = DateUtils.convertDateTo24Format(toTime);
+            }
+        }
+
+        if (Type.getIcon(timeRange.getType()) != 0) {
+            holder.icon.setVisibility(View.VISIBLE);
+        }
+        holder.icon.setImageResource(Type.getIcon(timeRange.getType()));
 
         if (fromTime != null && toTime != null) {
             holder.txtFrom.setText(fromTime);
             holder.txtTo.setText("to " + toTime);
         } else {
             holder.txtFrom.setText(App.getContext().getString(R.string.twenty_four_hours));
-            holder.txtFrom.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                    App.getContext().getResources().getDimension(R.dimen.text_size_micro));
+            holder.txtFrom.setTextSize(TypedValue.COMPLEX_UNIT_PX, App.getContext().getResources().getDimension(R.dimen.text_size_micro));
             holder.txtTo.setText(App.getContext().getString(R.string.access));
         }
 
@@ -188,16 +190,16 @@ public class NewEventsAdapter extends BaseAdapter {
             holder.layoutPlace.setVisibility(View.GONE);
         }
 
-        if (item.getTrack() != null){
-            holder.txtTrack.setText(item.getTrack());
-            holder.layoutTrack.setVisibility(View.VISIBLE);
+        if (timeRange.getTrack() != null) {
+            holder.txtTrack.setText(timeRange.getTrack());
+            holder.txtTrack.setVisibility(View.VISIBLE);
         } else {
-            holder.layoutTrack.setVisibility(View.GONE);
+            holder.txtTrack.setVisibility(View.GONE);
         }
 
-        if (!item.getSpeakers().isEmpty()){
+        if (!timeRange.getSpeakers().isEmpty()) {
 
-            List<String> speakers = item.getSpeakers();
+            List<String> speakers = timeRange.getSpeakers();
             StringBuilder builder = new StringBuilder(speakers.get(0));
 
             if (speakers.size() > 1) {
@@ -210,14 +212,10 @@ public class NewEventsAdapter extends BaseAdapter {
             holder.layoutSpeakers.setVisibility(View.GONE);
         }
 
-        if (Type.getIcon(item.getType()) != 0){
-            holder.icon.setVisibility(View.VISIBLE);
-        }
-        holder.icon.setImageResource(Type.getIcon(item.getType()));
 
         holder.expIcon.setImageResource(Level.getIcon(event.getExperienceLevel()));
 
-        if (item.isFirst()) {
+        if (timeRange.isFirst()) {
             holder.divider.setVisibility(View.GONE);
             holder.marginDivider.setVisibility(View.VISIBLE);
         } else {
@@ -225,11 +223,11 @@ public class NewEventsAdapter extends BaseAdapter {
             holder.marginDivider.setVisibility(View.GONE);
         }
 
-		if (mEventMode == DrawerManager.EventMode.Favorites){
-			resultView.findViewById(R.id.dark_background).setVisibility(View.GONE);
-		}
+        if (mEventMode == DrawerManager.EventMode.Favorites) {
+            resultView.findViewById(R.id.dark_background).setVisibility(View.GONE);
+        }
 
-		initEventClickAbility(holder.layoutRoot, holder.txtPlace, event, position);
+        initEventClickAbility(holder.layoutRoot, holder.txtPlace, event, position);
 
         return resultView;
     }
@@ -239,15 +237,15 @@ public class NewEventsAdapter extends BaseAdapter {
         ProgramsHolder holder = null;
 
         if (resultView == null) {
-            resultView = mInflater.inflate(R.layout.item_event_generic, parent, false);
+            resultView = mInflater.inflate(R.layout.item_event, parent, false);
 
             holder = new ProgramsHolder();
-			holder.layoutRoot = (RelativeLayout) resultView.findViewById(R.id.layoutRoot);
+            holder.layoutRoot = (LinearLayout) resultView.findViewById(R.id.layoutRoot);
             holder.divider = resultView.findViewById(R.id.divider);
             holder.marginDivider = resultView.findViewById(R.id.margin_divider);
             holder.expIcon = (ImageView) resultView.findViewById(R.id.imgExperience);
             holder.txtTitle = (TextView) resultView.findViewById(R.id.txtTitle);
-            holder.layoutTime = (RelativeLayout) resultView.findViewById(R.id.timeLayout);
+            holder.layoutTime = (LinearLayout) resultView.findViewById(R.id.timeLayout);
             holder.layoutSpeakers = (LinearLayout) resultView.findViewById(R.id.layout_speakers);
             holder.layoutTrack = (LinearLayout) resultView.findViewById(R.id.layout_track);
             holder.layoutPlace = (LinearLayout) resultView.findViewById(R.id.layout_place);
@@ -259,12 +257,12 @@ public class NewEventsAdapter extends BaseAdapter {
             holder = (ProgramsHolder) resultView.getTag();
         }
 
-        holder.layoutTime.setVisibility(View.INVISIBLE);
+//        holder.layoutTime.setVisibility(View.INVISIBLE);
 
         final ProgramItem item = (ProgramItem) getItem(position);
         final Event event = item.getEvent();
 
-		holder.txtTitle.setText(event.getName());
+        holder.txtTitle.setText(event.getName());
 
         if (!event.getPlace().equals("")) {
             holder.txtPlace.setText(event.getPlace());
@@ -273,14 +271,14 @@ public class NewEventsAdapter extends BaseAdapter {
             holder.layoutPlace.setVisibility(View.GONE);
         }
 
-        if (item.getTrack() != null){
+        if (item.getTrack() != null) {
             holder.txtTrack.setText(item.getTrack());
-            holder.layoutTrack.setVisibility(View.VISIBLE);
+            holder.txtTrack.setVisibility(View.VISIBLE);
         } else {
-            holder.layoutTrack.setVisibility(View.GONE);
+            holder.txtTrack.setVisibility(View.GONE);
         }
 
-        if (!item.getSpeakers().isEmpty()){
+        if (!item.getSpeakers().isEmpty()) {
 
             List<String> speakers = item.getSpeakers();
             StringBuilder builder = new StringBuilder(speakers.get(0));
@@ -303,13 +301,13 @@ public class NewEventsAdapter extends BaseAdapter {
             holder.marginDivider.setVisibility(View.GONE);
         }
         holder.expIcon.setImageResource(Level.getIcon(event.getExperienceLevel()));
-		holder.layoutRoot.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				mListener.onClick(position);
-			}
-		});
-		initEventClickAbility(holder.layoutRoot, holder.txtPlace, event, position);
+        holder.layoutRoot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onClick(position);
+            }
+        });
+        initEventClickAbility(holder.layoutRoot, holder.txtPlace, event, position);
 
         return resultView;
     }
@@ -319,14 +317,14 @@ public class NewEventsAdapter extends BaseAdapter {
         BofsHolder holder;
 
         if (resultView == null) {
-            resultView = mInflater.inflate(R.layout.item_event_generic, parent, false);
+            resultView = mInflater.inflate(R.layout.item_event, parent, false);
 
             holder = new BofsHolder();
-			holder.layoutRoot = (RelativeLayout) resultView.findViewById(R.id.layoutRoot);
+            holder.layoutRoot = (LinearLayout) resultView.findViewById(R.id.layoutRoot);
             holder.divider = resultView.findViewById(R.id.divider);
             holder.marginDivider = resultView.findViewById(R.id.margin_divider);
             holder.txtTitle = (TextView) resultView.findViewById(R.id.txtTitle);
-            holder.layoutTime = (RelativeLayout) resultView.findViewById(R.id.timeLayout);
+            holder.layoutTime = (LinearLayout) resultView.findViewById(R.id.timeLayout);
             holder.layoutPlace = (LinearLayout) resultView.findViewById(R.id.layout_place);
             holder.txtPlace = (TextView) resultView.findViewById(R.id.txtPlace);
 
@@ -338,15 +336,14 @@ public class NewEventsAdapter extends BaseAdapter {
         final BofsItem item = (BofsItem) getItem(position);
         final Event event = item.getEvent();
 
-		holder.layoutTime.setVisibility(View.INVISIBLE);
-		holder.txtTitle.setText(event.getName());
+        holder.txtTitle.setText(event.getName());
 
-		if (!event.getPlace().equals("")) {
-			holder.txtPlace.setText(event.getPlace());
-			holder.layoutPlace.setVisibility(View.VISIBLE);
-		} else {
-			holder.layoutPlace.setVisibility(View.GONE);
-		}
+        if (!event.getPlace().equals("")) {
+            holder.txtPlace.setText(event.getPlace());
+            holder.layoutPlace.setVisibility(View.VISIBLE);
+        } else {
+            holder.layoutPlace.setVisibility(View.GONE);
+        }
 
         if (!item.isLast()) {
             holder.divider.setVisibility(View.GONE);
@@ -355,19 +352,19 @@ public class NewEventsAdapter extends BaseAdapter {
             holder.divider.setVisibility(View.VISIBLE);
             holder.marginDivider.setVisibility(View.GONE);
         }
-		initEventClickAbility(holder.layoutRoot, holder.txtPlace, event, position);
+        initEventClickAbility(holder.layoutRoot, holder.txtPlace, event, position);
 
         return resultView;
     }
 
-    private View initSocialView(final int position, View convertView, ViewGroup parent){
+    private View initSocialView(final int position, View convertView, ViewGroup parent) {
         View resultView = convertView;
         SocialsHolder holder = null;
 
-        if (resultView == null){
+        if (resultView == null) {
             resultView = mInflater.inflate(R.layout.item_social_event, parent, false);
             holder = new SocialsHolder();
-			holder.layoutRoot = (RelativeLayout) resultView.findViewById(R.id.layoutRoot);
+            holder.layoutRoot = (RelativeLayout) resultView.findViewById(R.id.layoutRoot);
             holder.layoutPlace = (LinearLayout) resultView.findViewById(R.id.layout_place);
             holder.txtFrom = (TextView) resultView.findViewById(R.id.txtFrom);
             holder.txtTo = (TextView) resultView.findViewById(R.id.txtTo);
@@ -381,51 +378,51 @@ public class NewEventsAdapter extends BaseAdapter {
         final SocialItem item = (SocialItem) getItem(position);
         final Event event = item.getEvent();
 
-		String fromTime = event.getFromTime();
-		String toTime = event.getToTime();
+        String fromTime = event.getFromTime();
+        String toTime = event.getToTime();
 
-		if (android.text.format.DateFormat.is24HourFormat(mContext)) {
-			if (fromTime != null && toTime != null) {
-				fromTime = DateUtils.convertDateTo24Format(fromTime);
-				toTime = DateUtils.convertDateTo24Format(toTime);
-			}
-		}
+        if (android.text.format.DateFormat.is24HourFormat(mContext)) {
+            if (fromTime != null && toTime != null) {
+                fromTime = DateUtils.convertDateTo24Format(fromTime);
+                toTime = DateUtils.convertDateTo24Format(toTime);
+            }
+        }
 
 //		holder.txtFrom.setText(fromTime);
 //		holder.txtTo.setText("to " + toTime);
-		holder.txtTitle.setText(event.getName());
+        holder.txtTitle.setText(event.getName());
 
-		if (!event.getPlace().equals("")) {
-			holder.txtPlace.setText(event.getPlace());
-			holder.layoutPlace.setVisibility(View.VISIBLE);
-		} else {
-			holder.layoutPlace.setVisibility(View.GONE);
-		}
+        if (!event.getPlace().equals("")) {
+            holder.txtPlace.setText(event.getPlace());
+            holder.layoutPlace.setVisibility(View.VISIBLE);
+        } else {
+            holder.layoutPlace.setVisibility(View.GONE);
+        }
 
-		initEventClickAbility(holder.layoutRoot, holder.txtPlace, event, position);
+        initEventClickAbility(holder.layoutRoot, holder.txtPlace, event, position);
 
         return resultView;
     }
 
-	private void initEventClickAbility(View layoutRoot, TextView txtPlace, Event event, final int position) {
-		Context context = layoutRoot.getContext();
-		layoutRoot.setBackgroundResource(R.drawable.selector_light);
-		txtPlace.setMaxLines(1);
+    private void initEventClickAbility(View layoutRoot, TextView txtPlace, Event event, final int position) {
+        Context context = layoutRoot.getContext();
+        layoutRoot.setBackgroundResource(R.drawable.selector_light);
+        txtPlace.setMaxLines(1);
 
-		long eventType = event.getType();
-		if (eventType == Type.FREE_SLOT || eventType == Type.COFFEBREAK || eventType == Type.LUNCH || eventType == Type.REGISTRATION) {
-			layoutRoot.setBackgroundColor(context.getResources().getColor(R.color.black_20_trans));
-			txtPlace.setMaxLines(3);
-			layoutRoot.setClickable(false);
-		} else {
-			layoutRoot.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					mListener.onClick(position);
-				}
-			});
-		}
-	}
+        long eventType = event.getType();
+        if (eventType == Type.FREE_SLOT || eventType == Type.COFFEBREAK || eventType == Type.LUNCH || eventType == Type.REGISTRATION) {
+            layoutRoot.setBackgroundColor(context.getResources().getColor(R.color.black_20_trans));
+            txtPlace.setMaxLines(3);
+            layoutRoot.setClickable(false);
+        } else {
+            layoutRoot.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mListener.onClick(position);
+                }
+            });
+        }
+    }
 
     public void setData(List<EventListItem> data) {
         mData = data;
@@ -454,7 +451,7 @@ public class NewEventsAdapter extends BaseAdapter {
 
     private static class TimeRangeHolder {
 
-		RelativeLayout layoutRoot;
+        LinearLayout layoutRoot;
         ImageView icon;
         ImageView expIcon;
         View divider;
@@ -472,8 +469,8 @@ public class NewEventsAdapter extends BaseAdapter {
 
     private static class BofsHolder {
 
-		RelativeLayout layoutRoot;
-        RelativeLayout layoutTime;
+        LinearLayout layoutRoot;
+        LinearLayout layoutTime;
         LinearLayout layoutPlace;
         TextView txtTitle;
         TextView txtPlace;
@@ -484,9 +481,9 @@ public class NewEventsAdapter extends BaseAdapter {
 
     private static class ProgramsHolder {
 
-		RelativeLayout layoutRoot;
+        LinearLayout layoutRoot;
         ImageView expIcon;
-        RelativeLayout layoutTime;
+        LinearLayout layoutTime;
         LinearLayout layoutTrack;
         LinearLayout layoutSpeakers;
         LinearLayout layoutPlace;
@@ -501,12 +498,12 @@ public class NewEventsAdapter extends BaseAdapter {
 
     private static class SocialsHolder {
 
-		RelativeLayout layoutRoot;
+        RelativeLayout layoutRoot;
         LinearLayout layoutPlace;
         TextView txtFrom;
         TextView txtTo;
         TextView txtTitle;
         TextView txtPlace;
-		View divider;
+        View divider;
     }
 }
