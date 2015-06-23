@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutRoot"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@drawable/selector_light"
     android:clickable="true"
     android:orientation="horizontal">
@@ -53,79 +54,104 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_toRightOf="@+id/timeLayout"
-        android:orientation="vertical"
-        android:paddingBottom="12dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="12dp">
-
-        <com.ls.drupalconapp.ui.view.RegularFontTextView
-            android:id="@+id/txtTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="false"
-            android:textColor="@color/black_100"
-            android:textSize="@dimen/text_size_medium"
-            tools:text="Dinner with Drupal" />
-
-        <com.ls.drupalconapp.ui.view.RegularFontTextView
-            android:id="@+id/txtTrack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="3dp"
-            android:singleLine="true"
-            android:textColor="@color/grey_200"
-            android:textSize="@dimen/text_size_micro"
-            tools:text="Coding and development" />
+        android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/layout_speakers"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="3dp"
-            android:visibility="visible">
-
-            <ImageView
-                android:layout_width="14dp"
-                android:layout_height="14dp"
-                android:layout_gravity="center_vertical"
-                android:alpha="0.7"
-                android:src="@drawable/ic_speakers" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="12dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="12dp">
 
             <com.ls.drupalconapp.ui.view.RegularFontTextView
-                android:id="@+id/txtSpeakers"
+                android:id="@+id/txtTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="6dp"
+                android:clickable="false"
+                android:textColor="@color/black_100"
+                android:textSize="@dimen/text_size_medium"
+                tools:text="Dinner with Drupal" />
+
+            <com.ls.drupalconapp.ui.view.RegularFontTextView
+                android:id="@+id/txtTrack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="3dp"
                 android:singleLine="true"
                 android:textColor="@color/grey_200"
                 android:textSize="@dimen/text_size_micro"
-                tools:text="Jane Doe, John Doe" />
-        </LinearLayout>
+                tools:text="Coding and development" />
 
-        <LinearLayout
-            android:id="@+id/layout_place"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="3dp">
-
-            <ImageView
-                android:layout_width="14dp"
-                android:layout_height="14dp"
-                android:layout_marginTop="2dp"
-                android:alpha="0.7"
-                android:src="@drawable/ic_place" />
-
-            <com.ls.drupalconapp.ui.view.RegularFontTextView
-                android:id="@+id/txtPlace"
+            <LinearLayout
+                android:id="@+id/layout_speakers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:layout_marginLeft="6dp"
-                android:textColor="@color/grey_200"
-                android:textSize="@dimen/text_size_micro"
-                tools:text="Onyx Lounge" />
+                android:paddingBottom="3dp"
+                android:visibility="visible">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_gravity="center_vertical"
+                    android:alpha="0.7"
+                    android:src="@drawable/ic_speakers" />
+
+                <com.ls.drupalconapp.ui.view.RegularFontTextView
+                    android:id="@+id/txtSpeakers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:singleLine="true"
+                    android:textColor="@color/grey_200"
+                    android:textSize="@dimen/text_size_micro"
+                    tools:text="Jane Doe, John Doe" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_marginTop="2dp"
+                    android:alpha="0.7"
+                    android:src="@drawable/ic_place" />
+
+                <com.ls.drupalconapp.ui.view.RegularFontTextView
+                    android:id="@+id/txtPlace"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_marginLeft="6dp"
+                    android:textColor="@color/grey_200"
+                    android:textSize="@dimen/text_size_micro"
+                    tools:text="Onyx Lounge" />
+            </LinearLayout>
+
         </LinearLayout>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="20px"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:background="@color/grey_50"
+            android:visibility="gone" />
+
+        <View
+            android:id="@+id/margin_divider"
+            android:layout_width="match_parent"
+            android:layout_height="20px"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:background="@color/grey_50"
+            android:visibility="visible" />
 
     </LinearLayout>
 
@@ -136,24 +162,5 @@
         android:layout_alignParentRight="true"
         android:layout_margin="16dp"
         tools:src="@drawable/ic_launcher" />
-
-    <View
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="2px"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
-        android:background="@color/white_200"
-        android:visibility="gone" />
-
-    <View
-        android:id="@+id/margin_divider"
-        android:layout_width="match_parent"
-        android:layout_height="2px"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
-        android:layout_marginLeft="96dp"
-        android:background="@color/white_200"
-        android:visibility="visible" />
 
 </RelativeLayout>
