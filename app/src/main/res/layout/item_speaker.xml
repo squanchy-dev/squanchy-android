@@ -1,78 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/holderSpeaker"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="72dp">
+    android:background="@color/white"
+    android:minHeight="72dp"
+    android:orientation="horizontal">
 
     <com.ls.drupalconapp.ui.view.RegularFontTextView
         android:id="@+id/txtFirstLetter"
         android:layout_width="wrap_content"
-        android:layout_marginLeft="21dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="21dp"
         android:textColor="@color/primary"
-        android:textSize="@dimen/text_size_large"/>
+        android:textSize="@dimen/text_size_large" />
 
     <RelativeLayout
-        android:layout_centerVertical="true"
         android:layout_width="match_parent"
-        android:paddingLeft="41dp"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:paddingLeft="41dp">
 
         <com.ls.drupalconapp.ui.view.CircleImageView
-                android:id="@+id/imgPhoto"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_margin="16dp"
-                android:layout_centerVertical="true"
-                app:noImageResource="@drawable/ic_default_avatar_small"
-                android:scaleType="centerCrop"/>
+            android:id="@+id/imgPhoto"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_margin="16dp"
+            android:scaleType="centerCrop"
+            app:noImageResource="@drawable/ic_default_avatar_small" />
 
         <LinearLayout
-                android:layout_width="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/imgPhoto"
+            android:orientation="vertical">
+
+            <com.ls.drupalconapp.ui.view.RegularFontTextView
+                android:id="@+id/txtName"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/imgPhoto"
-                android:orientation="vertical">
+                android:textColor="@color/black_100"
+                android:textSize="@dimen/text_size_15"
+                tools:text="Lorem ipsum" />
 
             <com.ls.drupalconapp.ui.view.RegularFontTextView
-                    android:id="@+id/txtName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_15"
-                    tools:text="Lorem ipsum"
-                    android:textColor="@color/black_100"/>
-
-            <com.ls.drupalconapp.ui.view.RegularFontTextView
-                    android:id="@+id/txtOrgAndJobTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:paddingRight="16dp"
-                    android:textSize="@dimen/text_size_13"
-                    tools:text="Lorem ipsum"
-                    android:textColor="@color/grey_200"/>
+                android:id="@+id/txtOrgAndJobTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="16dp"
+                android:singleLine="true"
+                android:textColor="@color/grey_200"
+                android:textSize="@dimen/text_size_13"
+                tools:text="Lorem ipsum" />
 
         </LinearLayout>
     </RelativeLayout>
 
     <FrameLayout
-            android:id="@+id/divider"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
-            android:background="@android:color/white">
+        android:id="@+id/divider"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:visibility="invisible">
 
         <View
-                android:layout_width="match_parent"
-                android:layout_marginLeft="58dp"
-                android:layout_height="1px"
-                android:layout_gravity="right"
-                android:background="@color/white_200"/>
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_gravity="right"
+            android:layout_marginLeft="58dp"
+            android:background="@color/white_200" />
     </FrameLayout>
 
 </RelativeLayout>

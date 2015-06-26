@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +20,7 @@ import com.ls.drupalconapp.model.Model;
 import com.ls.drupalconapp.model.UpdatesManager;
 import com.ls.drupalconapp.model.data.InfoItem;
 import com.ls.drupalconapp.model.managers.InfoManager;
+import com.ls.utils.L;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +34,7 @@ public class AboutActivity extends ActionBarActivity {
     {
         @Override
         public void onDataUpdated(List<Integer> requestIds) {
-            Log.d("UPDATED", "AboutActivity");
+            L.d("AboutActivity");
             initViews();
         }
     };

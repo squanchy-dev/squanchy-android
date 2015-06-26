@@ -26,12 +26,12 @@
                 android:background="@drawable/speaker_details_header"/>
 
             <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@android:color/white"
-                android:layout_below="@+id/imgHeader"
-                android:id="@+id/linearLayout">
+                android:layout_below="@+id/imgHeader">
 
                 <com.ls.drupalconapp.ui.view.MediumFontTextView
                     android:layout_width="match_parent"

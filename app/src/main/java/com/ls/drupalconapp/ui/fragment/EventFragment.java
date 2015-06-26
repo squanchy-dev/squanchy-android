@@ -159,6 +159,7 @@ public class EventFragment extends Fragment implements NewEventsAdapter.Listener
 				intent.putExtra(EventDetailsActivity.EXTRA_EVENT_ID, item.getEvent().getId());
 				intent.putExtra(EventDetailsActivity.EXTRA_DAY, mDay);
 				startActivity(intent);
+//				EventDetailsActivity2.startThisActivity(getActivity(), item.getEvent().getId(), mDay);
 			}
 		}
 	}

@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebView;
@@ -59,7 +58,6 @@ public class EventDetailsActivity extends StackKeeperActivity {
 	private EventDetailsEvent mEvent;
 	private long mDay;
 	private float m_downX;
-	private String eventDescription = "";
 
 	private View mViewToolbar;
 	private TextView mToolbarTitle;
@@ -139,7 +137,6 @@ public class EventDetailsActivity extends StackKeeperActivity {
 		long oldEventId = mEventId;
 
 		handleExtras(intent);
-
 		if (oldEventId != mEventId) {
 			loadEventFromDb();
 		}
@@ -240,22 +237,15 @@ public class EventDetailsActivity extends StackKeeperActivity {
 			finish();
 			return;
 		}
-		mEvent = event;
 
-		if (mEvent.getLink().equals("") && mItemShare != null) {
+		mEvent = event;
+		if (mItemShare != null && TextUtils.isEmpty(mEvent.getLink())) {
 			mItemShare.setVisible(false);
 		}
-		mToolbarTitle.setText(event.getEventName());
 
-//		findViewById(R.id.btnAddToSchedule).setOnTouchListener(getOnSelectorTouchListener());
+		mToolbarTitle.setText(event.getEventName());
 		((TextView) findViewById(R.id.txtEventName)).setText(event.getEventName());
 
-		String day = formatDate(new Date(mDay));
-
-		String place = "";
-		if (!event.getPlace().equals("")) {
-			place = " in " + event.getPlace();
-		}
 
 		String fromTime = event.getFrom();
 		String toTime = event.getTo();
@@ -267,6 +257,12 @@ public class EventDetailsActivity extends StackKeeperActivity {
 			}
 		}
 
+		String place = "";
+		if (!event.getPlace().equals("")) {
+			place = " in " + event.getPlace();
+		}
+
+		String day = formatDate(new Date(mDay));
 		String date = day + ", " + fromTime + " - " + toTime + place;
 		((TextView) findViewById(R.id.label_where)).setText(date);
 
@@ -288,34 +284,11 @@ public class EventDetailsActivity extends StackKeeperActivity {
 			}
 		}
 
-		if (!eventDescription.equals(event.getDescription())) {
-			eventDescription = event.getDescription();
-
+		if (!TextUtils.isEmpty(event.getDescription())) {
 			String css = "<link rel='stylesheet' href='css/style.css' type='text/css'>";
-			String html = "<html><header>" + css + "</header>" + "<body>" + eventDescription + "</body></html>";
+			String html = "<html><header>" + css + "</header>" + "<body>" + event.getDescription() + "</body></html>";
 			WebView webView = (WebView) findViewById(R.id.webView);
 			webView.setHorizontalScrollBarEnabled(false);
-			webView.setOnTouchListener(new View.OnTouchListener() {
-				public boolean onTouch(View v, MotionEvent event) {
-
-					switch (event.getAction()) {
-						case MotionEvent.ACTION_DOWN: {
-							m_downX = event.getX();
-						}
-						break;
-
-						case MotionEvent.ACTION_MOVE:
-						case MotionEvent.ACTION_CANCEL:
-						case MotionEvent.ACTION_UP: {
-							event.setLocation(m_downX, event.getY());
-						}
-						break;
-
-					}
-
-					return false;
-				}
-			});
 			webView.loadDataWithBaseURL("file:///android_asset/", html, "text/html", "UTF-8", null);
 		}
 		mIsAddedToSchedule = event.isFavorite();

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <com.ls.drupalconapp.ui.view.NotifyingScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imgHeader"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/event_details_header"
+                android:scaleType="centerCrop" />
+
+            <View
+                android:id="@+id/viewStatusBarTrans"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/status_bar_height"
+                android:background="@color/black_90_trans"
+                android:visibility="visible" />
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/viewStatusBarTrans"
+                android:background="@android:color/transparent">
+
+                <TextView
+                    android:id="@+id/toolbarTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="8dp"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_20"
+                    android:textStyle="bold"
+                    tools:text="DrupalCon" />
+            </android.support.v7.widget.Toolbar>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/layoutTime"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:alpha="0.4"
+                android:background="@drawable/bg_details_header_shadow" />
+
+            <LinearLayout
+                android:id="@+id/layoutTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imgHeader"
+                android:background="@color/secondary"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <com.ls.drupalconapp.ui.view.BoldFontTextView
+                    android:id="@+id/txtEventName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textStyle="bold"
+                    tools:text="@string/lorem_ipsum" />
+
+                <com.ls.drupalconapp.ui.view.RegularFontTextView
+                    android:id="@+id/label_where"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/white_300"
+                    android:textSize="@dimen/text_size_small"
+                    tools:text="@string/lorem_ipsum" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/layoutTime"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <com.ls.drupalconapp.ui.view.MediumFontTextView
+                    android:id="@+id/txtTrack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="16dp"
+                    android:textColor="@color/grey_400"
+                    android:textSize="@dimen/text_size_15"
+                    tools:text="@string/lorem_ipsum" />
+
+                <LinearLayout
+                    android:id="@+id/layoutExpLevel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal">
+
+                    <com.ls.drupalconapp.ui.view.MediumFontTextView
+                        android:id="@+id/txtExpLevel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginRight="8dp"
+                        android:textColor="@color/grey_400"
+                        android:textSize="@dimen/text_size_15"
+                        tools:text="@string/lorem_ipsum" />
+
+                    <ImageView
+                        android:id="@+id/imgExperience"
+                        android:layout_width="17dp"
+                        android:layout_height="17dp"
+                        android:layout_gravity="center"
+                        tools:src="@drawable/ic_launcher" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/topDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:layout_marginLeft="72dp"
+                    android:background="@color/white_200" />
+
+                <LinearLayout
+                    android:id="@+id/holderSpeakers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+
+                <View
+                    android:id="@+id/botDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:layout_marginLeft="72dp"
+                    android:background="@color/white_200" />
+
+                <WebView
+                    android:id="@+id/webView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp" />
+
+            </LinearLayout>
+
+            <com.dd.ShadowLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/layoutTime"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="-25dp"
+                app:sl_cornerRadius="56dp"
+                app:sl_dx="0dp"
+                app:sl_dy="0.5dp"
+                app:sl_shadowColor="@color/black_90_trans"
+                app:sl_shadowRadius="2dp">
+
+                <RelativeLayout
+                    android:id="@+id/layoutFavorite"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/shape_favorite">
+
+                    <CheckBox
+                        android:id="@+id/checkBoxFavorite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/selector_favorite"
+                        android:button="@null"
+                        android:clickable="false" />
+                </RelativeLayout>
+            </com.dd.ShadowLayout>
+
+        </RelativeLayout>
+    </com.ls.drupalconapp.ui.view.NotifyingScrollView>
+
+    <ImageView
+        android:id="@+id/imgEmptyView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_no_details"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center" />
+
+</RelativeLayout>
+
+

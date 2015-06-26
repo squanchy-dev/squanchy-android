@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ls.drupalconapp"
-    android:installLocation="auto">
+    android:installLocation="auto" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -17,8 +17,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/DrupalConHomeTheme">
-
+        android:theme="@style/DrupalConHomeTheme" >
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -30,14 +29,13 @@
             android:name=".ui.activity.SplashActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeNoActionBar">
+            android:theme="@style/ThemeNoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.activity.HomeActivity"
             android:launchMode="singleTask"
@@ -58,7 +56,6 @@
             android:name=".ui.activity.AboutDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/DrupalConHomeTheme" />
-
         <activity
             android:name=".ui.activity.AboutActivity"
             android:label="@string/title_activity_about"
@@ -66,6 +63,11 @@
             android:theme="@style/DrupalConDetailsTheme" />
 
         <service android:name="com.ls.services.NotifyService" />
+
+        <activity
+            android:name=".ui.activity.EventDetailsActivity2"
+            android:label="@string/title_activity_event_details_activity2" >
+        </activity>
     </application>
 
 </manifest>

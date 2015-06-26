@@ -101,6 +101,7 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/txtTrack"
                             android:textColor="@color/grey_400"
+                            android:text="asdasdasd"
                             android:textSize="@dimen/text_size_15"/>
 
                         <LinearLayout

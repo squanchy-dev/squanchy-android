@@ -93,5 +93,7 @@
     <string name="no_search_result">No Search Result</string>
     <string name="TWITTER">TWITTER</string>
     <string name="WEBSITE">WEBSITE</string>
+    <string name="lorem_ipsum">Lorem ipsum</string>
+    <string name="title_activity_event_details_activity2">EventDetailsActivity2</string>
 
 </resources>

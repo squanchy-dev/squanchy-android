@@ -81,7 +81,7 @@ public class SpeakersListFragment extends Fragment
 
 	private void initSearchMenuItem(Menu menu) {
 		SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
-		final android.support.v7.widget.SearchView searchView = (android.support.v7.widget.SearchView) menu.findItem(R.id.actionSearch).getActionView();
+		android.support.v7.widget.SearchView searchView = (android.support.v7.widget.SearchView) menu.findItem(R.id.actionSearch).getActionView();
 		searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
 		searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
 			@Override
