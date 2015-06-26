@@ -39,11 +39,11 @@ public class EventFragment extends Fragment implements NewEventsAdapter.Listener
 	private List<Long> trackIds;
 	private long mDay;
 
-	private DrawerManager.EventMode mEventMode;
-	private NewEventsAdapter mAdapter;
+    private DrawerManager.EventMode mEventMode;
+    private NewEventsAdapter mAdapter;
 
-	private ListView mListView;
-	private ProgressBar mProgressBar;
+    private ListView mListView;
+    private ProgressBar mProgressBar;
 
 	public static Fragment newInstance(int modePos, long day) {
 		Fragment fragment = new EventFragment();
@@ -139,7 +139,7 @@ public class EventFragment extends Fragment implements NewEventsAdapter.Listener
 			mProgressBar.setVisibility(View.GONE);
 		}
 
-		mAdapter.setData(eventListItems);
+		mAdapter.setData(eventListItems, mEventMode);
 		if (isDateValid() && mEventMode != DrawerManager.EventMode.Favorites) {
 			int index = getCurrentTimeIndex(eventListItems);
 			mListView.setSelection(index);

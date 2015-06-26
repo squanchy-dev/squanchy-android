@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ls.drupalconapp.R;
@@ -40,7 +39,6 @@ public class NewEventsAdapter extends BaseAdapter {
     public interface Listener {
         void onClick(int position);
     }
-
 
     public NewEventsAdapter(Context context) {
         mContext = context;
@@ -74,7 +72,7 @@ public class NewEventsAdapter extends BaseAdapter {
     }
 
     public void setData(List<EventListItem> data, DrawerManager.EventMode mode) {
-        data.clear();
+        mData.clear();
         mData.addAll(data);
         mEventMode = mode;
         notifyDataSetChanged();
@@ -107,7 +105,7 @@ public class NewEventsAdapter extends BaseAdapter {
 
     public View initHeaderView(int position, View convertView, ViewGroup parent) {
         View resultView = convertView;
-        HeaderHolder holder = null;
+        HeaderHolder holder;
 
         if (resultView == null) {
             resultView = mInflater.inflate(R.layout.item_header, parent, false);
@@ -118,7 +116,7 @@ public class NewEventsAdapter extends BaseAdapter {
             holder = (HeaderHolder) resultView.getTag();
         }
 
-        final HeaderItem item = (HeaderItem) getItem(position);
+        HeaderItem item = (HeaderItem) getItem(position);
         holder.txtTitle.setText(item.getTitle());
         holder.txtTitle.setVisibility(View.VISIBLE);
 
@@ -141,7 +139,6 @@ public class NewEventsAdapter extends BaseAdapter {
             holder.txtFrom = (TextView) resultView.findViewById(R.id.txtFrom);
             holder.txtTo = (TextView) resultView.findViewById(R.id.txtTo);
             holder.layoutSpeakers = (LinearLayout) resultView.findViewById(R.id.layout_speakers);
-            holder.layoutTrack = (LinearLayout) resultView.findViewById(R.id.layout_track);
             holder.layoutPlace = (LinearLayout) resultView.findViewById(R.id.layout_place);
             holder.txtSpeakers = (TextView) resultView.findViewById(R.id.txtSpeakers);
             holder.txtTrack = (TextView) resultView.findViewById(R.id.txtTrack);
@@ -153,12 +150,9 @@ public class NewEventsAdapter extends BaseAdapter {
 
         TimeRangeItem timeRange = (TimeRangeItem) getItem(position);
         Event event = timeRange.getEvent();
-        if (!timeRange.getSpeakers().isEmpty()) {
-            timeRange.getSpeakers().size();
-        }
-
         String fromTime = timeRange.getFromTime();
         String toTime = timeRange.getToTime();
+
 
         if (android.text.format.DateFormat.is24HourFormat(mContext)) {
             if (fromTime != null && toTime != null) {
@@ -169,8 +163,10 @@ public class NewEventsAdapter extends BaseAdapter {
 
         if (Type.getIcon(timeRange.getType()) != 0) {
             holder.icon.setVisibility(View.VISIBLE);
+            holder.icon.setImageResource(Type.getIcon(timeRange.getType()));
+        } else {
+            holder.icon.setVisibility(View.GONE);
         }
-        holder.icon.setImageResource(Type.getIcon(timeRange.getType()));
 
         if (fromTime != null && toTime != null) {
             holder.txtFrom.setText(fromTime);
@@ -182,7 +178,6 @@ public class NewEventsAdapter extends BaseAdapter {
         }
 
         holder.txtTitle.setText(event.getName());
-
         if (!event.getPlace().equals("")) {
             holder.txtPlace.setText(event.getPlace());
             holder.layoutPlace.setVisibility(View.VISIBLE);
@@ -198,7 +193,6 @@ public class NewEventsAdapter extends BaseAdapter {
         }
 
         if (!timeRange.getSpeakers().isEmpty()) {
-
             List<String> speakers = timeRange.getSpeakers();
             StringBuilder builder = new StringBuilder(speakers.get(0));
 
@@ -212,9 +206,6 @@ public class NewEventsAdapter extends BaseAdapter {
             holder.layoutSpeakers.setVisibility(View.GONE);
         }
 
-
-        holder.expIcon.setImageResource(Level.getIcon(event.getExperienceLevel()));
-
         if (timeRange.isFirst()) {
             holder.divider.setVisibility(View.GONE);
             holder.marginDivider.setVisibility(View.VISIBLE);
@@ -224,9 +215,10 @@ public class NewEventsAdapter extends BaseAdapter {
         }
 
         if (mEventMode == DrawerManager.EventMode.Favorites) {
-            resultView.findViewById(R.id.dark_background).setVisibility(View.GONE);
+            resultView.findViewById(R.id.timeLayout).setBackgroundColor(mContext.getResources().getColor(android.R.color.transparent));
         }
 
+        holder.expIcon.setImageResource(Level.getIcon(event.getExperienceLevel()));
         initEventClickAbility(holder.layoutRoot, holder.txtPlace, event, position);
 
         return resultView;
@@ -234,7 +226,7 @@ public class NewEventsAdapter extends BaseAdapter {
 
     public View initProgramView(final int position, View convertView, ViewGroup parent) {
         View resultView = convertView;
-        ProgramsHolder holder = null;
+        ProgramsHolder holder;
 
         if (resultView == null) {
             resultView = mInflater.inflate(R.layout.item_event, parent, false);
@@ -247,7 +239,6 @@ public class NewEventsAdapter extends BaseAdapter {
             holder.txtTitle = (TextView) resultView.findViewById(R.id.txtTitle);
             holder.layoutTime = (LinearLayout) resultView.findViewById(R.id.timeLayout);
             holder.layoutSpeakers = (LinearLayout) resultView.findViewById(R.id.layout_speakers);
-            holder.layoutTrack = (LinearLayout) resultView.findViewById(R.id.layout_track);
             holder.layoutPlace = (LinearLayout) resultView.findViewById(R.id.layout_place);
             holder.txtSpeakers = (TextView) resultView.findViewById(R.id.txtSpeakers);
             holder.txtTrack = (TextView) resultView.findViewById(R.id.txtTrack);
@@ -257,11 +248,8 @@ public class NewEventsAdapter extends BaseAdapter {
             holder = (ProgramsHolder) resultView.getTag();
         }
 
-//        holder.layoutTime.setVisibility(View.INVISIBLE);
-
-        final ProgramItem item = (ProgramItem) getItem(position);
-        final Event event = item.getEvent();
-
+        ProgramItem item = (ProgramItem) getItem(position);
+        Event event = item.getEvent();
         holder.txtTitle.setText(event.getName());
 
         if (!event.getPlace().equals("")) {
@@ -279,7 +267,6 @@ public class NewEventsAdapter extends BaseAdapter {
         }
 
         if (!item.getSpeakers().isEmpty()) {
-
             List<String> speakers = item.getSpeakers();
             StringBuilder builder = new StringBuilder(speakers.get(0));
 
@@ -333,9 +320,8 @@ public class NewEventsAdapter extends BaseAdapter {
             holder = (BofsHolder) resultView.getTag();
         }
 
-        final BofsItem item = (BofsItem) getItem(position);
-        final Event event = item.getEvent();
-
+        BofsItem item = (BofsItem) getItem(position);
+        Event event = item.getEvent();
         holder.txtTitle.setText(event.getName());
 
         if (!event.getPlace().equals("")) {
@@ -359,12 +345,12 @@ public class NewEventsAdapter extends BaseAdapter {
 
     private View initSocialView(final int position, View convertView, ViewGroup parent) {
         View resultView = convertView;
-        SocialsHolder holder = null;
+        SocialsHolder holder;
 
         if (resultView == null) {
-            resultView = mInflater.inflate(R.layout.item_social_event, parent, false);
+            resultView = mInflater.inflate(R.layout.item_event, parent, false);
             holder = new SocialsHolder();
-            holder.layoutRoot = (RelativeLayout) resultView.findViewById(R.id.layoutRoot);
+            holder.layoutRoot = (LinearLayout) resultView.findViewById(R.id.layoutRoot);
             holder.layoutPlace = (LinearLayout) resultView.findViewById(R.id.layout_place);
             holder.txtFrom = (TextView) resultView.findViewById(R.id.txtFrom);
             holder.txtTo = (TextView) resultView.findViewById(R.id.txtTo);
@@ -375,21 +361,8 @@ public class NewEventsAdapter extends BaseAdapter {
             holder = (SocialsHolder) resultView.getTag();
         }
 
-        final SocialItem item = (SocialItem) getItem(position);
-        final Event event = item.getEvent();
-
-        String fromTime = event.getFromTime();
-        String toTime = event.getToTime();
-
-        if (android.text.format.DateFormat.is24HourFormat(mContext)) {
-            if (fromTime != null && toTime != null) {
-                fromTime = DateUtils.convertDateTo24Format(fromTime);
-                toTime = DateUtils.convertDateTo24Format(toTime);
-            }
-        }
-
-//		holder.txtFrom.setText(fromTime);
-//		holder.txtTo.setText("to " + toTime);
+        SocialItem item = (SocialItem) getItem(position);
+        Event event = item.getEvent();
         holder.txtTitle.setText(event.getName());
 
         if (!event.getPlace().equals("")) {
@@ -424,27 +397,6 @@ public class NewEventsAdapter extends BaseAdapter {
         }
     }
 
-    public void setData(List<EventListItem> data) {
-        mData = data;
-        notifyDataSetChanged();
-    }
-
-    public void addData(List<EventListItem> data) {
-        mData.addAll(data);
-        notifyDataSetChanged();
-    }
-
-    public void updateEvent(long eventId, boolean isFavorite) {
-        for (EventListItem eventListItem : mData) {
-            Event event = eventListItem.getEvent();
-            if (event != null && event.getId() == eventId) {
-                event.setFavorite(isFavorite);
-                notifyDataSetChanged();
-                return;
-            }
-        }
-    }
-
     private static class HeaderHolder {
         TextView txtTitle;
     }
@@ -456,7 +408,6 @@ public class NewEventsAdapter extends BaseAdapter {
         ImageView expIcon;
         View divider;
         View marginDivider;
-        LinearLayout layoutTrack;
         LinearLayout layoutSpeakers;
         LinearLayout layoutPlace;
         TextView txtSpeakers;
@@ -484,7 +435,6 @@ public class NewEventsAdapter extends BaseAdapter {
         LinearLayout layoutRoot;
         ImageView expIcon;
         LinearLayout layoutTime;
-        LinearLayout layoutTrack;
         LinearLayout layoutSpeakers;
         LinearLayout layoutPlace;
         TextView txtSpeakers;
@@ -498,12 +448,11 @@ public class NewEventsAdapter extends BaseAdapter {
 
     private static class SocialsHolder {
 
-        RelativeLayout layoutRoot;
+        LinearLayout layoutRoot;
         LinearLayout layoutPlace;
         TextView txtFrom;
         TextView txtTo;
         TextView txtTitle;
         TextView txtPlace;
-        View divider;
     }
 }
