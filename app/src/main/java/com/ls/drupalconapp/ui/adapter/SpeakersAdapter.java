@@ -1,10 +1,5 @@
 package com.ls.drupalconapp.ui.adapter;
 
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.model.data.Speaker;
-import com.ls.drupalconapp.ui.fragment.SpeakersListFragment;
-import com.ls.drupalconapp.ui.view.CircleDrupalImageView;
-
 import android.content.Context;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -14,6 +9,11 @@ import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
+
+import com.ls.drupalconapp.R;
+import com.ls.drupalconapp.model.data.Speaker;
+import com.ls.drupalconapp.ui.fragment.SpeakersListFragment;
+import com.ls.drupalconapp.ui.view.CircleImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +63,7 @@ public class SpeakersAdapter extends BaseAdapter implements Filterable {
 			row = mInflater.inflate(R.layout.item_speaker, parent, false);
 
 			holder = new ViewHolder();
-			holder.imgPhoto = (CircleDrupalImageView) row.findViewById(R.id.imgPhoto);
+			holder.imgPhoto = (CircleImageView) row.findViewById(R.id.imgPhoto);
 			holder.txtName = (TextView) row.findViewById(R.id.txtName);
 			holder.txtOrgAndJobTitle = (TextView) row.findViewById(R.id.txtOrgAndJobTitle);
 			holder.txtFirstLetter = (TextView) row.findViewById(R.id.txtFirstLetter);
@@ -115,7 +115,7 @@ public class SpeakersAdapter extends BaseAdapter implements Filterable {
 
 	private class ViewHolder {
 
-		CircleDrupalImageView imgPhoto;
+		CircleImageView imgPhoto;
 		TextView txtName;
 		TextView txtOrgAndJobTitle;
 		TextView txtFirstLetter;

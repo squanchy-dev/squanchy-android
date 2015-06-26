@@ -11,7 +11,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 
-public class CircleImageView extends VolleyImageView {
+import com.ls.util.image.DrupalImageView;
+
+public class CircleImageView extends DrupalImageView {
 
     public CircleImageView(Context context) {
         super(context);

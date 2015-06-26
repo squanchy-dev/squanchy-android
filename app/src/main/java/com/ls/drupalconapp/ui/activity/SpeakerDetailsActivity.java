@@ -31,7 +31,7 @@ import com.ls.drupalconapp.model.dao.EventDao;
 import com.ls.drupalconapp.model.data.Speaker;
 import com.ls.drupalconapp.model.data.SpeakerDetailsEvent;
 import com.ls.drupalconapp.model.managers.SpeakerManager;
-import com.ls.drupalconapp.ui.view.CircleDrupalImageView;
+import com.ls.drupalconapp.ui.view.CircleImageView;
 import com.ls.drupalconapp.ui.view.NotifyingScrollView;
 import com.ls.utils.AnalyticsManager;
 import com.ls.utils.DateUtils;
@@ -220,7 +220,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 		mSpeaker = speaker;
 
 		// Speaker image
-		CircleDrupalImageView imgPhoto = (CircleDrupalImageView) findViewById(R.id.imgPhoto);
+		CircleImageView imgPhoto = (CircleImageView) findViewById(R.id.imgPhoto);
 		String imageUrl = mSpeaker.getAvatarImageUrl();
 		imgPhoto.setImageWithURL(imageUrl);
 

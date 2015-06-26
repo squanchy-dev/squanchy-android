@@ -26,10 +26,6 @@ android {
         }
     }
     productFlavors {
-        bogota {
-            applicationId "com.ls.drupalconapp"
-            versionName "2.0.3"
-        }
         losangeles {
             applicationId "com.ls.drupalconapp"
             versionName "2.0.3"

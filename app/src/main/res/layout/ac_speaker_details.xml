@@ -132,7 +132,7 @@
 
             </LinearLayout>
 
-            <com.ls.drupalconapp.ui.view.CircleDrupalImageView
+            <com.ls.drupalconapp.ui.view.CircleImageView
                 android:id="@+id/imgPhoto"
                 android:layout_width="96dp"
                 android:layout_height="96dp"

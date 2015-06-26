@@ -15,7 +15,6 @@ public class DrawerMenu {
             R.drawable.menu_icon_speakers,
             R.drawable.menu_icon_my_schedule,
             R.drawable.menu_icon_location,
-//            R.drawable.menu_icon_points,
             R.drawable.menu_icon_about
     };
 
@@ -26,7 +25,6 @@ public class DrawerMenu {
             R.drawable.menu_icon_speakers_sel,
             R.drawable.menu_icon_my_schedule_sel,
             R.drawable.menu_icon_location_sel,
-//            R.drawable.menu_icon_points_sel,
             R.drawable.menu_icon_about_sel
     };
 
@@ -37,7 +35,6 @@ public class DrawerMenu {
             App.getContext().getString(R.string.speakers),
             App.getContext().getString(R.string.my_schedule),
             App.getContext().getString(R.string.location),
-//            App.getContext().getString(R.string.point_of_interest),
             App.getContext().getString(R.string.about)
     };
 

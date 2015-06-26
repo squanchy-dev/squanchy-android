@@ -79,6 +79,7 @@
                         android:id="@+id/txtTitle"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
                         android:layout_marginRight="8dp"
                         android:layout_weight="1.0"
                         android:clickable="false"
@@ -99,25 +100,25 @@
                     android:id="@+id/txtTrack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="3dp"
+                    android:layout_marginBottom="4dp"
                     android:singleLine="true"
                     android:textColor="@color/grey_200"
                     android:textSize="@dimen/text_size_micro"
-                    tools:text="Coding and development"
                     android:visibility="gone"
-                    tools:visibility="visible"/>
+                    tools:text="Coding and development"
+                    tools:visibility="visible" />
 
                 <LinearLayout
                     android:id="@+id/layout_speakers"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="3dp"
+                    android:layout_marginBottom="4dp"
                     android:visibility="gone"
                     tools:visibility="visible">
 
                     <ImageView
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:alpha="0.7"
                         android:src="@drawable/ic_speakers" />
@@ -126,6 +127,7 @@
                         android:id="@+id/txtSpeakers"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="6dp"
                         android:singleLine="true"
                         android:textColor="@color/grey_200"
@@ -142,8 +144,8 @@
                     tools:visibility="visible">
 
                     <ImageView
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:alpha="0.7"
                         android:src="@drawable/ic_place" />
@@ -152,7 +154,7 @@
                         android:id="@+id/txtPlace"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="top"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="6dp"
                         android:textColor="@color/grey_200"
                         android:textSize="@dimen/text_size_micro"

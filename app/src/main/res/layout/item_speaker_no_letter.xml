@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.ls.drupalconapp.ui.view.CircleDrupalImageView
+        <com.ls.drupalconapp.ui.view.CircleImageView
             android:id="@+id/imgPhoto"
             android:layout_width="40dp"
             android:layout_height="40dp"
