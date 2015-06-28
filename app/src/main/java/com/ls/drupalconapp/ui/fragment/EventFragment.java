@@ -3,6 +3,7 @@ package com.ls.drupalconapp.ui.fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,12 +65,18 @@ public class EventFragment extends Fragment implements NewEventsAdapter.Listener
 		super.onActivityCreated(savedInstanceState);
 		initData();
 		initViews();
-		loadEvents();
+		eventTask.execute();
 	}
 
 	@Override
 	public void onClick(int position) {
 		onItemClick(position);
+	}
+
+	@Override
+	public void onDestroyView() {
+		eventTask.cancel(true);
+		super.onDestroyView();
 	}
 
 	private void initViews() {
@@ -97,21 +104,20 @@ public class EventFragment extends Fragment implements NewEventsAdapter.Listener
 		}
 	}
 
-	private void loadEvents() {
-		new AsyncTask<Void, Void, List<EventListItem>>() {
-			@Override
-			protected List<EventListItem> doInBackground(Void... params) {
-				return getEventItems();
-			}
+	AsyncTask<Void, Void, List<EventListItem>> eventTask = new AsyncTask<Void, Void, List<EventListItem>>() {
+		@Override
+		protected List<EventListItem> doInBackground(Void... params) {
+			return getEventItems();
+		}
 
-			@Override
-			protected void onPostExecute(List<EventListItem> eventListItems) {
-				if (!isDetached()) {
-					handleEventsResult(eventListItems);
-				}
+		@Override
+		protected void onPostExecute(List<EventListItem> eventListItems) {
+			if (!isDetached() && !eventTask.isCancelled()) {
+				Log.e("TEST", "onPostExecute");
+				handleEventsResult(eventListItems);
 			}
-		}.execute();
-	}
+		}
+	};
 
 	private List<EventListItem> getEventItems() {
 		List<EventListItem> eventList = new ArrayList<>();
