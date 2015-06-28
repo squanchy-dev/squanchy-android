@@ -46,10 +46,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/DrupalConDetailsTheme" />
         <activity
-            android:name=".ui.activity.EventDetailsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/DrupalConDetailsTheme" />
-        <activity
             android:name=".ui.activity.RoomsMapActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -62,12 +58,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/DrupalConDetailsTheme" />
 
-        <service android:name="com.ls.services.NotifyService" />
-
         <activity
-            android:name=".ui.activity.EventDetailsActivity2"
-            android:label="@string/title_activity_event_details_activity2" >
+            android:name=".ui.activity.EventDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/DrupalConDetailsTheme" >
         </activity>
+
+        <service android:name="com.ls.services.NotifyService" />
     </application>
 
 </manifest>

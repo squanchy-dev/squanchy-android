@@ -341,10 +341,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 		eventView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Intent intent = new Intent(SpeakerDetailsActivity.this, EventDetailsActivity.class);
-				intent.putExtra(EventDetailsActivity.EXTRA_EVENT_ID, event.getEventId());
-				intent.putExtra(EventDetailsActivity.EXTRA_SPEAKER_ID, mSpeaker.getId());
-				startActivity(intent);
+				EventDetailsActivity.startThisActivity(SpeakerDetailsActivity.this, event.getEventId(), DateUtils.convertWeekDayToLong(event.getDate()));
 			}
 		});
 	}

@@ -1,8 +1,8 @@
 package com.ls.utils;
 
-import org.jetbrains.annotations.NotNull;
-
 import android.support.annotation.Nullable;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -74,4 +74,21 @@ public class DateUtils {
 		}
 		return null;
 	}
+
+	public static String getWeekDay(long millis) {
+		SimpleDateFormat format = new SimpleDateFormat("EEE");
+		return format.format(new Date(millis));
+	}
+
+    public static long convertWeekDayToLong(String weekDay) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE");
+        Date date;
+        try {
+            date = dateFormat.parse(weekDay);
+            return date.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }

@@ -1,6 +1,5 @@
 package com.ls.drupalconapp.ui.fragment;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -155,11 +154,11 @@ public class EventFragment extends Fragment implements NewEventsAdapter.Listener
 			long type = item.getEvent().getType();
 
 			if (type == Type.SPEACH || type == Type.SPEACH_OF_DAY) {
-				Intent intent = new Intent(getActivity(), EventDetailsActivity.class);
-				intent.putExtra(EventDetailsActivity.EXTRA_EVENT_ID, item.getEvent().getId());
-				intent.putExtra(EventDetailsActivity.EXTRA_DAY, mDay);
-				startActivity(intent);
-//				EventDetailsActivity2.startThisActivity(getActivity(), item.getEvent().getId(), mDay);
+//				Intent intent = new Intent(getActivity(), EventDetailsActivity.class);
+//				intent.putExtra(EventDetailsActivity.EXTRA_EVENT_ID, item.getEvent().getId());
+//				intent.putExtra(EventDetailsActivity.EXTRA_DAY, mDay);
+//				startActivity(intent);
+				EventDetailsActivity.startThisActivity(getActivity(), item.getEvent().getId(), mDay);
 			}
 		}
 	}
