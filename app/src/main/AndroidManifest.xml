@@ -65,6 +65,9 @@
         </activity>
 
         <service android:name="com.ls.services.NotifyService" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="e92185b02a2fa31062b797232c3d5cccf9867952" />
     </application>
 
 </manifest>
