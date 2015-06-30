@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:id="@+id/layoutChild"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:descendantFocusability="blocksDescendants"
-              android:paddingRight="16dp"
-              android:paddingTop="12dp"
-              android:paddingBottom="12dp"
-              android:paddingLeft="24dp"
-              android:orientation="horizontal"
-              android:background="@drawable/selector_light"
-              android:clickable="true">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutChild"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/selector_light"
+    android:clickable="true"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="horizontal"
+    android:paddingLeft="24dp"
+    android:paddingRight="16dp">
 
     <com.ls.drupalconapp.ui.view.RegularFontTextView
         android:id="@+id/txtItemTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
         android:layout_weight="1"
         android:maxLines="2"
-        android:textSize="@dimen/text_size_medium"
         android:textColor="#949494"
-        tools:text="Lorem Ipsum"
-        android:layout_gravity="center_vertical"/>
+        android:textSize="@dimen/text_size_medium"
+        tools:text="Lorem Ipsum" />
 
     <CheckBox
         android:id="@+id/checkBox"
-        android:clickable="false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:checked="false"/>
+        android:checked="false"
+        android:clickable="false" />
 
 </LinearLayout>

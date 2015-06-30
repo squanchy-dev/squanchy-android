@@ -1,18 +1,16 @@
 package com.ls.drupalconapp.ui.adapter;
 
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.model.data.Level;
-import com.ls.drupalconapp.model.data.Track;
-
 import android.content.Context;
-import android.util.SparseArray;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
+import com.ls.drupalconapp.R;
+import com.ls.drupalconapp.model.data.Level;
+import com.ls.drupalconapp.model.data.Track;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +21,6 @@ public class FilterDialogAdapter extends BaseExpandableListAdapter {
 	private LayoutInflater mInflater;
 	private List<String> listDataHeader;
 	private HashMap<String, String[]> listChildData;
-	private SparseArray<SparseBooleanArray> checkedPositions;
 
 	private List<Level> mLevelList;
 	private List<Track> mTrackList;
@@ -32,9 +29,9 @@ public class FilterDialogAdapter extends BaseExpandableListAdapter {
 	private Listener mListener;
 
 	public interface Listener {
-		public void onGroupClicked(int position);
+		 void onGroupClicked(int position);
 
-		public void onChildClicked(int groupPosition, int ChildPosition);
+		 void onChildClicked(int groupPosition, int ChildPosition);
 	}
 
 	public void setListener(Listener listener) {
@@ -51,8 +48,6 @@ public class FilterDialogAdapter extends BaseExpandableListAdapter {
 		mSelectedIds = new ArrayList<>();
 		mSelectedIds.add(new ArrayList<Long>());
 		mSelectedIds.add(new ArrayList<Long>());
-
-		checkedPositions = new SparseArray<SparseBooleanArray>();
 	}
 
 	public void setData(List<Level> levelList, List<Track> trackList) {
@@ -113,20 +108,25 @@ public class FilterDialogAdapter extends BaseExpandableListAdapter {
 
 		TextView lblListHeader = (TextView) convertView.findViewById(R.id.lblListHeader);
 		lblListHeader.setText(headerTitle);
-
-		final CheckBox checkBoxGroup = (CheckBox) convertView.findViewById(R.id.checkBoxGroup);
-		convertView.findViewById(R.id.layoutGroup).setOnClickListener(new View.OnClickListener() {
+		lblListHeader.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (mListener != null) {
-					mListener.onGroupClicked(groupPosition);
-					checkBoxGroup.setChecked(!checkBoxGroup.isChecked());
-				}
+				mListener.onGroupClicked(groupPosition);
 			}
 		});
 
-		View divider = convertView.findViewById(R.id.divider);
+//		final CheckBox checkBoxGroup = (CheckBox) convertView.findViewById(R.id.checkBoxGroup);
+//		convertView.findViewById(R.id.layoutGroup).setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				if (mListener != null) {
+//					checkBoxGroup.setChecked(!checkBoxGroup.isChecked());
+//					mListener.onGroupClicked(groupPosition);
+//				}
+//			}
+//		});
 
+		View divider = convertView.findViewById(R.id.divider);
 		if (groupPosition == 0) {
 			divider.setVisibility(View.INVISIBLE);
 		} else {

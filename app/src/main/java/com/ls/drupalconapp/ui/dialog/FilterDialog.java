@@ -103,27 +103,27 @@ public class FilterDialog extends DialogFragment {
 		listDataChild.put(listDataHeader.get(0), expLevels);
 		listDataChild.put(listDataHeader.get(1), tracks);
 
+		mSelectedIds = loadSelectedIds();
 		mAdapter = new FilterDialogAdapter(getActivity(), listDataHeader, listDataChild);
 		mAdapter.setData(mLevelList, mTrackList);
+		mAdapter.setCheckedPositions(mSelectedIds);
 		mAdapter.setListener(new FilterDialogAdapter.Listener() {
-            @Override
-            public void onGroupClicked(int groupPosition) {
-                if (listView.isGroupExpanded(groupPosition)) {
-                    listView.collapseGroup(groupPosition);
-                } else {
-                    listView.expandGroup(groupPosition);
-                }
-            }
+			@Override
+			public void onGroupClicked(int groupPosition) {
+				if (listView.isGroupExpanded(groupPosition)) {
+					listView.collapseGroup(groupPosition);
+				} else {
+					listView.expandGroup(groupPosition);
+				}
+			}
 
-            @Override
-            public void onChildClicked(int groupPosition, int childPosition) {
-                mAdapter.setClicked(groupPosition, childPosition);
+			@Override
+			public void onChildClicked(int groupPosition, int childPosition) {
+				mAdapter.setClicked(groupPosition, childPosition);
             }
         });
 
 		listView.setAdapter(mAdapter);
-        mSelectedIds = loadSelectedIds();
-        mAdapter.setCheckedPositions(mSelectedIds);
 
         for (int i = 0; i < mSelectedIds.size(); i++) {
             List<Long> ids = mSelectedIds.get(i);
