@@ -39,10 +39,8 @@ public class EventHolderFragment extends Fragment {
 
 	public static final String TAG = "ProjectsFragment";
 	private static final String EXTRAS_ARG_MODE = "EXTRAS_ARG_MODE";
-	private static final int ANIMATION_DURATION = 250;
 
 	private ViewPager mViewPager;
-	private View mTabView;
 	private PagerSlidingTabStrip mPagerTabs;
 	private BaseEventDaysPagerAdapter mAdapter;
 
@@ -141,7 +139,6 @@ public class EventHolderFragment extends Fragment {
 		mAdapter = new BaseEventDaysPagerAdapter(getChildFragmentManager());
 		mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
 		mViewPager.setAdapter(mAdapter);
-		mTabView = view.findViewById(R.id.tabView);
 
 		Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Regular.ttf");
 		mPagerTabs = (PagerSlidingTabStrip) getView().findViewById(R.id.pager_tab_strip);
@@ -211,7 +208,6 @@ public class EventHolderFragment extends Fragment {
 
 		mAdapter.setData(mDayIdList, mEventMode);
 		switchToCurrentDay(mDayIdList);
-		mTabView.animate().alpha(0).setDuration(ANIMATION_DURATION).start();
 	}
 
 	private void switchToCurrentDay(List<Long> days) {

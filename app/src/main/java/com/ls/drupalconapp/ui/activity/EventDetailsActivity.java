@@ -51,7 +51,6 @@ public class EventDetailsActivity extends ActionBarActivity {
 
     public static final String EXTRA_EVENT_ID = "EXTRA_EVENT_ID";
     public static final String EXTRA_DAY = "EXTRA_DAY";
-    private static final int ANIMATION_DURATION = 250;
 
     private TextView mToolbarTitle;
     private View mViewToolbar;
@@ -195,7 +194,7 @@ public class EventDetailsActivity extends ActionBarActivity {
 
     private void fillEventView(@NonNull EventDetailsEvent event) {
         mProgressBar.setVisibility(View.GONE);
-        mScrollView.animate().alpha(1.0f).setDuration(ANIMATION_DURATION).start();
+        mScrollView.setAlpha(1.0f);
 
         mEvent = event;
         fillToolbar(mEvent);

@@ -32,7 +32,6 @@ public class SpeakersListFragment extends Fragment
 		implements AdapterView.OnItemClickListener, SpeakersAdapter.OnFilterChangeListener {
 
 	public static final String TAG = "SpeakersFragment";
-	private static final int ANIMATION_DURATION = 250;
 	private SpeakersAdapter mSpeakersAdapter;
 	private ListView mListView;
 	private TextView mTxtNoSearchResult;
@@ -114,15 +113,8 @@ public class SpeakersListFragment extends Fragment
 		mProgressBar = (ProgressBar) getView().findViewById(R.id.progressBar);
 		mTxtNoSearchResult = (TextView) getView().findViewById(R.id.txtSearchEmpty);
 		mListView = (ListView) getView().findViewById(R.id.listSpeakers);
-		mListView.setAlpha(0);
 
 		new AsyncTask<Void, Void, List<Speaker>>() {
-			@Override
-			protected void onPreExecute() {
-				super.onPreExecute();
-				mListView.setVisibility(View.GONE);
-			}
-
 			@Override
 			protected List<Speaker> doInBackground(Void... params) {
 				SpeakerManager manager = Model.instance().getSpeakerManager();
@@ -151,10 +143,7 @@ public class SpeakersListFragment extends Fragment
 			mSpeakersAdapter.setData(speakers, letterPositions);
 			mSpeakersAdapter.notifyDataSetChanged();
 		}
-
-		mListView.setVisibility(View.VISIBLE);
 		mProgressBar.setVisibility(View.GONE);
-		mListView.animate().alpha(1.0f).setDuration(ANIMATION_DURATION).start();
 	}
 
 	public static SparseBooleanArray generateFirstLetterPositions(List<Speaker> speakers) {

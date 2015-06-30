@@ -5,7 +5,7 @@
     android:id="@+id/holderSpeaker"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@drawable/selector_light"
     android:minHeight="72dp"
     android:orientation="horizontal">
 

@@ -21,13 +21,6 @@
         app:pstsTextSelectedStyle  ="normal"
         app:pstsIndicatorHeight="3dp" />
 
-    <View
-        android:id="@+id/tabView"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:visibility="visible"
-        android:background="@color/primary"/>
-
     <android.support.v4.view.ViewPager
         android:layout_below="@+id/pager_tab_strip"
         android:id="@+id/viewPager"

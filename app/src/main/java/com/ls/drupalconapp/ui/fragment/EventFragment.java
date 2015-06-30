@@ -33,7 +33,6 @@ public class EventFragment extends Fragment implements NewEventsAdapter.Listener
 
 	private static final String EXTRAS_ARG_MODE = "EXTRAS_ARG_MODE";
 	private static final String EXTRAS_ARG_DAY = "EXTRAS_ARG_DAY";
-	private static final int ANIMATION_DURATION = 250;
 
 	private List<Long> levelIds;
 	private List<Long> trackIds;
@@ -87,7 +86,6 @@ public class EventFragment extends Fragment implements NewEventsAdapter.Listener
 			mAdapter.setOnClickListener(this);
 
 			mListView = (ListView) getView().findViewById(R.id.listView);
-			mListView.setAlpha(0);
 			mListView.setAdapter(mAdapter);
 		}
 	}
@@ -149,7 +147,6 @@ public class EventFragment extends Fragment implements NewEventsAdapter.Listener
 			int index = getCurrentTimeIndex(eventListItems);
 			mListView.setSelection(index);
 		}
-		mListView.animate().alpha(1.0f).setDuration(ANIMATION_DURATION).start();
 	}
 
 

@@ -48,7 +48,6 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 
 	private static final String TWITTER_URL = "https://twitter.com/";
 	private static final String TWITTER_APP_URL = "twitter://user?screen_name=";
-	private static int ANIMATION_DURATION = 250;
 
 	private View inspectView;
 	private int mActionBarBottomCoordinate = -1;
@@ -83,11 +82,6 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ac_speaker_details);
-
-		int apiVersion = android.os.Build.VERSION.SDK_INT;
-		if (apiVersion >= Build.VERSION_CODES.LOLLIPOP) {
-			ANIMATION_DURATION = 750;
-		}
 
 		mSpeakerManager = Model.instance().getSpeakerManager();
 		handleExtras(getIntent());
@@ -442,7 +436,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 	private void checkForLoadingComplete() {
 		if (isDataLoaded && isWebViewLoaded) {
 			findViewById(R.id.progressBar).setVisibility(View.GONE);
-			mScrollView.animate().alpha(1.0f).setDuration(ANIMATION_DURATION).start();
+			mScrollView.setAlpha(1.0f);
 		}
 	}
 }
