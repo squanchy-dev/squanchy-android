@@ -100,11 +100,11 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnChecke
 	}
 
 	private void initStatusBar() {
+		mStatusBar = findViewById(R.id.viewStatusBar);
+
 		int currentApiVersion = android.os.Build.VERSION.SDK_INT;
 		if (currentApiVersion >= Build.VERSION_CODES.LOLLIPOP) {
 			getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
-			mStatusBar = findViewById(R.id.viewStatusBar);
 			mStatusBar.setBackgroundColor(getResources().getColor(R.color.primary));
 			mStatusBar.setVisibility(View.VISIBLE);
 			findViewById(R.id.viewStatusBarTrans).setVisibility(View.VISIBLE);
@@ -279,7 +279,7 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnChecke
     }
 
     private void displayLocationTheme() {
-        if (mStatusBar != null) {
+		if (mStatusBar != null && mToolbar != null) {
             mStatusBar.setBackgroundColor(getResources().getColor(R.color.secondary));
             mToolbar.setBackgroundColor(getResources().getColor(R.color.secondary));
         }
