@@ -24,10 +24,16 @@ public abstract class SynchronousItemManager<FetchRequestResponseToManage ,Param
         AbstractBaseDrupalEntity request = getEntityToFetch(this.client, requestParams);
         TagClass tag = getEntityRequestTag(requestParams);
         ResponseData response = request.pullFromServer(true, tag, null);
-        FetchRequestResponseToManage responseObj = (FetchRequestResponseToManage)response.getData();
-        if(responseObj != null) {
-            return storeResponse(responseObj, tag);
+
+        int statusCode = response.getStatusCode();
+        if (statusCode > 0 && statusCode < 400) {
+
+            FetchRequestResponseToManage responseObj = (FetchRequestResponseToManage)response.getData();
+            if(responseObj != null) {
+                return storeResponse(responseObj, tag);
+            }
         }
+
         return false;
     }
 

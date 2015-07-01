@@ -9,8 +9,11 @@ import com.ls.drupalconapp.R;
 import com.ls.drupalconapp.model.Model;
 import com.ls.drupalconapp.model.UpdateCallback;
 import com.ls.drupalconapp.model.UpdatesManager;
+import com.ls.drupalconapp.ui.dialog.NoConnectionDialog;
 import com.ls.util.L;
 import com.ls.utils.AnalyticsManager;
+import com.ls.utils.DialogHelper;
+import com.ls.utils.NetworkUtils;
 
 public class SplashActivity extends FragmentActivity {
 
@@ -27,7 +30,11 @@ public class SplashActivity extends FragmentActivity {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                performSplash();
+                if (NetworkUtils.isOn(SplashActivity.this)) {
+                    checkForUpdates();
+                } else {
+                    DialogHelper.showAllowStateLoss(SplashActivity.this, NoConnectionDialog.TAG, new NoConnectionDialog());
+                }
             }
         }, SPLASH_DURATION);
     }
@@ -38,7 +45,7 @@ public class SplashActivity extends FragmentActivity {
         super.onDestroy();
     }
 
-    private void performSplash() {
+    private void checkForUpdates() {
         new AsyncTask<Void, Void, UpdatesManager>() {
             @Override
             protected UpdatesManager doInBackground(Void... params) {
@@ -66,6 +73,7 @@ public class SplashActivity extends FragmentActivity {
             @Override
             public void onDownloadError() {
                 L.e("onDownloadError");
+                DialogHelper.showAllowStateLoss(SplashActivity.this, NoConnectionDialog.TAG, new NoConnectionDialog());
             }
         });
     }

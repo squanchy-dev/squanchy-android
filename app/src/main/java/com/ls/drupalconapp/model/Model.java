@@ -14,6 +14,7 @@ import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HttpClientStack;
 import com.android.volley.toolbox.HttpStack;
 import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.NoCache;
 import com.ls.drupal.DrupalClient;
 import com.ls.drupalconapp.model.database.ILAPIDBFacade;
 import com.ls.drupalconapp.model.database.LAPIDBRegister;
@@ -171,11 +172,10 @@ public class Model {
         return this.loginManager.login(userName,password,queue);
     }
 
-
     private Model(Context context)
     {
         loginManager = new LoginManager();
-        queue = createNewQueue(context);
+        queue = createNoCachedQueue(context);
         client = new DrupalClient(ApplicationConfig.BASE_URL,queue, BaseRequest.RequestFormat.JSON,loginManager);
 
         typesManager = new TypesManager(client);
@@ -197,7 +197,7 @@ public class Model {
 
     //Initialization
 
-    private RequestQueue createNewQueue(Context context)
+    public RequestQueue createNewQueue(Context context)
     {
         cookieStore = new HURLCookieStore(context);
         CookieManager cmrCookieMan = new CookieManager(cookieStore, CookiePolicy.ACCEPT_ALL);
@@ -221,6 +221,31 @@ public class Model {
         }
 
         return newRequestQueue(context, stack);
+    }
+
+    private RequestQueue createNoCachedQueue(Context context) {
+        cookieStore = new HURLCookieStore(context);
+        CookieManager cmrCookieMan = new CookieManager(cookieStore, CookiePolicy.ACCEPT_ALL);
+        CookieHandler.setDefault(cmrCookieMan);
+
+        HttpStack stack;
+
+        String userAgent = "volley/0";
+        try {
+            String packageName = context.getPackageName();
+            PackageInfo info = context.getPackageManager().getPackageInfo(packageName, 0);
+            userAgent = packageName + "/" + info.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+        }
+
+        if (Build.VERSION.SDK_INT >= 9) {
+            stack =  new RedirectHurlStack();
+
+        } else {
+            stack = new HttpClientStack(AndroidHttpClient.newInstance(userAgent));
+        }
+
+        return newNoCachedRequestQueue(stack);
     }
 
     /**
@@ -248,6 +273,18 @@ public class Model {
         Network network = new BasicNetwork(stack);
 
         RequestQueue queue = new RequestQueue(new DiskBasedCache(cacheDir, ApplicationConfig.CACHE_DISK_USAGE_BYTES), network,1);
+        queue.start();
+
+        return queue;
+    }
+
+    private static RequestQueue newNoCachedRequestQueue(HttpStack stack) {
+        if (stack == null) {
+            stack = new HurlStack();
+        }
+
+        Network network = new BasicNetwork(stack);
+        RequestQueue queue = new RequestQueue(new NoCache(), network,1);
         queue.start();
 
         return queue;

@@ -35,7 +35,7 @@ public class App extends Application {
         PreferencesManager.initializeInstance(mContext);
         Model.instance(mContext);
         FontHelper.init(mContext);
-        DrupalImageView.setupSharedClient(new DrupalClient(null, Model.instance().getQueue(), BaseRequest.RequestFormat.JSON, null));
+        DrupalImageView.setupSharedClient(new DrupalClient(null, Model.instance().createNewQueue(getApplicationContext()), BaseRequest.RequestFormat.JSON, null));
     }
 
     public static Context getContext() {

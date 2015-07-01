@@ -109,21 +109,29 @@ public class UpdatesManager {
     /**
      * @return return updated request id's list in case of success or null in case of failure
      */
+
     private List<Integer> doPerformLoading() {
         RequestConfig config = new RequestConfig();
         config.setResponseFormat(BaseRequest.ResponseFormat.JSON);
         config.setRequestFormat(BaseRequest.RequestFormat.JSON);
         config.setResponseClassSpecifier(UpdateDate.class);
         BaseRequest checkForUpdatesRequest = new BaseRequest(BaseRequest.RequestMethod.GET, ApplicationConfig.BASE_URL + "checkUpdates", config);
-        checkForUpdatesRequest.addRequestHeader(IF_MODIFIED_SINCE_HEADER, PreferencesManager.getInstance().getLastUpdateDate());
+        String lastDate = PreferencesManager.getInstance().getLastUpdateDate();
+        checkForUpdatesRequest.addRequestHeader(IF_MODIFIED_SINCE_HEADER, lastDate);
         ResponseData updatesData = mClient.performRequest(checkForUpdatesRequest, true);
-        UpdateDate updateDate = (UpdateDate) updatesData.getData();
 
-        if (updateDate == null) {
-            return new LinkedList<>();
+        int statusCode = updatesData.getStatusCode();
+        if (statusCode > 0 && statusCode < 400) {
+            UpdateDate updateDate = (UpdateDate) updatesData.getData();
+            if (updateDate == null) {
+                return new LinkedList<>();
+            }
+            updateDate.setTime(updatesData.getHeaders().get(LAST_MODIFIED_HEADER));
+            return loadData(updateDate);
+
+        } else {
+            return null;
         }
-        updateDate.setTime(updatesData.getHeaders().get(LAST_MODIFIED_HEADER));
-        return loadData(updateDate);
     }
 
     private List<Integer> loadData(UpdateDate updateDate) {
