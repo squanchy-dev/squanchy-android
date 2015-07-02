@@ -149,6 +149,10 @@ public class Model {
         return programManager;
     }
 
+    public ProgramManager createProgramManager() {
+        return new ProgramManager(client);
+    }
+
     public UpdatesManager getUpdatesManager() {
         return updatesManager;
     }

@@ -1,5 +1,8 @@
 package com.ls.drupalconapp.model.dao;
 
+import android.content.Context;
+import android.database.Cursor;
+
 import com.ls.drupalconapp.R;
 import com.ls.drupalconapp.model.AppDatabaseInfo;
 import com.ls.drupalconapp.model.data.Event;
@@ -16,9 +19,6 @@ import com.ls.utils.ArrayUtils;
 import com.ls.utils.CursorParser;
 import com.ls.utils.CursorStringParser;
 
-import android.content.Context;
-import android.database.Cursor;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -33,6 +33,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
 
     public static final String TABLE_NAME = "table_event";
     private final Context mContext;
+    private boolean mShouldBreak;
 
     public EventDao(Context context) {
         mContext = context;
@@ -442,7 +443,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
         }
 
         ILAPIDBFacade facade = getFacade();
-        List<EventListItem> dataList = new ArrayList<EventListItem>();
+        List<EventListItem> dataList = new ArrayList<>();
 
         try {
             facade.open();
@@ -455,8 +456,11 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
 
             boolean moved = cursor.moveToFirst();
             while (moved) {
-                long eventId = cursor.getLong(cursor.getColumnIndex("_id"));
+                if (mShouldBreak) {
+                    return dataList;
+                }
 
+                long eventId = cursor.getLong(cursor.getColumnIndex("_id"));
                 if (lastId != eventId) {
                     lastItem = new ProgramItem();
                     Event event = new Event();
@@ -574,5 +578,9 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
         }
 
         return dataList;
+    }
+
+    public void setShouldBreak(boolean shouldBreak) {
+        mShouldBreak = shouldBreak;
     }
 }

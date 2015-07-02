@@ -3,7 +3,6 @@ package com.ls.drupalconapp.ui.fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +43,8 @@ public class EventFragment extends Fragment implements NewEventsAdapter.Listener
     private ListView mListView;
     private ProgressBar mProgressBar;
 
+	private EventGenerator mGenerator;
+
 	public static Fragment newInstance(int modePos, long day) {
 		Fragment fragment = new EventFragment();
 		Bundle args = new Bundle();
@@ -64,7 +65,7 @@ public class EventFragment extends Fragment implements NewEventsAdapter.Listener
 		super.onActivityCreated(savedInstanceState);
 		initData();
 		initViews();
-		eventTask.execute();
+		mEventTask.execute();
 	}
 
 	@Override
@@ -73,9 +74,10 @@ public class EventFragment extends Fragment implements NewEventsAdapter.Listener
 	}
 
 	@Override
-	public void onDestroyView() {
-		eventTask.cancel(true);
-		super.onDestroyView();
+	public void onDestroy() {
+		mEventTask.cancel(true);
+		mGenerator.setShouldBreak(true);
+		super.onDestroy();
 	}
 
 	private void initViews() {
@@ -100,9 +102,10 @@ public class EventFragment extends Fragment implements NewEventsAdapter.Listener
 			levelIds = PreferencesManager.getInstance().loadExpLevel();
 			trackIds = PreferencesManager.getInstance().loadTracks();
 		}
+		mGenerator = new EventGenerator();
 	}
 
-	AsyncTask<Void, Void, List<EventListItem>> eventTask = new AsyncTask<Void, Void, List<EventListItem>>() {
+	AsyncTask<Void, Void, List<EventListItem>> mEventTask = new AsyncTask<Void, Void, List<EventListItem>>() {
 		@Override
 		protected List<EventListItem> doInBackground(Void... params) {
 			return getEventItems();
@@ -110,8 +113,7 @@ public class EventFragment extends Fragment implements NewEventsAdapter.Listener
 
 		@Override
 		protected void onPostExecute(List<EventListItem> eventListItems) {
-			if (!isDetached() && !eventTask.isCancelled()) {
-				Log.e("TEST", "onPostExecute");
+			if (!isDetached() && !mEventTask.isCancelled()) {
 				handleEventsResult(eventListItems);
 			}
 		}
@@ -119,19 +121,19 @@ public class EventFragment extends Fragment implements NewEventsAdapter.Listener
 
 	private List<EventListItem> getEventItems() {
 		List<EventListItem> eventList = new ArrayList<>();
-		EventGenerator generator = new EventGenerator();
+
 		switch (mEventMode) {
 			case Program:
-				eventList.addAll(generator.generate(mDay, Event.PROGRAM_CLASS, levelIds, trackIds, new SimpleTimeRangeCreator()));
+				eventList.addAll(mGenerator.generate(mDay, Event.PROGRAM_CLASS, levelIds, trackIds, new SimpleTimeRangeCreator()));
 				break;
 			case Bofs:
-				eventList.addAll(generator.generate(mDay, Event.BOFS_CLASS, new SimpleTimeRangeCreator()));
+				eventList.addAll(mGenerator.generate(mDay, Event.BOFS_CLASS, new SimpleTimeRangeCreator()));
 				break;
 			case Social:
-				eventList.addAll(generator.generate(mDay, Event.SOCIALS_CLASS, new SimpleTimeRangeCreator()));
+				eventList.addAll(mGenerator.generate(mDay, Event.SOCIALS_CLASS, new SimpleTimeRangeCreator()));
 				break;
 			case Favorites:
-				eventList.addAll(generator.generateForFavorites(mDay));
+				eventList.addAll(mGenerator.generateForFavorites(mDay));
 				break;
 		}
 		return eventList;

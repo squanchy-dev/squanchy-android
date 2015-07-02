@@ -35,11 +35,13 @@ public class EventGenerator {
     private SocialManager mSocialManager;
     private ProgramManager mProgramManager;
 
+    private boolean mShouldBreak;
+
     public EventGenerator() {
         mEventManager = Model.instance().getEventManager();
         mBofsManager = Model.instance().getBofsManager();
         mSocialManager = Model.instance().getSocialManager();
-        mProgramManager = Model.instance().getProgramManager();
+        mProgramManager = Model.instance().createProgramManager();
     }
 
     public List<EventListItem> generate(long day, int eventClass, @NotNull EventItemCreator eventItemCreator) {
@@ -57,6 +59,10 @@ public class EventGenerator {
 
     public List<EventListItem> generate(long day, int eventClass, List<Long> levelIds, List<Long> trackIds, @NotNull EventItemCreator eventItemCreator) {
         List<EventListItem> eventListItems = mProgramManager.getProgramItemsSafe(eventClass, day, levelIds, trackIds);
+        if (mShouldBreak) {
+            return new ArrayList<>();
+        }
+
         List<TimeRange> ranges = mEventManager.getDistrictTimeRangeSafe(eventClass, day, levelIds, trackIds);
         return getEventItems(eventItemCreator, eventListItems, ranges);
     }
@@ -128,15 +134,15 @@ public class EventGenerator {
         return result;
     }
 
-    private List<EventListItem> getEventItems(EventItemCreator eventItemCreator,
-                                              List<EventListItem> events, List<TimeRange> ranges) {
-
+    private List<EventListItem> getEventItems(EventItemCreator eventItemCreator, List<EventListItem> events, List<TimeRange> ranges) {
         List<EventListItem> result = new ArrayList<EventListItem>();
 
         for (TimeRange timeRange : ranges) {
+            if (mShouldBreak) {
+                return result;
+            }
 
             List<EventListItem> timeRangeEvents = new ArrayList<EventListItem>();
-
             for (EventListItem eventListItem : events) {
                 Event event = eventListItem.getEvent();
                 if (event == null) {
@@ -249,7 +255,6 @@ public class EventGenerator {
     }
 
     private Date parseEventDate(Calendar fromTime, long dateTime) {
-
         Calendar monthYear = Calendar.getInstance();
         monthYear.setTimeInMillis(dateTime);
 
@@ -261,4 +266,8 @@ public class EventGenerator {
         return new Date(time.getTimeInMillis());
     }
 
+    public void setShouldBreak(boolean shouldBreak) {
+        mShouldBreak = shouldBreak;
+        mProgramManager.getEventDao().setShouldBreak(shouldBreak);
+    }
 }

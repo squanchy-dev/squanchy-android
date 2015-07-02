@@ -75,4 +75,8 @@ public class EventManager extends SynchronousItemManager<Event.Holder, Object, S
     public void clear() {
         mEventDao.deleteAll();
     }
+
+    public EventDao getEventDao() {
+        return mEventDao;
+    }
 }
