@@ -309,7 +309,7 @@ public class BaseRequest extends Request<ResponseData> {
     @Override
     public String getBodyContentType() {
         if (this.objectToPost != null) {
-            requestHandler.getBodyContentType(this.defaultCharset);
+            return requestHandler.getBodyContentType(this.defaultCharset);
         }
 
         return super.getBodyContentType();
