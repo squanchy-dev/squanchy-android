@@ -175,7 +175,7 @@ public class BaseRequest extends Request<ResponseData> {
             this.result.statusCode = volleyError.networkResponse.statusCode;
             if(this.errorResponseClasSpecifier!= null)
             {
-                Response<ResponseData> result = this.responseHandler.parseNetworkResponse(volleyError.networkResponse,responseClasSpecifier);
+                Response<ResponseData> result = this.responseHandler.parseNetworkResponse(volleyError.networkResponse,errorResponseClasSpecifier);
                 this.result.parsedErrorResponse = result.result;
             }
         }
@@ -309,7 +309,7 @@ public class BaseRequest extends Request<ResponseData> {
     @Override
     public String getBodyContentType() {
         if (this.objectToPost != null) {
-            requestHandler.getBodyContentType(this.defaultCharset);
+            return requestHandler.getBodyContentType(this.defaultCharset);
         }
 
         return super.getBodyContentType();
