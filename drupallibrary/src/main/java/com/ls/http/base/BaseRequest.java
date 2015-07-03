@@ -39,6 +39,8 @@ import android.net.Uri;
 import android.text.TextUtils;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -85,7 +87,7 @@ public class BaseRequest extends Request<ResponseData> {
 
     private Map<String, String> requestHeaders;
     private Map<String, String> postParameters;
-    private Map<String, String> getParameters;
+    private Map<String, Object> getParameters;
     private Object objectToPost;
 
 
@@ -246,7 +248,7 @@ public class BaseRequest extends Request<ResponseData> {
 
     public void addRequestHeader(Header header)
     {
-        addRequestHeader(header.getName(),header.getValue());
+        addRequestHeader(header.getName(), header.getValue());
     }
 
     // Post parameters handling
@@ -331,8 +333,29 @@ public class BaseRequest extends Request<ResponseData> {
     public String getUrl() {
         if (this.getParameters != null && !this.getParameters.isEmpty()) {
             Uri.Builder builder = Uri.parse(super.getUrl()).buildUpon();
-            for (Map.Entry<String, String> entry : this.getParameters.entrySet()) {
-                builder.appendQueryParameter(entry.getKey(), entry.getValue());
+            for (Map.Entry<String, Object> entry : this.getParameters.entrySet()) {
+                Object entryValue = entry.getValue();
+                String entryKey = entry.getKey();
+                if(entryValue == null)
+                {
+                    builder.appendQueryParameter(entryKey, null);
+                    break;
+                }
+                if(entryValue instanceof Collection)
+                {
+                    Collection items = (Collection)entryValue;
+                    for(Object item:items)
+                    {
+                        if(item == null)
+                        {
+                            builder.appendQueryParameter(entryKey, null);
+                        }else{
+                            builder.appendQueryParameter(entryKey, entryValue.toString());
+                        }
+                    }
+                }else {
+                    builder.appendQueryParameter(entryKey, entryValue.toString());
+                }
             }
             String urlString = builder.build().toString();
             return urlString;
@@ -341,15 +364,17 @@ public class BaseRequest extends Request<ResponseData> {
         }
     }
 
-    public Map<String, String> getGetParameters() {
+    public Map<String, Object> getGetParameters() {
         return getParameters;
     }
 
-    public void setGetParameters(Map<String, String> getParameters) {
+    public void setGetParameters(Map<String, Object> getParameters) {
         this.getParameters = getParameters;
     }
-
-    public void addGetParameters(Map<String, String> getParameters) {
+    /**
+     * @param getParameters in case if collection is passed as map entry value - all entities will be added under corresponding key. Object.toString will be called otherwise.
+     */
+    public void addGetParameters(Map<String, Object> getParameters) {
         if (this.getParameters == null) {
             this.getParameters = getParameters;
         } else {
@@ -357,9 +382,13 @@ public class BaseRequest extends Request<ResponseData> {
         }
     }
 
-    public void addGetParameter(String key, String value) {
+    /**
+     * @param key
+     * @param value in case if collection passed - all entities will be added under key specified. Object.toString will be called otherwise.
+     */
+    public void addGetParameter(String key, Object value) {
         if (this.getParameters == null) {
-            this.getParameters = new HashMap<String, String>();
+            this.getParameters = new HashMap<String, Object>();
         }
         if (value == null) {
             this.getParameters.remove(key);

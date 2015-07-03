@@ -27,7 +27,7 @@ public class SpeakersRequest extends AbstractDrupalEntityContainer<Speaker.Holde
     }
 
     @Override
-    protected Map<String, String> getItemRequestGetParameters(BaseRequest.RequestMethod method) {
+    protected Map<String, Object> getItemRequestGetParameters(BaseRequest.RequestMethod method) {
         return null;
     }
 }

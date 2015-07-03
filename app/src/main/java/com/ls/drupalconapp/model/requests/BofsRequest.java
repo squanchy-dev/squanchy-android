@@ -24,7 +24,7 @@ public class BofsRequest extends AbstractDrupalEntityContainer<Event.Holder> {
     }
 
     @Override
-    protected Map<String, String> getItemRequestGetParameters(BaseRequest.RequestMethod method) {
+    protected Map<String, Object> getItemRequestGetParameters(BaseRequest.RequestMethod method) {
         return null;
     }
 }

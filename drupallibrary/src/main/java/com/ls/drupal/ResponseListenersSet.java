@@ -49,12 +49,13 @@ public class ResponseListenersSet {
     public boolean registerListenerForRequest(Request request,DrupalClient.OnResponseListener listener,Object tag,boolean skipDuplicateRequestListeners)
     {
         boolean result = false;
-        List<ListenerHolder> listenersList = listeners.get(request);
 
-        if(listener== null)
+        if(listener == null)
         {
             return true;
         }
+
+        List<ListenerHolder> listenersList = listeners.get(request);
 
         if(listenersList == null)
         {

@@ -185,7 +185,7 @@ public class DrupalClient implements OnResponseListener {
         request.setSmartComparisonEnabled(this.duplicateRequestPolicy !=DuplicateRequestPolicy.ALLOW);
 
         boolean wasRegisterred ;
-        boolean skipDuplicateRequestListeners = this.duplicateRequestPolicy == DuplicateRequestPolicy.REJECT;
+        boolean skipDuplicateRequestListeners = this.duplicateRequestPolicy == DrupalClient.DuplicateRequestPolicy.REJECT;
         synchronized (listeners) {
             wasRegisterred = this.listeners.registerListenerForRequest(request, listener,tag,skipDuplicateRequestListeners);
         }

@@ -81,9 +81,9 @@ public abstract class AbstractBaseDrupalEntity implements DrupalClient.OnRespons
 
 	/**	 
 	 * @param method is instance od {@link com.ls.http.base.BaseRequest.RequestMethod} enum, this method is called for. it can be "GET", "POST", "PUT" ,"PATCH" or "DELETE".
-	 * @return parameters for the request method specified.
+	 * @return parameters for the request method specified. In case if collection is passed as map entry value - all entities will be added under corresponding key. Object.toString will be called otherwise.
 	 */
-	protected abstract Map<String, String> getItemRequestGetParameters(RequestMethod method);
+	protected abstract Map<String, Object> getItemRequestGetParameters(RequestMethod method);
 
 	/** Get data object, used to perform perform get/post/patch/delete requests.
 	 * @return data object. Can implement {@link com.ls.http.base.IPostableItem} or {@link com.ls.http.base.IResponseItem} in order to handle json/xml serialization/deserialization manually.

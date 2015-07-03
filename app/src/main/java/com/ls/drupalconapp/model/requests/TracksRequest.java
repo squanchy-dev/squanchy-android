@@ -27,7 +27,7 @@ public class TracksRequest extends AbstractDrupalEntityContainer<Track.Holder> {
     }
 
     @Override
-    protected Map<String, String> getItemRequestGetParameters(BaseRequest.RequestMethod method) {
+    protected Map<String, Object> getItemRequestGetParameters(BaseRequest.RequestMethod method) {
         return null;
     }
 }

@@ -40,6 +40,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.List;
 
 class MultipartRequestHandler extends RequestHandler
 {
@@ -87,15 +88,7 @@ class MultipartRequestHandler extends RequestHandler
                 try
                 {
                     value = field.get(source);
-                    if(value != null)
-                    {
-                        if(value instanceof IMultiPartEntityPart) {
-                            ContentBody body = ((IMultiPartEntityPart)value).getContentBody();
-                            entity.addPart(name,body);
-                        }else{
-                            entity.addTextBody(name,value.toString());
-                        }
-                    }
+                   addEntity(name,value);
                 } catch (IllegalAccessException e)
                 {
                     e.printStackTrace();
@@ -109,6 +102,41 @@ class MultipartRequestHandler extends RequestHandler
             currentClass = currentClass.getSuperclass();
         }
         httpentity = entity.build();
+    }
+
+    private void addEntity(String name, Object value ) throws UnsupportedEncodingException {
+        if(value != null)
+        {
+            if(value instanceof IMultiPartEntityPart) {
+                ContentBody body = ((IMultiPartEntityPart)value).getContentBody();
+                entity.addPart(name,body);
+            }else{
+                if(value instanceof List)
+                {
+                    for(Object item:(List)value)
+                    {
+                       addEntity(name+"[]",item);
+                    }
+                    return;
+                }
+
+                if(value.getClass().isArray())
+                {
+                    Object[]array = (Object[])value;
+                    for(int counter = 0;counter < array.length; counter++)
+                    {
+                        Object item = array[counter];
+                        if(item != null)
+                        {
+                            addEntity(name+"[]",item);
+                        }
+                    }
+                    return;
+                }
+
+                entity.addTextBody(name,value.toString());
+            }
+        }
     }
 
     @Override
