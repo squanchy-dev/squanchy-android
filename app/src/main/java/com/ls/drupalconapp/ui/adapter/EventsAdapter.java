@@ -27,7 +27,7 @@ import com.ls.utils.DateUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewEventsAdapter extends BaseAdapter {
+public class EventsAdapter extends BaseAdapter {
 
     private Context mContext;
     private List<EventListItem> mData;
@@ -40,7 +40,7 @@ public class NewEventsAdapter extends BaseAdapter {
         void onClick(int position);
     }
 
-    public NewEventsAdapter(Context context) {
+    public EventsAdapter(Context context) {
         mContext = context;
         mInflater = LayoutInflater.from(context);
         mData = new ArrayList<>();

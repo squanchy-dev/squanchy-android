@@ -16,7 +16,7 @@ import com.ls.drupalconapp.model.PreferencesManager;
 import com.ls.drupalconapp.model.data.Event;
 import com.ls.drupalconapp.model.data.Type;
 import com.ls.drupalconapp.ui.activity.EventDetailsActivity;
-import com.ls.drupalconapp.ui.adapter.NewEventsAdapter;
+import com.ls.drupalconapp.ui.adapter.EventsAdapter;
 import com.ls.drupalconapp.ui.adapter.item.EventListItem;
 import com.ls.drupalconapp.ui.adapter.item.SimpleTimeRangeCreator;
 import com.ls.drupalconapp.ui.adapter.item.TimeRangeItem;
@@ -28,7 +28,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class EventFragment extends Fragment implements NewEventsAdapter.Listener {
+public class EventFragment extends Fragment implements EventsAdapter.Listener {
 
 	private static final String EXTRAS_ARG_MODE = "EXTRAS_ARG_MODE";
 	private static final String EXTRAS_ARG_DAY = "EXTRAS_ARG_DAY";
@@ -38,7 +38,7 @@ public class EventFragment extends Fragment implements NewEventsAdapter.Listener
 	private long mDay;
 
     private DrawerManager.EventMode mEventMode;
-    private NewEventsAdapter mAdapter;
+    private EventsAdapter mAdapter;
 
     private ListView mListView;
     private ProgressBar mProgressBar;
@@ -84,7 +84,7 @@ public class EventFragment extends Fragment implements NewEventsAdapter.Listener
 		if (getView() != null) {
 			mProgressBar = (ProgressBar) getView().findViewById(R.id.progressBar);
 
-			mAdapter = new NewEventsAdapter(getActivity());
+			mAdapter = new EventsAdapter(getActivity());
 			mAdapter.setOnClickListener(this);
 
 			mListView = (ListView) getView().findViewById(R.id.listView);

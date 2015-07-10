@@ -29,6 +29,7 @@ import com.ls.drupalconapp.model.managers.LocationManager;
 import com.ls.drupalconapp.model.managers.LoginManager;
 import com.ls.drupalconapp.model.managers.PoisManager;
 import com.ls.drupalconapp.model.managers.ProgramManager;
+import com.ls.drupalconapp.model.managers.SettingsManager;
 import com.ls.drupalconapp.model.managers.SocialManager;
 import com.ls.drupalconapp.model.managers.SpeakerManager;
 import com.ls.drupalconapp.model.managers.TracksManager;
@@ -91,6 +92,7 @@ public class Model {
     private EventManager eventManager;
     private UpdatesManager updatesManager;
     private FavoriteManager favoriteManager;
+    private SettingsManager settingsManager;
 
     public DrupalClient getClient() {
         return client;
@@ -165,6 +167,14 @@ public class Model {
         return favoriteManager;
     }
 
+    public SettingsManager getSettingsManager() {
+        return settingsManager;
+    }
+
+    public void setSettingsManager(SettingsManager settingsManager) {
+        this.settingsManager = settingsManager;
+    }
+
     /**
      * NOTE: login is performed in synchroneus way so you must never call it from UI thread.
      * @param userName
@@ -173,7 +183,7 @@ public class Model {
      */
     public ResponseData performLogin(String userName, String password)
     {
-        return this.loginManager.login(userName,password,queue);
+        return this.loginManager.login(userName, password, queue);
     }
 
     private Model(Context context)
@@ -196,6 +206,7 @@ public class Model {
         favoriteManager = new FavoriteManager();
 
         updatesManager = new UpdatesManager(client);
+        settingsManager = new SettingsManager(client);
     }
 
 

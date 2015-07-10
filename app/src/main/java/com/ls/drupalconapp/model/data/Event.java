@@ -1,15 +1,15 @@
 package com.ls.drupalconapp.model.data;
 
-import com.google.gson.annotations.SerializedName;
+import android.content.ContentValues;
+import android.database.Cursor;
 
+import com.google.gson.annotations.SerializedName;
+import com.ls.drupalconapp.model.PreferencesManager;
 import com.ls.drupalconapp.model.database.AbstractEntity;
 import com.ls.drupalconapp.model.database.AbstractEntityDAO;
 import com.ls.utils.CursorStringParser;
 
 import org.jetbrains.annotations.NotNull;
-
-import android.content.ContentValues;
-import android.database.Cursor;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,6 +18,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by Yakiv M. on 19.09.2014.
@@ -176,11 +177,12 @@ public class Event extends AbstractEntity<Long> implements Comparable<Event>{
             return null;
         }
 
-        SimpleDateFormat format = new SimpleDateFormat("kk:mm");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ");
         try {
             Date date = format.parse(time);
-            Calendar calendar = Calendar.getInstance(Locale.UK);
+            Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
+
             return calendar;
         } catch (ParseException e) {
             return null;
@@ -190,6 +192,9 @@ public class Event extends AbstractEntity<Long> implements Comparable<Event>{
     public static String convertTime(Calendar time) {
         if (time != null) {
             SimpleDateFormat format = new SimpleDateFormat("hh:mm aa");
+            String timeZone = PreferencesManager.getInstance().getTimeZone();
+            format.setTimeZone(TimeZone.getTimeZone(timeZone));
+
             return format.format(time.getTime());
         } else {
             return null;
@@ -199,6 +204,9 @@ public class Event extends AbstractEntity<Long> implements Comparable<Event>{
     public static String convertTime24(Calendar time) {
         if (time != null) {
             SimpleDateFormat format = new SimpleDateFormat("kk:mm");
+            String timeZone = PreferencesManager.getInstance().getTimeZone();
+            format.setTimeZone(TimeZone.getTimeZone(timeZone));
+
             return format.format(time.getTime());
         } else {
             return null;
@@ -212,6 +220,9 @@ public class Event extends AbstractEntity<Long> implements Comparable<Event>{
     public static String format(Date date) {
         if (date != null) {
             SimpleDateFormat format = new SimpleDateFormat("EEE d");
+            String timeZone = PreferencesManager.getInstance().getTimeZone();
+            format.setTimeZone(TimeZone.getTimeZone(timeZone));
+
             return format.format(date).toUpperCase();
         } else {
             return null;

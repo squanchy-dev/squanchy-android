@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class PreferencesManager {
 
-	private static final String TIME_ZONE_ID = "TIME_ZONE_ID";
+	private static final String TIME_ZONE = "TIME_ZONE";
 	private static final String PREF_NAME = "com.ls.drupalconapp.model.MAIN_PREFERENCES";
 	private static final String KEY_LAST_UPDATE_DATE = "KEY_LAST_UPDATE_DATE";
 	private static final String KEY_ABOUT = "KEY_ABOUT";
@@ -42,14 +42,14 @@ public class PreferencesManager {
 		return sInstance;
 	}
 
-    public void saveTimeZoneId(String timeZoneId) {
+    public void saveTimeZone(String timeZone) {
         mPref.edit()
-                .putString(TIME_ZONE_ID, timeZoneId)
+                .putString(TIME_ZONE, timeZone)
                 .commit();
     }
 
-    public String getTimeZoneId() {
-        return mPref.getString(TIME_ZONE_ID, "");
+    public String getTimeZone() {
+        return mPref.getString(TIME_ZONE, "");
     }
 
 	public void saveLastUpdateDate(String value) {

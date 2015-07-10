@@ -22,14 +22,13 @@
 
 package com.ls.http.base;
 
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
+import android.util.Log;
+
 import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.ls.http.base.ResponseData;
-import com.ls.http.base.ResponseHandler;
-
-import android.support.annotation.NonNull;
-import android.text.TextUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
@@ -43,7 +42,9 @@ public abstract class BaseStringResponseHandler extends ResponseHandler
 
     protected Object itemFromResponseWithSpecifier(String response, Object theSpecifier)
 	{
-		Object result = null;
+        Log.d("Json", response);
+
+        Object result = null;
 		if(response != null && theSpecifier != null)
 		{
 			if(theSpecifier instanceof Class<?>)

@@ -18,13 +18,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.TimeZone;
 
 /**
  * Created by Yakiv M. on 19.09.2014.
  */
 public class UpdatesManager {
 
+    public static final int SETTINGS_REQUEST_ID = 0;
     public static final int TYPES_REQUEST_ID = 1;
     public static final int LEVELS_REQUEST_ID = 2;
     public static final int TRACKS_REQUEST_ID = 3;
@@ -137,6 +137,8 @@ public class UpdatesManager {
     private List<Integer> loadData(UpdateDate updateDate) {
 
         List<Integer> updateIds = updateDate.getIdsForUpdate();
+        updateIds.add(SETTINGS_REQUEST_ID);
+
         if (updateIds == null || updateIds.isEmpty()) {
             return new LinkedList<>();
         }
@@ -171,6 +173,10 @@ public class UpdatesManager {
 
         SynchronousItemManager manager;
         switch (id) {
+            case SETTINGS_REQUEST_ID:
+                manager = Model.instance().getSettingsManager();
+                break;
+
             case TYPES_REQUEST_ID:
                 manager = Model.instance().getTypesManager();
                 break;
@@ -230,15 +236,15 @@ public class UpdatesManager {
         ILAPIDBFacade facade = Model.instance().getFacade();
         facade.open();
 
-        String timeZone = TimeZone.getDefault().getID();
-        if (!TextUtils.isEmpty(timeZone)) {
-            String prefTimeZone = PreferencesManager.getInstance().getTimeZoneId();
-            if (!timeZone.equals(prefTimeZone)) {
-                Model.instance().clearAllDao();
-                PreferencesManager.getInstance().saveLastUpdateDate("");
-            }
-            PreferencesManager.getInstance().saveTimeZoneId(timeZone);
-        }
+//        String timeZone = TimeZone.getDefault().getID();
+//        if (!TextUtils.isEmpty(timeZone)) {
+//            String prefTimeZone = PreferencesManager.getInstance().getTimeZoneId();
+//            if (!timeZone.equals(prefTimeZone)) {
+//                Model.instance().clearAllDao();
+//                PreferencesManager.getInstance().saveLastUpdateDate("");
+//            }
+//            PreferencesManager.getInstance().saveTimeZone(timeZone);
+//        }
 
         facade.close();
     }
