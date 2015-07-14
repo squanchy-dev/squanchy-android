@@ -4,9 +4,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
 
 import com.ls.drupalconapp.R;
 import com.ls.drupalconapp.model.Model;
+import com.ls.drupalconapp.model.PreferencesManager;
 import com.ls.drupalconapp.model.UpdateCallback;
 import com.ls.drupalconapp.model.UpdatesManager;
 import com.ls.drupalconapp.ui.dialog.NoConnectionDialog;
@@ -30,10 +32,15 @@ public class SplashActivity extends FragmentActivity {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (NetworkUtils.isOn(SplashActivity.this)) {
+                boolean isOnline = NetworkUtils.isOn(SplashActivity.this);
+                String lastUpdate = PreferencesManager.getInstance().getLastUpdateDate();
+
+                if (isOnline) {
                     checkForUpdates();
-                } else {
+                } else if (TextUtils.isEmpty(lastUpdate)) {
                     DialogHelper.showAllowStateLoss(SplashActivity.this, NoConnectionDialog.TAG, new NoConnectionDialog());
+                } else {
+                    startMainActivity();
                 }
             }
         }, SPLASH_DURATION);
@@ -66,13 +73,13 @@ public class SplashActivity extends FragmentActivity {
         manager.startLoading(new UpdateCallback() {
             @Override
             public void onDownloadSuccess() {
-                L.e("onDownloadSuccess");
+                L.d("onDownloadSuccess");
                 startMainActivity();
             }
 
             @Override
             public void onDownloadError() {
-                L.e("onDownloadError");
+                L.d("onDownloadError");
                 DialogHelper.showAllowStateLoss(SplashActivity.this, NoConnectionDialog.TAG, new NoConnectionDialog());
             }
         });

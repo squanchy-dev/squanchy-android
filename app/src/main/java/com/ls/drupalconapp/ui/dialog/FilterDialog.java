@@ -35,9 +35,9 @@ public class FilterDialog extends DialogFragment {
     private ExpandableListView mListView;
     private FilterDialogAdapter mAdapter;
 
-    private OnCheckedPositionsPass mListener;
+    private OnFilterApplied mListener;
 
-    public interface OnCheckedPositionsPass {
+    public interface OnFilterApplied {
         void onNewFilterApplied();
     }
 
@@ -59,7 +59,7 @@ public class FilterDialog extends DialogFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mListener = (OnCheckedPositionsPass) activity;
+        mListener = (OnFilterApplied) activity;
     }
 
     public void setData(List<Level> levelList, List<Track> trackList) {

@@ -34,7 +34,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class HomeActivity extends StateActivity implements FilterDialog.OnCheckedPositionsPass {
+public class HomeActivity extends StateActivity implements FilterDialog.OnFilterApplied {
 
 	private DrawerManager mFrManager;
 	private DrawerAdapter mAdapter;
