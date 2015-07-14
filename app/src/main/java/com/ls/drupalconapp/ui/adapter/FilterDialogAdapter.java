@@ -18,15 +18,15 @@ import java.util.List;
 
 public class FilterDialogAdapter extends BaseExpandableListAdapter {
 
-	private LayoutInflater mInflater;
 	private List<String> listDataHeader;
 	private HashMap<String, String[]> listChildData;
-
 	private List<Level> mLevelList;
+
 	private List<Track> mTrackList;
 	private List<List<Long>> mSelectedIds;
 
 	private Listener mListener;
+	private LayoutInflater mInflater;
 
 	public interface Listener {
 		 void onGroupClicked(int position);
@@ -45,20 +45,15 @@ public class FilterDialogAdapter extends BaseExpandableListAdapter {
 
 		mLevelList = new ArrayList<>();
 		mTrackList = new ArrayList<>();
+
 		mSelectedIds = new ArrayList<>();
 		mSelectedIds.add(new ArrayList<Long>());
 		mSelectedIds.add(new ArrayList<Long>());
 	}
 
-	public void setData(List<Level> levelList, List<Track> trackList) {
-		if (levelList != null && trackList != null) {
-			mLevelList.addAll(levelList);
-			mTrackList.addAll(trackList);
-		}
-	}
-
-	public void setCheckedPositions(List<List<Long>> selectedids) {
-		mSelectedIds = selectedids;
+	@Override
+	public String getGroup(int position) {
+		return listDataHeader.get(position);
 	}
 
 	@Override
@@ -70,11 +65,6 @@ public class FilterDialogAdapter extends BaseExpandableListAdapter {
 	public int getChildrenCount(int groupPosition) {
 		String header = listDataHeader.get(groupPosition);
 		return listChildData.get(header).length;
-	}
-
-	@Override
-	public Object getGroup(int i) {
-		return listDataHeader.get(i);
 	}
 
 	@Override
@@ -100,31 +90,18 @@ public class FilterDialogAdapter extends BaseExpandableListAdapter {
 
 	@Override
 	public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup viewGroup) {
-		String headerTitle = (String) getGroup(groupPosition);
-
 		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.item_filter_group, null);
 		}
 
-		TextView lblListHeader = (TextView) convertView.findViewById(R.id.lblListHeader);
-		lblListHeader.setText(headerTitle);
-		lblListHeader.setOnClickListener(new View.OnClickListener() {
+		TextView txtHeader = (TextView) convertView.findViewById(R.id.txtTitle);
+		txtHeader.setText(getGroup(groupPosition));
+		txtHeader.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				mListener.onGroupClicked(groupPosition);
 			}
 		});
-
-//		final CheckBox checkBoxGroup = (CheckBox) convertView.findViewById(R.id.checkBoxGroup);
-//		convertView.findViewById(R.id.layoutGroup).setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				if (mListener != null) {
-//					checkBoxGroup.setChecked(!checkBoxGroup.isChecked());
-//					mListener.onGroupClicked(groupPosition);
-//				}
-//			}
-//		});
 
 		View divider = convertView.findViewById(R.id.divider);
 		if (groupPosition == 0) {
@@ -132,7 +109,6 @@ public class FilterDialogAdapter extends BaseExpandableListAdapter {
 		} else {
 			divider.setVisibility(View.VISIBLE);
 		}
-
 		return convertView;
 	}
 
@@ -152,8 +128,8 @@ public class FilterDialogAdapter extends BaseExpandableListAdapter {
 			childId = mTrackList.get(childPosition).getId();
 		}
 
-		TextView txtListChild = (TextView) convertView.findViewById(R.id.txtItemTitle);
-		txtListChild.setText(childText);
+		TextView txtChild = (TextView) convertView.findViewById(R.id.txtItemTitle);
+		txtChild.setText(childText);
 
 		CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.checkBox);
 		if (isSelected(childId, groupPosition)) {
@@ -179,6 +155,17 @@ public class FilterDialogAdapter extends BaseExpandableListAdapter {
 		return true;
 	}
 
+	public void setData(List<Level> levelList, List<Track> trackList) {
+		if (levelList != null && trackList != null) {
+			mLevelList.addAll(levelList);
+			mTrackList.addAll(trackList);
+		}
+	}
+
+	public void setCheckedPositions(List<List<Long>> selectedIds) {
+		mSelectedIds = selectedIds;
+	}
+
 	public void setClicked(int groupPosition, int childPosition) {
 		long selectedId;
 		if (groupPosition == 0) {
@@ -201,7 +188,7 @@ public class FilterDialogAdapter extends BaseExpandableListAdapter {
 	}
 
 	private boolean isSelected(long id, int groupPosition) {
-		if (mSelectedIds != null) {
+		if (!mSelectedIds.isEmpty()) {
 			if (groupPosition == 0) {
 				List<Long> ids = mSelectedIds.get(0);
 				if (ids.contains(id)) {

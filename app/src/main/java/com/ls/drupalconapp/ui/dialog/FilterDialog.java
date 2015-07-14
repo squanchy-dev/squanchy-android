@@ -25,146 +25,155 @@ import java.util.List;
 
 public class FilterDialog extends DialogFragment {
 
-	private static final String ARG_TRACKS = "ARG_TRACKS";
-	private static final String ARG_EXP_LEVEL = "ARG_EXP_LEVEL";
+    private static final String ARG_TRACKS = "ARG_TRACKS";
+    private static final String ARG_EXP_LEVEL = "ARG_EXP_LEVEL";
 
-	private static List<Level> mLevelList;
-	private static List<Track> mTrackList;
-	private static List<List<Long>> mSelectedIds;
+    private static List<Level> mLevelList;
+    private static List<Track> mTrackList;
+    private static List<List<Long>> mSelectedIds;
+
+    private ExpandableListView mListView;
+    private FilterDialogAdapter mAdapter;
 
     private OnCheckedPositionsPass mListener;
-	private FilterDialogAdapter mAdapter;
 
-	public interface OnCheckedPositionsPass {
-		void onNewFilterApplied();
-	}
+    public interface OnCheckedPositionsPass {
+        void onNewFilterApplied();
+    }
 
-	public static FilterDialog newInstance(String[] tracks, String[] expLevels) {
-		FilterDialog filterDialog = new FilterDialog();
+    public static FilterDialog newInstance(@NonNull String[] tracks, @NonNull String[] expLevels) {
+        FilterDialog filterDialog = new FilterDialog();
 
-		Bundle args = new Bundle();
-		args.putStringArray(ARG_TRACKS, tracks);
-		args.putStringArray(ARG_EXP_LEVEL, expLevels);
-		filterDialog.setArguments(args);
+        Bundle args = new Bundle();
+        args.putStringArray(ARG_TRACKS, tracks);
+        args.putStringArray(ARG_EXP_LEVEL, expLevels);
+        filterDialog.setArguments(args);
 
-		mLevelList = new ArrayList<>();
-		mTrackList = new ArrayList<>();
-		mSelectedIds = new ArrayList<>();
+        mLevelList = new ArrayList<>();
+        mTrackList = new ArrayList<>();
+        mSelectedIds = new ArrayList<>();
 
-		return filterDialog;
-	}
+        return filterDialog;
+    }
 
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-		mListener = (OnCheckedPositionsPass) activity;
-	}
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mListener = (OnCheckedPositionsPass) activity;
+    }
 
-	public void setData(List<Level> levelList, List<Track> trackList) {
-		if (levelList != null && trackList != null) {
-			mLevelList.addAll(levelList);
-			mTrackList.addAll(trackList);
-		}
-	}
+    public void setData(List<Level> levelList, List<Track> trackList) {
+        if (levelList != null && trackList != null) {
+            mLevelList.addAll(levelList);
+            mTrackList.addAll(trackList);
+        }
+    }
 
-	@Override
-	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-		//getArguments
-		String[] tracks = getArguments().getStringArray(ARG_TRACKS);
-		String[] expLevels = getArguments().getStringArray(ARG_EXP_LEVEL);
-		if (tracks == null || expLevels == null) {
-			throw new IllegalArgumentException("Tracks or Experience Levels is null! Please use newInstance() method and init them");
-		}
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View view = inflater.inflate(R.layout.dialog_filter, null);
 
-		LayoutInflater inflater = getActivity().getLayoutInflater();
-		View dialogView = inflater.inflate(R.layout.dialog_filter, null);
+        initViews(view);
 
-		final ExpandableListView listView = (ExpandableListView) dialogView.findViewById(R.id.listView);
+        builder.setView(view);
+        Dialog result = builder.create();
+        result.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-		DisplayMetrics metrics = new DisplayMetrics();
-		getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		int width = metrics.widthPixels;
+        return result;
+    }
 
-		if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
-			listView.setIndicatorBounds(width - (int) getResources().getDimension(R.dimen.exp_list_indicator_bounds_left),
-					width - (int) getResources().getDimension(R.dimen.exp_list_indicator_bounds_right));
-		} else {
-			listView.setIndicatorBoundsRelative(width - (int) getResources().getDimension(R.dimen.exp_list_indicator_bounds_left),
-					width - (int) getResources().getDimension(R.dimen.exp_list_indicator_bounds_right));
-		}
+    private void initViews(View view) {
+        initList(view);
+        initButtons(view);
+    }
 
-		List<String> listDataHeader = new ArrayList<String>();
-		listDataHeader.add(getActivity().getString(R.string.exp_levels));
-		listDataHeader.add(getActivity().getString(R.string.tracks));
+    private void initList(View view) {
+        mListView = (ExpandableListView) view.findViewById(R.id.listView);
 
-		HashMap<String, String[]> listDataChild = new HashMap<>();
-		listDataChild.put(listDataHeader.get(0), expLevels);
-		listDataChild.put(listDataHeader.get(1), tracks);
+        DisplayMetrics metrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int width = metrics.widthPixels;
 
-		mSelectedIds = loadSelectedIds();
-		mAdapter = new FilterDialogAdapter(getActivity(), listDataHeader, listDataChild);
-		mAdapter.setData(mLevelList, mTrackList);
-		mAdapter.setCheckedPositions(mSelectedIds);
-		mAdapter.setListener(new FilterDialogAdapter.Listener() {
-			@Override
-			public void onGroupClicked(int groupPosition) {
-				if (listView.isGroupExpanded(groupPosition)) {
-					listView.collapseGroup(groupPosition);
-				} else {
-					listView.expandGroup(groupPosition);
-				}
-			}
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            mListView.setIndicatorBounds(width - (int) getResources().getDimension(R.dimen.exp_list_indicator_bounds_left),
+                    width - (int) getResources().getDimension(R.dimen.exp_list_indicator_bounds_right));
+        } else {
+            mListView.setIndicatorBoundsRelative(width - (int) getResources().getDimension(R.dimen.exp_list_indicator_bounds_left),
+                    width - (int) getResources().getDimension(R.dimen.exp_list_indicator_bounds_right));
+        }
 
-			@Override
-			public void onChildClicked(int groupPosition, int childPosition) {
-				mAdapter.setClicked(groupPosition, childPosition);
+        List<String> listDataHeader = new ArrayList<String>();
+        listDataHeader.add(getActivity().getString(R.string.exp_levels));
+        listDataHeader.add(getActivity().getString(R.string.tracks));
+
+        String[] expLevels = getArguments().getStringArray(ARG_EXP_LEVEL);
+        String[] tracks = getArguments().getStringArray(ARG_TRACKS);
+
+        HashMap<String, String[]> listDataChild = new HashMap<>();
+        listDataChild.put(listDataHeader.get(0), expLevels);
+        listDataChild.put(listDataHeader.get(1), tracks);
+
+        mAdapter = new FilterDialogAdapter(getActivity(), listDataHeader, listDataChild);
+        mAdapter.setData(mLevelList, mTrackList);
+
+        mSelectedIds = loadSelectedIds();
+        mAdapter.setCheckedPositions(mSelectedIds);
+        mAdapter.setListener(new FilterDialogAdapter.Listener() {
+            @Override
+            public void onGroupClicked(int groupPosition) {
+                if (mListView.isGroupExpanded(groupPosition)) {
+                    mListView.collapseGroup(groupPosition);
+                } else {
+                    mListView.expandGroup(groupPosition);
+                }
+            }
+
+            @Override
+            public void onChildClicked(int groupPosition, int childPosition) {
+                mAdapter.setClicked(groupPosition, childPosition);
             }
         });
 
-		listView.setAdapter(mAdapter);
-
+        mListView.setAdapter(mAdapter);
         for (int i = 0; i < mSelectedIds.size(); i++) {
             List<Long> ids = mSelectedIds.get(i);
             if (!ids.isEmpty()) {
-                listView.expandGroup(i);
+                mListView.expandGroup(i);
             }
         }
+    }
 
-		TextView apply = (TextView) dialogView.findViewById(R.id.btnApply);
-		apply.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				applyFilter();
-				dismissAllowingStateLoss();
-			}
-		});
+    private void initButtons(View view) {
+        TextView txtApply = (TextView) view.findViewById(R.id.btnApply);
+        txtApply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                applyFilter();
+                dismissAllowingStateLoss();
+            }
+        });
 
-		TextView clear = (TextView) dialogView.findViewById(R.id.btnClear);
-		clear.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				clearFilter();
-				dismissAllowingStateLoss();
-			}
-		});
+        TextView txtClear = (TextView) view.findViewById(R.id.btnClear);
+        txtClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clearFilter();
+                dismissAllowingStateLoss();
+            }
+        });
+    }
 
-		builder.setView(dialogView);
-		Dialog result = builder.create();
-		result.requestWindowFeature(Window.FEATURE_NO_TITLE);
+    private void applyFilter() {
+        saveSelectedItems(mAdapter.getSelectedIds());
+        if (mListener != null) {
+            mListener.onNewFilterApplied();
+        }
+    }
 
-		return result;
-	}
-
-	private void applyFilter() {
-		saveSelectedItems(mAdapter.getSelectedIds());
-		if (mListener != null) {
-			mListener.onNewFilterApplied();
-		}
-	}
-
-	public void clearFilter() {
+    public void clearFilter() {
         clearSelectedItems();
         saveSelectedItems(mSelectedIds);
         if (mListener != null) {
@@ -172,25 +181,25 @@ public class FilterDialog extends DialogFragment {
         }
     }
 
-	private void clearSelectedItems() {
-		if (mSelectedIds != null && !mSelectedIds.isEmpty()) {
-			mSelectedIds.get(0).clear();
-			mSelectedIds.get(1).clear();
-		}
-	}
+    private void clearSelectedItems() {
+        if (mSelectedIds != null && !mSelectedIds.isEmpty()) {
+            mSelectedIds.get(0).clear();
+            mSelectedIds.get(1).clear();
+        }
+    }
 
-	private void saveSelectedItems(List<List<Long>> selectedIds) {
-		if (selectedIds != null && !selectedIds.isEmpty()) {
-			PreferencesManager.getInstance().saveExpLevel(selectedIds.get(0));
-			PreferencesManager.getInstance().saveTrack(selectedIds.get(1));
-		}
-	}
+    private void saveSelectedItems(List<List<Long>> selectedIds) {
+        if (selectedIds != null && !selectedIds.isEmpty()) {
+            PreferencesManager.getInstance().saveExpLevel(selectedIds.get(0));
+            PreferencesManager.getInstance().saveTrack(selectedIds.get(1));
+        }
+    }
 
-	@NonNull
-	private List<List<Long>> loadSelectedIds() {
-		List<List<Long>> selectedIds = new ArrayList<>();
-		selectedIds.add(PreferencesManager.getInstance().loadExpLevel());
-		selectedIds.add(PreferencesManager.getInstance().loadTracks());
-		return selectedIds;
-	}
+    @NonNull
+    private List<List<Long>> loadSelectedIds() {
+        List<List<Long>> selectedIds = new ArrayList<>();
+        selectedIds.add(PreferencesManager.getInstance().loadExpLevel());
+        selectedIds.add(PreferencesManager.getInstance().loadTracks());
+        return selectedIds;
+    }
 }

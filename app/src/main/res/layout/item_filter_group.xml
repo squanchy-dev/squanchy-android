@@ -12,7 +12,7 @@
         android:background="@color/grey_100" />
 
     <com.ls.drupalconapp.ui.view.RegularFontTextView
-        android:id="@+id/lblListHeader"
+        android:id="@+id/txtTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/selector_light"
