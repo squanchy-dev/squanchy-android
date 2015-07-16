@@ -358,7 +358,7 @@ public class EventDetailsActivity extends ActionBarActivity {
 
         String eventFromTime = mEvent.getFrom();
         Date date = new Date(mEventDay);
-        Date scheduleTime = DateUtils.convertDate(eventFromTime);
+        Date scheduleTime = DateUtils.convertTime(eventFromTime);
 
         if (mIsFavorite) {
             Calendar calendar = Calendar.getInstance();

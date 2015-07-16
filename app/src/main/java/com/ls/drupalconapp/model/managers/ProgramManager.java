@@ -6,9 +6,8 @@ import com.ls.drupalconapp.model.PreferencesManager;
 import com.ls.drupalconapp.model.data.Event;
 import com.ls.drupalconapp.model.requests.SessionsRequest;
 import com.ls.drupalconapp.ui.adapter.item.EventListItem;
+import com.ls.utils.DateUtils;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -36,32 +35,29 @@ public class ProgramManager extends EventManager {
         }
 
         List<Long> ids = mEventDao.selectFavoriteEventsSafe();
-        SimpleDateFormat format = new SimpleDateFormat("d-MM-yyyy");
-
         for (Event.Day day : sessions) {
             for (Event event : day.getEvents()) {
-                try {
-                    if (event != null) {
-                        Date date = format.parse(day.getDate());
+
+                if (event != null) {
+                    Date date = DateUtils.convertDate(day.getDate());
+                    if (date != null) {
                         event.setDate(date);
-                        event.setEventClass(Event.PROGRAM_CLASS);
-
-                        for (long id : ids) {
-                            if (event.getId() == id) {
-                                event.setFavorite(true);
-                                break;
-                            }
-                        }
-
-                        mEventDao.saveOrUpdateSafe(event);
-                        saveEventSpeakers(event);
-
-                        if (event.isDeleted()) {
-                            deleteEvent(event);
-                        }
-
                     }
-                } catch (ParseException e) {
+                    event.setEventClass(Event.PROGRAM_CLASS);
+
+                    for (long id : ids) {
+                        if (event.getId() == id) {
+                            event.setFavorite(true);
+                            break;
+                        }
+                    }
+
+                    mEventDao.saveOrUpdateSafe(event);
+                    saveEventSpeakers(event);
+
+                    if (event.isDeleted()) {
+                        deleteEvent(event);
+                    }
                 }
             }
         }

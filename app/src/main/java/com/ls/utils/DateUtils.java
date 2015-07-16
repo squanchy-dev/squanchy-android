@@ -59,7 +59,7 @@ public class DateUtils {
 	}
 
 	@Nullable
-	public static Date convertDate(String strDate) {
+	public static Date convertTime(String strDate) {
 		String timeZone = PreferencesManager.getInstance().getTimeZone();
 		Date date;
 
@@ -83,6 +83,20 @@ public class DateUtils {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
+		}
+		return null;
+	}
+
+	@Nullable
+	public static Date convertDate(String day) {
+		String timeZone = PreferencesManager.getInstance().getTimeZone();
+		SimpleDateFormat format = new SimpleDateFormat("d-MM-yyyy");
+		format.setTimeZone(TimeZone.getTimeZone(timeZone));
+
+		try {
+			return format.parse(day);
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
 		return null;
 	}
