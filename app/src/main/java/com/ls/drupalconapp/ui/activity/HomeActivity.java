@@ -43,7 +43,6 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
 	private int mLastSelectedItem = 0;
 	private boolean isIntentHandled = false;
 
-	private View mStatusBar;
 	private Toolbar mToolbar;
 	private DrawerLayout mDrawerLayout;
 
@@ -100,14 +99,11 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
 	}
 
 	private void initStatusBar() {
-		mStatusBar = findViewById(R.id.viewStatusBar);
-
 		int currentApiVersion = android.os.Build.VERSION.SDK_INT;
 		if (currentApiVersion >= Build.VERSION_CODES.LOLLIPOP) {
-			getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-			mStatusBar.setBackgroundColor(getResources().getColor(R.color.primary));
-			mStatusBar.setVisibility(View.VISIBLE);
-			findViewById(R.id.viewStatusBarTrans).setVisibility(View.VISIBLE);
+			getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+			getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
 		}
 	}
 
@@ -253,12 +249,6 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
 				mAdapter.setSelectedPos(mSelectedItem);
 				mAdapter.notifyDataSetChanged();
 
-				if (mSelectedItem == DrawerManager.EventMode.Location.ordinal()) {
-					displayLocationTheme();
-				} else {
-					displayDefaultTheme();
-				}
-
 				AnalyticsManager.sendEvent(this, mPresentTitle + " screen", R.string.action_open);
 			}
 		}
@@ -270,20 +260,6 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
 		AnalyticsManager.sendEvent(this, App.getContext().getString(R.string.Schedule) + " screen", R.string.action_open);
 		mFrManager.setFragment(DrawerManager.EventMode.Program);
 	}
-
-	private void displayDefaultTheme() {
-        if (mStatusBar != null && mToolbar != null) {
-            mStatusBar.setBackgroundColor(getResources().getColor(R.color.primary));
-            mToolbar.setBackgroundColor(getResources().getColor(R.color.primary));
-        }
-    }
-
-    private void displayLocationTheme() {
-		if (mStatusBar != null && mToolbar != null) {
-            mStatusBar.setBackgroundColor(getResources().getColor(R.color.secondary));
-            mToolbar.setBackgroundColor(getResources().getColor(R.color.secondary));
-        }
-    }
 
 	@Override
 	public void onNewFilterApplied() {

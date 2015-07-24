@@ -7,12 +7,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/primary"
         android:minHeight="125dp"
         android:orientation="vertical"
-        android:paddingLeft="28dp"
-        android:paddingRight="16dp"
         android:paddingBottom="23dp"
-        android:background="@color/secondary">
+        android:paddingLeft="28dp"
+        android:paddingRight="16dp">
 
         <com.ls.drupalconapp.ui.view.RegularFontTextView
             android:id="@+id/txtPlace"
@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="8dp"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_24"/>
+            android:textSize="@dimen/text_size_24" />
 
         <com.ls.drupalconapp.ui.view.LightFontTextView
             android:id="@+id/txtAddress"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="3dp"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_medium"/>
+            android:textSize="@dimen/text_size_medium" />
     </LinearLayout>
 
     <FrameLayout
@@ -36,12 +36,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white">
-
-        <!--<fragment-->
-            <!--android:id="@+id/map"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:name="com.google.android.gms.maps.MapFragment"/>-->
 
         <ProgressBar
             android:id="@+id/progressBar"

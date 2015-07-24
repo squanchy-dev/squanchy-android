@@ -1,10 +1,12 @@
 package com.ls.drupalconapp.ui.activity;
 
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
+import android.view.WindowManager;
 
 import com.ls.drupalconapp.R;
 import com.ls.drupalconapp.model.Model;
@@ -27,8 +29,10 @@ public class SplashActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_splash);
         AnalyticsManager.sendEvent(this, "Application", R.string.action_open);
-        mHandler = new Handler();
 
+        initStatusBar();
+
+        mHandler = new Handler();
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -50,6 +54,15 @@ public class SplashActivity extends FragmentActivity {
     protected void onDestroy() {
         mHandler.removeCallbacksAndMessages(null);
         super.onDestroy();
+    }
+
+    private void initStatusBar() {
+        int currentApiVersion = android.os.Build.VERSION.SDK_INT;
+        if (currentApiVersion >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().setStatusBarColor(getResources().getColor(R.color.secondary_dark));
+        }
     }
 
     private void checkForUpdates() {

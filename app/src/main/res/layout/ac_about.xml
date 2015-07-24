@@ -23,24 +23,10 @@
         android:dividerHeight="0dp"
         android:listSelector="@drawable/selector_light"/>
 
-    <View
-        android:id="@+id/viewStatusBarTrans"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/status_bar_height"
-        android:background="@color/black_90_trans"
-        android:visibility="gone"/>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/top_shadow_height"
-        android:background="@drawable/bg_shadow_top">
-    </ImageView>
-
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:layout_below="@+id/viewStatusBarTrans"/>
+        android:background="@android:color/transparent"/>
 
 </RelativeLayout>

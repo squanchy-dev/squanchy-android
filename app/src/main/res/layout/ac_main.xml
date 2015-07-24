@@ -21,15 +21,7 @@
                 android:id="@+id/toolBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/primary"
-                android:layout_below="@+id/viewStatusBar"/>
-
-            <View
-                android:id="@+id/viewStatusBar"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/status_bar_height"
-                android:background="@color/primary"
-                android:visibility="gone"/>
+                android:background="@color/primary"/>
 
         </RelativeLayout>
 

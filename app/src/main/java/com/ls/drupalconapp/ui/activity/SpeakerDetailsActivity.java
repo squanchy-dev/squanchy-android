@@ -11,13 +11,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -136,6 +134,15 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 		return super.onOptionsItemSelected(item);
 	}
 
+	private void initStatusBar() {
+		int currentApiVersion = android.os.Build.VERSION.SDK_INT;
+		if (currentApiVersion >= Build.VERSION_CODES.LOLLIPOP) {
+			getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+			getWindow().setStatusBarColor(getResources().getColor(R.color.secondary_dark));
+		}
+	}
+
 	private void initToolbar() {
 		mViewToolbar = findViewById(R.id.viewToolbar);
 		mViewToolbar.setAlpha(0);
@@ -151,22 +158,6 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		}
 		initStatusBar();
-	}
-
-	private void initStatusBar() {
-		int height = (int) getResources().getDimension(R.dimen.toolbar_height);
-		int currentApiVersion = android.os.Build.VERSION.SDK_INT;
-
-		if (currentApiVersion >= Build.VERSION_CODES.LOLLIPOP) {
-			getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-			findViewById(R.id.viewStatusBarTrans).setVisibility(View.VISIBLE);
-
-			if (mToolbar != null) {
-				height += (int) getResources().getDimension(R.dimen.status_bar_height);
-			}
-		}
-		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
-		mViewToolbar.setLayoutParams(params);
 	}
 
 	private void handleExtras(Intent intent) {

@@ -151,24 +151,11 @@
         android:layout_height="wrap_content"
         android:visibility="visible">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/top_shadow_height"
-            android:background="@drawable/bg_shadow_top">
-        </ImageView>
-
         <View
             android:id="@+id/viewToolbar"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:background="@color/primary"/>
-
-        <View
-            android:id="@+id/viewStatusBarTrans"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/status_bar_height"
-            android:background="@color/black_90_trans"
-            android:visibility="gone"/>
+            android:layout_height="56dp"
+            android:background="@color/secondary_dark"/>
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolBar"
