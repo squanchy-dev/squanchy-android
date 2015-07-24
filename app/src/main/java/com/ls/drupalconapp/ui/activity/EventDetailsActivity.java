@@ -147,7 +147,7 @@ public class EventDetailsActivity extends ActionBarActivity {
         if (currentApiVersion >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            getWindow().setStatusBarColor(getResources().getColor(R.color.secondary));
+            getWindow().setStatusBarColor(getResources().getColor(R.color.secondary_dark));
         }
     }
     private void initToolbar() {

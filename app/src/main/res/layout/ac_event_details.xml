@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imgHeader"
-                android:background="@color/secondary"
+                android:background="@color/secondary_dark"
                 android:orientation="vertical"
                 android:padding="16dp">
 
@@ -178,7 +178,7 @@
         android:id="@+id/viewToolbar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="@color/secondary"
+        android:background="@color/secondary_dark"
         android:visibility="visible" />
 
     <android.support.v7.widget.Toolbar
