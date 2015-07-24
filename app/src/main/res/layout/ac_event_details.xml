@@ -146,7 +146,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/layoutTime"
                 android:layout_marginRight="16dp"
-                android:layout_marginTop="-25dp"
+                android:layout_marginTop="-22dp"
                 app:sl_cornerRadius="56dp"
                 app:sl_dx="0dp"
                 app:sl_dy="0.5dp"

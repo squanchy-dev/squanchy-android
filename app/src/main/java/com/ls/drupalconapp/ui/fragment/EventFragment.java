@@ -21,6 +21,7 @@ import com.ls.drupalconapp.ui.adapter.item.EventListItem;
 import com.ls.drupalconapp.ui.adapter.item.SimpleTimeRangeCreator;
 import com.ls.drupalconapp.ui.adapter.item.TimeRangeItem;
 import com.ls.drupalconapp.ui.drawer.DrawerManager;
+import com.ls.drupalconapp.ui.receiver.FavoriteReceiverManager;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,6 +46,16 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 
 	private EventGenerator mGenerator;
 
+	private FavoriteReceiverManager favoriteReceiverManager = new FavoriteReceiverManager(
+			new FavoriteReceiverManager.FavoriteUpdatedListener() {
+				@Override
+				public void onFavoriteUpdated(long eventId, boolean isFavorite) {
+					if (mEventMode != DrawerManager.EventMode.Favorites) {
+						new LoadData().execute();
+					}
+				}
+			});
+
 	public static Fragment newInstance(int modePos, long day) {
 		Fragment fragment = new EventFragment();
 		Bundle args = new Bundle();
@@ -65,7 +76,8 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 		super.onActivityCreated(savedInstanceState);
 		initData();
 		initViews();
-		mEventTask.execute();
+		new LoadData().execute();
+		favoriteReceiverManager.register(getActivity());
 	}
 
 	@Override
@@ -75,8 +87,8 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 
 	@Override
 	public void onDestroy() {
-		mEventTask.cancel(true);
 		mGenerator.setShouldBreak(true);
+		favoriteReceiverManager.unregister(getActivity());
 		super.onDestroy();
 	}
 
@@ -105,7 +117,8 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 		mGenerator = new EventGenerator();
 	}
 
-	AsyncTask<Void, Void, List<EventListItem>> mEventTask = new AsyncTask<Void, Void, List<EventListItem>>() {
+
+	class LoadData extends AsyncTask<Void, Void, List<EventListItem>> {
 		@Override
 		protected List<EventListItem> doInBackground(Void... params) {
 			return getEventItems();
@@ -113,7 +126,7 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 
 		@Override
 		protected void onPostExecute(List<EventListItem> eventListItems) {
-			if (!isDetached() && !mEventTask.isCancelled()) {
+			if (!isDetached() && !isCancelled()) {
 				handleEventsResult(eventListItems);
 			}
 		}
@@ -159,10 +172,6 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 			long type = item.getEvent().getType();
 
 			if (type == Type.SPEACH || type == Type.SPEACH_OF_DAY) {
-//				Intent intent = new Intent(getActivity(), EventDetailsActivity.class);
-//				intent.putExtra(EventDetailsActivity.EXTRA_EVENT_ID, item.getEvent().getId());
-//				intent.putExtra(EventDetailsActivity.EXTRA_DAY, mDay);
-//				startActivity(intent);
 				EventDetailsActivity.startThisActivity(getActivity(), item.getEvent().getId(), mDay);
 			}
 		}

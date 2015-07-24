@@ -153,7 +153,6 @@ public class EventsAdapter extends BaseAdapter {
         String fromTime = timeRange.getFromTime();
         String toTime = timeRange.getToTime();
 
-
         if (android.text.format.DateFormat.is24HourFormat(mContext)) {
             if (fromTime != null && toTime != null) {
                 fromTime = DateUtils.convertDateTo24Format(fromTime);
@@ -183,6 +182,12 @@ public class EventsAdapter extends BaseAdapter {
             holder.layoutPlace.setVisibility(View.VISIBLE);
         } else {
             holder.layoutPlace.setVisibility(View.GONE);
+        }
+
+        if (event.isFavorite()) {
+            holder.txtTitle.setTextColor(mContext.getResources().getColor(R.color.additional));
+        } else {
+            holder.txtTitle.setTextColor(mContext.getResources().getColor(R.color.black_100));
         }
 
         if (timeRange.getTrack() != null) {
@@ -251,6 +256,11 @@ public class EventsAdapter extends BaseAdapter {
         ProgramItem item = (ProgramItem) getItem(position);
         Event event = item.getEvent();
         holder.txtTitle.setText(event.getName());
+        if (event.isFavorite()) {
+            holder.txtTitle.setTextColor(mContext.getResources().getColor(R.color.additional));
+        } else {
+            holder.txtTitle.setTextColor(mContext.getResources().getColor(R.color.black_100));
+        }
 
         if (!event.getPlace().equals("")) {
             holder.txtPlace.setText(event.getPlace());
@@ -323,6 +333,11 @@ public class EventsAdapter extends BaseAdapter {
         BofsItem item = (BofsItem) getItem(position);
         Event event = item.getEvent();
         holder.txtTitle.setText(event.getName());
+        if (event.isFavorite()) {
+            holder.txtTitle.setTextColor(mContext.getResources().getColor(R.color.additional));
+        } else {
+            holder.txtTitle.setTextColor(mContext.getResources().getColor(R.color.black_100));
+        }
 
         if (!event.getPlace().equals("")) {
             holder.txtPlace.setText(event.getPlace());
@@ -364,6 +379,11 @@ public class EventsAdapter extends BaseAdapter {
         SocialItem item = (SocialItem) getItem(position);
         Event event = item.getEvent();
         holder.txtTitle.setText(event.getName());
+        if (event.isFavorite()) {
+            holder.txtTitle.setTextColor(mContext.getResources().getColor(R.color.additional));
+        } else {
+            holder.txtTitle.setTextColor(mContext.getResources().getColor(R.color.black_100));
+        }
 
         if (!event.getPlace().equals("")) {
             holder.txtPlace.setText(event.getPlace());
