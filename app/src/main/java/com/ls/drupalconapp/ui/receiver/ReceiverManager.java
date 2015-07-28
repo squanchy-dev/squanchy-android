@@ -1,25 +1,24 @@
 package com.ls.drupalconapp.ui.receiver;
 
-import org.jetbrains.annotations.NotNull;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 
-/**
- * Created by Kuhta on 26.09.2014.
- */
-public class FavoriteReceiverManager {
+import org.jetbrains.annotations.NotNull;
+
+public class ReceiverManager {
 	public static final String EXTRAS_EVENT_ID = "EXTRAS_EVENT_ID";
 	public static final String EXTRAS_IS_FAVORITE = "EXTRAS_IS_FAVORITE";
 	public static final String ACTION_FAVORITE_UPDATED = "ACTION_FAVORITE_UPDATED";
 
+	public static final String SCREEN_OVERLAY = "SCREEN_OVERLAY";
+
 	private FavoriteUpdatedListener favoriteUpdatedListener;
 	private FavoriteReceiver favoriteReceiver;
 
-	public FavoriteReceiverManager(@NotNull FavoriteUpdatedListener favoriteUpdatedListener){
+	public ReceiverManager(@NotNull FavoriteUpdatedListener favoriteUpdatedListener){
 		this.favoriteUpdatedListener = favoriteUpdatedListener;
 		favoriteReceiver = new FavoriteReceiver();
 	}
@@ -53,4 +52,11 @@ public class FavoriteReceiverManager {
 			favoriteUpdatedListener.onFavoriteUpdated(eventId, isFavorite);
 		}
 	}
+
+	public class ScreenOverlayReceiver extends BroadcastReceiver {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+		}
+	}
+
 }

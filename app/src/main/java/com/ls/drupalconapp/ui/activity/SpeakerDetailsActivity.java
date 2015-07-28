@@ -67,8 +67,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 	private boolean isWebViewLoaded;
 	private boolean isDataLoaded;
 
-	private UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener()
-	{
+	private UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener() {
 		@Override
 		public void onDataUpdated(List<Integer> requestIds) {
 			Log.d("UPDATED", "SpeakerDetailsActivity");
@@ -329,6 +328,12 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 				EventDetailsActivity.startThisActivity(SpeakerDetailsActivity.this, event.getEventId(), DateUtils.convertWeekDayToLong(event.getDate()));
 			}
 		});
+	}
+
+	private void sendEventDetailsBroadcast() {
+		Intent intent = new Intent();
+		intent.setAction("com.tutorialspoint.CUSTOM_INTENT");
+		sendBroadcast(intent);
 	}
 
 	private void initEventExpLevel(View eventView, SpeakerDetailsEvent event) {

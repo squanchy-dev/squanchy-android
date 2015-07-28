@@ -21,7 +21,7 @@ import com.ls.drupalconapp.ui.adapter.item.EventListItem;
 import com.ls.drupalconapp.ui.adapter.item.SimpleTimeRangeCreator;
 import com.ls.drupalconapp.ui.adapter.item.TimeRangeItem;
 import com.ls.drupalconapp.ui.drawer.DrawerManager;
-import com.ls.drupalconapp.ui.receiver.FavoriteReceiverManager;
+import com.ls.drupalconapp.ui.receiver.ReceiverManager;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,8 +46,8 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 
 	private EventGenerator mGenerator;
 
-	private FavoriteReceiverManager favoriteReceiverManager = new FavoriteReceiverManager(
-			new FavoriteReceiverManager.FavoriteUpdatedListener() {
+	private ReceiverManager receiverManager = new ReceiverManager(
+			new ReceiverManager.FavoriteUpdatedListener() {
 				@Override
 				public void onFavoriteUpdated(long eventId, boolean isFavorite) {
 					if (mEventMode != DrawerManager.EventMode.Favorites) {
@@ -77,7 +77,7 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 		initData();
 		initViews();
 		new LoadData().execute();
-		favoriteReceiverManager.register(getActivity());
+		receiverManager.register(getActivity());
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 	@Override
 	public void onDestroy() {
 		mGenerator.setShouldBreak(true);
-		favoriteReceiverManager.unregister(getActivity());
+		receiverManager.unregister(getActivity());
 		super.onDestroy();
 	}
 

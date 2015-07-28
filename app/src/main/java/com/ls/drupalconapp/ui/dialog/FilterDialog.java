@@ -81,6 +81,7 @@ public class FilterDialog extends DialogFragment {
         builder.setView(view);
         Dialog result = builder.create();
         result.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        result.setCanceledOnTouchOutside(true);
 
         return result;
     }

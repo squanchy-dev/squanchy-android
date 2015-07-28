@@ -7,7 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ShareCompat;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -35,7 +34,7 @@ import com.ls.drupalconapp.model.data.Speaker;
 import com.ls.drupalconapp.model.managers.EventManager;
 import com.ls.drupalconapp.model.managers.FavoriteManager;
 import com.ls.drupalconapp.model.managers.SpeakerManager;
-import com.ls.drupalconapp.ui.receiver.FavoriteReceiverManager;
+import com.ls.drupalconapp.ui.receiver.ReceiverManager;
 import com.ls.drupalconapp.ui.view.CircleImageView;
 import com.ls.drupalconapp.ui.view.NotifyingScrollView;
 import com.ls.utils.AnalyticsManager;
@@ -47,7 +46,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class EventDetailsActivity extends ActionBarActivity {
+public class EventDetailsActivity extends StackKeeperActivity {
 
     public static final String EXTRA_EVENT_ID = "EXTRA_EVENT_ID";
     public static final String EXTRA_DAY = "EXTRA_DAY";
@@ -66,16 +65,15 @@ public class EventDetailsActivity extends ActionBarActivity {
 
     private boolean mIsFavorite;
 
-    private FavoriteReceiverManager favoriteReceiverManager = new FavoriteReceiverManager(
-            new FavoriteReceiverManager.FavoriteUpdatedListener() {
+    private ReceiverManager receiverManager = new ReceiverManager(
+            new ReceiverManager.FavoriteUpdatedListener() {
                 @Override
                 public void onFavoriteUpdated(long eventId, boolean isFavorite) {
                     mIsFavorite = isFavorite;
                 }
             });
 
-    private UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener()
-    {
+    private UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener() {
         @Override
         public void onDataUpdated(List<Integer> requestIds) {
             loadEvent();
@@ -94,7 +92,7 @@ public class EventDetailsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_event_details);
 
-        favoriteReceiverManager.register(this);
+        receiverManager.register(this);
         Model.instance().getUpdatesManager().registerUpdateListener(updateListener);
 
         initData();
@@ -105,7 +103,7 @@ public class EventDetailsActivity extends ActionBarActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        favoriteReceiverManager.unregister(this);
+        receiverManager.unregister(this);
         Model.instance().getUpdatesManager().unregisterUpdateListener(updateListener);
     }
 
@@ -350,7 +348,7 @@ public class EventDetailsActivity extends ActionBarActivity {
             actionId = R.string.action_add_to_favorites;
         }
         AnalyticsManager.sendEvent(this, R.string.event_category, actionId, mEventId);
-        FavoriteReceiverManager.updateFavorites(EventDetailsActivity.this, mEventId, mIsFavorite);
+        ReceiverManager.updateFavorites(EventDetailsActivity.this, mEventId, mIsFavorite);
     }
 
     private void setToNotificationQueue() {

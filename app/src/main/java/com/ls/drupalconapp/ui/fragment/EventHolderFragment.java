@@ -27,7 +27,7 @@ import com.ls.drupalconapp.ui.activity.HomeActivity;
 import com.ls.drupalconapp.ui.adapter.BaseEventDaysPagerAdapter;
 import com.ls.drupalconapp.ui.dialog.FilterDialog;
 import com.ls.drupalconapp.ui.drawer.DrawerManager;
-import com.ls.drupalconapp.ui.receiver.FavoriteReceiverManager;
+import com.ls.drupalconapp.ui.receiver.ReceiverManager;
 import com.ls.utils.DateUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -57,8 +57,8 @@ public class EventHolderFragment extends Fragment {
 		}
 	};
 
-	private FavoriteReceiverManager favoriteReceiverManager = new FavoriteReceiverManager(
-			new FavoriteReceiverManager.FavoriteUpdatedListener() {
+	private ReceiverManager receiverManager = new ReceiverManager(
+			new ReceiverManager.FavoriteUpdatedListener() {
 				@Override
 				public void onFavoriteUpdated(long eventId, boolean isFavorite) {
                     performFavoriteUpdate();
@@ -109,7 +109,7 @@ public class EventHolderFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		Model.instance().getUpdatesManager().registerUpdateListener(updateListener);
-		favoriteReceiverManager.register(getActivity());
+		receiverManager.register(getActivity());
 
 		initData();
 		initView();
@@ -119,7 +119,7 @@ public class EventHolderFragment extends Fragment {
 	public void onDestroy() {
 		super.onDestroy();
 		Model.instance().getUpdatesManager().unregisterUpdateListener(updateListener);
-		favoriteReceiverManager.unregister(getActivity());
+		receiverManager.unregister(getActivity());
 	}
 
 	private void initData() {

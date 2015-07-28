@@ -1,13 +1,10 @@
 package com.ls.drupalconapp.ui.activity;
 
+import android.content.ComponentCallbacks2;
+
 import com.ls.drupalconapp.model.Model;
 import com.ls.drupalconapp.model.UpdatesManager;
 
-import android.content.ComponentCallbacks2;
-
-/**
- * Created by Yakiv M. on 26.09.2014.
- */
 public class StateActivity extends BaseActivity {
 
     private static boolean wasInBackground = false;
