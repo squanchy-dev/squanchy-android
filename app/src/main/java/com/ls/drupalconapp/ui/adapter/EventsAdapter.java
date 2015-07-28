@@ -185,7 +185,7 @@ public class EventsAdapter extends BaseAdapter {
         }
 
         if (event.isFavorite()) {
-            holder.txtTitle.setTextColor(mContext.getResources().getColor(R.color.additional));
+            holder.txtTitle.setTextColor(mContext.getResources().getColor(R.color.link));
         } else {
             holder.txtTitle.setTextColor(mContext.getResources().getColor(R.color.black_100));
         }
@@ -257,7 +257,7 @@ public class EventsAdapter extends BaseAdapter {
         Event event = item.getEvent();
         holder.txtTitle.setText(event.getName());
         if (event.isFavorite()) {
-            holder.txtTitle.setTextColor(mContext.getResources().getColor(R.color.additional));
+            holder.txtTitle.setTextColor(mContext.getResources().getColor(R.color.link));
         } else {
             holder.txtTitle.setTextColor(mContext.getResources().getColor(R.color.black_100));
         }
@@ -334,7 +334,7 @@ public class EventsAdapter extends BaseAdapter {
         Event event = item.getEvent();
         holder.txtTitle.setText(event.getName());
         if (event.isFavorite()) {
-            holder.txtTitle.setTextColor(mContext.getResources().getColor(R.color.additional));
+            holder.txtTitle.setTextColor(mContext.getResources().getColor(R.color.link));
         } else {
             holder.txtTitle.setTextColor(mContext.getResources().getColor(R.color.black_100));
         }
@@ -380,7 +380,7 @@ public class EventsAdapter extends BaseAdapter {
         Event event = item.getEvent();
         holder.txtTitle.setText(event.getName());
         if (event.isFavorite()) {
-            holder.txtTitle.setTextColor(mContext.getResources().getColor(R.color.additional));
+            holder.txtTitle.setTextColor(mContext.getResources().getColor(R.color.link));
         } else {
             holder.txtTitle.setTextColor(mContext.getResources().getColor(R.color.black_100));
         }

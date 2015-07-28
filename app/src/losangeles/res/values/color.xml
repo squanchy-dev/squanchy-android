@@ -2,7 +2,9 @@
 <resources>
     <color name="primary_dark">#ff132041</color>
     <color name="primary">#142048</color>
-    <color name="secondary">#E12823</color>
-    <color name="secondary_dark">#ffb92722</color>
-    <color name="additional">#06BBD8</color>
+
+    <color name="favorite">#ff1d2e69</color>
+    <color name="event">#E12823</color>
+    <color name="speaker">#142048</color>
+    <color name="link">#06BBD8</color>
 </resources>

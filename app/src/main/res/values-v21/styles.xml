@@ -13,13 +13,13 @@
     </style>
 
     <style name="Additional" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">@color/additional</item>
+        <item name="colorPrimary">@color/link</item>
         <item name="colorAccent">@color/white</item>
         <item name="colorControlNormal">@color/white</item>
     </style>
 
     <style name="Secondary" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">@color/additional</item>
+        <item name="colorPrimary">@color/link</item>
         <item name="colorAccent">@color/white</item>
         <item name="colorControlNormal">@color/white</item>
     </style>

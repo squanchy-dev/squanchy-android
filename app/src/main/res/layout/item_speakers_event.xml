@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/date"
-            android:textColor="@color/additional"
+            android:textColor="@color/link"
             android:textSize="@dimen/text_size_small"
             android:layout_marginBottom="3dp"/>
 
