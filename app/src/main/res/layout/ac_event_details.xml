@@ -24,15 +24,6 @@
                 android:background="@drawable/event_details_header"
                 android:scaleType="centerCrop" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/layoutTime"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:alpha="0.4"
-                android:background="@drawable/bg_details_header_shadow" />
-
             <LinearLayout
                 android:id="@+id/layoutTime"
                 android:layout_width="match_parent"

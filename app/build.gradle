@@ -52,6 +52,12 @@ android {
             versionName "2.0.3"
         }
     }
+    productFlavors {
+        energy {
+            applicationId "com.ls.clean_energy"
+            versionName "2.0.3"
+        }
+    }
 }
 
 dependencies {

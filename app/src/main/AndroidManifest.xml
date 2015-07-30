@@ -42,7 +42,7 @@
         <activity
             android:name=".ui.activity.SpeakerDetailsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Additional" />
+            android:theme="@style/SpeakerDetails" />
         <activity
             android:name=".ui.activity.RoomsMapActivity"
             android:screenOrientation="portrait" />
@@ -54,12 +54,12 @@
             android:name=".ui.activity.AboutActivity"
             android:label="@string/title_activity_about"
             android:screenOrientation="portrait"
-            android:theme="@style/Home" />
+            android:theme="@style/About" />
 
         <activity
             android:name=".ui.activity.EventDetailsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Secondary"/>
+            android:theme="@style/EventDetails"/>
 
         <service android:name="com.ls.services.NotifyService" />
         <meta-data

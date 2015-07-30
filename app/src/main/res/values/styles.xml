@@ -12,14 +12,17 @@
         <item name="colorControlNormal">@color/white_200</item>
     </style>
 
-    <style name="Additional" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">@color/link</item>
+    <style name="SpeakerDetails" parent="Theme.AppCompat.NoActionBar">
         <item name="colorAccent">@color/white</item>
         <item name="colorControlNormal">@color/white</item>
     </style>
 
-    <style name="Secondary" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">@color/link</item>
+    <style name="EventDetails" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorAccent">@color/white</item>
+        <item name="colorControlNormal">@color/white</item>
+    </style>
+
+    <style name="About" parent="Theme.AppCompat.NoActionBar">
         <item name="colorAccent">@color/white</item>
         <item name="colorControlNormal">@color/white</item>
     </style>

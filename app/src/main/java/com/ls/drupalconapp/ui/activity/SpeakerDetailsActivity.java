@@ -138,7 +138,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 		if (currentApiVersion >= Build.VERSION_CODES.LOLLIPOP) {
 			getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-			getWindow().setStatusBarColor(getResources().getColor(R.color.event));
+			getWindow().setStatusBarColor(getResources().getColor(R.color.speaker_primary));
 		}
 	}
 

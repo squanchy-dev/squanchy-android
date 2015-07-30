@@ -122,7 +122,9 @@ public class EventDetailsActivity extends StackKeeperActivity {
                 finish();
                 return true;
             case R.id.actionShare:
-                shareEvent(mEvent.getLink());
+                if (mEvent != null) {
+                    shareEvent(mEvent.getLink());
+                }
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -145,7 +147,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
         if (currentApiVersion >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            getWindow().setStatusBarColor(getResources().getColor(R.color.event));
+            getWindow().setStatusBarColor(getResources().getColor(R.color.event_primary));
         }
     }
     private void initToolbar() {
