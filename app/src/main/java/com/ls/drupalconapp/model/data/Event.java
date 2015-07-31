@@ -360,7 +360,20 @@ public class Event extends AbstractEntity<Long> implements Comparable<Event>{
 
     @Override
     public int compareTo(@NotNull Event event) {
-        return mFromTime.compareTo(event.getFromTime());
+        int result =  mFromTime.compareTo(event.getFromTime());
+        if(result == 0)
+        {
+            if(mOrder == event.mOrder)
+            {
+                result = 0;
+            }else if(mOrder > event.mOrder){
+                result = 1;
+            }else{
+                result = -1;
+            }
+        }
+
+        return result;
     }
 
     public static class Holder {
