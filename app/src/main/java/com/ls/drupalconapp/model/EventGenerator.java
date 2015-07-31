@@ -101,7 +101,7 @@ public class EventGenerator {
                     return Double.compare(eventListItem.getEvent().getFromTimeStamp(), eventListItem2.getEvent().getFromTimeStamp());
                 }
             });
-            schedules.add(0, new HeaderItem(App.getContext().getString(R.string.Schedule)));
+            schedules.add(0, new HeaderItem(App.getContext().getString(R.string.Sessions)));
             schedules.get(schedules.size() - 1).setLast(true);
         }
 

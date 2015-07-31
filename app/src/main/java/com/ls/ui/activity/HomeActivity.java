@@ -257,7 +257,7 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
 
 	private void initFragmentManager() {
 		mFrManager = DrawerManager.getInstance(getSupportFragmentManager(), R.id.mainFragment);
-		AnalyticsManager.sendEvent(this, App.getContext().getString(R.string.Schedule) + " screen", R.string.action_open);
+		AnalyticsManager.sendEvent(this, App.getContext().getString(R.string.Sessions) + " screen", R.string.action_open);
 		mFrManager.setFragment(DrawerMenu.DrawerItem.Program);
 	}
 

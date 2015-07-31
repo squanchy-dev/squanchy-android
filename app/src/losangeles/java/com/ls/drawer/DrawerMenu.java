@@ -29,7 +29,7 @@ public class DrawerMenu {
     };
 
     public static final String[] MENU_STRING_ARRAY = {
-            App.getContext().getString(R.string.Schedule),
+            App.getContext().getString(R.string.Sessions),
             App.getContext().getString(R.string.bofs),
             App.getContext().getString(R.string.social_events),
             App.getContext().getString(R.string.speakers),
