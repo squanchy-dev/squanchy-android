@@ -1,6 +1,6 @@
 package com.ls.utils;
 
-import com.ls.drupalconapp.ui.view.utils.MultiFontsTypefaceSpan;
+import com.ls.ui.view.utils.MultiFontsTypefaceSpan;
 
 import android.content.Context;
 import android.content.res.AssetManager;

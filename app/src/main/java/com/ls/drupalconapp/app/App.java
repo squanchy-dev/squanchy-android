@@ -12,7 +12,7 @@ import com.ls.drupalconapp.model.AppDatabaseInfo;
 import com.ls.drupalconapp.model.Model;
 import com.ls.drupalconapp.model.PreferencesManager;
 import com.ls.drupalconapp.model.database.LAPIDBRegister;
-import com.ls.drupalconapp.ui.view.FontHelper;
+import com.ls.ui.view.FontHelper;
 import com.ls.http.base.BaseRequest;
 import com.ls.util.image.DrupalImageView;
 

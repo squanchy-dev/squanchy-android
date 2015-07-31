@@ -11,4 +11,6 @@
 
     <color name="favorite">#FFD200</color>
     <color name="link">#266EAC</color>
+    <color name="navigation">#266EAC</color>
+
 </resources>

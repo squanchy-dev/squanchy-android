@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.ls.drupalconapp.ui.view.CircleImageView
+        <com.ls.ui.view.CircleImageView
             android:id="@+id/imgPhoto"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -30,7 +30,7 @@
             android:layout_toRightOf="@+id/imgPhoto"
             android:orientation="vertical">
 
-            <com.ls.drupalconapp.ui.view.RegularFontTextView
+            <com.ls.ui.view.RegularFontTextView
                 android:id="@+id/txtName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
                 tools:text="Lorem ipsum"
                 android:textColor="#333333"/>
 
-            <com.ls.drupalconapp.ui.view.RegularFontTextView
+            <com.ls.ui.view.RegularFontTextView
                 android:id="@+id/txtOrgAndJobTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

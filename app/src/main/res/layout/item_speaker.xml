@@ -9,7 +9,7 @@
     android:minHeight="72dp"
     android:orientation="horizontal">
 
-    <com.ls.drupalconapp.ui.view.RegularFontTextView
+    <com.ls.ui.view.RegularFontTextView
         android:id="@+id/txtFirstLetter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,14 +24,14 @@
         android:layout_centerVertical="true"
         android:paddingLeft="41dp">
 
-        <com.ls.drupalconapp.ui.view.CircleImageView
+        <com.ls.ui.view.CircleImageView
             android:id="@+id/imgPhoto"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:layout_margin="16dp"
             android:scaleType="centerCrop"
-            app:noImageResource="@drawable/ic_default_avatar_small" />
+            app:noImageResource="@drawable/ic_default_avatar_small"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,7 +40,7 @@
             android:layout_toRightOf="@+id/imgPhoto"
             android:orientation="vertical">
 
-            <com.ls.drupalconapp.ui.view.RegularFontTextView
+            <com.ls.ui.view.RegularFontTextView
                 android:id="@+id/txtName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
                 android:textSize="@dimen/text_size_15"
                 tools:text="Lorem ipsum" />
 
-            <com.ls.drupalconapp.ui.view.RegularFontTextView
+            <com.ls.ui.view.RegularFontTextView
                 android:id="@+id/txtOrgAndJobTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

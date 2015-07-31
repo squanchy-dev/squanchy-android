@@ -23,7 +23,7 @@
             android:paddingBottom="12dp"
             android:paddingTop="12dp">
 
-            <com.ls.drupalconapp.ui.view.RegularFontTextView
+            <com.ls.ui.view.RegularFontTextView
                 android:id="@+id/txtFrom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
                 android:textSize="@dimen/text_size_13_74"
                 tools:text="03:30" />
 
-            <com.ls.drupalconapp.ui.view.RegularFontTextView
+            <com.ls.ui.view.RegularFontTextView
                 android:id="@+id/txtTo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <com.ls.drupalconapp.ui.view.RegularFontTextView
+                    <com.ls.ui.view.RegularFontTextView
                         android:id="@+id/txtTitle"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
 
                 </LinearLayout>
 
-                <com.ls.drupalconapp.ui.view.RegularFontTextView
+                <com.ls.ui.view.RegularFontTextView
                     android:id="@+id/txtTrack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -121,7 +121,7 @@
                         android:alpha="0.7"
                         android:src="@drawable/ic_speakers" />
 
-                    <com.ls.drupalconapp.ui.view.RegularFontTextView
+                    <com.ls.ui.view.RegularFontTextView
                         android:id="@+id/txtSpeakers"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -148,7 +148,7 @@
                         android:alpha="0.7"
                         android:src="@drawable/ic_place" />
 
-                    <com.ls.drupalconapp.ui.view.RegularFontTextView
+                    <com.ls.ui.view.RegularFontTextView
                         android:id="@+id/txtPlace"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

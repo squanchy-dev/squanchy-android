@@ -8,8 +8,8 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.ui.activity.EventDetailsActivity;
-import com.ls.drupalconapp.ui.activity.HomeActivity;
+import com.ls.ui.activity.EventDetailsActivity;
+import com.ls.ui.activity.HomeActivity;
 import com.ls.utils.AlarmTask;
 
 public class NotifyService extends IntentService{

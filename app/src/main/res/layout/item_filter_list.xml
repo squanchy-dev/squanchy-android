@@ -11,7 +11,7 @@
     android:paddingLeft="24dp"
     android:paddingRight="16dp">
 
-    <com.ls.drupalconapp.ui.view.RegularFontTextView
+    <com.ls.ui.view.RegularFontTextView
         android:id="@+id/txtItemTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

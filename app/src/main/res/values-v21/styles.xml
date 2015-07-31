@@ -19,12 +19,12 @@
 
     <style name="EventDetails" parent="Theme.AppCompat.NoActionBar">
         <item name="colorAccent">@color/grey_100</item>
-        <item name="colorControlNormal">@color/event_primary</item>
+        <item name="colorControlNormal">@color/navigation</item>
     </style>
 
     <style name="About" parent="Theme.AppCompat.NoActionBar">
         <item name="colorAccent">@color/grey_100</item>
-        <item name="colorControlNormal">@color/primary_dark</item>
+        <item name="colorControlNormal">@color/navigation</item>
     </style>
 
 </resources>

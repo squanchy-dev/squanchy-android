@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <com.ls.drupalconapp.ui.view.NotifyingScrollView
+    <com.ls.ui.view.NotifyingScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -33,7 +33,7 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <com.ls.drupalconapp.ui.view.BoldFontTextView
+                <com.ls.ui.view.BoldFontTextView
                     android:id="@+id/txtEventName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
                     android:textStyle="bold"
                     tools:text="@string/lorem_ipsum" />
 
-                <com.ls.drupalconapp.ui.view.RegularFontTextView
+                <com.ls.ui.view.RegularFontTextView
                     android:id="@+id/label_where"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <com.ls.drupalconapp.ui.view.MediumFontTextView
+                    <com.ls.ui.view.MediumFontTextView
                         android:id="@+id/txtTrack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <com.ls.drupalconapp.ui.view.MediumFontTextView
+                        <com.ls.ui.view.MediumFontTextView
                             android:id="@+id/txtExpLevel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -163,7 +163,7 @@
             </com.dd.ShadowLayout>
 
         </RelativeLayout>
-    </com.ls.drupalconapp.ui.view.NotifyingScrollView>
+    </com.ls.ui.view.NotifyingScrollView>
 
     <View
         android:id="@+id/viewToolbar"

@@ -67,7 +67,7 @@ ADDED from AndroidManifest.xml:25:9
 		ADDED from AndroidManifest.xml:26:13
 	android:value
 		ADDED from AndroidManifest.xml:27:13
-activity#com.ls.drupalconapp.ui.activity.SplashActivity
+activity#com.ls.ui.activity.SplashActivity
 ADDED from AndroidManifest.xml:39:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:42:13
@@ -87,7 +87,7 @@ category#android.intent.category.LAUNCHER
 ADDED from AndroidManifest.xml:47:17
 	android:name
 		ADDED from AndroidManifest.xml:47:27
-activity#com.ls.drupalconapp.ui.activity.MainActivity
+activity#com.ls.ui.activity.MainActivity
 ADDED from AndroidManifest.xml:50:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:53:13
@@ -95,7 +95,7 @@ ADDED from AndroidManifest.xml:50:9
 		ADDED from AndroidManifest.xml:51:13
 	android:launchMode
 		ADDED from AndroidManifest.xml:52:13
-activity#com.ls.drupalconapp.ui.activity.SpeakerDetailsActivity
+activity#com.ls.ui.activity.SpeakerDetailsActivity
 ADDED from AndroidManifest.xml:54:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:56:13
@@ -103,7 +103,7 @@ ADDED from AndroidManifest.xml:54:9
 		ADDED from AndroidManifest.xml:57:13
 	android:name
 		ADDED from AndroidManifest.xml:55:13
-activity#com.ls.drupalconapp.ui.activity.EventDetailsActivity
+activity#com.ls.ui.activity.EventDetailsActivity
 ADDED from AndroidManifest.xml:58:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:60:13
@@ -111,13 +111,13 @@ ADDED from AndroidManifest.xml:58:9
 		ADDED from AndroidManifest.xml:61:13
 	android:name
 		ADDED from AndroidManifest.xml:59:13
-activity#com.ls.drupalconapp.ui.activity.RoomsMapActivity
+activity#com.ls.ui.activity.RoomsMapActivity
 ADDED from AndroidManifest.xml:62:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:64:13
 	android:name
 		ADDED from AndroidManifest.xml:63:13
-activity#com.ls.drupalconapp.ui.activity.AboutActivity
+activity#com.ls.ui.activity.AboutActivity
 ADDED from AndroidManifest.xml:65:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:67:13
@@ -125,7 +125,7 @@ ADDED from AndroidManifest.xml:65:9
 		ADDED from AndroidManifest.xml:68:13
 	android:name
 		ADDED from AndroidManifest.xml:66:13
-activity#com.ls.drupalconapp.ui.activity.AboutDetailsActivity
+activity#com.ls.ui.activity.AboutDetailsActivity
 ADDED from AndroidManifest.xml:69:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:71:13

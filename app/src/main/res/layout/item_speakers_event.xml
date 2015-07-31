@@ -22,7 +22,7 @@
         android:paddingRight="16dp"
         android:paddingLeft="16dp">
 
-        <com.ls.drupalconapp.ui.view.RegularFontTextView
+        <com.ls.ui.view.RegularFontTextView
             android:id="@+id/txtArticleName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
             android:layout_marginTop="12dp"
             android:layout_marginBottom="3dp"/>
 
-        <com.ls.drupalconapp.ui.view.RegularFontTextView
+        <com.ls.ui.view.RegularFontTextView
             android:id="@+id/txtWhere"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
             android:textSize="@dimen/text_size_small"
             android:layout_marginBottom="3dp"/>
 
-        <com.ls.drupalconapp.ui.view.RegularFontTextView
+        <com.ls.ui.view.RegularFontTextView
             android:id="@+id/txtTrack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.ls.drupalconapp.ui.view.RegularFontTextView
+            <com.ls.ui.view.RegularFontTextView
                 android:id="@+id/txtExpLevel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

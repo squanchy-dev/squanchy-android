@@ -11,7 +11,7 @@
         android:layout_height="1px"
         android:background="@color/grey_100" />
 
-    <com.ls.drupalconapp.ui.view.RegularFontTextView
+    <com.ls.ui.view.RegularFontTextView
         android:id="@+id/txtTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

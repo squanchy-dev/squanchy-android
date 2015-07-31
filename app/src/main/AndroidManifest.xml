@@ -26,7 +26,7 @@
             android:value="@string/google_maps_api_key" />
 
         <activity
-            android:name=".ui.activity.SplashActivity"
+            android:name="com.ls.ui.activity.SplashActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -35,29 +35,29 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.HomeActivity"
+            android:name="com.ls.ui.activity.HomeActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/Home" />
         <activity
-            android:name=".ui.activity.SpeakerDetailsActivity"
+            android:name="com.ls.ui.activity.SpeakerDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SpeakerDetails" />
         <activity
-            android:name=".ui.activity.RoomsMapActivity"
+            android:name="com.ls.ui.activity.RoomsMapActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.AboutDetailsActivity"
+            android:name="com.ls.ui.activity.AboutDetailsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Home" />
+            android:theme="@style/AboutDetails" />
         <activity
-            android:name=".ui.activity.AboutActivity"
+            android:name="com.ls.ui.activity.AboutActivity"
             android:label="@string/title_activity_about"
             android:screenOrientation="portrait"
             android:theme="@style/About" />
 
         <activity
-            android:name=".ui.activity.EventDetailsActivity"
+            android:name="com.ls.ui.activity.EventDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/EventDetails"/>
 

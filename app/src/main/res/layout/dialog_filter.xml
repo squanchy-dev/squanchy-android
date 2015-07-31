@@ -5,7 +5,7 @@
     android:background="@android:color/white"
     android:orientation="vertical">
 
-    <com.ls.drupalconapp.ui.view.MediumFontTextView
+    <com.ls.ui.view.MediumFontTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -34,7 +34,7 @@
         android:layout_marginTop="8dp"
         android:orientation="horizontal">
 
-        <com.ls.drupalconapp.ui.view.MediumFontTextView
+        <com.ls.ui.view.MediumFontTextView
             android:id="@+id/btnClear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
             android:textColor="@color/primary"
             android:textSize="@dimen/text_size_small" />
 
-        <com.ls.drupalconapp.ui.view.MediumFontTextView
+        <com.ls.ui.view.MediumFontTextView
             android:id="@+id/btnApply"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

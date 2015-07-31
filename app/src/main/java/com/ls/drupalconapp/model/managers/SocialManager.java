@@ -4,7 +4,7 @@ import com.ls.drupal.AbstractBaseDrupalEntity;
 import com.ls.drupal.DrupalClient;
 import com.ls.drupalconapp.model.data.Event;
 import com.ls.drupalconapp.model.requests.SocialRequest;
-import com.ls.drupalconapp.ui.adapter.item.EventListItem;
+import com.ls.ui.adapter.item.EventListItem;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

@@ -15,7 +15,7 @@
         android:paddingLeft="24dp"
         android:paddingTop="40dp">
 
-        <com.ls.drupalconapp.ui.view.BoldFontTextView
+        <com.ls.ui.view.BoldFontTextView
             android:id="@+id/txtLatin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
             android:textSize="@dimen/text_size_48"
             android:textAllCaps="true"/>
 
-        <com.ls.drupalconapp.ui.view.BoldFontTextView
+        <com.ls.ui.view.BoldFontTextView
             android:id="@+id/txtAmerica"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
             android:textAllCaps="true"
             android:layout_below="@+id/txtLatin"/>
 
-        <com.ls.drupalconapp.ui.view.ThinFontTextView
+        <com.ls.ui.view.ThinFontTextView
             android:id="@+id/txtDrupalCon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
             android:textSize="@dimen/text_size_45"
             android:layout_below="@+id/txtAmerica"/>
 
-        <com.ls.drupalconapp.ui.view.RegularFontTextView
+        <com.ls.ui.view.RegularFontTextView
             android:id="@+id/txtYear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
             android:textSize="@dimen/text_size_45"
             android:layout_below="@+id/txtDrupalCon"/>
 
-        <com.ls.drupalconapp.ui.view.ThinFontTextView
+        <com.ls.ui.view.ThinFontTextView
             android:id="@+id/txtMonthBegin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
             android:textSize="@dimen/text_size_45"
             android:layout_below="@+id/txtYear"/>
 
-        <com.ls.drupalconapp.ui.view.RegularFontTextView
+        <com.ls.ui.view.RegularFontTextView
             android:id="@+id/txtDateBegin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

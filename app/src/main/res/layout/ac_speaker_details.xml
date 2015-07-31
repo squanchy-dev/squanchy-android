@@ -6,7 +6,7 @@
                 android:layout_height="match_parent"
                 android:background="@android:color/white">
 
-    <com.ls.drupalconapp.ui.view.NotifyingScrollView
+    <com.ls.ui.view.NotifyingScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -33,7 +33,7 @@
                 android:background="@android:color/white"
                 android:layout_below="@+id/imgHeader">
 
-                <com.ls.drupalconapp.ui.view.MediumFontTextView
+                <com.ls.ui.view.MediumFontTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="42dp"
@@ -45,7 +45,7 @@
                     android:id="@+id/txtSpeakerName"
                     tools:text="Lorem Ipsum"/>
 
-                <com.ls.drupalconapp.ui.view.RegularFontTextView
+                <com.ls.ui.view.RegularFontTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -132,7 +132,7 @@
 
             </LinearLayout>
 
-            <com.ls.drupalconapp.ui.view.CircleImageView
+            <com.ls.ui.view.CircleImageView
                 android:id="@+id/imgPhoto"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
@@ -144,7 +144,7 @@
 
         </RelativeLayout>
 
-    </com.ls.drupalconapp.ui.view.NotifyingScrollView>
+    </com.ls.ui.view.NotifyingScrollView>
 
     <RelativeLayout
         android:layout_width="match_parent"

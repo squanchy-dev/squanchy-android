@@ -7,7 +7,7 @@ import com.ls.drupal.DrupalClient;
 import com.ls.drupalconapp.model.data.UpdateDate;
 import com.ls.drupalconapp.model.database.ILAPIDBFacade;
 import com.ls.drupalconapp.model.managers.SynchronousItemManager;
-import com.ls.drupalconapp.ui.drawer.DrawerManager;
+import com.ls.drawer.DrawerManager;
 import com.ls.http.base.BaseRequest;
 import com.ls.http.base.RequestConfig;
 import com.ls.http.base.ResponseData;
@@ -19,9 +19,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created by Yakiv M. on 19.09.2014.
- */
 public class UpdatesManager {
 
     public static final int SETTINGS_REQUEST_ID = 0;

@@ -5,7 +5,7 @@ import com.ls.drupal.DrupalClient;
 import com.ls.drupalconapp.model.PreferencesManager;
 import com.ls.drupalconapp.model.data.Event;
 import com.ls.drupalconapp.model.requests.SessionsRequest;
-import com.ls.drupalconapp.ui.adapter.item.EventListItem;
+import com.ls.ui.adapter.item.EventListItem;
 import com.ls.utils.DateUtils;
 
 import java.util.Date;

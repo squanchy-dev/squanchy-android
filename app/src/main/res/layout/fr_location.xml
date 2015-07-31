@@ -14,7 +14,7 @@
         android:paddingLeft="28dp"
         android:paddingRight="16dp">
 
-        <com.ls.drupalconapp.ui.view.RegularFontTextView
+        <com.ls.ui.view.RegularFontTextView
             android:id="@+id/txtPlace"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_24" />
 
-        <com.ls.drupalconapp.ui.view.LightFontTextView
+        <com.ls.ui.view.LightFontTextView
             android:id="@+id/txtAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

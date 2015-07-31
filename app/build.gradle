@@ -43,19 +43,19 @@ android {
     productFlavors {
         losangeles {
             applicationId "com.ls.drupalconapp"
-            versionName "2.0.3"
+            versionName "2.0.4"
         }
     }
     productFlavors {
         barcelona {
             applicationId "com.ls.drupalconapp"
-            versionName "2.0.3"
+            versionName "2.0.4"
         }
     }
     productFlavors {
         energy {
             applicationId "com.ls.clean_energy"
-            versionName "2.0.3"
+            versionName "1.0.0"
         }
     }
 }
