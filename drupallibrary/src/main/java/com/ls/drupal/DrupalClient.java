@@ -170,7 +170,7 @@ public class DrupalClient implements OnResponseListener {
      * @return {@link com.ls.http.base.ResponseData} object, containing request result code and string or error and deserialized object, specified in request.
      */
     public ResponseData performRequest(BaseRequest request, Object tag, final OnResponseListener listener, boolean synchronous) {
-        request.setRetryPolicy(new DefaultRetryPolicy(requestTimeout, 1, 1));
+        request.setRetryPolicy(new DefaultRetryPolicy(requestTimeout, 0, 1));
         if (!loginManager.shouldRestoreLogin()) {
             return performRequestNoLoginRestore(request, tag, listener, synchronous);
         } else {
