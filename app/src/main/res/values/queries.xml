@@ -358,7 +358,7 @@
 
     <string name="select_program_items_by_date">
         SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class,
-        e._favorite, e._experience_level, t.track_name, l.level_name,
+        e._favorite, e._order, e._experience_level, t.track_name, l.level_name,
         s.first_name|| \' \' ||s.last_name AS _speaker_name
 
         FROM table_event AS e
@@ -377,7 +377,7 @@
 
     <string name="select_program_items_by_date_and_track_ids">
         SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class,
-        e._favorite, e._experience_level, t.track_name, l.level_name,
+        e._favorite, e._order, e._experience_level, t.track_name, l.level_name,
         s.first_name|| \' \' ||s.last_name AS _speaker_name
 
         FROM table_event AS e
@@ -396,7 +396,7 @@
 
     <string name="select_program_items_by_date_and_expLevel_ids">
         SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class,
-        e._favorite, e._experience_level, t.track_name, l.level_name,
+        e._favorite, e._order, e._experience_level, t.track_name, l.level_name,
         s.first_name|| \' \' ||s.last_name AS _speaker_name
 
         FROM table_event AS e
@@ -415,7 +415,7 @@
 
     <string name="select_program_items_by_date_and_track_ids_and_expLevel_ids" formatted = "false">
         SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class,
-        e._favorite, e._experience_level, t.track_name, l.level_name,
+        e._favorite, e._order, e._experience_level, t.track_name, l.level_name,
         s.first_name|| \' \' ||s.last_name AS _speaker_name
 
         FROM table_event AS e
@@ -434,7 +434,7 @@
 
     <string name="select_events_partly_class_and_date">
         SELECT e._id, e._date, e._from, e._to, e._type, e._experience_level,
-               e._name, e._place, e._event_class, e._favorite
+               e._name, e._place, e._event_class, e._favorite, e._order
         FROM table_event AS e
         WHERE _event_class=? and _date=?
         ORDER BY _id, e._order

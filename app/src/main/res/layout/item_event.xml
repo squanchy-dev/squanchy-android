@@ -30,6 +30,8 @@
                 android:layout_gravity="center"
                 android:textColor="@color/grey_400"
                 android:textSize="@dimen/text_size_13_74"
+                android:visibility="gone"
+                tools:visibility="visible"
                 tools:text="03:30" />
 
             <com.ls.ui.view.RegularFontTextView
@@ -39,6 +41,8 @@
                 android:layout_gravity="center"
                 android:textColor="@color/grey_200"
                 android:textSize="@dimen/text_size_11_24"
+                android:visibility="gone"
+                tools:visibility="visible"
                 tools:text="to 04:30" />
 
             <ImageView

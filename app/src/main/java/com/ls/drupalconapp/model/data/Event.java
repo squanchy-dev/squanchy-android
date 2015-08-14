@@ -139,6 +139,7 @@ public class Event extends AbstractEntity<Long> implements Comparable<Event>{
 
         mEventClass = parser.readInt("_event_class");
         mIsFavorite = parser.readBoolean("_favorite");
+        mOrder = parser.readDouble("_order");
     }
 
     private void initializeDateAndTime(CursorStringParser parser) {

@@ -176,6 +176,9 @@ public class EventsAdapter extends BaseAdapter {
             holder.txtTo.setText(App.getContext().getString(R.string.access));
         }
 
+        holder.txtFrom.setVisibility(View.VISIBLE);
+        holder.txtTo.setVisibility(View.VISIBLE);
+
         holder.txtTitle.setText(event.getName());
         if (!event.getPlace().equals("")) {
             holder.txtPlace.setText(event.getPlace());
@@ -241,6 +244,7 @@ public class EventsAdapter extends BaseAdapter {
             holder.divider = resultView.findViewById(R.id.divider);
             holder.marginDivider = resultView.findViewById(R.id.margin_divider);
             holder.expIcon = (ImageView) resultView.findViewById(R.id.imgExperience);
+            holder.icon = (ImageView) resultView.findViewById(R.id.imgEventIcon);
             holder.txtTitle = (TextView) resultView.findViewById(R.id.txtTitle);
             holder.layoutTime = (LinearLayout) resultView.findViewById(R.id.timeLayout);
             holder.layoutSpeakers = (LinearLayout) resultView.findViewById(R.id.layout_speakers);
@@ -255,6 +259,14 @@ public class EventsAdapter extends BaseAdapter {
 
         ProgramItem item = (ProgramItem) getItem(position);
         Event event = item.getEvent();
+
+        if (Type.getIcon(event.getType()) != 0) {
+            holder.icon.setVisibility(View.VISIBLE);
+            holder.icon.setImageResource(Type.getIcon(event.getType()));
+        } else {
+            holder.icon.setVisibility(View.GONE);
+        }
+
         holder.txtTitle.setText(event.getName());
         if (event.isFavorite()) {
             holder.txtTitle.setTextColor(mContext.getResources().getColor(R.color.link));
@@ -318,6 +330,7 @@ public class EventsAdapter extends BaseAdapter {
 
             holder = new BofsHolder();
             holder.layoutRoot = (LinearLayout) resultView.findViewById(R.id.layoutRoot);
+            holder.icon = (ImageView) resultView.findViewById(R.id.imgEventIcon);
             holder.divider = resultView.findViewById(R.id.divider);
             holder.marginDivider = resultView.findViewById(R.id.margin_divider);
             holder.txtTitle = (TextView) resultView.findViewById(R.id.txtTitle);
@@ -331,7 +344,15 @@ public class EventsAdapter extends BaseAdapter {
         }
 
         BofsItem item = (BofsItem) getItem(position);
+
         Event event = item.getEvent();
+        if (Type.getIcon(event.getType()) != 0) {
+            holder.icon.setVisibility(View.VISIBLE);
+            holder.icon.setImageResource(Type.getIcon(event.getType()));
+        } else {
+            holder.icon.setVisibility(View.GONE);
+        }
+
         holder.txtTitle.setText(event.getName());
         if (event.isFavorite()) {
             holder.txtTitle.setTextColor(mContext.getResources().getColor(R.color.link));
@@ -368,6 +389,7 @@ public class EventsAdapter extends BaseAdapter {
             holder.layoutRoot = (LinearLayout) resultView.findViewById(R.id.layoutRoot);
             holder.layoutPlace = (LinearLayout) resultView.findViewById(R.id.layout_place);
             holder.txtFrom = (TextView) resultView.findViewById(R.id.txtFrom);
+            holder.icon = (ImageView) resultView.findViewById(R.id.imgEventIcon);
             holder.txtTo = (TextView) resultView.findViewById(R.id.txtTo);
             holder.txtTitle = (TextView) resultView.findViewById(R.id.txtTitle);
             holder.txtPlace = (TextView) resultView.findViewById(R.id.txtPlace);
@@ -378,6 +400,14 @@ public class EventsAdapter extends BaseAdapter {
 
         SocialItem item = (SocialItem) getItem(position);
         Event event = item.getEvent();
+
+        if (Type.getIcon(event.getType()) != 0) {
+            holder.icon.setVisibility(View.VISIBLE);
+            holder.icon.setImageResource(Type.getIcon(event.getType()));
+        } else {
+            holder.icon.setVisibility(View.GONE);
+        }
+
         holder.txtTitle.setText(event.getName());
         if (event.isFavorite()) {
             holder.txtTitle.setTextColor(mContext.getResources().getColor(R.color.link));
@@ -443,6 +473,7 @@ public class EventsAdapter extends BaseAdapter {
         LinearLayout layoutRoot;
         LinearLayout layoutTime;
         LinearLayout layoutPlace;
+        ImageView icon;
         TextView txtTitle;
         TextView txtPlace;
         View divider;
@@ -458,6 +489,7 @@ public class EventsAdapter extends BaseAdapter {
         LinearLayout layoutSpeakers;
         LinearLayout layoutPlace;
         TextView txtSpeakers;
+        ImageView icon;
         TextView txtTrack;
         TextView txtTitle;
         TextView txtPlace;
@@ -470,6 +502,7 @@ public class EventsAdapter extends BaseAdapter {
 
         LinearLayout layoutRoot;
         LinearLayout layoutPlace;
+        ImageView icon;
         TextView txtFrom;
         TextView txtTo;
         TextView txtTitle;
