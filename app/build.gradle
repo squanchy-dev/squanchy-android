@@ -54,7 +54,7 @@ android {
     }
     productFlavors {
         energy {
-            applicationId "com.ls.clean_energy"
+            applicationId "com.ls.cleanenergy"
             versionName "1.0.0"
         }
     }
