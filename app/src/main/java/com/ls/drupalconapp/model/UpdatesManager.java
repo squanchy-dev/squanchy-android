@@ -134,8 +134,6 @@ public class UpdatesManager {
     private List<Integer> loadData(UpdateDate updateDate) {
 
         List<Integer> updateIds = updateDate.getIdsForUpdate();
-        updateIds.add(SETTINGS_REQUEST_ID);
-
         if (updateIds == null || updateIds.isEmpty()) {
             return new LinkedList<>();
         }
