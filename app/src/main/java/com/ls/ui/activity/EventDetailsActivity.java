@@ -176,6 +176,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
                 @Override
                 protected EventDetailsEvent doInBackground(Void... params) {
                     SpeakerManager speakerManager = Model.instance().getSpeakerManager();
+                    mSpeakerList.clear();
                     mSpeakerList.addAll(speakerManager.getSpeakersByEventId(mEventId));
 
                     EventManager eventManager = Model.instance().getEventManager();
@@ -295,7 +296,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
         if (!mSpeakerList.isEmpty()) {
             LayoutInflater inflater = LayoutInflater.from(EventDetailsActivity.this);
             LinearLayout holderSpeakers = (LinearLayout) findViewById(R.id.holderSpeakers);
-            holderSpeakers.removeAllViews();
+            holderSpeakers.removeAllViewsInLayout();
 
             for (Speaker speaker : mSpeakerList) {
                 View speakerView = inflater.inflate(R.layout.item_speaker_no_letter, null);
