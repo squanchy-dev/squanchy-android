@@ -4,29 +4,36 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="centerCrop"
-        android:src="@drawable/bg_about_header"
         android:adjustViewBounds="true"
-        android:id="@+id/header"/>
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_about_header" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@+id/header"
+        android:background="@color/white_200" />
 
     <ListView
-        android:layout_below="@+id/header"
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/divider"
         android:background="@android:color/white"
         android:cacheColorHint="@android:color/transparent"
-        android:divider="@android:color/transparent"
         android:clipToPadding="false"
+        android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
-        android:listSelector="@drawable/selector_light"/>
+        android:listSelector="@drawable/selector_light" />
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"/>
+        android:background="@android:color/transparent" />
 
 </RelativeLayout>
