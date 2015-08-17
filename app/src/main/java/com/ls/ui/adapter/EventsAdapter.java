@@ -336,6 +336,8 @@ public class EventsAdapter extends BaseAdapter {
             holder.txtTitle = (TextView) resultView.findViewById(R.id.txtTitle);
             holder.layoutTime = (LinearLayout) resultView.findViewById(R.id.timeLayout);
             holder.layoutPlace = (LinearLayout) resultView.findViewById(R.id.layout_place);
+            holder.txtSpeakers = (TextView) resultView.findViewById(R.id.txtSpeakers);
+            holder.layoutSpeakers = (LinearLayout) resultView.findViewById(R.id.layout_speakers);
             holder.txtPlace = (TextView) resultView.findViewById(R.id.txtPlace);
 
             resultView.setTag(holder);
@@ -344,8 +346,8 @@ public class EventsAdapter extends BaseAdapter {
         }
 
         BofsItem item = (BofsItem) getItem(position);
-
         Event event = item.getEvent();
+
         if (Type.getIcon(event.getType()) != 0) {
             holder.icon.setVisibility(View.VISIBLE);
             holder.icon.setImageResource(Type.getIcon(event.getType()));
@@ -374,6 +376,21 @@ public class EventsAdapter extends BaseAdapter {
             holder.divider.setVisibility(View.VISIBLE);
             holder.marginDivider.setVisibility(View.GONE);
         }
+
+        if (!item.getSpeakers().isEmpty()) {
+            List<String> speakers = item.getSpeakers();
+            StringBuilder builder = new StringBuilder(speakers.get(0));
+
+            if (speakers.size() > 1) {
+                builder.append(", ");
+                builder.append(speakers.get(1));
+            }
+            holder.txtSpeakers.setText(builder.toString());
+            holder.layoutSpeakers.setVisibility(View.VISIBLE);
+        } else {
+            holder.layoutSpeakers.setVisibility(View.GONE);
+        }
+
         initEventClickAbility(holder.layoutRoot, holder.txtPlace, event, position);
 
         return resultView;
@@ -473,6 +490,8 @@ public class EventsAdapter extends BaseAdapter {
         LinearLayout layoutRoot;
         LinearLayout layoutTime;
         LinearLayout layoutPlace;
+        LinearLayout layoutSpeakers;
+        TextView txtSpeakers;
         ImageView icon;
         TextView txtTitle;
         TextView txtPlace;

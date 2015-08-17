@@ -13,6 +13,7 @@ import com.ls.drupalconapp.model.managers.ProgramManager;
 import com.ls.drupalconapp.model.managers.SocialManager;
 import com.ls.drupalconapp.model.managers.SpeakerManager;
 import com.ls.drupalconapp.model.managers.TracksManager;
+import com.ls.ui.adapter.item.BofsItem;
 import com.ls.ui.adapter.item.EventItemCreator;
 import com.ls.ui.adapter.item.EventListItem;
 import com.ls.ui.adapter.item.HeaderItem;
@@ -212,19 +213,26 @@ public class EventGenerator {
         List<EventListItem> result = new ArrayList<EventListItem>();
 
         if (eventListItems.size() > 0) {
-            Event firstEvent = eventListItems.get(0).getEvent();
-            if (firstEvent == null) {
+            EventListItem item = eventListItems.get(0);
+            Event event = item.getEvent();
+            if (event == null) {
                 return result;
             }
 
-            long typeId = firstEvent.getType();
+            long typeId = event.getType();
 
-            TimeRangeItem timeRangeItem = (TimeRangeItem) eventItemCreator.getItem(firstEvent);
-            if (firstEvent.getTimeRange().getFromTime() != null) {
-                Calendar eventFromTime = firstEvent.getTimeRange().getFromTime();
-                long eventDate = firstEvent.getTimeRange().getDate();
+            TimeRangeItem timeRangeItem = (TimeRangeItem) eventItemCreator.getItem(event);
+            if (event.getTimeRange().getFromTime() != null) {
+                Calendar eventFromTime = event.getTimeRange().getFromTime();
+                long eventDate = event.getTimeRange().getDate();
                 Date date = parseEventDate(eventFromTime, eventDate);
                 timeRangeItem.setDate(date);
+
+                if (item instanceof ProgramItem) {
+                    timeRangeItem.setSpeakers(((ProgramItem) item).getSpeakers());
+                } else if (item instanceof BofsItem) {
+                    timeRangeItem.setSpeakers(((BofsItem) item).getSpeakers());
+                }
             }
 
             switch ((int) typeId) {

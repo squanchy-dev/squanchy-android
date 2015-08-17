@@ -492,7 +492,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
 
     public List<EventListItem> selectBofsItemsSafe(int eventClass, long date) {
         String[] selectionArgs = ArrayUtils.build(eventClass, date);
-        String query = mContext.getString(R.string.select_events_partly_class_and_date);
+        String query = mContext.getString(R.string.select_program_items_by_date);
 
         ILAPIDBFacade facade = getFacade();
         List<EventListItem> dataList = new ArrayList<EventListItem>();
@@ -509,6 +509,12 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
 
                 BofsItem item = new BofsItem();
                 item.setEvent(event);
+
+                String speakerName = parser.readString("_speaker_name");
+                if (speakerName != null) {
+                    item.addSpeaker(speakerName);
+                }
+
                 dataList.add(item);
 
                 moved = cursor.moveToNext();
