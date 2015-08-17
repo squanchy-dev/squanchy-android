@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- <string name="google_maps_api_key">AIzaSyBSidWjdu2s3h2jGsvSdBnesWgFRVq6WBo</string> -->
-
     <string name="google_maps_api_key">AIzaSyCR0UqOGndPeeldlG0YiKKqOADy9tl6Z0g</string> <!-- //release key -->
 
-
-    <!-- <string name="google_maps_api_key">AIzaSyD95dHQWRMmVPHX2DsWwVN1EFY0jCXoZkI</string> -->
     <!-- for navigation drawer -->
     <string name="drawerOpen">Open navigation drawer</string>
     <string name="drawerClose">Close navigation drawer</string>

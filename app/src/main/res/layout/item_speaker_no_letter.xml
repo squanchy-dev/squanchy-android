@@ -28,6 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/imgPhoto"
+            android:layout_marginRight="16dp"
             android:orientation="vertical">
 
             <com.ls.ui.view.RegularFontTextView
