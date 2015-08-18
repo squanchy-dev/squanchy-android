@@ -19,9 +19,9 @@
 
             <ImageView
                 android:id="@+id/imgHeader"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/event_details_header"
+                android:src="@drawable/event_details_header"
                 android:scaleType="centerCrop" />
 
             <LinearLayout

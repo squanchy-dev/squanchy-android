@@ -20,10 +20,10 @@
 
             <ImageView
                 android:id="@+id/imgHeader"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="165dp"
                 android:scaleType="centerCrop"
-                android:background="@drawable/speaker_details_header"/>
+                android:src="@drawable/speaker_details_header"/>
 
             <LinearLayout
                 android:id="@+id/linearLayout"
