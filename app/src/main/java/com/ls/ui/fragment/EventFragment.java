@@ -1,6 +1,6 @@
 package com.ls.ui.fragment;
 
-import android.os.AsyncTask;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.SparseIntArray;
@@ -51,7 +51,7 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 				@Override
 				public void onFavoriteUpdated(long eventId, boolean isFavorite) {
 					if (mEventMode != DrawerManager.EventMode.Favorites) {
-						new LoadData().execute();
+						loadData();
 					}
 				}
 			});
@@ -76,7 +76,7 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 		super.onActivityCreated(savedInstanceState);
 		initData();
 		initViews();
-		new LoadData().execute();
+		loadData();
 		receiverManager.register(getActivity());
 	}
 
@@ -117,20 +117,26 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 		mGenerator = new EventGenerator();
 	}
 
-
-	class LoadData extends AsyncTask<Void, Void, List<EventListItem>> {
-		@Override
-		protected List<EventListItem> doInBackground(Void... params) {
-			return getEventItems();
-		}
-
-		@Override
-		protected void onPostExecute(List<EventListItem> eventListItems) {
-			if (!isDetached() && !isCancelled()) {
-				handleEventsResult(eventListItems);
+	private void loadData() {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+                updateViewsUI(getEventItems());
 			}
+		}).start();
+	}
+
+	private void updateViewsUI(final List<EventListItem> eventList) {
+		Activity activity = getActivity();
+		if (activity != null) {
+			activity.runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					handleEventsResult(eventList);
+				}
+			});
 		}
-	};
+	}
 
 	private List<EventListItem> getEventItems() {
 		List<EventListItem> eventList = new ArrayList<>();

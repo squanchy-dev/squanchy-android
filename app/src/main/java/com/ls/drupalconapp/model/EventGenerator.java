@@ -1,5 +1,7 @@
 package com.ls.drupalconapp.model;
 
+import android.util.Log;
+
 import com.ls.drupalconapp.R;
 import com.ls.drupalconapp.app.App;
 import com.ls.drupalconapp.model.data.Event;
@@ -47,6 +49,9 @@ public class EventGenerator {
 
     public List<EventListItem> generate(long day, int eventClass, @NotNull EventItemCreator eventItemCreator) {
         List<TimeRange> ranges = mEventManager.getDistrictTimeRangeSafe(eventClass, day);
+        if (mShouldBreak) {
+            return new ArrayList<>();
+        }
 
         List<EventListItem> eventListItems;
         if (eventClass == Event.SOCIALS_CLASS) {
@@ -61,6 +66,13 @@ public class EventGenerator {
     public List<EventListItem> generate(long day, int eventClass, List<Long> levelIds, List<Long> trackIds, @NotNull EventItemCreator eventItemCreator) {
         List<EventListItem> eventListItems = mProgramManager.getProgramItemsSafe(eventClass, day, levelIds, trackIds);
         if (mShouldBreak) {
+            Log.e("TEST", "Session event list Break");
+            return new ArrayList<>();
+        }
+
+        List<TimeRange> ranges = mEventManager.getDistrictTimeRangeSafe(eventClass, day, levelIds, trackIds);
+        if (mShouldBreak) {
+            Log.e("TEST", "Session time range Break");
             return new ArrayList<>();
         }
 
@@ -80,7 +92,6 @@ public class EventGenerator {
             }
         });
 
-        List<TimeRange> ranges = mEventManager.getDistrictTimeRangeSafe(eventClass, day, levelIds, trackIds);
         return getEventItems(eventItemCreator, eventListItems, ranges);
     }
 

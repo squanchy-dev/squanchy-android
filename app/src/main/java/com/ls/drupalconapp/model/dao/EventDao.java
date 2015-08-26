@@ -295,6 +295,9 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
 
             boolean moved = parser.moveToFirst();
             while (moved) {
+                if (mShouldBreak) {
+                    return dataList;
+                }
 
                 Calendar from = null;
                 Calendar to = null;
@@ -504,6 +507,10 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
 
             boolean moved = cursor.moveToFirst();
             while (moved) {
+                if (mShouldBreak) {
+                    return new ArrayList<>();
+                }
+
                 Event event = new Event();
                 event.initializePartly(parser);
 
@@ -542,6 +549,10 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
 
             boolean moved = cursor.moveToFirst();
             while (moved) {
+                if (mShouldBreak) {
+                    return new ArrayList<>();
+                }
+
                 Event event = new Event();
                 event.initializePartly(parser);
 
