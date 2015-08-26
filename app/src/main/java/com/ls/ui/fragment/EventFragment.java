@@ -155,7 +155,6 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 				eventList.addAll(mGenerator.generateForFavorites(mDay));
 				break;
 		}
-
 		return eventList;
 	}
 

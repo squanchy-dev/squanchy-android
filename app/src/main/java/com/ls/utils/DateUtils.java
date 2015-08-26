@@ -60,12 +60,10 @@ public class DateUtils {
 
 	@Nullable
 	public static Date convertTime(String strDate) {
-		String timeZone = PreferencesManager.getInstance().getTimeZone();
 		Date date;
 
 		if (strDate.toLowerCase().contains("pm") || strDate.toLowerCase().contains("am")) {
 			SimpleDateFormat format = new SimpleDateFormat("hh:mm aa");
-			format.setTimeZone(TimeZone.getTimeZone(timeZone));
 
 			try {
 				date = format.parse(strDate);
@@ -75,7 +73,6 @@ public class DateUtils {
 			}
 		} else {
 			SimpleDateFormat format = new SimpleDateFormat("kk:mm");
-			format.setTimeZone(TimeZone.getTimeZone(timeZone));
 			try {
 				date = format.parse(strDate);
 
