@@ -202,34 +202,6 @@ public class Event extends AbstractEntity<Long> implements Comparable<Event>{
         }
     }
 
-    public static String convertTime24(Calendar time) {
-        if (time != null) {
-            SimpleDateFormat format = new SimpleDateFormat("kk:mm");
-            String timeZone = PreferencesManager.getInstance().getTimeZone();
-            format.setTimeZone(TimeZone.getTimeZone(timeZone));
-
-            return format.format(time.getTime());
-        } else {
-            return null;
-        }
-    }
-
-    public static String format(long date) {
-        return format(new Date(date));
-    }
-
-    public static String format(Date date) {
-        if (date != null) {
-            SimpleDateFormat format = new SimpleDateFormat("EEE d");
-            String timeZone = PreferencesManager.getInstance().getTimeZone();
-            format.setTimeZone(TimeZone.getTimeZone(timeZone));
-
-            return format.format(date).toUpperCase();
-        } else {
-            return null;
-        }
-    }
-
     @Override
     public Long getId() {
         return mId;

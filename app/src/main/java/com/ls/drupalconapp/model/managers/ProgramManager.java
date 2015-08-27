@@ -1,5 +1,7 @@
 package com.ls.drupalconapp.model.managers;
 
+import android.util.Log;
+
 import com.ls.drupal.AbstractBaseDrupalEntity;
 import com.ls.drupal.DrupalClient;
 import com.ls.drupalconapp.model.PreferencesManager;
@@ -8,6 +10,7 @@ import com.ls.drupalconapp.model.requests.SessionsRequest;
 import com.ls.ui.adapter.item.EventListItem;
 import com.ls.utils.DateUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -42,6 +45,10 @@ public class ProgramManager extends EventManager {
                     Date date = DateUtils.convertDate(day.getDate());
                     if (date != null) {
                         event.setDate(date);
+
+                        SimpleDateFormat format = new SimpleDateFormat("d-MM-yyyy");
+                        String str = format.format(date);
+                        Log.e("TEST", str);
                     }
                     event.setEventClass(Event.PROGRAM_CLASS);
 

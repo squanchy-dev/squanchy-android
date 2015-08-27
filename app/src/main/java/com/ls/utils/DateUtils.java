@@ -86,10 +86,7 @@ public class DateUtils {
 
 	@Nullable
 	public static Date convertDate(String day) {
-		String timeZone = PreferencesManager.getInstance().getTimeZone();
 		SimpleDateFormat format = new SimpleDateFormat("d-MM-yyyy");
-		format.setTimeZone(TimeZone.getTimeZone(timeZone));
-
 		try {
 			return format.parse(day);
 		} catch (ParseException e) {
@@ -120,4 +117,18 @@ public class DateUtils {
         }
         return 0;
     }
+
+	public static String getWeekNameAndDate(long millis) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(millis);
+		calendar.clear(Calendar.MILLISECOND);
+		calendar.clear(Calendar.SECOND);
+		calendar.clear(Calendar.MINUTE);
+		calendar.clear(Calendar.HOUR_OF_DAY);
+
+		SimpleDateFormat format = new SimpleDateFormat("EEE d");
+		String timeZone = PreferencesManager.getInstance().getTimeZone();
+		format.setTimeZone(TimeZone.getTimeZone(timeZone));
+		return format.format(new Date(calendar.getTimeInMillis()));
+	}
 }
