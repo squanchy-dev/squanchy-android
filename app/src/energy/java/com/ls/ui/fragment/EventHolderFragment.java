@@ -188,7 +188,6 @@ public class EventHolderFragment extends Fragment {
         initView();
     }
 
-    //TODO bag logic, need to be refactored +tested by Charles
     private void performDataUpdate(List<Integer> requestIds) {
         Activity activity = getActivity();
         if (activity instanceof HomeActivity) {

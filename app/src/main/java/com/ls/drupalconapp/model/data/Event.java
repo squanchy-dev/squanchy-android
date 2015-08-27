@@ -173,7 +173,7 @@ public class Event extends AbstractEntity<Long> implements Comparable<Event>{
         return mFromTimeStamp;
     }
 
-    public static Calendar convertTime(String time) {
+    private static Calendar convertTime(String time) {
         if (time == null) {
             return null;
         }

@@ -3,7 +3,6 @@ package com.ls.ui.fragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +21,7 @@ import com.ls.ui.adapter.item.EventListItem;
 import com.ls.ui.adapter.item.SimpleTimeRangeCreator;
 import com.ls.ui.adapter.item.TimeRangeItem;
 import com.ls.ui.receiver.ReceiverManager;
+import com.ls.utils.DateUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -165,7 +165,7 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 
 		mAdapter.setData(eventListItems, mEventMode);
 		if (isDateValid() && mEventMode != DrawerManager.EventMode.Favorites) {
-			int index = getCurrentTimeIndex(eventListItems);
+			int index = getCurrentTimePosition(eventListItems);
 			mListView.setSelection(index);
 		}
 	}
@@ -195,44 +195,21 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 		}
 	}
 
-	private int getCurrentTimeIndex(List<EventListItem> eventListItems) {
+	private int getCurrentTimePosition(List<EventListItem> eventListItems) {
+		int deviceHours = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+		int pos = 0;
 
-		long systemDate = System.currentTimeMillis();
-		Calendar systemTime = Calendar.getInstance();
-		systemTime.setTimeInMillis(systemDate);
+		for (int i = 0; i < eventListItems.size(); i++) {
+			EventListItem item = eventListItems.get(i);
 
-		int systemHour = systemTime.get(Calendar.HOUR_OF_DAY);
-		SparseIntArray timeRangeItemArray = new SparseIntArray();
-
-		int index = 0;
-		int iterator = 0;
-
-		for (EventListItem item : eventListItems) {
 			if (item instanceof TimeRangeItem) {
-				TimeRangeItem timeRange = (TimeRangeItem) item;
-				if (timeRange.getDate() != null) {
-					Calendar calendar = Calendar.getInstance();
-					calendar.setTime(timeRange.getDate());
-					int hour = calendar.get(Calendar.HOUR_OF_DAY);
-					timeRangeItemArray.put(iterator, hour);
-				}
-			}
-			iterator++;
+				TimeRangeItem rangeItem = (TimeRangeItem) item;
+				int eventHours = DateUtils.convertTime(rangeItem.getFromTime()).getHours();
+				if (deviceHours >= eventHours) {
+                    pos = i;
+                }
+            }
 		}
-
-		long minDiff = -1;
-		int key;
-		for (int i = 0; i < timeRangeItemArray.size(); i++) {
-			key = timeRangeItemArray.keyAt(i);
-			int hour = timeRangeItemArray.get(key);
-			long diff = Math.abs(hour - systemHour);
-			if ((minDiff == -1) || (diff < minDiff)) {
-				minDiff = diff;
-				index = key;
-			}
-
-		}
-
-		return index;
+		return pos;
 	}
 }
