@@ -3,7 +3,6 @@ package com.ls.ui.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -11,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
@@ -133,15 +131,6 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 		return super.onOptionsItemSelected(item);
 	}
 
-	private void initStatusBar() {
-		int currentApiVersion = android.os.Build.VERSION.SDK_INT;
-		if (currentApiVersion >= Build.VERSION_CODES.LOLLIPOP) {
-			getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-			getWindow().setStatusBarColor(getResources().getColor(R.color.speaker_primary));
-		}
-	}
-
 	private void initToolbar() {
 		mViewToolbar = findViewById(R.id.viewToolbar);
 		mViewToolbar.setAlpha(0);
@@ -156,7 +145,6 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 			setSupportActionBar(mToolbar);
 			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		}
-		initStatusBar();
 	}
 
 	private void handleExtras(Intent intent) {

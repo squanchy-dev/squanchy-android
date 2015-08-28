@@ -1,35 +1,22 @@
 <resources>
 
-    <style name="DrupalConAppActionBarTextStyle">
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">@dimen/text_size_medium</item>
-    </style>
-
-    <style name="Home" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimaryDark">@color/primary_dark</item>
-        <item name="colorPrimary">@color/primary</item>
+    <style name="Theme.DrupalCon" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@color/white</item>
         <item name="colorAccent">@color/grey_100</item>
         <item name="colorControlNormal">@color/white_200</item>
     </style>
 
-    <style name="SpeakerDetails" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorAccent">@color/grey_100</item>
-        <item name="colorControlNormal">@color/white</item>
+    <style name="Theme.DrupalCon.Home" parent="Theme.DrupalCon">
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorPrimary">@color/primary</item>
     </style>
 
-    <style name="EventDetails" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorAccent">@color/grey_100</item>
-        <item name="colorControlNormal">@color/navigation</item>
+    <style name="Theme.DrupalCon.Speaker" parent="Theme.DrupalCon">
+        <item name="colorPrimaryDark">@color/speaker_primary</item>
     </style>
 
-    <style name="About" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorAccent">@color/grey_100</item>
-        <item name="colorControlNormal">@color/navigation</item>
-    </style>
-
-    <style name="AboutDetails" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorAccent">@color/grey_100</item>
-        <item name="colorControlNormal">@color/white</item>
+    <style name="Theme.DrupalCon.Event" parent="Theme.DrupalCon">
+        <item name="colorPrimaryDark">@color/event_primary</item>
     </style>
 
 </resources>

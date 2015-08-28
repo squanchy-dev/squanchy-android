@@ -1,11 +1,9 @@
 package com.ls.ui.activity;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.WindowManager;
 import android.webkit.WebView;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
@@ -29,7 +27,6 @@ public class AboutDetailsActivity extends StateActivity {
         }
     };
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,12 +36,10 @@ public class AboutDetailsActivity extends StateActivity {
         String aboutContent = getIntent().getStringExtra(EXTRA_DETAILS_CONTENT);
         long id = getIntent().getLongExtra(EXTRA_DETAILS_ID, -1);
         initView(aboutContent);
-        initStatusBar();
         initToolbar(aboutTitle);
         Model.instance().getUpdatesManager().registerUpdateListener(updateListener);
 
         AnalyticsManager.sendEvent(this, R.string.about_category, R.string.action_open, id);
-
     }
 
     @Override
@@ -81,15 +76,6 @@ public class AboutDetailsActivity extends StateActivity {
         String css = "<link rel='stylesheet' href='css/style.css' type='text/css'>";
         String html = "<html><header>" + css + "</header>" + "<body>" + content + "</body></html>";
         webView.loadDataWithBaseURL("file:///android_asset/", html, "text/html", "UTF-8", null);
-    }
-
-    private void initStatusBar() {
-        int currentApiVersion = android.os.Build.VERSION.SDK_INT;
-        if (currentApiVersion >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
-        }
     }
 
     private void initToolbar(String title) {

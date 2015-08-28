@@ -3,17 +3,19 @@ package com.ls.ui.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ListView;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
+import com.ls.drawer.DrawerAdapter;
+import com.ls.drawer.DrawerManager;
+import com.ls.drawer.DrawerMenu;
+import com.ls.drawer.DrawerMenuItem;
 import com.ls.drupalconapp.R;
 import com.ls.drupalconapp.app.App;
 import com.ls.drupalconapp.model.Model;
@@ -22,10 +24,6 @@ import com.ls.drupalconapp.model.data.Track;
 import com.ls.drupalconapp.model.managers.TracksManager;
 import com.ls.ui.adapter.item.EventListItem;
 import com.ls.ui.dialog.FilterDialog;
-import com.ls.drawer.DrawerAdapter;
-import com.ls.drawer.DrawerManager;
-import com.ls.drawer.DrawerMenu;
-import com.ls.drawer.DrawerMenuItem;
 import com.ls.utils.AnalyticsManager;
 import com.ls.utils.KeyboardUtils;
 import com.ls.utils.ScheduleManager;
@@ -59,7 +57,6 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ac_main);
 
-		initStatusBar();
 		initToolbar();
 		initNavigationDrawer();
 		initNavigationDrawerList();
@@ -96,15 +93,6 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
 	protected void onDestroy() {
 		super.onDestroy();
 		AnalyticsManager.sendEvent(this, "Application", R.string.action_close);
-	}
-
-	private void initStatusBar() {
-		int currentApiVersion = android.os.Build.VERSION.SDK_INT;
-		if (currentApiVersion >= Build.VERSION_CODES.LOLLIPOP) {
-			getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-			getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
-		}
 	}
 
 	private void initToolbar() {

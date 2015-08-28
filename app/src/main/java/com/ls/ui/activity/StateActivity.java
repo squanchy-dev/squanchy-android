@@ -1,14 +1,14 @@
 package com.ls.ui.activity;
 
 import android.content.ComponentCallbacks2;
+import android.support.v7.app.AppCompatActivity;
 
 import com.ls.drupalconapp.model.Model;
 import com.ls.drupalconapp.model.UpdatesManager;
 
-public class StateActivity extends BaseActivity {
+public class StateActivity extends AppCompatActivity {
 
     private static boolean wasInBackground = false;
-//    protected ProgressBar progressBar;
 
     @Override
     public void onTrimMemory(int level) {
@@ -29,9 +29,5 @@ public class StateActivity extends BaseActivity {
     private void checkForUpdates() {
         UpdatesManager manager = Model.instance().getUpdatesManager();
         manager.startLoading(null);
-    }
-
-    public static boolean wasInBackground() {
-        return wasInBackground;
     }
 }
