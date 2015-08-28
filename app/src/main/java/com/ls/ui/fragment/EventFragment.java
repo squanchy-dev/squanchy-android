@@ -204,7 +204,7 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 
 			if (item instanceof TimeRangeItem) {
 				TimeRangeItem rangeItem = (TimeRangeItem) item;
-				int eventHours = DateUtils.convertTime(rangeItem.getFromTime()).getHours();
+				int eventHours = DateUtils.getInstance().convertTime(rangeItem.getFromTime()).getHours();
 				if (deviceHours >= eventHours) {
                     pos = i;
                 }

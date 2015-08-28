@@ -3,7 +3,6 @@ package com.ls.ui.fragment;
 
 import android.app.Activity;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -47,10 +46,8 @@ public class EventHolderFragment extends Fragment {
     private DrawerManager.EventMode mEventMode;
     private View mTxtNoEvents;
     private View mNoFavorites;
-    private List<Long> mDayIdList;
 
-    private UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener()
-    {
+    private UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener() {
         @Override
         public void onDataUpdated(List<Integer> requestIds) {
             performDataUpdate(requestIds);
@@ -113,6 +110,7 @@ public class EventHolderFragment extends Fragment {
 
         initData();
         initView();
+        loadData();
     }
 
     @Override
@@ -147,53 +145,61 @@ public class EventHolderFragment extends Fragment {
 
         mTxtNoEvents = view.findViewById(R.id.txtNoEvents);
         mNoFavorites = view.findViewById(R.id.emptyIcon);
-        mDayIdList = new ArrayList<>();
-
-        new PerformLoadData().execute();
     }
 
-    class PerformLoadData extends AsyncTask<String, String, String> {
-        @Override
-        protected void onPreExecute() {
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            switch (mEventMode) {
-                case Bofs:
-                    BofsManager bofsManager = Model.instance().getBofsManager();
-                    mDayIdList.addAll(bofsManager.getBofsDays());
-                    break;
-                case Social:
-                    SocialManager socialManager = Model.instance().getSocialManager();
-                    mDayIdList.addAll(socialManager.getSocialsDays());
-                    break;
-                case Favorites:
-                    FavoriteManager favoriteManager = Model.instance().getFavoriteManager();
-                    mDayIdList.addAll(favoriteManager.getFavoriteEventDays());
-                    break;
-                default:
-                    ProgramManager programManager = Model.instance().getProgramManager();
-                    mDayIdList.addAll(programManager.getProgramDays());
-                    break;
+    private void loadData() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                updateViewsUI(getDayList());
             }
-            return null;
-        }
+        }).start();
+    }
 
-        @Override
-        protected void onPostExecute(String s) {
-            updateViews();
+    private void updateViewsUI(final List<Long> dayList) {
+        Activity activity = getActivity();
+        if (activity != null) {
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    updateViews(dayList);
+                }
+            });
         }
     }
 
-    private void updateViews() {
+    private List<Long> getDayList() {
+        List<Long> dayList = new ArrayList<>();
+        switch (mEventMode) {
+            case Bofs:
+                BofsManager bofsManager = Model.instance().getBofsManager();
+                dayList.addAll(bofsManager.getBofsDays());
+                break;
+            case Social:
+                SocialManager socialManager = Model.instance().getSocialManager();
+                dayList.addAll(socialManager.getSocialsDays());
+                break;
+            case Favorites:
+                FavoriteManager favoriteManager = Model.instance().getFavoriteManager();
+                dayList.addAll(favoriteManager.getFavoriteEventDays());
+                break;
+            default:
+                ProgramManager programManager = Model.instance().getProgramManager();
+                dayList.addAll(programManager.getProgramDays());
+                break;
+        }
+        return dayList;
+    }
+
+
+    private void updateViews(List<Long> dayList) {
         if (mEventMode == DrawerManager.EventMode.Program) {
             setHasOptionsMenu(true);
         } else {
             setHasOptionsMenu(false);
         }
 
-        if (mDayIdList.isEmpty()) {
+        if (dayList.isEmpty()) {
             mPagerTabs.setVisibility(View.GONE);
             if (mEventMode == DrawerManager.EventMode.Favorites) {
                 mNoFavorites.setVisibility(View.VISIBLE);
@@ -206,14 +212,14 @@ public class EventHolderFragment extends Fragment {
             mPagerTabs.setVisibility(View.VISIBLE);
         }
 
-        mAdapter.setData(mDayIdList, mEventMode);
-        switchToCurrentDay(mDayIdList);
+        mAdapter.setData(dayList, mEventMode);
+        switchToCurrentDay(dayList);
     }
 
     private void switchToCurrentDay(List<Long> days) {
         int item = 0;
         for (Long millis : days) {
-            if (DateUtils.isToday(millis)) {
+            if (DateUtils.getInstance().isToday(millis)) {
                 mViewPager.setCurrentItem(item);
                 break;
             }

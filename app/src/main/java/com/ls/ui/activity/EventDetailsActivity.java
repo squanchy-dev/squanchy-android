@@ -224,10 +224,10 @@ public class EventDetailsActivity extends StackKeeperActivity {
             String fromTime = event.getFrom();
             String toTime = event.getTo();
             if (android.text.format.DateFormat.is24HourFormat(this)) {
-                fromTime = DateUtils.convertDateTo24Format(fromTime);
-                toTime = DateUtils.convertDateTo24Format(toTime);
+                fromTime = DateUtils.getInstance().get24HoursTime(fromTime);
+                toTime = DateUtils.getInstance().get24HoursTime(toTime);
             }
-            String eventLocation = DateUtils.getWeekDay(mEventDay) + ", " + fromTime + " - " + toTime;
+            String eventLocation = DateUtils.getInstance().getWeekDay(mEventDay) + ", " + fromTime + " - " + toTime;
 
             if (!TextUtils.isEmpty(event.getPlace())) {
                 String eventPlace = String.format(" in %s", event.getPlace());
@@ -359,7 +359,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
 
         String eventFromTime = mEvent.getFrom();
         Date date = new Date(mEventDay);
-        Date scheduleTime = DateUtils.convertTime(eventFromTime);
+        Date scheduleTime = DateUtils.getInstance().convertTime(eventFromTime);
 
         if (mIsFavorite) {
             Calendar calendar = Calendar.getInstance();

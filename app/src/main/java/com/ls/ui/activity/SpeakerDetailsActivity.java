@@ -309,8 +309,8 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 
 		if (android.text.format.DateFormat.is24HourFormat(this)) {
 			if (fromTime != null && toTime != null) {
-				fromTime = DateUtils.convertDateTo24Format(fromTime);
-				toTime = DateUtils.convertDateTo24Format(toTime);
+				fromTime = DateUtils.getInstance().get24HoursTime(fromTime);
+				toTime = DateUtils.getInstance().get24HoursTime(toTime);
 			}
 		}
 
@@ -325,7 +325,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 		eventView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				EventDetailsActivity.startThisActivity(SpeakerDetailsActivity.this, event.getEventId(), DateUtils.convertWeekDayToLong(event.getDate()));
+				EventDetailsActivity.startThisActivity(SpeakerDetailsActivity.this, event.getEventId(), DateUtils.getInstance().convertWeekDayToLong(event.getDate()));
 			}
 		});
 	}

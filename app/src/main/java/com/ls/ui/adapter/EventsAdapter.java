@@ -155,8 +155,8 @@ public class EventsAdapter extends BaseAdapter {
 
         if (android.text.format.DateFormat.is24HourFormat(mContext)) {
             if (fromTime != null && toTime != null) {
-                fromTime = DateUtils.convertDateTo24Format(fromTime);
-                toTime = DateUtils.convertDateTo24Format(toTime);
+                fromTime = DateUtils.getInstance().get24HoursTime(fromTime);
+                toTime = DateUtils.getInstance().get24HoursTime(toTime);
             }
         }
 

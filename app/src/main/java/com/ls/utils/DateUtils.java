@@ -14,103 +14,110 @@ import java.util.TimeZone;
 
 public class DateUtils {
 
-	public static boolean isToday(long millis) {
-		boolean isToday = false;
+    private SimpleDateFormat mDateFormat;
+    private static DateUtils mUtils;
 
-		Calendar currCalendar = Calendar.getInstance();
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTimeInMillis(millis);
+    public DateUtils() {
+        mDateFormat = new SimpleDateFormat();
+        String timeZone = PreferencesManager.getInstance().getTimeZone();
+        mDateFormat.setTimeZone(TimeZone.getTimeZone(timeZone));
+    }
 
-		int currYear = currCalendar.get(Calendar.YEAR);
-		int currMonth = currCalendar.get(Calendar.MONTH);
-		int currDay = currCalendar.get(Calendar.DAY_OF_MONTH);
+    @NotNull
+    public static DateUtils getInstance() {
+        if (mUtils == null) {
+            mUtils = new DateUtils();
+        }
+        return mUtils;
+    }
 
-		int year = calendar.get(Calendar.YEAR);
-		int month = calendar.get(Calendar.MONTH);
-		int day = calendar.get(Calendar.DAY_OF_MONTH);
+    @Nullable
+    public Date convertEventDayDate(String day) {
+        mDateFormat.applyPattern("d-MM-yyyy");
 
-		if (currYear == year && currMonth == month && currDay == day) {
-			isToday = true;
-		}
-		return isToday;
-	}
+        try {
+            return mDateFormat.parse(day);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-	@Nullable
-	public static String convertDateTo24Format(@NotNull String strDate) {
-		String timeZone = PreferencesManager.getInstance().getTimeZone();
-		SimpleDateFormat format = new SimpleDateFormat("hh:mm aa");
-		format.setTimeZone(TimeZone.getTimeZone(timeZone));
+    public boolean isToday(long millis) {
+        boolean isToday = false;
 
-		Date date = null;
-		try {
-			date = format.parse(strDate);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+        Calendar currCalendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(millis);
 
-		if (date != null) {
-			SimpleDateFormat newFormat = new SimpleDateFormat("kk:mm");
-			newFormat.setTimeZone(TimeZone.getTimeZone(timeZone));
+        int currYear = currCalendar.get(Calendar.YEAR);
+        int currMonth = currCalendar.get(Calendar.MONTH);
+        int currDay = currCalendar.get(Calendar.DAY_OF_MONTH);
 
-			return newFormat.format(date.getTime());
-		} else {
-			return strDate;
-		}
-	}
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-	@Nullable
-	public static Date convertTime(String strDate) {
-		Date date;
+        if (currYear == year && currMonth == month && currDay == day) {
+            isToday = true;
+        }
+        return isToday;
+    }
 
-		if (strDate.toLowerCase().contains("pm") || strDate.toLowerCase().contains("am")) {
-			SimpleDateFormat format = new SimpleDateFormat("hh:mm aa");
+    public String get24HoursTime(@NotNull String strDate) {
+        mDateFormat.applyPattern("hh:mm aa");
+        Date date = null;
 
-			try {
-				date = format.parse(strDate);
-				return date;
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		} else {
-			SimpleDateFormat format = new SimpleDateFormat("kk:mm");
-			try {
-				date = format.parse(strDate);
+        try {
+            date = mDateFormat.parse(strDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-				return date;
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
-		return null;
-	}
+        if (date != null) {
+            mDateFormat.applyPattern("kk:mm");
+            return mDateFormat.format(date.getTime());
+        } else {
+            return strDate;
+        }
+    }
 
-	@Nullable
-	public static Date convertDate(String day) {
-		SimpleDateFormat format = new SimpleDateFormat("d-MM-yyyy");
-		try {
-			return format.parse(day);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+    @Nullable
+    public Date convertTime(String strDate) {
+        Date date;
 
-	public static String getWeekDay(long millis) {
-		SimpleDateFormat format = new SimpleDateFormat("EEE");
-		String timeZone = PreferencesManager.getInstance().getTimeZone();
-		format.setTimeZone(TimeZone.getTimeZone(timeZone));
+        if (strDate.toLowerCase().contains("pm") || strDate.toLowerCase().contains("am")) {
+            mDateFormat.applyPattern("hh:mm aa");
 
-		return format.format(new Date(millis));
-	}
+            try {
+                date = mDateFormat.parse(strDate);
+                return date;
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        } else {
+            mDateFormat.applyPattern("kk:mm");
+            try {
+                date = mDateFormat.parse(strDate);
 
-    public static long convertWeekDayToLong(String weekDay) {
-        SimpleDateFormat format = new SimpleDateFormat("EEE");
-		String timeZone = PreferencesManager.getInstance().getTimeZone();
-		format.setTimeZone(TimeZone.getTimeZone(timeZone));
+                return date;
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
 
+    public String getWeekDay(long millis) {
+        mDateFormat.applyPattern("EEE");
+        return mDateFormat.format(new Date(millis));
+    }
+
+    public long convertWeekDayToLong(String weekDay) {
+        mDateFormat.applyPattern("EEE");
         Date date;
         try {
-            date = format.parse(weekDay);
+            date = mDateFormat.parse(weekDay);
             return date.getTime();
         } catch (ParseException e) {
             e.printStackTrace();
@@ -118,17 +125,8 @@ public class DateUtils {
         return 0;
     }
 
-	public static String getWeekNameAndDate(long millis) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTimeInMillis(millis);
-		calendar.clear(Calendar.MILLISECOND);
-		calendar.clear(Calendar.SECOND);
-		calendar.clear(Calendar.MINUTE);
-		calendar.clear(Calendar.HOUR_OF_DAY);
-
-		SimpleDateFormat format = new SimpleDateFormat("EEE d");
-		String timeZone = PreferencesManager.getInstance().getTimeZone();
-		format.setTimeZone(TimeZone.getTimeZone(timeZone));
-		return format.format(new Date(calendar.getTimeInMillis()));
-	}
+    public String getWeekNameAndDate(long millis) {
+        mDateFormat.applyPattern("EEE d");
+        return mDateFormat.format(new Date(millis));
+    }
 }
