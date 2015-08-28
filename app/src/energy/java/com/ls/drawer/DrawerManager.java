@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class DrawerManager {
 
-	public enum EventMode {Program, Bofs, Social, Speakers, Favorites, Location, About}
+	public enum EventMode {Program, Speakers, Favorites, Location, About}
 
 	private FragmentManager fragmentManager;
 	private int fragmentHolderId;
@@ -36,17 +36,6 @@ public class DrawerManager {
 				fragment = EventHolderFragment.newInstance(EventMode.Program.ordinal());
 				fragmentTag = EventHolderFragment.TAG;
 				break;
-
-//			case Bofs:
-//				fragment = EventHolderFragment.newInstance(EventMode.Bofs.ordinal());
-//				fragmentTag = EventHolderFragment.TAG;
-//				break;
-//
-//			case Social:
-//				fragment = EventHolderFragment.newInstance(EventMode.Social.ordinal());
-//				fragmentTag = EventHolderFragment.TAG;
-//				break;
-
 			case Favorites:
 				fragment = EventHolderFragment.newInstance(EventMode.Favorites.ordinal());
 				fragmentTag = EventHolderFragment.TAG;

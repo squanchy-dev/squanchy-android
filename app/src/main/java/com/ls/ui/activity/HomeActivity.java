@@ -28,229 +28,247 @@ import com.ls.utils.AnalyticsManager;
 import com.ls.utils.KeyboardUtils;
 import com.ls.utils.ScheduleManager;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 public class HomeActivity extends StateActivity implements FilterDialog.OnFilterApplied {
 
-	private DrawerManager mFrManager;
-	private DrawerAdapter mAdapter;
-	private String mPresentTitle;
-	private int mSelectedItem = 0;
-	private int mLastSelectedItem = 0;
-	private boolean isIntentHandled = false;
+    private DrawerManager mFrManager;
+    private DrawerAdapter mAdapter;
+    private String mPresentTitle;
+    private int mSelectedItem = 0;
+    private int mLastSelectedItem = 0;
+    private boolean isIntentHandled = false;
 
-	private Toolbar mToolbar;
-	private DrawerLayout mDrawerLayout;
+    private Toolbar mToolbar;
+    private DrawerLayout mDrawerLayout;
 
-	public FilterDialog mFilterDialog;
-	public boolean mIsDrawerItemClicked;
+    public FilterDialog mFilterDialog;
+    public boolean mIsDrawerItemClicked;
 
-	public static void startThisActivity(Activity activity) {
-		Intent intent = new Intent(activity, HomeActivity.class);
-		activity.startActivity(intent);
-	}
+    public static void startThisActivity(Activity activity) {
+        Intent intent = new Intent(activity, HomeActivity.class);
+        activity.startActivity(intent);
+    }
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.ac_main);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.ac_main);
 
-		initToolbar();
-		initNavigationDrawer();
-		initNavigationDrawerList();
-		initFilterDialog();
+        initToolbar();
+        initNavigationDrawer();
+        initNavigationDrawerList();
+        initFilterDialog();
 
-		initFragmentManager();
-		if (getIntent().getExtras() != null) {
-			isIntentHandled = true;
-		}
-		handleIntent(getIntent());
-	}
+        initFragmentManager();
+        if (getIntent().getExtras() != null) {
+            isIntentHandled = true;
+        }
+        handleIntent(getIntent());
+    }
 
-	@Override
-	protected void onNewIntent(Intent intent) {
-		super.onNewIntent(null);
-		if (!isIntentHandled) {
-			handleIntent(intent);
-		}
-	}
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(null);
+        if (!isIntentHandled) {
+            handleIntent(intent);
+        }
+    }
 
-	@Override
-	protected void onStart() {
-		super.onStart();
-		GoogleAnalytics.getInstance(this).reportActivityStart(this);
-	}
+    @Override
+    protected void onStart() {
+        super.onStart();
+        GoogleAnalytics.getInstance(this).reportActivityStart(this);
+    }
 
-	@Override
-	protected void onStop() {
-		super.onStop();
-		GoogleAnalytics.getInstance(this).reportActivityStop(this);
-	}
+    @Override
+    protected void onStop() {
+        super.onStop();
+        GoogleAnalytics.getInstance(this).reportActivityStop(this);
+    }
 
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		AnalyticsManager.sendEvent(this, "Application", R.string.action_close);
-	}
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AnalyticsManager.sendEvent(this, "Application", R.string.action_close);
+    }
 
-	private void initToolbar() {
-		mPresentTitle = DrawerMenu.MENU_STRING_ARRAY[0];
-		mToolbar = (Toolbar) findViewById(R.id.toolBar);
-		if (mToolbar != null) {
-			mToolbar.setBackgroundColor(getResources().getColor(R.color.primary));
-			mToolbar.setTitle(mPresentTitle);
-			setSupportActionBar(mToolbar);
-		}
-	}
+    @Override
+    public void onNewFilterApplied() {
+        mFrManager.reloadPrograms();
+    }
 
-	private void initNavigationDrawer() {
-		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-		ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.app_name, R.string.app_name);
+    private void initToolbar() {
+        mPresentTitle = DrawerMenu.MENU_STRING_ARRAY[0];
+        mToolbar = (Toolbar) findViewById(R.id.toolBar);
+        mToolbar.setTitle(mPresentTitle);
+        setSupportActionBar(mToolbar);
+    }
 
-		mDrawerLayout.setDrawerListener(drawerToggle);
-		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-		mDrawerLayout.closeDrawers();
-		mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
-			@Override
-			public void onDrawerSlide(View drawerView, float slideOffset) {
-				KeyboardUtils.hideKeyboard(getCurrentFocus());
-			}
+    private void initNavigationDrawer() {
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.app_name, R.string.app_name);
 
-			@Override
-			public void onDrawerOpened(View drawerView) {
-			}
+        mDrawerLayout.setDrawerListener(drawerToggle);
+        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        mDrawerLayout.closeDrawers();
+        mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                KeyboardUtils.hideKeyboard(getCurrentFocus());
+            }
 
-			@Override
-			public void onDrawerClosed(View drawerView) {
-				if (mIsDrawerItemClicked) {
-					mIsDrawerItemClicked = false;
-					changeFragment();
-				}
-			}
+            @Override
+            public void onDrawerOpened(View drawerView) {
+            }
 
-			@Override
-			public void onDrawerStateChanged(int newState) {
-			}
-		});
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                if (mIsDrawerItemClicked) {
+                    mIsDrawerItemClicked = false;
+                    changeFragment();
+                }
+            }
 
-		drawerToggle.syncState();
-	}
+            @Override
+            public void onDrawerStateChanged(int newState) {
+            }
+        });
 
-	private void initNavigationDrawerList() {
-		List<DrawerMenuItem> menu = DrawerMenu.getNavigationDrawerItems();
-		mAdapter = new DrawerAdapter(this, menu);
-		mAdapter.setDrawerItemClickListener(new DrawerAdapter.OnDrawerItemClickListener() {
-			@Override
-			public void onDrawerItemClicked(int position) {
-				onItemClick(position);
-			}
-		});
+        drawerToggle.syncState();
+    }
 
-		ListView listView = (ListView) findViewById(R.id.leftDrawer);
-		listView.addHeaderView(
-				getLayoutInflater().inflate(R.layout.nav_drawer_header, null),
-				null,
-				false);
-		listView.setAdapter(mAdapter);
-	}
+    private void initNavigationDrawerList() {
+        List<DrawerMenuItem> menu = getNavigationDrawerItems();
+        mAdapter = new DrawerAdapter(this, menu);
+        mAdapter.setDrawerItemClickListener(new DrawerAdapter.OnDrawerItemClickListener() {
+            @Override
+            public void onDrawerItemClicked(int position) {
+                onItemClick(position);
+            }
+        });
 
-	public void initFilterDialog() {
-		new AsyncTask<Void, Void, List<EventListItem>>() {
-			@Override
-			protected List<EventListItem> doInBackground(Void... params) {
-				TracksManager tracksManager = Model.instance().getTracksManager();
-				List<Track> trackList = tracksManager.getTracks();
-				List<Level> levelList = tracksManager.getLevels();
+        ListView listView = (ListView) findViewById(R.id.leftDrawer);
+        listView.addHeaderView(
+                getLayoutInflater().inflate(R.layout.nav_drawer_header, null),
+                null,
+                false);
+        listView.setAdapter(mAdapter);
+    }
 
-				Collections.sort(trackList, new Comparator<Track>() {
-					@Override
-					public int compare(Track track1, Track track2) {
-						String name1 = track1.getName();
-						String name2 = track2.getName();
-						return name1.compareToIgnoreCase(name2);
-					}
-				});
+    public void initFilterDialog() {
+        new AsyncTask<Void, Void, List<EventListItem>>() {
+            @Override
+            protected List<EventListItem> doInBackground(Void... params) {
+                TracksManager tracksManager = Model.instance().getTracksManager();
+                List<Track> trackList = tracksManager.getTracks();
+                List<Level> levelList = tracksManager.getLevels();
 
-				String[] tracks = new String[trackList.size()];
-				String[] levels = new String[levelList.size()];
+                Collections.sort(trackList, new Comparator<Track>() {
+                    @Override
+                    public int compare(Track track1, Track track2) {
+                        String name1 = track1.getName();
+                        String name2 = track2.getName();
+                        return name1.compareToIgnoreCase(name2);
+                    }
+                });
 
-				for (int i = 0; i < trackList.size(); i++) {
-					tracks[i] = trackList.get(i).getName();
-				}
+                String[] tracks = new String[trackList.size()];
+                String[] levels = new String[levelList.size()];
 
-				for (int i = 0; i < levelList.size(); i++) {
-					levels[i] = levelList.get(i).getName();
-				}
-				mFilterDialog = FilterDialog.newInstance(tracks, levels);
-				mFilterDialog.setData(levelList, trackList);
-				return null;
-			}
+                for (int i = 0; i < trackList.size(); i++) {
+                    tracks[i] = trackList.get(i).getName();
+                }
 
-			@Override
-			protected void onPostExecute(List<EventListItem> eventListItems) {
-			}
-		}.execute();
-	}
+                for (int i = 0; i < levelList.size(); i++) {
+                    levels[i] = levelList.get(i).getName();
+                }
+                mFilterDialog = FilterDialog.newInstance(tracks, levels);
+                mFilterDialog.setData(levelList, trackList);
+                return null;
+            }
 
-	private void handleIntent(Intent intent) {
-		if (intent.getExtras() != null) {
-			long eventId = intent.getLongExtra(EventDetailsActivity.EXTRA_EVENT_ID, -1);
-			long day = intent.getLongExtra(EventDetailsActivity.EXTRA_DAY, -1);
-			redirectToDetails(eventId, day);
-			isIntentHandled = false;
-			new ScheduleManager(this).cancelAlarm(eventId);
-		}
-	}
+            @Override
+            protected void onPostExecute(List<EventListItem> eventListItems) {
+            }
+        }.execute();
+    }
 
-	private void redirectToDetails(long id, long day) {
-		Intent intent = new Intent(this, EventDetailsActivity.class);
-		intent.putExtra(EventDetailsActivity.EXTRA_EVENT_ID, id);
-		intent.putExtra(EventDetailsActivity.EXTRA_DAY, day);
-		startActivity(intent);
-	}
+    private void handleIntent(Intent intent) {
+        if (intent.getExtras() != null) {
+            long eventId = intent.getLongExtra(EventDetailsActivity.EXTRA_EVENT_ID, -1);
+            long day = intent.getLongExtra(EventDetailsActivity.EXTRA_DAY, -1);
+            redirectToDetails(eventId, day);
+            isIntentHandled = false;
+            new ScheduleManager(this).cancelAlarm(eventId);
+        }
+    }
 
-	private void onItemClick(int position) {
-		mDrawerLayout.closeDrawers();
-		if (mSelectedItem == position) {
-			return;
-		}
-		mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-		mSelectedItem = position;
-		mIsDrawerItemClicked = true;
-	}
+    private void redirectToDetails(long id, long day) {
+        Intent intent = new Intent(this, EventDetailsActivity.class);
+        intent.putExtra(EventDetailsActivity.EXTRA_EVENT_ID, id);
+        intent.putExtra(EventDetailsActivity.EXTRA_DAY, day);
+        startActivity(intent);
+    }
 
-	private void changeFragment() {
-		mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+    private void onItemClick(int position) {
+        mDrawerLayout.closeDrawers();
+        if (mSelectedItem == position) {
+            return;
+        }
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        mSelectedItem = position;
+        mIsDrawerItemClicked = true;
+    }
 
-		if (mSelectedItem == DrawerMenu.DrawerItem.About.ordinal()) {
-			AboutActivity.startThisActivity(this);
-			mSelectedItem = mLastSelectedItem;
-		} else {
-			DrawerMenuItem item = mAdapter.getItem(mSelectedItem);
-			if (!item.isGroup() && mFrManager != null) {
-				mFrManager.setFragment(DrawerMenu.DrawerItem.values()[mSelectedItem]);
-				mPresentTitle = DrawerMenu.MENU_STRING_ARRAY[mSelectedItem];
-				mToolbar.setTitle(mPresentTitle);
+    private void changeFragment() {
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
 
-				mAdapter.setSelectedPos(mSelectedItem);
-				mAdapter.notifyDataSetChanged();
+        if (mSelectedItem == DrawerMenu.DrawerItem.About.ordinal()) {
+            AboutActivity.startThisActivity(this);
+            mSelectedItem = mLastSelectedItem;
 
-				AnalyticsManager.sendEvent(this, mPresentTitle + " screen", R.string.action_open);
-			}
-		}
-		mLastSelectedItem = mSelectedItem;
-	}
+        } else {
+            DrawerMenuItem item = mAdapter.getItem(mSelectedItem);
+            if (!item.isGroup() && mFrManager != null) {
+                mFrManager.setFragment(DrawerMenu.DrawerItem.values()[mSelectedItem]);
+                mPresentTitle = DrawerMenu.MENU_STRING_ARRAY[mSelectedItem];
+                mToolbar.setTitle(mPresentTitle);
 
-	private void initFragmentManager() {
-		mFrManager = DrawerManager.getInstance(getSupportFragmentManager(), R.id.mainFragment);
-		AnalyticsManager.sendEvent(this, App.getContext().getString(R.string.Sessions) + " screen", R.string.action_open);
-		mFrManager.setFragment(DrawerMenu.DrawerItem.Program);
-	}
+                mAdapter.setSelectedPos(mSelectedItem);
+                mAdapter.notifyDataSetChanged();
 
-	@Override
-	public void onNewFilterApplied() {
-		mFrManager.reloadPrograms();
-	}
+                AnalyticsManager.sendEvent(this, mPresentTitle + " screen", R.string.action_open);
+            }
+        }
+        mLastSelectedItem = mSelectedItem;
+    }
+
+    private void initFragmentManager() {
+        mFrManager = DrawerManager.getInstance(getSupportFragmentManager(), R.id.mainFragment);
+        AnalyticsManager.sendEvent(this, App.getContext().getString(R.string.Sessions) + " screen", R.string.action_open);
+        mFrManager.setFragment(DrawerMenu.DrawerItem.Program);
+    }
+
+    private static List<DrawerMenuItem> getNavigationDrawerItems() {
+        List<DrawerMenuItem> result = new ArrayList<DrawerMenuItem>();
+
+        for (int i = 0; i < DrawerMenu.MENU_STRING_ARRAY.length; i++) {
+            DrawerMenuItem menuItem = new DrawerMenuItem();
+            String name = DrawerMenu.MENU_STRING_ARRAY[i];
+
+            menuItem.setId(i);
+            menuItem.setName(name);
+            menuItem.setGroup(false);
+            menuItem.setIconRes(DrawerMenu.MENU_ICON_RES[i]);
+            menuItem.setSelIconRes(DrawerMenu.MENU_ICON_RES_SEL[i]);
+
+            result.add(menuItem);
+        }
+
+        return result;
+    }
 }
