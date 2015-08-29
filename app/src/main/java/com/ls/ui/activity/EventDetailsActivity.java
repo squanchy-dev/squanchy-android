@@ -282,7 +282,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
     }
 
     private void fillSpeakers(@NonNull EventDetailsEvent event) {
-        if (!mSpeakerList.isEmpty()) {
+        if (mSpeakerList != null && !mSpeakerList.isEmpty()) {
             LayoutInflater inflater = LayoutInflater.from(EventDetailsActivity.this);
             LinearLayout holderSpeakers = (LinearLayout) findViewById(R.id.holderSpeakers);
             holderSpeakers.removeAllViewsInLayout();
@@ -292,9 +292,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
                 fillSpeakerView(speaker, speakerView);
                 holderSpeakers.addView(speakerView);
             }
-        }
-
-        if (mSpeakerList.isEmpty() && TextUtils.isEmpty(event.getDescription())) {
+        } else if (TextUtils.isEmpty(event.getDescription())) {
             findViewById(R.id.imgEmptyView).setVisibility(View.VISIBLE);
         }
     }

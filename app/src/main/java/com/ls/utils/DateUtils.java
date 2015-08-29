@@ -43,6 +43,33 @@ public class DateUtils {
         return null;
     }
 
+    @Nullable
+    public Date convertTime(String strDate) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat();
+        Date date;
+
+        if (strDate.toLowerCase().contains("pm") || strDate.toLowerCase().contains("am")) {
+            dateFormat.applyPattern("hh:mm aa");
+
+            try {
+                date = dateFormat.parse(strDate);
+                return date;
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        } else {
+            dateFormat.applyPattern("kk:mm");
+            try {
+                date = dateFormat.parse(strDate);
+
+                return date;
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
     public boolean isToday(long millis) {
         boolean isToday = false;
 
@@ -80,32 +107,6 @@ public class DateUtils {
         } else {
             return strDate;
         }
-    }
-
-    @Nullable
-    public Date convertTime(String strDate) {
-        Date date;
-
-        if (strDate.toLowerCase().contains("pm") || strDate.toLowerCase().contains("am")) {
-            mDateFormat.applyPattern("hh:mm aa");
-
-            try {
-                date = mDateFormat.parse(strDate);
-                return date;
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        } else {
-            mDateFormat.applyPattern("kk:mm");
-            try {
-                date = mDateFormat.parse(strDate);
-
-                return date;
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
     }
 
     public String getWeekDay(long millis) {
