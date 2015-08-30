@@ -46,16 +46,19 @@ public class EventGenerator {
     }
 
     public List<EventListItem> generate(long day, int eventClass, @NotNull EventItemCreator eventItemCreator) {
-        List<TimeRange> ranges = mEventManager.getDistrictTimeRangeSafe(eventClass, day);
-        if (mShouldBreak) {
-            return new ArrayList<>();
-        }
-
         List<EventListItem> eventListItems;
         if (eventClass == Event.SOCIALS_CLASS) {
             eventListItems = mSocialManager.getSocialItemsSafe(day);
         } else {
             eventListItems = mBofsManager.getBofsItemsSafe(day);
+        }
+        if (mShouldBreak) {
+            return new ArrayList<>();
+        }
+
+        List<TimeRange> ranges = mEventManager.getDistrictTimeRangeSafe(eventClass, day);
+        if (mShouldBreak) {
+            return new ArrayList<>();
         }
 
         return getEventItems(eventItemCreator, eventListItems, ranges);

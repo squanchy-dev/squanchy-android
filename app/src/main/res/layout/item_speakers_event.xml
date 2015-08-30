@@ -38,7 +38,7 @@
             android:id="@+id/txtWhere"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/date"
+            tools:text="date"
             android:textColor="@color/link"
             android:textSize="@dimen/text_size_small"
             android:layout_marginBottom="3dp"/>
@@ -47,7 +47,7 @@
             android:id="@+id/txtTrack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/track"
+            tools:text="track"
             android:textColor="@color/grey_400"
             android:textSize="@dimen/text_size_small"
             android:layout_marginBottom="3dp"

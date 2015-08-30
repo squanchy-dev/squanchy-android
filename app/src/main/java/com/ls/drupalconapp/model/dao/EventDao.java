@@ -460,7 +460,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
             boolean moved = cursor.moveToFirst();
             while (moved) {
                 if (mShouldBreak) {
-                    return dataList;
+                    break;
                 }
 
                 long eventId = cursor.getLong(cursor.getColumnIndex("_id"));
@@ -508,7 +508,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
             boolean moved = cursor.moveToFirst();
             while (moved) {
                 if (mShouldBreak) {
-                    return new ArrayList<>();
+                    break;
                 }
 
                 Event event = new Event();
@@ -550,7 +550,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
             boolean moved = cursor.moveToFirst();
             while (moved) {
                 if (mShouldBreak) {
-                    return new ArrayList<>();
+                    break;
                 }
 
                 Event event = new Event();

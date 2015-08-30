@@ -50,7 +50,6 @@
             android:theme="@style/Theme.DrupalCon.Home" />
         <activity
             android:name="com.ls.ui.activity.AboutActivity"
-            android:label="@string/title_activity_about"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.DrupalCon.Home" />
 

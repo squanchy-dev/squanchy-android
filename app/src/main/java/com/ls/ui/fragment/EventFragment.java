@@ -92,18 +92,6 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 		super.onDestroy();
 	}
 
-	private void initViews() {
-		if (getView() != null) {
-			mProgressBar = (ProgressBar) getView().findViewById(R.id.progressBar);
-
-			mAdapter = new EventsAdapter(getActivity());
-			mAdapter.setOnClickListener(this);
-
-			mListView = (ListView) getView().findViewById(R.id.listView);
-			mListView.setAdapter(mAdapter);
-		}
-	}
-
 	private void initData() {
 		Bundle bundle = getArguments();
 		if (bundle != null) {
@@ -115,6 +103,18 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 			trackIds = PreferencesManager.getInstance().loadTracks();
 		}
 		mGenerator = new EventGenerator();
+	}
+
+	private void initViews() {
+		if (getView() != null) {
+			mProgressBar = (ProgressBar) getView().findViewById(R.id.progressBar);
+
+			mAdapter = new EventsAdapter(getActivity());
+			mAdapter.setOnClickListener(this);
+
+			mListView = (ListView) getView().findViewById(R.id.listView);
+			mListView.setAdapter(mAdapter);
+		}
 	}
 
 	private void loadData() {

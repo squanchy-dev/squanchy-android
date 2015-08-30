@@ -14,6 +14,7 @@
     <color name="grey_100">#ABABAB</color>
     <color name="grey_200">#919191</color>
     <color name="grey_400">#6a6a6a</color>
+    <color name="grey_400_40_trans">#666a6a6a</color>
     <color name="grey_400_trans">#1a9b9b9b</color>
 
 </resources>

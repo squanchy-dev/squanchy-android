@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class DrawerManager {
 
-	public enum EventMode {Program, Speakers, Favorites, Location, About}
+	public enum EventMode {Program, Bofs, Social, Speakers, Favorites, Location, About}
 
 	private FragmentManager fragmentManager;
 	private int fragmentHolderId;

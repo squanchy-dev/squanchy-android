@@ -27,6 +27,7 @@ import com.ls.ui.activity.HomeActivity;
 import com.ls.ui.adapter.BaseEventDaysPagerAdapter;
 import com.ls.ui.dialog.FilterDialog;
 import com.ls.ui.receiver.ReceiverManager;
+import com.ls.utils.ApplicationConfig;
 import com.ls.utils.DateUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -145,6 +146,12 @@ public class EventHolderFragment extends Fragment {
 
         mTxtNoEvents = view.findViewById(R.id.txtNoEvents);
         mNoFavorites = view.findViewById(R.id.emptyIcon);
+
+        if (!ApplicationConfig.DISPLAY_FILTER || mEventMode != DrawerManager.EventMode.Program) {
+            setHasOptionsMenu(false);
+        } else {
+            setHasOptionsMenu(true);
+        }
     }
 
     private void loadData() {
@@ -193,12 +200,6 @@ public class EventHolderFragment extends Fragment {
 
 
     private void updateViews(List<Long> dayList) {
-        if (mEventMode == DrawerManager.EventMode.Program) {
-            setHasOptionsMenu(true);
-        } else {
-            setHasOptionsMenu(false);
-        }
-
         if (dayList.isEmpty()) {
             mPagerTabs.setVisibility(View.GONE);
             if (mEventMode == DrawerManager.EventMode.Favorites) {

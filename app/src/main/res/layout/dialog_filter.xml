@@ -46,7 +46,7 @@
             android:paddingRight="16dp"
             android:paddingTop="8dp"
             android:splitMotionEvents="false"
-            android:text="@string/clear"
+            android:text="@string/CLEAR"
             android:textColor="@color/primary"
             android:textSize="@dimen/text_size_small" />
 
@@ -62,7 +62,7 @@
             android:paddingRight="16dp"
             android:paddingTop="8dp"
             android:splitMotionEvents="false"
-            android:text="@string/apply"
+            android:text="@string/APPLY"
             android:textColor="@color/primary"
             android:textSize="@dimen/text_size_small" />
     </LinearLayout>

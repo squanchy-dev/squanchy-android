@@ -75,7 +75,7 @@ public class DatabaseFacade
 	}
 
 	
-	public synchronized DatabaseFacade open() 
+	public synchronized DatabaseFacade open()
 	    throws SQLException
 	{
 		if (this.openCounter == 0) {
