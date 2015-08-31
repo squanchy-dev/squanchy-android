@@ -220,7 +220,7 @@ public abstract class AbstractBaseDrupalEntity implements DrupalClient.OnRespons
 	public void onResponseReceived(ResponseData data, Object tag)
 	{		
 		DrupalEntityTag entityTag = (DrupalEntityTag)tag;
-		if (entityTag.consumeResponse)
+		if (entityTag.consumeResponse && data != null)
 		{
 			this.consumeObject(data);
 		}
