@@ -72,10 +72,13 @@ public class DateUtils {
 
     public boolean isToday(long millis) {
         boolean isToday = false;
+        String zone = PreferencesManager.getInstance().getTimeZone();
+        TimeZone timeZone = TimeZone.getTimeZone(zone);
 
         Calendar currCalendar = Calendar.getInstance();
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(millis);
+        calendar.setTimeZone(timeZone);
 
         int currYear = currCalendar.get(Calendar.YEAR);
         int currMonth = currCalendar.get(Calendar.MONTH);

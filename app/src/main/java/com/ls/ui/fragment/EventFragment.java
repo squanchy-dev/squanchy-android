@@ -164,7 +164,7 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 		}
 
 		mAdapter.setData(eventListItems, mEventMode);
-		if (isDateValid() && mEventMode != DrawerManager.EventMode.Favorites) {
+		if (DateUtils.getInstance().isToday(mDay) && mEventMode != DrawerManager.EventMode.Favorites) {
 			int index = getCurrentTimePosition(eventListItems);
 			mListView.setSelection(index);
 		}
