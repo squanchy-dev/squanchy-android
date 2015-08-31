@@ -131,7 +131,6 @@ public class EventDetailsActivity extends StackKeeperActivity {
     private void initData() {
         mEventId = getIntent().getLongExtra(EXTRA_EVENT_ID, -1);
         mEventDay = getIntent().getLongExtra(EXTRA_DAY, -1);
-        mSpeakerList = new ArrayList<>();
     }
 
     private void initViews() {
@@ -165,7 +164,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
                 @Override
                 protected EventDetailsEvent doInBackground(Void... params) {
                     SpeakerManager speakerManager = Model.instance().getSpeakerManager();
-                    mSpeakerList.clear();
+                    mSpeakerList = new ArrayList<>();
                     mSpeakerList.addAll(speakerManager.getSpeakersByEventId(mEventId));
 
                     EventManager eventManager = Model.instance().getEventManager();
@@ -282,12 +281,15 @@ public class EventDetailsActivity extends StackKeeperActivity {
     }
 
     private void fillSpeakers(@NonNull EventDetailsEvent event) {
-        if (mSpeakerList != null && !mSpeakerList.isEmpty()) {
+        List<Speaker> speakerList = new ArrayList<>();
+        speakerList.addAll(mSpeakerList);
+
+        if (!speakerList.isEmpty()) {
             LayoutInflater inflater = LayoutInflater.from(EventDetailsActivity.this);
             LinearLayout holderSpeakers = (LinearLayout) findViewById(R.id.holderSpeakers);
             holderSpeakers.removeAllViewsInLayout();
 
-            for (Speaker speaker : mSpeakerList) {
+            for (Speaker speaker : speakerList) {
                 View speakerView = inflater.inflate(R.layout.item_speaker_no_letter, null);
                 fillSpeakerView(speaker, speakerView);
                 holderSpeakers.addView(speakerView);
