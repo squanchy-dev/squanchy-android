@@ -4,6 +4,7 @@ import com.ls.drupal.AbstractDrupalEntityContainer;
 import com.ls.drupal.DrupalClient;
 import com.ls.drupalconapp.model.data.Track;
 import com.ls.http.base.BaseRequest;
+import com.ls.http.base.ResponseData;
 
 import java.util.Map;
 
@@ -29,5 +30,12 @@ public class TracksRequest extends AbstractDrupalEntityContainer<Track.Holder> {
     @Override
     protected Map<String, Object> getItemRequestGetParameters(BaseRequest.RequestMethod method) {
         return null;
+    }
+
+    @Override
+    protected void consumeObject(ResponseData entity) {
+        if(entity != null) {
+            super.consumeObject(entity);
+        }
     }
 }
