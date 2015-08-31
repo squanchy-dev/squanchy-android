@@ -3,12 +3,11 @@ package com.ls.drawer;
 import com.ls.drupalconapp.R;
 import com.ls.drupalconapp.app.App;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class DrawerMenu {
 
-    private static final int[] MENU_ICON_RES = {
+    public enum DrawerItem {Program, Bofs, Social, Speakers, Favorites, Location, About}
+
+    public static final int[] MENU_ICON_RES = {
             R.drawable.menu_icon_program,
             R.drawable.menu_icon_bofs,
             R.drawable.menu_icon_social,
@@ -18,7 +17,7 @@ public class DrawerMenu {
             R.drawable.menu_icon_about
     };
 
-    private static final int[] MENU_ICON_RES_SEL = {
+    public static final int[] MENU_ICON_RES_SEL = {
             R.drawable.menu_icon_program_sel,
             R.drawable.menu_icon_bofs_sel,
             R.drawable.menu_icon_social_sel,
@@ -37,25 +36,4 @@ public class DrawerMenu {
             App.getContext().getString(R.string.location),
             App.getContext().getString(R.string.about)
     };
-
-    public enum DrawerItem {Program, Bofs, Social, Speakers, Favorites, Location, About}
-
-    public static List<DrawerMenuItem> getNavigationDrawerItems() {
-        List<DrawerMenuItem> result = new ArrayList<DrawerMenuItem>();
-
-        for(int i = 0; i < MENU_STRING_ARRAY.length; i++){
-            DrawerMenuItem menuItem = new DrawerMenuItem();
-            String name = MENU_STRING_ARRAY[i];
-
-            menuItem.setId(i);
-            menuItem.setName(name);
-            menuItem.setGroup(false);
-            menuItem.setIconRes(MENU_ICON_RES[i]);
-            menuItem.setSelIconRes(MENU_ICON_RES_SEL[i]);
-
-            result.add(menuItem);
-        }
-
-        return result;
-    }
 }

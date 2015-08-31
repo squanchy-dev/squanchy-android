@@ -3,15 +3,7 @@
 
     <string name="google_maps_api_key">AIzaSyBssk81wlfgQCQ-QE12wKtDQtiPlV-nwZI</string> <!-- //release key -->
 
-    <!-- for navigation drawer -->
-    <string name="drawerOpen">Open navigation drawer</string>
-    <string name="drawerClose">Close navigation drawer</string>
-    <!-- // -->
-
     <string name="app_name">DrupalCon</string>
-    <string name="share_subject">DrupalCon 2015, Latin America</string>
-    <string name="log_in">Log in</string>
-    <string name="log_in_">Log in…</string>
     <string name="Sessions">Sessions</string>
     <string name="bofs">BoFs</string>
     <string name="speakers">Speakers</string>
@@ -19,57 +11,13 @@
     <string name="about">Info</string>
     <string name="my_schedule">My Schedule</string>
     <string name="social_events">Social Events</string>
-    <string name="socials">Socials</string>
-    <string name="point_of_interest">Point of Interest</string>
     <string name="search">Search</string>
-    <string name="refresh">Refresh</string>
     <string name="filter">Filter</string>
-    <string name="log_out">Log out</string>
-    <string name="amsterdam_location">Amsterdam RAI Europaplein, 1078 GZ</string>
-    <string name="organization">Organization:</string>
-    <string name="job_title">Job title:</string>
-    <string name="date">Date</string>
-    <string name="speaker">Speaker</string>
-    <string name="Place">Place</string>
-    <string name="track">Track:</string>
     <string name="experience_level">Experience level:</string>
-    <string name="latin">Latin</string>
-    <string name="america">America</string>
-    <string name="drupal_con">DrupalCon</string>
-    <string name="conf_year">2015</string>
-    <string name="conf_month_begin">Feb</string>
-    <string name="conf_date_begin">10/12</string>
-    <string name="conf_month_end">Oct</string>
-    <string name="conf_date_end">03</string>
-    <string name="username">Username</string>
-    <string name="password">Password</string>
-    <string name="to">to</string>
-    <string name="ok">Ok</string>
     <string name="tracks">Tracks</string>
     <string name="exp_levels">Experience Levels</string>
-    <string name="program_refreshed">Program refreshed</string>
-    <string name="data_refreshed">Data refreshed</string>
-    <string name="select">Select</string>
-    <string name="rooms_map">Rooms Map</string>
-    <string name="remove_from_your_schedule">Remove from your schedule</string>
-    <string name="add_to_your_schedule">Add to your schedule</string>
-    <string name="greatest_drupal_con_ever">The greatest DrupalCon ever</string>
-    <string name="greatest_drupal_con_ever_description">Just a few more months until the DrupalCon ship sets sail in beautiful Amsterdam and it\'s going to be amazing. Since DrupalCon Prague, where myself and two other Dutch community members, Roy and Ruben, announced DrupalCon Amsterdam from the main stage (in bright orange suits), the Dutch community has worked hard to make this DrupalCon the best ever.</string>
-    <string name="what_can_you_expect">What can you expect?</string>
-    <string name="what_can_you_expect_desc_part_one">Bikes. The Dutch love their bikes. In The Netherlands, we have more bikes than inhabitants. So be brave and order a rental bike when buying your DrupalCon ticket. We researched and proposed a plan to include the opportunity to reserve a bike in the checkout process.</string>
-    <string name="what_can_you_expect_desc_part_two">Don\'t like biking? Fine, we added a transport card pre-order as well (called GVB-card) to help you get around the city via bus and tram.\n\nWe teamed up with the Tour de Drupal group, who will bike to Amsterdam all the way from England. They will arrive in Amsterdam on Sunday September 28th near the Museumplein, where the local community will welcome them with a BBQ and drinks. So make sure you will be there on Sunday!</string>
-    <string name="test">An Activity is an application component that provides a screen with which users can interact in order to do something, such as dial the phone, take a photo, send an email, or view a map. Each activity is given a window in which to draw its user interface. The window typically fills the screen, but may be smaller than the screen and float on top of other windows. An application usually consists of multiple activities that are loosely bound to each other. Typically, one activity in an application is specified as the "main" activity, which is presented to the user when launching the application for the first time. Each activity can then start another activity in order to perform different actions. Each time a new activity starts, the previous activity is stopped, but the system preserves the activity in a stack (the "back stack"). When a new activity starts, it is pushed onto the back stack and takes user focus. The back stack abides to the basic "last in, first out" stack mechanism, so, when the user is done with the current activity and presses the Back button, it is popped from the stack (and destroyed) and the previous activity resumes. (The back stack is discussed more in the Tasks and Back Stack document.</string>
-    <string name="speakerProfile">Speaker Profile</string>
-    <string name="twenty_four_hours">24 HOURS</string>
-    <string name="access">ACCESS</string>
-    <string name="apply">APPLY</string>
-    <string name="clear">CLEAR</string>
-    <string name="no_events">No Matching Events</string>
-    <string name="Attention">Attention</string>
     <string name="NoConnectionMessage">Internet connection is not available at this moment. Please, try later</string>
-    <string name="learn_more">LEARN MORE</string>
     <string name="exp_level">Experience Level:</string>
-    <string name="dont_miss_it">Don\'t miss it!</string>
     <string name="body_share">Hey, just thought this may be interesting for you:</string>
     <string name="title_share">Share using</string>
     <string name="event_category">Event</string>
@@ -80,16 +28,16 @@
     <string name="action_add_to_favorites">Add to favorites</string>
     <string name="action_remove_from_favorites">Remove to favorites</string>
     <string name="no_apps_can_perform_this_action">No Apps can perform this action.</string>
-    <string name="about_drupal">About DrupalCon</string>
-    <string name="about_app">About this App</string>
-    <string name="title_activity_about">AboutActivity</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
     <string name="share">Share</string>
     <string name="no_search_result">No Search Result</string>
     <string name="TWITTER">TWITTER</string>
     <string name="WEBSITE">WEBSITE</string>
     <string name="lorem_ipsum">Lorem ipsum</string>
-    <string name="title_activity_event_details_activity2">EventDetailsActivity2</string>
-
+    <string name="APPLY">APPLY</string>
+    <string name="CLEAR">CLEAR</string>
+    <string name="access">ACCESS</string>
+    <string name="no_events">No Matching Events</string>
+    <string name="dont_miss_it">Don\'t miss it!</string>
+    <string name="twenty_four_hours">24 HOURS</string>
+    <string name="Attention">Attention</string>
 </resources>

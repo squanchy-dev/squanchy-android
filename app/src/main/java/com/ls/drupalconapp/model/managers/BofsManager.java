@@ -5,13 +5,12 @@ import com.ls.drupal.DrupalClient;
 import com.ls.drupalconapp.model.data.Event;
 import com.ls.drupalconapp.model.requests.BofsRequest;
 import com.ls.ui.adapter.item.EventListItem;
+import com.ls.utils.DateUtils;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class BofsManager extends EventManager{
+public class BofsManager extends EventManager {
 
     public BofsManager(DrupalClient client) {
         super(client);
@@ -35,32 +34,31 @@ public class BofsManager extends EventManager{
         }
 
         List<Long> ids = mEventDao.selectFavoriteEventsSafe();
-        SimpleDateFormat format = new SimpleDateFormat("d-MM-yyyy");
-
         for (Event.Day day : bofs) {
+
             for (Event event : day.getEvents()) {
-                try {
-                    if (event != null) {
-                        Date date = format.parse(day.getDate());
+                if (event != null) {
+
+                    Date date = DateUtils.getInstance().convertEventDayDate(day.getDate());
+                    if (date != null) {
                         event.setDate(date);
-                        event.setEventClass(Event.BOFS_CLASS);
-
-                        for (long id : ids) {
-                            if (event.getId() == id) {
-                                event.setFavorite(true);
-                                break;
-                            }
-                        }
-
-                        mEventDao.saveOrUpdateSafe(event);
-                        saveEventSpeakers(event);
-
-                        if (event.isDeleted()) {
-                            deleteEvent(event);
-                        }
-
                     }
-                } catch (ParseException e) {
+                    event.setEventClass(Event.BOFS_CLASS);
+
+                    for (long id : ids) {
+                        if (event.getId() == id) {
+                            event.setFavorite(true);
+                            break;
+                        }
+                    }
+
+                    mEventDao.saveOrUpdateSafe(event);
+                    saveEventSpeakers(event);
+
+                    if (event.isDeleted()) {
+                        deleteEvent(event);
+                    }
+
                 }
             }
         }

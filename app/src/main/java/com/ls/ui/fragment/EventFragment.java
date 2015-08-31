@@ -1,9 +1,8 @@
 package com.ls.ui.fragment;
 
-import android.os.AsyncTask;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +21,7 @@ import com.ls.ui.adapter.item.EventListItem;
 import com.ls.ui.adapter.item.SimpleTimeRangeCreator;
 import com.ls.ui.adapter.item.TimeRangeItem;
 import com.ls.ui.receiver.ReceiverManager;
+import com.ls.utils.DateUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 				@Override
 				public void onFavoriteUpdated(long eventId, boolean isFavorite) {
 					if (mEventMode != DrawerManager.EventMode.Favorites) {
-						new LoadData().execute();
+						loadData();
 					}
 				}
 			});
@@ -76,7 +76,7 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 		super.onActivityCreated(savedInstanceState);
 		initData();
 		initViews();
-		new LoadData().execute();
+		loadData();
 		receiverManager.register(getActivity());
 	}
 
@@ -92,18 +92,6 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 		super.onDestroy();
 	}
 
-	private void initViews() {
-		if (getView() != null) {
-			mProgressBar = (ProgressBar) getView().findViewById(R.id.progressBar);
-
-			mAdapter = new EventsAdapter(getActivity());
-			mAdapter.setOnClickListener(this);
-
-			mListView = (ListView) getView().findViewById(R.id.listView);
-			mListView.setAdapter(mAdapter);
-		}
-	}
-
 	private void initData() {
 		Bundle bundle = getArguments();
 		if (bundle != null) {
@@ -117,20 +105,38 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 		mGenerator = new EventGenerator();
 	}
 
+	private void initViews() {
+		if (getView() != null) {
+			mProgressBar = (ProgressBar) getView().findViewById(R.id.progressBar);
 
-	class LoadData extends AsyncTask<Void, Void, List<EventListItem>> {
-		@Override
-		protected List<EventListItem> doInBackground(Void... params) {
-			return getEventItems();
+			mAdapter = new EventsAdapter(getActivity());
+			mAdapter.setOnClickListener(this);
+
+			mListView = (ListView) getView().findViewById(R.id.listView);
+			mListView.setAdapter(mAdapter);
 		}
+	}
 
-		@Override
-		protected void onPostExecute(List<EventListItem> eventListItems) {
-			if (!isDetached() && !isCancelled()) {
-				handleEventsResult(eventListItems);
+	private void loadData() {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+                updateViewsUI(getEventItems());
 			}
+		}).start();
+	}
+
+	private void updateViewsUI(final List<EventListItem> eventList) {
+		Activity activity = getActivity();
+		if (activity != null) {
+			activity.runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					handleEventsResult(eventList);
+				}
+			});
 		}
-	};
+	}
 
 	private List<EventListItem> getEventItems() {
 		List<EventListItem> eventList = new ArrayList<>();
@@ -149,7 +155,6 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 				eventList.addAll(mGenerator.generateForFavorites(mDay));
 				break;
 		}
-
 		return eventList;
 	}
 
@@ -159,8 +164,8 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 		}
 
 		mAdapter.setData(eventListItems, mEventMode);
-		if (isDateValid() && mEventMode != DrawerManager.EventMode.Favorites) {
-			int index = getCurrentTimeIndex(eventListItems);
+		if (DateUtils.getInstance().isToday(mDay) && mEventMode != DrawerManager.EventMode.Favorites) {
+			int index = getCurrentTimePosition(eventListItems);
 			mListView.setSelection(index);
 		}
 	}
@@ -190,44 +195,21 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 		}
 	}
 
-	private int getCurrentTimeIndex(List<EventListItem> eventListItems) {
+	private int getCurrentTimePosition(List<EventListItem> eventListItems) {
+		int deviceHours = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+		int pos = 0;
 
-		long systemDate = System.currentTimeMillis();
-		Calendar systemTime = Calendar.getInstance();
-		systemTime.setTimeInMillis(systemDate);
+		for (int i = 0; i < eventListItems.size(); i++) {
+			EventListItem item = eventListItems.get(i);
 
-		int systemHour = systemTime.get(Calendar.HOUR_OF_DAY);
-		SparseIntArray timeRangeItemArray = new SparseIntArray();
-
-		int index = 0;
-		int iterator = 0;
-
-		for (EventListItem item : eventListItems) {
 			if (item instanceof TimeRangeItem) {
-				TimeRangeItem timeRange = (TimeRangeItem) item;
-				if (timeRange.getDate() != null) {
-					Calendar calendar = Calendar.getInstance();
-					calendar.setTime(timeRange.getDate());
-					int hour = calendar.get(Calendar.HOUR_OF_DAY);
-					timeRangeItemArray.put(iterator, hour);
-				}
-			}
-			iterator++;
+				TimeRangeItem rangeItem = (TimeRangeItem) item;
+				int eventHours = DateUtils.getInstance().convertTime(rangeItem.getFromTime()).getHours();
+				if (deviceHours >= eventHours) {
+                    pos = i;
+                }
+            }
 		}
-
-		long minDiff = -1;
-		int key;
-		for (int i = 0; i < timeRangeItemArray.size(); i++) {
-			key = timeRangeItemArray.keyAt(i);
-			int hour = timeRangeItemArray.get(key);
-			long diff = Math.abs(hour - systemHour);
-			if ((minDiff == -1) || (diff < minDiff)) {
-				minDiff = diff;
-				index = key;
-			}
-
-		}
-
-		return index;
+		return pos;
 	}
 }

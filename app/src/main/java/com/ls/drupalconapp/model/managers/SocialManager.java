@@ -5,9 +5,8 @@ import com.ls.drupal.DrupalClient;
 import com.ls.drupalconapp.model.data.Event;
 import com.ls.drupalconapp.model.requests.SocialRequest;
 import com.ls.ui.adapter.item.EventListItem;
+import com.ls.utils.DateUtils;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -35,31 +34,30 @@ public class SocialManager extends EventManager {
         }
 
         List<Long> ids = mEventDao.selectFavoriteEventsSafe();
-        SimpleDateFormat format = new SimpleDateFormat("d-MM-yyyy");
-
         for (Event.Day day : socials) {
+
             for (Event event : day.getEvents()) {
-                try {
-                    if (event != null) {
-                        Date date = format.parse(day.getDate());
+                if (event != null) {
+
+                    Date date = DateUtils.getInstance().convertEventDayDate(day.getDate());
+                    if (date != null) {
                         event.setDate(date);
-                        event.setEventClass(Event.SOCIALS_CLASS);
+                    }
+                    event.setEventClass(Event.SOCIALS_CLASS);
 
-                        for (long id : ids) {
-                            if (event.getId() == id) {
-                                event.setFavorite(true);
-                                break;
-                            }
-                        }
-
-                        mEventDao.saveOrUpdateSafe(event);
-                        saveEventSpeakers(event);
-
-                        if (event.isDeleted()) {
-                            deleteEvent(event);
+                    for (long id : ids) {
+                        if (event.getId() == id) {
+                            event.setFavorite(true);
+                            break;
                         }
                     }
-                } catch (ParseException e) {
+
+                    mEventDao.saveOrUpdateSafe(event);
+                    saveEventSpeakers(event);
+
+                    if (event.isDeleted()) {
+                        deleteEvent(event);
+                    }
                 }
             }
         }

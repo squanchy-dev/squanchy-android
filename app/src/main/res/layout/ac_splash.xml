@@ -6,71 +6,15 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/bg_splash"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_splash" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="24dp"
-        android:paddingTop="40dp">
-
-        <com.ls.ui.view.BoldFontTextView
-            android:id="@+id/txtLatin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#313131"
-            android:text="@string/latin"
-            android:textSize="@dimen/text_size_48"
-            android:textAllCaps="true"/>
-
-        <com.ls.ui.view.BoldFontTextView
-            android:id="@+id/txtAmerica"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#313131"
-            android:text="@string/america"
-            android:textSize="@dimen/text_size_48"
-            android:textAllCaps="true"
-            android:layout_below="@+id/txtLatin"/>
-
-        <com.ls.ui.view.ThinFontTextView
-            android:id="@+id/txtDrupalCon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#313131"
-            android:text="@string/drupal_con"
-            android:textSize="@dimen/text_size_45"
-            android:layout_below="@+id/txtAmerica"/>
-
-        <com.ls.ui.view.RegularFontTextView
-            android:id="@+id/txtYear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#a5c21c"
-            android:text="@string/conf_year"
-            android:textSize="@dimen/text_size_45"
-            android:layout_below="@+id/txtDrupalCon"/>
-
-        <com.ls.ui.view.ThinFontTextView
-            android:id="@+id/txtMonthBegin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#313131"
-            android:text="@string/conf_month_begin"
-            android:textSize="@dimen/text_size_45"
-            android:layout_below="@+id/txtYear"/>
-
-        <com.ls.ui.view.RegularFontTextView
-            android:id="@+id/txtDateBegin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#313131"
-            android:text="@string/conf_date_begin"
-            android:textSize="@dimen/text_size_45"
-            android:layout_below="@+id/txtYear"
-            android:layout_toRightOf="@+id/txtMonthBegin"
-            android:paddingLeft="16dp"/>
-    </RelativeLayout>
+    <ProgressBar
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="16dp" />
 
 </RelativeLayout>

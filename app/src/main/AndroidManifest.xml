@@ -17,7 +17,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Home">
+        android:theme="@style/Theme.DrupalCon.Home">
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -28,7 +28,8 @@
         <activity
             android:name="com.ls.ui.activity.SplashActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.DrupalCon.Home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -38,28 +39,24 @@
             android:name="com.ls.ui.activity.HomeActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/Home" />
+            android:theme="@style/Theme.DrupalCon.Home" />
         <activity
             android:name="com.ls.ui.activity.SpeakerDetailsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/SpeakerDetails" />
-        <activity
-            android:name="com.ls.ui.activity.RoomsMapActivity"
-            android:screenOrientation="portrait" />
+            android:theme="@style/Theme.DrupalCon.Speaker" />
         <activity
             android:name="com.ls.ui.activity.AboutDetailsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AboutDetails" />
+            android:theme="@style/Theme.DrupalCon.Home" />
         <activity
             android:name="com.ls.ui.activity.AboutActivity"
-            android:label="@string/title_activity_about"
             android:screenOrientation="portrait"
-            android:theme="@style/About" />
+            android:theme="@style/Theme.DrupalCon.Home" />
 
         <activity
             android:name="com.ls.ui.activity.EventDetailsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/EventDetails"/>
+            android:theme="@style/Theme.DrupalCon.Event"/>
 
         <service android:name="com.ls.services.NotifyService" />
         <meta-data

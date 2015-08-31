@@ -3,7 +3,6 @@ package com.ls.ui.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ShareCompat;
@@ -14,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -133,23 +131,13 @@ public class EventDetailsActivity extends StackKeeperActivity {
     private void initData() {
         mEventId = getIntent().getLongExtra(EXTRA_EVENT_ID, -1);
         mEventDay = getIntent().getLongExtra(EXTRA_DAY, -1);
-        mSpeakerList = new ArrayList<>();
     }
 
     private void initViews() {
-        initStatusBar();
         initToolbar();
         initView();
     }
 
-    private void initStatusBar() {
-        int currentApiVersion = android.os.Build.VERSION.SDK_INT;
-        if (currentApiVersion >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            getWindow().setStatusBarColor(getResources().getColor(R.color.event_primary));
-        }
-    }
     private void initToolbar() {
         mToolbarTitle = (TextView) findViewById(R.id.toolbarTitle);
         mViewToolbar = findViewById(R.id.viewToolbar);
@@ -176,7 +164,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
                 @Override
                 protected EventDetailsEvent doInBackground(Void... params) {
                     SpeakerManager speakerManager = Model.instance().getSpeakerManager();
-                    mSpeakerList.clear();
+                    mSpeakerList = new ArrayList<>();
                     mSpeakerList.addAll(speakerManager.getSpeakersByEventId(mEventId));
 
                     EventManager eventManager = Model.instance().getEventManager();
@@ -224,10 +212,10 @@ public class EventDetailsActivity extends StackKeeperActivity {
             String fromTime = event.getFrom();
             String toTime = event.getTo();
             if (android.text.format.DateFormat.is24HourFormat(this)) {
-                fromTime = DateUtils.convertDateTo24Format(fromTime);
-                toTime = DateUtils.convertDateTo24Format(toTime);
+                fromTime = DateUtils.getInstance().get24HoursTime(fromTime);
+                toTime = DateUtils.getInstance().get24HoursTime(toTime);
             }
-            String eventLocation = DateUtils.getWeekDay(mEventDay) + ", " + fromTime + " - " + toTime;
+            String eventLocation = DateUtils.getInstance().getWeekDay(mEventDay) + ", " + fromTime + " - " + toTime;
 
             if (!TextUtils.isEmpty(event.getPlace())) {
                 String eventPlace = String.format(" in %s", event.getPlace());
@@ -293,19 +281,20 @@ public class EventDetailsActivity extends StackKeeperActivity {
     }
 
     private void fillSpeakers(@NonNull EventDetailsEvent event) {
-        if (!mSpeakerList.isEmpty()) {
+        List<Speaker> speakerList = new ArrayList<>();
+        speakerList.addAll(mSpeakerList);
+
+        if (!speakerList.isEmpty()) {
             LayoutInflater inflater = LayoutInflater.from(EventDetailsActivity.this);
             LinearLayout holderSpeakers = (LinearLayout) findViewById(R.id.holderSpeakers);
             holderSpeakers.removeAllViewsInLayout();
 
-            for (Speaker speaker : mSpeakerList) {
+            for (Speaker speaker : speakerList) {
                 View speakerView = inflater.inflate(R.layout.item_speaker_no_letter, null);
                 fillSpeakerView(speaker, speakerView);
                 holderSpeakers.addView(speakerView);
             }
-        }
-
-        if (mSpeakerList.isEmpty() && TextUtils.isEmpty(event.getDescription())) {
+        } else if (TextUtils.isEmpty(event.getDescription())) {
             findViewById(R.id.imgEmptyView).setVisibility(View.VISIBLE);
         }
     }
@@ -359,7 +348,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
 
         String eventFromTime = mEvent.getFrom();
         Date date = new Date(mEventDay);
-        Date scheduleTime = DateUtils.convertTime(eventFromTime);
+        Date scheduleTime = DateUtils.getInstance().convertTime(eventFromTime);
 
         if (mIsFavorite) {
             Calendar calendar = Calendar.getInstance();

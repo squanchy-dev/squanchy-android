@@ -36,10 +36,11 @@ public class ProgramManager extends EventManager {
 
         List<Long> ids = mEventDao.selectFavoriteEventsSafe();
         for (Event.Day day : sessions) {
-            for (Event event : day.getEvents()) {
 
+            for (Event event : day.getEvents()) {
                 if (event != null) {
-                    Date date = DateUtils.convertDate(day.getDate());
+
+                    Date date = DateUtils.getInstance().convertEventDayDate(day.getDate());
                     if (date != null) {
                         event.setDate(date);
                     }

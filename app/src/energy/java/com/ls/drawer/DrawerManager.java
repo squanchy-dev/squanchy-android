@@ -36,17 +36,6 @@ public class DrawerManager {
 				fragment = EventHolderFragment.newInstance(EventMode.Program.ordinal());
 				fragmentTag = EventHolderFragment.TAG;
 				break;
-
-//			case Bofs:
-//				fragment = EventHolderFragment.newInstance(EventMode.Bofs.ordinal());
-//				fragmentTag = EventHolderFragment.TAG;
-//				break;
-//
-//			case Social:
-//				fragment = EventHolderFragment.newInstance(EventMode.Social.ordinal());
-//				fragmentTag = EventHolderFragment.TAG;
-//				break;
-
 			case Favorites:
 				fragment = EventHolderFragment.newInstance(EventMode.Favorites.ordinal());
 				fragmentTag = EventHolderFragment.TAG;
