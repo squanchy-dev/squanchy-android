@@ -229,8 +229,6 @@ public class EventHolderFragment extends Fragment {
     }
 
     private void updateData() {
-        mAdapter = null;
-        mViewPager.setAdapter(null);
         initView();
     }
 
@@ -288,7 +286,7 @@ public class EventHolderFragment extends Fragment {
     private void performFavoriteUpdate() {
         if (getView() != null) {
             if (mEventMode == DrawerManager.EventMode.Favorites) {
-                updateData();
+                loadData();
             }
         }
     }
