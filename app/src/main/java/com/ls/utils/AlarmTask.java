@@ -1,12 +1,13 @@
 package com.ls.utils;
 
-import com.ls.drupalconapp.model.data.EventDetailsEvent;
-import com.ls.services.NotifyService;
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+
+import com.ls.drupalconapp.R;
+import com.ls.drupalconapp.model.data.EventDetailsEvent;
+import com.ls.receiver.NotifyReceiver;
 
 import java.util.Calendar;
 
@@ -31,12 +32,12 @@ public class AlarmTask implements Runnable{
 
     @Override
     public void run() {
-        Intent intent = new Intent(context, NotifyService.class);
+        Intent intent = new Intent(context, NotifyReceiver.class);
         intent.putExtra(EXTRA_ID, event.getEventId());
         intent.putExtra(EXTRA_DAY, day);
-        String notifyText = event.getEventName() + " starts in 5 mins";
+        String notifyText = event.getEventName() + context.getString(R.string.start_in_5_minutes);
         intent.putExtra(EXTRA_TEXT, notifyText);
-        PendingIntent pendingIntent = PendingIntent.getService(context, (int) event.getEventId(), intent, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int) event.getEventId(), intent, PendingIntent.FLAG_ONE_SHOT);
 
         long fiveMinutes = 5*60*1000;
 

@@ -40,4 +40,5 @@
     <string name="dont_miss_it">Don\'t miss it!</string>
     <string name="twenty_four_hours">24 HOURS</string>
     <string name="Attention">Attention</string>
+    <string name="start_in_5_minutes">" starts in 5 minutes"</string>
 </resources>

@@ -1,12 +1,12 @@
 package com.ls.utils;
 
-import com.ls.drupalconapp.model.data.EventDetailsEvent;
-import com.ls.services.NotifyService;
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+
+import com.ls.drupalconapp.model.data.EventDetailsEvent;
+import com.ls.receiver.NotifyReceiver;
 
 import java.util.Calendar;
 
@@ -24,8 +24,8 @@ public class ScheduleManager {
     }
 
     public void cancelAlarm(long id){
-        Intent intent = new Intent(mContext, NotifyService.class);
-        PendingIntent pendingIntent = PendingIntent.getService(mContext, (int) id, intent, PendingIntent.FLAG_ONE_SHOT);
+        Intent intent = new Intent(mContext, NotifyReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, (int) id, intent, PendingIntent.FLAG_ONE_SHOT);
         am.cancel(pendingIntent);
     }
 

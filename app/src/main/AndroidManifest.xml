@@ -58,7 +58,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.DrupalCon.Event"/>
 
-        <service android:name="com.ls.services.NotifyService" />
+        <receiver android:name="com.ls.receiver.NotifyReceiver" />
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="e92185b02a2fa31062b797232c3d5cccf9867952" />
