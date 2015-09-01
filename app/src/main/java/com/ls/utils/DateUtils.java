@@ -56,6 +56,7 @@ public class DateUtils {
             try {
                 date = dateFormat.parse(strDate);
                 return date;
+
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -63,13 +64,19 @@ public class DateUtils {
             dateFormat.applyPattern("kk:mm");
             try {
                 date = dateFormat.parse(strDate);
-
                 return date;
+
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
         return null;
+    }
+
+    public long getSystemDate() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeZone(mTimezone);
+        return calendar.getTimeInMillis();
     }
 
     public boolean isToday(long millis) {

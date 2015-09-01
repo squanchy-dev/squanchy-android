@@ -59,7 +59,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
     private EventDetailsEvent mEvent;
     private List<Speaker> mSpeakerList;
     private long mEventId;
-    private long mEventDay;
+    private long mEventStartDate;
 
     private boolean mIsFavorite;
 
@@ -130,7 +130,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
 
     private void initData() {
         mEventId = getIntent().getLongExtra(EXTRA_EVENT_ID, -1);
-        mEventDay = getIntent().getLongExtra(EXTRA_DAY, -1);
+        mEventStartDate = getIntent().getLongExtra(EXTRA_DAY, -1);
     }
 
     private void initViews() {
@@ -215,7 +215,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
                 fromTime = DateUtils.getInstance().get24HoursTime(fromTime);
                 toTime = DateUtils.getInstance().get24HoursTime(toTime);
             }
-            String eventLocation = DateUtils.getInstance().getWeekDay(mEventDay) + ", " + fromTime + " - " + toTime;
+            String eventLocation = DateUtils.getInstance().getWeekDay(mEventStartDate) + ", " + fromTime + " - " + toTime;
 
             if (!TextUtils.isEmpty(event.getPlace())) {
                 String eventPlace = String.format(" in %s", event.getPlace());
@@ -347,24 +347,33 @@ public class EventDetailsActivity extends StackKeeperActivity {
         ScheduleManager manager = new ScheduleManager(this);
 
         String eventFromTime = mEvent.getFrom();
-        Date date = new Date(mEventDay);
         Date scheduleTime = DateUtils.getInstance().convertTime(eventFromTime);
 
         if (mIsFavorite) {
             Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
-            calendar.setTimeZone(DateUtils.getInstance().getTimeZone());
+            calendar.setTimeInMillis(mEventStartDate);
+
             if (scheduleTime != null) {
-                calendar.set(Calendar.HOUR_OF_DAY, scheduleTime.getHours());
-                calendar.set(Calendar.MINUTE, scheduleTime.getMinutes());
-                calendar.set(Calendar.SECOND, 0);
+                calendar.clear(Calendar.HOUR_OF_DAY);
+                calendar.clear(Calendar.MINUTE);
+                calendar.clear(Calendar.SECOND);
+                calendar.clear(Calendar.MILLISECOND);
+
+                calendar.add(Calendar.HOUR_OF_DAY, scheduleTime.getHours());
+                calendar.add(Calendar.MINUTE, scheduleTime.getMinutes());
             }
+            calendar.setTimeZone(DateUtils.getInstance().getTimeZone());
 
-            long systemDate = System.currentTimeMillis();
-            long scheduleDate = calendar.getTimeInMillis();
+            long systemDateLong = System.currentTimeMillis();
+            long scheduleDateLong = calendar.getTimeInMillis();
 
-            if (scheduleDate > systemDate) {
-                manager.setAlarmForNotification(calendar, mEvent, mEventDay);
+//            SimpleDateFormat format = new SimpleDateFormat("d-MM-yyyy kk:mm");
+//            format.setTimeZone(DateUtils.getInstance().getTimeZone());
+//            String system = format.format(new Date(systemDateLong));
+//            String schelude = format.format(new Date(scheduleDateLong));
+
+            if (scheduleDateLong > systemDateLong) {
+                manager.setAlarmForNotification(calendar, mEvent, mEventStartDate);
             }
 
         } else {
