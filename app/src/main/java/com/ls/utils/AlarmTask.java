@@ -11,16 +11,18 @@ import com.ls.receiver.NotifyReceiver;
 
 import java.util.Calendar;
 
-public class AlarmTask implements Runnable{
+public class AlarmTask implements Runnable {
+
+    public static final String EXTRA_ID = "EXTRA_ID";
+    public static final String EXTRA_DAY = "EXTRA_DAY";
+    public static final String EXTRA_TEXT = "EXTRA_TEXT";
+    private static final int FIVE_MINUTES = 5 * 60 * 1000;
+
     private final Calendar date;
     private final AlarmManager am;
     private final Context context;
     private final EventDetailsEvent event;
     private final long day;
-
-    public static final String EXTRA_ID = "EXTRA_ID";
-    public static final String EXTRA_DAY = "EXTRA_DAY";
-    public static final String EXTRA_TEXT = "EXTRA_TEXT";
 
     public AlarmTask(Context context, Calendar date, AlarmManager am, EventDetailsEvent event, long day) {
         this.context = context;
@@ -37,10 +39,8 @@ public class AlarmTask implements Runnable{
         intent.putExtra(EXTRA_DAY, day);
         String notifyText = event.getEventName() + context.getString(R.string.start_in_5_minutes);
         intent.putExtra(EXTRA_TEXT, notifyText);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int) event.getEventId(), intent, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int) event.getEventId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        long fiveMinutes = 5*60*1000;
-
-        am.set(AlarmManager.RTC, date.getTimeInMillis() - fiveMinutes, pendingIntent);
+        am.set(AlarmManager.RTC, date.getTimeInMillis() - FIVE_MINUTES, pendingIntent);
     }
 }

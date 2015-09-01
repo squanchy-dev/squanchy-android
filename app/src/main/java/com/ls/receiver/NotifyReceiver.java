@@ -33,7 +33,7 @@ public class NotifyReceiver extends BroadcastReceiver {
         intent.putExtra(EventDetailsActivity.EXTRA_EVENT_ID, id);
         intent.putExtra(EventDetailsActivity.EXTRA_DAY, day);
 
-        PendingIntent contentIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent contentIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         notification.setLatestEventInfo(context, title, text, contentIntent);
 
         notification.flags |= Notification.FLAG_AUTO_CANCEL;

@@ -353,6 +353,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
         if (mIsFavorite) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
+            calendar.setTimeZone(DateUtils.getInstance().getTimeZone());
             if (scheduleTime != null) {
                 calendar.set(Calendar.HOUR_OF_DAY, scheduleTime.getHours());
                 calendar.set(Calendar.MINUTE, scheduleTime.getMinutes());

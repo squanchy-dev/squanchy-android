@@ -15,12 +15,14 @@ import java.util.TimeZone;
 public class DateUtils {
 
     private SimpleDateFormat mDateFormat;
+    private TimeZone mTimezone;
     private static DateUtils mUtils;
 
     public DateUtils() {
         mDateFormat = new SimpleDateFormat();
         String timeZone = PreferencesManager.getInstance().getTimeZone();
-        mDateFormat.setTimeZone(TimeZone.getTimeZone(timeZone));
+        mTimezone = TimeZone.getTimeZone(timeZone);
+        mDateFormat.setTimeZone(mTimezone);
     }
 
     @NotNull
@@ -72,13 +74,13 @@ public class DateUtils {
 
     public boolean isToday(long millis) {
         boolean isToday = false;
-        String zone = PreferencesManager.getInstance().getTimeZone();
-        TimeZone timeZone = TimeZone.getTimeZone(zone);
 
         Calendar currCalendar = Calendar.getInstance();
+        currCalendar.setTimeZone(mTimezone);
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(millis);
-        calendar.setTimeZone(timeZone);
+        calendar.setTimeZone(mTimezone);
 
         int currYear = currCalendar.get(Calendar.YEAR);
         int currMonth = currCalendar.get(Calendar.MONTH);
@@ -92,6 +94,16 @@ public class DateUtils {
             isToday = true;
         }
         return isToday;
+    }
+
+    public int getHours() {
+        String zone = PreferencesManager.getInstance().getTimeZone();
+        TimeZone timeZone = TimeZone.getTimeZone(zone);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeZone(timeZone);
+
+        return calendar.get(Calendar.HOUR_OF_DAY);
     }
 
     public String get24HoursTime(@NotNull String strDate) {
@@ -132,5 +144,9 @@ public class DateUtils {
     public String getWeekNameAndDate(long millis) {
         mDateFormat.applyPattern("EEE d");
         return mDateFormat.format(new Date(millis));
+    }
+
+    public TimeZone getTimeZone() {
+        return mTimezone;
     }
 }

@@ -23,10 +23,7 @@ import com.ls.ui.adapter.item.TimeRangeItem;
 import com.ls.ui.receiver.ReceiverManager;
 import com.ls.utils.DateUtils;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class EventFragment extends Fragment implements EventsAdapter.Listener {
@@ -183,20 +180,8 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 		}
 	}
 
-	private boolean isDateValid() {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		String systemDate = dateFormat.format(new Date(System.currentTimeMillis()));
-		String eventDate = dateFormat.format(new Date(mDay));
-
-		if (systemDate.equals(eventDate)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	private int getCurrentTimePosition(List<EventListItem> eventListItems) {
-		int deviceHours = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+		int deviceHours = DateUtils.getInstance().getHours();
 		int pos = 0;
 
 		for (int i = 0; i < eventListItems.size(); i++) {
