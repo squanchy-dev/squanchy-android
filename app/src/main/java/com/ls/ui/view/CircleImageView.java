@@ -47,6 +47,9 @@ public class CircleImageView extends DrupalImageView {
     }
 
     public static Bitmap getCroppedBitmap(Bitmap bmp, int radius) {
+
+        bmp = getSquareBitmap(bmp);
+
         Bitmap sbmp;
         if (bmp.getWidth() != radius || bmp.getHeight() != radius) {
             sbmp = Bitmap.createScaledBitmap(bmp, radius, radius, false);
@@ -70,5 +73,19 @@ public class CircleImageView extends DrupalImageView {
 
         return output;
     }
+
+    private static Bitmap getSquareBitmap(Bitmap bmp)
+    {
+        if(bmp == null)
+        {
+            return null;
+        }
+
+        int size = Math.min(bmp.getHeight(),bmp.getWidth());
+        int left = (bmp.getWidth() - size)/2;
+        int top = (bmp.getHeight() - size)/2;
+       return Bitmap.createBitmap(bmp,left,top,size,size);
+    }
+
 
 }
