@@ -1,14 +1,12 @@
 package com.ls.drupalconapp.model.requests;
 
-import com.ls.drupal.AbstractDrupalEntityContainer;
 import com.ls.drupal.DrupalClient;
 import com.ls.drupalconapp.model.data.InfoItem;
 import com.ls.http.base.BaseRequest;
-import com.ls.http.base.ResponseData;
 
 import java.util.Map;
 
-public class InfoRequest extends AbstractDrupalEntityContainer<InfoItem.General> {
+public class InfoRequest extends BaseSafeConsumeContainerRequest<InfoItem.General> {
 
     public InfoRequest(DrupalClient client) {
         super(client, new InfoItem.General());
@@ -27,12 +25,5 @@ public class InfoRequest extends AbstractDrupalEntityContainer<InfoItem.General>
     @Override
     protected Map<String, Object> getItemRequestGetParameters(BaseRequest.RequestMethod method) {
         return null;
-    }
-
-    @Override
-    protected void consumeObject(ResponseData entity) {
-        if(entity != null) {
-            super.consumeObject(entity);
-        }
     }
 }

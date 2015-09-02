@@ -1,14 +1,12 @@
 package com.ls.drupalconapp.model.requests;
 
-import com.ls.drupal.AbstractDrupalEntityContainer;
 import com.ls.drupal.DrupalClient;
 import com.ls.drupalconapp.model.data.Event;
 import com.ls.http.base.BaseRequest;
-import com.ls.http.base.ResponseData;
 
 import java.util.Map;
 
-    public class SessionsRequest extends AbstractDrupalEntityContainer<Event.Holder> {
+    public class SessionsRequest extends BaseSafeConsumeContainerRequest<Event.Holder> {
 
     public SessionsRequest(DrupalClient client) {
         super(client, new Event.Holder());
@@ -29,11 +27,5 @@ import java.util.Map;
         return null;
     }
 
-        @Override
-        protected void consumeObject(ResponseData entity) {
-            if(entity != null) {
-                super.consumeObject(entity);
-            }
-        }
 }
 
