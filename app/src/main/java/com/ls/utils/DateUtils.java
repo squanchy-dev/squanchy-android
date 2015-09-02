@@ -1,6 +1,8 @@
 package com.ls.utils;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
+import android.text.format.DateFormat;
 
 import com.ls.drupalconapp.model.PreferencesManager;
 
@@ -73,12 +75,6 @@ public class DateUtils {
         return null;
     }
 
-    public long getSystemDate() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeZone(mTimezone);
-        return calendar.getTimeInMillis();
-    }
-
     public boolean isToday(long millis) {
         boolean isToday = false;
 
@@ -128,6 +124,16 @@ public class DateUtils {
             return mDateFormat.format(date.getTime());
         } else {
             return strDate;
+        }
+    }
+
+    public String getTime(Context context, long millis) {
+        if (DateFormat.is24HourFormat(context)) {
+            mDateFormat.applyPattern("kk:mm");
+            return mDateFormat.format(new Date(millis));
+        } else {
+            mDateFormat.applyPattern("hh:mm aa");
+            return mDateFormat.format(new Date(millis));
         }
     }
 

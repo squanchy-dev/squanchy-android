@@ -292,8 +292,8 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 			txtTrack.setVisibility(View.VISIBLE);
 		}
 
-		String fromTime = event.getFrom();
-		String toTime = event.getTo();
+		String fromTime = DateUtils.getInstance().getTime(this, event.getFrom());
+		String toTime = DateUtils.getInstance().getTime(this, event.getTo());
 
 		if (android.text.format.DateFormat.is24HourFormat(this)) {
 			if (fromTime != null && toTime != null) {
@@ -313,7 +313,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 		eventView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				EventDetailsActivity.startThisActivity(SpeakerDetailsActivity.this, event.getEventId(), DateUtils.getInstance().convertWeekDayToLong(event.getDate()));
+				EventDetailsActivity.startThisActivity(SpeakerDetailsActivity.this, event.getEventId(), event.getFrom());
 			}
 		});
 	}

@@ -360,8 +360,8 @@ public class EventDetailsActivity extends StackKeeperActivity {
                 calendar.clear(Calendar.SECOND);
                 calendar.clear(Calendar.MILLISECOND);
 
-                calendar.add(Calendar.HOUR_OF_DAY, scheduleTime.getHours());
-                calendar.add(Calendar.MINUTE, scheduleTime.getMinutes());
+                calendar.set(Calendar.HOUR_OF_DAY, scheduleTime.getHours());
+                calendar.set(Calendar.MINUTE, scheduleTime.getMinutes());
             }
 
             long systemDateLong = System.currentTimeMillis();

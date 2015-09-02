@@ -360,10 +360,10 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
                 event.setFavorite(cursor.getInt(cursor.getColumnIndex("_favorite")) == 1);
                 event.setPlace(cursor.getString(cursor.getColumnIndex("_place")));
                 calendar.setTimeInMillis(cursor.getLong(cursor.getColumnIndex("_from")));
-                event.setFrom(Event.convertTime(calendar));
+                event.setFrom(calendar.getTimeInMillis());
 
                 calendar.setTimeInMillis(cursor.getLong(cursor.getColumnIndex("_to")));
-                event.setTo(Event.convertTime(calendar));
+                event.setTo(calendar.getTimeInMillis());
 
                 ret.add(event);
             } while (cursor.moveToNext());

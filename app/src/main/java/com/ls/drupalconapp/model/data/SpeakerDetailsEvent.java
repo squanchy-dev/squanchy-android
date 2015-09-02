@@ -11,8 +11,8 @@ public class SpeakerDetailsEvent {
 	private long eventId;
     private String place;
 	private String eventName;
-	private String from;
-	private String to;
+	private long from;
+	private long to;
 	private String date;
 	private String levelName;
 	private String trackName;
@@ -32,22 +32,6 @@ public class SpeakerDetailsEvent {
 
 	public void setEventName(String eventName) {
 		this.eventName = eventName;
-	}
-
-	public String getFrom() {
-		return from;
-	}
-
-	public void setFrom(String from) {
-		this.from = from;
-	}
-
-	public String getTo() {
-		return to;
-	}
-
-	public void setTo(String to) {
-		this.to = to;
 	}
 
 	public String getDate() {
@@ -89,4 +73,20 @@ public class SpeakerDetailsEvent {
     public String getPlace() {
         return place;
     }
+
+	public long getFrom() {
+		return from;
+	}
+
+	public void setFrom(long from) {
+		this.from = from;
+	}
+
+	public long getTo() {
+		return to;
+	}
+
+	public void setTo(long to) {
+		this.to = to;
+	}
 }
