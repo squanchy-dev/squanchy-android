@@ -1,18 +1,13 @@
 package com.ls.drupalconapp.model.database;
 
 
-import com.ls.drupalconapp.model.PreferencesManager;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.util.Iterator;
+import com.ls.drupalconapp.model.PreferencesManager;
 
-/**
- * @author Lemberg
- * @version 3.00
- */
+import java.util.Iterator;
 
 public class DatabaseHelper
         extends SQLiteOpenHelper {

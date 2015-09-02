@@ -1,5 +1,9 @@
 package com.ls.drupalconapp.model;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.database.sqlite.SQLiteDatabase;
+
 import com.ls.drupalconapp.R;
 import com.ls.drupalconapp.model.dao.EventDao;
 import com.ls.drupalconapp.model.dao.InfoDao;
@@ -12,10 +16,6 @@ import com.ls.drupalconapp.model.dao.TypeDao;
 import com.ls.drupalconapp.model.database.DBInfo;
 import com.ls.drupalconapp.model.database.IMigrationTask;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.database.sqlite.SQLiteDatabase;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,7 +23,7 @@ import java.util.List;
 public class AppDatabaseInfo implements DBInfo, IMigrationTask {
 
     public static final String DATABASE_NAME = "drupal_db";
-    public static final int DATABASE_VERSION = 7;
+    public static final int DATABASE_VERSION = 8;
 
     private Resources resources;
 
