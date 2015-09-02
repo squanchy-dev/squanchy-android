@@ -39,7 +39,6 @@ import com.ls.utils.AnalyticsManager;
 import com.ls.utils.DateUtils;
 import com.ls.utils.ScheduleManager;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
