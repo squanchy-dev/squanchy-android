@@ -39,6 +39,7 @@ import com.ls.utils.AnalyticsManager;
 import com.ls.utils.DateUtils;
 import com.ls.utils.ScheduleManager;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -351,6 +352,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
 
         if (mIsFavorite) {
             Calendar calendar = Calendar.getInstance();
+            calendar.setTimeZone(DateUtils.getInstance().getTimeZone());
             calendar.setTimeInMillis(mEventStartDate);
 
             if (scheduleTime != null) {
@@ -362,7 +364,6 @@ public class EventDetailsActivity extends StackKeeperActivity {
                 calendar.add(Calendar.HOUR_OF_DAY, scheduleTime.getHours());
                 calendar.add(Calendar.MINUTE, scheduleTime.getMinutes());
             }
-            calendar.setTimeZone(DateUtils.getInstance().getTimeZone());
 
             long systemDateLong = System.currentTimeMillis();
             long scheduleDateLong = calendar.getTimeInMillis();
