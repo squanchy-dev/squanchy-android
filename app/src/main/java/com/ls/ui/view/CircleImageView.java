@@ -15,6 +15,8 @@ import com.ls.util.image.DrupalImageView;
 
 public class CircleImageView extends DrupalImageView {
 
+    private Bitmap cachedImage;
+
     public CircleImageView(Context context) {
         super(context);
     }
@@ -38,19 +40,47 @@ public class CircleImageView extends DrupalImageView {
         if (getWidth() == 0 || getHeight() == 0) {
             return;
         }
-        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
 
-        if (bitmap != null) {
-            Bitmap roundBitmap = getCroppedBitmap(bitmap, getWidth());
+        Bitmap roundBitmap = null;
+        if(cachedImage != null)
+        {
+            roundBitmap = cachedImage;
+        }else {
+
+            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+            if(bitmap != null) {
+                roundBitmap = getCroppedBitmap(bitmap, getWidth());
+            }
+        }
+
+        if (roundBitmap != null) {
+
             canvas.drawBitmap(roundBitmap, 0, 0, null);
+        }
+    }
+
+    @Override
+    public void setImageDrawable(Drawable drawable) {
+        super.setImageDrawable(drawable);
+        cachedImage = null;
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        if(w != oldw || h != oldh)
+        {
+            cachedImage = null;
         }
     }
 
     public static Bitmap getCroppedBitmap(Bitmap bmp, int radius) {
 
+        Bitmap sbmp;
+
         bmp = getSquareBitmap(bmp);
 
-        Bitmap sbmp;
+
         if (bmp.getWidth() != radius || bmp.getHeight() != radius) {
             sbmp = Bitmap.createScaledBitmap(bmp, radius, radius, false);
         } else {
