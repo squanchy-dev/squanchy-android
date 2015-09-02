@@ -14,12 +14,18 @@
     <style name="Theme.DrupalCon.Speaker" parent="Theme.DrupalCon">
         <item name="colorPrimaryDark">@color/speaker_primary</item>
         <item name="colorPrimary">@color/speaker_primary</item>
-        <item name="colorAccent">@color/white</item>
+        <item name="colorControlNormal">@color/white</item>
     </style>
 
     <style name="Theme.DrupalCon.Event" parent="Theme.DrupalCon">
         <item name="colorPrimaryDark">@color/event</item>
         <item name="colorPrimary">@color/event</item>
+        <item name="colorControlNormal">@color/white</item>
+    </style>
+
+    <style name="Theme.DrupalCon.About" parent="Theme.DrupalCon">
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorPrimary">@color/primary</item>
         <item name="colorControlNormal">@color/white</item>
     </style>
 

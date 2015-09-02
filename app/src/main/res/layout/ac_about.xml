@@ -30,6 +30,12 @@
         android:dividerHeight="0dp"
         android:listSelector="@drawable/selector_light" />
 
+    <View
+        android:id="@+id/viewShadow"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@drawable/shape_shadow"/>
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolBar"
         android:layout_width="match_parent"
