@@ -292,6 +292,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 			txtTrack.setVisibility(View.VISIBLE);
 		}
 
+		String weekDay = DateUtils.getInstance().getWeekDay(event.getFrom());
 		String fromTime = DateUtils.getInstance().getTime(this, event.getFrom());
 		String toTime = DateUtils.getInstance().getTime(this, event.getTo());
 
@@ -303,7 +304,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity
 		}
 
 		TextView txtWhere = (TextView) eventView.findViewById(R.id.txtWhere);
-		String date = String.format("%s, %s - %s", event.getDate(), fromTime, toTime);
+		String date = String.format("%s, %s - %s", weekDay, fromTime, toTime);
 		txtWhere.setText(date);
 		if (!event.getPlace().equals("")) {
 			txtWhere.append(String.format(" in %s", event.getPlace()));
