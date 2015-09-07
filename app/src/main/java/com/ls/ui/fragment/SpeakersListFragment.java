@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -42,7 +41,6 @@ public class SpeakersListFragment extends Fragment
 	{
 		@Override
 		public void onDataUpdated(List<Integer> requestIds) {
-			Log.d("UPDATED", "SpeakersListFragment");
 			initView();
 		}
 	};

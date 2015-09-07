@@ -228,10 +228,6 @@ public class EventHolderFragment extends Fragment {
         }
     }
 
-    private void updateData() {
-        initView();
-    }
-
     private void showFilter() {
         Activity activity = getActivity();
         if (activity instanceof HomeActivity) {
@@ -258,7 +254,7 @@ public class EventHolderFragment extends Fragment {
         }
     }
 
-    //TODO bag logic, need to be refactored +tested by Charles
+    //TODO refactor
     private void performDataUpdate(List<Integer> requestIds) {
         Activity activity = getActivity();
         if (activity instanceof HomeActivity) {
@@ -277,7 +273,7 @@ public class EventHolderFragment extends Fragment {
         for (int id : requestIds) {
             int eventModePos = UpdatesManager.convertEventIdToEventModePos(id);
             if (eventModePos == mEventMode.ordinal()) {
-                updateData();
+                loadData();
                 break;
             }
         }
