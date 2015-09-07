@@ -209,6 +209,7 @@ public class EventHolderFragment extends Fragment {
             }
 
         } else {
+            mNoFavorites.setVisibility(View.GONE);
             mTxtNoEvents.setVisibility(View.GONE);
             mPagerTabs.setVisibility(View.VISIBLE);
         }

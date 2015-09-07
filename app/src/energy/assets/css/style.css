@@ -40,7 +40,8 @@
 	a {
 	 font-size: 16px;
 	 line-height: 22px;
-	 color: #266EAC;
+	 color: #478622;
+	 word-wrap: break-word;
 	 text-decoration: none;
 	}
 

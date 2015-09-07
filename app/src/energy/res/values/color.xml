@@ -10,8 +10,6 @@
     <color name="speaker">#0054A4</color>
 
     <color name="favorite">#FFD200</color>
-    <color name="link">#266EAC</color>
+    <color name="link">#478622</color>
     <color name="navigation">#266EAC</color>
-
-    <color name="white_200">#ffff</color>
 </resources>

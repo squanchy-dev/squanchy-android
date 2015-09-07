@@ -1,51 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/holderSpeaker"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="72dp"
-    android:background="@drawable/selector_light">
+    android:background="@drawable/selector_light"
+    android:orientation="horizontal"
+    android:padding="16dp">
 
     <RelativeLayout
-        android:layout_centerVertical="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true">
 
         <com.ls.ui.view.CircleImageView
             android:id="@+id/imgPhoto"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_margin="16dp"
             android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
             android:scaleType="centerCrop"
-            app:noImageResource="@drawable/ic_default_avatar_small"/>
+            app:noImageResource="@drawable/ic_default_avatar_small" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/imgPhoto"
             android:layout_marginRight="16dp"
+            android:layout_toRightOf="@+id/imgPhoto"
             android:orientation="vertical">
 
             <com.ls.ui.view.RegularFontTextView
                 android:id="@+id/txtName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#333333"
                 android:textSize="@dimen/text_size_15"
-                tools:text="Lorem ipsum"
-                android:textColor="#333333"/>
+                tools:text="Lorem ipsum" />
 
             <com.ls.ui.view.RegularFontTextView
                 android:id="@+id/txtOrgAndJobTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#949494"
                 android:textSize="@dimen/text_size_13"
-                tools:text="Lorem ipsum"
-                android:textColor="#949494"/>
+                tools:text="Lorem ipsum" />
         </LinearLayout>
 
     </RelativeLayout>

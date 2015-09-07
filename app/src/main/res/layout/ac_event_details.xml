@@ -105,7 +105,7 @@
                 <View
                     android:id="@+id/topDivider"
                     android:layout_width="match_parent"
-                    android:layout_height="2px"
+                    android:layout_height="1dp"
                     android:layout_marginLeft="72dp"
                     android:background="@color/white_200" />
 
@@ -118,7 +118,7 @@
                 <View
                     android:id="@+id/botDivider"
                     android:layout_width="match_parent"
-                    android:layout_height="2px"
+                    android:layout_height="1dp"
                     android:layout_marginLeft="72dp"
                     android:background="@color/white_200" />
 
@@ -126,7 +126,10 @@
                     android:id="@+id/webView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="16dp" />
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"/>
 
             </LinearLayout>
 
