@@ -3,7 +3,6 @@ package com.ls.ui.fragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,14 +22,12 @@ import com.ls.drupalconapp.model.managers.LocationManager;
 
 import java.util.List;
 
-public class LocationFragment extends Fragment implements CustomMapFragment.OnActivityCreatedListener{
+public class LocationFragment extends Fragment implements CustomMapFragment.OnActivityCreatedListener {
     public static final String TAG = "LocationsFragment";
 
-    private UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener()
-    {
+    private UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener() {
         @Override
         public void onDataUpdated(List<Integer> requestIds) {
-            Log.d("UPDATED", "LocationFragment");
             initView();
         }
     };
@@ -54,20 +51,20 @@ public class LocationFragment extends Fragment implements CustomMapFragment.OnAc
 
     @Override
     public void onActivityCreated(GoogleMap googleMap) {
-        if(googleMap != null) {
+        if (googleMap != null) {
             LocationManager locationManager = Model.instance().getLocationManager();
-			List<Location> locations = locationManager.getLocations();
+            List<Location> locations = locationManager.getLocations();
 
-			for(int i=0; i<locations.size(); i++){
-				Location location = locations.get(i);
-				LatLng position = new LatLng(location.getLat(), location.getLon());
-				googleMap.addMarker(new MarkerOptions().position(position));
+            for (int i = 0; i < locations.size(); i++) {
+                Location location = locations.get(i);
+                LatLng position = new LatLng(location.getLat(), location.getLon());
+                googleMap.addMarker(new MarkerOptions().position(position));
 
-				if(i==0) {
-					googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(position, 15, 0, 0)));
-					fillTextViews(location);
-				}
-			}
+                if (i == 0) {
+                    googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(position, 15, 0, 0)));
+                    fillTextViews(location);
+                }
+            }
 
             UiSettings uiSettings = googleMap.getUiSettings();
             uiSettings.setMapToolbarEnabled(false);
@@ -88,11 +85,9 @@ public class LocationFragment extends Fragment implements CustomMapFragment.OnAc
         TextView txtAmsterdam = (TextView) getView().findViewById(R.id.txtPlace);
         TextView txtAddress = (TextView) getView().findViewById(R.id.txtAddress);
 
-		String locationName = location.getName();
+        String locationName = location.getName();
         txtAmsterdam.setText(locationName);
-
-        String address = toTitleCase(location.getAddress());
-        txtAddress.setText(address);
+        txtAddress.setText(location.getAddress());
 
     }
 
@@ -101,14 +96,14 @@ public class LocationFragment extends Fragment implements CustomMapFragment.OnAc
             @Override
             public void run() {
 
-                if (getActivity() == null){
+                if (getActivity() == null) {
                     return;
                 }
 
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if(getView() == null) {
+                        if (getView() == null) {
                             return;
                         }
 
@@ -122,23 +117,5 @@ public class LocationFragment extends Fragment implements CustomMapFragment.OnAc
                 });
             }
         }, 600);
-    }
-
-    private String toTitleCase(String input) {
-        StringBuilder titleCase = new StringBuilder();
-        boolean nextTitleCase = true;
-
-        for (char c : input.toCharArray()) {
-            if (Character.isSpaceChar(c)) {
-                nextTitleCase = true;
-            } else if (nextTitleCase) {
-                c = Character.toTitleCase(c);
-                nextTitleCase = false;
-            }
-
-            titleCase.append(c);
-        }
-
-        return titleCase.toString();
     }
 }
