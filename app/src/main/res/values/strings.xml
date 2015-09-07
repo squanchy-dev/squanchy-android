@@ -17,7 +17,7 @@
     <string name="tracks">Tracks</string>
     <string name="exp_levels">Experience Levels</string>
     <string name="NoConnectionMessage">Internet connection is not available at this moment. Please, try later</string>
-    <string name="exp_level">Experience Level:</string>
+    <string name="exp_level">Experience level:</string>
     <string name="body_share">Hey, just thought this may be interesting for you:</string>
     <string name="title_share">Share using</string>
     <string name="event_category">Event</string>
