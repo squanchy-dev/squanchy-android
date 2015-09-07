@@ -294,8 +294,13 @@ public class EventDetailsActivity extends StackKeeperActivity {
                 fillSpeakerView(speaker, speakerView);
                 holderSpeakers.addView(speakerView);
             }
-        } else if (TextUtils.isEmpty(event.getDescription())) {
-            findViewById(R.id.imgEmptyView).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.topDivider).setVisibility(View.GONE);
+            findViewById(R.id.botDivider).setVisibility(View.GONE);
+
+            if (TextUtils.isEmpty(event.getDescription())) {
+                findViewById(R.id.imgEmptyView).setVisibility(View.VISIBLE);
+            }
         }
     }
 
