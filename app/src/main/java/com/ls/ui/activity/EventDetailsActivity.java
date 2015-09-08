@@ -299,6 +299,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
             findViewById(R.id.botDivider).setVisibility(View.GONE);
 
             if (TextUtils.isEmpty(event.getDescription())) {
+                findViewById(R.id.webView).setVisibility(View.GONE);
                 findViewById(R.id.imgEmptyView).setVisibility(View.VISIBLE);
             }
         }

@@ -131,6 +131,7 @@ public class EventsAdapter extends BaseAdapter {
             resultView = mInflater.inflate(R.layout.item_event, parent, false);
             holder = new TimeRangeHolder();
             holder.layoutRoot = (LinearLayout) resultView.findViewById(R.id.layoutRoot);
+            holder.layoutTime = (LinearLayout) resultView.findViewById(R.id.timeLayout);
             holder.divider = resultView.findViewById(R.id.divider);
             holder.marginDivider = resultView.findViewById(R.id.margin_divider);
             holder.icon = (ImageView) resultView.findViewById(R.id.imgEventIcon);
@@ -223,7 +224,9 @@ public class EventsAdapter extends BaseAdapter {
         }
 
         if (mEventMode == DrawerManager.EventMode.Favorites) {
-            resultView.findViewById(R.id.timeLayout).setBackgroundColor(mContext.getResources().getColor(android.R.color.transparent));
+            holder.layoutTime.setBackgroundColor(mContext.getResources().getColor(android.R.color.transparent));
+        } else {
+            holder.layoutTime.setBackgroundColor(mContext.getResources().getColor(R.color.grey_400_trans));
         }
 
         holder.expIcon.setImageResource(Level.getIcon(event.getExperienceLevel()));
@@ -475,6 +478,7 @@ public class EventsAdapter extends BaseAdapter {
         ImageView expIcon;
         View divider;
         View marginDivider;
+        LinearLayout layoutTime;
         LinearLayout layoutSpeakers;
         LinearLayout layoutPlace;
         TextView txtSpeakers;
