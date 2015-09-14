@@ -5,15 +5,10 @@ import com.ls.drupalconapp.model.data.Event;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Yakiv M. on 24.09.2014.
- */
 public class ProgramItem implements EventListItem {
 
     private Event mEvent;
-
     private String mTrack;
-
     private String mLevel;
 
     private boolean isLast = false;

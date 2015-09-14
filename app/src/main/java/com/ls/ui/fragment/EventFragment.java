@@ -107,7 +107,7 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 			mProgressBar = (ProgressBar) getView().findViewById(R.id.progressBar);
 
 			mAdapter = new EventsAdapter(getActivity());
-			mAdapter.setOnClickListener(this);
+			mAdapter.setOnItemClickListener(this);
 
 			mListView = (ListView) getView().findViewById(R.id.listView);
 			mListView.setAdapter(mAdapter);

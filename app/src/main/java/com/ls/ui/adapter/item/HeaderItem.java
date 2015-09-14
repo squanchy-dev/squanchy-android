@@ -15,7 +15,7 @@ public class HeaderItem implements EventListItem {
 
     @Override
     public int getAdapterType() {
-        return TYPE_HEADER;
+        return TYPE_SEACTION_NAME;
     }
 
     @Override

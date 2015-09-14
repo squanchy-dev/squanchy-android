@@ -5,9 +5,6 @@ import com.ls.drupalconapp.model.data.Event;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Yakiv M. on 24.09.2014.
- */
 public class BofsItem implements EventListItem {
 
     private Event mEvent;

@@ -6,9 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by Yakiv M. on 24.09.2014.
- */
 public class TimeRangeItem implements EventListItem {
 
     private String mFromTime;
