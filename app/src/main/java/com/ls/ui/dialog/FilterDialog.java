@@ -192,7 +192,7 @@ public class FilterDialog extends DialogFragment {
     private void saveSelectedItems(List<List<Long>> selectedIds) {
         if (selectedIds != null && !selectedIds.isEmpty()) {
             PreferencesManager.getInstance().saveExpLevel(selectedIds.get(0));
-            PreferencesManager.getInstance().saveTrack(selectedIds.get(1));
+            PreferencesManager.getInstance().saveTracks(selectedIds.get(1));
         }
     }
 

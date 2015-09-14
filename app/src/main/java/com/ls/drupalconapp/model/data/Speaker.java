@@ -1,21 +1,17 @@
 package com.ls.drupalconapp.model.data;
 
-import com.google.gson.annotations.SerializedName;
-
-import com.ls.drupalconapp.model.database.AbstractEntity;
-import com.ls.utils.CursorParser;
-
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+import com.ls.drupalconapp.model.database.AbstractEntity;
+import com.ls.utils.CursorParser;
+
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Yakiv M. on 19.09.2014.
- */
 public class Speaker extends AbstractEntity<Long> implements Parcelable, Comparable<Speaker> {
 
     @SerializedName("speakerId")
@@ -37,7 +33,7 @@ public class Speaker extends AbstractEntity<Long> implements Parcelable, Compara
     private String mJobTitle;
 
     @SerializedName("characteristic")
-    private String mCharact;
+    private String mCharacteristic;
 
     @SerializedName("twitterName")
     private String mTwitterName;
@@ -64,7 +60,7 @@ public class Speaker extends AbstractEntity<Long> implements Parcelable, Compara
         result.put("avatar_image_url", mAvatarImageUrl);
         result.put("organization", mOrganization);
         result.put("job_title", mJobTitle);
-        result.put("charact", mCharact);
+        result.put("charact", mCharacteristic);
         result.put("twitter_name", mTwitterName);
         result.put("web_site", mWebSite);
         result.put("_order", mOrder);
@@ -83,7 +79,7 @@ public class Speaker extends AbstractEntity<Long> implements Parcelable, Compara
         mAvatarImageUrl = parser.readString();
         mOrganization = parser.readString();
         mJobTitle = parser.readString();
-        mCharact = parser.readString();
+        mCharacteristic = parser.readString();
         mTwitterName = parser.readString();
         mWebSite = parser.readString();
         mOrder = parser.readDouble();
@@ -116,7 +112,7 @@ public class Speaker extends AbstractEntity<Long> implements Parcelable, Compara
         parcel.writeString(mAvatarImageUrl);
         parcel.writeString(mOrganization);
         parcel.writeString(mJobTitle);
-        parcel.writeString(mCharact);
+        parcel.writeString(mCharacteristic);
         parcel.writeString(mTwitterName);
         parcel.writeString(mWebSite);
     }
@@ -128,7 +124,7 @@ public class Speaker extends AbstractEntity<Long> implements Parcelable, Compara
         mAvatarImageUrl = parcel.readString();
         mOrganization = parcel.readString();
         mJobTitle = parcel.readString();
-        mCharact = parcel.readString();
+        mCharacteristic = parcel.readString();
         mTwitterName = parcel.readString();
         mWebSite = parcel.readString();
     }
@@ -188,11 +184,11 @@ public class Speaker extends AbstractEntity<Long> implements Parcelable, Compara
     }
 
     public String getCharact() {
-        return mCharact;
+        return mCharacteristic;
     }
 
     public void setCharact(String charact) {
-        mCharact = charact;
+        mCharacteristic = charact;
     }
 
     public String getTwitterName() {

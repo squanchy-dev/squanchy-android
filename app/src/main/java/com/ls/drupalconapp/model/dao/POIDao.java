@@ -4,11 +4,6 @@ import com.ls.drupalconapp.model.AppDatabaseInfo;
 import com.ls.drupalconapp.model.data.POI;
 import com.ls.drupalconapp.model.database.AbstractEntityDAO;
 
-
-/**
- * Created by Yakiv M. on 25.04.14.
- */
-
 public class POIDao extends AbstractEntityDAO<POI, Long> {
 
     public static final String TABLE_NAME = "table_poi";

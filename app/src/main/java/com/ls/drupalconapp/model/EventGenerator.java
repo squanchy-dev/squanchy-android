@@ -279,7 +279,6 @@ public class EventGenerator {
 
                 case Type.ALL_DAY:
                     result.add(timeRangeItem);
-//                    result.addAll(eventListItems);
                     break;
             }
 
@@ -297,7 +296,7 @@ public class EventGenerator {
         time.set(Calendar.HOUR_OF_DAY, fromTime.get(Calendar.HOUR_OF_DAY));
         time.set(Calendar.MINUTE, fromTime.get(Calendar.MINUTE));
 
-        return new Date(time.getTimeInMillis());
+        return time.getTime();
     }
 
     public void setShouldBreak(boolean shouldBreak) {

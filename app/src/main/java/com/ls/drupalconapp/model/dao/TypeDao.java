@@ -4,11 +4,6 @@ import com.ls.drupalconapp.model.AppDatabaseInfo;
 import com.ls.drupalconapp.model.data.Type;
 import com.ls.drupalconapp.model.database.AbstractEntityDAO;
 
-
-/**
- * Created by Yakiv M. on 25.04.14.
- */
-
 public class TypeDao extends AbstractEntityDAO<Type, Long> {
 
     public static final String TABLE_NAME = "table_type";

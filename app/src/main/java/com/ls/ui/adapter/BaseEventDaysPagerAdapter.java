@@ -4,7 +4,6 @@ package com.ls.ui.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.view.ViewGroup;
 
 import com.ls.drawer.DrawerManager;
 import com.ls.ui.fragment.EventFragment;
@@ -61,17 +60,6 @@ public class BaseEventDaysPagerAdapter extends FragmentStatePagerAdapter{
     @Override
     public int getCount() {
         return mDays.size();
-    }
-
-    @Override
-    public Object instantiateItem(ViewGroup container, int position) {
-        Fragment fragment = (Fragment) super.instantiateItem(container, position);
-        return fragment;
-    }
-
-    @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        super.destroyItem(container, position, object);
     }
 
     public Long getDate(int position){

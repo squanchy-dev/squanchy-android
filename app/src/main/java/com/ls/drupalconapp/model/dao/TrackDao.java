@@ -4,11 +4,6 @@ import com.ls.drupalconapp.model.AppDatabaseInfo;
 import com.ls.drupalconapp.model.data.Track;
 import com.ls.drupalconapp.model.database.AbstractEntityDAO;
 
-
-/**
- * Created by Yakiv M. on 25.04.14.
- */
-
 public class TrackDao extends AbstractEntityDAO<Track, Long> {
 
     public static final String TABLE_NAME = "table_track";

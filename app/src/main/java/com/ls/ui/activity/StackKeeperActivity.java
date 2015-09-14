@@ -7,31 +7,33 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 
-public class StackKeeperActivity extends StateActivity{
-    private static final String ACTION = "CHECK_STACK";
-    private static final String EXTRAS_STATE = "EXTRAS_STATE";
+public class StackKeeperActivity extends StateActivity {
 
+    private static final String EXTRAS_STATE = "EXTRAS_STATE";
+    private static final String ACTION = "CHECK_STACK";
+
+    private static final int MAX_ACTIVITIES_COUNT = 2;
     private static final int OPEN_STATE = 1;
     private static final int CLOSE_STATE = 2;
 
-    private int count = 0;
-    private StackKeeperReceiver receiver;
+    private int mActivitiesCount = 0;
+    private StackKeeperReceiver mReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        receiver = new StackKeeperReceiver();
+        mReceiver = new StackKeeperReceiver();
 
         sendMessage(OPEN_STATE);
 
         IntentFilter intentFilter = new IntentFilter(ACTION);
-        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, intentFilter);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, intentFilter);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
     }
 
     @Override
@@ -40,7 +42,7 @@ public class StackKeeperActivity extends StateActivity{
         sendMessage(CLOSE_STATE);
     }
 
-    private void sendMessage(int state){
+    private void sendMessage(int state) {
         Intent intent = new Intent();
         intent.setAction(ACTION);
         intent.putExtra(EXTRAS_STATE, state);
@@ -48,18 +50,21 @@ public class StackKeeperActivity extends StateActivity{
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
-    private class StackKeeperReceiver extends BroadcastReceiver{
+    private class StackKeeperReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             int state = intent.getIntExtra(EXTRAS_STATE, OPEN_STATE);
+            switch (state) {
+                case OPEN_STATE:
+                    mActivitiesCount++;
+                    break;
+                case CLOSE_STATE:
+                    mActivitiesCount--;
+            }
 
-            if(state == OPEN_STATE)
-                count++;
-            else
-                count --;
-
-            if(count == 2)
+            if (mActivitiesCount >= MAX_ACTIVITIES_COUNT) {
                 StackKeeperActivity.super.finish();
+            }
         }
     }
 }

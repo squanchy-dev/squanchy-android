@@ -24,11 +24,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-
-/**
- * Created by Yakiv M. on 25.04.14.
- */
-
 public class EventDao extends AbstractEntityDAO<Event, Long> {
 
     public static final String TABLE_NAME = "table_event";

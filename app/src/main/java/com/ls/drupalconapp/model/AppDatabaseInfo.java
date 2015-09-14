@@ -22,23 +22,21 @@ import java.util.List;
 
 public class AppDatabaseInfo implements DBInfo, IMigrationTask {
 
-    public static final String DATABASE_NAME = "drupal_db";
+    public static final String DATABASE_NAME = "drupalcon.db";
     public static final int DATABASE_VERSION = 8;
 
-    private Resources resources;
+    private static final String TABLE_EVENT_SPEAKER = "table_event_and_speaker";
+    private static final String TABLE_FAVORITE_EVENTS = "table_favorite_events";
+
+    private Resources mResources;
 
     public AppDatabaseInfo(Context theContext) {
-        this.resources = theContext.getResources();
+        this.mResources = theContext.getResources();
     }
 
     @Override
     public List<String> getTableCreationQueries() {
-        List<String> dbSchemaQueryList = generateCreationQueryList();
-        return dbSchemaQueryList;
-    }
-
-    private void addStringWithIdToList(List<String> theList, int theId) {
-        theList.add(this.resources.getString(theId));
+        return generateCreationQueryList();
     }
 
     @Override
@@ -52,8 +50,8 @@ public class AppDatabaseInfo implements DBInfo, IMigrationTask {
         dbTableNameList.add(EventDao.TABLE_NAME);
         dbTableNameList.add(POIDao.TABLE_NAME);
         dbTableNameList.add(InfoDao.TABLE_NAME);
-        dbTableNameList.add("table_event_and_speaker");
-        dbTableNameList.add("table_favorite_events");
+        dbTableNameList.add(TABLE_EVENT_SPEAKER);
+        dbTableNameList.add(TABLE_FAVORITE_EVENTS);
         return dbTableNameList;
     }
 
@@ -76,22 +74,21 @@ public class AppDatabaseInfo implements DBInfo, IMigrationTask {
     public void onUpgrade(SQLiteDatabase theDb, int oldVersion, int newVersion) {
         if (newVersion > oldVersion){
             List<String> dbDropList = generateDropQueryList();
-
             List<String> dbSchemaQueryList = generateCreationQueryList();
 
-            for (String query : dbDropList){
+            for (String query : dbDropList) {
                 theDb.execSQL(query);
             }
 
-            for (String query : dbSchemaQueryList){
+            for (String query : dbSchemaQueryList) {
                 theDb.execSQL(query);
             }
 
         }
     }
 
-    private List<String> generateCreationQueryList(){
-        List<String> dbSchemaQueryList = new LinkedList<String>();
+    private List<String> generateCreationQueryList() {
+        List<String> dbSchemaQueryList = new LinkedList<>();
         addStringWithIdToList(dbSchemaQueryList, R.string.create_table_type);
         addStringWithIdToList(dbSchemaQueryList, R.string.create_table_speaker);
         addStringWithIdToList(dbSchemaQueryList, R.string.create_table_level);
@@ -105,8 +102,8 @@ public class AppDatabaseInfo implements DBInfo, IMigrationTask {
         return dbSchemaQueryList;
     }
 
-    private List<String> generateDropQueryList(){
-        List<String> dbDropList = new ArrayList<String>();
+    private List<String> generateDropQueryList() {
+        List<String> dbDropList = new ArrayList<>();
         addStringWithIdToList(dbDropList, R.string.delete_table_type);
         addStringWithIdToList(dbDropList, R.string.delete_table_speaker);
         addStringWithIdToList(dbDropList, R.string.delete_table_level);
@@ -119,5 +116,9 @@ public class AppDatabaseInfo implements DBInfo, IMigrationTask {
         addStringWithIdToList(dbDropList, R.string.delete_table_event_and_speaker);
         addStringWithIdToList(dbDropList, R.string.delete_table_favorite_events);
         return dbDropList;
+    }
+
+    private void addStringWithIdToList(List<String> theList, int theId) {
+        theList.add(this.mResources.getString(theId));
     }
 }
