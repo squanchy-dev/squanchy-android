@@ -29,7 +29,7 @@ public class KeyboardUtils {
         }
     }
 
-    public static void showKeyboardFromDialog(View theView,Dialog dialog) {
+    public static void showKeyboardFromDialog(View theView, Dialog dialog) {
         theView.requestFocus();
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }

@@ -1,7 +1,5 @@
 package com.ls.utils;
 
-import com.ls.ui.view.utils.MultiFontsTypefaceSpan;
-
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -30,7 +28,7 @@ public class UIUtils {
     }
 
     public static void addColorSpanToTextView(TextView txtView, String strToSpan, String separator, int spanColor) {
-        if(strToSpan == null) {
+        if (strToSpan == null) {
             txtView.setVisibility(View.GONE);
             return;
         }
@@ -45,7 +43,7 @@ public class UIUtils {
     }
 
     public static void addSizeSupersciptSpanToTextView(TextView txtView, String strToSpan, float size) {
-        if(strToSpan == null) {
+        if (strToSpan == null) {
             txtView.setVisibility(View.GONE);
             return;
         }
@@ -58,14 +56,14 @@ public class UIUtils {
     }
 
     public static void addMultiFontSpanToTextView(TextView txtView, Typeface typeFace,
-                                                       String strToSpan, float size) {
-        if(strToSpan == null) {
+                                                  String strToSpan, float size) {
+        if (strToSpan == null) {
             txtView.setVisibility(View.GONE);
             return;
         }
 
         Spannable spanRAI = new SpannableString(strToSpan + " ");
-        spanRAI.setSpan( new MultiFontsTypefaceSpan("", typeFace),
+        spanRAI.setSpan(new MultiFontsTypefaceSpan("", typeFace),
                 0, spanRAI.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         txtView.append(spanRAI);

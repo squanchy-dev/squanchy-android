@@ -76,7 +76,7 @@ public class RedirectHurlStack implements HttpStack {
     }
 
     private HttpResponse performRequest(Request<?> request, Map<String, String> additionalHeaders,
-            String url) throws AuthFailureError, IOException {
+                                        String url) throws AuthFailureError, IOException {
         HashMap<String, String> map = new HashMap<String, String>();
         map.putAll(request.getHeaders());
         map.putAll(additionalHeaders);
@@ -174,7 +174,7 @@ public class RedirectHurlStack implements HttpStack {
 
     @SuppressWarnings("deprecation")
     /* package */ static void setConnectionParametersForRequest(HttpURLConnection connection,
-            Request<?> request) throws IOException, AuthFailureError {
+                                                                Request<?> request) throws IOException, AuthFailureError {
         switch (request.getMethod()) {
             case Method.DEPRECATED_GET_OR_POST:
                 // This is the deprecated way that needs to be handled for backwards compatibility.

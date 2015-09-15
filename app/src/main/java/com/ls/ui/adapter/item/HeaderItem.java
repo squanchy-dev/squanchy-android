@@ -6,13 +6,13 @@ public class HeaderItem implements EventListItem {
 
     private String mTitle;
 
-    public HeaderItem(String title){
+    public HeaderItem(String title) {
         this.mTitle = title;
     }
 
     @Override
     public int getAdapterType() {
-        return TYPE_SEACTION_NAME;
+        return TYPE_SECTION_NAME;
     }
 
     @Override

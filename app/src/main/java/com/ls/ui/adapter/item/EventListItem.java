@@ -8,7 +8,7 @@ public interface EventListItem {
     int TYPE_PROGRAM = 1;
     int TYPE_BOFS = 2;
     int TYPE_SOCIAL = 3;
-    int TYPE_SEACTION_NAME = 4;
+    int TYPE_SECTION_NAME = 4;
 
     int getAdapterType();
 

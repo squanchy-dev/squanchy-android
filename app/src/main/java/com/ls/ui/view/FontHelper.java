@@ -12,13 +12,13 @@ public class FontHelper {
     private Typeface fontRobotoThin;
     private Typeface fontRobotoLight;
     private Typeface fontRobotoMedium;
-	private Typeface fontRobotoBold;
+    private Typeface fontRobotoBold;
 
     private FontHelper() {
     }
 
     public static FontHelper getInstance(Context context) {
-        if(instance == null) {
+        if (instance == null) {
             init(context);
         }
 
@@ -29,7 +29,7 @@ public class FontHelper {
      * init FontHelper in Application in onCreate() method
      */
     public static void init(Context context) {
-        if(instance == null) {
+        if (instance == null) {
             instance = new FontHelper();
             instance.loadFont(context);
         }
@@ -67,13 +67,13 @@ public class FontHelper {
         this.fontRobotoMedium = fontRobotoMedium;
     }
 
-	public Typeface getFontRobotoBold(){
-		return fontRobotoBold;
-	}
+    public Typeface getFontRobotoBold() {
+        return fontRobotoBold;
+    }
 
-	public void setFontRobotoBold(Typeface fontRobotoBold){
-		this.fontRobotoBold = fontRobotoBold;
-	}
+    public void setFontRobotoBold(Typeface fontRobotoBold) {
+        this.fontRobotoBold = fontRobotoBold;
+    }
 
     public void loadFont(final Context context) {
         new AsyncTask<Void, Void, Void>() {
@@ -84,7 +84,7 @@ public class FontHelper {
                 instance.setFontRobotoThin(Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Thin.ttf"));
                 instance.setFontRobotoLight(Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Light.ttf"));
                 instance.setFontRobotoMedium(Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Medium.ttf"));
-				instance.setFontRobotoBold(Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Bold.ttf"));
+                instance.setFontRobotoBold(Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Bold.ttf"));
                 return null;
             }
 

@@ -10,7 +10,7 @@ public class BofsItem implements EventListItem {
     private Event mEvent;
     private List<String> mSpeakers = new ArrayList<String>();
 
-    private boolean  isLast = false;
+    private boolean isLast = false;
 
     @Override
     public int getAdapterType() {

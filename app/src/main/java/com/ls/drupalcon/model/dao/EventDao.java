@@ -262,12 +262,12 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
 
         String query;
 
-        if (levelIds.isEmpty() & trackIds.isEmpty()){
+        if (levelIds.isEmpty() & trackIds.isEmpty()) {
             query = mContext.getString(R.string.select_distinct_time_range);
-        } else if (!levelIds.isEmpty() & !trackIds.isEmpty()){
+        } else if (!levelIds.isEmpty() & !trackIds.isEmpty()) {
             String rawQuery = mContext.getString(R.string.select_distinct_time_range_by_expLevel_and_track_ids);
             query = String.format(rawQuery, getArrayAsString(levelIds), getArrayAsString(trackIds));
-        } else if (!levelIds.isEmpty() & trackIds.isEmpty()){
+        } else if (!levelIds.isEmpty() & trackIds.isEmpty()) {
             String rawQuery = mContext.getString(R.string.select_distinct_time_range_by_expLevel_ids);
             query = String.format(rawQuery, getArrayAsString(levelIds));
         } else {
@@ -427,12 +427,12 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
         String[] selectionArgs = ArrayUtils.build(eventClass, date);
         String query;
 
-        if (levelIds.isEmpty() & trackIds.isEmpty()){
+        if (levelIds.isEmpty() & trackIds.isEmpty()) {
             query = mContext.getString(R.string.select_program_items_by_date);
-        } else if (!levelIds.isEmpty() & !trackIds.isEmpty()){
+        } else if (!levelIds.isEmpty() & !trackIds.isEmpty()) {
             String rawQuery = mContext.getString(R.string.select_program_items_by_date_and_track_ids_and_expLevel_ids);
             query = String.format(rawQuery, getArrayAsString(trackIds), getArrayAsString(levelIds));
-        } else if (!levelIds.isEmpty() & trackIds.isEmpty()){
+        } else if (!levelIds.isEmpty() & trackIds.isEmpty()) {
             String rawQuery = mContext.getString(R.string.select_program_items_by_date_and_expLevel_ids);
             query = String.format(rawQuery, getArrayAsString(levelIds));
         } else {

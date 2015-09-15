@@ -8,7 +8,7 @@ import com.ls.drupalcon.app.App;
 
 public class AnalyticsManager {
 
-    public static void sendEvent(Activity activity, String category, int actionId){
+    public static void sendEvent(Activity activity, String category, int actionId) {
         Tracker t = ((App) activity.getApplication()).getTracker();
         // Build and send an Event.
         t.send(new HitBuilders.EventBuilder()
@@ -18,7 +18,7 @@ public class AnalyticsManager {
                 .build());
     }
 
-    public static void sendEvent(Activity activity, int categoryId, int actionId, long id){
+    public static void sendEvent(Activity activity, int categoryId, int actionId, long id) {
         Tracker t = ((App) activity.getApplication()).getTracker();
         // Build and send an Event.
         t.send(new HitBuilders.EventBuilder()

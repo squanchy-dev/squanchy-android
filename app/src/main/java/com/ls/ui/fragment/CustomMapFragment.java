@@ -1,9 +1,9 @@
 package com.ls.ui.fragment;
 
+import android.os.Bundle;
+
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
-
-import android.os.Bundle;
 
 
 public class CustomMapFragment extends SupportMapFragment {
@@ -25,7 +25,7 @@ public class CustomMapFragment extends SupportMapFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if(mListener != null) {
+        if (mListener != null) {
             mListener.onActivityCreated(getMap());
         }
     }

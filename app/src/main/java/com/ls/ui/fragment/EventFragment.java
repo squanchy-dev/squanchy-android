@@ -28,12 +28,12 @@ import java.util.List;
 
 public class EventFragment extends Fragment implements EventsAdapter.Listener {
 
-	private static final String EXTRAS_ARG_MODE = "EXTRAS_ARG_MODE";
-	private static final String EXTRAS_ARG_DAY = "EXTRAS_ARG_DAY";
+    private static final String EXTRAS_ARG_MODE = "EXTRAS_ARG_MODE";
+    private static final String EXTRAS_ARG_DAY = "EXTRAS_ARG_DAY";
 
-	private List<Long> levelIds;
-	private List<Long> trackIds;
-	private long mDay;
+    private List<Long> levelIds;
+    private List<Long> trackIds;
+    private long mDay;
 
     private DrawerManager.EventMode mEventMode;
     private EventsAdapter mAdapter;
@@ -41,160 +41,160 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
     private ListView mListView;
     private ProgressBar mProgressBar;
 
-	private EventGenerator mGenerator;
+    private EventGenerator mGenerator;
 
-	private ReceiverManager receiverManager = new ReceiverManager(
-			new ReceiverManager.FavoriteUpdatedListener() {
-				@Override
-				public void onFavoriteUpdated(long eventId, boolean isFavorite) {
-					if (mEventMode != DrawerManager.EventMode.Favorites) {
-						loadData();
-					}
-				}
-			});
+    private ReceiverManager receiverManager = new ReceiverManager(
+            new ReceiverManager.FavoriteUpdatedListener() {
+                @Override
+                public void onFavoriteUpdated(long eventId, boolean isFavorite) {
+                    if (mEventMode != DrawerManager.EventMode.Favorites) {
+                        loadData();
+                    }
+                }
+            });
 
-	public static Fragment newInstance(int modePos, long day) {
-		Fragment fragment = new EventFragment();
-		Bundle args = new Bundle();
-		args.putInt(EXTRAS_ARG_MODE, modePos);
-		args.putLong(EXTRAS_ARG_DAY, day);
-		fragment.setArguments(args);
+    public static Fragment newInstance(int modePos, long day) {
+        Fragment fragment = new EventFragment();
+        Bundle args = new Bundle();
+        args.putInt(EXTRAS_ARG_MODE, modePos);
+        args.putLong(EXTRAS_ARG_DAY, day);
+        fragment.setArguments(args);
 
-		return fragment;
-	}
+        return fragment;
+    }
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fr_event, null);
-	}
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fr_event, null);
+    }
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		initData();
-		initViews();
-		loadData();
-		receiverManager.register(getActivity());
-	}
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initData();
+        initViews();
+        loadData();
+        receiverManager.register(getActivity());
+    }
 
-	@Override
-	public void onClick(int position) {
-		onItemClick(position);
-	}
+    @Override
+    public void onClick(int position) {
+        onItemClick(position);
+    }
 
-	@Override
-	public void onDestroy() {
-		mGenerator.setShouldBreak(true);
-		receiverManager.unregister(getActivity());
-		super.onDestroy();
-	}
+    @Override
+    public void onDestroy() {
+        mGenerator.setShouldBreak(true);
+        receiverManager.unregister(getActivity());
+        super.onDestroy();
+    }
 
-	private void initData() {
-		Bundle bundle = getArguments();
-		if (bundle != null) {
-			int eventPost = bundle.getInt(EXTRAS_ARG_MODE, DrawerManager.EventMode.Program.ordinal());
-			mEventMode = DrawerManager.EventMode.values()[eventPost];
+    private void initData() {
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            int eventPost = bundle.getInt(EXTRAS_ARG_MODE, DrawerManager.EventMode.Program.ordinal());
+            mEventMode = DrawerManager.EventMode.values()[eventPost];
 
-			mDay = bundle.getLong(EXTRAS_ARG_DAY, 0);
-			levelIds = PreferencesManager.getInstance().loadExpLevel();
-			trackIds = PreferencesManager.getInstance().loadTracks();
-		}
-		mGenerator = new EventGenerator();
-	}
+            mDay = bundle.getLong(EXTRAS_ARG_DAY, 0);
+            levelIds = PreferencesManager.getInstance().loadExpLevel();
+            trackIds = PreferencesManager.getInstance().loadTracks();
+        }
+        mGenerator = new EventGenerator();
+    }
 
-	private void initViews() {
-		if (getView() != null) {
-			mProgressBar = (ProgressBar) getView().findViewById(R.id.progressBar);
+    private void initViews() {
+        if (getView() != null) {
+            mProgressBar = (ProgressBar) getView().findViewById(R.id.progressBar);
 
-			mAdapter = new EventsAdapter(getActivity());
-			mAdapter.setOnItemClickListener(this);
+            mAdapter = new EventsAdapter(getActivity());
+            mAdapter.setOnItemClickListener(this);
 
-			mListView = (ListView) getView().findViewById(R.id.listView);
-			mListView.setAdapter(mAdapter);
-		}
-	}
+            mListView = (ListView) getView().findViewById(R.id.listView);
+            mListView.setAdapter(mAdapter);
+        }
+    }
 
-	private void loadData() {
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
+    private void loadData() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
                 updateViewsUI(getEventItems());
-			}
-		}).start();
-	}
+            }
+        }).start();
+    }
 
-	private void updateViewsUI(final List<EventListItem> eventList) {
-		Activity activity = getActivity();
-		if (activity != null) {
-			activity.runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					handleEventsResult(eventList);
-				}
-			});
-		}
-	}
+    private void updateViewsUI(final List<EventListItem> eventList) {
+        Activity activity = getActivity();
+        if (activity != null) {
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    handleEventsResult(eventList);
+                }
+            });
+        }
+    }
 
-	private List<EventListItem> getEventItems() {
-		List<EventListItem> eventList = new ArrayList<>();
+    private List<EventListItem> getEventItems() {
+        List<EventListItem> eventList = new ArrayList<>();
 
-		switch (mEventMode) {
-			case Program:
-				eventList.addAll(mGenerator.generate(mDay, Event.PROGRAM_CLASS, levelIds, trackIds, new SimpleTimeRangeCreator()));
-				break;
-			case Bofs:
-				eventList.addAll(mGenerator.generate(mDay, Event.BOFS_CLASS, new SimpleTimeRangeCreator()));
-				break;
-			case Social:
-				eventList.addAll(mGenerator.generate(mDay, Event.SOCIALS_CLASS, new SimpleTimeRangeCreator()));
-				break;
-			case Favorites:
-				eventList.addAll(mGenerator.generateForFavorites(mDay));
-				break;
-		}
-		return eventList;
-	}
+        switch (mEventMode) {
+            case Program:
+                eventList.addAll(mGenerator.generate(mDay, Event.PROGRAM_CLASS, levelIds, trackIds, new SimpleTimeRangeCreator()));
+                break;
+            case Bofs:
+                eventList.addAll(mGenerator.generate(mDay, Event.BOFS_CLASS, new SimpleTimeRangeCreator()));
+                break;
+            case Social:
+                eventList.addAll(mGenerator.generate(mDay, Event.SOCIALS_CLASS, new SimpleTimeRangeCreator()));
+                break;
+            case Favorites:
+                eventList.addAll(mGenerator.generateForFavorites(mDay));
+                break;
+        }
+        return eventList;
+    }
 
-	private void handleEventsResult(List<EventListItem> eventListItems) {
-		if (mProgressBar != null) {
-			mProgressBar.setVisibility(View.GONE);
-		}
+    private void handleEventsResult(List<EventListItem> eventListItems) {
+        if (mProgressBar != null) {
+            mProgressBar.setVisibility(View.GONE);
+        }
 
-		mAdapter.setData(eventListItems, mEventMode);
-		if (DateUtils.getInstance().isToday(mDay) && mEventMode != DrawerManager.EventMode.Favorites) {
-			int index = getCurrentTimePosition(eventListItems);
-			mListView.setSelection(index);
-		}
-	}
+        mAdapter.setData(eventListItems, mEventMode);
+        if (DateUtils.getInstance().isToday(mDay) && mEventMode != DrawerManager.EventMode.Favorites) {
+            int index = getCurrentTimePosition(eventListItems);
+            mListView.setSelection(index);
+        }
+    }
 
 
-	private void onItemClick(int position) {
-		EventListItem item = mAdapter.getItem(position);
+    private void onItemClick(int position) {
+        EventListItem item = mAdapter.getItem(position);
 
-		if (item.getEvent() != null && item.getEvent().getId() != 0) {
-			long type = item.getEvent().getType();
+        if (item.getEvent() != null && item.getEvent().getId() != 0) {
+            long type = item.getEvent().getType();
 
-			if (type == Type.SPEACH || type == Type.SPEACH_OF_DAY) {
-				EventDetailsActivity.startThisActivity(getActivity(), item.getEvent().getId(), mDay);
-			}
-		}
-	}
+            if (type == Type.SPEACH || type == Type.SPEACH_OF_DAY) {
+                EventDetailsActivity.startThisActivity(getActivity(), item.getEvent().getId(), mDay);
+            }
+        }
+    }
 
-	private int getCurrentTimePosition(List<EventListItem> eventListItems) {
-		int deviceHours = DateUtils.getInstance().getHours();
-		int pos = 0;
+    private int getCurrentTimePosition(List<EventListItem> eventListItems) {
+        int deviceHours = DateUtils.getInstance().getHours();
+        int pos = 0;
 
-		for (int i = 0; i < eventListItems.size(); i++) {
-			EventListItem item = eventListItems.get(i);
+        for (int i = 0; i < eventListItems.size(); i++) {
+            EventListItem item = eventListItems.get(i);
 
-			if (item instanceof TimeRangeItem) {
-				TimeRangeItem rangeItem = (TimeRangeItem) item;
-				int eventHours = DateUtils.getInstance().convertTime(rangeItem.getFromTime()).getHours();
-				if (deviceHours >= eventHours) {
+            if (item instanceof TimeRangeItem) {
+                TimeRangeItem rangeItem = (TimeRangeItem) item;
+                int eventHours = DateUtils.getInstance().convertTime(rangeItem.getFromTime()).getHours();
+                if (deviceHours >= eventHours) {
                     pos = i;
                 }
             }
-		}
-		return pos;
-	}
+        }
+        return pos;
+    }
 }

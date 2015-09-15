@@ -60,7 +60,7 @@ public class HURLCookieStore implements CookieStore {
         spePreferences = ctxContext.getSharedPreferences("CookiePrefsFile", 0);
         Map<String, ?> prefsMap = spePreferences.getAll();
 
-        for(Map.Entry<String, ?> entry : prefsMap.entrySet()) {
+        for (Map.Entry<String, ?> entry : prefsMap.entrySet()) {
 
             for (String strCookie : (HashSet<String>) entry.getValue()) {
 

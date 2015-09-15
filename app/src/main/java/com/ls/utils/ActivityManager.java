@@ -51,7 +51,7 @@ public class ActivityManager {
                     if (index >= 0) {
                         log("Excluding activity from finish: " + mActivity.getClass().getName());
                         return;
-                    } else if(!haveFinishActivity) {
+                    } else if (!haveFinishActivity) {
                         log("Finishing activity: " + mActivity.getClass().getName());
                         mActivity.finish();
                     }

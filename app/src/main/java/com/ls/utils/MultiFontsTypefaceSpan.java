@@ -1,4 +1,4 @@
-package com.ls.ui.view.utils;
+package com.ls.utils;
 
 import android.graphics.Paint;
 import android.graphics.Typeface;

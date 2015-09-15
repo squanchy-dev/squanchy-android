@@ -28,8 +28,7 @@ public class AboutActivity extends ActionBarActivity {
     private AboutListAdapter adapter;
     private List<InfoItem> infoItems;
 
-    private UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener()
-    {
+    private UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener() {
         @Override
         public void onDataUpdated(List<Integer> requestIds) {
             L.d("AboutActivity");

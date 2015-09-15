@@ -87,7 +87,7 @@ public class TimeRangeItem implements EventListItem {
         mTrack = track;
     }
 
-    public void setFirst(boolean isFirst){
+    public void setFirst(boolean isFirst) {
         this.isFirst = isFirst;
     }
 

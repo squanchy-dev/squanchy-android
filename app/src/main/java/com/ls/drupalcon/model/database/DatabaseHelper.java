@@ -24,14 +24,14 @@ public class DatabaseHelper
     public void onCreate(SQLiteDatabase theDb) {
         Iterator<String> it = this.dbInfo.getTableCreationQueries().iterator();
         while (it.hasNext()) {
-            String subquery = it.next();
-            theDb.execSQL(subquery);
+            String subQuery = it.next();
+            theDb.execSQL(subQuery);
         }
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase theDb, int oldVersion, int newVersion) {
-		PreferencesManager.getInstance().saveLastUpdateDate("");
+        PreferencesManager.getInstance().saveLastUpdateDate("");
         this.dbInfo.getMigrationTask().onUpgrade(theDb, oldVersion, newVersion);
     }
 

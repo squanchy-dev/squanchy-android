@@ -12,7 +12,7 @@ import com.ls.utils.DateUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BaseEventDaysPagerAdapter extends FragmentStatePagerAdapter{
+public class BaseEventDaysPagerAdapter extends FragmentStatePagerAdapter {
 
     private DrawerManager.EventMode mEventMode;
 
@@ -26,31 +26,31 @@ public class BaseEventDaysPagerAdapter extends FragmentStatePagerAdapter{
     @Override
     public Fragment getItem(int position) {
         Long date = getDate(position);
-		Fragment fragment = EventFragment.newInstance(DrawerManager.EventMode.Program.ordinal(), date);
+        Fragment fragment = EventFragment.newInstance(DrawerManager.EventMode.Program.ordinal(), date);
 
-		switch (mEventMode) {
-			case Program:
-				fragment = EventFragment.newInstance(DrawerManager.EventMode.Program.ordinal(), date);
-				break;
-			case Bofs:
-				fragment = EventFragment.newInstance(DrawerManager.EventMode.Bofs.ordinal(), date);
-				break;
-			case Social:
-				fragment = EventFragment.newInstance(DrawerManager.EventMode.Social.ordinal(), date);
-				break;
-			case Favorites:
-				fragment = EventFragment.newInstance(DrawerManager.EventMode.Favorites.ordinal(), date);
-				break;
-		}
-		return fragment;
+        switch (mEventMode) {
+            case Program:
+                fragment = EventFragment.newInstance(DrawerManager.EventMode.Program.ordinal(), date);
+                break;
+            case Bofs:
+                fragment = EventFragment.newInstance(DrawerManager.EventMode.Bofs.ordinal(), date);
+                break;
+            case Social:
+                fragment = EventFragment.newInstance(DrawerManager.EventMode.Social.ordinal(), date);
+                break;
+            case Favorites:
+                fragment = EventFragment.newInstance(DrawerManager.EventMode.Favorites.ordinal(), date);
+                break;
+        }
+        return fragment;
     }
 
-	public void setData(List<Long> eventDays, DrawerManager.EventMode eventMode) {
+    public void setData(List<Long> eventDays, DrawerManager.EventMode eventMode) {
         mDays.clear();
-		mDays.addAll(eventDays);
-		mEventMode = eventMode;
-		notifyDataSetChanged();
-	}
+        mDays.addAll(eventDays);
+        mEventMode = eventMode;
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getItemPosition(Object object) {
@@ -62,7 +62,7 @@ public class BaseEventDaysPagerAdapter extends FragmentStatePagerAdapter{
         return mDays.size();
     }
 
-    public Long getDate(int position){
+    public Long getDate(int position) {
         return mDays.get(position);
     }
 

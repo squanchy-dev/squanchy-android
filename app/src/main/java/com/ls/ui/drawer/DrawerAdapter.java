@@ -15,93 +15,93 @@ import com.ls.drupalcon.app.App;
 import java.util.List;
 
 public class DrawerAdapter extends BaseAdapter {
-	private List<DrawerMenuItem> menu;
-	private LayoutInflater inflater;
-	private int selectedPos = 0;
+    private List<DrawerMenuItem> menu;
+    private LayoutInflater inflater;
+    private int selectedPos = 0;
 
-	public DrawerAdapter(Context theContext, List<DrawerMenuItem> theMenu) {
-		inflater = (LayoutInflater) theContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		menu = theMenu;
-	}
+    public DrawerAdapter(Context theContext, List<DrawerMenuItem> theMenu) {
+        inflater = (LayoutInflater) theContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        menu = theMenu;
+    }
 
-	public void setSelectedPos(int selectedPos) {
-		this.selectedPos = selectedPos;
-	}
+    public void setSelectedPos(int selectedPos) {
+        this.selectedPos = selectedPos;
+    }
 
-	@Override
-	public int getCount() {
-		return menu.size(); //+ 1 because header was added to list
-	}
+    @Override
+    public int getCount() {
+        return menu.size(); //+ 1 because header was added to list
+    }
 
-	@Override
-	public DrawerMenuItem getItem(int position) {
-		return menu.get(position);
-	}
+    @Override
+    public DrawerMenuItem getItem(int position) {
+        return menu.get(position);
+    }
 
-	@Override
-	public long getItemId(int position) {
-		return menu.get(position).getId();
-	}
+    @Override
+    public long getItemId(int position) {
+        return menu.get(position).getId();
+    }
 
-	@Override
-	public View getView(final int position, View convertView, ViewGroup parent) {
-		View result;
+    @Override
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        View result;
 
-		DrawerMenuItem item = menu.get(position);
+        DrawerMenuItem item = menu.get(position);
 
-		if (item.isGroup()) {
-			result = inflater.inflate(R.layout.item_drawer_group, null);
-		} else {
-			result = inflater.inflate(R.layout.item_drawer, null);
-		}
+        if (item.isGroup()) {
+            result = inflater.inflate(R.layout.item_drawer_group, null);
+        } else {
+            result = inflater.inflate(R.layout.item_drawer, null);
+        }
 
-		LinearLayout layoutDrawerItem = (LinearLayout) result.findViewById(R.id.layoutDrawerItem);
-		TextView txtName = (TextView) result.findViewById(R.id.txtName);
-		txtName.setText(item.getName());
+        LinearLayout layoutDrawerItem = (LinearLayout) result.findViewById(R.id.layoutDrawerItem);
+        TextView txtName = (TextView) result.findViewById(R.id.txtName);
+        txtName.setText(item.getName());
 
-		ImageView image = (ImageView) result.findViewById(R.id.image);
+        ImageView image = (ImageView) result.findViewById(R.id.image);
 
-		if (position == selectedPos) {
-			image.setImageResource(item.getSelIconRes());
-			txtName.setTextColor(App.getContext().getResources().getColor(R.color.primary));
-		} else {
-			image.setImageResource(item.getIconRes());
-		}
+        if (position == selectedPos) {
+            image.setImageResource(item.getSelIconRes());
+            txtName.setTextColor(App.getContext().getResources().getColor(R.color.primary));
+        } else {
+            image.setImageResource(item.getIconRes());
+        }
 
-		if (position == 2 | position == 5) {
-			result.findViewById(R.id.divider).setVisibility(View.VISIBLE);
-		}
+        if (position == 2 | position == 5) {
+            result.findViewById(R.id.divider).setVisibility(View.VISIBLE);
+        }
 
-		layoutDrawerItem.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				mListener.onDrawerItemClicked(position);
-			}
-		});
+        layoutDrawerItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onDrawerItemClicked(position);
+            }
+        });
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public boolean isEnabled(int position) {
-		DrawerMenuItem item = menu.get(position);
+    @Override
+    public boolean isEnabled(int position) {
+        DrawerMenuItem item = menu.get(position);
 
-		if (item.isGroup()) {
-			return false;
-		} else {
-			return true;
-		}
-	}
+        if (item.isGroup()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
-	public OnDrawerItemClickListener mListener;
+    public OnDrawerItemClickListener mListener;
 
-	public interface OnDrawerItemClickListener {
-		public void onDrawerItemClicked(int position);
-	}
+    public interface OnDrawerItemClickListener {
+        public void onDrawerItemClicked(int position);
+    }
 
-	public void setDrawerItemClickListener(OnDrawerItemClickListener listener) {
-		if (listener != null) {
-			mListener = listener;
-		}
-	}
+    public void setDrawerItemClickListener(OnDrawerItemClickListener listener) {
+        if (listener != null) {
+            mListener = listener;
+        }
+    }
 }

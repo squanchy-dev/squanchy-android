@@ -98,7 +98,7 @@ public class EventsAdapter extends BaseAdapter {
             resultView = initProgramView(position, convertView, parent);
         } else if (itemViewType == EventListItem.TYPE_SOCIAL) {
             resultView = initSocialView(position, convertView, parent);
-        } else if (itemViewType == EventListItem.TYPE_SEACTION_NAME) {
+        } else if (itemViewType == EventListItem.TYPE_SECTION_NAME) {
             resultView = initSeactionNameView(position, convertView, parent);
         } else {
             resultView = new View(mInflater.getContext());

@@ -42,13 +42,12 @@ public class CircleImageView extends DrupalImageView {
         }
 
         Bitmap roundBitmap = null;
-        if(cachedImage != null)
-        {
+        if (cachedImage != null) {
             roundBitmap = cachedImage;
-        }else {
+        } else {
 
             Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-            if(bitmap != null) {
+            if (bitmap != null) {
                 roundBitmap = getCroppedBitmap(bitmap, getWidth());
             }
         }
@@ -68,8 +67,7 @@ public class CircleImageView extends DrupalImageView {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        if(w != oldw || h != oldh)
-        {
+        if (w != oldw || h != oldh) {
             cachedImage = null;
         }
     }
@@ -104,17 +102,15 @@ public class CircleImageView extends DrupalImageView {
         return output;
     }
 
-    private static Bitmap getSquareBitmap(Bitmap bmp)
-    {
-        if(bmp == null)
-        {
+    private static Bitmap getSquareBitmap(Bitmap bmp) {
+        if (bmp == null) {
             return null;
         }
 
-        int size = Math.min(bmp.getHeight(),bmp.getWidth());
-        int left = (bmp.getWidth() - size)/2;
-        int top = (bmp.getHeight() - size)/2;
-       return Bitmap.createBitmap(bmp,left,top,size,size);
+        int size = Math.min(bmp.getHeight(), bmp.getWidth());
+        int left = (bmp.getWidth() - size) / 2;
+        int top = (bmp.getHeight() - size) / 2;
+        return Bitmap.createBitmap(bmp, left, top, size, size);
     }
 
 

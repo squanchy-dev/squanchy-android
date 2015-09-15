@@ -10,7 +10,7 @@ import android.graphics.RectF;
 
 public class BitmapUtils {
     public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int percentOfWidth) {
-        if(bitmap == null){
+        if (bitmap == null) {
             return null;
         }
 
@@ -35,31 +35,31 @@ public class BitmapUtils {
         return output;
     }
 
-	public static Bitmap getBitmapRect(Bitmap bitmap){
-		if(bitmap == null){
-			return null;
-		}
+    public static Bitmap getBitmapRect(Bitmap bitmap) {
+        if (bitmap == null) {
+            return null;
+        }
 
-		int size = bitmap.getHeight() > bitmap.getWidth() ? bitmap.getWidth() : bitmap.getHeight();
+        int size = bitmap.getHeight() > bitmap.getWidth() ? bitmap.getWidth() : bitmap.getHeight();
 
-		Bitmap output = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
-		Canvas canvas = new Canvas(output);
+        Bitmap output = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
 
-		final Paint paint = new Paint();
-		paint.setAntiAlias(true);
+        final Paint paint = new Paint();
+        paint.setAntiAlias(true);
 
-		int left, top;
+        int left, top;
 
-		if(bitmap.getHeight() > bitmap.getWidth()){
-			left = 0;
-			top = (bitmap.getHeight() - bitmap.getWidth()) / -2;
-		}else{
-			left = (bitmap.getWidth() - bitmap.getHeight()) / -2;
-			top = 0;
-		}
+        if (bitmap.getHeight() > bitmap.getWidth()) {
+            left = 0;
+            top = (bitmap.getHeight() - bitmap.getWidth()) / -2;
+        } else {
+            left = (bitmap.getWidth() - bitmap.getHeight()) / -2;
+            top = 0;
+        }
 
-		canvas.drawBitmap(bitmap, left, top, paint);
+        canvas.drawBitmap(bitmap, left, top, paint);
 
-		return output;
-	}
+        return output;
+    }
 }

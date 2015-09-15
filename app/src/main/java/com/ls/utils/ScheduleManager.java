@@ -19,11 +19,11 @@ public class ScheduleManager {
         this.am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
     }
 
-    public void setAlarmForNotification(Calendar calendar, EventDetailsEvent event, long day){
+    public void setAlarmForNotification(Calendar calendar, EventDetailsEvent event, long day) {
         new AlarmTask(mContext, calendar, am, event, day).run();
     }
 
-    public void cancelAlarm(long id){
+    public void cancelAlarm(long id) {
         Intent intent = new Intent(mContext, NotifyReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, (int) id, intent, PendingIntent.FLAG_ONE_SHOT);
         am.cancel(pendingIntent);

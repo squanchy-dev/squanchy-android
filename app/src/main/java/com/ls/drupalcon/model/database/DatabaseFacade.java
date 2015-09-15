@@ -7,20 +7,19 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 public class DatabaseFacade
-    implements ILAPIDBFacade
-{
+        implements ILAPIDBFacade {
 //
 //	private static DatabaseFacade instance;
 
-	private DBInfo dbInfo;
-	private DatabaseHelper dbHelper;
-	private SQLiteDatabase db;
-	
-	private final Context context;
-	private int openCounter = 0;
-	
+    private DBInfo dbInfo;
+    private DatabaseHelper dbHelper;
+    private SQLiteDatabase db;
+
+    private final Context context;
+    private int openCounter = 0;
+
 	/*
-	public static DatabaseFacade instance(Context theContext, DBInfo theDbInfo)
+    public static DatabaseFacade instance(Context theContext, DBInfo theDbInfo)
 	{
 		if (instance == null)
 		{
@@ -40,65 +39,58 @@ public class DatabaseFacade
 
 		return instance;
 	}*/
-	
 
-	public DatabaseFacade(Context theContext, DBInfo theDbInfo)
-	{
-		this.context = theContext;
-		this.dbInfo = theDbInfo;
-	}
-	
-	
-	public void beginTransactions()
-	{
-		db.beginTransaction();
-	}
 
-	
-	public void setTransactionSuccesfull()
-	{
-		db.setTransactionSuccessful();
-	}
+    public DatabaseFacade(Context theContext, DBInfo theDbInfo) {
+        this.context = theContext;
+        this.dbInfo = theDbInfo;
+    }
 
-	
-	public void endTransactions()
-	{
-		db.endTransaction();
-	}
 
-	
-	public synchronized DatabaseFacade open()
-	    throws SQLException
-	{
-		if (this.openCounter == 0) {
-			this.dbHelper = new DatabaseHelper(this.context, this.dbInfo);
-			this.db = this.dbHelper.getWritableDatabase();
-		}
+    public void beginTransactions() {
+        db.beginTransaction();
+    }
 
-		this.openCounter++;
 
-		return this;
-	}
-	
+    public void setTransactionSuccesfull() {
+        db.setTransactionSuccessful();
+    }
 
-	public synchronized void close()
-	{
-		if (openCounter == 1) {
-			this.db.close();
-			this.dbHelper.close();
-		}
 
-		openCounter--;
-	}
-    
-    
-	public boolean containsRecord(String theTable, String theWhereClause, String[] theColumns)
-    {
+    public void endTransactions() {
+        db.endTransaction();
+    }
+
+
+    public synchronized DatabaseFacade open()
+            throws SQLException {
+        if (this.openCounter == 0) {
+            this.dbHelper = new DatabaseHelper(this.context, this.dbInfo);
+            this.db = this.dbHelper.getWritableDatabase();
+        }
+
+        this.openCounter++;
+
+        return this;
+    }
+
+
+    public synchronized void close() {
+        if (openCounter == 1) {
+            this.db.close();
+            this.dbHelper.close();
+        }
+
+        openCounter--;
+    }
+
+
+    public boolean containsRecord(String theTable, String theWhereClause, String[] theColumns) {
         boolean result = false;
 
         Cursor cursor = db.query(true,
-                theTable, 
-                theColumns, 
+                theTable,
+                theColumns,
                 theWhereClause,// selection
                 null,// selection args
                 null,// groupBy
@@ -106,23 +98,22 @@ public class DatabaseFacade
                 null,// order by
                 null);// limit
 
-        result = cursor.getCount() > 0; 
-        
+        result = cursor.getCount() > 0;
+
         cursor.close();
 //        cursor = null;
-        
+
         return result;
     }
-    
-	
-	public boolean containsRecord(String theTable, String theWhereClause,String[] selectionArgs,
-			String[] theColumns)
-    {
+
+
+    public boolean containsRecord(String theTable, String theWhereClause, String[] selectionArgs,
+                                  String[] theColumns) {
         boolean result = false;
 
         Cursor cursor = db.query(true,
-                theTable, 
-                theColumns, 
+                theTable,
+                theColumns,
                 theWhereClause,// selection
                 selectionArgs,// selection args
                 null,// groupBy
@@ -130,79 +121,68 @@ public class DatabaseFacade
                 null,// order by
                 null);// limit
 
-        result = cursor.getCount() > 0; 
-        
+        result = cursor.getCount() > 0;
+
         cursor.close();
 //        cursor = null;
-        
+
         return result;
     }
-	
-	
-	public Cursor query(String theQuery, String[] selectionArgs)
-	{
-	    return db.rawQuery(theQuery, selectionArgs);
-	}
-	
-    
-    public long save(String theTable, ContentValues theValues)
-    {
+
+
+    public Cursor query(String theQuery, String[] selectionArgs) {
+        return db.rawQuery(theQuery, selectionArgs);
+    }
+
+
+    public long save(String theTable, ContentValues theValues) {
         return db.insert(theTable, null, theValues);
     }
-    
+
     /**
-     * 
      * @param theTable
      * @param theWhereClause
      * @param theValues
      * @return returns number of rows affected
      */
-    public int update(String theTable, String theWhereClause, ContentValues theValues)
-    {
+    public int update(String theTable, String theWhereClause, ContentValues theValues) {
         return db.update(theTable, theValues, theWhereClause, null);
     }
-    
-    
+
+
     public int update(String theTable, String theWhereClause, String[] whereArgs,
-    		ContentValues theValues)
-    {
+                      ContentValues theValues) {
         return db.update(theTable, theValues, theWhereClause, whereArgs);
     }
-    
-    
-    public int delete(String theTable, String theWhereClause, String[] whereArgs)
-    {
+
+
+    public int delete(String theTable, String theWhereClause, String[] whereArgs) {
         return db.delete(theTable, theWhereClause, whereArgs);
     }
-    
-    
-    public int delete(String theTable, String theWhereClause)
-    {
+
+
+    public int delete(String theTable, String theWhereClause) {
         return db.delete(theTable, theWhereClause, null);
     }
-    
-    
-    public void insert(String sqlQuery)
-    {
-    	db.execSQL(sqlQuery);
+
+
+    public void insert(String sqlQuery) {
+        db.execSQL(sqlQuery);
     }
 
-    public void execSQL(String sqlQuery, Object[] bindArgs)
-    {
+    public void execSQL(String sqlQuery, Object[] bindArgs) {
         db.execSQL(sqlQuery, bindArgs);
     }
-    
-    
-    public int clearTable(String theTable)
-    {
-    	return this.delete(theTable, null,null);
+
+
+    public int clearTable(String theTable) {
+        return this.delete(theTable, null, null);
     }
-    
-    
-    public Cursor getAllRecords(String theTable, String[] theColumns, String theSelection)
-    {
+
+
+    public Cursor getAllRecords(String theTable, String[] theColumns, String theSelection) {
         Cursor cursor = db.query(true,
-                theTable, 
+                theTable,
                 theColumns,
                 theSelection,// selection
                 null,// selection args
@@ -210,16 +190,15 @@ public class DatabaseFacade
                 null,// having
                 null,// order by
                 null);// limit
-        
+
         return cursor;
     }
-    
-    
+
+
     public Cursor getAllRecords(String theTable, String[] theColumns, String theSelection,
-    		String[] selectionArgs)
-    {
+                                String[] selectionArgs) {
         Cursor cursor = db.query(true,
-                theTable, 
+                theTable,
                 theColumns,
                 theSelection,// selection
                 selectionArgs,// selection args
@@ -227,14 +206,13 @@ public class DatabaseFacade
                 null,// having
                 null,// order by
                 null);// limit
-        
+
         return cursor;
     }
-    
-    
-    public String getQuery(int theResId)
-    {
+
+
+    public String getQuery(int theResId) {
         return context.getString(theResId);
     }
-    
+
 }

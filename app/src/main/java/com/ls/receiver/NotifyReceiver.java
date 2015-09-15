@@ -22,7 +22,7 @@ public class NotifyReceiver extends BroadcastReceiver {
         showNotification(context, eventId, day, text);
     }
 
-    private void showNotification(Context context, long id, long day ,String text) {
+    private void showNotification(Context context, long id, long day, String text) {
         String title = context.getString(R.string.dont_miss_it);
         int icon = android.R.drawable.ic_dialog_info;
         long time = System.currentTimeMillis();

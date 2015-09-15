@@ -49,11 +49,11 @@ public class SpeakerDao extends AbstractEntityDAO<Speaker, Long> {
         return new String[0];
     }
 
-	public List<Speaker> getSpeakerById(long speakerId){
-		String query = "SELECT * FROM table_speaker WHERE _id =" + speakerId;
+    public List<Speaker> getSpeakerById(long speakerId) {
+        String query = "SELECT * FROM table_speaker WHERE _id =" + speakerId;
 
-		return getDataBySqlQuerySafe(query, null);
-	}
+        return getDataBySqlQuerySafe(query, null);
+    }
 
     public List<Speaker> getSpeakersByEventId(long eventId) {
         String query = "SELECT * FROM table_speaker WHERE _id IN (" +
@@ -61,7 +61,7 @@ public class SpeakerDao extends AbstractEntityDAO<Speaker, Long> {
         return getDataBySqlQuerySafe(query, null);
     }
 
-    public List<Speaker> selectSpeakersOrderedByName(){
+    public List<Speaker> selectSpeakersOrderedByName() {
         String query = mContext.getString(R.string.select_speakers_ordered_by_name);
         return getDataBySqlQuerySafe(query, null);
     }
