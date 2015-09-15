@@ -8,9 +8,9 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.model.data.Level;
-import com.ls.drupalconapp.model.data.Track;
+import com.ls.drupalcon.R;
+import com.ls.drupalcon.model.data.Level;
+import com.ls.drupalcon.model.data.Track;
 
 import java.util.ArrayList;
 import java.util.HashMap;

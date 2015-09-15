@@ -13,11 +13,11 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.model.Model;
-import com.ls.drupalconapp.model.UpdatesManager;
-import com.ls.drupalconapp.model.data.InfoItem;
-import com.ls.drupalconapp.model.managers.InfoManager;
+import com.ls.drupalcon.R;
+import com.ls.drupalcon.model.Model;
+import com.ls.drupalcon.model.UpdatesManager;
+import com.ls.drupalcon.model.data.InfoItem;
+import com.ls.drupalcon.model.managers.InfoManager;
 import com.ls.utils.L;
 
 import java.util.ArrayList;

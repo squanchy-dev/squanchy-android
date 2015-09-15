@@ -11,9 +11,6 @@ import android.util.Log;
 
 import java.util.Arrays;
 
-/**
- * Created by Yakiv M. on 26.09.2014.
- */
 public class ActivityManager {
 
     public static final boolean LOGS_ON = true;

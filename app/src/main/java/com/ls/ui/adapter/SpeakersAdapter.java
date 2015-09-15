@@ -10,8 +10,8 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.model.data.Speaker;
+import com.ls.drupalcon.R;
+import com.ls.drupalcon.model.data.Speaker;
 import com.ls.ui.fragment.SpeakersListFragment;
 import com.ls.ui.view.CircleImageView;
 

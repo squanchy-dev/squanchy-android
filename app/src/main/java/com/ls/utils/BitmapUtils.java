@@ -8,9 +8,6 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
-/**
- * Created by Kuhta on 08.07.2014.
- */
 public class BitmapUtils {
     public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int percentOfWidth) {
         if(bitmap == null){

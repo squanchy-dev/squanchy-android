@@ -9,12 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
-import com.ls.drawer.DrawerManager;
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.model.EventGenerator;
-import com.ls.drupalconapp.model.PreferencesManager;
-import com.ls.drupalconapp.model.data.Event;
-import com.ls.drupalconapp.model.data.Type;
+import com.ls.ui.drawer.DrawerManager;
+import com.ls.drupalcon.R;
+import com.ls.drupalcon.model.EventGenerator;
+import com.ls.drupalcon.model.PreferencesManager;
+import com.ls.drupalcon.model.data.Event;
+import com.ls.drupalcon.model.data.Type;
 import com.ls.ui.activity.EventDetailsActivity;
 import com.ls.ui.adapter.EventsAdapter;
 import com.ls.ui.adapter.item.EventListItem;

@@ -5,9 +5,6 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-/**
- * Created by omeres on 09.07.2014.
- */
 public class MediumFontTextView extends TextView {
 
     public MediumFontTextView(Context context) {

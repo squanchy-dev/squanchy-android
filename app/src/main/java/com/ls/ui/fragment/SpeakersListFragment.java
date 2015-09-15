@@ -17,11 +17,11 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.model.Model;
-import com.ls.drupalconapp.model.UpdatesManager;
-import com.ls.drupalconapp.model.data.Speaker;
-import com.ls.drupalconapp.model.managers.SpeakerManager;
+import com.ls.drupalcon.R;
+import com.ls.drupalcon.model.Model;
+import com.ls.drupalcon.model.UpdatesManager;
+import com.ls.drupalcon.model.data.Speaker;
+import com.ls.drupalcon.model.managers.SpeakerManager;
 import com.ls.ui.activity.SpeakerDetailsActivity;
 import com.ls.ui.adapter.SpeakersAdapter;
 

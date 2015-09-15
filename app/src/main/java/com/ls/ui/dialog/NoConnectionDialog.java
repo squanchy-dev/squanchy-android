@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 
-import com.ls.drupalconapp.R;
+import com.ls.drupalcon.R;
 
 public class NoConnectionDialog extends DialogFragment {
 

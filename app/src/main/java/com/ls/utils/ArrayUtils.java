@@ -1,8 +1,5 @@
 package com.ls.utils;
 
-/**
- * Created by Yakiv M. on 23.09.2014.
- */
 public class ArrayUtils {
 
     public static String[] build(Object... values) {

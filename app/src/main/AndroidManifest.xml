@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ls.drupalconapp"
+    package="com.ls.drupalcon"
     android:installLocation="auto">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,7 +13,7 @@
         android:required="true" />
 
     <application
-        android:name=".app.App"
+        android:name="com.ls.drupalcon.app.App"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"

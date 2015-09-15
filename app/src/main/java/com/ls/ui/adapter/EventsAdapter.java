@@ -14,12 +14,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ls.drawer.DrawerManager;
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.app.App;
-import com.ls.drupalconapp.model.data.Event;
-import com.ls.drupalconapp.model.data.Level;
-import com.ls.drupalconapp.model.data.Type;
+import com.ls.ui.drawer.DrawerManager;
+import com.ls.drupalcon.R;
+import com.ls.drupalcon.app.App;
+import com.ls.drupalcon.model.data.Event;
+import com.ls.drupalcon.model.data.Level;
+import com.ls.drupalcon.model.data.Type;
 import com.ls.ui.adapter.item.BofsItem;
 import com.ls.ui.adapter.item.EventListItem;
 import com.ls.ui.adapter.item.HeaderItem;

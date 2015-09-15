@@ -1,15 +1,11 @@
 package com.ls.utils;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-
-import com.ls.drupalconapp.app.App;
-
 import android.app.Activity;
 
-/**
- * Created by Admin on 04.02.2015.
- */
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.ls.drupalcon.app.App;
+
 public class AnalyticsManager {
 
     public static void sendEvent(Activity activity, String category, int actionId){

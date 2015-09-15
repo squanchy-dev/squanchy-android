@@ -1,10 +1,7 @@
 package com.ls.ui.adapter.item;
 
-import com.ls.drupalconapp.model.data.Event;
+import com.ls.drupalcon.model.data.Event;
 
-/**
- * Created by Yakiv M. on 24.09.2014.
- */
 public class SocialItem implements EventListItem {
 
     private Event mEvent;

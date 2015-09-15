@@ -3,8 +3,8 @@ package com.ls.ui.activity;
 import android.content.ComponentCallbacks2;
 import android.support.v7.app.AppCompatActivity;
 
-import com.ls.drupalconapp.model.Model;
-import com.ls.drupalconapp.model.UpdatesManager;
+import com.ls.drupalcon.model.Model;
+import com.ls.drupalcon.model.UpdatesManager;
 
 public class StateActivity extends AppCompatActivity {
 

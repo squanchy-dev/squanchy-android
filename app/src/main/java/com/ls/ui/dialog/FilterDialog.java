@@ -13,10 +13,10 @@ import android.view.Window;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.model.PreferencesManager;
-import com.ls.drupalconapp.model.data.Level;
-import com.ls.drupalconapp.model.data.Track;
+import com.ls.drupalcon.R;
+import com.ls.drupalcon.model.PreferencesManager;
+import com.ls.drupalcon.model.data.Level;
+import com.ls.drupalcon.model.data.Track;
 import com.ls.ui.adapter.FilterDialogAdapter;
 
 import java.util.ArrayList;

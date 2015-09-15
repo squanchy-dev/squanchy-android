@@ -7,7 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.ls.drupalconapp.R;
+import com.ls.drupalcon.R;
 import com.ls.ui.activity.EventDetailsActivity;
 import com.ls.ui.activity.HomeActivity;
 import com.ls.utils.AlarmTask;

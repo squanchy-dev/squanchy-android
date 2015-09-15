@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.text.format.DateFormat;
 
-import com.ls.drupalconapp.model.PreferencesManager;
+import com.ls.drupalcon.model.PreferencesManager;
 
 import org.jetbrains.annotations.NotNull;
 

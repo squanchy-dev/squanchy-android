@@ -14,11 +14,11 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.model.Model;
-import com.ls.drupalconapp.model.UpdatesManager;
-import com.ls.drupalconapp.model.data.Location;
-import com.ls.drupalconapp.model.managers.LocationManager;
+import com.ls.drupalcon.R;
+import com.ls.drupalcon.model.Model;
+import com.ls.drupalcon.model.UpdatesManager;
+import com.ls.drupalcon.model.data.Location;
+import com.ls.drupalcon.model.managers.LocationManager;
 
 import java.util.List;
 

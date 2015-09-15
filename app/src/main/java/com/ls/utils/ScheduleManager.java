@@ -5,7 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
-import com.ls.drupalconapp.model.data.EventDetailsEvent;
+import com.ls.drupalcon.model.data.EventDetailsEvent;
 import com.ls.receiver.NotifyReceiver;
 
 import java.util.Calendar;

@@ -1,13 +1,10 @@
 package com.ls.ui.activity;
 
-import com.ls.utils.ActivityManager;
-
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
-/**
- * Created by Yakiv M. on 26.09.2014.
- */
+import com.ls.utils.ActivityManager;
+
 public class BaseActivity extends ActionBarActivity {
 
     private ActivityManager mActivityManager;

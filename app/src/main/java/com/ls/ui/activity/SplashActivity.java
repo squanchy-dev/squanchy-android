@@ -7,11 +7,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.model.Model;
-import com.ls.drupalconapp.model.PreferencesManager;
-import com.ls.drupalconapp.model.UpdateCallback;
-import com.ls.drupalconapp.model.UpdatesManager;
+import com.ls.drupalcon.R;
+import com.ls.drupalcon.model.Model;
+import com.ls.drupalcon.model.PreferencesManager;
+import com.ls.drupalcon.model.UpdateCallback;
+import com.ls.drupalcon.model.UpdatesManager;
 import com.ls.ui.dialog.NoConnectionDialog;
 import com.ls.util.L;
 import com.ls.utils.AnalyticsManager;

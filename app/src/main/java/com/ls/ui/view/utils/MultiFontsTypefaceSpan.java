@@ -2,7 +2,6 @@ package com.ls.ui.view.utils;
 
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.os.Parcel;
 import android.text.TextPaint;
 import android.text.style.TypefaceSpan;
 
@@ -13,14 +12,6 @@ public class MultiFontsTypefaceSpan extends TypefaceSpan {
     public MultiFontsTypefaceSpan(String family, Typeface  type) {
         super(family);
         newType = type;
-    }
-
-    public MultiFontsTypefaceSpan(String family) {
-        super(family);
-    }
-
-    public MultiFontsTypefaceSpan(Parcel src) {
-        super(src);
     }
 
     @Override

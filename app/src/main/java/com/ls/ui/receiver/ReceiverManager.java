@@ -13,8 +13,6 @@ public class ReceiverManager {
 	public static final String EXTRAS_IS_FAVORITE = "EXTRAS_IS_FAVORITE";
 	public static final String ACTION_FAVORITE_UPDATED = "ACTION_FAVORITE_UPDATED";
 
-	public static final String SCREEN_OVERLAY = "SCREEN_OVERLAY";
-
 	private FavoriteUpdatedListener favoriteUpdatedListener;
 	private FavoriteReceiver favoriteReceiver;
 
@@ -39,8 +37,8 @@ public class ReceiverManager {
 		LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 	}
 
-	public static interface FavoriteUpdatedListener{
-		public void onFavoriteUpdated(long eventId, boolean isFavorite);
+	public interface FavoriteUpdatedListener{
+		void onFavoriteUpdated(long eventId, boolean isFavorite);
 	}
 
 	private class FavoriteReceiver extends BroadcastReceiver{

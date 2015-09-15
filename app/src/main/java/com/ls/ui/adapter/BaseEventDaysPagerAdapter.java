@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.ls.drawer.DrawerManager;
+import com.ls.ui.drawer.DrawerManager;
 import com.ls.ui.fragment.EventFragment;
 import com.ls.utils.DateUtils;
 

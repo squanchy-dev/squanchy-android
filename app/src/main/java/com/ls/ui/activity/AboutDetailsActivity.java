@@ -7,9 +7,9 @@ import android.view.MenuItem;
 import android.webkit.WebView;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
-import com.ls.drupalconapp.R;
-import com.ls.drupalconapp.model.Model;
-import com.ls.drupalconapp.model.UpdatesManager;
+import com.ls.drupalcon.R;
+import com.ls.drupalcon.model.Model;
+import com.ls.drupalcon.model.UpdatesManager;
 import com.ls.utils.AnalyticsManager;
 
 import java.util.List;

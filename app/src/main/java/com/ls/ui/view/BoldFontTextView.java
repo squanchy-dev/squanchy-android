@@ -5,9 +5,6 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-/**
- * Created by Kuhta on 23.09.2014.
- */
 public class BoldFontTextView extends TextView {
 	private static Typeface font;
 
