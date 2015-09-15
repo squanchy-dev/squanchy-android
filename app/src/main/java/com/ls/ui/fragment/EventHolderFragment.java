@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.ls.ui.drawer.DrawerManager;
 import com.ls.drupalcon.R;
 import com.ls.drupalcon.model.Model;
 import com.ls.drupalcon.model.PreferencesManager;
@@ -25,9 +24,8 @@ import com.ls.drupalcon.model.managers.ProgramManager;
 import com.ls.drupalcon.model.managers.SocialManager;
 import com.ls.ui.activity.HomeActivity;
 import com.ls.ui.adapter.BaseEventDaysPagerAdapter;
-import com.ls.ui.dialog.FilterDialog;
+import com.ls.ui.drawer.DrawerManager;
 import com.ls.ui.receiver.ReceiverManager;
-import com.ls.utils.ApplicationConfig;
 import com.ls.utils.DateUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -48,20 +46,19 @@ public class EventHolderFragment extends Fragment {
     private View mTxtNoEvents;
     private View mNoFavorites;
 
-    private UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener() {
+    private UpdatesManager.DataUpdatedListener updateReceiver = new UpdatesManager.DataUpdatedListener() {
         @Override
         public void onDataUpdated(List<Integer> requestIds) {
-            performDataUpdate(requestIds);
+            updateData(requestIds);
         }
     };
 
-    private ReceiverManager receiverManager = new ReceiverManager(
-            new ReceiverManager.FavoriteUpdatedListener() {
-                @Override
-                public void onFavoriteUpdated(long eventId, boolean isFavorite) {
-                    performFavoriteUpdate();
-                }
-            });
+    private ReceiverManager favoriteReceiver = new ReceiverManager(new ReceiverManager.FavoriteUpdatedListener() {
+        @Override
+        public void onFavoriteUpdated(long eventId, boolean isFavorite) {
+            updateFavorites();
+        }
+    });
 
     public static EventHolderFragment newInstance(int modePos) {
         EventHolderFragment fragment = new EventHolderFragment();
@@ -106,8 +103,8 @@ public class EventHolderFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Model.instance().getUpdatesManager().registerUpdateListener(updateListener);
-        receiverManager.register(getActivity());
+        Model.instance().getUpdatesManager().registerUpdateListener(updateReceiver);
+        favoriteReceiver.register(getActivity());
 
         initData();
         initView();
@@ -117,8 +114,8 @@ public class EventHolderFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Model.instance().getUpdatesManager().unregisterUpdateListener(updateListener);
-        receiverManager.unregister(getActivity());
+        Model.instance().getUpdatesManager().unregisterUpdateListener(updateReceiver);
+        favoriteReceiver.unregister(getActivity());
     }
 
     private void initData() {
@@ -147,7 +144,7 @@ public class EventHolderFragment extends Fragment {
         mTxtNoEvents = view.findViewById(R.id.txtNoEvents);
         mNoFavorites = view.findViewById(R.id.emptyIcon);
 
-        if (!ApplicationConfig.DISPLAY_FILTER || mEventMode != DrawerManager.EventMode.Program) {
+        if (mEventMode != DrawerManager.EventMode.Program) {
             setHasOptionsMenu(false);
         } else {
             setHasOptionsMenu(true);
@@ -255,22 +252,7 @@ public class EventHolderFragment extends Fragment {
         }
     }
 
-    //TODO refactor
-    private void performDataUpdate(List<Integer> requestIds) {
-        Activity activity = getActivity();
-        if (activity instanceof HomeActivity) {
-            ((HomeActivity) activity).initFilterDialog();
-
-            FilterDialog filterDialog = ((HomeActivity) activity).mFilterDialog;
-            if (filterDialog != null) {
-                filterDialog.clearFilter();
-
-                if (((HomeActivity) activity).mFilterDialog.isAdded()) {
-                    ((HomeActivity) activity).mFilterDialog.dismissAllowingStateLoss();
-                }
-            }
-        }
-
+    private void updateData(List<Integer> requestIds) {
         for (int id : requestIds) {
             int eventModePos = UpdatesManager.convertEventIdToEventModePos(id);
             if (eventModePos == mEventMode.ordinal()) {
@@ -280,7 +262,7 @@ public class EventHolderFragment extends Fragment {
         }
     }
 
-    private void performFavoriteUpdate() {
+    private void updateFavorites() {
         if (getView() != null) {
             if (mEventMode == DrawerManager.EventMode.Favorites) {
                 loadData();

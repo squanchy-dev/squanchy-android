@@ -12,18 +12,19 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
-import com.ls.ui.drawer.DrawerAdapter;
-import com.ls.ui.drawer.DrawerManager;
-import com.ls.ui.drawer.DrawerMenu;
-import com.ls.ui.drawer.DrawerMenuItem;
 import com.ls.drupalcon.R;
 import com.ls.drupalcon.app.App;
 import com.ls.drupalcon.model.Model;
+import com.ls.drupalcon.model.UpdatesManager;
 import com.ls.drupalcon.model.data.Level;
 import com.ls.drupalcon.model.data.Track;
 import com.ls.drupalcon.model.managers.TracksManager;
 import com.ls.ui.adapter.item.EventListItem;
 import com.ls.ui.dialog.FilterDialog;
+import com.ls.ui.drawer.DrawerAdapter;
+import com.ls.ui.drawer.DrawerManager;
+import com.ls.ui.drawer.DrawerMenu;
+import com.ls.ui.drawer.DrawerMenuItem;
 import com.ls.utils.AnalyticsManager;
 import com.ls.utils.KeyboardUtils;
 import com.ls.utils.ScheduleManager;
@@ -48,6 +49,14 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
     public FilterDialog mFilterDialog;
     public boolean mIsDrawerItemClicked;
 
+    private UpdatesManager.DataUpdatedListener updateReceiver = new UpdatesManager.DataUpdatedListener() {
+        @Override
+        public void onDataUpdated(List<Integer> requestIds) {
+            closeFilterDialog();
+            initFilterDialog();
+        }
+    };
+
     public static void startThisActivity(Activity activity) {
         Intent intent = new Intent(activity, HomeActivity.class);
         activity.startActivity(intent);
@@ -57,6 +66,7 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_main);
+        Model.instance().getUpdatesManager().registerUpdateListener(updateReceiver);
 
         initToolbar();
         initNavigationDrawer();
@@ -92,8 +102,9 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+        Model.instance().getUpdatesManager().unregisterUpdateListener(updateReceiver);
         AnalyticsManager.sendEvent(this, "Application", R.string.action_close);
+        super.onDestroy();
     }
 
     @Override
@@ -195,6 +206,15 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
             protected void onPostExecute(List<EventListItem> eventListItems) {
             }
         }.execute();
+    }
+
+    public void closeFilterDialog() {
+        if (mFilterDialog != null) {
+            if (mFilterDialog.isAdded()) {
+                mFilterDialog.dismissAllowingStateLoss();
+            }
+            mFilterDialog.clearFilter();
+        }
     }
 
     private void handleIntent(Intent intent) {
