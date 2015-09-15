@@ -115,6 +115,8 @@ public class Speaker extends AbstractEntity<Long> implements Parcelable, Compara
         parcel.writeString(mCharacteristic);
         parcel.writeString(mTwitterName);
         parcel.writeString(mWebSite);
+        parcel.writeDouble(mOrder);
+        parcel.writeInt(fromBoolean(mDeleted));
     }
 
     public Speaker(Parcel parcel) {
@@ -127,6 +129,24 @@ public class Speaker extends AbstractEntity<Long> implements Parcelable, Compara
         mCharacteristic = parcel.readString();
         mTwitterName = parcel.readString();
         mWebSite = parcel.readString();
+        mOrder = parcel.readDouble();
+        mDeleted = toBoolean(parcel.readInt());
+    }
+
+    private boolean toBoolean(int num) {
+        if (num == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private int fromBoolean(boolean bl) {
+        if (bl) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     @Override

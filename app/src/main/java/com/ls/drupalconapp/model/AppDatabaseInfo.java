@@ -23,10 +23,11 @@ import java.util.List;
 public class AppDatabaseInfo implements DBInfo, IMigrationTask {
 
     public static final String DATABASE_NAME = "drupalcon.db";
-    public static final int DATABASE_VERSION = 8;
+    public static final int DATABASE_VERSION = 20;
 
     private static final String TABLE_EVENT_SPEAKER = "table_event_and_speaker";
     private static final String TABLE_FAVORITE_EVENTS = "table_favorite_events";
+    private static final String DELETE_TABLE_IF_EXIST = "DROP TABLE IF EXISTS ";
 
     private Resources mResources;
 
@@ -104,17 +105,10 @@ public class AppDatabaseInfo implements DBInfo, IMigrationTask {
 
     private List<String> generateDropQueryList() {
         List<String> dbDropList = new ArrayList<>();
-        addStringWithIdToList(dbDropList, R.string.delete_table_type);
-        addStringWithIdToList(dbDropList, R.string.delete_table_speaker);
-        addStringWithIdToList(dbDropList, R.string.delete_table_level);
-        addStringWithIdToList(dbDropList, R.string.delete_table_track);
-        addStringWithIdToList(dbDropList, R.string.delete_table_location);
-        addStringWithIdToList(dbDropList, R.string.delete_table_house_plans);
-        addStringWithIdToList(dbDropList, R.string.delete_table_info);
-        addStringWithIdToList(dbDropList, R.string.delete_table_poi);
-        addStringWithIdToList(dbDropList, R.string.delete_table_event);
-        addStringWithIdToList(dbDropList, R.string.delete_table_event_and_speaker);
-        addStringWithIdToList(dbDropList, R.string.delete_table_favorite_events);
+        for (String tableName : getTableNameList()) {
+            String query = DELETE_TABLE_IF_EXIST + tableName;
+            dbDropList.add(query);
+        }
         return dbDropList;
     }
 
