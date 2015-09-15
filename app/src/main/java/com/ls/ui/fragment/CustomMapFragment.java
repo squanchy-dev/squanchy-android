@@ -9,7 +9,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 public class CustomMapFragment extends SupportMapFragment {
 
     public interface OnActivityCreatedListener {
-        public void onActivityCreated(GoogleMap googleMap);
+        void onActivityCreated(GoogleMap googleMap);
     }
 
     private OnActivityCreatedListener mListener;
