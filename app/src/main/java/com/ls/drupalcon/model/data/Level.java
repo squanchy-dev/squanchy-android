@@ -105,4 +105,21 @@ public class Level extends AbstractEntity<Long>{
                 return 0;
         }
     }
+
+    public static int getIcon(String levelName) {
+        switch (levelName) {
+
+            case "Beginner":
+                return R.drawable.ic_experience_beginner;
+
+            case "Intermediate":
+                return R.drawable.ic_experience_intermediate;
+
+            case "Advanced":
+                return R.drawable.ic_experience_advanced;
+
+            default:
+                return 0;
+        }
+    }
 }

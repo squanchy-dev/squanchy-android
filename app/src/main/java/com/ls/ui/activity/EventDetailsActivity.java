@@ -373,11 +373,6 @@ public class EventDetailsActivity extends StackKeeperActivity {
             long systemDateLong = System.currentTimeMillis();
             long scheduleDateLong = calendar.getTimeInMillis();
 
-//            SimpleDateFormat format = new SimpleDateFormat("d-MM-yyyy kk:mm");
-//            format.setTimeZone(DateUtils.getInstance().getTimeZone());
-//            String system = format.format(new Date(systemDateLong));
-//            String schelude = format.format(new Date(scheduleDateLong));
-
             if (scheduleDateLong > systemDateLong) {
                 manager.setAlarmForNotification(calendar, mEvent, mEventStartDate);
             }

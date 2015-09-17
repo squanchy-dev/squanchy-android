@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/white">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
 
     <com.ls.ui.view.NotifyingScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
         android:fillViewport="true"
-        app:parallax_views_num="1">
+        android:visibility="gone"
+        app:parallax_views_num="1"
+        tools:visibility="visible">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -23,112 +24,111 @@
                 android:layout_width="match_parent"
                 android:layout_height="165dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/speaker_details_header"/>
+                android:src="@drawable/speaker_details_header" />
 
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_below="@+id/imgHeader"
                 android:background="@android:color/white"
-                android:layout_below="@+id/imgHeader">
+                android:orientation="vertical">
 
                 <com.ls.ui.view.MediumFontTextView
+                    android:id="@+id/txtSpeakerName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="42dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
+                    android:layout_marginTop="42dp"
                     android:gravity="center_vertical"
-                    android:textSize="@dimen/text_size_medium"
                     android:textColor="@color/black_100"
-                    android:id="@+id/txtSpeakerName"
-                    tools:text="Lorem Ipsum"/>
+                    android:textSize="@dimen/text_size_medium"
+                    tools:text="Lorem Ipsum" />
 
                 <com.ls.ui.view.RegularFontTextView
+                    android:id="@+id/txtSpeakerPosition"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    tools:text="Lorem Ipsum"
+                    android:layout_marginTop="4dp"
                     android:background="@android:color/white"
                     android:textColor="@color/black_100"
                     android:textSize="@dimen/text_size_small"
-                    android:id="@+id/txtSpeakerPosition"/>
+                    tools:text="Lorem Ipsum" />
 
                 <LinearLayout
                     android:id="@+id/holderButtons"
-                    android:background="@android:color/white"
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
                     android:layout_marginBottom="12dp"
+                    android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:layout_marginLeft="16dp">
+                    android:layout_marginTop="12dp"
+                    android:background="@android:color/white"
+                    android:orientation="horizontal">
 
                     <FrameLayout
                         android:id="@+id/holderBtnTwitter"
                         android:layout_width="wrap_content"
                         android:layout_height="36dp"
-                        android:background="@drawable/bg_shadow"
-                        android:layout_marginRight="4dp">
+                        android:layout_marginRight="4dp"
+                        android:background="@drawable/bg_shadow">
 
                         <ImageView
                             android:id="@+id/btnTwitter"
                             android:layout_width="100dp"
                             android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textStyle="bold"
-                            android:textSize="@dimen/text_size_small"
-                            android:textColor="@android:color/holo_blue_dark"
                             android:background="@drawable/selector_light"
                             android:clickable="true"
-                            android:src="@drawable/btn_twitter_normal"/>
+                            android:gravity="center"
+                            android:src="@drawable/btn_twitter_normal"
+                            android:textColor="@android:color/holo_blue_dark"
+                            android:textSize="@dimen/text_size_small"
+                            android:textStyle="bold" />
                     </FrameLayout>
 
                     <FrameLayout
                         android:id="@+id/holderBtnWebsite"
                         android:layout_width="wrap_content"
                         android:layout_height="36dp"
-                        android:background="@drawable/bg_shadow"
-                        android:layout_marginLeft="4dp">
+                        android:layout_marginLeft="4dp"
+                        android:background="@drawable/bg_shadow">
 
                         <ImageView
                             android:id="@+id/btnWebsite"
                             android:layout_width="100dp"
                             android:layout_height="match_parent"
                             android:background="@drawable/selector_light"
-                            android:gravity="center"
-                            android:textStyle="bold"
-                            android:textSize="@dimen/text_size_small"
-                            android:textColor="@android:color/holo_blue_dark"
                             android:clickable="true"
-                            android:src="@drawable/btn_website_normal"/>
+                            android:gravity="center"
+                            android:src="@drawable/btn_website_normal"
+                            android:textColor="@android:color/holo_blue_dark"
+                            android:textSize="@dimen/text_size_small"
+                            android:textStyle="bold" />
                     </FrameLayout>
                 </LinearLayout>
 
                 <FrameLayout
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp">
 
                     <WebView
                         android:id="@+id/webView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:visibility="gone"/>
+                        android:visibility="gone" />
                 </FrameLayout>
 
                 <LinearLayout
                     android:id="@+id/layoutEvents"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@android:color/white">
-                </LinearLayout>
+                    android:background="@android:color/white"
+                    android:orientation="vertical" />
 
             </LinearLayout>
 
@@ -150,7 +150,7 @@
         android:id="@+id/viewShadow"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="@drawable/shape_shadow"/>
+        android:background="@drawable/shape_shadow" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -161,7 +161,7 @@
             android:id="@+id/viewToolbar"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:background="@color/speaker"/>
+            android:background="@color/speaker" />
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolBar"
@@ -174,12 +174,12 @@
                 android:id="@+id/toolbarTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="DrupalCon"
-                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="8dp"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_20"
-                android:layout_marginRight="8dp"
-                android:layout_gravity="center_vertical"/>
+                android:textStyle="bold"
+                tools:text="DrupalCon" />
         </android.support.v7.widget.Toolbar>
     </RelativeLayout>
 
@@ -188,6 +188,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center" />
 
 </RelativeLayout>

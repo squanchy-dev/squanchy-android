@@ -43,4 +43,5 @@
     <string name="start_in_5_minutes">" starts in 5 minutes"</string>
     <string name="to">to %s</string>
     <string name="speaker_separator">", "</string>
+    <string name="css"><![CDATA[<link rel=\'stylesheet\' href=\'css/style.css\' type=\'text/css\'>]]></string>
 </resources>
