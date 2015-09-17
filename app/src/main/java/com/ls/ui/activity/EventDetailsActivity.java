@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ShareCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -14,10 +15,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -38,6 +39,7 @@ import com.ls.ui.view.NotifyingScrollView;
 import com.ls.utils.AnalyticsManager;
 import com.ls.utils.DateUtils;
 import com.ls.utils.ScheduleManager;
+import com.ls.utils.WebviewUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -53,14 +55,12 @@ public class EventDetailsActivity extends StackKeeperActivity {
     private View mViewToolbar;
 
     private NotifyingScrollView mScrollView;
-    private ProgressBar mProgressBar;
     private MenuItem mItemShare;
 
     private EventDetailsEvent mEvent;
     private List<Speaker> mSpeakerList;
     private long mEventId;
     private long mEventStartDate;
-
     private boolean mIsFavorite;
 
     private ReceiverManager receiverManager = new ReceiverManager(
@@ -94,15 +94,9 @@ public class EventDetailsActivity extends StackKeeperActivity {
         Model.instance().getUpdatesManager().registerUpdateListener(updateListener);
 
         initData();
+        initToolbar();
         initViews();
         loadEvent();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        receiverManager.unregister(this);
-        Model.instance().getUpdatesManager().unregisterUpdateListener(updateListener);
     }
 
     @Override
@@ -128,14 +122,16 @@ public class EventDetailsActivity extends StackKeeperActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        receiverManager.unregister(this);
+        Model.instance().getUpdatesManager().unregisterUpdateListener(updateListener);
+    }
+
     private void initData() {
         mEventId = getIntent().getLongExtra(EXTRA_EVENT_ID, -1);
         mEventStartDate = getIntent().getLongExtra(EXTRA_DAY, -1);
-    }
-
-    private void initViews() {
-        initToolbar();
-        initView();
     }
 
     private void initToolbar() {
@@ -146,60 +142,63 @@ public class EventDetailsActivity extends StackKeeperActivity {
         mViewToolbar.setAlpha(0f);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
-        toolbar.setTitle("");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
+        if (toolbar != null) {
+            toolbar.setTitle("");
+            setSupportActionBar(toolbar);
 
-    private void initView() {
-        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
-        mScrollView = (NotifyingScrollView) findViewById(R.id.scrollView);
-        mScrollView.setAlpha(0);
-        mScrollView.setOnScrollChangedListener(scrollListener);
-    }
-
-    private void loadEvent() {
-        if (mEventId != -1) {
-            new AsyncTask<Void, Void, EventDetailsEvent>() {
-                @Override
-                protected EventDetailsEvent doInBackground(Void... params) {
-                    SpeakerManager speakerManager = Model.instance().getSpeakerManager();
-                    mSpeakerList = new ArrayList<>();
-                    mSpeakerList.addAll(speakerManager.getSpeakersByEventId(mEventId));
-
-                    EventManager eventManager = Model.instance().getEventManager();
-                    return eventManager.getEventById(mEventId);
-                }
-
-                @Override
-                protected void onPostExecute(EventDetailsEvent event) {
-                    if (event != null) {
-                        fillEventView(event);
-                    }
-                }
-            }.execute();
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+            }
         }
     }
 
-    private void fillEventView(@NonNull EventDetailsEvent event) {
-        mProgressBar.setVisibility(View.GONE);
-        mScrollView.setAlpha(1.0f);
+    private void initViews() {
+        mSpeakerList = new ArrayList<>();
+        mScrollView = (NotifyingScrollView) findViewById(R.id.scrollView);
+        mScrollView.setOnScrollChangedListener(scrollListener);
+        mScrollView.setAlpha(0);
+    }
 
+    private void loadEvent() {
+        if (mEventId == -1) return;
+
+        new AsyncTask<Void, Void, EventDetailsEvent>() {
+            @Override
+            protected EventDetailsEvent doInBackground(Void... params) {
+                SpeakerManager speakerManager = Model.instance().getSpeakerManager();
+                mSpeakerList.addAll(speakerManager.getSpeakersByEventId(mEventId));
+
+                EventManager eventManager = Model.instance().getEventManager();
+                return eventManager.getEventById(mEventId);
+            }
+
+            @Override
+            protected void onPostExecute(EventDetailsEvent event) {
+                if (event != null) {
+                    fillEventView(event);
+                }
+            }
+        }.execute();
+    }
+
+    private void fillEventView(@NonNull EventDetailsEvent event) {
         mEvent = event;
         fillToolbar(mEvent);
         fillDate(mEvent);
         fillPreDescription(mEvent);
-        fillDescription(mEvent);
         fillFavoriteState(mEvent);
         fillSpeakers(mEvent);
+        fillDescription(mEvent);
     }
 
     private void fillToolbar(@NonNull EventDetailsEvent event) {
-        if (mItemShare != null && mToolbarTitle != null) {
-            if (TextUtils.isEmpty(event.getLink())) {
-                mItemShare.setVisible(false);
-            }
+        if (mToolbarTitle != null && !TextUtils.isEmpty(event.getEventName())) {
             mToolbarTitle.setText(event.getEventName());
+        }
+
+        if (mItemShare != null && TextUtils.isEmpty(event.getLink())) {
+            mItemShare.setVisible(false);
         }
     }
 
@@ -255,11 +254,15 @@ public class EventDetailsActivity extends StackKeeperActivity {
 
     private void fillDescription(@NonNull EventDetailsEvent event) {
         if (!TextUtils.isEmpty(event.getDescription())) {
-            String css = "<link rel='stylesheet' href='css/style.css' type='text/css'>";
-            String html = "<html><header>" + css + "</header>" + "<body>" + event.getDescription() + "</body></html>";
+            String html = WebviewUtils.getHtml(this, event.getDescription());
             WebView webView = (WebView) findViewById(R.id.webView);
             webView.setHorizontalScrollBarEnabled(false);
             webView.loadDataWithBaseURL("file:///android_asset/", html, "text/html", "UTF-8", null);
+            webView.setWebViewClient(new WebViewClient() {
+                public void onPageFinished(WebView view, String url) {
+                   completeLoading();
+                }
+            });
         }
     }
 
@@ -395,6 +398,11 @@ public class EventDetailsActivity extends StackKeeperActivity {
                 .setSubject(shareSubject)
                 .setText(getString(R.string.body_share) + " " + url);
         return builder.getIntent();
+    }
+
+    private void completeLoading() {
+        findViewById(R.id.progressBar).setVisibility(View.GONE);
+        mScrollView.setAlpha(1.0f);
     }
 
     private NotifyingScrollView.OnScrollChangedListener scrollListener = new NotifyingScrollView.OnScrollChangedListener() {
