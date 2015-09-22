@@ -77,9 +77,6 @@ public class UpdatesManager {
                     });
                 }
 
-                if (callback == null) {
-                    return;
-                }
                 if (result != null) {
                     callback.onDownloadSuccess();
                     mUpdateListeners.notifyAllObservers(new ObserverHolder.ObserverNotifier<DataUpdatedListener>() {
@@ -230,17 +227,6 @@ public class UpdatesManager {
     public void checkForDatabaseUpdate() {
         ILAPIDBFacade facade = Model.instance().getFacade();
         facade.open();
-
-//        String timeZone = TimeZone.getDefault().getID();
-//        if (!TextUtils.isEmpty(timeZone)) {
-//            String prefTimeZone = PreferencesManager.getInstance().getTimeZoneId();
-//            if (!timeZone.equals(prefTimeZone)) {
-//                Model.instance().clearAllDao();
-//                PreferencesManager.getInstance().saveLastUpdateDate("");
-//            }
-//            PreferencesManager.getInstance().saveTimeZone(timeZone);
-//        }
-
         facade.close();
     }
 }

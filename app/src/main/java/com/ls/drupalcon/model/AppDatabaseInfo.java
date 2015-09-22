@@ -23,7 +23,7 @@ import java.util.List;
 public class AppDatabaseInfo implements DBInfo, IMigrationTask {
 
     public static final String DATABASE_NAME = "drupalcon.db";
-    public static final int DATABASE_VERSION = 8;
+    public static final int DATABASE_VERSION = 9;
 
     private static final String TABLE_EVENT_SPEAKER = "table_event_and_speaker";
     private static final String TABLE_FAVORITE_EVENTS = "table_favorite_events";
@@ -74,6 +74,7 @@ public class AppDatabaseInfo implements DBInfo, IMigrationTask {
     @Override
     public void onUpgrade(SQLiteDatabase theDb, int oldVersion, int newVersion) {
         if (newVersion > oldVersion){
+            PreferencesManager.getInstance().saveLastUpdateDate(null);
             List<String> dbDropList = generateDropQueryList();
             List<String> dbSchemaQueryList = generateCreationQueryList();
 

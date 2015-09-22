@@ -40,7 +40,7 @@ public class PreferencesManager {
     }
 
     public void saveTimeZone(String timeZone) {
-        mPref.edit().putString(TIME_ZONE, timeZone).apply();
+        mPref.edit().putString(TIME_ZONE, timeZone).commit();
     }
 
     public String getTimeZone() {
@@ -48,7 +48,7 @@ public class PreferencesManager {
     }
 
     public void saveLastUpdateDate(String value) {
-        mPref.edit().putString(KEY_LAST_UPDATE_DATE, value).apply();
+        mPref.edit().putString(KEY_LAST_UPDATE_DATE, value).commit();
     }
 
     public String getLastUpdateDate() {
@@ -56,7 +56,7 @@ public class PreferencesManager {
     }
 
     public void saveMajorInfoTitle(String value) {
-        mPref.edit().putString(KEY_INFO_MAJOR_TITLE, value).apply();
+        mPref.edit().putString(KEY_INFO_MAJOR_TITLE, value).commit();
     }
 
     public String getMajorInfoTitle() {
@@ -66,7 +66,7 @@ public class PreferencesManager {
     public void saveMinorInfoTitle(String value) {
         mPref.edit()
                 .putString(KEY_INFO_MINOR_TITLE, value)
-                .apply();
+                .commit();
     }
 
     public String getMinorInfoTitle() {
@@ -74,7 +74,7 @@ public class PreferencesManager {
     }
 
     public void remove(String key) {
-        mPref.edit().remove(key).apply();
+        mPref.edit().remove(key).commit();
     }
 
     public boolean clear() {
@@ -96,7 +96,7 @@ public class PreferencesManager {
 
         String expLevelAll = builder.toString();
         editor.putString(FILTER_EXP_LEVEL, expLevelAll);
-        editor.apply();
+        editor.commit();
     }
 
     public List<Long> loadExpLevel() {
@@ -127,7 +127,7 @@ public class PreferencesManager {
 
         String trackAll = builder.toString();
         editor.putString(FILTER_TRACK, trackAll);
-        editor.apply();
+        editor.commit();
     }
 
     public List<Long> loadTracks() {
