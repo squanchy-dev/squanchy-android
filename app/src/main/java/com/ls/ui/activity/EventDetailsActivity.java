@@ -167,6 +167,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
             @Override
             protected EventDetailsEvent doInBackground(Void... params) {
                 SpeakerManager speakerManager = Model.instance().getSpeakerManager();
+                mSpeakerList.clear();
                 mSpeakerList.addAll(speakerManager.getSpeakersByEventId(mEventId));
 
                 EventManager eventManager = Model.instance().getEventManager();
