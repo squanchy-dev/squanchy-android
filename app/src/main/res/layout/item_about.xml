@@ -18,8 +18,8 @@
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/white_200"
-        android:layout_gravity="bottom"/>
+        android:layout_height="1dp"
+        android:layout_gravity="bottom"
+        android:background="@color/grey_50"/>
 
 </FrameLayout>
