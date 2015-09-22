@@ -95,8 +95,10 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void showNoNetworkDialog() {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(new NoConnectionDialog(), NoConnectionDialog.TAG);
-        ft.commitAllowingStateLoss();
+        if (!isDestroyed()) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.add(new NoConnectionDialog(), NoConnectionDialog.TAG);
+            ft.commitAllowingStateLoss();
+        }
     }
 }
