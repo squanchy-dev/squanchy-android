@@ -99,7 +99,7 @@ public class EventsAdapter extends BaseAdapter {
         } else if (itemViewType == EventListItem.TYPE_SOCIAL) {
             resultView = initSocialView(position, convertView, parent);
         } else if (itemViewType == EventListItem.TYPE_SECTION_NAME) {
-            resultView = initSeactionNameView(position, convertView, parent);
+            resultView = initSectionNameView(position, convertView, parent);
         } else {
             resultView = new View(mInflater.getContext());
         }
@@ -154,6 +154,7 @@ public class EventsAdapter extends BaseAdapter {
         fillIcon(holder, event.getType());
         fillEventInfo(holder, event, null, bofsItem.getSpeakers());
         fillEventClickAbility(holder.layoutRoot, holder.txtPlace, event, position);
+        fillDivider(holder, !bofsItem.isLast());
 
         return resultView;
     }
@@ -207,7 +208,7 @@ public class EventsAdapter extends BaseAdapter {
         return resultView;
     }
 
-    public View initSeactionNameView(int position, View convertView, ViewGroup parent) {
+    public View initSectionNameView(int position, View convertView, ViewGroup parent) {
         View resultView = convertView;
         HeaderHolder holder;
 
