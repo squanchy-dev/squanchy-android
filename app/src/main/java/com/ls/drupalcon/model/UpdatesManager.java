@@ -78,7 +78,9 @@ public class UpdatesManager {
                 }
 
                 if (result != null) {
-                    callback.onDownloadSuccess();
+                    if (callback != null) {
+                        callback.onDownloadSuccess();
+                    }
                     mUpdateListeners.notifyAllObservers(new ObserverHolder.ObserverNotifier<DataUpdatedListener>() {
                         @Override
                         public void onNotify(DataUpdatedListener observer) {
@@ -86,7 +88,9 @@ public class UpdatesManager {
                         }
                     });
                 } else {
-                    callback.onDownloadError();
+                    if (callback != null) {
+                        callback.onDownloadError();
+                    }
                 }
             }
         }.execute();
