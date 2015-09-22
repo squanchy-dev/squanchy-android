@@ -25,7 +25,7 @@ public class ScheduleManager {
 
     public void cancelAlarm(long id) {
         Intent intent = new Intent(mContext, NotifyReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, (int) id, intent, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, (int) id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         am.cancel(pendingIntent);
     }
 
