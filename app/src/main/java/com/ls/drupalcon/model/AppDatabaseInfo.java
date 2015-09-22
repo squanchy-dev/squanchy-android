@@ -22,7 +22,7 @@ import java.util.List;
 
 public class AppDatabaseInfo implements DBInfo, IMigrationTask {
 
-    public static final String DATABASE_NAME = "drupalcon.db";
+    public static final String DATABASE_NAME = "drupal_db";
     public static final int DATABASE_VERSION = 9;
 
     private static final String TABLE_EVENT_SPEAKER = "table_event_and_speaker";
