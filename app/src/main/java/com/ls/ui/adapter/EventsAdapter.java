@@ -177,7 +177,7 @@ public class EventsAdapter extends BaseAdapter {
 
         fillEventInfo(holder, event, programItem.getTrack(), programItem.getSpeakers());
         fillIcon(holder, event.getType());
-        fillDivider(holder, programItem.isLast());
+        fillDivider(holder, !programItem.isLast());
         fillEventClickAbility(holder.layoutRoot, holder.txtPlace, event, position);
 
         return resultView;
