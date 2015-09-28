@@ -29,7 +29,7 @@
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_below="@+id/imgHeader"
                 android:background="@android:color/white"
                 android:orientation="vertical">
@@ -110,18 +110,12 @@
                     </FrameLayout>
                 </LinearLayout>
 
-                <FrameLayout
+                <WebView
+                    android:id="@+id/webView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp">
-
-                    <WebView
-                        android:id="@+id/webView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:visibility="gone" />
-                </FrameLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"/>
 
                 <LinearLayout
                     android:id="@+id/layoutEvents"

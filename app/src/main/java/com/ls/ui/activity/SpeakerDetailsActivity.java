@@ -192,15 +192,14 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
     }
 
     private void fillSpeakerDescription() {
-        WebView webView = (WebView) findViewById(R.id.webView);
+        final WebView webView = (WebView) findViewById(R.id.webView);
         if (!TextUtils.isEmpty(mSpeaker.getCharact())) {
 
-            webView.setVisibility(View.VISIBLE);
-            webView.loadUrl("about:blank");
-
             String html = WebviewUtils.getHtml(this, mSpeaker.getCharact());
-            webView.loadDataWithBaseURL("file:///android_asset/", html, "text/html", "UTF-8", null);
+            webView.setVisibility(View.VISIBLE);
 
+            webView.setHorizontalScrollBarEnabled(false);
+            webView.loadDataWithBaseURL("file:///android_asset/", html, "text/html", "UTF-8", null);
             webView.setWebViewClient(new WebViewClient() {
                 public void onPageFinished(WebView view, String url) {
                     mIsWebLoaded = true;
