@@ -1,6 +1,7 @@
 package com.ls.ui.fragment;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -48,7 +49,7 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
                 @Override
                 public void onFavoriteUpdated(long eventId, boolean isFavorite) {
                     if (mEventMode != DrawerManager.EventMode.Favorites) {
-                        loadData();
+                        new LoadData().execute();
                     }
                 }
             });
@@ -73,7 +74,7 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
         super.onActivityCreated(savedInstanceState);
         initData();
         initViews();
-        loadData();
+        new LoadData().execute();
         receiverManager.register(getActivity());
     }
 
@@ -114,13 +115,17 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
         }
     }
 
-    private void loadData() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                updateViewsUI(getEventItems());
-            }
-        }).start();
+    class LoadData extends AsyncTask<Void, Void, List<EventListItem>> {
+
+        @Override
+        protected List<EventListItem> doInBackground(Void... params) {
+            return getEventItems();
+        }
+
+        @Override
+        protected void onPostExecute(List<EventListItem> result) {
+            updateViewsUI(result);
+        }
     }
 
     private void updateViewsUI(final List<EventListItem> eventList) {

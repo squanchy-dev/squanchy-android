@@ -3,6 +3,7 @@ package com.ls.ui.fragment;
 
 import android.app.Activity;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -108,7 +109,7 @@ public class EventHolderFragment extends Fragment {
 
         initData();
         initView();
-        loadData();
+        new LoadData().execute();
     }
 
     @Override
@@ -151,24 +152,16 @@ public class EventHolderFragment extends Fragment {
         }
     }
 
-    private void loadData() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                updateViewsUI(getDayList());
-            }
-        }).start();
-    }
+    class LoadData extends AsyncTask<Void, Void, List<Long>> {
 
-    private void updateViewsUI(final List<Long> dayList) {
-        Activity activity = getActivity();
-        if (activity != null) {
-            activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    updateViews(dayList);
-                }
-            });
+        @Override
+        protected List<Long> doInBackground(Void... params) {
+            return getDayList();
+        }
+
+        @Override
+        protected void onPostExecute(List<Long> result) {
+            updateViews(result);
         }
     }
 
@@ -256,7 +249,7 @@ public class EventHolderFragment extends Fragment {
         for (int id : requestIds) {
             int eventModePos = UpdatesManager.convertEventIdToEventModePos(id);
             if (eventModePos == mEventMode.ordinal()) {
-                loadData();
+                new LoadData().execute();
                 break;
             }
         }
@@ -265,7 +258,7 @@ public class EventHolderFragment extends Fragment {
     private void updateFavorites() {
         if (getView() != null) {
             if (mEventMode == DrawerManager.EventMode.Favorites) {
-                loadData();
+                new LoadData().execute();
             }
         }
     }
