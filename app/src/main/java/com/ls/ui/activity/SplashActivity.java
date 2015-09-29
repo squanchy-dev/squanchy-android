@@ -95,7 +95,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void showNoNetworkDialog() {
-        if (!isDestroyed()) {
+        if (!isFinishing()) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.add(new NoConnectionDialog(), NoConnectionDialog.TAG);
             ft.commitAllowingStateLoss();
