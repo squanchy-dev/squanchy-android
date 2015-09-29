@@ -264,6 +264,8 @@ public class EventDetailsActivity extends StackKeeperActivity {
                    completeLoading();
                 }
             });
+        } else {
+            completeLoading();
         }
     }
 
