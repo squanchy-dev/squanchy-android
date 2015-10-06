@@ -1,3 +1,5 @@
 include ':app'
 include ':ParallaxScroll'
 include ':drupallibrary'
+project(':drupallibrary').projectDir = new File('libraries/drupallibrary')
+project(':ParallaxScroll').projectDir = new File('libraries/ParallaxScroll')
