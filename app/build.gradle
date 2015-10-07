@@ -64,7 +64,7 @@ dependencies {
     compile 'org.jetbrains:annotations:13.0'
     compile 'com.jpardogo.materialtabstrip:library:1.0.8'
     compile project(':ParallaxScroll')
-    compile project(':drupallibrary')
+    compile project(':drupalSDK')
     compile('com.crashlytics.sdk.android:crashlytics:2.4.0@aar') {
         transitive = true;
     }
