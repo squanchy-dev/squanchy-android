@@ -44,5 +44,5 @@
     <string name="to">to %s</string>
     <string name="speaker_separator">", "</string>
     <string name="css"><![CDATA[<link rel=\'stylesheet\' href=\'css/style.css\' type=\'text/css\'>]]></string>
-    <string name="irrelevant_timezone_notificaiton" formatted="false"><![CDATA[Event will dates are provided in %s(%s) timezone]]></string>
+    <string name="irrelevant_timezone_notificaiton" formatted="false"><![CDATA[Event dates are provided in %s(%s) timezone]]></string>
 </resources>
