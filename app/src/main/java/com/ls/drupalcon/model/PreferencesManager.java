@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 public class PreferencesManager {
 
@@ -45,6 +46,10 @@ public class PreferencesManager {
 
     public String getTimeZone() {
         return mPref.getString(TIME_ZONE, "");
+    }
+
+    public TimeZone getServerTimeZoneObject() {
+        return TimeZone.getTimeZone(getTimeZone());
     }
 
     public void saveLastUpdateDate(String value) {

@@ -190,9 +190,7 @@ public class Event extends AbstractEntity<Long> implements Comparable<Event>{
     public static String convertTime(Calendar time) {
         if (time != null) {
             SimpleDateFormat format = new SimpleDateFormat("hh:mm aa");
-            String timeZone = PreferencesManager.getInstance().getTimeZone();
-            format.setTimeZone(TimeZone.getTimeZone(timeZone));
-
+            format.setTimeZone(PreferencesManager.getInstance().getServerTimeZoneObject());
             return format.format(time.getTime());
         } else {
             return null;

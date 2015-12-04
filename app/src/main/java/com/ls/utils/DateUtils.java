@@ -22,8 +22,7 @@ public class DateUtils {
 
     public DateUtils() {
         mDateFormat = new SimpleDateFormat();
-        String timeZone = PreferencesManager.getInstance().getTimeZone();
-        mTimezone = TimeZone.getTimeZone(timeZone);
+        mTimezone = PreferencesManager.getInstance().getServerTimeZoneObject();
         mDateFormat.setTimeZone(mTimezone);
     }
 
@@ -100,8 +99,7 @@ public class DateUtils {
     }
 
     public int getHours() {
-        String zone = PreferencesManager.getInstance().getTimeZone();
-        TimeZone timeZone = TimeZone.getTimeZone(zone);
+        TimeZone timeZone = PreferencesManager.getInstance().getServerTimeZoneObject();
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeZone(timeZone);

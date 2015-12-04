@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,6 +22,7 @@ import com.ls.drupalcon.model.data.Track;
 import com.ls.drupalcon.model.managers.TracksManager;
 import com.ls.ui.adapter.item.EventListItem;
 import com.ls.ui.dialog.FilterDialog;
+import com.ls.ui.dialog.IrrelevantTimezoneDialog;
 import com.ls.ui.drawer.DrawerAdapter;
 import com.ls.ui.drawer.DrawerManager;
 import com.ls.ui.drawer.DrawerMenu;
@@ -78,6 +80,7 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
             isIntentHandled = true;
         }
         handleIntent(getIntent());
+        showIrrelevantTimezoneDialogIfNeeded();
     }
 
     @Override
@@ -290,5 +293,13 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
         }
 
         return result;
+    }
+
+     private void showIrrelevantTimezoneDialogIfNeeded() {
+        if (!IrrelevantTimezoneDialog.isCurrentTimezoneRelevant() && !isFinishing()) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.add(new IrrelevantTimezoneDialog(), IrrelevantTimezoneDialog.TAG);
+            ft.commitAllowingStateLoss();
+        }
     }
 }
