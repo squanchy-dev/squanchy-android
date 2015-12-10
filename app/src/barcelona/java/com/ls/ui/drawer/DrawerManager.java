@@ -1,14 +1,14 @@
 package com.ls.ui.drawer;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-
 import com.ls.ui.fragment.EventHolderFragment;
 import com.ls.ui.fragment.LocationFragment;
 import com.ls.ui.fragment.SpeakersListFragment;
 
 import org.jetbrains.annotations.NotNull;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
 public class DrawerManager {
 

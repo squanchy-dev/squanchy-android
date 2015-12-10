@@ -1,5 +1,7 @@
 package com.nirhart.parallaxscroll.views;
 
+import com.nirhart.parallaxscroll.R;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
@@ -8,8 +10,6 @@ import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
-
-import com.nirhart.parallaxscroll.R;
 
 public class ParallaxListViewHelper implements OnScrollListener {
 

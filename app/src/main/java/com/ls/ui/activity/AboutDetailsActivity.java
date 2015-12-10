@@ -1,16 +1,17 @@
 package com.ls.ui.activity;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+
+import com.ls.drupalcon.R;
+import com.ls.drupalcon.model.Model;
+import com.ls.drupalcon.model.UpdatesManager;
+import com.ls.utils.AnalyticsManager;
+
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.webkit.WebView;
-
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.ls.drupalcon.R;
-import com.ls.drupalcon.model.Model;
-import com.ls.drupalcon.model.UpdatesManager;
-import com.ls.utils.AnalyticsManager;
 
 import java.util.List;
 

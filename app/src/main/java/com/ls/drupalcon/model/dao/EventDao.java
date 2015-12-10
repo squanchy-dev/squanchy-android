@@ -1,8 +1,5 @@
 package com.ls.drupalcon.model.dao;
 
-import android.content.Context;
-import android.database.Cursor;
-
 import com.ls.drupalcon.R;
 import com.ls.drupalcon.model.AppDatabaseInfo;
 import com.ls.drupalcon.model.data.Event;
@@ -18,6 +15,9 @@ import com.ls.ui.adapter.item.SocialItem;
 import com.ls.utils.ArrayUtils;
 import com.ls.utils.CursorParser;
 import com.ls.utils.CursorStringParser;
+
+import android.content.Context;
+import android.database.Cursor;
 
 import java.util.ArrayList;
 import java.util.Calendar;

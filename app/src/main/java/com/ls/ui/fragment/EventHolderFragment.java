@@ -1,19 +1,6 @@
 package com.ls.ui.fragment;
 
 
-import android.app.Activity;
-import android.graphics.Typeface;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.astuetz.PagerSlidingTabStrip;
 import com.ls.drupalcon.R;
 import com.ls.drupalcon.model.Model;
@@ -30,6 +17,19 @@ import com.ls.ui.receiver.ReceiverManager;
 import com.ls.utils.DateUtils;
 
 import org.jetbrains.annotations.NotNull;
+
+import android.app.Activity;
+import android.graphics.Typeface;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;

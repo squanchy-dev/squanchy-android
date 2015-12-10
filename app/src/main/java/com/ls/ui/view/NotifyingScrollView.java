@@ -1,10 +1,10 @@
 package com.ls.ui.view;
 
+import com.nirhart.parallaxscroll.views.ParallaxScrollView;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ScrollView;
-
-import com.nirhart.parallaxscroll.views.ParallaxScrollView;
 
 public class NotifyingScrollView extends ParallaxScrollView {
 

@@ -1,9 +1,5 @@
 package com.ls.drupalcon.model;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.database.sqlite.SQLiteDatabase;
-
 import com.ls.drupalcon.R;
 import com.ls.drupalcon.model.dao.EventDao;
 import com.ls.drupalcon.model.dao.InfoDao;
@@ -15,6 +11,10 @@ import com.ls.drupalcon.model.dao.TrackDao;
 import com.ls.drupalcon.model.dao.TypeDao;
 import com.ls.drupalcon.model.database.DBInfo;
 import com.ls.drupalcon.model.database.IMigrationTask;
+
+import android.content.Context;
+import android.content.res.Resources;
+import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

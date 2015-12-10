@@ -22,13 +22,13 @@
 
 package com.ls.http.base;
 
-import android.support.annotation.NonNull;
-import android.text.TextUtils;
-import android.util.Log;
-
 import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
+
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
+import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;

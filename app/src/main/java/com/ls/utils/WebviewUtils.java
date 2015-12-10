@@ -1,8 +1,8 @@
 package com.ls.utils;
 
-import android.app.Activity;
-
 import com.ls.drupalcon.R;
+
+import android.app.Activity;
 
 public class WebviewUtils {
 

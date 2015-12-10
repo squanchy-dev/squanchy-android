@@ -1,10 +1,10 @@
 package com.ls.ui.activity;
 
-import android.content.ComponentCallbacks2;
-import android.support.v7.app.AppCompatActivity;
-
 import com.ls.drupalcon.model.Model;
 import com.ls.drupalcon.model.UpdatesManager;
+
+import android.content.ComponentCallbacks2;
+import android.support.v7.app.AppCompatActivity;
 
 public class StateActivity extends AppCompatActivity {
 

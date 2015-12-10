@@ -23,7 +23,6 @@
 package com.ls.drupal;
 
 import com.android.volley.Request;
-import com.ls.util.L;
 
 import java.util.HashMap;
 import java.util.LinkedList;

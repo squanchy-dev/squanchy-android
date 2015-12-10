@@ -1,5 +1,12 @@
 package com.ls.ui.activity;
 
+import com.ls.drupalcon.R;
+import com.ls.drupalcon.model.Model;
+import com.ls.drupalcon.model.UpdatesManager;
+import com.ls.drupalcon.model.data.InfoItem;
+import com.ls.drupalcon.model.managers.InfoManager;
+import com.ls.utils.L;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,13 +19,6 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.ls.drupalcon.R;
-import com.ls.drupalcon.model.Model;
-import com.ls.drupalcon.model.UpdatesManager;
-import com.ls.drupalcon.model.data.InfoItem;
-import com.ls.drupalcon.model.managers.InfoManager;
-import com.ls.utils.L;
 
 import java.util.ArrayList;
 import java.util.List;

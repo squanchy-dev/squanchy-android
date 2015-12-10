@@ -1,15 +1,16 @@
 package com.ls.drupalcon.model.data;
 
-import android.content.ContentValues;
-import android.database.Cursor;
-
 import com.google.gson.annotations.SerializedName;
+
 import com.ls.drupalcon.model.PreferencesManager;
 import com.ls.drupalcon.model.database.AbstractEntity;
 import com.ls.drupalcon.model.database.AbstractEntityDAO;
 import com.ls.utils.CursorStringParser;
 
 import org.jetbrains.annotations.NotNull;
+
+import android.content.ContentValues;
+import android.database.Cursor;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,7 +19,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
 
 public class Event extends AbstractEntity<Long> implements Comparable<Event>{
 

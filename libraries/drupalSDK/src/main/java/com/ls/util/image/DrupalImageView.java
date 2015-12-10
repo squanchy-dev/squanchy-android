@@ -22,13 +22,11 @@
 
 package com.ls.util.image;
 
-import com.android.volley.VolleyError;
 import com.ls.drupal.AbstractBaseDrupalEntity;
 import com.ls.drupal.DrupalClient;
 import com.ls.drupal.DrupalImageEntity;
 import com.ls.drupal.R;
 import com.ls.http.base.ResponseData;
-import com.ls.util.L;
 
 import android.content.Context;
 import android.content.res.TypedArray;

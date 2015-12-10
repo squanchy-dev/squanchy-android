@@ -1,9 +1,9 @@
 package com.ls.ui.activity;
 
+import com.ls.utils.ActivityManager;
+
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-
-import com.ls.utils.ActivityManager;
 
 public class BaseActivity extends ActionBarActivity {
 
