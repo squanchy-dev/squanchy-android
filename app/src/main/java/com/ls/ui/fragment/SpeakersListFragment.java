@@ -1,5 +1,13 @@
 package com.ls.ui.fragment;
 
+import com.ls.drupalcon.R;
+import com.ls.drupalcon.model.Model;
+import com.ls.drupalcon.model.UpdatesManager;
+import com.ls.drupalcon.model.data.Speaker;
+import com.ls.drupalcon.model.managers.SpeakerManager;
+import com.ls.ui.activity.SpeakerDetailsActivity;
+import com.ls.ui.adapter.SpeakersAdapter;
+
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -16,14 +24,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.ls.drupalcon.R;
-import com.ls.drupalcon.model.Model;
-import com.ls.drupalcon.model.UpdatesManager;
-import com.ls.drupalcon.model.data.Speaker;
-import com.ls.drupalcon.model.managers.SpeakerManager;
-import com.ls.ui.activity.SpeakerDetailsActivity;
-import com.ls.ui.adapter.SpeakersAdapter;
 
 import java.util.List;
 

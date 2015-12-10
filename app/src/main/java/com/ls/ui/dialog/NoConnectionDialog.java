@@ -1,13 +1,13 @@
 package com.ls.ui.dialog;
 
+import com.ls.drupalcon.R;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
-
-import com.ls.drupalcon.R;
 
 public class NoConnectionDialog extends DialogFragment {
 

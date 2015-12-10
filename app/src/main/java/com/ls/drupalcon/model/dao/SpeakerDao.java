@@ -1,11 +1,11 @@
 package com.ls.drupalcon.model.dao;
 
-import android.content.Context;
-
 import com.ls.drupalcon.R;
 import com.ls.drupalcon.model.AppDatabaseInfo;
 import com.ls.drupalcon.model.data.Speaker;
 import com.ls.drupalcon.model.database.AbstractEntityDAO;
+
+import android.content.Context;
 
 import java.util.List;
 

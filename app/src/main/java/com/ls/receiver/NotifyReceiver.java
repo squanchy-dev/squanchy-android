@@ -1,16 +1,16 @@
 package com.ls.receiver;
 
+import com.ls.drupalcon.R;
+import com.ls.ui.activity.EventDetailsActivity;
+import com.ls.ui.activity.HomeActivity;
+import com.ls.utils.AlarmTask;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-
-import com.ls.drupalcon.R;
-import com.ls.ui.activity.EventDetailsActivity;
-import com.ls.ui.activity.HomeActivity;
-import com.ls.utils.AlarmTask;
 
 public class NotifyReceiver extends BroadcastReceiver {
 

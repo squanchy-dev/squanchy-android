@@ -26,13 +26,11 @@ package com.ls.drupal;
 
 import com.google.gson.annotations.Expose;
 
-import com.android.volley.VolleyError;
 import com.ls.http.base.BaseRequest;
 import com.ls.http.base.BaseRequest.RequestMethod;
 import com.ls.http.base.ICharsetItem;
 import com.ls.http.base.RequestConfig;
 import com.ls.http.base.ResponseData;
-import com.ls.util.L;
 import com.ls.util.internal.ObjectComparator;
 import com.ls.util.internal.ObjectComparator.Snapshot;
 import com.ls.util.internal.VolleyResponseUtils;

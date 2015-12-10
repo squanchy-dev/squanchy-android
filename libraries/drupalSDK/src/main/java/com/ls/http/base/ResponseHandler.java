@@ -25,10 +25,6 @@ package com.ls.http.base;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 
-import android.support.annotation.NonNull;
-
-import java.lang.reflect.Type;
-
 
 public abstract class ResponseHandler
 {

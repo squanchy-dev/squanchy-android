@@ -1,5 +1,7 @@
 package com.ls.ui.view;
 
+import com.ls.util.image.DrupalImageView;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -10,8 +12,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-
-import com.ls.util.image.DrupalImageView;
 
 public class CircleImageView extends DrupalImageView {
 

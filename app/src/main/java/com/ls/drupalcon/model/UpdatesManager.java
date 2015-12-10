@@ -1,20 +1,20 @@
 package com.ls.drupalcon.model;
 
-import android.os.AsyncTask;
-import android.text.TextUtils;
-
 import com.ls.drupal.DrupalClient;
 import com.ls.drupalcon.model.data.UpdateDate;
 import com.ls.drupalcon.model.database.ILAPIDBFacade;
 import com.ls.drupalcon.model.managers.SynchronousItemManager;
-import com.ls.ui.drawer.DrawerManager;
 import com.ls.http.base.BaseRequest;
 import com.ls.http.base.RequestConfig;
 import com.ls.http.base.ResponseData;
+import com.ls.ui.drawer.DrawerManager;
 import com.ls.util.ObserverHolder;
 import com.ls.utils.ApplicationConfig;
 
 import org.jetbrains.annotations.NotNull;
+
+import android.os.AsyncTask;
+import android.text.TextUtils;
 
 import java.util.LinkedList;
 import java.util.List;

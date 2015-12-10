@@ -24,10 +24,8 @@ package com.ls.http.base.handler.multipart;
 
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.content.ContentBody;
-import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.InputStreamBody;
 
-import java.io.File;
 import java.io.InputStream;
 
 /**

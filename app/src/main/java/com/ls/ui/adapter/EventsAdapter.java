@@ -1,5 +1,19 @@
 package com.ls.ui.adapter;
 
+import com.ls.drupalcon.R;
+import com.ls.drupalcon.app.App;
+import com.ls.drupalcon.model.data.Event;
+import com.ls.drupalcon.model.data.Level;
+import com.ls.drupalcon.model.data.Type;
+import com.ls.ui.adapter.item.BofsItem;
+import com.ls.ui.adapter.item.EventListItem;
+import com.ls.ui.adapter.item.HeaderItem;
+import com.ls.ui.adapter.item.ProgramItem;
+import com.ls.ui.adapter.item.SocialItem;
+import com.ls.ui.adapter.item.TimeRangeItem;
+import com.ls.ui.drawer.DrawerManager;
+import com.ls.utils.DateUtils;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
@@ -13,20 +27,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.ls.ui.drawer.DrawerManager;
-import com.ls.drupalcon.R;
-import com.ls.drupalcon.app.App;
-import com.ls.drupalcon.model.data.Event;
-import com.ls.drupalcon.model.data.Level;
-import com.ls.drupalcon.model.data.Type;
-import com.ls.ui.adapter.item.BofsItem;
-import com.ls.ui.adapter.item.EventListItem;
-import com.ls.ui.adapter.item.HeaderItem;
-import com.ls.ui.adapter.item.ProgramItem;
-import com.ls.ui.adapter.item.SocialItem;
-import com.ls.ui.adapter.item.TimeRangeItem;
-import com.ls.utils.DateUtils;
 
 import java.util.ArrayList;
 import java.util.List;

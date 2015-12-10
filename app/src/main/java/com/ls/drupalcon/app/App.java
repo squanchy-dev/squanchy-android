@@ -1,20 +1,21 @@
 package com.ls.drupalcon.app;
 
-import android.app.Application;
-import android.content.Context;
-
-import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
+
+import com.crashlytics.android.Crashlytics;
 import com.ls.drupal.DrupalClient;
 import com.ls.drupalcon.BuildConfig;
 import com.ls.drupalcon.model.AppDatabaseInfo;
 import com.ls.drupalcon.model.Model;
 import com.ls.drupalcon.model.PreferencesManager;
 import com.ls.drupalcon.model.database.LAPIDBRegister;
-import com.ls.ui.view.FontHelper;
 import com.ls.http.base.BaseRequest;
+import com.ls.ui.view.FontHelper;
 import com.ls.util.image.DrupalImageView;
+
+import android.app.Application;
+import android.content.Context;
 
 import io.fabric.sdk.android.Fabric;
 

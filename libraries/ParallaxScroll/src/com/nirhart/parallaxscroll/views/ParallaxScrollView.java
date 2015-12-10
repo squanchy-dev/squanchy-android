@@ -1,6 +1,6 @@
 package com.nirhart.parallaxscroll.views;
 
-import java.util.ArrayList;
+import com.nirhart.parallaxscroll.R;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
 
-import com.nirhart.parallaxscroll.R;
+import java.util.ArrayList;
 
 public class ParallaxScrollView extends ScrollView {
 

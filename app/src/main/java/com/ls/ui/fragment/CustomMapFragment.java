@@ -1,9 +1,9 @@
 package com.ls.ui.fragment;
 
-import android.os.Bundle;
-
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+
+import android.os.Bundle;
 
 
 public class CustomMapFragment extends SupportMapFragment {

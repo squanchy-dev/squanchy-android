@@ -1,5 +1,23 @@
 package com.ls.ui.activity;
 
+import com.ls.drupalcon.R;
+import com.ls.drupalcon.model.Model;
+import com.ls.drupalcon.model.PreferencesManager;
+import com.ls.drupalcon.model.UpdatesManager;
+import com.ls.drupalcon.model.data.EventDetailsEvent;
+import com.ls.drupalcon.model.data.Level;
+import com.ls.drupalcon.model.data.Speaker;
+import com.ls.drupalcon.model.managers.EventManager;
+import com.ls.drupalcon.model.managers.FavoriteManager;
+import com.ls.drupalcon.model.managers.SpeakerManager;
+import com.ls.ui.receiver.ReceiverManager;
+import com.ls.ui.view.CircleImageView;
+import com.ls.ui.view.NotifyingScrollView;
+import com.ls.utils.AnalyticsManager;
+import com.ls.utils.DateUtils;
+import com.ls.utils.ScheduleManager;
+import com.ls.utils.WebviewUtils;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -22,24 +40,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
-import com.ls.drupalcon.R;
-import com.ls.drupalcon.model.Model;
-import com.ls.drupalcon.model.PreferencesManager;
-import com.ls.drupalcon.model.UpdatesManager;
-import com.ls.drupalcon.model.data.EventDetailsEvent;
-import com.ls.drupalcon.model.data.Level;
-import com.ls.drupalcon.model.data.Speaker;
-import com.ls.drupalcon.model.managers.EventManager;
-import com.ls.drupalcon.model.managers.FavoriteManager;
-import com.ls.drupalcon.model.managers.SpeakerManager;
-import com.ls.ui.receiver.ReceiverManager;
-import com.ls.ui.view.CircleImageView;
-import com.ls.ui.view.NotifyingScrollView;
-import com.ls.utils.AnalyticsManager;
-import com.ls.utils.DateUtils;
-import com.ls.utils.ScheduleManager;
-import com.ls.utils.WebviewUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
