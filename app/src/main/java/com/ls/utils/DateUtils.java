@@ -109,18 +109,19 @@ public class DateUtils {
     }
 
     public String get24HoursTime(@NotNull String strDate) {
-        mDateFormat.applyPattern("hh:mm aa");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("", Locale.getDefault());
+        dateFormat.applyPattern("hh:mm aa");
         Date date = null;
 
         try {
-            date = mDateFormat.parse(strDate);
+            date = dateFormat.parse(strDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
         if (date != null) {
-            mDateFormat.applyPattern("kk:mm");
-            return mDateFormat.format(date.getTime());
+            dateFormat.applyPattern("kk:mm");
+            return dateFormat.format(date.getTime());
         } else {
             return strDate;
         }
