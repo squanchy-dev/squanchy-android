@@ -17,11 +17,11 @@ import com.ls.util.image.DrupalImageView;
 import android.app.Application;
 import android.content.Context;
 
+import com.ls.utils.ApplicationConfig;
 import io.fabric.sdk.android.Fabric;
 
 public class App extends Application {
     private static Context mContext;
-    private static final String PROPERTY_ID = "UA-267362-65";
 
     @Override
     public void onCreate() {
@@ -45,6 +45,6 @@ public class App extends Application {
 
     public synchronized Tracker getTracker() {
         GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-        return analytics.newTracker(PROPERTY_ID);
+        return analytics.newTracker(ApplicationConfig.PROPERTY_ID);
     }
 }
