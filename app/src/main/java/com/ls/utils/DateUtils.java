@@ -12,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 public class DateUtils {
@@ -21,7 +22,7 @@ public class DateUtils {
     private static DateUtils mUtils;
 
     public DateUtils() {
-        mDateFormat = new SimpleDateFormat();
+        mDateFormat = new SimpleDateFormat("", Locale.ENGLISH);
         mTimezone = PreferencesManager.getInstance().getServerTimeZoneObject();
         mDateFormat.setTimeZone(mTimezone);
     }
