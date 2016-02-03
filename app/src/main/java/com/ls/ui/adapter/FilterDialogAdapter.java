@@ -89,26 +89,28 @@ public class FilterDialogAdapter extends BaseExpandableListAdapter {
 	}
 
 	@Override
-	public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup viewGroup) {
+	public View getGroupView(final int groupPosition, final boolean isExpanded, View convertView, ViewGroup viewGroup) {
 		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.item_filter_group, null);
 		}
+
+		final View divider = convertView.findViewById(R.id.divider);
 
 		TextView txtHeader = (TextView) convertView.findViewById(R.id.txtTitle);
 		txtHeader.setText(getGroup(groupPosition));
 		txtHeader.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				if (!isExpanded) {
+					divider.setVisibility(View.VISIBLE);
+				} else {
+					divider.setVisibility(View.INVISIBLE);
+				}
+
 				mListener.onGroupClicked(groupPosition);
 			}
 		});
 
-		View divider = convertView.findViewById(R.id.divider);
-		if (groupPosition == 0) {
-			divider.setVisibility(View.INVISIBLE);
-		} else {
-			divider.setVisibility(View.VISIBLE);
-		}
 		return convertView;
 	}
 
@@ -118,14 +120,26 @@ public class FilterDialogAdapter extends BaseExpandableListAdapter {
 			convertView = mInflater.inflate(R.layout.item_filter_list, null);
 		}
 
+		View divider = convertView.findViewById(R.id.dialogDivider);
 		String childText;
 		long childId;
+		boolean displayDivider;
+
 		if (groupPosition == 0) {
 			childText = mLevelList.get(childPosition).getName();
 			childId = mLevelList.get(childPosition).getId();
+			displayDivider = childPosition == mLevelList.size() - 1;
+
 		} else {
 			childText = mTrackList.get(childPosition).getName();
 			childId = mTrackList.get(childPosition).getId();
+			displayDivider = childPosition == mTrackList.size() - 1;
+		}
+
+		if (displayDivider) {
+			divider.setVisibility(View.VISIBLE);
+		} else {
+			divider.setVisibility(View.INVISIBLE);
 		}
 
 		TextView txtChild = (TextView) convertView.findViewById(R.id.txtItemTitle);

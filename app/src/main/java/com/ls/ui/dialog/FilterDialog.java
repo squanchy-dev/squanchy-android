@@ -91,7 +91,7 @@ public class FilterDialog extends DialogFragment {
         initButtons(view);
     }
 
-    private void initList(View view) {
+    private void initList(final View view) {
         mListView = (ExpandableListView) view.findViewById(R.id.listView);
 
         DisplayMetrics metrics = new DisplayMetrics();

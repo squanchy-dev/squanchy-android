@@ -1,69 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@android:color/white"
+              android:orientation="vertical">
 
     <com.ls.ui.view.MediumFontTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/filter"
-        android:textColor="@color/black_100"
-        android:textSize="@dimen/text_size_medium" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/filter"
+            android:textColor="@color/black_100"
+            android:textSize="@dimen/text_size_medium"/>
 
     <ExpandableListView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1.0"
-        android:groupIndicator="@drawable/group_indicator" />
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.0"
+            android:divider="@null"
+            android:groupIndicator="@drawable/group_indicator"/>
 
     <LinearLayout
-        android:id="@+id/btnHolder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal">
-
-        <com.ls.ui.view.MediumFontTextView
-            android:id="@+id/btnClear"
+            android:id="@+id/btnHolder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="4dp"
-            android:background="@drawable/selector_light"
-            android:gravity="center"
-            android:paddingBottom="8dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="8dp"
-            android:splitMotionEvents="false"
-            android:text="@string/CLEAR"
-            android:textColor="@color/primary"
-            android:textSize="@dimen/text_size_small" />
+            android:layout_gravity="right"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
 
         <com.ls.ui.view.MediumFontTextView
-            android:id="@+id/btnApply"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:background="@drawable/selector_light"
-            android:gravity="center"
-            android:paddingBottom="8dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="8dp"
-            android:splitMotionEvents="false"
-            android:text="@string/APPLY"
-            android:textColor="@color/primary"
-            android:textSize="@dimen/text_size_small" />
+                android:id="@+id/btnClear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="4dp"
+                android:background="@drawable/selector_light"
+                android:gravity="center"
+                android:paddingBottom="8dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="8dp"
+                android:splitMotionEvents="false"
+                android:text="@string/CLEAR"
+                android:textColor="@color/primary"
+                android:textSize="@dimen/text_size_small"/>
+
+        <com.ls.ui.view.MediumFontTextView
+                android:id="@+id/btnApply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:background="@drawable/selector_light"
+                android:gravity="center"
+                android:paddingBottom="8dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="8dp"
+                android:splitMotionEvents="false"
+                android:text="@string/APPLY"
+                android:textColor="@color/primary"
+                android:textSize="@dimen/text_size_small"/>
     </LinearLayout>
 </LinearLayout>
