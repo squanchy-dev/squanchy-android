@@ -107,17 +107,25 @@
                 </LinearLayout>
 
                 <View
-                    android:id="@+id/divider"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="72dp"
-                    android:background="@color/white_200" />
+                        android:id="@+id/topDivider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="72dp"
+                        android:background="@color/white_200"/>
 
                 <LinearLayout
-                    android:id="@+id/holderSpeakers"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" />
+                        android:id="@+id/holderSpeakers"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"/>
+
+                <View
+                        android:id="@+id/botDivider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="72dp"
+                        android:background="@color/white_200"/>
+
 
                 <WebView
                     android:id="@+id/webView"
