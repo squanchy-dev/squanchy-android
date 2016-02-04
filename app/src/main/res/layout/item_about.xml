@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:orientation="vertical"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
 
-    <com.ls.ui.view.MediumFontTextView
+    <com.ls.ui.view.FontTextView
         android:id="@+id/txtTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_medium"
         android:textColor="@color/black_100"
-        android:text="ALALAL"
+        tools:text="ALALAL"
+        app:custom_font="@string/roboto_medium"
         android:gravity="center_vertical"
         android:padding="16dp"
         android:layout_gravity="center_vertical"/>

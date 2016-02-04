@@ -9,12 +9,13 @@
     android:minHeight="72dp"
     android:orientation="horizontal">
 
-    <com.ls.ui.view.RegularFontTextView
+    <com.ls.ui.view.FontTextView
         android:id="@+id/txtFirstLetter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="21dp"
+        app:custom_font="@string/roboto_regular"
         android:textColor="@color/primary"
         android:textSize="@dimen/text_size_large" />
 
@@ -40,20 +41,22 @@
             android:layout_toRightOf="@+id/imgPhoto"
             android:orientation="vertical">
 
-            <com.ls.ui.view.RegularFontTextView
+            <com.ls.ui.view.FontTextView
                 android:id="@+id/txtName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black_100"
                 android:textSize="@dimen/text_size_15"
+                app:custom_font="@string/roboto_regular"
                 tools:text="Lorem ipsum" />
 
-            <com.ls.ui.view.RegularFontTextView
+            <com.ls.ui.view.FontTextView
                 android:id="@+id/txtOrgAndJobTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingRight="16dp"
                 android:singleLine="true"
+                app:custom_font="@string/roboto_regular"
                 android:textColor="@color/grey_200"
                 android:textSize="@dimen/text_size_13"
                 tools:text="Lorem ipsum" />

@@ -11,7 +11,6 @@ import com.ls.drupalcon.model.Model;
 import com.ls.drupalcon.model.PreferencesManager;
 import com.ls.drupalcon.model.database.LAPIDBRegister;
 import com.ls.http.base.BaseRequest;
-import com.ls.ui.view.FontHelper;
 import com.ls.util.image.DrupalImageView;
 
 import android.app.Application;
@@ -35,7 +34,6 @@ public class App extends Application {
         LAPIDBRegister.getInstance().register(mContext, new AppDatabaseInfo(mContext));
         PreferencesManager.initializeInstance(mContext);
         Model.instance(mContext);
-        FontHelper.init(mContext);
         DrupalImageView.setupSharedClient(new DrupalClient(null, Model.instance().createNewQueue(getApplicationContext()), BaseRequest.RequestFormat.JSON, null));
     }
 

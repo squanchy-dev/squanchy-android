@@ -28,12 +28,13 @@
         android:layout_height="wrap_content">
     </android.support.v4.view.ViewPager>
 
-    <TextView
+    <com.ls.ui.view.FontTextView
         android:id="@+id/txtNoEvents"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="gone"
+        app:custom_font="@string/roboto_regular"
         android:textSize="@dimen/text_size_medium"
         android:textColor="@color/grey_100"
         android:text="@string/no_events"/>

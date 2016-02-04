@@ -34,7 +34,7 @@
                 android:background="@android:color/white"
                 android:orientation="vertical">
 
-                <com.ls.ui.view.MediumFontTextView
+                <com.ls.ui.view.FontTextView
                     android:id="@+id/txtSpeakerName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -42,17 +42,19 @@
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="42dp"
                     android:gravity="center_vertical"
+                    app:custom_font="@string/roboto_medium"
                     android:textColor="@color/black_100"
                     android:textSize="@dimen/text_size_medium"
                     tools:text="Lorem Ipsum" />
 
-                <com.ls.ui.view.RegularFontTextView
+                <com.ls.ui.view.FontTextView
                     android:id="@+id/txtSpeakerPosition"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="4dp"
+                    app:custom_font="@string/roboto_regular"
                     android:background="@android:color/white"
                     android:textColor="@color/black_100"
                     android:textSize="@dimen/text_size_small"

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ This document and the source codes contained herein are the property of Schneider Enterprises, LLC. 
+  ~ Copyright (c) 2015, Schneider Enterprises, LLC.  All rights reserved.
+  -->
+
+<resources>
+    <string name="roboto_bold">"Roboto-Bold.ttf"</string>
+    <string name="roboto_light">"Roboto-Light.ttf"</string>
+    <string name="roboto_medium">"Roboto-Medium.ttf"</string>
+    <string name="roboto_regular">"Roboto-Regular.ttf"</string>
+    <string name="roboto_thin">"Roboto-Thin.ttf"</string>
+</resources>

@@ -33,22 +33,24 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <com.ls.ui.view.BoldFontTextView
+                <com.ls.ui.view.FontTextView
                     android:id="@+id/txtEventName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_medium"
                     android:textStyle="bold"
+                    app:custom_font="@string/roboto_bold"
                     tools:text="@string/lorem_ipsum" />
 
-                <com.ls.ui.view.RegularFontTextView
+                <com.ls.ui.view.FontTextView
                     android:id="@+id/label_where"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:textColor="@color/white_100"
                     android:textSize="@dimen/text_size_small"
+                    app:custom_font="@string/roboto_regular"
                     tools:text="@string/lorem_ipsum" />
             </LinearLayout>
 
@@ -67,13 +69,14 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <com.ls.ui.view.MediumFontTextView
+                    <com.ls.ui.view.FontTextView
                         android:id="@+id/txtTrack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:textColor="@color/grey_400"
                         android:textSize="@dimen/text_size_15"
+                        app:custom_font="@string/roboto_medium"
                         tools:text="@string/lorem_ipsum" />
 
                     <LinearLayout
@@ -82,12 +85,13 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <com.ls.ui.view.MediumFontTextView
+                        <com.ls.ui.view.FontTextView
                             android:id="@+id/txtExpLevel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
                             android:layout_marginRight="8dp"
+                            app:custom_font="@string/roboto_medium"
                             android:textColor="@color/grey_400"
                             android:textSize="@dimen/text_size_15"
                             tools:text="@string/lorem_ipsum" />

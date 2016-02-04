@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/layoutInfo"
@@ -14,22 +15,24 @@
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
 
-        <com.ls.ui.view.RegularFontTextView
+        <com.ls.ui.view.FontTextView
             android:id="@+id/txtPlace"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:minLines="2"
             android:textColor="@color/white"
             android:layout_marginBottom="4dp"
+            app:custom_font="@string/roboto_regular"
             android:textSize="@dimen/text_size_24" />
 
-        <com.ls.ui.view.LightFontTextView
+        <com.ls.ui.view.FontTextView
             android:id="@+id/txtAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minLines="2"
             android:paddingTop="3dp"
             android:textColor="@color/white"
+            app:custom_font="@string/roboto_light"
             android:textSize="@dimen/text_size_medium" />
     </LinearLayout>
 

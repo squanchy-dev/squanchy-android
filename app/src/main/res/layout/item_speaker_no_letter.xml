@@ -25,22 +25,24 @@
                 android:layout_marginLeft="16dp"
                 android:orientation="vertical">
 
-            <com.ls.ui.view.RegularFontTextView
+            <com.ls.ui.view.FontTextView
                     android:id="@+id/txtName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#333333"
                     android:singleLine="true"
+                    app:custom_font="@string/roboto_regular"
                     android:layout_marginBottom="2dp"
                     android:textSize="@dimen/text_size_15"
                     tools:text="Lorem ipsum"/>
 
-            <com.ls.ui.view.RegularFontTextView
+            <com.ls.ui.view.FontTextView
                     android:id="@+id/txtOrgAndJobTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#949494"
                     android:singleLine="true"
+                    app:custom_font="@string/roboto_regular"
                     android:textSize="@dimen/text_size_13"
                     tools:text="Lorem ipsum"/>
         </LinearLayout>
