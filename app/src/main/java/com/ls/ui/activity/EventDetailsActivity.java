@@ -1,5 +1,6 @@
 package com.ls.ui.activity;
 
+import android.net.Uri;
 import com.ls.drupalcon.R;
 import com.ls.drupalcon.model.Model;
 import com.ls.drupalcon.model.PreferencesManager;
@@ -260,10 +261,18 @@ public class EventDetailsActivity extends StackKeeperActivity {
             webView.setHorizontalScrollBarEnabled(false);
             webView.loadDataWithBaseURL("file:///android_asset/", html, "text/html", "UTF-8", null);
             webView.setWebViewClient(new WebViewClient() {
+                @Override
                 public void onPageFinished(WebView view, String url) {
-                   completeLoading();
+                    completeLoading();
+                }
+
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    WebviewUtils.openUrl(EventDetailsActivity.this, url);
+                    return true;
                 }
             });
+
         } else {
             completeLoading();
         }

@@ -46,4 +46,5 @@
     <string name="css"><![CDATA[<link rel=\'stylesheet\' href=\'css/style.css\' type=\'text/css\'>]]></string>
     <string name="irrelevant_timezone_notificaiton" formatted="false"><![CDATA[Event dates are provided in %s (%s) timezone]]></string>
     <string name="dont_show_message_again">Don\'t show this message again</string>
+    <string name="no_default_browser_found">No default browser found</string>
 </resources>

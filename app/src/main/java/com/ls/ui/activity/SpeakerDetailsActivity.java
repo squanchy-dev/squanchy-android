@@ -202,11 +202,19 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
             webView.setHorizontalScrollBarEnabled(false);
             webView.loadDataWithBaseURL("file:///android_asset/", html, "text/html", "UTF-8", null);
             webView.setWebViewClient(new WebViewClient() {
+                @Override
                 public void onPageFinished(WebView view, String url) {
                     mIsWebLoaded = true;
                     completeLoading();
                 }
+
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    WebviewUtils.openUrl(SpeakerDetailsActivity.this, url);
+                    return true;
+                }
             });
+
         } else {
             mIsWebLoaded = true;
             completeLoading();
