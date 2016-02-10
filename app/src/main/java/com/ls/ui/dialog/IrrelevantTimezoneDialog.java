@@ -18,12 +18,12 @@ import android.widget.TextView;
 
 import java.util.TimeZone;
 
-public class IrrelevantTimezoneDialog2 extends DialogFragment {
+public class IrrelevantTimezoneDialog extends DialogFragment {
 
     private final static String PREF_FILE_NAME = "timezone.dialog.preference";
     private final static String PREF_DONT_SHOW_AGAIN = "timezone.dialog.dontshow.key";
 
-    public static final String TAG = IrrelevantTimezoneDialog2.class.getName();
+    public static final String TAG = IrrelevantTimezoneDialog.class.getName();
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
