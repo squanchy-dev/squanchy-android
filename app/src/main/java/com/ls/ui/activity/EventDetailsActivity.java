@@ -1,6 +1,5 @@
 package com.ls.ui.activity;
 
-import android.net.Uri;
 import com.ls.drupalcon.R;
 import com.ls.drupalcon.model.Model;
 import com.ls.drupalcon.model.PreferencesManager;
@@ -212,9 +211,9 @@ public class EventDetailsActivity extends StackKeeperActivity {
         if (!TextUtils.isEmpty(event.getFrom()) && !TextUtils.isEmpty(event.getTo())) {
             String fromTime = event.getFrom();
             String toTime = event.getTo();
-            if (android.text.format.DateFormat.is24HourFormat(this)) {
-                fromTime = DateUtils.getInstance().get24HoursTime(fromTime);
-                toTime = DateUtils.getInstance().get24HoursTime(toTime);
+            if (!android.text.format.DateFormat.is24HourFormat(this)) {
+                fromTime = DateUtils.getInstance().get12HoursTime(fromTime);
+                toTime = DateUtils.getInstance().get12HoursTime(toTime);
             }
             String eventLocation = DateUtils.getInstance().getWeekDay(mEventStartDate) + ", " + fromTime + " - " + toTime;
 

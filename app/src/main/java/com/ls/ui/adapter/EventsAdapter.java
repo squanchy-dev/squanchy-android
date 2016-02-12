@@ -234,10 +234,10 @@ public class EventsAdapter extends BaseAdapter {
         String fromTime = timeRange.getFromTime();
         String toTime = timeRange.getToTime();
 
-        if (DateFormat.is24HourFormat(mContext)) {
+        if (!DateFormat.is24HourFormat(mContext)) {
             if (!TextUtils.isEmpty(fromTime) && !TextUtils.isEmpty(toTime)) {
-                fromTime = DateUtils.getInstance().get24HoursTime(fromTime);
-                toTime = DateUtils.getInstance().get24HoursTime(toTime);
+                fromTime = DateUtils.getInstance().get12HoursTime(fromTime);
+                toTime = DateUtils.getInstance().get12HoursTime(toTime);
             }
         }
 

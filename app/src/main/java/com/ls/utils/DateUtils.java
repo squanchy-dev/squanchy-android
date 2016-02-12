@@ -108,9 +108,8 @@ public class DateUtils {
         return calendar.get(Calendar.HOUR_OF_DAY);
     }
 
-    public String get24HoursTime(@NotNull String strDate) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("", Locale.getDefault());
-        dateFormat.applyPattern("hh:mm aa");
+    public String get12HoursTime(@NotNull String strDate) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("kk:mm", Locale.ENGLISH);
         Date date = null;
 
         try {
@@ -120,7 +119,7 @@ public class DateUtils {
         }
 
         if (date != null) {
-            dateFormat.applyPattern("kk:mm");
+            dateFormat.applyPattern("hh:mm aa");
             return dateFormat.format(date.getTime());
         } else {
             return strDate;
