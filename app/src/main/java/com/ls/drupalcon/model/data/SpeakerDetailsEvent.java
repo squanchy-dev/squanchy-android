@@ -1,9 +1,10 @@
 package com.ls.drupalcon.model.data;
 
+import com.ls.utils.DateUtils;
+
 import java.text.SimpleDateFormat;
 
 public class SpeakerDetailsEvent {
-	private static final SimpleDateFormat formatter = new SimpleDateFormat("EEE");
 
 	private long eventId;
     private String place;
@@ -36,7 +37,7 @@ public class SpeakerDetailsEvent {
 	}
 
 	public void setDate(long time) {
-		this.date = formatter.format(time);
+		this.date = DateUtils.getInstance().getWeekDay(time);
 	}
 
 	public String getLevelName() {

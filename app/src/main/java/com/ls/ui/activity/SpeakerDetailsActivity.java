@@ -276,13 +276,6 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
         String fromTime = DateUtils.getInstance().getTime(this, event.getFrom());
         String toTime = DateUtils.getInstance().getTime(this, event.getTo());
 
-        if (!android.text.format.DateFormat.is24HourFormat(this)) {
-            if (fromTime != null && toTime != null) {
-                fromTime = DateUtils.getInstance().get12HoursTime(fromTime);
-                toTime = DateUtils.getInstance().get12HoursTime(toTime);
-            }
-        }
-
         TextView txtWhere = (TextView) eventView.findViewById(R.id.txtWhere);
         String date = String.format("%s, %s - %s", weekDay, fromTime, toTime);
         txtWhere.setText(date);

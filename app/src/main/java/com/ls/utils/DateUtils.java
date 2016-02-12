@@ -141,18 +141,6 @@ public class DateUtils {
         return mDateFormat.format(new Date(millis));
     }
 
-    public long convertWeekDayToLong(String weekDay) {
-        mDateFormat.applyPattern("EEE");
-        Date date;
-        try {
-            date = mDateFormat.parse(weekDay);
-            return date.getTime();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
-
     public String getWeekNameAndDate(long millis) {
         mDateFormat.applyPattern("EEE d");
         return mDateFormat.format(new Date(millis));
