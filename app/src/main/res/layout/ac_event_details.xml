@@ -73,10 +73,10 @@
                         android:id="@+id/txtTrack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:textColor="@color/grey_400"
+                        android:layout_marginBottom="4dp"
+                        android:textColor="@color/grey_500"
                         android:textSize="@dimen/text_size_15"
-                        app:custom_font="@string/roboto_medium"
+                        app:custom_font="@string/roboto_regular"
                         tools:text="@string/lorem_ipsum" />
 
                     <LinearLayout
@@ -91,8 +91,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
                             android:layout_marginRight="8dp"
-                            app:custom_font="@string/roboto_medium"
-                            android:textColor="@color/grey_400"
+                            app:custom_font="@string/roboto_regular"
+                            android:textColor="@color/grey_500"
                             android:textSize="@dimen/text_size_15"
                             tools:text="@string/lorem_ipsum" />
 

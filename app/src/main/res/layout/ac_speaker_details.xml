@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:layout_marginTop="42dp"
+                    android:layout_marginTop="56dp"
                     android:gravity="center_vertical"
                     app:custom_font="@string/roboto_medium"
                     android:textColor="@color/black_100"
@@ -134,7 +134,7 @@
                 android:layout_height="96dp"
                 android:layout_marginLeft="24dp"
                 android:layout_marginRight="24dp"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="118dp"
                 android:scaleType="fitXY"
                 app:noImageResource="@drawable/ic_default_avatar_small" />
 

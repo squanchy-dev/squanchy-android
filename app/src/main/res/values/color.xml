@@ -13,9 +13,11 @@
     <color name="grey_50">#d7d7d7</color>
     <color name="grey_100">#ABABAB</color>
     <color name="grey_200">#919191</color>
+    <color name="grey_300">#878787</color>
     <color name="grey_400">#6a6a6a</color>
     <color name="grey_400_40_trans">#666a6a6a</color>
     <color name="grey_400_trans">#1a9b9b9b</color>
+    <color name="grey_500">#373737</color>
 
     <color name="primary_dark">#D3472A</color>
     <color name="primary">#D3472A</color>

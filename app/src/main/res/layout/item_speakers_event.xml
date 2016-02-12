@@ -28,7 +28,7 @@
             android:textSize="@dimen/text_size_16"
             tools:text="Title"
             app:custom_font="@string/roboto_regular"
-            android:textColor="@color/grey_400"
+            android:textColor="@color/grey_500"
             android:gravity="center_vertical"
             android:textStyle="bold"
             android:layout_marginBottom="3dp"/>
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             tools:text="track"
             app:custom_font="@string/roboto_regular"
-            android:textColor="@color/grey_400"
+            android:textColor="@color/grey_500"
             android:textSize="@dimen/text_size_small"
             android:layout_marginBottom="3dp"
             android:visibility="gone"/>
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 tools:text="Exp Level:"
                 app:custom_font="@string/roboto_regular"
-                android:textColor="@color/grey_400"
+                android:textColor="@color/grey_500"
                 android:visibility="gone"
                 android:textSize="@dimen/text_size_small"
                 android:layout_gravity="center"/>
