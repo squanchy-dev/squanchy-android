@@ -19,7 +19,6 @@ import com.ls.ui.adapter.item.EventListItem;
 import com.ls.ui.adapter.item.HeaderItem;
 import com.ls.ui.adapter.item.ProgramItem;
 import com.ls.ui.adapter.item.TimeRangeItem;
-import com.ls.util.L;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -126,7 +125,7 @@ public class EventGenerator {
             Collections.sort(schedules, new Comparator<EventListItem>() {
                 @Override
                 public int compare(EventListItem eventListItem, EventListItem eventListItem2) {
-                    return Double.compare(eventListItem.getEvent().getFromTimeStamp(), eventListItem2.getEvent().getFromTimeStamp());
+                    return Double.compare(eventListItem.getEvent().getFromMillis(), eventListItem2.getEvent().getFromMillis());
                 }
             });
             schedules.add(0, new HeaderItem(App.getContext().getString(R.string.Sessions)));
@@ -137,7 +136,7 @@ public class EventGenerator {
             Collections.sort(bofs, new Comparator<EventListItem>() {
                 @Override
                 public int compare(EventListItem eventListItem, EventListItem eventListItem2) {
-                    return Double.compare(eventListItem.getEvent().getFromTimeStamp(), eventListItem2.getEvent().getFromTimeStamp());
+                    return Double.compare(eventListItem.getEvent().getFromMillis(), eventListItem2.getEvent().getFromMillis());
                 }
             });
             bofs.add(0, new HeaderItem(App.getContext().getString(R.string.bofs)));
@@ -148,7 +147,7 @@ public class EventGenerator {
             Collections.sort(socials, new Comparator<EventListItem>() {
                 @Override
                 public int compare(EventListItem eventListItem, EventListItem eventListItem2) {
-                    return Double.compare(eventListItem.getEvent().getFromTimeStamp(), eventListItem2.getEvent().getFromTimeStamp());
+                    return Double.compare(eventListItem.getEvent().getFromMillis(), eventListItem2.getEvent().getFromMillis());
                 }
             });
             socials.add(0, new HeaderItem(App.getContext().getString(R.string.social_events)));

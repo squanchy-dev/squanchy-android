@@ -126,7 +126,7 @@ public class EventsAdapter extends BaseAdapter {
         TimeRangeItem timeRange = (TimeRangeItem) getItem(position);
         Event event = timeRange.getEvent();
 
-        fillDate(holder, timeRange);
+        fillDate(holder, event);
         fillIcon(holder, event.getType());
         fillEventInfo(holder, event, timeRange.getTrack(), timeRange.getSpeakers());
         fillDivider(holder, timeRange.isFirst());
@@ -230,16 +230,9 @@ public class EventsAdapter extends BaseAdapter {
         return resultView;
     }
 
-    private void fillDate(EventHolder holder, TimeRangeItem timeRange) {
-        String fromTime = timeRange.getFromTime();
-        String toTime = timeRange.getToTime();
-
-        if (!DateFormat.is24HourFormat(mContext)) {
-            if (!TextUtils.isEmpty(fromTime) && !TextUtils.isEmpty(toTime)) {
-                fromTime = DateUtils.getInstance().get12HoursTime(fromTime);
-                toTime = DateUtils.getInstance().get12HoursTime(toTime);
-            }
-        }
+    private void fillDate(EventHolder holder, Event event) {
+        String fromTime = DateUtils.getInstance().getTime(mContext, event.getFromMillis());
+        String toTime = DateUtils.getInstance().getTime(mContext, event.getToMillis());
 
         if (!TextUtils.isEmpty(fromTime) && !TextUtils.isEmpty(toTime)) {
             holder.txtFrom.setText(fromTime);

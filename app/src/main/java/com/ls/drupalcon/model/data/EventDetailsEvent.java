@@ -2,8 +2,8 @@ package com.ls.drupalcon.model.data;
 
 public class EventDetailsEvent{
 	private long eventId;
-	private String from;
-	private String to;
+	private long from;
+	private long to;
 	private String eventName;
 	private String track;
 	private String level;
@@ -29,19 +29,19 @@ public class EventDetailsEvent{
 		this.eventId = eventId;
 	}
 
-	public String getFrom() {
+	public long getFrom() {
 		return from;
 	}
 
-	public void setFrom(String from) {
+	public void setFrom(long from) {
 		this.from = from;
 	}
 
-	public String getTo() {
+	public long getTo() {
 		return to;
 	}
 
-	public void setTo(String to) {
+	public void setTo(long to) {
 		this.to = to;
 	}
 

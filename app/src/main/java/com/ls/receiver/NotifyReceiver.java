@@ -1,5 +1,6 @@
 package com.ls.receiver;
 
+import android.support.v4.app.NotificationCompat;
 import com.ls.drupalcon.R;
 import com.ls.ui.activity.EventDetailsActivity;
 import com.ls.ui.activity.HomeActivity;
@@ -25,22 +26,21 @@ public class NotifyReceiver extends BroadcastReceiver {
     private void showNotification(Context context, long id, long day, String text) {
         String title = context.getString(R.string.dont_miss_it);
         int icon = android.R.drawable.ic_dialog_info;
-        long time = System.currentTimeMillis();
-
-        Notification notification = new Notification(icon, text, time);
 
         Intent intent = new Intent(context, HomeActivity.class);
         intent.putExtra(EventDetailsActivity.EXTRA_EVENT_ID, id);
         intent.putExtra(EventDetailsActivity.EXTRA_DAY, day);
-
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        notification.setLatestEventInfo(context, title, text, contentIntent);
 
-        notification.flags |= Notification.FLAG_AUTO_CANCEL;
-        notification.defaults |= Notification.DEFAULT_SOUND;
-        notification.defaults |= Notification.DEFAULT_VIBRATE;
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        builder.setSmallIcon(icon);
+        builder.setContentTitle(title);
+        builder.setContentText(text);
+        builder.setAutoCancel(true);
+        builder.setContentIntent(contentIntent);
+        builder.setDefaults(Notification.DEFAULT_ALL);
 
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(0, notification);
+        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.notify(0, builder.build());
     }
 }

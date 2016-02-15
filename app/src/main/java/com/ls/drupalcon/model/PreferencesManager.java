@@ -49,7 +49,8 @@ public class PreferencesManager {
     }
 
     public TimeZone getServerTimeZoneObject() {
-        return TimeZone.getTimeZone(getTimeZone());
+        String timezoneId = getTimeZone();
+        return TimeZone.getTimeZone(timezoneId);
     }
 
     public void saveLastUpdateDate(String value) {

@@ -342,7 +342,6 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
             if (!cursor.moveToFirst()) {
                 return ret;
             }
-            Calendar calendar = Calendar.getInstance(Locale.UK);
 
             do {
                 SpeakerDetailsEvent event = new SpeakerDetailsEvent();
@@ -354,13 +353,15 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
                 event.setDate(cursor.getLong(cursor.getColumnIndex("_date")));
                 event.setFavorite(cursor.getInt(cursor.getColumnIndex("_favorite")) == 1);
                 event.setPlace(cursor.getString(cursor.getColumnIndex("_place")));
-                calendar.setTimeInMillis(cursor.getLong(cursor.getColumnIndex("_from")));
-                event.setFrom(calendar.getTimeInMillis());
 
-                calendar.setTimeInMillis(cursor.getLong(cursor.getColumnIndex("_to")));
-                event.setTo(calendar.getTimeInMillis());
+                long timeFrom = cursor.getLong(cursor.getColumnIndex("_from"));
+                event.setFrom(timeFrom);
+
+                long timeTo = cursor.getLong(cursor.getColumnIndex("_to"));
+                event.setTo(timeTo);
 
                 ret.add(event);
+
             } while (cursor.moveToNext());
         } finally {
             facade.close();
@@ -387,10 +388,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
                 return null;
             }
 
-            Calendar calendar = Calendar.getInstance(Locale.UK);
-
             EventDetailsEvent event = new EventDetailsEvent();
-
             event.setEventId(cursor.getLong(cursor.getColumnIndex("_id")));
             event.setEventName(cursor.getString(cursor.getColumnIndex("_name")));
             event.setLevel(cursor.getString(cursor.getColumnIndex("level_name")));
@@ -402,20 +400,9 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
             event.setDescription(cursor.getString(cursor.getColumnIndex("_description")));
 
             long from = cursor.getLong(cursor.getColumnIndex("_from"));
-            if (from != Long.MAX_VALUE) {
-                calendar.setTimeInMillis(from);
-                event.setFrom(Event.convertTime(calendar));
-            } else {
-                event.setFrom("");
-            }
-
+            event.setFrom(from);
             long to = cursor.getLong(cursor.getColumnIndex("_to"));
-            if (to != Long.MAX_VALUE) {
-                calendar.setTimeInMillis(cursor.getLong(cursor.getColumnIndex("_to")));
-                event.setTo(Event.convertTime(calendar));
-            } else {
-                event.setTo("");
-            }
+            event.setTo(to);
 
             return event;
         } finally {

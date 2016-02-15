@@ -43,7 +43,7 @@ public class Event extends AbstractEntity<Long> implements Comparable<Event>{
     private String mName;
 
     @SerializedName("speakers")
-    private List<Long> mSpeakers = new ArrayList<Long>();
+    private List<Long> mSpeakers = new ArrayList<>();
 
     @SerializedName("track")
     private long mTrack;
@@ -67,13 +67,12 @@ public class Event extends AbstractEntity<Long> implements Comparable<Event>{
     private boolean mDeleted;
 
     private Date mDate;
-
-    private long mFromTimeStamp;
-
     private TimeRange mTimeRange;
 
-    private int mEventClass = -1;
+    private long fromMillis;
+    private long toMillis;
 
+    private int mEventClass = -1;
     private boolean mIsFavorite = false;
 
     @Override
@@ -143,31 +142,24 @@ public class Event extends AbstractEntity<Long> implements Comparable<Event>{
         long date = parser.readLong("_date");
         mDate = date != 0 ? new Date(date) : null;
 
-        long fromTime = parser.readLong("_from");
-
-        mFromTimeStamp = fromTime;
-
-        long toTime = parser.readLong("_to");
+        fromMillis = parser.readLong("_from");
+        toMillis = parser.readLong("_to");
 
         Calendar from = null;
         Calendar to = null;
 
-        if (fromTime != Long.MAX_VALUE && toTime != Long.MAX_VALUE) {
+        if (fromMillis != Long.MAX_VALUE && toMillis != Long.MAX_VALUE) {
             from = Calendar.getInstance(Locale.UK);
-            from.setTimeInMillis(fromTime);
+            from.setTimeInMillis(fromMillis);
 
             to = Calendar.getInstance(Locale.UK);
-            to.setTimeInMillis(toTime);
+            to.setTimeInMillis(toMillis);
 
             mFromTime = convertTime(from);
             mToTime = convertTime(to);
         }
 
         mTimeRange = new TimeRange(date, from, to);
-    }
-
-    public long getFromTimeStamp() {
-        return mFromTimeStamp;
     }
 
     private static Calendar convertTime(String time) {
@@ -324,6 +316,14 @@ public class Event extends AbstractEntity<Long> implements Comparable<Event>{
 
     public void setLink(String mLink) {
         this.mLink = mLink;
+    }
+
+    public long getFromMillis() {
+        return fromMillis;
+    }
+
+    public long getToMillis() {
+        return toMillis;
     }
 
     @Override

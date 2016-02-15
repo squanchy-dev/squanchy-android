@@ -27,8 +27,6 @@ public class IrrelevantTimezoneDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-
         TimeZone eventTimeZone = PreferencesManager.getInstance().getServerTimeZoneObject();
         String timezoneNotificationData = String.format(getActivity().getString(R.string.irrelevant_timezone_notificaiton), eventTimeZone.getDisplayName(), eventTimeZone.getID());
 

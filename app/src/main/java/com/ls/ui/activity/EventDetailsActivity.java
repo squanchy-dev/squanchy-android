@@ -208,23 +208,17 @@ public class EventDetailsActivity extends StackKeeperActivity {
         TextView txtEventName = (TextView) findViewById(R.id.txtEventName);
         txtEventName.setText(eventName);
 
-        if (!TextUtils.isEmpty(event.getFrom()) && !TextUtils.isEmpty(event.getTo())) {
-            String fromTime = event.getFrom();
-            String toTime = event.getTo();
-            if (!android.text.format.DateFormat.is24HourFormat(this)) {
-                fromTime = DateUtils.getInstance().get12HoursTime(fromTime);
-                toTime = DateUtils.getInstance().get12HoursTime(toTime);
-            }
-            String eventLocation = DateUtils.getInstance().getWeekDay(mEventStartDate) + ", " + fromTime + " - " + toTime;
+        String fromTime = DateUtils.getInstance().getTime(this, event.getFrom());
+        String toTime = DateUtils.getInstance().getTime(this, event.getTo());
+        String eventLocation = DateUtils.getInstance().getWeekDay(mEventStartDate) + ", " + fromTime + " - " + toTime;
 
-            if (!TextUtils.isEmpty(event.getPlace())) {
-                String eventPlace = String.format(" in %s", event.getPlace());
-                eventLocation += eventPlace;
-            }
-
-            TextView txtEventLocation = (TextView) findViewById(R.id.label_where);
-            txtEventLocation.setText(eventLocation);
+        if (!TextUtils.isEmpty(event.getPlace())) {
+            String eventPlace = String.format(" in %s", event.getPlace());
+            eventLocation += eventPlace;
         }
+
+        TextView txtEventLocation = (TextView) findViewById(R.id.label_where);
+        txtEventLocation.setText(eventLocation);
     }
 
     private void fillPreDescription(@NonNull EventDetailsEvent event) {
@@ -366,29 +360,13 @@ public class EventDetailsActivity extends StackKeeperActivity {
     private void setToNotificationQueue() {
         ScheduleManager manager = new ScheduleManager(this);
 
-        String eventFromTime = mEvent.getFrom();
-        Date scheduleTime = DateUtils.getInstance().convertTime(eventFromTime);
-
         if (mIsFavorite) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeZone(DateUtils.getInstance().getTimeZone());
-            calendar.setTimeInMillis(mEventStartDate);
 
-            if (scheduleTime != null) {
-                calendar.clear(Calendar.HOUR_OF_DAY);
-                calendar.clear(Calendar.MINUTE);
-                calendar.clear(Calendar.SECOND);
-                calendar.clear(Calendar.MILLISECOND);
+            long currMillis = System.currentTimeMillis();
+            long eventMillis = mEvent.getFrom();
 
-                calendar.set(Calendar.HOUR_OF_DAY, scheduleTime.getHours());
-                calendar.set(Calendar.MINUTE, scheduleTime.getMinutes());
-            }
-
-            long systemDateLong = System.currentTimeMillis();
-            long scheduleDateLong = calendar.getTimeInMillis();
-
-            if (scheduleDateLong > systemDateLong) {
-                manager.setAlarmForNotification(calendar, mEvent, mEventStartDate);
+            if (eventMillis > currMillis) {
+                manager.setAlarmForNotification(mEvent, eventMillis, mEventStartDate);
             }
 
         } else {

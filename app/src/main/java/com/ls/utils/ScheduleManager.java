@@ -19,8 +19,8 @@ public class ScheduleManager {
         this.am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
     }
 
-    public void setAlarmForNotification(Calendar calendar, EventDetailsEvent event, long day) {
-        new AlarmTask(mContext, calendar, am, event, day).run();
+    public void setAlarmForNotification(EventDetailsEvent event, long startMillis, long startDay) {
+        new AlarmTask(mContext, am, event, startMillis, startDay).run();
     }
 
     public void cancelAlarm(long id) {
