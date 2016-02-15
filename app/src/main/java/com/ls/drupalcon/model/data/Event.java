@@ -80,11 +80,12 @@ public class Event extends AbstractEntity<Long> implements Comparable<Event>{
         ContentValues result = new ContentValues();
         result.put("_id", mId);
         result.put("_date", mDate != null ? mDate.getTime() : 0);
-        Calendar timeFrom = convertTime(mFromTime);
-        result.put("_from", timeFrom != null ? timeFrom.getTimeInMillis() : Long.MAX_VALUE);
 
-        Calendar timeTo = convertTime(mToTime);
-        result.put("_to", timeTo != null ? timeTo.getTimeInMillis() : Long.MAX_VALUE);
+        long timeFrom = convertTime(mFromTime);
+        result.put("_from", timeFrom);
+
+        long timeTo = convertTime(mToTime);
+        result.put("_to", timeTo);
 
         result.put("_type", mType);
         result.put("_name", mName);
@@ -162,20 +163,18 @@ public class Event extends AbstractEntity<Long> implements Comparable<Event>{
         mTimeRange = new TimeRange(date, from, to);
     }
 
-    private static Calendar convertTime(String time) {
+    private static long convertTime(String time) {
         if (time == null) {
-            return null;
+            return 0;
         }
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ", Locale.ENGLISH);
         try {
             Date date = format.parse(time);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
+            return date.getTime();
 
-            return calendar;
         } catch (ParseException e) {
-            return null;
+            return 0;
         }
     }
 
