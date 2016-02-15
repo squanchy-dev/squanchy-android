@@ -249,8 +249,11 @@ public class EventDetailsActivity extends StackKeeperActivity {
 
     private void fillDescription(@NonNull EventDetailsEvent event) {
         if (!TextUtils.isEmpty(event.getDescription())) {
-            String html = WebviewUtils.getHtml(this, event.getDescription());
+
             WebView webView = (WebView) findViewById(R.id.webView);
+            webView.setVisibility(View.VISIBLE);
+
+            String html = WebviewUtils.getHtml(this, event.getDescription());
             webView.setHorizontalScrollBarEnabled(false);
             webView.loadDataWithBaseURL("file:///android_asset/", html, "text/html", "UTF-8", null);
             webView.setWebViewClient(new WebViewClient() {

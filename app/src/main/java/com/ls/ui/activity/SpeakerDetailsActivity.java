@@ -193,7 +193,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
     }
 
     private void fillSpeakerDescription() {
-        final WebView webView = (WebView) findViewById(R.id.webView);
+        WebView webView = (WebView) findViewById(R.id.webView);
         if (!TextUtils.isEmpty(mSpeaker.getCharact())) {
 
             String html = WebviewUtils.getHtml(this, mSpeaker.getCharact());
