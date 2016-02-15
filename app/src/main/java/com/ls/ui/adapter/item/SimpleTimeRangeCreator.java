@@ -11,8 +11,6 @@ public class SimpleTimeRangeCreator implements EventItemCreator {
         TimeRangeItem result = new TimeRangeItem();
 
         result.setType(event.getType());
-        result.setFromTime(event.getFromTime());
-        result.setToTime(event.getToTime());
         result.setEvent(event);
 
         return result;

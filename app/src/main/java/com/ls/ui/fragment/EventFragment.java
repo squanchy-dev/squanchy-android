@@ -25,6 +25,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class EventFragment extends Fragment implements EventsAdapter.Listener {
@@ -186,15 +188,20 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
     }
 
     private int getCurrentTimePosition(List<EventListItem> eventListItems) {
-        int deviceHours = DateUtils.getInstance().getHours();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeZone(DateUtils.getInstance().getTimeZone());
+        int deviceHours =  calendar.get(Calendar.HOUR_OF_DAY);
         int pos = 0;
 
         for (int i = 0; i < eventListItems.size(); i++) {
             EventListItem item = eventListItems.get(i);
 
             if (item instanceof TimeRangeItem) {
-                TimeRangeItem rangeItem = (TimeRangeItem) item;
-                int eventHours = DateUtils.getInstance().convertTime(rangeItem.getFromTime()).getHours();
+
+                Event event = item.getEvent();
+                calendar.setTimeInMillis(event.getFromMillis());
+                int eventHours = calendar.get(Calendar.HOUR_OF_DAY);
+
                 if (deviceHours >= eventHours) {
                     pos = i;
                 }

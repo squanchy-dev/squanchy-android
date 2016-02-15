@@ -8,8 +8,6 @@ import java.util.List;
 
 public class TimeRangeItem implements EventListItem {
 
-    private String mFromTime;
-    private String mToTime;
     private Date mDate;
     private Event mEvent;
     private String mTrack;
@@ -41,22 +39,6 @@ public class TimeRangeItem implements EventListItem {
 
     public void setEvent(Event mEvent) {
         this.mEvent = mEvent;
-    }
-
-    public String getFromTime() {
-        return mFromTime;
-    }
-
-    public void setFromTime(String fromTime) {
-        mFromTime = fromTime;
-    }
-
-    public String getToTime() {
-        return mToTime;
-    }
-
-    public void setToTime(String toTime) {
-        mToTime = toTime;
     }
 
     public long getType() {
