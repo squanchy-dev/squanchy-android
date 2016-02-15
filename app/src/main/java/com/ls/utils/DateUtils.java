@@ -47,34 +47,6 @@ public class DateUtils {
         return null;
     }
 
-    @Nullable
-    public Date convertTime(String strDate) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat();
-        Date date;
-
-        if (strDate.toLowerCase().contains("pm") || strDate.toLowerCase().contains("am")) {
-            dateFormat.applyPattern("hh:mm aa");
-
-            try {
-                date = dateFormat.parse(strDate);
-                return date;
-
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        } else {
-            dateFormat.applyPattern("kk:mm");
-            try {
-                date = dateFormat.parse(strDate);
-                return date;
-
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
-
     public boolean isToday(long millis) {
         boolean isToday = false;
 
@@ -97,33 +69,6 @@ public class DateUtils {
             isToday = true;
         }
         return isToday;
-    }
-
-    public int getHours() {
-        TimeZone timeZone = PreferencesManager.getInstance().getServerTimeZoneObject();
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeZone(timeZone);
-
-        return calendar.get(Calendar.HOUR_OF_DAY);
-    }
-
-    public String get12HoursTime(@NotNull String strDate) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("kk:mm", Locale.ENGLISH);
-        Date date = null;
-
-        try {
-            date = dateFormat.parse(strDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        if (date != null) {
-            dateFormat.applyPattern("hh:mm aa");
-            return dateFormat.format(date.getTime());
-        } else {
-            return strDate;
-        }
     }
 
     public String getTime(Context context, long millis) {

@@ -204,8 +204,6 @@ public class EventGenerator {
             Track track = tracksManager.getTrack(event.getTrack());
             TimeRangeItem item = new TimeRangeItem();
             item.setEvent(event);
-            item.setFromTime(event.getFromTime());
-            item.setToTime(event.getToTime());
             item.setTrack(track != null ? track.getName() : null);
 
             for (Speaker speaker : speakers) {
