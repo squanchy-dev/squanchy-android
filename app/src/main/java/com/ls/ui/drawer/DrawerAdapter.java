@@ -63,7 +63,7 @@ public class DrawerAdapter extends BaseAdapter {
 
         if (position == selectedPos) {
             image.setImageResource(item.getSelIconRes());
-            txtName.setTextColor(App.getContext().getResources().getColor(R.color.primary));
+            txtName.setTextColor(App.getContext().getResources().getColor(R.color.item_selection));
         } else {
             image.setImageResource(item.getIconRes());
         }

@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="date"
-            app:custom_font="@string/roboto_regular"
+            app:custom_font="@string/roboto_bold"
             android:textColor="@color/link"
             android:textSize="@dimen/text_size_small"
             android:layout_marginBottom="3dp"/>

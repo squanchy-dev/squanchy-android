@@ -18,8 +18,8 @@
     </style>
 
     <style name="Theme.DrupalCon.Event" parent="Theme.DrupalCon">
-        <item name="colorPrimaryDark">@color/event</item>
-        <item name="colorPrimary">@color/event</item>
+        <item name="colorPrimaryDark">@color/event_primary</item>
+        <item name="colorPrimary">@color/event_primary</item>
         <item name="colorControlNormal">@color/white</item>
     </style>
 

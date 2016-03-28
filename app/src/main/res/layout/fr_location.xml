@@ -22,7 +22,7 @@
             android:minLines="2"
             android:textColor="@color/white"
             android:layout_marginBottom="4dp"
-            app:custom_font="@string/roboto_regular"
+            app:custom_font="@string/smythe_regular"
             android:textSize="@dimen/text_size_24" />
 
         <com.ls.ui.view.FontTextView
