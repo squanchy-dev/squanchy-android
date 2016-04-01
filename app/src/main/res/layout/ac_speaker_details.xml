@@ -44,7 +44,7 @@
                     android:gravity="center_vertical"
                     app:custom_font="@string/smythe_regular"
                     android:textColor="@color/black_100"
-                    android:textSize="@dimen/text_size_medium"
+                    android:textSize="@dimen/text_size_24"
                     tools:text="Lorem Ipsum" />
 
                 <com.ls.ui.view.FontTextView
