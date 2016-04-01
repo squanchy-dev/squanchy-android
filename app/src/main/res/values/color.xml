@@ -25,12 +25,12 @@
     <color name="primary">#593787</color>
 
     <color name="event_primary">#4E4E4E</color>
-    <color name="event">#757428</color>
+    <color name="event">#57308C</color>
 
     <color name="speaker_primary">#4E4E4E</color>
     <color name="speaker">#4E4E4E</color>
 
-    <color name="favorite">#57308C</color>
+    <color name="favorite">#757428</color>
     <color name="link">#757428</color>
     <color name="navigation">#ffffff</color>
 
