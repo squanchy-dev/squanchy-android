@@ -2,8 +2,9 @@ package com.ls.ui.fragment;
 
 
 import com.ls.drupalcon.R;
+import com.ls.drupalcon.model.PreferencesManager;
 import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
-import com.twitter.sdk.android.tweetui.UserTimeline;
+import com.twitter.sdk.android.tweetui.SearchTimeline;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -39,8 +40,10 @@ public class SocialMediaFragment extends Fragment
     {
         super.onViewCreated(view, savedInstanceState);
 
-        final UserTimeline userTimeline = new UserTimeline.Builder()
-                .screenName("fabric")
+        String searchQuery = PreferencesManager.getInstance().getTwitterSearchQuery();
+
+        final SearchTimeline userTimeline = new SearchTimeline.Builder()
+                .query(searchQuery)
                 .build();
         final TweetTimelineListAdapter adapter = new TweetTimelineListAdapter.Builder(view.getContext())
                 .setTimeline(userTimeline)
