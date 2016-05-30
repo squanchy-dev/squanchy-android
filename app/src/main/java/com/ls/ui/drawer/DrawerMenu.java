@@ -5,7 +5,7 @@ import com.ls.drupalcon.app.App;
 
 public class DrawerMenu {
 
-    public enum DrawerItem {Program, Bofs, Social, Speakers, Favorites, Location, About}
+    public enum DrawerItem {Program, Bofs, Social, Speakers, Favorites, Location, SocialMedia, About}
 
     public static final int[] MENU_ICON_RES = {
             R.drawable.menu_icon_program,
@@ -14,6 +14,7 @@ public class DrawerMenu {
             R.drawable.menu_icon_speakers,
             R.drawable.menu_icon_my_schedule,
             R.drawable.menu_icon_location,
+            R.drawable.menu_icon_points,
             R.drawable.menu_icon_about
     };
 
@@ -24,6 +25,7 @@ public class DrawerMenu {
             R.drawable.menu_icon_speakers_sel,
             R.drawable.menu_icon_my_schedule_sel,
             R.drawable.menu_icon_location_sel,
+            R.drawable.menu_icon_points_sel,
             R.drawable.menu_icon_about_sel
     };
 
@@ -34,6 +36,7 @@ public class DrawerMenu {
             App.getContext().getString(R.string.speakers),
             App.getContext().getString(R.string.my_schedule),
             App.getContext().getString(R.string.location),
+            App.getContext().getString(R.string.social_media),
             App.getContext().getString(R.string.about)
     };
 }

@@ -34,7 +34,6 @@ import com.ls.utils.ApplicationConfig;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.net.http.AndroidHttpClient;
 import android.os.Build;
 import android.os.Environment;
 
@@ -225,12 +224,10 @@ public class Model {
         } catch (PackageManager.NameNotFoundException e) {
         }
 
-        if (Build.VERSION.SDK_INT >= 9) {
-            stack =  new RedirectHurlStack();
 
-        } else {
-            stack = new HttpClientStack(AndroidHttpClient.newInstance(userAgent));
-        }
+        stack =  new RedirectHurlStack();
+
+
 
         return newRequestQueue(context, stack);
     }
@@ -250,12 +247,7 @@ public class Model {
         } catch (PackageManager.NameNotFoundException e) {
         }
 
-        if (Build.VERSION.SDK_INT >= 9) {
-            stack =  new RedirectHurlStack();
-
-        } else {
-            stack = new HttpClientStack(AndroidHttpClient.newInstance(userAgent));
-        }
+        stack =  new RedirectHurlStack();
 
         return newNoCachedRequestQueue(stack);
     }

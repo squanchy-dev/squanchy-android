@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import com.ls.ui.fragment.EventHolderFragment;
 import com.ls.ui.fragment.LocationFragment;
+import com.ls.ui.fragment.SocialMediaFragment;
 import com.ls.ui.fragment.SpeakersListFragment;
 import org.jetbrains.annotations.NotNull;
 
@@ -57,6 +58,10 @@ public class DrawerManager {
 			case Location:
 				fragment = new LocationFragment();
 				fragmentTag = LocationFragment.TAG;
+				break;
+			case SocialMedia:
+				fragment = new SocialMediaFragment();
+				fragmentTag = SocialMediaFragment.TAG;
 				break;
 			default:
 				fragment = EventHolderFragment.newInstance(EventMode.Program.ordinal());

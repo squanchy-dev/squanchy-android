@@ -15,19 +15,28 @@ import com.ls.util.image.DrupalImageView;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDexApplication;
 
 import com.ls.utils.ApplicationConfig;
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
 import io.fabric.sdk.android.Fabric;
 
-public class App extends Application {
+public class App extends MultiDexApplication {
+
+    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
+    private static final String TWITTER_KEY = "Mxl1GoGSM98T3jTIWdlUuqXmh";
+    private static final String TWITTER_SECRET = "UM74rykaGhxPhhKED2KxJrd6zGBLNWgVsGdlzjdSwSNqLTiyqY";
+
     private static Context mContext;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        if (!BuildConfig.DEBUG) {
-            Fabric.with(this, new Crashlytics());
-        }
+//        if (!BuildConfig.DEBUG) {
+            TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
+            Fabric.with(this, new Crashlytics(), new Twitter(authConfig));
+//        }
 
         mContext = getApplicationContext();
 
