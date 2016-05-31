@@ -19,6 +19,7 @@ import com.ls.ui.adapter.item.EventListItem;
 import com.ls.ui.adapter.item.HeaderItem;
 import com.ls.ui.adapter.item.ProgramItem;
 import com.ls.ui.adapter.item.TimeRangeItem;
+import com.ls.util.L;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -272,10 +273,8 @@ public class EventGenerator {
                 case Type.COFFEBREAK:
                 case Type.LUNCH:
                 case Type.REGISTRATION:
-                    result.add(timeRangeItem);
-                    break;
-
                 case Type.ALL_DAY:
+                    default:
                     result.add(timeRangeItem);
                     break;
             }
