@@ -14,6 +14,7 @@ import com.ls.ui.activity.HomeActivity;
 import com.ls.ui.adapter.BaseEventDaysPagerAdapter;
 import com.ls.ui.drawer.DrawerManager;
 import com.ls.ui.receiver.ReceiverManager;
+import com.ls.util.L;
 import com.ls.utils.DateUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -101,9 +102,29 @@ public class EventHolderFragment extends Fragment {
         return true;
     }
 
+//    @Override
+//    public void onActivityCreated(Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//        Model.instance().getUpdatesManager().registerUpdateListener(updateReceiver);
+//        favoriteReceiver.register(getActivity());
+//
+//        initData();
+//        initView();
+//        new LoadData().execute();
+//    }
+//
+//
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        Model.instance().getUpdatesManager().unregisterUpdateListener(updateReceiver);
+//        favoriteReceiver.unregister(getActivity());
+//    }
+
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onResume()
+    {
+        super.onResume();
         Model.instance().getUpdatesManager().registerUpdateListener(updateReceiver);
         favoriteReceiver.register(getActivity());
 
@@ -113,8 +134,9 @@ public class EventHolderFragment extends Fragment {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onPause()
+    {
+        super.onPause();
         Model.instance().getUpdatesManager().unregisterUpdateListener(updateReceiver);
         favoriteReceiver.unregister(getActivity());
     }
@@ -190,6 +212,11 @@ public class EventHolderFragment extends Fragment {
 
 
     private void updateViews(List<Long> dayList) {
+
+        if(!isResumed()){
+            return;
+        }
+
         if (dayList.isEmpty()) {
             mPagerTabs.setVisibility(View.GONE);
             if (mEventMode == DrawerManager.EventMode.Favorites) {
