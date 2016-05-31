@@ -28,9 +28,9 @@ public class SettingsManager extends SynchronousItemManager<SettingsHolder, Obje
 //        String timeZoneNumber = requestResponse.getSettings().getTimeZone();
 //        String timeZone = String.format("GMT%s", timeZoneNumber);
         String timeZone = requestResponse.getSettings().getTimeZone();
-        L.e("Settings timezone:" + timeZone);
         PreferencesManager.getInstance().saveTimeZone(timeZone);
-
+        String searchQuery = requestResponse.getSettings().getTwitterSearchQuery();
+        PreferencesManager.getInstance().saveTwitterSearchQuery(searchQuery);
         return true;
     }
 }

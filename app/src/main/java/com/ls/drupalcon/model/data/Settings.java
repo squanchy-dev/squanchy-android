@@ -16,6 +16,9 @@ public class Settings {
     @SerializedName("timezone")
     private String timeZone;
 
+    @SerializedName("twitterSearchQuery")
+    private String twitterSearchQuery;
+
     public String getTitleMajor() {
         return titleMajor;
     }
@@ -46,5 +49,15 @@ public class Settings {
 
     public void setTimeZone(String timeZone) {
         this.timeZone = timeZone;
+    }
+
+    public String getTwitterSearchQuery()
+    {
+        return twitterSearchQuery;
+    }
+
+    public void setTwitterSearchQuery(String twitterSearchQuery)
+    {
+        this.twitterSearchQuery = twitterSearchQuery;
     }
 }
