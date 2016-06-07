@@ -12,6 +12,7 @@ import com.ls.ui.adapter.item.SimpleTimeRangeCreator;
 import com.ls.ui.adapter.item.TimeRangeItem;
 import com.ls.ui.drawer.DrawerManager;
 import com.ls.ui.receiver.ReceiverManager;
+import com.ls.util.L;
 import com.ls.utils.DateUtils;
 
 import android.app.Activity;
@@ -179,11 +180,10 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
         EventListItem item = mAdapter.getItem(position);
 
         if (item.getEvent() != null && item.getEvent().getId() != 0) {
-            long type = item.getEvent().getType();
-
-            if (type == Type.SPEACH || type == Type.SPEACH_OF_DAY) {
+//            long type = item.getEvent().getType();
+//            if (type == Type.SPEACH || type == Type.SPEACH_OF_DAY || type == Type.UNKNOWN_TYPE) {
                 EventDetailsActivity.startThisActivity(getActivity(), item.getEvent().getId(), mDay);
-            }
+//            }
         }
     }
 

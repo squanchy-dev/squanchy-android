@@ -24,6 +24,7 @@ public class Type extends AbstractEntity<Long> {
     public static final int WALKING = 7;
     public static final int REGISTRATION = 8;
     public static final int FREE_SLOT = 9;
+    public static final int UNKNOWN_TYPE = 10;
 
     @SerializedName("typeId")
     private long mId;
@@ -119,6 +120,9 @@ public class Type extends AbstractEntity<Long> {
 
             case Type.ALL_DAY:
                 return R.drawable.ic_program_24_hour;
+
+            case Type.UNKNOWN_TYPE:
+                return 0;
 
             default:
                 return 0;

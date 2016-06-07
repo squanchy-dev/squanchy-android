@@ -121,10 +121,11 @@ public class EventHolderFragment extends Fragment {
 //        favoriteReceiver.unregister(getActivity());
 //    }
 
+
     @Override
-    public void onResume()
+    public void onViewCreated(View view, Bundle savedInstanceState)
     {
-        super.onResume();
+        super.onViewCreated(view, savedInstanceState);
         Model.instance().getUpdatesManager().registerUpdateListener(updateReceiver);
         favoriteReceiver.register(getActivity());
 
@@ -134,11 +135,11 @@ public class EventHolderFragment extends Fragment {
     }
 
     @Override
-    public void onPause()
+    public void onDestroyView()
     {
-        super.onPause();
         Model.instance().getUpdatesManager().unregisterUpdateListener(updateReceiver);
         favoriteReceiver.unregister(getActivity());
+        super.onDestroyView();
     }
 
     private void initData() {
