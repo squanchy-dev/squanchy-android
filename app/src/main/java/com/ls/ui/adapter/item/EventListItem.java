@@ -2,18 +2,49 @@ package com.ls.ui.adapter.item;
 
 import com.ls.drupalcon.model.data.Event;
 
-public interface EventListItem {
+import java.util.ArrayList;
+import java.util.List;
 
-    int TYPE_TIME_RANGE = 0;
-    int TYPE_PROGRAM = 1;
-    int TYPE_BOFS = 2;
-    int TYPE_SOCIAL = 3;
-    int TYPE_SECTION_NAME = 4;
+public abstract class EventListItem {
 
-    int getAdapterType();
+    public static final int TYPE_TIME_RANGE = 0;
+    public static final int TYPE_PROGRAM = 1;
+    public static final int TYPE_BOFS = 2;
+    public static final int TYPE_SOCIAL = 3;
+    public static final int TYPE_SECTION_NAME = 4;
 
-    Event getEvent();
+    private Event mEvent;
+    private List<String> mSpeakers = new ArrayList<String>();
+    private boolean isLast = false;
 
-    void setLast(boolean isLast);
+    abstract public int getAdapterType();
+
+    public Event getEvent() {
+        return mEvent;
+    }
+
+    public void setEvent(Event event) {
+        mEvent = event;
+    }
+
+    public void setLast(boolean isLast) {
+        this.isLast = isLast;
+    }
+
+    public boolean isLast() {
+        return isLast;
+    }
+
+    public List<String> getSpeakers() {
+        return mSpeakers;
+    }
+
+    public void setSpeakers(List<String> speakers) {
+        mSpeakers = speakers;
+    }
+
+    public void addSpeaker(String speaker) {
+        mSpeakers.add(speaker);
+    }
 
 }

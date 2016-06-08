@@ -18,6 +18,7 @@ import com.ls.ui.adapter.item.EventItemCreator;
 import com.ls.ui.adapter.item.EventListItem;
 import com.ls.ui.adapter.item.HeaderItem;
 import com.ls.ui.adapter.item.ProgramItem;
+import com.ls.ui.adapter.item.SocialItem;
 import com.ls.ui.adapter.item.TimeRangeItem;
 import com.ls.util.L;
 
@@ -236,12 +237,7 @@ public class EventGenerator {
                 long eventDate = event.getTimeRange().getDate();
                 Date date = parseEventDate(eventFromTime, eventDate);
                 timeRangeItem.setDate(date);
-
-                if (item instanceof ProgramItem) {
-                    timeRangeItem.setSpeakers(((ProgramItem) item).getSpeakers());
-                } else if (item instanceof BofsItem) {
-                    timeRangeItem.setSpeakers(((BofsItem) item).getSpeakers());
-                }
+                timeRangeItem.setSpeakers(item.getSpeakers());
             }
 
             switch ((int) typeId) {

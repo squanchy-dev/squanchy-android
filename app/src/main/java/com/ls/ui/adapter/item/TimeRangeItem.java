@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class TimeRangeItem implements EventListItem {
+public class TimeRangeItem extends EventListItem {
 
     private Date mDate;
     private Event mEvent;

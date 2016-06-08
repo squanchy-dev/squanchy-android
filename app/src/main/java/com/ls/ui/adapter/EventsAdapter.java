@@ -12,6 +12,7 @@ import com.ls.ui.adapter.item.ProgramItem;
 import com.ls.ui.adapter.item.SocialItem;
 import com.ls.ui.adapter.item.TimeRangeItem;
 import com.ls.ui.drawer.DrawerManager;
+import com.ls.util.L;
 import com.ls.utils.DateUtils;
 
 import android.content.Context;
@@ -89,7 +90,6 @@ public class EventsAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View resultView;
         int itemViewType = getItemViewType(position);
-
         if (itemViewType == EventListItem.TYPE_TIME_RANGE) {
             resultView = initTimeRangeView(position, convertView, parent);
         } else if (itemViewType == EventListItem.TYPE_BOFS) {
@@ -200,9 +200,8 @@ public class EventsAdapter extends BaseAdapter {
 
         SocialItem socialItem = (SocialItem) getItem(position);
         Event event = socialItem.getEvent();
-
         fillIcon(holder, event.getType());
-        fillEventInfo(holder, event, null, null);
+        fillEventInfo(holder, event, null, socialItem.getSpeakers());
         fillEventClickAbility(holder.layoutRoot, holder.txtPlace, event, position);
 
         return resultView;

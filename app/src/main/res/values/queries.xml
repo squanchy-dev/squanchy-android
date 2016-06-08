@@ -442,7 +442,18 @@
 
     <string name="select_events_partly_class_and_date">
         SELECT e._id, e._date, e._from, e._to, e._type, e._experience_level,
-               e._name, e._place, e._event_class, e._favorite, e._order
+               e._name, e._place, e._event_class, e._favorite, e._order,
+             (SELECT group_concat(first_name|| \' \' ||last_name,\',\')
+                FROM table_speaker
+                WHERE _id IN (
+                    SELECT _speaker_id
+                    FROM table_event_and_speaker
+                    WHERE _event_id=e._id
+                )
+            )
+            AS _speaker_name
+
+
         FROM table_event AS e
         WHERE _event_class=? and _date=?
         ORDER BY _id, e._order

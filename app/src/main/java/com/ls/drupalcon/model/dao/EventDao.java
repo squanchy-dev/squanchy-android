@@ -12,6 +12,7 @@ import com.ls.ui.adapter.item.BofsItem;
 import com.ls.ui.adapter.item.EventListItem;
 import com.ls.ui.adapter.item.ProgramItem;
 import com.ls.ui.adapter.item.SocialItem;
+import com.ls.util.L;
 import com.ls.utils.ArrayUtils;
 import com.ls.utils.CursorParser;
 import com.ls.utils.CursorStringParser;
@@ -546,7 +547,18 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
 
                 SocialItem item = new SocialItem();
                 item.setEvent(event);
+
+                String speakerName = parser.readString("_speaker_name");
+                if (speakerName != null) {
+                    String[] speakerNames = speakerName.split(",");
+                    for(int count = 0;count < speakerNames.length - 1;count++) {
+                        item.addSpeaker(speakerNames[count]);
+                    }
+                    L.e("Fetching socials, speakers:" + speakerName);
+                }
+
                 dataList.add(item);
+
 
                 moved = cursor.moveToNext();
             }
