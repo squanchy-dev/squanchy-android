@@ -358,17 +358,20 @@
     <string name="select_program_items_by_date_and_track_ids">
         SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class,
         e._favorite, e._order, e._experience_level, t.track_name, l.level_name,
-        s.first_name|| \' \' ||s.last_name AS _speaker_name
+            (SELECT group_concat(first_name|| \' \' ||last_name,\',\')
+                FROM table_speaker
+                WHERE _id IN (
+                    SELECT _speaker_id
+                    FROM table_event_and_speaker
+                    WHERE _event_id=e._id
+                )
+            )
+            AS _speaker_name
+
 
         FROM table_event AS e
         LEFT JOIN table_track AS t ON e._track=t._id
         LEFT JOIN table_level AS l ON e._experience_level=l._id
-
-        LEFT JOIN table_speaker AS s ON s._id IN (
-        SELECT _speaker_id
-        FROM table_event_and_speaker
-        WHERE _event_id=e._id
-        )
 
         WHERE e._event_class=? and e._date=? and e._track IN (%s)
         ORDER BY e._id, e._order
@@ -377,17 +380,19 @@
     <string name="select_program_items_by_date_and_expLevel_ids">
         SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class,
         e._favorite, e._order, e._experience_level, t.track_name, l.level_name,
-        s.first_name|| \' \' ||s.last_name AS _speaker_name
+            (SELECT group_concat(first_name|| \' \' ||last_name,\',\')
+                FROM table_speaker
+                WHERE _id IN (
+                    SELECT _speaker_id
+                    FROM table_event_and_speaker
+                    WHERE _event_id=e._id
+                )
+            )
+            AS _speaker_name
 
         FROM table_event AS e
         LEFT JOIN table_track AS t ON e._track=t._id
         LEFT JOIN table_level AS l ON e._experience_level=l._id
-
-        LEFT JOIN table_speaker AS s ON s._id IN (
-        SELECT _speaker_id
-        FROM table_event_and_speaker
-        WHERE _event_id=e._id
-        )
 
         WHERE e._event_class=? and e._date=? and e._experience_level IN (%s)
         ORDER BY e._id, e._order
@@ -396,17 +401,19 @@
     <string name="select_program_items_by_date_and_track_ids_and_expLevel_ids" formatted = "false">
         SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class,
         e._favorite, e._order, e._experience_level, t.track_name, l.level_name,
-        s.first_name|| \' \' ||s.last_name AS _speaker_name
+            (SELECT group_concat(first_name|| \' \' ||last_name,\',\')
+                FROM table_speaker
+                WHERE _id IN (
+                    SELECT _speaker_id
+                    FROM table_event_and_speaker
+                    WHERE _event_id=e._id
+                )
+            )
+            AS _speaker_name
 
         FROM table_event AS e
         LEFT JOIN table_track AS t ON e._track=t._id
         LEFT JOIN table_level AS l ON e._experience_level=l._id
-
-        LEFT JOIN table_speaker AS s ON s._id IN (
-        SELECT _speaker_id
-        FROM table_event_and_speaker
-        WHERE _event_id=e._id
-        )
 
         WHERE e._event_class=? and e._date=? and e._track IN (%s) and e._experience_level IN (%s)
         ORDER BY e._id, e._order
@@ -415,17 +422,19 @@
     <string name="select_program_items_by_date">
         SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class,
         e._favorite, e._order, e._experience_level, t.track_name, l.level_name,
-        s.first_name|| \' \' ||s.last_name AS _speaker_name
+            (SELECT group_concat(first_name|| \' \' ||last_name,\',\')
+                FROM table_speaker
+                WHERE _id IN (
+                    SELECT _speaker_id
+                    FROM table_event_and_speaker
+                    WHERE _event_id=e._id
+                )
+            )
+            AS _speaker_name
 
         FROM table_event AS e
         LEFT JOIN table_track AS t ON e._track=t._id
         LEFT JOIN table_level AS l ON e._experience_level=l._id
-
-        LEFT JOIN table_speaker AS s ON s._id IN (
-        SELECT _speaker_id
-        FROM table_event_and_speaker
-        WHERE _event_id=e._id
-        )
 
         WHERE e._event_class=? and e._date=?
         ORDER BY e._id, e._order

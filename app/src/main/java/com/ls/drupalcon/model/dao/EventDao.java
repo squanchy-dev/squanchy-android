@@ -460,7 +460,10 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
 
                 String speakerName = parser.readString("_speaker_name");
                 if (speakerName != null) {
-                    lastItem.addSpeaker(speakerName);
+                    String[] speakerNames = speakerName.split(",");
+                    for(int count = 0;count < speakerNames.length - 1;count++) {
+                        lastItem.addSpeaker(speakerNames[count]);
+                    }
                 }
 
                 lastId = eventId;
@@ -501,7 +504,10 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
 
                 String speakerName = parser.readString("_speaker_name");
                 if (speakerName != null) {
-                    item.addSpeaker(speakerName);
+                    String[] speakerNames = speakerName.split(",");
+                    for(int count = 0;count < speakerNames.length - 1;count++) {
+                        item.addSpeaker(speakerNames[count]);
+                    }
                 }
 
                 dataList.add(item);
