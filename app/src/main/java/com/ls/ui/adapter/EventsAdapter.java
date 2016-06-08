@@ -12,14 +12,12 @@ import com.ls.ui.adapter.item.ProgramItem;
 import com.ls.ui.adapter.item.SocialItem;
 import com.ls.ui.adapter.item.TimeRangeItem;
 import com.ls.ui.drawer.DrawerManager;
-import com.ls.util.L;
 import com.ls.utils.DateUtils;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.text.format.DateFormat;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,12 +90,12 @@ public class EventsAdapter extends BaseAdapter {
         int itemViewType = getItemViewType(position);
         if (itemViewType == EventListItem.TYPE_TIME_RANGE) {
             resultView = initTimeRangeView(position, convertView, parent);
-        } else if (itemViewType == EventListItem.TYPE_BOFS) {
-            resultView = initBofsView(position, convertView, parent);
-        } else if (itemViewType == EventListItem.TYPE_PROGRAM) {
-            resultView = initProgramView(position, convertView, parent);
-        } else if (itemViewType == EventListItem.TYPE_SOCIAL) {
-            resultView = initSocialView(position, convertView, parent);
+//        } else if (itemViewType == EventListItem.TYPE_BOFS) {
+//            resultView = initBofsView(position, convertView, parent);
+//        } else if (itemViewType == EventListItem.TYPE_PROGRAM) {
+//            resultView = initProgramView(position, convertView, parent);
+//        } else if (itemViewType == EventListItem.TYPE_SOCIAL) {
+//            resultView = initSocialView(position, convertView, parent);
         } else if (itemViewType == EventListItem.TYPE_SECTION_NAME) {
             resultView = initSectionNameView(position, convertView, parent);
         } else {
@@ -134,77 +132,77 @@ public class EventsAdapter extends BaseAdapter {
 
         return resultView;
     }
-
-    public View initBofsView(final int position, View convertView, ViewGroup parent) {
-        View resultView = convertView;
-        EventHolder holder;
-
-        if (resultView == null) {
-            resultView = mInflater.inflate(R.layout.item_event, parent, false);
-            holder = createEventHolder(resultView);
-            resultView.setTag(holder);
-        } else {
-            holder = (EventHolder) resultView.getTag();
-        }
-
-        BofsItem bofsItem = (BofsItem) getItem(position);
-        Event event = bofsItem.getEvent();
-
-        fillIcon(holder, event.getType());
-        fillEventInfo(holder, event, null, bofsItem.getSpeakers());
-        fillEventClickAbility(holder.layoutRoot, holder.txtPlace, event, position);
-        fillDivider(holder, !bofsItem.isLast());
-
-        return resultView;
-    }
-
-    public View initProgramView(final int position, View convertView, ViewGroup parent) {
-        View resultView = convertView;
-        EventHolder holder;
-
-        if (resultView == null) {
-            resultView = mInflater.inflate(R.layout.item_event, parent, false);
-            holder = createEventHolder(resultView);
-            resultView.setTag(holder);
-
-            resultView.setTag(holder);
-        } else {
-            holder = (EventHolder) resultView.getTag();
-        }
-
-        ProgramItem programItem = (ProgramItem) getItem(position);
-        Event event = programItem.getEvent();
-
-        fillEventInfo(holder, event, programItem.getTrack(), programItem.getSpeakers());
-        fillIcon(holder, event.getType());
-        fillDivider(holder, !programItem.isLast());
-        fillEventClickAbility(holder.layoutRoot, holder.txtPlace, event, position);
-
-        return resultView;
-    }
-
-    private View initSocialView(final int position, View convertView, ViewGroup parent) {
-        View resultView = convertView;
-        EventHolder holder;
-
-        if (resultView == null) {
-            resultView = mInflater.inflate(R.layout.item_event, parent, false);
-            holder = createEventHolder(resultView);
-            resultView.setTag(holder);
-
-            resultView.setTag(holder);
-        } else {
-            holder = (EventHolder) resultView.getTag();
-        }
-
-        SocialItem socialItem = (SocialItem) getItem(position);
-        Event event = socialItem.getEvent();
-        fillIcon(holder, event.getType());
-        fillEventInfo(holder, event, null, socialItem.getSpeakers());
-        fillEventClickAbility(holder.layoutRoot, holder.txtPlace, event, position);
-
-        return resultView;
-    }
+//
+//    public View initBofsView(final int position, View convertView, ViewGroup parent) {
+//        View resultView = convertView;
+//        EventHolder holder;
+//
+//        if (resultView == null) {
+//            resultView = mInflater.inflate(R.layout.item_event, parent, false);
+//            holder = createEventHolder(resultView);
+//            resultView.setTag(holder);
+//        } else {
+//            holder = (EventHolder) resultView.getTag();
+//        }
+//
+//        BofsItem bofsItem = (BofsItem) getItem(position);
+//        Event event = bofsItem.getEvent();
+//
+//        fillIcon(holder, event.getType());
+//        fillEventInfo(holder, event, null, bofsItem.getSpeakers());
+//        fillEventClickAbility(holder.layoutRoot, holder.txtPlace, event, position);
+//        fillDivider(holder, !bofsItem.isLast());
+//
+//        return resultView;
+//    }
+//
+//    public View initProgramView(final int position, View convertView, ViewGroup parent) {
+//        View resultView = convertView;
+//        EventHolder holder;
+//
+//        if (resultView == null) {
+//            resultView = mInflater.inflate(R.layout.item_event, parent, false);
+//            holder = createEventHolder(resultView);
+//            resultView.setTag(holder);
+//
+//            resultView.setTag(holder);
+//        } else {
+//            holder = (EventHolder) resultView.getTag();
+//        }
+//
+//        ProgramItem programItem = (ProgramItem) getItem(position);
+//        Event event = programItem.getEvent();
+//
+//        fillEventInfo(holder, event, programItem.getTrack(), programItem.getSpeakers());
+//        fillIcon(holder, event.getType());
+//        fillDivider(holder, !programItem.isLast());
+//        fillEventClickAbility(holder.layoutRoot, holder.txtPlace, event, position);
+//
+//        return resultView;
+//    }
+//
+//    private View initSocialView(final int position, View convertView, ViewGroup parent) {
+//        View resultView = convertView;
+//        EventHolder holder;
+//
+//        if (resultView == null) {
+//            resultView = mInflater.inflate(R.layout.item_event, parent, false);
+//            holder = createEventHolder(resultView);
+//            resultView.setTag(holder);
+//
+//            resultView.setTag(holder);
+//        } else {
+//            holder = (EventHolder) resultView.getTag();
+//        }
+//
+//        SocialItem socialItem = (SocialItem) getItem(position);
+//        Event event = socialItem.getEvent();
+//        fillIcon(holder, event.getType());
+//        fillEventInfo(holder, event, null, socialItem.getSpeakers());
+//        fillEventClickAbility(holder.layoutRoot, holder.txtPlace, event, position);
+//
+//        return resultView;
+//    }
 
     public View initSectionNameView(int position, View convertView, ViewGroup parent) {
         View resultView = convertView;
