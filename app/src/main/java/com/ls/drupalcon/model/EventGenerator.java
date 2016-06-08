@@ -237,8 +237,8 @@ public class EventGenerator {
                 long eventDate = event.getTimeRange().getDate();
                 Date date = parseEventDate(eventFromTime, eventDate);
                 timeRangeItem.setDate(date);
-                timeRangeItem.setSpeakers(item.getSpeakers());
             }
+            timeRangeItem.setSpeakers(item.getSpeakers());
 
             switch ((int) typeId) {
 
@@ -248,7 +248,7 @@ public class EventGenerator {
 
                     if (eventListItems.get(0) instanceof ProgramItem) {
                         ProgramItem firstItem = (ProgramItem) eventListItems.get(0);
-                        timeRangeItem.setSpeakers(firstItem.getSpeakers());
+//                        timeRangeItem.setSpeakers(firstItem.getSpeakers());
                         timeRangeItem.setTrack(firstItem.getTrack());
                     }
 

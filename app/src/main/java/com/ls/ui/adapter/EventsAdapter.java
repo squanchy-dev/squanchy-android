@@ -125,7 +125,6 @@ public class EventsAdapter extends BaseAdapter {
 
         TimeRangeItem timeRange = (TimeRangeItem) getItem(position);
         Event event = timeRange.getEvent();
-
         fillDate(holder, event);
         fillIcon(holder, event.getType());
         fillEventInfo(holder, event, timeRange.getTrack(), timeRange.getSpeakers());

@@ -21,6 +21,7 @@ import android.content.Context;
 import android.database.Cursor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -551,10 +552,9 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
                 String speakerName = parser.readString("_speaker_name");
                 if (speakerName != null) {
                     String[] speakerNames = speakerName.split(",");
-                    for(int count = 0;count < speakerNames.length - 1;count++) {
+                    for(int count = 0;count < speakerNames.length;count++) {
                         item.addSpeaker(speakerNames[count]);
                     }
-                    L.e("Fetching socials, speakers:" + speakerName);
                 }
 
                 dataList.add(item);
