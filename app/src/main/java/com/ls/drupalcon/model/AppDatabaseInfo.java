@@ -1,6 +1,7 @@
 package com.ls.drupalcon.model;
 
 import com.ls.drupalcon.R;
+import com.ls.drupalcon.app.App;
 import com.ls.drupalcon.model.dao.EventDao;
 import com.ls.drupalcon.model.dao.InfoDao;
 import com.ls.drupalcon.model.dao.LevelDao;
@@ -11,6 +12,7 @@ import com.ls.drupalcon.model.dao.TrackDao;
 import com.ls.drupalcon.model.dao.TypeDao;
 import com.ls.drupalcon.model.database.DBInfo;
 import com.ls.drupalcon.model.database.IMigrationTask;
+import com.ls.utils.FileUtils;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -81,6 +83,7 @@ public class AppDatabaseInfo implements DBInfo, IMigrationTask {
             for (String query : dbDropList) {
                 theDb.execSQL(query);
             }
+            FileUtils.deleteDataStorageDirectory(App.getContext());
 
             for (String query : dbSchemaQueryList) {
                 theDb.execSQL(query);

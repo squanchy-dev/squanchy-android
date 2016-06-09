@@ -414,7 +414,9 @@ public class DrupalClient implements OnResponseListener {
     private String getURLForEntity(AbstractBaseDrupalEntity entity) {
         String path = entity.getPath();
 
-        if(TextUtils.isEmpty(baseURL))
+        boolean pathAlreadyHasDomain = !TextUtils.isEmpty(path) && (path.startsWith("http://") || path.startsWith("https://"));
+
+        if(TextUtils.isEmpty(baseURL)||pathAlreadyHasDomain)
         {
             return path;
         }else {

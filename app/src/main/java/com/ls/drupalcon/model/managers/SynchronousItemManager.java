@@ -37,4 +37,9 @@ public abstract class SynchronousItemManager<FetchRequestResponseToManage ,Param
     public boolean fetchData() {
         return fetchData(null);
     }
+
+    public DrupalClient getClient()
+    {
+        return client;
+    }
 }

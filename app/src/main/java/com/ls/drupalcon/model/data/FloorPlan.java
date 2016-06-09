@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,6 +101,10 @@ public class FloorPlan extends AbstractEntity<String> implements Comparable<Floo
         return result;
     }
 
+    public String getFilePath(){
+        return "FloorImages" + File.separator + this.getName()+"-"+this.getId();
+    }
+
     public static class Holder {
 
         @SerializedName("locations")
@@ -108,5 +113,17 @@ public class FloorPlan extends AbstractEntity<String> implements Comparable<Floo
         public List<FloorPlan> getLocations() {
             return mLocations;
         }
+    }
+
+    @Override
+    public String toString()
+    {
+        return "FloorPlan{" +
+                "mId='" + mId + '\'' +
+                ", mName='" + mName + '\'' +
+                ", mImageURL='" + mImageURL + '\'' +
+                ", mDeleted=" + mDeleted +
+                ", mOrder=" + mOrder +
+                "} " + super.toString();
     }
 }
