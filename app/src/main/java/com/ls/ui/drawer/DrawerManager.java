@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import com.ls.ui.fragment.EventHolderFragment;
+import com.ls.ui.fragment.FloorPlanFragment;
 import com.ls.ui.fragment.LocationFragment;
 import com.ls.ui.fragment.SocialMediaFragment;
 import com.ls.ui.fragment.SpeakersListFragment;
@@ -53,6 +54,11 @@ public class DrawerManager {
 			case Speakers:
 				fragment = new SpeakersListFragment();
 				fragmentTag = SpeakersListFragment.TAG;
+				break;
+
+			case FloorPlan:
+				fragment = new FloorPlanFragment();
+				fragmentTag = FloorPlanFragment.TAG;
 				break;
 
 			case Location:
