@@ -1,6 +1,8 @@
 package com.ls.drupalcon.model;
 
 import com.ls.drupal.DrupalClient;
+import com.ls.drupalcon.R;
+import com.ls.drupalcon.app.App;
 import com.ls.drupalcon.model.data.UpdateDate;
 import com.ls.drupalcon.model.database.ILAPIDBFacade;
 import com.ls.drupalcon.model.managers.SynchronousItemManager;
@@ -9,8 +11,6 @@ import com.ls.http.base.RequestConfig;
 import com.ls.http.base.ResponseData;
 import com.ls.ui.drawer.DrawerManager;
 import com.ls.util.ObserverHolder;
-import com.ls.utils.ApplicationConfig;
-
 import org.jetbrains.annotations.NotNull;
 
 import android.os.AsyncTask;
@@ -113,7 +113,8 @@ public class UpdatesManager {
         config.setResponseFormat(BaseRequest.ResponseFormat.JSON);
         config.setRequestFormat(BaseRequest.RequestFormat.JSON);
         config.setResponseClassSpecifier(UpdateDate.class);
-        BaseRequest checkForUpdatesRequest = new BaseRequest(BaseRequest.RequestMethod.GET, ApplicationConfig.BASE_URL + "checkUpdates", config);
+        String baseURL =  App.getContext().getString(R.string.api_value_base_url);
+        BaseRequest checkForUpdatesRequest = new BaseRequest(BaseRequest.RequestMethod.GET, baseURL + "checkUpdates", config);
         String lastDate = PreferencesManager.getInstance().getLastUpdateDate();
         checkForUpdatesRequest.addRequestHeader(IF_MODIFIED_SINCE_HEADER, lastDate);
         ResponseData updatesData = mClient.performRequest(checkForUpdatesRequest, true);
