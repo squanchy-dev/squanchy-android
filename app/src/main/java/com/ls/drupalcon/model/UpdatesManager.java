@@ -33,7 +33,7 @@ public class UpdatesManager {
     public static final int SOCIALS_REQUEST_ID = 9;
     public static final int POIS_REQUEST_ID = 10;
     public static final int INFO_REQUEST_ID = 11;
-    public static final int TWITTER_REQUEST_ID = 12;
+    public static final int FLOOR_PLANS_REQUEST_ID = 12;
 
     private DrupalClient mClient;
     private ObserverHolder<DataUpdatedListener> mUpdateListeners;
@@ -213,6 +213,11 @@ public class UpdatesManager {
             case INFO_REQUEST_ID:
                 manager = Model.instance().getInfoManager();
                 break;
+
+            case FLOOR_PLANS_REQUEST_ID:
+                manager = Model.instance().getFloorPlansManager();
+                break;
+
             default:
                 return true;
         }

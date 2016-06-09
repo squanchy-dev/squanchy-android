@@ -127,6 +127,16 @@
         )
     </string>
 
+    <string name="create_table_floor_plans">
+        CREATE TABLE table_floor_plans (
+        _id                      STRING,
+        _name                    STRING,
+        _image_url               STRING,
+        _order                   DOUBLE,
+        _deleted                 BOOLEAN
+        )
+    </string>
+
     <!--==============================================================-->
     <!--INSERT-->
     <!--==============================================================-->

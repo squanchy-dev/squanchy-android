@@ -23,7 +23,7 @@ import java.util.List;
 public class AppDatabaseInfo implements DBInfo, IMigrationTask {
 
     public static final String DATABASE_NAME = "drupal_db";
-    public static final int DATABASE_VERSION = 10;
+    public static final int DATABASE_VERSION = 11;
 
     private static final String TABLE_EVENT_SPEAKER = "table_event_and_speaker";
     private static final String TABLE_FAVORITE_EVENTS = "table_favorite_events";
@@ -101,6 +101,7 @@ public class AppDatabaseInfo implements DBInfo, IMigrationTask {
         addStringWithIdToList(dbSchemaQueryList, R.string.create_table_favorite_events);
         addStringWithIdToList(dbSchemaQueryList, R.string.create_table_info);
         addStringWithIdToList(dbSchemaQueryList, R.string.create_table_poi);
+        addStringWithIdToList(dbSchemaQueryList, R.string.create_table_floor_plans);
         return dbSchemaQueryList;
     }
 

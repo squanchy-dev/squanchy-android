@@ -16,6 +16,7 @@ import com.ls.drupalcon.model.http.hurl.RedirectHurlStack;
 import com.ls.drupalcon.model.managers.BofsManager;
 import com.ls.drupalcon.model.managers.EventManager;
 import com.ls.drupalcon.model.managers.FavoriteManager;
+import com.ls.drupalcon.model.managers.FloorPlansManager;
 import com.ls.drupalcon.model.managers.InfoManager;
 import com.ls.drupalcon.model.managers.LevelsManager;
 import com.ls.drupalcon.model.managers.LocationManager;
@@ -89,6 +90,7 @@ public class Model {
     private UpdatesManager updatesManager;
     private FavoriteManager favoriteManager;
     private SettingsManager settingsManager;
+    private FloorPlansManager floorPlansManager;
 
     public DrupalClient getClient() {
         return client;
@@ -167,6 +169,11 @@ public class Model {
         return settingsManager;
     }
 
+    public FloorPlansManager getFloorPlansManager()
+    {
+        return floorPlansManager;
+    }
+
     public void setSettingsManager(SettingsManager settingsManager) {
         this.settingsManager = settingsManager;
     }
@@ -203,6 +210,7 @@ public class Model {
 
         updatesManager = new UpdatesManager(client);
         settingsManager = new SettingsManager(client);
+        floorPlansManager = new FloorPlansManager(client);
     }
 
 

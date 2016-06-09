@@ -1,0 +1,112 @@
+package com.ls.drupalcon.model.data;
+
+import com.google.gson.annotations.SerializedName;
+
+import com.ls.drupalcon.model.database.AbstractEntity;
+import com.ls.utils.CursorStringParser;
+
+import org.jetbrains.annotations.NotNull;
+
+import android.content.ContentValues;
+import android.database.Cursor;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created on 09.06.2016.
+ */
+public class FloorPlan extends AbstractEntity<String> implements Comparable<FloorPlan>
+{
+    public final static String COLUMN_ID = "_id";
+    private final static String COLUMN_NAME = "_name";
+    private final static String COLUMN_IMAGE_URL = "_image_url";
+    private final static String COLUMN_ORDER = "_order";
+    private final static String COLUMN_DELETED = "_deleted";
+
+    @SerializedName("floorPlanId")
+    private String mId;
+    @SerializedName("floorPlanName")
+    private String mName;
+    @SerializedName("floorPlanImageURL")
+    private String mImageURL;
+    @SerializedName("deleted")
+    private boolean mDeleted;
+    @SerializedName("order")
+    private double mOrder;
+
+    public String getName()
+    {
+        return mName;
+    }
+
+    public String getImageURL()
+    {
+        return mImageURL;
+    }
+
+    public boolean isDeleted()
+    {
+        return mDeleted;
+    }
+
+    public double getOrder()
+    {
+        return mOrder;
+    }
+
+    @Override
+    public String getId()
+    {
+        return mId;
+    }
+
+    @Override
+    public ContentValues getContentValues()
+    {
+        ContentValues result = new ContentValues();
+        result.put(COLUMN_ID,mId);
+        result.put(COLUMN_NAME,mName);
+        result.put(COLUMN_IMAGE_URL,mImageURL);
+        result.put(COLUMN_DELETED,mDeleted);
+        result.put(COLUMN_ORDER,mOrder);
+        return result;
+    }
+
+    @Override
+    public void initialize(Cursor cursor)
+    {
+        CursorStringParser parser = new CursorStringParser(cursor);
+        mId = parser.readString(COLUMN_ID);
+        mName = parser.readString(COLUMN_NAME);
+        mImageURL = parser.readString(COLUMN_IMAGE_URL);
+        mDeleted = parser.readBoolean(COLUMN_DELETED);
+        mOrder = parser.readDouble(COLUMN_ORDER);
+    }
+
+    @Override
+    public int compareTo(@NotNull FloorPlan event) {
+
+        int result;
+        if(mOrder == event.mOrder)
+        {
+            result = 0;
+        }else if(mOrder > event.mOrder){
+            result = 1;
+        }else{
+             result = -1;
+        }
+
+        return result;
+    }
+
+    public static class Holder {
+
+        @SerializedName("locations")
+        private List<FloorPlan> mLocations = new ArrayList<FloorPlan>();
+
+        public List<FloorPlan> getLocations() {
+            return mLocations;
+        }
+    }
+}
