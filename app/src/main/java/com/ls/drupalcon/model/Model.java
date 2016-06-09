@@ -4,11 +4,11 @@ import com.android.volley.Network;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
-import com.android.volley.toolbox.HttpClientStack;
 import com.android.volley.toolbox.HttpStack;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.NoCache;
 import com.ls.drupal.DrupalClient;
+import com.ls.drupalcon.R;
 import com.ls.drupalcon.model.database.ILAPIDBFacade;
 import com.ls.drupalcon.model.database.LAPIDBRegister;
 import com.ls.drupalcon.model.http.hurl.HURLCookieStore;
@@ -29,12 +29,10 @@ import com.ls.drupalcon.model.managers.TracksManager;
 import com.ls.drupalcon.model.managers.TypesManager;
 import com.ls.http.base.BaseRequest;
 import com.ls.http.base.ResponseData;
-import com.ls.utils.ApplicationConfig;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Environment;
 
 import java.io.File;
@@ -44,6 +42,8 @@ import java.net.CookiePolicy;
 import java.net.CookieStore;
 
 public class Model {
+
+    public static final int CACHE_DISK_USAGE_BYTES = 20 * 1024 * 1024;
 
     private static Model instance;
     public static Model instance(Context theContext)
@@ -186,7 +186,7 @@ public class Model {
     {
         loginManager = new LoginManager();
         queue = createNoCachedQueue(context);
-        client = new DrupalClient(ApplicationConfig.BASE_URL,queue, BaseRequest.RequestFormat.JSON,loginManager);
+        client = new DrupalClient(context.getString(R.string.api_value_base_url),queue, BaseRequest.RequestFormat.JSON,loginManager);
 
         typesManager = new TypesManager(client);
         levelsManager = new LevelsManager(client);
@@ -276,7 +276,7 @@ public class Model {
 
         Network network = new BasicNetwork(stack);
 
-        RequestQueue queue = new RequestQueue(new DiskBasedCache(cacheDir, ApplicationConfig.CACHE_DISK_USAGE_BYTES), network,1);
+        RequestQueue queue = new RequestQueue(new DiskBasedCache(cacheDir, CACHE_DISK_USAGE_BYTES), network,1);
         queue.start();
 
         return queue;
