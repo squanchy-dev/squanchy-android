@@ -2,10 +2,9 @@
 <resources>
     <string name="api_value_base_url">http://connfa-integration.uat.link/api/v2/</string>
     <string name="api_value_google_analytics_app_Id">Goodle Analytisc App ID stub</string>
-    <string name="api_value_google_maps_api_key">AIzaSyBssk81wlfgQCQ-QE12wKtDQtiPlV-nwZI</string>
+    <string name="api_value_google_maps_api_key">Google maps API key stub</string>
     <!--<string name="api_value_fabric_api_key">value is situated in manifest</string>-->//Key can't be placed in resources due to fabric plugin restrictions
-
-    <string name="api_value_twitter_api_key">Mxl1GoGSM98T3jTIWdlUuqXmh</string>
-    <string name="api_value_twitter_secret">UM74rykaGhxPhhKED2KxJrd6zGBLNWgVsGdlzjdSwSNqLTiyqY</string>
+    <string name="api_value_twitter_api_key">Twitter API key stub</string>
+    <string name="api_value_twitter_secret">Twitter API key secret stub</string>
 
 </resources>
