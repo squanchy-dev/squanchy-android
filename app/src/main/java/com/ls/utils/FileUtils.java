@@ -156,6 +156,44 @@ public class FileUtils
             return BitmapFactory.decodeStream(fin);
         } catch (IOException e) {
             e.printStackTrace();
+        }  catch (Error error) {
+            error.printStackTrace();
+        } finally {
+            if(fin != null) {
+                try {
+                    fin.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
+
+    public static Bitmap readBitmapFromStoredFile(String name, int reqWidth,int reqHeight, Context theContext)
+    {
+        L.e("Reading bitmap:"+name);
+        FileInputStream fin = null;
+        try {
+            File fl = getFileWithName(name, theContext);
+
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            fin = new FileInputStream(fl);
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(fin, null, options);
+            fin.close();
+
+            // Calculate inSampleSize
+            options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+            // Decode bitmap with inSampleSize set
+            options.inJustDecodeBounds = false;
+            fin = new FileInputStream(fl);
+
+            return BitmapFactory.decodeStream(fin,null,options);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }  catch (Error error) {
+            error.printStackTrace();
         } finally {
             if(fin != null) {
                 try {
@@ -217,5 +255,22 @@ public class FileUtils
     private static String cleanFileName(String fileName)
     {
         return fileName.replaceAll("[|?*<\":>+\\[\\]/']", "-");
+    }
+
+    private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int heightRatio = Math.round((float) height / (float) reqHeight);
+            final int widthRatio = Math.round((float) width / (float) reqWidth);
+
+            inSampleSize = heightRatio > widthRatio ? heightRatio : widthRatio;
+        }
+        L.e("Sample size:"+inSampleSize);
+        return inSampleSize;
     }
 }

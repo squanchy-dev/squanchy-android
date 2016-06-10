@@ -81,8 +81,8 @@ public class FloorPlansManager extends SynchronousItemManager<FloorPlan.Holder, 
         return result;
     }
 
-    public Bitmap getImageForPlan(FloorPlan plan){
-        Bitmap planImage = FileUtils.readBitmapFromStoredFile(plan.getFilePath(), App.getContext());
+    public Bitmap getImageForPlan(FloorPlan plan,int requiredWidth,int requiredHeight){
+        Bitmap planImage = FileUtils.readBitmapFromStoredFile(plan.getFilePath(),requiredWidth, requiredHeight, App.getContext());
         return planImage;
     }
 

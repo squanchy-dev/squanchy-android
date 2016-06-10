@@ -4,9 +4,10 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
         <com.ls.ui.view.TouchImageView
+                android:id="@+id/floor_plan_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
+                android:scaleType="fitCenter"
                 android:src="@drawable/bg_nav_drawer_header"
                 />
 </FrameLayout>
