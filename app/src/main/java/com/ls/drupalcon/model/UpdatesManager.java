@@ -10,6 +10,7 @@ import com.ls.http.base.BaseRequest;
 import com.ls.http.base.RequestConfig;
 import com.ls.http.base.ResponseData;
 import com.ls.ui.drawer.DrawerManager;
+import com.ls.util.L;
 import com.ls.util.ObserverHolder;
 import org.jetbrains.annotations.NotNull;
 
@@ -27,13 +28,12 @@ public class UpdatesManager {
     public static final int TRACKS_REQUEST_ID = 3;
     public static final int SPEAKERS_REQUEST_ID = 4;
     public static final int LOCATIONS_REQUEST_ID = 5;
-    public static final int HOUSE_PLANS_REQUEST_ID = 6;
+    public static final int FLOOR_PLANS_REQUEST_ID = 6;
     public static final int PROGRAMS_REQUEST_ID = 7;
     public static final int BOFS_REQUEST_ID = 8;
     public static final int SOCIALS_REQUEST_ID = 9;
     public static final int POIS_REQUEST_ID = 10;
     public static final int INFO_REQUEST_ID = 11;
-    public static final int FLOOR_PLANS_REQUEST_ID = 12;
 
     private DrupalClient mClient;
     private ObserverHolder<DataUpdatedListener> mUpdateListeners;
@@ -139,7 +139,6 @@ public class UpdatesManager {
         if (updateIds == null || updateIds.isEmpty()) {
             return new LinkedList<>();
         }
-
         ILAPIDBFacade facade = Model.instance().getFacade();
         try {
             facade.open();

@@ -107,11 +107,11 @@ public class FloorPlan extends AbstractEntity<String> implements Comparable<Floo
 
     public static class Holder {
 
-        @SerializedName("locations")
-        private List<FloorPlan> mLocations = new ArrayList<FloorPlan>();
+        @SerializedName("floorPlans")
+        private List<FloorPlan> floorPlans = new ArrayList<>();
 
-        public List<FloorPlan> getLocations() {
-            return mLocations;
+        public List<FloorPlan> getFloorPlans() {
+            return floorPlans;
         }
     }
 

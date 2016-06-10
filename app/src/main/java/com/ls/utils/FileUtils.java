@@ -48,6 +48,37 @@ public class FileUtils
         }
     }
 
+    public static boolean writeBytesToStorage(String name, byte[] data, Context context){
+        if(data == null){
+            return false;
+        }
+        FileOutputStream out = null;
+        try {
+            File file = getFileWithName(name, context);
+
+            File parentDirectory = file.getParentFile();
+            if (!parentDirectory.exists()) {
+                parentDirectory.mkdirs();
+            }
+
+            out = new FileOutputStream(file);
+            out.write(data);
+            out.flush();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public static void writeToFileToStorage(String name, String data, Context theContext)
     {
         FileWriter fileWritter = null;

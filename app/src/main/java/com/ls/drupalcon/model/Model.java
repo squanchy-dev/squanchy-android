@@ -45,6 +45,7 @@ import java.net.CookieStore;
 public class Model {
 
     public static final int CACHE_DISK_USAGE_BYTES = 20 * 1024 * 1024;
+    public static final int REQUEST_TIMEOUT_MLLIS = 60 * 1000;
 
     private static Model instance;
     public static Model instance(Context theContext)
@@ -194,6 +195,7 @@ public class Model {
         loginManager = new LoginManager();
         queue = createNoCachedQueue(context);
         client = new DrupalClient(context.getString(R.string.api_value_base_url),queue, BaseRequest.RequestFormat.JSON,loginManager);
+        client.setRequestTimeout(REQUEST_TIMEOUT_MLLIS);
 
         typesManager = new TypesManager(client);
         levelsManager = new LevelsManager(client);
