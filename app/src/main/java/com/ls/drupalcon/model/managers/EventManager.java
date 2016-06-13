@@ -36,12 +36,19 @@ public class EventManager extends SynchronousItemManager<Event.Holder, Object, S
 
     public void saveEventSpeakers(Event data) {
         Long eventId = data.getId();
-        List<Long> speakerEventIds = mEventDao.selectSpeakerEventIds();
+        List<Long> speakerEventIds = mEventDao.selectEventSpeakersSafe(eventId);
 
         for (Long speakerId : data.getSpeakers()) {
             if (!speakerEventIds.contains(eventId)) {
                 mEventDao.insertEventSpeaker(eventId, speakerId);
             }
+
+            speakerEventIds.remove(speakerId);
+        }
+
+        //Delete removed speakers
+        for(Long speakerId:speakerEventIds){
+            mEventDao.deleteByEventAndSpeaker(eventId,speakerId);
         }
     }
 
