@@ -362,7 +362,7 @@
 
     <string name="select_program_items_by_date_and_track_ids">
         SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class,
-        e._favorite, e._order, e._experience_level, t.track_name, l.level_name,
+        e._favorite, e._order, e._experience_level, t.track_name, l.level_name, e._track,
             (SELECT group_concat(first_name|| \' \' ||last_name,\',\')
                 FROM table_speaker
                 WHERE _id IN (
@@ -383,7 +383,7 @@
     </string>
 
     <string name="select_program_items_by_date_and_expLevel_ids">
-        SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class,
+        SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class, e._track,
         e._favorite, e._order, e._experience_level, t.track_name, l.level_name,
             (SELECT group_concat(first_name|| \' \' ||last_name,\',\')
                 FROM table_speaker
@@ -404,7 +404,7 @@
     </string>
 
     <string name="select_program_items_by_date_and_track_ids_and_expLevel_ids" formatted = "false">
-        SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class,
+        SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class, e._track,
         e._favorite, e._order, e._experience_level, t.track_name, l.level_name,
             (SELECT group_concat(first_name|| \' \' ||last_name,\',\')
                 FROM table_speaker
@@ -425,7 +425,7 @@
     </string>
 
     <string name="select_program_items_by_date">
-        SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class,
+        SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class, e._track,
         e._favorite, e._order, e._experience_level, t.track_name, l.level_name,
             (SELECT group_concat(first_name|| \' \' ||last_name,\',\')
                 FROM table_speaker
@@ -446,7 +446,7 @@
     </string>
 
     <string name="select_events_partly_class_and_date">
-        SELECT e._id, e._date, e._from, e._to, e._type, e._experience_level,
+        SELECT e._id, e._date, e._from, e._to, e._type, e._experience_level, e._track,
                e._name, e._place, e._event_class, e._favorite, e._order,
              (SELECT group_concat(first_name|| \' \' ||last_name,\',\')
                 FROM table_speaker

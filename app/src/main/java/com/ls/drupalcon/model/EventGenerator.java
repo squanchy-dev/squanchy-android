@@ -220,6 +220,7 @@ public class EventGenerator {
 
     private List<EventListItem> generateEventItems(List<EventListItem> eventListItems,
                                                    EventItemCreator eventItemCreator) {
+        TracksManager tracksManager = Model.instance().getTracksManager();
         List<EventListItem> result = new ArrayList<EventListItem>();
 
         if (eventListItems.size() > 0) {
@@ -239,6 +240,9 @@ public class EventGenerator {
                 timeRangeItem.setDate(date);
             }
             timeRangeItem.setSpeakers(item.getSpeakers());
+
+            Track track = tracksManager.getTrack(event.getTrack());
+            timeRangeItem.setTrack(track != null ? track.getName() : null);
 
             switch ((int) typeId) {
 
