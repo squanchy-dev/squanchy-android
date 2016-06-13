@@ -13,14 +13,11 @@ import com.ls.drupalcon.model.managers.ProgramManager;
 import com.ls.drupalcon.model.managers.SocialManager;
 import com.ls.drupalcon.model.managers.SpeakerManager;
 import com.ls.drupalcon.model.managers.TracksManager;
-import com.ls.ui.adapter.item.BofsItem;
 import com.ls.ui.adapter.item.EventItemCreator;
 import com.ls.ui.adapter.item.EventListItem;
 import com.ls.ui.adapter.item.HeaderItem;
 import com.ls.ui.adapter.item.ProgramItem;
-import com.ls.ui.adapter.item.SocialItem;
 import com.ls.ui.adapter.item.TimeRangeItem;
-import com.ls.util.L;
 
 import org.jetbrains.annotations.NotNull;
 
