@@ -86,6 +86,12 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
         getFacade().execSQL(query, args);
     }
 
+    public void deleteByEventAndSpeaker(long eventId, long speakerId) {
+        String[] args = ArrayUtils.build(eventId,speakerId);
+        String query = mContext.getString(R.string.delete_event_and_speaker_by_event_and_speaker_id);
+        getFacade().execSQL(query, args);
+    }
+
     public void insertEventSpeaker(long eventId, long speakerId) {
         String[] bindArgs = ArrayUtils.build(eventId, speakerId);
         getFacade().execSQL(mContext.getString(R.string.insert_event_speaker), bindArgs);
@@ -463,7 +469,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
                 String speakerName = parser.readString("_speaker_name");
                 if (speakerName != null) {
                     String[] speakerNames = speakerName.split(",");
-                    for(int count = 0;count < speakerNames.length - 1;count++) {
+                    for(int count = 0;count < speakerNames.length;count++) {
                         lastItem.addSpeaker(speakerNames[count]);
                     }
                 }
@@ -507,7 +513,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
                 String speakerName = parser.readString("_speaker_name");
                 if (speakerName != null) {
                     String[] speakerNames = speakerName.split(",");
-                    for(int count = 0;count < speakerNames.length - 1;count++) {
+                    for(int count = 0;count < speakerNames.length;count++) {
                         item.addSpeaker(speakerNames[count]);
                     }
                 }

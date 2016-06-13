@@ -131,6 +131,7 @@ public class Event extends AbstractEntity<Long> implements Comparable<Event>{
 
         mType = parser.readLong("_type");
         mName = parser.readString("_name");
+        mTrack = parser.readLong("_track");
         mPlace = parser.readString("_place");
         mExperienceLevel =  parser.readLong("_experience_level");
 
