@@ -6,6 +6,7 @@ import com.ls.drupalcon.model.data.FloorPlan;
 import com.ls.util.L;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -15,6 +16,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +33,9 @@ import java.util.List;
  */
 public class FloorPlanFragment  extends Fragment
 {
+    public static int REDCOMMENDED_FLOOR_IMAGE_HEIGHT = Resources.getSystem().getDisplayMetrics().heightPixels * 2;
+    public static int REDCOMMENDED_FLOOR_IMAGE_WIDTH = Resources.getSystem().getDisplayMetrics().widthPixels * 2;
+
     public static final String TAG = "FloorPlanFragment";
     private Spinner floorSelector;
     private List<FloorPlan>plans;
@@ -110,7 +115,7 @@ public class FloorPlanFragment  extends Fragment
               names.add(plan.getName());
             }
 
-            ArrayAdapter<String> floorsAdapter = new ArrayAdapter<>(floorSelector.getContext(), android.R.layout.simple_spinner_item, names);
+            ArrayAdapter<String> floorsAdapter = new ArrayAdapter<>(floorSelector.getContext(), R.layout.fr_floor_plan_spinner, names);
             floorSelector.setAdapter(floorsAdapter);
         }
     }
@@ -129,7 +134,8 @@ public class FloorPlanFragment  extends Fragment
         @Override
         protected Drawable doInBackground(FloorPlan... params)
         {
-            Bitmap planImage =  Model.instance().getFloorPlansManager().getImageForPlan(params[0],1000,1000);
+            Bitmap planImage =  Model.instance().getFloorPlansManager().getImageForPlan(params[0],
+                    REDCOMMENDED_FLOOR_IMAGE_WIDTH,REDCOMMENDED_FLOOR_IMAGE_HEIGHT);
             if(planImage != null){
                 return new BitmapDrawable(null,planImage);
             }

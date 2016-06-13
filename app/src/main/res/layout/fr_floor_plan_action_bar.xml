@@ -6,7 +6,7 @@
               android:layout_gravity="fill_horizontal">
 
     <Spinner
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/spinner"
             android:layout_gravity="left|center_vertical"
