@@ -88,18 +88,23 @@ public class EventsAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View resultView;
         int itemViewType = getItemViewType(position);
-        if (itemViewType == EventListItem.TYPE_TIME_RANGE) {
-            resultView = initTimeRangeView(position, convertView, parent);
+//        if (itemViewType == EventListItem.TYPE_TIME_RANGE) {
+//            resultView = initTimeRangeView(position, convertView, parent);
 //        } else if (itemViewType == EventListItem.TYPE_BOFS) {
 //            resultView = initBofsView(position, convertView, parent);
 //        } else if (itemViewType == EventListItem.TYPE_PROGRAM) {
 //            resultView = initProgramView(position, convertView, parent);
 //        } else if (itemViewType == EventListItem.TYPE_SOCIAL) {
 //            resultView = initSocialView(position, convertView, parent);
-        } else if (itemViewType == EventListItem.TYPE_SECTION_NAME) {
+//        } else if (itemViewType == EventListItem.TYPE_SECTION_NAME) {
+//            resultView = initSectionNameView(position, convertView, parent);
+//        } else {
+//            resultView = new View(mInflater.getContext());
+//        }
+        if (itemViewType == EventListItem.TYPE_SECTION_NAME) {
             resultView = initSectionNameView(position, convertView, parent);
         } else {
-            resultView = new View(mInflater.getContext());
+            resultView = initTimeRangeView(position, convertView, parent);
         }
 
         return resultView;
