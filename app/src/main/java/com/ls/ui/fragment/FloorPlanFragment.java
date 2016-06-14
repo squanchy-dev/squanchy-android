@@ -3,9 +3,8 @@ package com.ls.ui.fragment;
 import com.ls.drupalcon.R;
 import com.ls.drupalcon.model.Model;
 import com.ls.drupalcon.model.data.FloorPlan;
-import com.ls.util.L;
+import com.ls.ui.adapter.FloorSelectorAdapter;
 
-import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -13,10 +12,8 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,7 +112,7 @@ public class FloorPlanFragment  extends Fragment
               names.add(plan.getName());
             }
 
-            ArrayAdapter<String> floorsAdapter = new ArrayAdapter<>(floorSelector.getContext(), R.layout.fr_floor_plan_spinner, names);
+            FloorSelectorAdapter floorsAdapter = new FloorSelectorAdapter(floorSelector.getContext(),names);
             floorSelector.setAdapter(floorsAdapter);
         }
     }
