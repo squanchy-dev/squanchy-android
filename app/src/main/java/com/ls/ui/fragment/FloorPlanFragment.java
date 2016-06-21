@@ -18,7 +18,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
@@ -74,7 +73,9 @@ public class FloorPlanFragment  extends Fragment
         if(activity != null && activity.getSupportActionBar() != null) {
             ActionBar actionBar = activity.getSupportActionBar();
             actionBar.setDisplayShowCustomEnabled(true);
-            actionBar.setDisplayShowTitleEnabled(false);
+//            actionBar.setDisplayShowTitleEnabled(false);
+//            actionBar.setTitle("");
+            this.resolveTitleVisibility();
             actionBar.setCustomView(actionbarLayout,
                     new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         }
@@ -83,14 +84,32 @@ public class FloorPlanFragment  extends Fragment
     @Override
     public void onPause()
     {
+        super.onPause();
         AppCompatActivity activity = (AppCompatActivity)this.getActivity();
         if(activity != null && activity.getSupportActionBar() != null) {
             ActionBar actionBar = activity.getSupportActionBar();
             actionBar.setDisplayShowCustomEnabled(false);
-            actionBar.setDisplayShowTitleEnabled(true);
-            actionBar.setCustomView(null);
+//            actionBar.setDisplayShowTitleEnabled(true);
+            this.resolveTitleVisibility();
+//            actionBar.setCustomView(null);
         }
-        super.onPause();
+
+    }
+
+    void resolveTitleVisibility(){
+        AppCompatActivity activity = (AppCompatActivity)this.getActivity();
+        if(activity != null && activity.getSupportActionBar() != null) {
+            ActionBar actionBar = activity.getSupportActionBar();
+            if(this.isResumed()) {
+                if (plans != null && !plans.isEmpty()) {
+                    actionBar.setTitle("");
+                    actionBar.setCustomView(actionbarLayout);
+                } else {
+                    actionBar.setTitle(R.string.floor_plan);
+                    actionBar.setCustomView(null);
+                }
+            }
+        }
     }
 
     private class LoadPlansTask extends AsyncTask<Void,Void,List<FloorPlan>>{
@@ -114,6 +133,7 @@ public class FloorPlanFragment  extends Fragment
 
             FloorSelectorAdapter floorsAdapter = new FloorSelectorAdapter(floorSelector.getContext(),names);
             floorSelector.setAdapter(floorsAdapter);
+            resolveTitleVisibility();
         }
     }
 
