@@ -73,10 +73,10 @@ public class DateUtils {
 
     public String getTime(Context context, long millis) {
         if (DateFormat.is24HourFormat(context)) {
-            mDateFormat.applyPattern("kk:mm");
+            mDateFormat.applyPattern("KK:mm");
             return mDateFormat.format(new Date(millis));
         } else {
-            mDateFormat.applyPattern("hh:mm aa");
+            mDateFormat.applyPattern("HH:mm aa");
             return mDateFormat.format(new Date(millis));
         }
     }
