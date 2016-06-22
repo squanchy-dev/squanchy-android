@@ -61,7 +61,6 @@ public class FloorPlanFragment  extends Fragment
 
         floorImage = (ImageView)result.findViewById(R.id.floor_plan_image);
 
-        new LoadPlansTask().execute();
         return result;
     }
 
@@ -79,6 +78,7 @@ public class FloorPlanFragment  extends Fragment
             actionBar.setCustomView(actionbarLayout,
                     new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         }
+        new LoadPlansTask().execute();
     }
 
     @Override
