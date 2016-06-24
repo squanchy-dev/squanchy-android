@@ -248,9 +248,9 @@ public class EventDetailsActivity extends StackKeeperActivity {
     }
 
     private void fillDescription(@NonNull EventDetailsEvent event) {
+        WebView webView = (WebView) findViewById(R.id.webView);
         if (!TextUtils.isEmpty(event.getDescription())) {
 
-            WebView webView = (WebView) findViewById(R.id.webView);
             webView.setVisibility(View.VISIBLE);
 
             String html = WebviewUtils.getHtml(this, event.getDescription());
@@ -270,6 +270,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
             });
 
         } else {
+            webView.setVisibility(View.GONE);
             completeLoading();
         }
     }
@@ -281,9 +282,11 @@ public class EventDetailsActivity extends StackKeeperActivity {
         checkBoxFavorite.setChecked(mIsFavorite);
 
         RelativeLayout layoutFavorite = (RelativeLayout) findViewById(R.id.layoutFavorite);
-        layoutFavorite.setOnClickListener(new View.OnClickListener() {
+        layoutFavorite.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 checkBoxFavorite.setChecked(!checkBoxFavorite.isChecked());
                 mIsFavorite = checkBoxFavorite.isChecked();
                 setFavorite();
@@ -305,13 +308,16 @@ public class EventDetailsActivity extends StackKeeperActivity {
                 fillSpeakerView(speaker, speakerView);
                 holderSpeakers.addView(speakerView);
             }
+            findViewById(R.id.topDivider).setVisibility(View.VISIBLE);
+            findViewById(R.id.botDivider).setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.topDivider).setVisibility(View.GONE);
             findViewById(R.id.botDivider).setVisibility(View.GONE);
 
             if (TextUtils.isEmpty(event.getDescription())) {
-                findViewById(R.id.webView).setVisibility(View.GONE);
                 findViewById(R.id.imgEmptyView).setVisibility(View.VISIBLE);
+            }else{
+                findViewById(R.id.imgEmptyView).setVisibility(View.GONE);
             }
         }
     }
