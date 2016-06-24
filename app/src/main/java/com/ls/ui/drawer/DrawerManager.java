@@ -3,6 +3,8 @@ package com.ls.ui.drawer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+
+import com.ls.ui.fragment.AboutFragment;
 import com.ls.ui.fragment.EventHolderFragment;
 import com.ls.ui.fragment.FloorPlanFragment;
 import com.ls.ui.fragment.LocationFragment;
@@ -67,6 +69,10 @@ public class DrawerManager {
 				break;
 			case SocialMedia:
 				fragment = new SocialMediaFragment();
+				fragmentTag = SocialMediaFragment.TAG;
+				break;
+			case About:
+				fragment = new AboutFragment();
 				fragmentTag = SocialMediaFragment.TAG;
 				break;
 			default:

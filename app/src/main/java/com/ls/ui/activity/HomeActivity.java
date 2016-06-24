@@ -251,11 +251,12 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
     private void changeFragment() {
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
 
-        if (mSelectedItem == DrawerMenu.DrawerItem.About.ordinal()) {
-            AboutActivity.startThisActivity(this);
-            mSelectedItem = mLastSelectedItem;
-
-        } else {
+//        if (mSelectedItem == DrawerMenu.DrawerItem.About.ordinal()) {
+//            AboutActivity.startThisActivity(this);
+//            mSelectedItem = mLastSelectedItem;
+//
+//        } else
+        {
             DrawerMenuItem item = mAdapter.getItem(mSelectedItem);
             if (!item.isGroup() && mFrManager != null) {
                 mFrManager.setFragment(DrawerMenu.DrawerItem.values()[mSelectedItem]);

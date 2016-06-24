@@ -1,18 +1,20 @@
-package com.ls.ui.activity;
+package com.ls.ui.fragment;
 
 import com.ls.drupalcon.R;
 import com.ls.drupalcon.model.Model;
 import com.ls.drupalcon.model.UpdatesManager;
 import com.ls.drupalcon.model.data.InfoItem;
 import com.ls.drupalcon.model.managers.InfoManager;
+import com.ls.ui.activity.AboutDetailsActivity;
 import com.ls.utils.L;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -23,11 +25,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-@Deprecated
 /**
- * Use  {@link com.ls.ui.fragment.AboutFragment} instead
+ * Created on 24.06.2016.
  */
-public class AboutActivity extends ActionBarActivity {
+public class AboutFragment  extends Fragment
+{
+    public static final String TAG = "AboutFragment";
 
     private AboutListAdapter adapter;
     private List<InfoItem> infoItems;
@@ -35,90 +38,95 @@ public class AboutActivity extends ActionBarActivity {
     private UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener() {
         @Override
         public void onDataUpdated(List<Integer> requestIds) {
-            L.d("AboutActivity");
-            initViews();
+            L.d("AboutFragment");
+            reloadData();
         }
     };
 
-    public static void startThisActivity(Activity activity) {
-        Intent intent = new Intent(activity, AboutActivity.class);
-        activity.startActivity(intent);
-    }
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ac_about);
         Model.instance().getUpdatesManager().registerUpdateListener(updateListener);
-        initToolbar();
-        initViews();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        View result = inflater.inflate(R.layout.ac_about,container,false);
+        initViews(result);
+        return result;
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onDestroy()
+    {
         Model.instance().getUpdatesManager().unregisterUpdateListener(updateListener);
+        super.onDestroy();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+    private void initViews(View root) {
 
-    private void initToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
-        if (toolbar != null) {
-            toolbar.setTitle("");
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-    }
-
-    private void initViews() {
-        InfoManager infoManager = Model.instance().getInfoManager();
-        infoItems = infoManager.getInfo();
-
-        ListView listMenu = (ListView) findViewById(R.id.listView);
-        listMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ListView listMenu = (ListView) root.findViewById(R.id.listView);
+        listMenu.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
+            {
                 onItemClicked(position);
             }
         });
 
         if (adapter == null) {
-            adapter = new AboutListAdapter(infoItems);
+            adapter = new AboutListAdapter(infoItems,root.getContext());
             listMenu.setAdapter(adapter);
-        } else {
+        }
+
+        reloadData();
+    }
+
+    private void reloadData()
+    {
+        InfoManager infoManager = Model.instance().getInfoManager();
+        infoItems = infoManager.getInfo();
+        if(adapter != null){
             adapter.setData(infoItems);
             adapter.notifyDataSetChanged();
         }
     }
 
     private void onItemClicked(int position) {
+        Activity root = getActivity();
+        if(root == null){
+            return;
+        }
+
         InfoItem item = infoItems.get(position);
-        Intent intent = new Intent(this, AboutDetailsActivity.class);
+        Intent intent = new Intent(root, AboutDetailsActivity.class);
         intent.putExtra(AboutDetailsActivity.EXTRA_DETAILS_TITLE, item.getTitle());
         intent.putExtra(AboutDetailsActivity.EXTRA_DETAILS_ID, item.getId());
         intent.putExtra(AboutDetailsActivity.EXTRA_DETAILS_CONTENT, item.getContent());
         startActivity(intent);
     }
 
-    private class AboutListAdapter extends BaseAdapter {
+    private class AboutListAdapter extends BaseAdapter
+    {
 
-        List<InfoItem> mItems = new ArrayList<InfoItem>();
+        List<InfoItem> mItems = new ArrayList<>();
+        LayoutInflater inflatter;
 
-        public AboutListAdapter(List<InfoItem> items) {
-            mItems = items;
+        public AboutListAdapter(List<InfoItem> items,Context context) {
+            inflatter = LayoutInflater.from(context);
+            setData(items);
         }
 
         public void setData(List<InfoItem> items) {
-            mItems = items;
+            if(items != null) {
+                mItems = new ArrayList<>(items);
+            }else{
+                mItems = new ArrayList<>();
+            }
         }
 
         @Override
@@ -141,7 +149,7 @@ public class AboutActivity extends ActionBarActivity {
             View resultView;
 
             if (view == null) {
-                resultView = getLayoutInflater().inflate(R.layout.item_about, parent, false);
+                resultView = inflatter.inflate(R.layout.item_about, parent, false);
             } else {
                 resultView = view;
             }
