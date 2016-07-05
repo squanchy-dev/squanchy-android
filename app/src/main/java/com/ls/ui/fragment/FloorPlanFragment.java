@@ -35,15 +35,13 @@ public class FloorPlanFragment  extends Fragment
     public static final String TAG = "FloorPlanFragment";
     private Spinner floorSelector;
     private List<FloorPlan>plans;
-    private View actionbarLayout;
     private ImageView floorImage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View result = inflater.inflate(R.layout.fr_floor_plan, null);
-        actionbarLayout = inflater.inflate(R.layout.fr_floor_plan_action_bar,null);
-        floorSelector = (Spinner)actionbarLayout.findViewById(R.id.spinner);
+        floorSelector = (Spinner)result.findViewById(R.id.spinner);
         floorSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             @Override
@@ -68,49 +66,24 @@ public class FloorPlanFragment  extends Fragment
     public void onResume()
     {
         super.onResume();
-        AppCompatActivity activity = (AppCompatActivity)this.getActivity();
-        if(activity != null && activity.getSupportActionBar() != null) {
-            ActionBar actionBar = activity.getSupportActionBar();
-            actionBar.setDisplayShowCustomEnabled(true);
-//            actionBar.setDisplayShowTitleEnabled(false);
-//            actionBar.setTitle("");
-            this.resolveTitleVisibility();
-            actionBar.setCustomView(actionbarLayout,
-                    new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        }
         new LoadPlansTask().execute();
     }
 
-    @Override
-    public void onPause()
-    {
-        super.onPause();
-        AppCompatActivity activity = (AppCompatActivity)this.getActivity();
-        if(activity != null && activity.getSupportActionBar() != null) {
-            ActionBar actionBar = activity.getSupportActionBar();
-            actionBar.setDisplayShowCustomEnabled(false);
-//            actionBar.setDisplayShowTitleEnabled(true);
-            this.resolveTitleVisibility();
-//            actionBar.setCustomView(null);
-        }
-
-    }
-
-    void resolveTitleVisibility(){
-        AppCompatActivity activity = (AppCompatActivity)this.getActivity();
-        if(activity != null && activity.getSupportActionBar() != null) {
-            ActionBar actionBar = activity.getSupportActionBar();
-            if(this.isResumed()) {
-                if (plans != null && !plans.isEmpty()) {
-                    actionBar.setTitle("");
-                    actionBar.setCustomView(actionbarLayout);
-                } else {
-                    actionBar.setTitle(R.string.floor_plan);
-                    actionBar.setCustomView(null);
-                }
-            }
-        }
-    }
+//    void resolveTitleVisibility(){
+//        AppCompatActivity activity = (AppCompatActivity)this.getActivity();
+//        if(activity != null && activity.getSupportActionBar() != null) {
+//            ActionBar actionBar = activity.getSupportActionBar();
+//            if(this.isResumed()) {
+//                if (plans != null && !plans.isEmpty()) {
+//                    actionBar.setTitle("");
+//                    actionBar.setCustomView(actionbarLayout);
+//                } else {
+//                    actionBar.setTitle(R.string.floor_plan);
+//                    actionBar.setCustomView(null);
+//                }
+//            }
+//        }
+//    }
 
     private class LoadPlansTask extends AsyncTask<Void,Void,List<FloorPlan>>{
 
@@ -133,7 +106,7 @@ public class FloorPlanFragment  extends Fragment
 
             FloorSelectorAdapter floorsAdapter = new FloorSelectorAdapter(floorSelector.getContext(),names);
             floorSelector.setAdapter(floorsAdapter);
-            resolveTitleVisibility();
+//            resolveTitleVisibility();
         }
     }
 

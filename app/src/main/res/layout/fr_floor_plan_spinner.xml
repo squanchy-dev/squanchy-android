@@ -7,6 +7,7 @@
           android:maxLines="2"
           android:ellipsize="end"
           style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+          android:textSize="@dimen/text_size_15"
         >
 
 </TextView>

@@ -36,10 +36,4 @@
     <dimen name="drawer_list_weight">260dp</dimen>
     <dimen name="filter_item_padding">13dp</dimen>
 
-
-    <dimen name="action_bar_default_height">48dip</dimen>
-    <dimen name="action_bar_title_text_size">18dp</dimen>
-    <dimen name="action_bar_subtitle_text_size">14dp</dimen>
-    <dimen name="action_bar_subtitle_top_margin">-3dp</dimen>
-    <dimen name="action_bar_subtitle_bottom_margin">5dip</dimen>
 </resources>

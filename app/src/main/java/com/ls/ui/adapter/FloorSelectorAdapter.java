@@ -75,7 +75,7 @@ public class FloorSelectorAdapter extends BaseAdapter implements ThemedSpinnerAd
     public View getView(int position, View convertView, ViewGroup parent)
     {
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.fr_floor_plan_spinner_selected, parent, false);
+            convertView = mInflater.inflate(R.layout.fr_floor_plan_spinner, parent, false);
         }
 
         TextView label = (TextView)convertView.findViewById(R.id.spinnerTarget);
