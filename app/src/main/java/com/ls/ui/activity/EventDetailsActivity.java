@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.app.ActionBar;
@@ -163,24 +164,21 @@ public class EventDetailsActivity extends StackKeeperActivity {
     private void loadEvent() {
         if (mEventId == -1) return;
 
-        new AsyncTask<Void, Void, EventDetailsEvent>() {
+        new Handler().postDelayed(new Runnable() {
             @Override
-            protected EventDetailsEvent doInBackground(Void... params) {
+            public void run() {
                 SpeakerManager speakerManager = Model.instance().getSpeakerManager();
                 mSpeakerList.clear();
                 mSpeakerList.addAll(speakerManager.getSpeakersByEventId(mEventId));
 
                 EventManager eventManager = Model.instance().getEventManager();
-                return eventManager.getEventById(mEventId);
-            }
+                EventDetailsEvent event = eventManager.getEventById(mEventId);
 
-            @Override
-            protected void onPostExecute(EventDetailsEvent event) {
                 if (event != null) {
                     fillEventView(event);
                 }
             }
-        }.execute();
+        }, 200);
     }
 
     private void fillEventView(@NonNull EventDetailsEvent event) {
@@ -198,8 +196,8 @@ public class EventDetailsActivity extends StackKeeperActivity {
             mToolbarTitle.setText(event.getEventName());
         }
 
-        if (mItemShare != null && TextUtils.isEmpty(event.getLink())) {
-            mItemShare.setVisible(false);
+        if (mItemShare != null && !TextUtils.isEmpty(event.getLink())) {
+            mItemShare.setVisible(true);
         }
     }
 

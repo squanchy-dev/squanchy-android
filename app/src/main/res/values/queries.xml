@@ -452,7 +452,7 @@
         LEFT JOIN table_level AS l ON e._experience_level=l._id
 
         WHERE e._event_class=? and e._date=?
-        ORDER BY e._id, e._order
+        ORDER BY e._order, e._id
     </string>
 
     <string name="select_events_partly_class_and_date">
