@@ -11,7 +11,7 @@ import com.ls.drupalcon.model.data.Track;
 import com.ls.drupalcon.model.managers.TracksManager;
 import com.ls.ui.adapter.item.EventListItem;
 import com.ls.ui.dialog.FilterDialog;
-import com.ls.ui.dialog.IrrelevantTimezoneDialog;
+import com.ls.ui.dialog.IrrelevantTimezoneDialogFragment;
 import com.ls.ui.drawer.DrawerAdapter;
 import com.ls.ui.drawer.DrawerManager;
 import com.ls.ui.drawer.DrawerMenu;
@@ -298,11 +298,11 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
     }
 
      private void showIrrelevantTimezoneDialogIfNeeded() {
-        if (!IrrelevantTimezoneDialog.isCurrentTimezoneRelevant()
-                && IrrelevantTimezoneDialog.canPresentMessage(this)
+        if (!IrrelevantTimezoneDialogFragment.isCurrentTimezoneRelevant()
+                && IrrelevantTimezoneDialogFragment.canPresentMessage(this)
                 && !isFinishing()) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.add(new IrrelevantTimezoneDialog(), IrrelevantTimezoneDialog.TAG);
+            ft.add(new IrrelevantTimezoneDialogFragment(), IrrelevantTimezoneDialogFragment.TAG);
             ft.commitAllowingStateLoss();
         }
     }
