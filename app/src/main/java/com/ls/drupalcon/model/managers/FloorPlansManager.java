@@ -13,16 +13,19 @@ import com.ls.drupalcon.model.data.Location;
 import com.ls.drupalcon.model.requests.FloorPlansRequest;
 import com.ls.drupalcon.model.requests.LocationRequest;
 import com.ls.http.base.BaseRequest;
+import com.ls.http.base.ResponseData;
 import com.ls.util.L;
 import com.ls.utils.FileUtils;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
 public class FloorPlansManager extends SynchronousItemManager<FloorPlan.Holder, Object, String> {
 
@@ -133,18 +136,46 @@ public class FloorPlansManager extends SynchronousItemManager<FloorPlan.Holder, 
             }
         };
 
-        try {
-            imageEntity.pullFromServer(true, floor.getImageURL(), null);
-            byte[]imageData = imageEntity.getManagedData();
+        final CountDownLatch latch = new CountDownLatch(1);
+        final ResponseResult result = new ResponseResult();
 
-            //Store image
-            if (imageData != null && imageData.length > 0) {
-                return FileUtils.writeBytesToStorage(floor.getFilePath(), imageData, App.getContext());
-            } else {
-                return false;
-            }
-        }catch (Error e){
-            return false;
+        try {
+            imageEntity.pullFromServer(true, floor.getImageURL(), new AbstractBaseDrupalEntity.OnEntityRequestListener() {
+                @Override
+                public void onRequestCompleted(AbstractBaseDrupalEntity entity, Object tag, ResponseData data) {
+                    byte[]imageData = (byte[]) data.getData();
+
+                    //Store image
+                    if (imageData != null && imageData.length > 0) {
+                        result.isSuccessful = FileUtils.writeBytesToStorage(floor.getFilePath(), imageData, App.getContext());
+                    } else {
+                        result.isSuccessful = false;
+                    }
+                    latch.countDown();
+                }
+
+                @Override
+                public void onRequestFailed(AbstractBaseDrupalEntity entity, Object tag, ResponseData data) {
+                    result.isSuccessful = false;
+                    latch.countDown();
+                }
+
+                @Override
+                public void onRequestCanceled(AbstractBaseDrupalEntity entity, Object tag) {
+                    result.isSuccessful = false;
+                    latch.countDown();
+                }
+            });
+
+            latch.await();
+        } catch (InterruptedException e){
+            e.printStackTrace();
         }
+
+        return result.isSuccessful;
+    }
+
+    private class ResponseResult{
+        public boolean isSuccessful;
     }
 }
