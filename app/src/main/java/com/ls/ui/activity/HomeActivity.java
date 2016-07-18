@@ -55,7 +55,7 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
     private UpdatesManager.DataUpdatedListener updateReceiver = new UpdatesManager.DataUpdatedListener() {
         @Override
         public void onDataUpdated(List<Integer> requestIds) {
-            closeFilterDialog();
+//            closeFilterDialog();
             initFilterDialog();
         }
     };
