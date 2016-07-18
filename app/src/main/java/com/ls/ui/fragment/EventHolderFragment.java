@@ -168,10 +168,12 @@ public class EventHolderFragment extends Fragment {
         mTxtNoEvents = view.findViewById(R.id.txtNoEvents);
         mNoFavorites = view.findViewById(R.id.emptyIcon);
 
-        if (mEventMode != DrawerManager.EventMode.Program) {
-            setHasOptionsMenu(false);
-        } else {
+        if (mEventMode == DrawerManager.EventMode.Program ||
+                mEventMode == DrawerManager.EventMode.Bofs ||
+                mEventMode == DrawerManager.EventMode.Social) {
             setHasOptionsMenu(true);
+        } else {
+            setHasOptionsMenu(false);
         }
     }
 
