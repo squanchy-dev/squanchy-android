@@ -106,7 +106,8 @@ public class FloorPlanFragment  extends Fragment
 
             FloorSelectorAdapter floorsAdapter = new FloorSelectorAdapter(floorSelector.getContext(),names);
             floorSelector.setAdapter(floorsAdapter);
-//            resolveTitleVisibility();
+
+            floorSelector.setVisibility(plans.isEmpty() ? View.INVISIBLE : View.VISIBLE);
         }
     }
 
