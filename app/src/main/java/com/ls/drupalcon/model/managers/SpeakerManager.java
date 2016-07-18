@@ -63,7 +63,12 @@ public class SpeakerManager extends SynchronousItemManager<Speaker.Holder, Objec
     }
 
     public Speaker getSpeakerById(long id) {
-        return mSpeakerDao.getSpeakerById(id).get(0);
+        List<Speaker> speakerById = mSpeakerDao.getSpeakerById(id);
+        if (!speakerById.isEmpty()){
+            return speakerById.get(0);
+        } else {
+            return null;
+        }
     }
 
     public void clear() {

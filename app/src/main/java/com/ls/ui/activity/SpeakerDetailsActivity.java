@@ -153,6 +153,8 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
             protected void onPostExecute(Speaker speaker) {
                 if (speaker != null) {
                     fillView(speaker);
+                } else {
+                    finish();
                 }
             }
         }.execute();
