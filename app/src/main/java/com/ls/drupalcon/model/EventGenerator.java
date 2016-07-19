@@ -81,9 +81,9 @@ public class EventGenerator {
                 double order1 = first.getEvent().getOrder();
                 double order2 = second.getEvent().getOrder();
 
-                if (order1 < order2) {
+                if (order1 > order2) {
                     return 1;
-                } else if (order1 > order2) {
+                } else if (order1 < order2) {
                     return -1;
                 } else {
                     return 0;
