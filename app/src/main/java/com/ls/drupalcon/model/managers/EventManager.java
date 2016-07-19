@@ -39,7 +39,7 @@ public class EventManager extends SynchronousItemManager<Event.Holder, Object, S
         List<Long> speakerEventIds = mEventDao.selectEventSpeakersSafe(eventId);
 
         for (Long speakerId : data.getSpeakers()) {
-            if (!speakerEventIds.contains(eventId)) {
+            if (!speakerEventIds.contains(speakerId)) {
                 mEventDao.insertEventSpeaker(eventId, speakerId);
             }
 
