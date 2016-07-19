@@ -23,7 +23,9 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -97,7 +99,6 @@ public class EventDetailsActivity extends StackKeeperActivity {
         initData();
         initToolbar();
         initViews();
-        loadEvent();
     }
 
     @Override
@@ -105,6 +106,12 @@ public class EventDetailsActivity extends StackKeeperActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_share, menu);
         mItemShare = menu.findItem(R.id.actionShare);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        loadEvent();
         return true;
     }
 
@@ -164,21 +171,24 @@ public class EventDetailsActivity extends StackKeeperActivity {
     private void loadEvent() {
         if (mEventId == -1) return;
 
-        new Handler().postDelayed(new Runnable() {
+        new AsyncTask<Void, Void, EventDetailsEvent>() {
             @Override
-            public void run() {
+            protected EventDetailsEvent doInBackground(Void... params) {
                 SpeakerManager speakerManager = Model.instance().getSpeakerManager();
                 mSpeakerList.clear();
                 mSpeakerList.addAll(speakerManager.getSpeakersByEventId(mEventId));
 
                 EventManager eventManager = Model.instance().getEventManager();
-                EventDetailsEvent event = eventManager.getEventById(mEventId);
+                return eventManager.getEventById(mEventId);
+            }
 
+            @Override
+            protected void onPostExecute(EventDetailsEvent event) {
                 if (event != null) {
                     fillEventView(event);
                 }
             }
-        }, 200);
+        }.execute();
     }
 
     private void fillEventView(@NonNull EventDetailsEvent event) {
