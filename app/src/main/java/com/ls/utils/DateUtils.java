@@ -27,6 +27,11 @@ public class DateUtils {
         mDateFormat.setTimeZone(mTimezone);
     }
 
+    public void setTimezone(String theTimezoneId) {
+        mTimezone = TimeZone.getTimeZone(theTimezoneId);
+        mDateFormat.setTimeZone(mTimezone);
+    }
+
     @NotNull
     public static DateUtils getInstance() {
         if (mUtils == null) {
