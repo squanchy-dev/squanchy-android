@@ -216,9 +216,9 @@ public class EventHolderFragment extends Fragment {
 
     private void updateViews(List<Long> dayList) {
 
-        if(!isResumed()){
-            return;
-        }
+//        if(!isResumed()){
+//            return;
+//        }
 
         if (dayList.isEmpty()) {
             mPagerTabs.setVisibility(View.GONE);
