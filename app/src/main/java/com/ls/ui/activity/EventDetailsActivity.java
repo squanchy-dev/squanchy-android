@@ -316,11 +316,9 @@ public class EventDetailsActivity extends StackKeeperActivity {
                 fillSpeakerView(speaker, speakerView);
                 holderSpeakers.addView(speakerView);
             }
-            findViewById(R.id.topDivider).setVisibility(View.VISIBLE);
             findViewById(R.id.botDivider).setVisibility(View.VISIBLE);
             findViewById(R.id.imgEmptyView).setVisibility(View.GONE);
         } else {
-            findViewById(R.id.topDivider).setVisibility(View.GONE);
             findViewById(R.id.botDivider).setVisibility(View.GONE);
 
             if (TextUtils.isEmpty(event.getDescription())) {
