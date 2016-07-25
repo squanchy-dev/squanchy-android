@@ -18,6 +18,7 @@ public class DrawerManager {
 
 	private FragmentManager fragmentManager;
 	private int fragmentHolderId;
+	private EventMode currentEventMode;
 
 	public static DrawerManager getInstance(FragmentManager theFragmentManager, int theMainFragmentId) {
 		return new DrawerManager(theFragmentManager, theMainFragmentId);
@@ -81,9 +82,23 @@ public class DrawerManager {
 		fragmentManager.beginTransaction().replace(fragmentHolderId, fragment, fragmentTag).commit();
 	}
 
-	public void reloadPrograms() {
+	public void reloadPrograms(@NotNull DrawerMenu.DrawerItem mode) {
 		Fragment fragment;
-		fragment = EventHolderFragment.newInstance(EventMode.Program.ordinal());
+		switch (mode) {
+			case Program:
+				fragment = EventHolderFragment.newInstance(DrawerMenu.DrawerItem.Program.ordinal());
+				break;
+
+			case Bofs:
+				fragment = EventHolderFragment.newInstance(DrawerMenu.DrawerItem.Bofs.ordinal());
+				break;
+
+			case Social:
+				fragment = EventHolderFragment.newInstance(DrawerMenu.DrawerItem.Social.ordinal());
+				break;
+			default:
+				fragment = EventHolderFragment.newInstance(EventMode.Program.ordinal());
+		}
 		FragmentTransaction ft = fragmentManager.beginTransaction();
 		ft.replace(fragmentHolderId, fragment, EventHolderFragment.TAG);
 		ft.commitAllowingStateLoss();

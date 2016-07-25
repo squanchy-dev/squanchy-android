@@ -113,7 +113,7 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
 
     @Override
     public void onNewFilterApplied() {
-        mFrManager.reloadPrograms();
+        mFrManager.reloadPrograms(DrawerMenu.DrawerItem.values()[mSelectedItem]);
     }
 
     private void initToolbar() {

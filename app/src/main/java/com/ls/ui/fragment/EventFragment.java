@@ -151,10 +151,10 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
                 eventList.addAll(mGenerator.generate(mDay, Event.PROGRAM_CLASS, levelIds, trackIds, new SimpleTimeRangeCreator()));
                 break;
             case Bofs:
-                eventList.addAll(mGenerator.generate(mDay, Event.BOFS_CLASS, new SimpleTimeRangeCreator()));
+                eventList.addAll(mGenerator.generate(mDay, Event.BOFS_CLASS, levelIds, trackIds, new SimpleTimeRangeCreator()));
                 break;
             case Social:
-                eventList.addAll(mGenerator.generate(mDay, Event.SOCIALS_CLASS, new SimpleTimeRangeCreator()));
+                eventList.addAll(mGenerator.generate(mDay, Event.SOCIALS_CLASS, levelIds, trackIds, new SimpleTimeRangeCreator()));
                 break;
             case Favorites:
                 eventList.addAll(mGenerator.generateForFavorites(mDay));
