@@ -7,6 +7,7 @@ import com.ls.drupalcon.app.App;
 import com.ls.drupalcon.model.Model;
 import com.ls.drupalcon.model.UpdatesManager;
 import com.ls.drupalcon.model.dao.EventDao;
+import com.ls.drupalcon.model.data.EventDetailsEvent;
 import com.ls.drupalcon.model.data.Level;
 import com.ls.drupalcon.model.data.Speaker;
 import com.ls.drupalcon.model.data.SpeakerDetailsEvent;
@@ -254,6 +255,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
                 mIsDataLoaded = true;
                 addSpeakerEvents(events);
                 completeLoading();
+                updatePlaceholderVisibility(events);
             }
         }.execute();
     }
@@ -367,6 +369,17 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
         if (mIsDataLoaded && mIsWebLoaded) {
             findViewById(R.id.progressBar).setVisibility(View.GONE);
             mScrollView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void updatePlaceholderVisibility(List<SpeakerDetailsEvent> events) {
+        if (TextUtils.isEmpty(mSpeaker.getTwitterName()) &&
+                TextUtils.isEmpty(mSpeaker.getWebSite()) &&
+                TextUtils.isEmpty(mSpeaker.getCharact()) &&
+                events.isEmpty()){
+            findViewById(R.id.imgEmptyView).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.imgEmptyView).setVisibility(View.GONE);
         }
     }
 }
