@@ -199,6 +199,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
         fillFavoriteState(mEvent);
         fillSpeakers(mEvent);
         fillDescription(mEvent);
+        updatePlaceholderVisibility(mEvent);
     }
 
     private void fillToolbar(@NonNull EventDetailsEvent event) {
@@ -283,6 +284,17 @@ public class EventDetailsActivity extends StackKeeperActivity {
         }
     }
 
+    private void updatePlaceholderVisibility(EventDetailsEvent event) {
+        if (TextUtils.isEmpty(event.getTrack()) &&
+                TextUtils.isEmpty(event.getLevel()) &&
+                TextUtils.isEmpty(event.getDescription()) &&
+                mSpeakerList.isEmpty()){
+            findViewById(R.id.imgEmptyView).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.imgEmptyView).setVisibility(View.GONE);
+        }
+    }
+
     private void fillFavoriteState(@NonNull EventDetailsEvent event) {
         mIsFavorite = event.isFavorite();
 
@@ -306,26 +318,19 @@ public class EventDetailsActivity extends StackKeeperActivity {
         List<Speaker> speakerList = new ArrayList<>();
         speakerList.addAll(mSpeakerList);
 
-        if (!speakerList.isEmpty()) {
-            LayoutInflater inflater = LayoutInflater.from(EventDetailsActivity.this);
-            LinearLayout holderSpeakers = (LinearLayout) findViewById(R.id.holderSpeakers);
-            holderSpeakers.removeAllViewsInLayout();
+        LayoutInflater inflater = LayoutInflater.from(EventDetailsActivity.this);
+        LinearLayout holderSpeakers = (LinearLayout) findViewById(R.id.holderSpeakers);
+        holderSpeakers.removeAllViewsInLayout();
 
+        if (!speakerList.isEmpty()) {
             for (Speaker speaker : speakerList) {
                 View speakerView = inflater.inflate(R.layout.item_speaker_no_letter, null);
                 fillSpeakerView(speaker, speakerView);
                 holderSpeakers.addView(speakerView);
             }
             findViewById(R.id.botDivider).setVisibility(View.VISIBLE);
-            findViewById(R.id.imgEmptyView).setVisibility(View.GONE);
         } else {
             findViewById(R.id.botDivider).setVisibility(View.GONE);
-
-            if (TextUtils.isEmpty(event.getDescription())) {
-                findViewById(R.id.imgEmptyView).setVisibility(View.VISIBLE);
-            }else{
-                findViewById(R.id.imgEmptyView).setVisibility(View.GONE);
-            }
         }
     }
 
