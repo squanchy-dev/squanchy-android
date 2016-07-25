@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-          android:id="@+id/spinnerTarget"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:paddingTop="4dp"
-          android:paddingBottom="4dp"
-          android:paddingLeft="16dp"
-          android:paddingRight="72dp"
-          android:maxLines="2"
-          android:ellipsize="end"
-          style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-          android:textSize="@dimen/text_size_15"
-        >
-
-</TextView>
+    android:id="@+id/spinnerTarget"
+    style="?android:attr/spinnerDropDownItemStyle"
+    android:singleLine="true"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:ellipsize="marquee"/>
