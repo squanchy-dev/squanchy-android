@@ -177,7 +177,7 @@
         android:id="@+id/viewToolbar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="@color/event"
+        android:background="@color/primary"
         android:visibility="visible" />
 
     <android.support.v7.widget.Toolbar

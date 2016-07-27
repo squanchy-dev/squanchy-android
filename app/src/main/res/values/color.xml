@@ -21,11 +21,11 @@
 
     <color name="item_selection">#757428</color>
 
-    <color name="primary_dark">#593787</color>
-    <color name="primary">#593787</color>
+    <color name="primary_dark">#06335b</color>
+    <color name="primary">#06335b</color>
 
     <color name="event_primary">#4E4E4E</color>
-    <color name="event">#57308C</color>
+    <color name="event">#4077aa</color>
 
     <color name="speaker_primary">#4E4E4E</color>
     <color name="speaker">#4E4E4E</color>
