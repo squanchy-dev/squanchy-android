@@ -38,9 +38,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_27"
+                    android:textSize="@dimen/text_size_16"
                     android:textStyle="bold"
-                    app:custom_font="@string/smythe_regular"
+                    app:custom_font="@string/montserrat_regular"
                     tools:text="@string/lorem_ipsum" />
 
                 <com.ls.ui.view.FontTextView

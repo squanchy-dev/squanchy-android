@@ -42,9 +42,9 @@
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="56dp"
                     android:gravity="center_vertical"
-                    app:custom_font="@string/smythe_regular"
+                    app:custom_font="@string/montserrat_regular"
                     android:textColor="@color/black_100"
-                    android:textSize="@dimen/text_size_24"
+                    android:textSize="@dimen/text_size_20"
                     tools:text="Lorem Ipsum" />
 
                 <com.ls.ui.view.FontTextView
