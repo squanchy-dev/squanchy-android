@@ -28,4 +28,14 @@ public class AnalyticsManager {
                 .setLabel(Long.toString(id))
                 .build());
     }
+
+    public static void sendEvent(Activity activity, int categoryId, int actionId, String title) {
+        Tracker t = ((App) activity.getApplication()).getTracker();
+        // Build and send an Event.
+        t.send(new HitBuilders.EventBuilder()
+                .setCategory(activity.getString(categoryId))
+                .setAction(activity.getString(actionId))
+                .setLabel(title)
+                .build());
+    }
 }
