@@ -9,6 +9,7 @@ buildscript {
 }
 apply plugin: 'android'
 apply plugin: 'io.fabric'
+apply plugin: 'com.google.gms.google-services'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -59,7 +60,7 @@ dependencies {
     compile 'com.github.dmytrodanylyk.shadow-layout:library:1.0.2'
     compile 'com.android.support:support-v13:23.2.1'
     compile 'com.android.support:appcompat-v7:23.2.1'
-    compile 'com.google.android.gms:play-services:8.4.0'
+    compile 'com.google.android.gms:play-services-analytics:9.0.0'
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'org.jetbrains:annotations:13.0'
     compile 'com.jpardogo.materialtabstrip:library:1.0.8'
