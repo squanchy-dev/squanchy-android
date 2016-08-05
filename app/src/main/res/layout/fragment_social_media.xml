@@ -2,14 +2,17 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="com.ls.ui.fragment.SocialMediaFragment"
-        >
+             tools:context="com.ls.ui.fragment.SocialMediaFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/list_view"
-            />
+            android:id="@+id/list_view"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
 
 </FrameLayout>

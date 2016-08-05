@@ -8,8 +8,10 @@ import com.ls.drupalcon.model.UpdatesManager;
 import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
 import com.twitter.sdk.android.tweetui.SearchTimeline;
 
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,6 +77,15 @@ public class SocialMediaFragment extends Fragment
         final TweetTimelineListAdapter adapter = new TweetTimelineListAdapter.Builder(rootView.getContext())
                 .setTimeline(userTimeline)
                 .build();
+
+        adapter.registerDataSetObserver(new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                rootView.findViewById(R.id.progressBar).setVisibility(View.GONE);
+            }
+        });
+
         ListView list = (ListView)rootView.findViewById(R.id.list_view);
         list.setAdapter(adapter);
     }

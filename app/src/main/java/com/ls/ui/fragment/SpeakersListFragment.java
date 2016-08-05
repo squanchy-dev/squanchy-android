@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -34,6 +35,8 @@ public class SpeakersListFragment extends Fragment
     private SpeakersAdapter mSpeakersAdapter;
     private ListView mListView;
     private TextView mTxtNoSearchResult;
+
+    private String lastSearchRequest;
 
     private ProgressBar mProgressBar;
 
@@ -88,6 +91,7 @@ public class SpeakersListFragment extends Fragment
             @Override
             public boolean onQueryTextChange(String searchedText) {
                 if (mSpeakersAdapter != null) {
+                    lastSearchRequest = searchedText;
                     mSpeakersAdapter.getFilter().filter(searchedText);
                 }
                 return true;
@@ -138,7 +142,11 @@ public class SpeakersListFragment extends Fragment
             mListView.setAdapter(mSpeakersAdapter);
         } else {
             mSpeakersAdapter.setData(speakers, letterPositions);
-            mSpeakersAdapter.notifyDataSetChanged();
+            if (!TextUtils.isEmpty(lastSearchRequest)){
+                mSpeakersAdapter.getFilter().filter(lastSearchRequest);
+            }else{
+                mSpeakersAdapter.notifyDataSetChanged();
+            }
         }
         mProgressBar.setVisibility(View.GONE);
     }

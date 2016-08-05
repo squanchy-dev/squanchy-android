@@ -24,7 +24,7 @@
     <string name="action_open">Open</string>
     <string name="action_close">Close</string>
     <string name="action_add_to_favorites">Add to favorites</string>
-    <string name="action_remove_from_favorites">Remove to favorites</string>
+    <string name="action_remove_from_favorites">Remove from favorites</string>
     <string name="no_apps_can_perform_this_action">No Apps can perform this action.</string>
     <string name="share">Share</string>
     <string name="no_search_result">No Search Result</string>
