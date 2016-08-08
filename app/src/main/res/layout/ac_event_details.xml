@@ -119,6 +119,33 @@
                         android:layout_marginLeft="72dp"
                         android:background="@color/white_200"/>
 
+                <LinearLayout
+                    android:id="@+id/imgEmptyView"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="60dp"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_no_details" />
+
+                    <com.ls.ui.view.FontTextView
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        app:custom_font="@string/roboto_regular"
+                        android:clickable="false"
+                        android:textColor="#bbbbbb"
+                        android:textSize="@dimen/text_size_medium"
+                        android:text="No Details" />
+
+                </LinearLayout>
 
                 <WebView
                     android:id="@+id/webView"
@@ -198,33 +225,6 @@
             android:textStyle="bold"
             tools:text="DrupalCon" />
     </android.support.v7.widget.Toolbar>
-
-    <LinearLayout
-        android:id="@+id/imgEmptyView"
-        android:layout_centerInParent="true"
-        android:orientation="vertical"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_no_details" />
-
-        <com.ls.ui.view.FontTextView
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            app:custom_font="@string/roboto_regular"
-            android:clickable="false"
-            android:textColor="#bbbbbb"
-            android:textSize="@dimen/text_size_medium"
-            android:text="No Details" />
-
-    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"
