@@ -42,7 +42,7 @@ public class AboutDetailsActivity extends StateActivity {
         initToolbar(aboutTitle);
         Model.instance().getUpdatesManager().registerUpdateListener(updateListener);
 
-        AnalyticsManager.sendEvent(this, R.string.about_category, R.string.action_open, id);
+        AnalyticsManager.sendEvent(this, R.string.about_category, R.string.action_open, id + " " + aboutTitle);
     }
 
     @Override

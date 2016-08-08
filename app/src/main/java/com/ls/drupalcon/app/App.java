@@ -48,6 +48,6 @@ public class App extends MultiDexApplication {
 
     public synchronized Tracker getTracker() {
         GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-        return analytics.newTracker(getString(R.string.api_value_google_analytics_app_Id));
+        return analytics.newTracker(R.xml.global_tracker);
     }
 }
