@@ -5,6 +5,7 @@ import com.ls.drupalcon.R;
 import com.ls.drupalcon.model.Model;
 import com.ls.drupalcon.model.PreferencesManager;
 import com.ls.drupalcon.model.UpdatesManager;
+import com.ls.utils.NetworkUtils;
 import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
 import com.twitter.sdk.android.tweetui.SearchTimeline;
 
@@ -69,6 +70,13 @@ public class SocialMediaFragment extends Fragment
     }
 
     private void fillView() {
+
+        if(!NetworkUtils.isOn(getActivity()) ){
+            rootView.findViewById(R.id.txtNoConnection).setVisibility(View.VISIBLE);
+            rootView.findViewById(R.id.list_view).setVisibility(View.GONE);
+            rootView.findViewById(R.id.progressBar).setVisibility(View.GONE);
+        }
+
         String searchQuery = PreferencesManager.getInstance().getTwitterSearchQuery();
 
         final SearchTimeline userTimeline = new SearchTimeline.Builder()
