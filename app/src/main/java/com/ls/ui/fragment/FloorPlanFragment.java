@@ -4,6 +4,7 @@ import com.ls.drupalcon.R;
 import com.ls.drupalcon.model.Model;
 import com.ls.drupalcon.model.data.FloorPlan;
 import com.ls.ui.adapter.FloorSelectorAdapter;
+import com.ls.ui.view.TouchImageView;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -35,7 +36,7 @@ public class FloorPlanFragment  extends Fragment
     public static final String TAG = "FloorPlanFragment";
     private Spinner floorSelector;
     private List<FloorPlan>plans;
-    private ImageView floorImage;
+    private TouchImageView floorImage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -57,7 +58,7 @@ public class FloorPlanFragment  extends Fragment
             }
         });
 
-        floorImage = (ImageView)result.findViewById(R.id.floor_plan_image);
+        floorImage = (TouchImageView)result.findViewById(R.id.floor_plan_image);
 
         return result;
     }
@@ -139,6 +140,7 @@ public class FloorPlanFragment  extends Fragment
             super.onPostExecute(drawable);
             floorSelector.setEnabled(true);
             floorSelector.setClickable(true);
+            floorImage.setZoom(1);
             floorImage.setImageDrawable(drawable);
         }
     }
