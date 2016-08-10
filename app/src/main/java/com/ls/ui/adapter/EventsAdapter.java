@@ -322,12 +322,12 @@ public class EventsAdapter extends BaseAdapter {
     private void fillEventClickAbility(View layoutRoot, TextView txtPlace, Event event, final int position) {
         Context context = layoutRoot.getContext();
         layoutRoot.setBackgroundResource(R.drawable.selector_light);
-        txtPlace.setMaxLines(SINGLE_LINE_COUNT);
+//        txtPlace.setMaxLines(SINGLE_LINE_COUNT);
 
         long eventType = event.getType();
         if (eventType == Type.FREE_SLOT || eventType == Type.COFFEBREAK || eventType == Type.LUNCH || eventType == Type.REGISTRATION) {
             layoutRoot.setBackgroundColor(context.getResources().getColor(R.color.black_20_trans));
-            txtPlace.setMaxLines(MULTI_LINE_COUNT);
+//            txtPlace.setMaxLines(MULTI_LINE_COUNT);
             layoutRoot.setClickable(false);
         } else {
             layoutRoot.setOnClickListener(new View.OnClickListener() {
