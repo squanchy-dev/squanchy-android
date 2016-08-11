@@ -76,6 +76,22 @@ public class DateUtils {
         return isToday;
     }
 
+    public boolean isAfterCurrentFate(long millis) {
+        boolean isAfter = false;
+
+        Calendar currCalendar = Calendar.getInstance();
+        currCalendar.setTimeZone(mTimezone);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(millis);
+        calendar.setTimeZone(mTimezone);
+
+        if (calendar.after(currCalendar)) {
+            isAfter = true;
+        }
+        return isAfter;
+    }
+
     public String getTime(Context context, long millis) {
         if (DateFormat.is24HourFormat(context)) {
             mDateFormat.applyPattern("HH:mm");

@@ -241,7 +241,8 @@ public class EventHolderFragment extends Fragment {
     private void switchToCurrentDay(List<Long> days) {
         int item = 0;
         for (Long millis : days) {
-            if (DateUtils.getInstance().isToday(millis)) {
+            if (DateUtils.getInstance().isToday(millis) ||
+                    DateUtils.getInstance().isAfterCurrentFate(millis)) {
                 mViewPager.setCurrentItem(item);
                 break;
             }
