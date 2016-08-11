@@ -2,9 +2,11 @@ package com.ls.ui.fragment;
 
 import com.ls.drupalcon.R;
 import com.ls.drupalcon.model.Model;
+import com.ls.drupalcon.model.UpdatesManager;
 import com.ls.drupalcon.model.data.FloorPlan;
 import com.ls.ui.adapter.FloorSelectorAdapter;
 import com.ls.ui.view.TouchImageView;
+import com.ls.utils.L;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -12,14 +14,12 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -37,6 +37,30 @@ public class FloorPlanFragment  extends Fragment
     private Spinner floorSelector;
     private List<FloorPlan>plans;
     private TouchImageView floorImage;
+
+    private UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener() {
+        @Override
+        public void onDataUpdated(List<Integer> requestIds) {
+
+            if (requestIds.contains(UpdatesManager.FLOOR_PLANS_REQUEST_ID)){
+                new LoadPlansTask().execute();
+            }
+
+        }
+    };
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Model.instance().getUpdatesManager().registerUpdateListener(updateListener);
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        Model.instance().getUpdatesManager().unregisterUpdateListener(updateListener);
+        super.onDestroy();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,14 +84,9 @@ public class FloorPlanFragment  extends Fragment
 
         floorImage = (TouchImageView)result.findViewById(R.id.floor_plan_image);
 
-        return result;
-    }
-
-    @Override
-    public void onResume()
-    {
-        super.onResume();
         new LoadPlansTask().execute();
+
+        return result;
     }
 
 //    void resolveTitleVisibility(){
