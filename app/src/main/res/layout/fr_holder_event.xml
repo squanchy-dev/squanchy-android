@@ -13,7 +13,7 @@
         android:textSize= "13sp"
         android:textColor= "#FFF"
         android:textStyle = "normal"
-        android:background="@color/event"
+        android:background="@color/primary"
         app:pstsDividerColor="#00000000"
         app:pstsIndicatorColor="@color/white"
         app:pstsTextStyle = "normal"
