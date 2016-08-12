@@ -93,18 +93,38 @@ public class DateUtils {
     }
 
     public String getTime(Context context, long millis) {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(millis);
+        calendar.setTimeZone(mTimezone);
+
+
         if (DateFormat.is24HourFormat(context)) {
-            mDateFormat.applyPattern("HH:mm");
-            return mDateFormat.format(new Date(millis));
+//            mDateFormat.applyPattern("HH:mm");
+//            return mDateFormat.format(new Date(millis));
+
+
+            int hr = calendar.get(Calendar.HOUR_OF_DAY);
+            int min = calendar.get(Calendar.MINUTE);
+            return String.format("%02d:%02d", hr, min);
+
         } else {
-            mDateFormat.applyPattern("hh:mm aa");
-            return mDateFormat.format(new Date(millis));
+//            mDateFormat.applyPattern("hh:mm aa");
+//            return mDateFormat.format(new Date(millis));
+
+            int hr = calendar.get(Calendar.HOUR);
+            int min = calendar.get(Calendar.MINUTE);
+            String AmPm = calendar.getDisplayName(Calendar.AM_PM, Calendar.SHORT, Locale.US);
+            return String.format("%02d:%02d", hr, min) + " " + AmPm;
         }
     }
 
     public String getWeekDay(long millis) {
-        mDateFormat.applyPattern("EEE");
-        return mDateFormat.format(new Date(millis));
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(millis);
+        calendar.setTimeZone(mTimezone);
+
+        return calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.US);
     }
 
     public String getWeekNameAndDate(long millis) {
