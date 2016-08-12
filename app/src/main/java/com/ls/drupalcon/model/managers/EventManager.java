@@ -55,6 +55,7 @@ public class EventManager extends SynchronousItemManager<Event.Holder, Object, S
     public void deleteEvent(Event data) {
         mEventDao.deleteDataSafe(data.getId());
         mEventDao.deleteEventAndSpeakerByEvent(data.getId());
+        mEventDao.setFavoriteSafe(data.getId(), false);
     }
 
     public EventDetailsEvent getEventById(long id) {
