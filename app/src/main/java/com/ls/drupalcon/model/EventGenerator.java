@@ -76,22 +76,6 @@ public class EventGenerator {
             return new ArrayList<>();
         }
 
-        Collections.sort(eventListItems, new Comparator<EventListItem>() {
-            @Override
-            public int compare(EventListItem first, EventListItem second) {
-                double order1 = first.getEvent().getOrder();
-                double order2 = second.getEvent().getOrder();
-
-                if (order1 > order2) {
-                    return 1;
-                } else if (order1 < order2) {
-                    return -1;
-                } else {
-                    return 0;
-                }
-            }
-        });
-
         return getEventItems(eventItemCreator, eventListItems, ranges);
     }
 
@@ -110,17 +94,11 @@ public class EventGenerator {
             return new ArrayList<>();
         }
 
-        List<TimeRange> ranges = mEventManager.getDistrictFavoriteTimeRangeSafe(favoriteEventIds, day);
-        if (mShouldBreak) {
-            return new ArrayList<>();
-        }
-
-        List<EventListItem> eventItems = getEventItems(eventItemCreator, eventListItems, ranges);
-
-        return sortFavorites(eventItems);
+        return sortFavorites(favoriteEventIds, eventListItems, day, eventItemCreator);
     }
 
-    private List<EventListItem> sortFavorites(List<EventListItem> eventListItems) {
+    private List<EventListItem> sortFavorites(List<Long> favoriteEventIds, List<EventListItem> eventListItems, long day,
+                                              @NotNull EventItemCreator eventItemCreator) {
         List<EventListItem> result = new ArrayList<EventListItem>();
 
         if (eventListItems.isEmpty()) {
@@ -143,36 +121,27 @@ public class EventGenerator {
         }
 
         if (!schedules.isEmpty()) {
-            Collections.sort(schedules, new Comparator<EventListItem>() {
-                @Override
-                public int compare(EventListItem eventListItem, EventListItem eventListItem2) {
-                    return Double.compare(eventListItem.getEvent().getFromMillis(), eventListItem2.getEvent().getFromMillis());
-                }
-            });
+
+            List<TimeRange> ranges = mEventManager.getDistrictFavoriteTimeRangeSafe(Event.PROGRAM_CLASS, favoriteEventIds, day);
+            schedules = getEventItems(eventItemCreator, schedules, ranges);
             schedules.add(0, new HeaderItem(App.getContext().getString(R.string.Sessions)));
-            schedules.get(schedules.size() - 1).setLast(true);
+
         }
 
         if (!bofs.isEmpty()) {
-            Collections.sort(bofs, new Comparator<EventListItem>() {
-                @Override
-                public int compare(EventListItem eventListItem, EventListItem eventListItem2) {
-                    return Double.compare(eventListItem.getEvent().getFromMillis(), eventListItem2.getEvent().getFromMillis());
-                }
-            });
+
+            List<TimeRange> ranges = mEventManager.getDistrictFavoriteTimeRangeSafe(Event.BOFS_CLASS, favoriteEventIds, day);
+            bofs = getEventItems(eventItemCreator, bofs, ranges);
             bofs.add(0, new HeaderItem(App.getContext().getString(R.string.bofs)));
-            bofs.get(bofs.size() - 1).setLast(true);
+
         }
 
         if (!socials.isEmpty()) {
-            Collections.sort(socials, new Comparator<EventListItem>() {
-                @Override
-                public int compare(EventListItem eventListItem, EventListItem eventListItem2) {
-                    return Double.compare(eventListItem.getEvent().getFromMillis(), eventListItem2.getEvent().getFromMillis());
-                }
-            });
+
+            List<TimeRange> ranges = mEventManager.getDistrictFavoriteTimeRangeSafe(Event.SOCIALS_CLASS, favoriteEventIds, day);
+            socials = getEventItems(eventItemCreator, socials, ranges);
             socials.add(0, new HeaderItem(App.getContext().getString(R.string.social_events)));
-            socials.get(socials.size() - 1).setLast(true);
+
         }
 
         result.addAll(schedules);

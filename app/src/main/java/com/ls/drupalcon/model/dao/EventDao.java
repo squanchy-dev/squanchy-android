@@ -286,8 +286,8 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
         return selectDistrictTimeRangeSafe(selectionArgs, query);
     }
 
-    public List<TimeRange> selectDistrictFavTimeRangeSafe(List<Long> favoriteEventIds, long date) {
-        String[] selectionArgs = ArrayUtils.build(date);
+    public List<TimeRange> selectDistrictFavTimeRangeSafe(int eventClass, List<Long> favoriteEventIds, long date) {
+        String[] selectionArgs = ArrayUtils.build(eventClass, date);
 
         String rawQuery = mContext.getString(R.string.select_distinct_fav_time_range);
         String query = String.format(rawQuery, getArrayAsString(favoriteEventIds));

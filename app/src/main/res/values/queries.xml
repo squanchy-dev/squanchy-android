@@ -350,7 +350,7 @@
     <string name="select_distinct_fav_time_range" formatted = "false">
         SELECT _from, _to, _date
         FROM table_event
-        WHERE _date=? and _id IN (%s)
+        WHERE _event_class=? and _date=? and _id IN (%s)
         GROUP BY  _from, _to
         ORDER BY  _from, _to
     </string>

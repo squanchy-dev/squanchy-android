@@ -70,8 +70,8 @@ public class EventManager extends SynchronousItemManager<Event.Holder, Object, S
         return mEventDao.selectDistrictTimeRangeByLevelTrackIdsSafe(eventClass, day, levelIds, trackIds);
     }
 
-    public List<TimeRange> getDistrictFavoriteTimeRangeSafe(List<Long> favoriteEventIds, long day) {
-        return mEventDao.selectDistrictFavTimeRangeSafe(favoriteEventIds, day);
+    public List<TimeRange> getDistrictFavoriteTimeRangeSafe(int eventClass, List<Long> favoriteEventIds, long day) {
+        return mEventDao.selectDistrictFavTimeRangeSafe(eventClass, favoriteEventIds, day);
     }
 
     public List<Long> getEventSpeakerSafe(long id) {
