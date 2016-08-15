@@ -347,6 +347,14 @@
         ORDER BY  _from, _to
     </string>
 
+    <string name="select_distinct_fav_time_range" formatted = "false">
+        SELECT _from, _to, _date
+        FROM table_event
+        WHERE _date=? and _id IN (%s)
+        GROUP BY  _from, _to
+        ORDER BY  _from, _to
+    </string>
+
 
     <string name="select_distinct_time_range_by_event_ids">
         SELECT _from, _to, _date
@@ -453,6 +461,27 @@
 
         WHERE e._event_class=? and e._date=?
         ORDER BY e._order, e._id
+    </string>
+
+    <string name="select_fav_program_items_by_date_and_fav_ids">
+        SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class, e._track,
+        e._favorite, e._order, e._experience_level, t.track_name, l.level_name,
+            (SELECT group_concat(first_name|| \' \' ||last_name,\',\')
+                FROM table_speaker
+                WHERE _id IN (
+                    SELECT _speaker_id
+                    FROM table_event_and_speaker
+                    WHERE _event_id=e._id
+                )
+            )
+            AS _speaker_name
+
+        FROM table_event AS e
+        LEFT JOIN table_track AS t ON e._track=t._id
+        LEFT JOIN table_level AS l ON e._experience_level=l._id
+
+        WHERE e._date=? and e._id IN (%s)
+        ORDER BY e._id, e._order
     </string>
 
     <string name="select_events_partly_class_and_date">

@@ -156,6 +156,7 @@ public class EventsAdapter extends BaseAdapter {
         fillIcon(holder, event.getType());
         fillEventInfo(holder, event, null, bofsItem.getSpeakers());
         fillEventClickAbility(holder.layoutRoot, holder.txtPlace, event, position);
+        fillFavorite(holder);
         fillDivider(holder, !bofsItem.isLast());
 
         return resultView;
@@ -181,6 +182,7 @@ public class EventsAdapter extends BaseAdapter {
         fillEventInfo(holder, event, programItem.getTrack(), programItem.getSpeakers());
         fillIcon(holder, event.getType());
         fillDivider(holder, !programItem.isLast());
+        fillFavorite(holder);
         fillEventClickAbility(holder.layoutRoot, holder.txtPlace, event, position);
 
         return resultView;
@@ -204,6 +206,7 @@ public class EventsAdapter extends BaseAdapter {
         Event event = socialItem.getEvent();
         fillIcon(holder, event.getType());
         fillEventInfo(holder, event, null, socialItem.getSpeakers());
+        fillFavorite(holder);
         fillEventClickAbility(holder.layoutRoot, holder.txtPlace, event, position);
 
         return resultView;

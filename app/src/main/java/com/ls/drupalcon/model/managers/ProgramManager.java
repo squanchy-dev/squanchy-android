@@ -86,4 +86,8 @@ public class ProgramManager extends EventManager {
     public List<EventListItem> getProgramItemsSafe(int eventClass, long day, List<Long> levelIds, List<Long> trackIds) {
         return mEventDao.selectProgramItemsSafe(eventClass, day, levelIds, trackIds);
     }
+
+    public List<EventListItem> getFavoriteProgramItemsSafe(List<Long> favoriteEventIds, long day){
+        return mEventDao.selectFavoriteProgramItemsSafe(favoriteEventIds, day);
+    }
 }

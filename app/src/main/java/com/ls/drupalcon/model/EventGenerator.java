@@ -9,6 +9,7 @@ import com.ls.drupalcon.model.data.Track;
 import com.ls.drupalcon.model.data.Type;
 import com.ls.drupalcon.model.managers.BofsManager;
 import com.ls.drupalcon.model.managers.EventManager;
+import com.ls.drupalcon.model.managers.FavoriteManager;
 import com.ls.drupalcon.model.managers.ProgramManager;
 import com.ls.drupalcon.model.managers.SocialManager;
 import com.ls.drupalcon.model.managers.SpeakerManager;
@@ -94,9 +95,29 @@ public class EventGenerator {
         return getEventItems(eventItemCreator, eventListItems, ranges);
     }
 
-    public List<EventListItem> generateForFavorites(long day) {
-        List<Event> events = mEventManager.getEventsByIdsAndDaySafe(day);
-        return sortFavorites(fetchEventItems(events));
+//    public List<EventListItem> generateForFavorites(long day) {
+//        List<Event> events = mEventManager.getEventsByIdsAndDaySafe(day);
+//        return sortFavorites(fetchEventItems(events));
+//    }
+
+    public List<EventListItem> generateForFavorites(long day, @NotNull EventItemCreator eventItemCreator) {
+
+        FavoriteManager favoriteManager = new FavoriteManager();
+        List<Long> favoriteEventIds = favoriteManager.getFavoriteEventsSafe();
+
+        List<EventListItem> eventListItems = mProgramManager.getFavoriteProgramItemsSafe(favoriteEventIds, day);
+        if (mShouldBreak) {
+            return new ArrayList<>();
+        }
+
+        List<TimeRange> ranges = mEventManager.getDistrictFavoriteTimeRangeSafe(favoriteEventIds, day);
+        if (mShouldBreak) {
+            return new ArrayList<>();
+        }
+
+        List<EventListItem> eventItems = getEventItems(eventItemCreator, eventListItems, ranges);
+
+        return sortFavorites(eventItems);
     }
 
     private List<EventListItem> sortFavorites(List<EventListItem> eventListItems) {
