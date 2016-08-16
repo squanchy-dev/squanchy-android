@@ -195,10 +195,10 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeZone(DateUtils.getInstance().getTimeZone());
         int deviceHours =  calendar.get(Calendar.HOUR_OF_DAY);
+        int nearestHour = 0;
         int pos = 0;
 
-        for (int i = 0; i < eventListItems.size(); i++) {
-            EventListItem item = eventListItems.get(i);
+        for (EventListItem item : eventListItems){
 
             if (item instanceof TimeRangeItem) {
 
@@ -207,10 +207,27 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
                 int eventHours = calendar.get(Calendar.HOUR_OF_DAY);
 
                 if (deviceHours >= eventHours) {
-                    pos = i;
+                    nearestHour = eventHours;
                 }
             }
         }
+
+        for (EventListItem item : eventListItems){
+
+            if (item instanceof TimeRangeItem) {
+
+                Event event = item.getEvent();
+                calendar.setTimeInMillis(event.getFromMillis());
+                int eventHours = calendar.get(Calendar.HOUR_OF_DAY);
+
+                if (nearestHour == eventHours) {
+                    pos = eventListItems.indexOf(item);
+                    break;
+                }
+            }
+        }
+
+
         return pos;
     }
 }

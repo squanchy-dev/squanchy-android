@@ -112,7 +112,7 @@ public class DateUtils {
 //            mDateFormat.applyPattern("hh:mm aa");
 //            return mDateFormat.format(new Date(millis));
 
-            int hr = calendar.get(Calendar.HOUR);
+            int hr = (calendar.get(Calendar.HOUR) == 0) ? 12 : calendar.get(Calendar.HOUR) ;
             int min = calendar.get(Calendar.MINUTE);
             String AmPm = calendar.getDisplayName(Calendar.AM_PM, Calendar.SHORT, Locale.US);
             return String.format("%02d:%02d", hr, min) + " " + AmPm;
