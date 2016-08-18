@@ -34,4 +34,6 @@
     <color name="link">#757428</color>
     <color name="navigation">#ffffff</color>
 
+    <color name="placeholder_text">#a3a3a3</color>
+
 </resources>

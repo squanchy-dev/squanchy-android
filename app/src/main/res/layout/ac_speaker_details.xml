@@ -121,32 +121,39 @@
                     tools:visibility="visible"
                     android:layout_marginRight="16dp"/>
 
-                <LinearLayout
-                    android:id="@+id/imgEmptyView"
-                    android:orientation="vertical"
-                    android:layout_gravity="center"
-                    android:visibility="gone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                <FrameLayout
+                        android:id="@+id/layout_placeholder"
+                        android:layout_width="match_parent"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_height="match_parent">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_no_details" />
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
 
-                    <com.ls.ui.view.FontTextView
-                        android:layout_gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        app:custom_font="@string/roboto_regular"
-                        android:clickable="false"
-                        android:textColor="#bbbbbb"
-                        android:textSize="@dimen/text_size_medium"
-                        android:text="No Details" />
+                        <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_no_details"
+                                android:layout_height="wrap_content" />
 
-                </LinearLayout>
+                        <com.ls.ui.view.FontTextView
+                                android:layout_width="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:layout_marginTop="@dimen/margin_top_placeholder_text"
+                                android:layout_height="wrap_content"
+                                android:text="@string/placeholder_no_details"
+                                app:custom_font="@string/roboto_regular"
+                                android:textSize="@dimen/text_size_placeholder"
+                                android:textColor="@color/placeholder_text" />
+                    </LinearLayout>
+                </FrameLayout>
 
                 <LinearLayout
                     android:id="@+id/layoutEvents"

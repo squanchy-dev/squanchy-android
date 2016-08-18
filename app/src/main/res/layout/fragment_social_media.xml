@@ -2,6 +2,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
              tools:context="com.ls.ui.fragment.SocialMediaFragment"
         >
 
@@ -11,5 +12,34 @@
             android:layout_height="match_parent"
             android:id="@+id/list_view"
             />
+
+    <LinearLayout
+            android:id="@+id/layout_placeholder"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:orientation="vertical">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_no_social_media"
+                android:layout_height="wrap_content" />
+
+        <com.ls.ui.view.FontTextView
+                android:layout_width="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_top_placeholder_text"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder_social_media"
+                app:custom_font="@string/roboto_regular"
+                android:textSize="@dimen/text_size_placeholder"
+                android:textColor="@color/placeholder_text" />
+    </LinearLayout>
 
 </FrameLayout>

@@ -25,6 +25,7 @@ public class SocialMediaFragment extends Fragment
 
     public static final String TAG = "SocialMediaFragment";
     private View rootView;
+    private View mLayoutPlaceholder;
 
     private UpdatesManager.DataUpdatedListener updateReceiver = new UpdatesManager.DataUpdatedListener() {
         @Override
@@ -43,8 +44,9 @@ public class SocialMediaFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState)
     {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_social_media, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_social_media, container, false);
+        mLayoutPlaceholder = rootView.findViewById(R.id.layout_placeholder);
+        return rootView;
     }
     private void updateData(List<Integer> requestIds) {
         for (int id : requestIds) {
@@ -76,6 +78,8 @@ public class SocialMediaFragment extends Fragment
                 .setTimeline(userTimeline)
                 .build();
         ListView list = (ListView)rootView.findViewById(R.id.list_view);
+
+        list.setEmptyView(mLayoutPlaceholder);
         list.setAdapter(adapter);
     }
 

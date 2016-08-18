@@ -12,8 +12,6 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +31,7 @@ public class FloorPlanFragment  extends Fragment
     public static int REDCOMMENDED_FLOOR_IMAGE_WIDTH = Resources.getSystem().getDisplayMetrics().widthPixels * 2;
 
     public static final String TAG = "FloorPlanFragment";
+    private View mLayoutContent, mLayoutPlaceholder;
     private Spinner floorSelector;
     private List<FloorPlan>plans;
     private ImageView floorImage;
@@ -41,6 +40,8 @@ public class FloorPlanFragment  extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View result = inflater.inflate(R.layout.fr_floor_plan, null);
+        mLayoutContent = result.findViewById(R.id.layout_content);
+        mLayoutPlaceholder = result.findViewById(R.id.layout_placeholder);
         floorSelector = (Spinner)result.findViewById(R.id.spinner);
         floorSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
@@ -99,15 +100,23 @@ public class FloorPlanFragment  extends Fragment
             super.onPostExecute(floorPlans);
             plans = floorPlans;
 
-            List<String>names = new ArrayList<>(floorPlans.size());
-            for(FloorPlan plan:plans){
-              names.add(plan.getName());
+            if (plans == null || plans.isEmpty()) {
+                mLayoutContent.setVisibility(View.GONE);
+                mLayoutPlaceholder.setVisibility(View.VISIBLE);
+            } else {
+                mLayoutContent.setVisibility(View.VISIBLE);
+                mLayoutPlaceholder.setVisibility(View.GONE);
+
+                List<String> names = new ArrayList<>(floorPlans.size());
+                for (FloorPlan plan : plans) {
+                    names.add(plan.getName());
+                }
+
+                FloorSelectorAdapter floorsAdapter = new FloorSelectorAdapter(floorSelector.getContext(), names);
+                floorSelector.setAdapter(floorsAdapter);
+
+                floorSelector.setVisibility(plans.isEmpty() ? View.INVISIBLE : View.VISIBLE);
             }
-
-            FloorSelectorAdapter floorsAdapter = new FloorSelectorAdapter(floorSelector.getContext(),names);
-            floorSelector.setAdapter(floorsAdapter);
-
-            floorSelector.setVisibility(plans.isEmpty() ? View.INVISIBLE : View.VISIBLE);
         }
     }
 

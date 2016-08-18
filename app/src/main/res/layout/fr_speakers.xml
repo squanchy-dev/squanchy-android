@@ -1,33 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/white">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:background="@android:color/white"
+        >
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
+    <RelativeLayout
+            android:id="@+id/layout_content"
+            tools:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <ListView
-        android:id="@+id/listSpeakers"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"
-        android:listSelector="@drawable/selector_light"
-        android:splitMotionEvents="false"/>
+        <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"/>
 
-    <TextView
-        android:id="@+id/txtSearchEmpty"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="@dimen/text_size_medium"
-        android:textColor="@color/grey_100"
-        android:text="@string/no_search_result"
-        android:layout_centerInParent="true"
-        android:visibility="gone"/>
+        <ListView
+                android:id="@+id/listSpeakers"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="0dp"
+                android:listSelector="@drawable/selector_light"
+                android:splitMotionEvents="false"/>
 
-</RelativeLayout>
+        <TextView
+                android:id="@+id/txtSearchEmpty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="@dimen/text_size_placeholder"
+                android:textColor="@color/placeholder_text"
+                android:text="@string/no_search_result"
+                android:layout_centerInParent="true"
+                android:visibility="gone"/>
+    </RelativeLayout>
+
+    <LinearLayout
+            android:id="@+id/layout_placeholder"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:orientation="vertical">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_no_speakers"
+                android:layout_height="wrap_content" />
+
+        <com.ls.ui.view.FontTextView
+                android:layout_width="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_top_placeholder_text"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder_speakers"
+                app:custom_font="@string/roboto_regular"
+                android:textSize="@dimen/text_size_placeholder"
+                android:textColor="@color/placeholder_text" />
+    </LinearLayout>
+
+</FrameLayout>

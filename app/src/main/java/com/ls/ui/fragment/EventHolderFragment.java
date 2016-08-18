@@ -1,6 +1,5 @@
 package com.ls.ui.fragment;
 
-
 import com.astuetz.PagerSlidingTabStrip;
 import com.ls.drupalcon.R;
 import com.ls.drupalcon.model.Model;
@@ -14,7 +13,6 @@ import com.ls.ui.activity.HomeActivity;
 import com.ls.ui.adapter.BaseEventDaysPagerAdapter;
 import com.ls.ui.drawer.DrawerManager;
 import com.ls.ui.receiver.ReceiverManager;
-import com.ls.util.L;
 import com.ls.utils.DateUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -31,9 +29,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class EventHolderFragment extends Fragment {
 
@@ -45,8 +46,10 @@ public class EventHolderFragment extends Fragment {
     private BaseEventDaysPagerAdapter mAdapter;
 
     private DrawerManager.EventMode mEventMode;
-    private View mTxtNoEvents;
-    private View mNoFavorites;
+
+    private View mLayoutPlaceholder;
+    private ImageView mImageViewNoContent;
+    private TextView mTextViewNoContent;
 
     private UpdatesManager.DataUpdatedListener updateReceiver = new UpdatesManager.DataUpdatedListener() {
         @Override
@@ -54,13 +57,14 @@ public class EventHolderFragment extends Fragment {
             updateData(requestIds);
         }
     };
-
     private ReceiverManager favoriteReceiver = new ReceiverManager(new ReceiverManager.FavoriteUpdatedListener() {
         @Override
         public void onFavoriteUpdated(long eventId, boolean isFavorite) {
             updateFavorites();
         }
     });
+
+    private boolean mIsFilterUsed;
 
     public static EventHolderFragment newInstance(int modePos) {
         EventHolderFragment fragment = new EventHolderFragment();
@@ -165,8 +169,9 @@ public class EventHolderFragment extends Fragment {
         mPagerTabs.setTypeface(typeface, 0);
         mPagerTabs.setViewPager(mViewPager);
 
-        mTxtNoEvents = view.findViewById(R.id.txtNoEvents);
-        mNoFavorites = view.findViewById(R.id.emptyIcon);
+        mLayoutPlaceholder = view.findViewById(R.id.layout_placeholder);
+        mTextViewNoContent = (TextView) view.findViewById(R.id.text_view_placeholder);
+        mImageViewNoContent = (ImageView) view.findViewById(R.id.image_view_placeholder);
 
         if (mEventMode == DrawerManager.EventMode.Program ||
                 mEventMode == DrawerManager.EventMode.Bofs ||
@@ -222,15 +227,30 @@ public class EventHolderFragment extends Fragment {
 
         if (dayList.isEmpty()) {
             mPagerTabs.setVisibility(View.GONE);
-            if (mEventMode == DrawerManager.EventMode.Favorites) {
-                mNoFavorites.setVisibility(View.VISIBLE);
-            } else {
-                mTxtNoEvents.setVisibility(View.VISIBLE);
-            }
+            mLayoutPlaceholder.setVisibility(View.VISIBLE);
 
+            if (mIsFilterUsed) {
+                mImageViewNoContent.setVisibility(View.GONE);
+                mTextViewNoContent.setText(getString(R.string.placeholder_no_matching_events));
+            } else {
+                mImageViewNoContent.setVisibility(View.VISIBLE);
+
+                if (mEventMode == DrawerManager.EventMode.Program) {
+                    mImageViewNoContent.setImageResource(R.drawable.ic_no_session);
+                    mTextViewNoContent.setText(getString(R.string.placeholder_sessions));
+                } else if (mEventMode == DrawerManager.EventMode.Bofs) {
+                    mImageViewNoContent.setImageResource(R.drawable.ic_no_bofs);
+                    mTextViewNoContent.setText(getString(R.string.placeholder_bofs));
+                } else if (mEventMode == DrawerManager.EventMode.Social) {
+                    mImageViewNoContent.setImageResource(R.drawable.ic_no_social_events);
+                    mTextViewNoContent.setText(getString(R.string.placeholder_social_events));
+                } else if (mEventMode == DrawerManager.EventMode.Favorites) {
+                    mImageViewNoContent.setImageResource(R.drawable.ic_no_my_schedule);
+                    mTextViewNoContent.setText(getString(R.string.placeholder_schedule));
+                }
+            }
         } else {
-            mNoFavorites.setVisibility(View.GONE);
-            mTxtNoEvents.setVisibility(View.GONE);
+            mLayoutPlaceholder.setVisibility(View.GONE);
             mPagerTabs.setVisibility(View.VISIBLE);
         }
 
@@ -260,15 +280,15 @@ public class EventHolderFragment extends Fragment {
     }
 
     private void updateFilterState(@NotNull MenuItem filter) {
-        boolean isFilterUsed = false;
+        mIsFilterUsed = false;
         List<Long> levelIds = PreferencesManager.getInstance().loadExpLevel();
         List<Long> trackIds = PreferencesManager.getInstance().loadTracks();
 
         if (!levelIds.isEmpty() || !trackIds.isEmpty()) {
-            isFilterUsed = true;
+            mIsFilterUsed = true;
         }
 
-        if (isFilterUsed) {
+        if (mIsFilterUsed) {
             filter.setIcon(getResources().getDrawable(R.drawable.ic_filter));
         } else {
             filter.setIcon(getResources().getDrawable(R.drawable.ic_filter_empty));

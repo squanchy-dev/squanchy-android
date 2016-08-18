@@ -7,7 +7,6 @@ import com.ls.drupalcon.app.App;
 import com.ls.drupalcon.model.Model;
 import com.ls.drupalcon.model.UpdatesManager;
 import com.ls.drupalcon.model.dao.EventDao;
-import com.ls.drupalcon.model.data.EventDetailsEvent;
 import com.ls.drupalcon.model.data.Level;
 import com.ls.drupalcon.model.data.Speaker;
 import com.ls.drupalcon.model.data.SpeakerDetailsEvent;
@@ -36,6 +35,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SpeakerDetailsActivity extends StackKeeperActivity implements View.OnClickListener {
@@ -54,6 +54,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
     private View mViewToolbar;
     private TextView mTitle;
     private NotifyingScrollView mScrollView;
+    private View mLayoutPlaceholder;
 
     private boolean mIsDataLoaded;
     private boolean mIsWebLoaded;
@@ -139,6 +140,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
     private void initView() {
         mScrollView = (NotifyingScrollView) findViewById(R.id.scrollView);
         mScrollView.setOnScrollChangedListener(onScrollChangedListener);
+        mLayoutPlaceholder = findViewById(R.id.layout_placeholder);
     }
 
     private void loadSpeakerFromDb() {
@@ -197,12 +199,10 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
 
     private void fillSpeakerDescription() {
         WebView webView = (WebView) findViewById(R.id.webView);
-        View emptyView = findViewById(R.id.imgEmptyView);
         if (!TextUtils.isEmpty(mSpeaker.getCharact())) {
 
             String html = WebviewUtils.getHtml(this, mSpeaker.getCharact());
             webView.setVisibility(View.VISIBLE);
-            emptyView.setVisibility(View.GONE);
 
             webView.setHorizontalScrollBarEnabled(false);
             webView.loadDataWithBaseURL("file:///android_asset/", html, "text/html", "UTF-8", null);
@@ -221,7 +221,6 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
             });
 
         } else {
-            emptyView.setVisibility(View.VISIBLE);
             webView.setVisibility(View.GONE);
             mIsWebLoaded = true;
             completeLoading();
@@ -377,9 +376,9 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
                 TextUtils.isEmpty(mSpeaker.getWebSite()) &&
                 TextUtils.isEmpty(mSpeaker.getCharact()) &&
                 events.isEmpty()){
-            findViewById(R.id.imgEmptyView).setVisibility(View.VISIBLE);
+            mLayoutPlaceholder.setVisibility(View.VISIBLE);
         } else {
-            findViewById(R.id.imgEmptyView).setVisibility(View.GONE);
+            mLayoutPlaceholder.setVisibility(View.GONE);
         }
     }
 }

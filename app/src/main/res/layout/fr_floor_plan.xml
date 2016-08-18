@@ -1,34 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
+
+<FrameLayout android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
         >
 
-    <FrameLayout android:layout_height="wrap_content"
-                 android:layout_width="match_parent"
-                 android:background="@color/primary"
-                 android:paddingBottom="24dp"
-                 android:paddingLeft="72dp"
-                 android:paddingRight="24dp"
-                >
-        <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/spinner"
-                android:visibility="invisible"
-                android:layout_gravity="left|center_vertical"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    <LinearLayout
+            android:id="@+id/layout_content"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            tools:visibility="gone"
+            android:layout_height="match_parent">
+
+        <FrameLayout android:layout_height="wrap_content"
+                     android:layout_width="match_parent"
+                     android:background="@color/primary"
+                     android:paddingBottom="24dp"
+                     android:paddingLeft="72dp"
+                     android:paddingRight="24dp"
+                    >
+            <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinner"
+                    android:visibility="invisible"
+                    android:layout_gravity="left|center_vertical"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    />
+
+        </FrameLayout>
+
+        <com.ls.ui.view.TouchImageView
+                android:id="@+id/floor_plan_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/empty_image"
+                tools:src="@drawable/bg_nav_drawer_header"
                 />
 
-    </FrameLayout>
+    </LinearLayout>
 
-    <com.ls.ui.view.TouchImageView
-            android:id="@+id/floor_plan_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitCenter"
-            android:src="@drawable/bg_nav_drawer_header"
-            />
-</LinearLayout>
+    <LinearLayout
+            android:id="@+id/layout_placeholder"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:orientation="vertical">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_no_floor_plan"
+                android:layout_height="wrap_content" />
+
+        <com.ls.ui.view.FontTextView
+                android:layout_width="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_top_placeholder_text"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder_floor_plan"
+                app:custom_font="@string/roboto_regular"
+                android:textSize="@dimen/text_size_placeholder"
+                android:textColor="@color/placeholder_text" />
+    </LinearLayout>
+
+
+</FrameLayout>

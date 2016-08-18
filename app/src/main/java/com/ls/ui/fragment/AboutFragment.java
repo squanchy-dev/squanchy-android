@@ -32,6 +32,9 @@ public class AboutFragment  extends Fragment
 {
     public static final String TAG = "AboutFragment";
 
+    private ListView mListMenu;
+    private View mLayoutPlaceholder;
+
     private AboutListAdapter adapter;
     private List<InfoItem> infoItems;
 
@@ -68,8 +71,9 @@ public class AboutFragment  extends Fragment
 
     private void initViews(View root) {
 
-        ListView listMenu = (ListView) root.findViewById(R.id.listView);
-        listMenu.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        mLayoutPlaceholder = root.findViewById(R.id.layout_placeholder);
+        mListMenu = (ListView) root.findViewById(R.id.listView);
+        mListMenu.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
@@ -79,8 +83,8 @@ public class AboutFragment  extends Fragment
         });
 
         if (adapter == null) {
-            adapter = new AboutListAdapter(infoItems,root.getContext());
-            listMenu.setAdapter(adapter);
+            adapter = new AboutListAdapter(null, root.getContext());
+            mListMenu.setAdapter(adapter);
         }
 
         reloadData();
@@ -90,7 +94,13 @@ public class AboutFragment  extends Fragment
     {
         InfoManager infoManager = Model.instance().getInfoManager();
         infoItems = infoManager.getInfo();
-        if(adapter != null){
+
+        if (infoItems == null || infoItems.isEmpty()) {
+            mListMenu.setVisibility(View.GONE);
+            mLayoutPlaceholder.setVisibility(View.VISIBLE);
+        } else {
+            mListMenu.setVisibility(View.VISIBLE);
+            mLayoutPlaceholder.setVisibility(View.GONE);
             adapter.setData(infoItems);
             adapter.notifyDataSetChanged();
         }
@@ -122,7 +132,7 @@ public class AboutFragment  extends Fragment
         }
 
         public void setData(List<InfoItem> items) {
-            if(items != null) {
+            if(items != null && !items.isEmpty()) {
                 mItems = new ArrayList<>(items);
             }else{
                 mItems = new ArrayList<>();

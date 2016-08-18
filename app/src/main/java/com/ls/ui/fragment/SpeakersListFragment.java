@@ -31,6 +31,7 @@ public class SpeakersListFragment extends Fragment
         implements AdapterView.OnItemClickListener, SpeakersAdapter.OnFilterChangeListener {
 
     public static final String TAG = "SpeakersFragment";
+    private View mLayoutContent, mLayoutPlaceholder;
     private SpeakersAdapter mSpeakersAdapter;
     private ListView mListView;
     private TextView mTxtNoSearchResult;
@@ -107,6 +108,8 @@ public class SpeakersListFragment extends Fragment
             return;
         }
 
+        mLayoutContent = getView().findViewById(R.id.layout_content);
+        mLayoutPlaceholder = getView().findViewById(R.id.layout_placeholder);
         mProgressBar = (ProgressBar) getView().findViewById(R.id.progressBar);
         mTxtNoSearchResult = (TextView) getView().findViewById(R.id.txtSearchEmpty);
         mListView = (ListView) getView().findViewById(R.id.listSpeakers);
@@ -130,15 +133,23 @@ public class SpeakersListFragment extends Fragment
             return;
         }
 
-        SparseBooleanArray letterPositions = generateFirstLetterPositions(speakers);
-        if (mSpeakersAdapter == null) {
-            mSpeakersAdapter = new SpeakersAdapter(getActivity(), speakers, letterPositions);
-            mSpeakersAdapter.setOnFilterChangeListener(SpeakersListFragment.this);
-            mListView.setOnItemClickListener(SpeakersListFragment.this);
-            mListView.setAdapter(mSpeakersAdapter);
+        if (speakers == null || speakers.isEmpty()) {
+            mLayoutContent.setVisibility(View.GONE);
+            mLayoutPlaceholder.setVisibility(View.VISIBLE);
         } else {
-            mSpeakersAdapter.setData(speakers, letterPositions);
-            mSpeakersAdapter.notifyDataSetChanged();
+            mLayoutContent.setVisibility(View.VISIBLE);
+            mLayoutPlaceholder.setVisibility(View.GONE);
+
+            SparseBooleanArray letterPositions = generateFirstLetterPositions(speakers);
+            if (mSpeakersAdapter == null) {
+                mSpeakersAdapter = new SpeakersAdapter(getActivity(), speakers, letterPositions);
+                mSpeakersAdapter.setOnFilterChangeListener(SpeakersListFragment.this);
+                mListView.setOnItemClickListener(SpeakersListFragment.this);
+                mListView.setAdapter(mSpeakersAdapter);
+            } else {
+                mSpeakersAdapter.setData(speakers, letterPositions);
+                mSpeakersAdapter.notifyDataSetChanged();
+            }
         }
         mProgressBar.setVisibility(View.GONE);
     }
