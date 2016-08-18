@@ -51,6 +51,8 @@ public class EventHolderFragment extends Fragment {
     private ImageView mImageViewNoContent;
     private TextView mTextViewNoContent;
 
+    private boolean mIsFilterUsed;
+
     private UpdatesManager.DataUpdatedListener updateReceiver = new UpdatesManager.DataUpdatedListener() {
         @Override
         public void onDataUpdated(List<Integer> requestIds) {
@@ -63,8 +65,6 @@ public class EventHolderFragment extends Fragment {
             updateFavorites();
         }
     });
-
-    private boolean mIsFilterUsed;
 
     public static EventHolderFragment newInstance(int modePos) {
         EventHolderFragment fragment = new EventHolderFragment();
@@ -235,19 +235,29 @@ public class EventHolderFragment extends Fragment {
             } else {
                 mImageViewNoContent.setVisibility(View.VISIBLE);
 
-                if (mEventMode == DrawerManager.EventMode.Program) {
-                    mImageViewNoContent.setImageResource(R.drawable.ic_no_session);
-                    mTextViewNoContent.setText(getString(R.string.placeholder_sessions));
-                } else if (mEventMode == DrawerManager.EventMode.Bofs) {
-                    mImageViewNoContent.setImageResource(R.drawable.ic_no_bofs);
-                    mTextViewNoContent.setText(getString(R.string.placeholder_bofs));
-                } else if (mEventMode == DrawerManager.EventMode.Social) {
-                    mImageViewNoContent.setImageResource(R.drawable.ic_no_social_events);
-                    mTextViewNoContent.setText(getString(R.string.placeholder_social_events));
-                } else if (mEventMode == DrawerManager.EventMode.Favorites) {
-                    mImageViewNoContent.setImageResource(R.drawable.ic_no_my_schedule);
-                    mTextViewNoContent.setText(getString(R.string.placeholder_schedule));
+                int imageResId = 0, textResId = 0;
+
+                switch (mEventMode) {
+                    case Program:
+                        imageResId = R.drawable.ic_no_session;
+                        textResId = R.string.placeholder_sessions;
+                        break;
+                    case Bofs:
+                        imageResId = R.drawable.ic_no_bofs;
+                        textResId = R.string.placeholder_bofs;
+                        break;
+                    case Social:
+                        imageResId = R.drawable.ic_no_social_events;
+                        textResId = R.string.placeholder_social_events;
+                        break;
+                    case Favorites:
+                        imageResId = R.drawable.ic_no_my_schedule;
+                        textResId = R.string.placeholder_schedule;
+                        break;
                 }
+
+                mImageViewNoContent.setImageResource(imageResId);
+                mTextViewNoContent.setText(getString(textResId));
             }
         } else {
             mLayoutPlaceholder.setVisibility(View.GONE);

@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LocationFragment extends Fragment implements CustomMapFragment.OnActivityCreatedListener {
@@ -86,7 +87,8 @@ public class LocationFragment extends Fragment implements CustomMapFragment.OnAc
         if (mGoogleMap == null) return;
 
         if (locations == null || locations.isEmpty()) {
-            ((TextView) getView().findViewById(R.id.txtAddress)).setText(getString(R.string.placeholder_location));
+            TextView textViewAddress = (TextView) getView().findViewById(R.id.txtAddress);
+            textViewAddress.setText(getString(R.string.placeholder_location));
         }
 
         for (int i = 0; i < locations.size(); i++) {
