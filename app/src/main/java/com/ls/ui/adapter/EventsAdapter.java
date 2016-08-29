@@ -156,6 +156,7 @@ public class EventsAdapter extends BaseAdapter {
         fillIcon(holder, event.getType());
         fillEventInfo(holder, event, null, bofsItem.getSpeakers());
         fillEventClickAbility(holder.layoutRoot, holder.txtPlace, event, position);
+        fillFavorite(holder);
         fillDivider(holder, !bofsItem.isLast());
 
         return resultView;
@@ -181,6 +182,7 @@ public class EventsAdapter extends BaseAdapter {
         fillEventInfo(holder, event, programItem.getTrack(), programItem.getSpeakers());
         fillIcon(holder, event.getType());
         fillDivider(holder, !programItem.isLast());
+        fillFavorite(holder);
         fillEventClickAbility(holder.layoutRoot, holder.txtPlace, event, position);
 
         return resultView;
@@ -204,6 +206,7 @@ public class EventsAdapter extends BaseAdapter {
         Event event = socialItem.getEvent();
         fillIcon(holder, event.getType());
         fillEventInfo(holder, event, null, socialItem.getSpeakers());
+        fillFavorite(holder);
         fillEventClickAbility(holder.layoutRoot, holder.txtPlace, event, position);
 
         return resultView;
@@ -322,12 +325,12 @@ public class EventsAdapter extends BaseAdapter {
     private void fillEventClickAbility(View layoutRoot, TextView txtPlace, Event event, final int position) {
         Context context = layoutRoot.getContext();
         layoutRoot.setBackgroundResource(R.drawable.selector_light);
-        txtPlace.setMaxLines(SINGLE_LINE_COUNT);
+//        txtPlace.setMaxLines(SINGLE_LINE_COUNT);
 
         long eventType = event.getType();
         if (eventType == Type.FREE_SLOT || eventType == Type.COFFEBREAK || eventType == Type.LUNCH || eventType == Type.REGISTRATION) {
             layoutRoot.setBackgroundColor(context.getResources().getColor(R.color.black_20_trans));
-            txtPlace.setMaxLines(MULTI_LINE_COUNT);
+//            txtPlace.setMaxLines(MULTI_LINE_COUNT);
             layoutRoot.setClickable(false);
         } else {
             layoutRoot.setOnClickListener(new View.OnClickListener() {

@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             tools:text="date"
             app:custom_font="@string/roboto_bold"
-            android:textColor="@color/link"
+            android:textColor="@color/event_date"
             android:textSize="@dimen/text_size_small"
             android:layout_marginBottom="3dp"/>
 

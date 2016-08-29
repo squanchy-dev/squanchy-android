@@ -271,7 +271,8 @@ public class EventHolderFragment extends Fragment {
     private void switchToCurrentDay(List<Long> days) {
         int item = 0;
         for (Long millis : days) {
-            if (DateUtils.getInstance().isToday(millis)) {
+            if (DateUtils.getInstance().isToday(millis) ||
+                    DateUtils.getInstance().isAfterCurrentFate(millis)) {
                 mViewPager.setCurrentItem(item);
                 break;
             }
@@ -308,11 +309,18 @@ public class EventHolderFragment extends Fragment {
     private void updateData(List<Integer> requestIds) {
         for (int id : requestIds) {
             int eventModePos = UpdatesManager.convertEventIdToEventModePos(id);
-            if (eventModePos == mEventMode.ordinal()) {
+            if (eventModePos == mEventMode.ordinal() ||
+                    (mEventMode == DrawerManager.EventMode.Favorites && isEventItem(id)) ) {
                 new LoadData().execute();
                 break;
             }
         }
+    }
+
+    private boolean isEventItem(int id) {
+        return id == UpdatesManager.PROGRAMS_REQUEST_ID ||
+                id == UpdatesManager.BOFS_REQUEST_ID ||
+                id == UpdatesManager.SOCIALS_REQUEST_ID;
     }
 
     private void updateFavorites() {

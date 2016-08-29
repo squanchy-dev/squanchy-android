@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="api_value_base_url">http://connfa-integration.uat.link/api/v2/</string>
-    <string name="api_value_google_analytics_app_Id">Goodle Analytisc App ID stub</string>
+    <string name="api_value_base_url">http://dublin2016.drupalcon.uat.link/api/v2/</string>
+    <!--Google config is provided by app/google-services.json file for now-->
+    <string name="api_value_google_analytics_app_Id">"UA-267362-65"</string>
     <string name="api_value_google_maps_api_key">AIzaSyBssk81wlfgQCQ-QE12wKtDQtiPlV-nwZI</string>
     <!--<string name="api_value_fabric_api_key">value is situated in manifest</string>-->//Key can't be placed in resources due to fabric plugin restrictions
 

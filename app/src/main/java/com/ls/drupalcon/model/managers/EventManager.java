@@ -55,6 +55,7 @@ public class EventManager extends SynchronousItemManager<Event.Holder, Object, S
     public void deleteEvent(Event data) {
         mEventDao.deleteDataSafe(data.getId());
         mEventDao.deleteEventAndSpeakerByEvent(data.getId());
+        mEventDao.setFavoriteSafe(data.getId(), false);
     }
 
     public EventDetailsEvent getEventById(long id) {
@@ -67,6 +68,10 @@ public class EventManager extends SynchronousItemManager<Event.Holder, Object, S
 
     public List<TimeRange> getDistrictTimeRangeSafe(int eventClass, long day, List<Long> levelIds, List<Long> trackIds) {
         return mEventDao.selectDistrictTimeRangeByLevelTrackIdsSafe(eventClass, day, levelIds, trackIds);
+    }
+
+    public List<TimeRange> getDistrictFavoriteTimeRangeSafe(int eventClass, List<Long> favoriteEventIds, long day) {
+        return mEventDao.selectDistrictFavTimeRangeSafe(eventClass, favoriteEventIds, day);
     }
 
     public List<Long> getEventSpeakerSafe(long id) {

@@ -9,6 +9,7 @@ import com.ls.drupalcon.model.data.Track;
 import com.ls.drupalcon.model.data.Type;
 import com.ls.drupalcon.model.managers.BofsManager;
 import com.ls.drupalcon.model.managers.EventManager;
+import com.ls.drupalcon.model.managers.FavoriteManager;
 import com.ls.drupalcon.model.managers.ProgramManager;
 import com.ls.drupalcon.model.managers.SocialManager;
 import com.ls.drupalcon.model.managers.SpeakerManager;
@@ -94,12 +95,26 @@ public class EventGenerator {
         return getEventItems(eventItemCreator, eventListItems, ranges);
     }
 
-    public List<EventListItem> generateForFavorites(long day) {
-        List<Event> events = mEventManager.getEventsByIdsAndDaySafe(day);
-        return sortFavorites(fetchEventItems(events));
+//    public List<EventListItem> generateForFavorites(long day) {
+//        List<Event> events = mEventManager.getEventsByIdsAndDaySafe(day);
+//        return sortFavorites(fetchEventItems(events));
+//    }
+
+    public List<EventListItem> generateForFavorites(long day, @NotNull EventItemCreator eventItemCreator) {
+
+        FavoriteManager favoriteManager = new FavoriteManager();
+        List<Long> favoriteEventIds = favoriteManager.getFavoriteEventsSafe();
+
+        List<EventListItem> eventListItems = mProgramManager.getFavoriteProgramItemsSafe(favoriteEventIds, day);
+        if (mShouldBreak) {
+            return new ArrayList<>();
+        }
+
+        return sortFavorites(favoriteEventIds, eventListItems, day, eventItemCreator);
     }
 
-    private List<EventListItem> sortFavorites(List<EventListItem> eventListItems) {
+    private List<EventListItem> sortFavorites(List<Long> favoriteEventIds, List<EventListItem> eventListItems, long day,
+                                              @NotNull EventItemCreator eventItemCreator) {
         List<EventListItem> result = new ArrayList<EventListItem>();
 
         if (eventListItems.isEmpty()) {
@@ -122,36 +137,27 @@ public class EventGenerator {
         }
 
         if (!schedules.isEmpty()) {
-            Collections.sort(schedules, new Comparator<EventListItem>() {
-                @Override
-                public int compare(EventListItem eventListItem, EventListItem eventListItem2) {
-                    return Double.compare(eventListItem.getEvent().getFromMillis(), eventListItem2.getEvent().getFromMillis());
-                }
-            });
+
+            List<TimeRange> ranges = mEventManager.getDistrictFavoriteTimeRangeSafe(Event.PROGRAM_CLASS, favoriteEventIds, day);
+            schedules = getEventItems(eventItemCreator, schedules, ranges);
             schedules.add(0, new HeaderItem(App.getContext().getString(R.string.Sessions)));
-            schedules.get(schedules.size() - 1).setLast(true);
+
         }
 
         if (!bofs.isEmpty()) {
-            Collections.sort(bofs, new Comparator<EventListItem>() {
-                @Override
-                public int compare(EventListItem eventListItem, EventListItem eventListItem2) {
-                    return Double.compare(eventListItem.getEvent().getFromMillis(), eventListItem2.getEvent().getFromMillis());
-                }
-            });
+
+            List<TimeRange> ranges = mEventManager.getDistrictFavoriteTimeRangeSafe(Event.BOFS_CLASS, favoriteEventIds, day);
+            bofs = getEventItems(eventItemCreator, bofs, ranges);
             bofs.add(0, new HeaderItem(App.getContext().getString(R.string.bofs)));
-            bofs.get(bofs.size() - 1).setLast(true);
+
         }
 
         if (!socials.isEmpty()) {
-            Collections.sort(socials, new Comparator<EventListItem>() {
-                @Override
-                public int compare(EventListItem eventListItem, EventListItem eventListItem2) {
-                    return Double.compare(eventListItem.getEvent().getFromMillis(), eventListItem2.getEvent().getFromMillis());
-                }
-            });
+
+            List<TimeRange> ranges = mEventManager.getDistrictFavoriteTimeRangeSafe(Event.SOCIALS_CLASS, favoriteEventIds, day);
+            socials = getEventItems(eventItemCreator, socials, ranges);
             socials.add(0, new HeaderItem(App.getContext().getString(R.string.social_events)));
-            socials.get(socials.size() - 1).setLast(true);
+
         }
 
         result.addAll(schedules);

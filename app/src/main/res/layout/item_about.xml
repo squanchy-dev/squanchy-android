@@ -12,6 +12,8 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_medium"
         android:textColor="@color/black_100"
+        android:maxLines="1"
+        android:ellipsize="end"
         tools:text="ALALAL"
         app:custom_font="@string/roboto_medium"
         android:gravity="center_vertical"

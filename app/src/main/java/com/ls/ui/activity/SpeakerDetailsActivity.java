@@ -114,7 +114,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
         if (mSpeaker != null) {
             mSpeakerName = String.format("%s %s", mSpeaker.getFirstName(), mSpeaker.getLastName());
         }
-        AnalyticsManager.sendEvent(this, R.string.speaker_category, R.string.action_open, mSpeakerId);
+        AnalyticsManager.sendEvent(this, R.string.speaker_category, R.string.action_open, mSpeakerId + " " + mSpeakerName);
     }
 
     private void initToolbar() {
@@ -186,15 +186,14 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
             findViewById(R.id.txtSpeakerPosition).setVisibility(View.VISIBLE);
         }
 
-        if (!TextUtils.isEmpty(mSpeaker.getJobTitle())) {
-            ((TextView) findViewById(R.id.txtSpeakerPosition)).setText(mSpeaker.getJobTitle());
+        TextView jobTxt = (TextView) findViewById(R.id.txtSpeakerPosition);
+        String jobValue = mSpeaker.getJobTitle() + " at " + mSpeaker.getOrganization();
+
+        if ( TextUtils.isEmpty(mSpeaker.getJobTitle()) || TextUtils.isEmpty(mSpeaker.getOrganization()) ){
+            jobValue = jobValue.replace(" at ", "");
         }
 
-        if (!TextUtils.isEmpty(mSpeaker.getOrganization())) {
-            TextView jobTxt = (TextView) findViewById(R.id.txtSpeakerPosition);
-            String text = jobTxt.getText().toString() + " at " + mSpeaker.getOrganization();
-            jobTxt.setText(text);
-        }
+        jobTxt.setText(jobValue);
     }
 
     private void fillSpeakerDescription() {

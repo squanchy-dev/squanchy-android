@@ -4,7 +4,6 @@ import com.ls.drupalcon.R;
 import com.ls.drupalcon.model.EventGenerator;
 import com.ls.drupalcon.model.PreferencesManager;
 import com.ls.drupalcon.model.data.Event;
-import com.ls.drupalcon.model.data.Type;
 import com.ls.ui.activity.EventDetailsActivity;
 import com.ls.ui.adapter.EventsAdapter;
 import com.ls.ui.adapter.item.EventListItem;
@@ -12,7 +11,7 @@ import com.ls.ui.adapter.item.SimpleTimeRangeCreator;
 import com.ls.ui.adapter.item.TimeRangeItem;
 import com.ls.ui.drawer.DrawerManager;
 import com.ls.ui.receiver.ReceiverManager;
-import com.ls.util.L;
+import com.ls.utils.AnalyticsManager;
 import com.ls.utils.DateUtils;
 
 import android.app.Activity;
@@ -27,7 +26,6 @@ import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class EventFragment extends Fragment implements EventsAdapter.Listener {
@@ -157,7 +155,7 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
                 eventList.addAll(mGenerator.generate(mDay, Event.SOCIALS_CLASS, levelIds, trackIds, new SimpleTimeRangeCreator()));
                 break;
             case Favorites:
-                eventList.addAll(mGenerator.generateForFavorites(mDay));
+                eventList.addAll(mGenerator.generateForFavorites(mDay, new SimpleTimeRangeCreator()));
                 break;
         }
         return eventList;
@@ -181,31 +179,90 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 
         if (item.getEvent() != null && item.getEvent().getId() != 0) {
 //            long type = item.getEvent().getType();
-//            if (type == Type.SPEACH || type == Type.SPEACH_OF_DAY || type == Type.UNKNOWN_TYPE) {
+//            if (type == Type.SPEACH || type == Type.SPEACH_OF_DAY || type == Type.UNKNOWN_TYPE)
+            Long eventId = item.getEvent().getId();
+            String eventName = item.getEvent().getName();
+            AnalyticsManager.sendEvent(getActivity(), R.string.event_category, R.string.action_open, eventId + " " + eventName);
                 EventDetailsActivity.startThisActivity(getActivity(), item.getEvent().getId(), mDay);
 //            }
         }
     }
 
+//    private int getCurrentTimePosition(List<EventListItem> eventListItems) {
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTimeZone(DateUtils.getInstance().getTimeZone());
+//        int deviceHours =  calendar.get(Calendar.HOUR_OF_DAY);
+//        int deviceMinutes =  calendar.get(Calendar.MINUTE);
+//        int nearestHour = 0;
+//        int nearestMinute = 0;
+//        int pos = 0;
+//
+//        for (EventListItem item : eventListItems){
+//
+//            if (item instanceof TimeRangeItem) {
+//
+//                Event event = item.getEvent();
+//                calendar.setTimeInMillis(event.getFromMillis());
+//                int eventHours = calendar.get(Calendar.HOUR_OF_DAY);
+//                int eventMinutes = calendar.get(Calendar.MINUTE);
+//
+//                if (deviceHours >= eventHours && deviceMinutes >= eventMinutes) {
+//                    nearestHour = eventHours;
+//                    nearestMinute = eventMinutes;
+//                }
+//            }
+//        }
+//
+//        for (EventListItem item : eventListItems){
+//
+//            if (item instanceof TimeRangeItem) {
+//
+//                Event event = item.getEvent();
+//                calendar.setTimeInMillis(event.getFromMillis());
+//                int eventHours = calendar.get(Calendar.HOUR_OF_DAY);
+//                int eventMinutes = calendar.get(Calendar.MINUTE);
+//
+//                if (nearestHour == eventHours && nearestMinute == eventMinutes) {
+//                    pos = eventListItems.indexOf(item);
+//                    break;
+//                }
+//            }
+//        }
+//
+//
+//        return pos;
+//    }
+
     private int getCurrentTimePosition(List<EventListItem> eventListItems) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeZone(DateUtils.getInstance().getTimeZone());
-        int deviceHours =  calendar.get(Calendar.HOUR_OF_DAY);
+        int deviceTimeMinutes = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+
+        int minDifference = Integer.MAX_VALUE;
         int pos = 0;
 
-        for (int i = 0; i < eventListItems.size(); i++) {
-            EventListItem item = eventListItems.get(i);
+        EventListItem eventToSelect = null;
+
+        for (EventListItem item : eventListItems){
 
             if (item instanceof TimeRangeItem) {
 
                 Event event = item.getEvent();
                 calendar.setTimeInMillis(event.getFromMillis());
-                int eventHours = calendar.get(Calendar.HOUR_OF_DAY);
+                int eventTimeMinutes =  calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 
-                if (deviceHours >= eventHours) {
-                    pos = i;
+                int difference = Math.abs(eventTimeMinutes - deviceTimeMinutes);
+
+                if (eventTimeMinutes <= deviceTimeMinutes && minDifference > difference ) {
+                    minDifference = difference;
+                    eventToSelect = item;
                 }
+
             }
+        }
+
+        if(eventToSelect != null){
+            pos = eventListItems.indexOf(eventToSelect);
         }
         return pos;
     }
