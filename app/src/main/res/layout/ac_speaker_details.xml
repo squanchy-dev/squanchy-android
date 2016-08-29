@@ -42,9 +42,9 @@
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="56dp"
                     android:gravity="center_vertical"
-                    app:custom_font="@string/smythe_regular"
+                    app:custom_font="@string/montserrat_regular"
                     android:textColor="@color/black_100"
-                    android:textSize="@dimen/text_size_24"
+                    android:textSize="@dimen/text_size_20"
                     tools:text="Lorem Ipsum" />
 
                 <com.ls.ui.view.FontTextView
@@ -112,6 +112,34 @@
                     </FrameLayout>
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/imgEmptyView"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="60dp"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_no_details" />
+
+                    <com.ls.ui.view.FontTextView
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        app:custom_font="@string/roboto_regular"
+                        android:clickable="false"
+                        android:textColor="#bbbbbb"
+                        android:textSize="@dimen/text_size_medium"
+                        android:text="No Details" />
+
+                </LinearLayout>
+
                 <WebView
                     android:id="@+id/webView"
                     android:layout_width="match_parent"
@@ -120,9 +148,42 @@
                     android:visibility="gone"
                     tools:visibility="visible"
                     android:layout_marginRight="16dp"/>
+                <FrameLayout
+                        android:id="@+id/layout_placeholder"
+                        android:layout_width="match_parent"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_height="match_parent">
 
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
+                        <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_no_details"
+                                android:layout_height="wrap_content" />
+
+                        <com.ls.ui.view.FontTextView
+                                android:layout_width="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:layout_marginTop="@dimen/margin_top_placeholder_text"
+                                android:layout_height="wrap_content"
+                                android:text="@string/placeholder_no_details"
+                                app:custom_font="@string/roboto_regular"
+                                android:textSize="@dimen/text_size_placeholder"
+                                android:textColor="@color/placeholder_text" />
+                    </LinearLayout>
+                </FrameLayout>
                 <LinearLayout
                     android:id="@+id/layoutEvents"
+                    android:layout_marginTop = "16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/white"

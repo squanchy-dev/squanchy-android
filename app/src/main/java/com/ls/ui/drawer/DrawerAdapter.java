@@ -68,7 +68,7 @@ public class DrawerAdapter extends BaseAdapter {
             image.setImageResource(item.getIconRes());
         }
 
-        if (position == 2 | position == 5) {
+        if (position == 3 | position == 7) {
             result.findViewById(R.id.divider).setVisibility(View.VISIBLE);
         }
 

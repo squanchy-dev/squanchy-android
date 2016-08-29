@@ -36,18 +36,26 @@ public class EventManager extends SynchronousItemManager<Event.Holder, Object, S
 
     public void saveEventSpeakers(Event data) {
         Long eventId = data.getId();
-        List<Long> speakerEventIds = mEventDao.selectSpeakerEventIds();
+        List<Long> speakerEventIds = mEventDao.selectEventSpeakersSafe(eventId);
 
         for (Long speakerId : data.getSpeakers()) {
-            if (!speakerEventIds.contains(eventId)) {
+            if (!speakerEventIds.contains(speakerId)) {
                 mEventDao.insertEventSpeaker(eventId, speakerId);
             }
+
+            speakerEventIds.remove(speakerId);
+        }
+
+        //Delete removed speakers
+        for(Long speakerId:speakerEventIds){
+            mEventDao.deleteByEventAndSpeaker(eventId,speakerId);
         }
     }
 
     public void deleteEvent(Event data) {
         mEventDao.deleteDataSafe(data.getId());
         mEventDao.deleteEventAndSpeakerByEvent(data.getId());
+        mEventDao.setFavoriteSafe(data.getId(), false);
     }
 
     public EventDetailsEvent getEventById(long id) {
@@ -60,6 +68,10 @@ public class EventManager extends SynchronousItemManager<Event.Holder, Object, S
 
     public List<TimeRange> getDistrictTimeRangeSafe(int eventClass, long day, List<Long> levelIds, List<Long> trackIds) {
         return mEventDao.selectDistrictTimeRangeByLevelTrackIdsSafe(eventClass, day, levelIds, trackIds);
+    }
+
+    public List<TimeRange> getDistrictFavoriteTimeRangeSafe(int eventClass, List<Long> favoriteEventIds, long day) {
+        return mEventDao.selectDistrictFavTimeRangeSafe(eventClass, favoriteEventIds, day);
     }
 
     public List<Long> getEventSpeakerSafe(long id) {

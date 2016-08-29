@@ -36,4 +36,7 @@
     <dimen name="drawer_list_weight">260dp</dimen>
     <dimen name="filter_item_padding">13dp</dimen>
 
+    <dimen name="text_size_placeholder">14sp</dimen>
+    <dimen name="margin_top_placeholder_text">20dp</dimen>
+
 </resources>

@@ -3,7 +3,10 @@ package com.ls.ui.drawer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+
+import com.ls.ui.fragment.AboutFragment;
 import com.ls.ui.fragment.EventHolderFragment;
+import com.ls.ui.fragment.FloorPlanFragment;
 import com.ls.ui.fragment.LocationFragment;
 import com.ls.ui.fragment.SocialMediaFragment;
 import com.ls.ui.fragment.SpeakersListFragment;
@@ -15,6 +18,7 @@ public class DrawerManager {
 
 	private FragmentManager fragmentManager;
 	private int fragmentHolderId;
+	private EventMode currentEventMode;
 
 	public static DrawerManager getInstance(FragmentManager theFragmentManager, int theMainFragmentId) {
 		return new DrawerManager(theFragmentManager, theMainFragmentId);
@@ -55,6 +59,11 @@ public class DrawerManager {
 				fragmentTag = SpeakersListFragment.TAG;
 				break;
 
+			case FloorPlan:
+				fragment = new FloorPlanFragment();
+				fragmentTag = FloorPlanFragment.TAG;
+				break;
+
 			case Location:
 				fragment = new LocationFragment();
 				fragmentTag = LocationFragment.TAG;
@@ -63,15 +72,33 @@ public class DrawerManager {
 				fragment = new SocialMediaFragment();
 				fragmentTag = SocialMediaFragment.TAG;
 				break;
+			case About:
+				fragment = new AboutFragment();
+				fragmentTag = SocialMediaFragment.TAG;
+				break;
 			default:
 				fragment = EventHolderFragment.newInstance(EventMode.Program.ordinal());
 		}
 		fragmentManager.beginTransaction().replace(fragmentHolderId, fragment, fragmentTag).commit();
 	}
 
-	public void reloadPrograms() {
+	public void reloadPrograms(@NotNull DrawerMenu.DrawerItem mode) {
 		Fragment fragment;
-		fragment = EventHolderFragment.newInstance(EventMode.Program.ordinal());
+		switch (mode) {
+			case Program:
+				fragment = EventHolderFragment.newInstance(DrawerMenu.DrawerItem.Program.ordinal());
+				break;
+
+			case Bofs:
+				fragment = EventHolderFragment.newInstance(DrawerMenu.DrawerItem.Bofs.ordinal());
+				break;
+
+			case Social:
+				fragment = EventHolderFragment.newInstance(DrawerMenu.DrawerItem.Social.ordinal());
+				break;
+			default:
+				fragment = EventHolderFragment.newInstance(EventMode.Program.ordinal());
+		}
 		FragmentTransaction ft = fragmentManager.beginTransaction();
 		ft.replace(fragmentHolderId, fragment, EventHolderFragment.TAG);
 		ft.commitAllowingStateLoss();

@@ -12,11 +12,8 @@ public class TimeRangeItem extends EventListItem {
     private Event mEvent;
     private String mTrack;
     private boolean isFirst = false;
-    private boolean isLast = false;
 
     private long mType;
-
-    private List<String> mSpeakers = new ArrayList<String>();
 
     @Override
     public int getAdapterType() {
@@ -26,15 +23,6 @@ public class TimeRangeItem extends EventListItem {
     @Override
     public Event getEvent() {
         return mEvent;
-    }
-
-    @Override
-    public void setLast(boolean isLast) {
-        this.isLast = isLast;
-    }
-
-    public boolean isLast() {
-        return isLast;
     }
 
     public void setEvent(Event mEvent) {
@@ -55,14 +43,6 @@ public class TimeRangeItem extends EventListItem {
 
     public void setDate(Date date) {
         mDate = date;
-    }
-
-    public List<String> getSpeakers() {
-        return mSpeakers;
-    }
-
-    public void setSpeakers(List<String> speakers) {
-        mSpeakers = speakers;
     }
 
     public void setTrack(String track) {

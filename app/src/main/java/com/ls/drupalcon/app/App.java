@@ -31,7 +31,6 @@ public class App extends MultiDexApplication {
             TwitterAuthConfig authConfig = new TwitterAuthConfig(
                     getString(R.string.api_value_twitter_api_key),
                     getString(R.string.api_value_twitter_secret));
-            Fabric.with(this, new Crashlytics(), new Twitter(authConfig));
 //        }
 
         mContext = getApplicationContext();
@@ -40,6 +39,7 @@ public class App extends MultiDexApplication {
         PreferencesManager.initializeInstance(mContext);
         Model.instance(mContext);
         DrupalImageView.setupSharedClient(new DrupalClient(null, Model.instance().createNewQueue(getApplicationContext()), BaseRequest.RequestFormat.JSON, null));
+        Fabric.with(this, new Crashlytics(), new Twitter(authConfig));
     }
 
     public static Context getContext() {
@@ -48,6 +48,6 @@ public class App extends MultiDexApplication {
 
     public synchronized Tracker getTracker() {
         GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-        return analytics.newTracker(getString(R.string.api_value_google_analytics_app_Id));
+        return analytics.newTracker(R.xml.global_tracker);
     }
 }

@@ -22,7 +22,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -96,7 +99,6 @@ public class EventDetailsActivity extends StackKeeperActivity {
         initData();
         initToolbar();
         initViews();
-        loadEvent();
     }
 
     @Override
@@ -104,6 +106,12 @@ public class EventDetailsActivity extends StackKeeperActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_share, menu);
         mItemShare = menu.findItem(R.id.actionShare);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        loadEvent();
         return true;
     }
 
@@ -191,6 +199,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
         fillFavoriteState(mEvent);
         fillSpeakers(mEvent);
         fillDescription(mEvent);
+        updatePlaceholderVisibility(mEvent);
     }
 
     private void fillToolbar(@NonNull EventDetailsEvent event) {
@@ -198,8 +207,8 @@ public class EventDetailsActivity extends StackKeeperActivity {
             mToolbarTitle.setText(event.getEventName());
         }
 
-        if (mItemShare != null && TextUtils.isEmpty(event.getLink())) {
-            mItemShare.setVisible(false);
+        if (mItemShare != null && !TextUtils.isEmpty(event.getLink())) {
+            mItemShare.setVisible(true);
         }
     }
 
@@ -248,9 +257,9 @@ public class EventDetailsActivity extends StackKeeperActivity {
     }
 
     private void fillDescription(@NonNull EventDetailsEvent event) {
+        WebView webView = (WebView) findViewById(R.id.webView);
         if (!TextUtils.isEmpty(event.getDescription())) {
 
-            WebView webView = (WebView) findViewById(R.id.webView);
             webView.setVisibility(View.VISIBLE);
 
             String html = WebviewUtils.getHtml(this, event.getDescription());
@@ -270,7 +279,19 @@ public class EventDetailsActivity extends StackKeeperActivity {
             });
 
         } else {
+            webView.setVisibility(View.GONE);
             completeLoading();
+        }
+    }
+
+    private void updatePlaceholderVisibility(EventDetailsEvent event) {
+        if (TextUtils.isEmpty(event.getTrack()) &&
+                TextUtils.isEmpty(event.getLevel()) &&
+                TextUtils.isEmpty(event.getDescription()) &&
+                mSpeakerList.isEmpty()){
+            findViewById(R.id.imgEmptyView).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.imgEmptyView).setVisibility(View.GONE);
         }
     }
 
@@ -281,9 +302,11 @@ public class EventDetailsActivity extends StackKeeperActivity {
         checkBoxFavorite.setChecked(mIsFavorite);
 
         RelativeLayout layoutFavorite = (RelativeLayout) findViewById(R.id.layoutFavorite);
-        layoutFavorite.setOnClickListener(new View.OnClickListener() {
+        layoutFavorite.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 checkBoxFavorite.setChecked(!checkBoxFavorite.isChecked());
                 mIsFavorite = checkBoxFavorite.isChecked();
                 setFavorite();
@@ -295,24 +318,19 @@ public class EventDetailsActivity extends StackKeeperActivity {
         List<Speaker> speakerList = new ArrayList<>();
         speakerList.addAll(mSpeakerList);
 
-        if (!speakerList.isEmpty()) {
-            LayoutInflater inflater = LayoutInflater.from(EventDetailsActivity.this);
-            LinearLayout holderSpeakers = (LinearLayout) findViewById(R.id.holderSpeakers);
-            holderSpeakers.removeAllViewsInLayout();
+        LayoutInflater inflater = LayoutInflater.from(EventDetailsActivity.this);
+        LinearLayout holderSpeakers = (LinearLayout) findViewById(R.id.holderSpeakers);
+        holderSpeakers.removeAllViewsInLayout();
 
+        if (!speakerList.isEmpty()) {
             for (Speaker speaker : speakerList) {
                 View speakerView = inflater.inflate(R.layout.item_speaker_no_letter, null);
                 fillSpeakerView(speaker, speakerView);
                 holderSpeakers.addView(speakerView);
             }
+            findViewById(R.id.botDivider).setVisibility(View.VISIBLE);
         } else {
-            findViewById(R.id.topDivider).setVisibility(View.GONE);
             findViewById(R.id.botDivider).setVisibility(View.GONE);
-
-            if (TextUtils.isEmpty(event.getDescription())) {
-                findViewById(R.id.webView).setVisibility(View.GONE);
-                findViewById(R.id.imgEmptyView).setVisibility(View.VISIBLE);
-            }
         }
     }
 
@@ -356,7 +374,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
         if (mIsFavorite) {
             actionId = R.string.action_add_to_favorites;
         }
-        AnalyticsManager.sendEvent(this, R.string.event_category, actionId, mEventId);
+        AnalyticsManager.sendEvent(this, R.string.event_category, actionId, mEventId + " " + mEvent.getEventName());
         ReceiverManager.updateFavorites(EventDetailsActivity.this, mEventId, mIsFavorite);
     }
 

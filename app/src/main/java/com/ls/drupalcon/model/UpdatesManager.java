@@ -1,6 +1,8 @@
 package com.ls.drupalcon.model;
 
 import com.ls.drupal.DrupalClient;
+import com.ls.drupalcon.R;
+import com.ls.drupalcon.app.App;
 import com.ls.drupalcon.model.data.UpdateDate;
 import com.ls.drupalcon.model.database.ILAPIDBFacade;
 import com.ls.drupalcon.model.managers.SynchronousItemManager;
@@ -8,9 +10,8 @@ import com.ls.http.base.BaseRequest;
 import com.ls.http.base.RequestConfig;
 import com.ls.http.base.ResponseData;
 import com.ls.ui.drawer.DrawerManager;
+import com.ls.util.L;
 import com.ls.util.ObserverHolder;
-import com.ls.utils.ApplicationConfig;
-
 import org.jetbrains.annotations.NotNull;
 
 import android.os.AsyncTask;
@@ -27,13 +28,12 @@ public class UpdatesManager {
     public static final int TRACKS_REQUEST_ID = 3;
     public static final int SPEAKERS_REQUEST_ID = 4;
     public static final int LOCATIONS_REQUEST_ID = 5;
-    public static final int HOUSE_PLANS_REQUEST_ID = 6;
+    public static final int FLOOR_PLANS_REQUEST_ID = 6;
     public static final int PROGRAMS_REQUEST_ID = 7;
     public static final int BOFS_REQUEST_ID = 8;
     public static final int SOCIALS_REQUEST_ID = 9;
     public static final int POIS_REQUEST_ID = 10;
     public static final int INFO_REQUEST_ID = 11;
-    public static final int TWITTER_REQUEST_ID = 12;
 
     private DrupalClient mClient;
     private ObserverHolder<DataUpdatedListener> mUpdateListeners;
@@ -113,7 +113,8 @@ public class UpdatesManager {
         config.setResponseFormat(BaseRequest.ResponseFormat.JSON);
         config.setRequestFormat(BaseRequest.RequestFormat.JSON);
         config.setResponseClassSpecifier(UpdateDate.class);
-        BaseRequest checkForUpdatesRequest = new BaseRequest(BaseRequest.RequestMethod.GET, ApplicationConfig.BASE_URL + "checkUpdates", config);
+        String baseURL =  App.getContext().getString(R.string.api_value_base_url);
+        BaseRequest checkForUpdatesRequest = new BaseRequest(BaseRequest.RequestMethod.GET, baseURL + "checkUpdates", config);
         String lastDate = PreferencesManager.getInstance().getLastUpdateDate();
         checkForUpdatesRequest.addRequestHeader(IF_MODIFIED_SINCE_HEADER, lastDate);
         ResponseData updatesData = mClient.performRequest(checkForUpdatesRequest, true);
@@ -138,7 +139,6 @@ public class UpdatesManager {
         if (updateIds == null || updateIds.isEmpty()) {
             return new LinkedList<>();
         }
-
         ILAPIDBFacade facade = Model.instance().getFacade();
         try {
             facade.open();
@@ -212,6 +212,11 @@ public class UpdatesManager {
             case INFO_REQUEST_ID:
                 manager = Model.instance().getInfoManager();
                 break;
+
+            case FLOOR_PLANS_REQUEST_ID:
+                manager = Model.instance().getFloorPlansManager();
+                break;
+
             default:
                 return true;
         }

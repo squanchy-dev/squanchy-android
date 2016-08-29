@@ -24,7 +24,7 @@
     <string name="action_open">Open</string>
     <string name="action_close">Close</string>
     <string name="action_add_to_favorites">Add to favorites</string>
-    <string name="action_remove_from_favorites">Remove to favorites</string>
+    <string name="action_remove_from_favorites">Remove from favorites</string>
     <string name="no_apps_can_perform_this_action">No Apps can perform this action.</string>
     <string name="share">Share</string>
     <string name="no_search_result">No Search Result</string>
@@ -34,7 +34,17 @@
     <string name="APPLY">APPLY</string>
     <string name="CLEAR">CLEAR</string>
     <string name="access">ACCESS</string>
-    <string name="no_events">No Matching Events</string>
+    <string name="placeholder_no_matching_events">No matching events</string>
+    <string name="placeholder_sessions">Currently there are no sessions</string>
+    <string name="placeholder_bofs">Currently there are no BoFs</string>
+    <string name="placeholder_social_events">Currently there are no social events</string>
+    <string name="placeholder_speakers">Currently there are no speakers</string>
+    <string name="placeholder_schedule">Your schedule is empty. Please add some events</string>
+    <string name="placeholder_floor_plan">Currently there are no floor plans</string>
+    <string name="placeholder_location">The address is not specified</string>
+    <string name="placeholder_social_media">Currently there are no twits</string>
+    <string name="placeholder_info">Currently there is no information</string>
+    <string name="placeholder_no_details">No details</string>
     <string name="dont_miss_it">Don\'t miss it!</string>
     <string name="twenty_four_hours">24 HOURS</string>
     <string name="Attention">Attention</string>
@@ -50,4 +60,5 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="social_media">Social Media</string>
+    <string name="floor_plan">Floor Plans</string>
 </resources>

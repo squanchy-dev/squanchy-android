@@ -1,5 +1,6 @@
 package com.ls.ui.activity;
 
+import android.view.View;
 import android.webkit.WebViewClient;
 import com.google.android.gms.analytics.GoogleAnalytics;
 
@@ -13,6 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.webkit.WebView;
+import android.widget.ScrollView;
+
 import com.ls.utils.WebviewUtils;
 
 import java.util.List;
@@ -42,7 +45,7 @@ public class AboutDetailsActivity extends StateActivity {
         initToolbar(aboutTitle);
         Model.instance().getUpdatesManager().registerUpdateListener(updateListener);
 
-        AnalyticsManager.sendEvent(this, R.string.about_category, R.string.action_open, id);
+        AnalyticsManager.sendEvent(this, R.string.about_category, R.string.action_open, id + " " + aboutTitle);
     }
 
     @Override
@@ -74,18 +77,30 @@ public class AboutDetailsActivity extends StateActivity {
     }
 
     private void initView(String content) {
+        ScrollView scrollView = (ScrollView) findViewById(R.id.scroll_view);
+        View layoutPlaceholder = findViewById(R.id.layout_placeholder);
         WebView webView = (WebView) findViewById(R.id.web_view);
 
-        String css = "<link rel='stylesheet' href='css/style.css' type='text/css'>";
-        String html = "<html><header>" + css + "</header>" + "<body>" + content + "</body></html>";
-        webView.loadDataWithBaseURL("file:///android_asset/", html, "text/html", "UTF-8", null);
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                WebviewUtils.openUrl(AboutDetailsActivity.this, url);
-                return true;
-            }
-        });
+        if (content == null || content.isEmpty()) {
+            scrollView.setVisibility(View.GONE);
+            layoutPlaceholder.setVisibility(View.VISIBLE);
+        } else {
+            scrollView.setVisibility(View.VISIBLE);
+            layoutPlaceholder.setVisibility(View.GONE);
+
+            String css = "<link rel='stylesheet' href='css/style.css' type='text/css'>";
+            String html = "<html><header>" + css + "</header>" + "<body>" + content + "</body></html>";
+            webView.loadDataWithBaseURL("file:///android_asset/", html, "text/html", "UTF-8", null);
+            webView.setWebViewClient(new WebViewClient()
+            {
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String url)
+                {
+                    WebviewUtils.openUrl(AboutDetailsActivity.this, url);
+                    return true;
+                }
+            });
+        }
     }
 
     private void initToolbar(String title) {

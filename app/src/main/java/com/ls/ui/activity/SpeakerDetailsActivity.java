@@ -35,6 +35,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SpeakerDetailsActivity extends StackKeeperActivity implements View.OnClickListener {
@@ -53,6 +54,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
     private View mViewToolbar;
     private TextView mTitle;
     private NotifyingScrollView mScrollView;
+    private View mLayoutPlaceholder;
 
     private boolean mIsDataLoaded;
     private boolean mIsWebLoaded;
@@ -112,7 +114,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
         if (mSpeaker != null) {
             mSpeakerName = String.format("%s %s", mSpeaker.getFirstName(), mSpeaker.getLastName());
         }
-        AnalyticsManager.sendEvent(this, R.string.speaker_category, R.string.action_open, mSpeakerId);
+        AnalyticsManager.sendEvent(this, R.string.speaker_category, R.string.action_open, mSpeakerId + " " + mSpeakerName);
     }
 
     private void initToolbar() {
@@ -138,6 +140,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
     private void initView() {
         mScrollView = (NotifyingScrollView) findViewById(R.id.scrollView);
         mScrollView.setOnScrollChangedListener(onScrollChangedListener);
+        mLayoutPlaceholder = findViewById(R.id.layout_placeholder);
     }
 
     private void loadSpeakerFromDb() {
@@ -153,6 +156,8 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
             protected void onPostExecute(Speaker speaker) {
                 if (speaker != null) {
                     fillView(speaker);
+                } else {
+                    finish();
                 }
             }
         }.execute();
@@ -181,15 +186,14 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
             findViewById(R.id.txtSpeakerPosition).setVisibility(View.VISIBLE);
         }
 
-        if (!TextUtils.isEmpty(mSpeaker.getJobTitle())) {
-            ((TextView) findViewById(R.id.txtSpeakerPosition)).setText(mSpeaker.getJobTitle());
+        TextView jobTxt = (TextView) findViewById(R.id.txtSpeakerPosition);
+        String jobValue = mSpeaker.getJobTitle() + " at " + mSpeaker.getOrganization();
+
+        if ( TextUtils.isEmpty(mSpeaker.getJobTitle()) || TextUtils.isEmpty(mSpeaker.getOrganization()) ){
+            jobValue = jobValue.replace(" at ", "");
         }
 
-        if (!TextUtils.isEmpty(mSpeaker.getOrganization())) {
-            TextView jobTxt = (TextView) findViewById(R.id.txtSpeakerPosition);
-            String text = jobTxt.getText().toString() + " at " + mSpeaker.getOrganization();
-            jobTxt.setText(text);
-        }
+        jobTxt.setText(jobValue);
     }
 
     private void fillSpeakerDescription() {
@@ -216,6 +220,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
             });
 
         } else {
+            webView.setVisibility(View.GONE);
             mIsWebLoaded = true;
             completeLoading();
         }
@@ -248,6 +253,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
                 mIsDataLoaded = true;
                 addSpeakerEvents(events);
                 completeLoading();
+                updatePlaceholderVisibility(events);
             }
         }.execute();
     }
@@ -361,6 +367,17 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
         if (mIsDataLoaded && mIsWebLoaded) {
             findViewById(R.id.progressBar).setVisibility(View.GONE);
             mScrollView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void updatePlaceholderVisibility(List<SpeakerDetailsEvent> events) {
+        if (TextUtils.isEmpty(mSpeaker.getTwitterName()) &&
+                TextUtils.isEmpty(mSpeaker.getWebSite()) &&
+                TextUtils.isEmpty(mSpeaker.getCharact()) &&
+                events.isEmpty()){
+            mLayoutPlaceholder.setVisibility(View.VISIBLE);
+        } else {
+            mLayoutPlaceholder.setVisibility(View.GONE);
         }
     }
 }

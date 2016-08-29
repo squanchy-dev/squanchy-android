@@ -127,6 +127,16 @@
         )
     </string>
 
+    <string name="create_table_floor_plans">
+        CREATE TABLE table_floor_plans (
+        _id                      STRING,
+        _name                    STRING,
+        _image_url               STRING,
+        _order                   DOUBLE,
+        _deleted                 BOOLEAN
+        )
+    </string>
+
     <!--==============================================================-->
     <!--INSERT-->
     <!--==============================================================-->
@@ -172,6 +182,11 @@
     <string name="delete_event_and_speaker_by_event_id">
         DELETE FROM table_event_and_speaker
         WHERE _event_id =?
+    </string>
+
+    <string name="delete_event_and_speaker_by_event_and_speaker_id">
+        DELETE FROM table_event_and_speaker
+        WHERE _event_id =? AND _speaker_id =?
     </string>
 
     <string name="delete_table_type">
@@ -332,6 +347,14 @@
         ORDER BY  _from, _to
     </string>
 
+    <string name="select_distinct_fav_time_range" formatted = "false">
+        SELECT _from, _to, _date
+        FROM table_event
+        WHERE _event_class=? and _date=? and _id IN (%s)
+        GROUP BY  _from, _to
+        ORDER BY  _from, _to
+    </string>
+
 
     <string name="select_distinct_time_range_by_event_ids">
         SELECT _from, _to, _date
@@ -357,7 +380,7 @@
 
     <string name="select_program_items_by_date_and_track_ids">
         SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class,
-        e._favorite, e._order, e._experience_level, t.track_name, l.level_name,
+        e._favorite, e._order, e._experience_level, t.track_name, l.level_name, e._track,
             (SELECT group_concat(first_name|| \' \' ||last_name,\',\')
                 FROM table_speaker
                 WHERE _id IN (
@@ -378,7 +401,7 @@
     </string>
 
     <string name="select_program_items_by_date_and_expLevel_ids">
-        SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class,
+        SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class, e._track,
         e._favorite, e._order, e._experience_level, t.track_name, l.level_name,
             (SELECT group_concat(first_name|| \' \' ||last_name,\',\')
                 FROM table_speaker
@@ -399,7 +422,7 @@
     </string>
 
     <string name="select_program_items_by_date_and_track_ids_and_expLevel_ids" formatted = "false">
-        SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class,
+        SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class, e._track,
         e._favorite, e._order, e._experience_level, t.track_name, l.level_name,
             (SELECT group_concat(first_name|| \' \' ||last_name,\',\')
                 FROM table_speaker
@@ -420,7 +443,7 @@
     </string>
 
     <string name="select_program_items_by_date">
-        SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class,
+        SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class, e._track,
         e._favorite, e._order, e._experience_level, t.track_name, l.level_name,
             (SELECT group_concat(first_name|| \' \' ||last_name,\',\')
                 FROM table_speaker
@@ -437,11 +460,32 @@
         LEFT JOIN table_level AS l ON e._experience_level=l._id
 
         WHERE e._event_class=? and e._date=?
+        ORDER BY e._order, e._id
+    </string>
+
+    <string name="select_fav_program_items_by_date_and_fav_ids">
+        SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class, e._track,
+        e._favorite, e._order, e._experience_level, t.track_name, l.level_name,
+            (SELECT group_concat(first_name|| \' \' ||last_name,\',\')
+                FROM table_speaker
+                WHERE _id IN (
+                    SELECT _speaker_id
+                    FROM table_event_and_speaker
+                    WHERE _event_id=e._id
+                )
+            )
+            AS _speaker_name
+
+        FROM table_event AS e
+        LEFT JOIN table_track AS t ON e._track=t._id
+        LEFT JOIN table_level AS l ON e._experience_level=l._id
+
+        WHERE e._date=? and e._id IN (%s)
         ORDER BY e._id, e._order
     </string>
 
     <string name="select_events_partly_class_and_date">
-        SELECT e._id, e._date, e._from, e._to, e._type, e._experience_level,
+        SELECT e._id, e._date, e._from, e._to, e._type, e._experience_level, e._track,
                e._name, e._place, e._event_class, e._favorite, e._order,
              (SELECT group_concat(first_name|| \' \' ||last_name,\',\')
                 FROM table_speaker

@@ -17,7 +17,8 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.DrupalCon.Home">
+        android:theme="@style/Theme.DrupalCon.Home"
+        android:largeHeap="true">
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -62,7 +63,7 @@
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="06991ccf21ed23f79c78c19e84287fdca01e5286" />
+            android:value="e92185b02a2fa31062b797232c3d5cccf9867952" />
     </application>
 
 </manifest>

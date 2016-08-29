@@ -1,6 +1,7 @@
 package com.ls.drupalcon.model;
 
 import com.ls.drupalcon.R;
+import com.ls.drupalcon.app.App;
 import com.ls.drupalcon.model.dao.EventDao;
 import com.ls.drupalcon.model.dao.InfoDao;
 import com.ls.drupalcon.model.dao.LevelDao;
@@ -11,6 +12,7 @@ import com.ls.drupalcon.model.dao.TrackDao;
 import com.ls.drupalcon.model.dao.TypeDao;
 import com.ls.drupalcon.model.database.DBInfo;
 import com.ls.drupalcon.model.database.IMigrationTask;
+import com.ls.utils.FileUtils;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -23,7 +25,7 @@ import java.util.List;
 public class AppDatabaseInfo implements DBInfo, IMigrationTask {
 
     public static final String DATABASE_NAME = "drupal_db";
-    public static final int DATABASE_VERSION = 10;
+    public static final int DATABASE_VERSION = 11;
 
     private static final String TABLE_EVENT_SPEAKER = "table_event_and_speaker";
     private static final String TABLE_FAVORITE_EVENTS = "table_favorite_events";
@@ -81,6 +83,7 @@ public class AppDatabaseInfo implements DBInfo, IMigrationTask {
             for (String query : dbDropList) {
                 theDb.execSQL(query);
             }
+            FileUtils.deleteDataStorageDirectory(App.getContext());
 
             for (String query : dbSchemaQueryList) {
                 theDb.execSQL(query);
@@ -101,6 +104,7 @@ public class AppDatabaseInfo implements DBInfo, IMigrationTask {
         addStringWithIdToList(dbSchemaQueryList, R.string.create_table_favorite_events);
         addStringWithIdToList(dbSchemaQueryList, R.string.create_table_info);
         addStringWithIdToList(dbSchemaQueryList, R.string.create_table_poi);
+        addStringWithIdToList(dbSchemaQueryList, R.string.create_table_floor_plans);
         return dbSchemaQueryList;
     }
 

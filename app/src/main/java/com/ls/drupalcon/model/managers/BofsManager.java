@@ -2,6 +2,7 @@ package com.ls.drupalcon.model.managers;
 
 import com.ls.drupal.AbstractBaseDrupalEntity;
 import com.ls.drupal.DrupalClient;
+import com.ls.drupalcon.model.PreferencesManager;
 import com.ls.drupalcon.model.data.Event;
 import com.ls.drupalcon.model.requests.BofsRequest;
 import com.ls.ui.adapter.item.EventListItem;
@@ -65,8 +66,26 @@ public class BofsManager extends EventManager {
         return true;
     }
 
+//    public List<Long> getBofsDays() {
+//        return mEventDao.selectDistrictDateSafe(Event.BOFS_CLASS);
+//    }
+
     public List<Long> getBofsDays() {
-        return mEventDao.selectDistrictDateSafe(Event.BOFS_CLASS);
+        List<Long> levelIds = PreferencesManager.getInstance().loadExpLevel();
+        List<Long> trackIds = PreferencesManager.getInstance().loadTracks();
+
+        if (levelIds.isEmpty() & trackIds.isEmpty()) {
+            return mEventDao.selectDistrictDateSafe(Event.BOFS_CLASS);
+
+        } else if (!levelIds.isEmpty() & !trackIds.isEmpty()) {
+            return mEventDao.selectDistrictDateByTrackAndLevelIdsSafe(Event.BOFS_CLASS, levelIds, trackIds);
+
+        } else if (!levelIds.isEmpty() & trackIds.isEmpty()) {
+            return mEventDao.selectDistrictDateByLevelIdsSafe(Event.BOFS_CLASS, levelIds);
+
+        } else {
+            return mEventDao.selectDistrictDateByTrackIdsSafe(Event.BOFS_CLASS, trackIds);
+        }
     }
 
     public List<EventListItem> getBofsItemsSafe(long day) {

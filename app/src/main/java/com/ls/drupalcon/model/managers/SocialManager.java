@@ -2,6 +2,7 @@ package com.ls.drupalcon.model.managers;
 
 import com.ls.drupal.AbstractBaseDrupalEntity;
 import com.ls.drupal.DrupalClient;
+import com.ls.drupalcon.model.PreferencesManager;
 import com.ls.drupalcon.model.data.Event;
 import com.ls.drupalcon.model.requests.SocialRequest;
 import com.ls.ui.adapter.item.EventListItem;
@@ -64,8 +65,26 @@ public class SocialManager extends EventManager {
         return true;
     }
 
+//    public List<Long> getSocialsDays() {
+//        return mEventDao.selectDistrictDateSafe(Event.SOCIALS_CLASS);
+//    }
+
     public List<Long> getSocialsDays() {
-        return mEventDao.selectDistrictDateSafe(Event.SOCIALS_CLASS);
+        List<Long> levelIds = PreferencesManager.getInstance().loadExpLevel();
+        List<Long> trackIds = PreferencesManager.getInstance().loadTracks();
+
+        if (levelIds.isEmpty() & trackIds.isEmpty()) {
+            return mEventDao.selectDistrictDateSafe(Event.SOCIALS_CLASS);
+
+        } else if (!levelIds.isEmpty() & !trackIds.isEmpty()) {
+            return mEventDao.selectDistrictDateByTrackAndLevelIdsSafe(Event.SOCIALS_CLASS, levelIds, trackIds);
+
+        } else if (!levelIds.isEmpty() & trackIds.isEmpty()) {
+            return mEventDao.selectDistrictDateByLevelIdsSafe(Event.SOCIALS_CLASS, levelIds);
+
+        } else {
+            return mEventDao.selectDistrictDateByTrackIdsSafe(Event.SOCIALS_CLASS, trackIds);
+        }
     }
 
     public List<EventListItem> getSocialItemsSafe(long day) {

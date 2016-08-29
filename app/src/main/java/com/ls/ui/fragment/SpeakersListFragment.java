@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -31,9 +32,12 @@ public class SpeakersListFragment extends Fragment
         implements AdapterView.OnItemClickListener, SpeakersAdapter.OnFilterChangeListener {
 
     public static final String TAG = "SpeakersFragment";
+    private View mLayoutContent, mLayoutPlaceholder;
     private SpeakersAdapter mSpeakersAdapter;
     private ListView mListView;
     private TextView mTxtNoSearchResult;
+
+    private String lastSearchRequest;
 
     private ProgressBar mProgressBar;
 
@@ -88,6 +92,7 @@ public class SpeakersListFragment extends Fragment
             @Override
             public boolean onQueryTextChange(String searchedText) {
                 if (mSpeakersAdapter != null) {
+                    lastSearchRequest = searchedText;
                     mSpeakersAdapter.getFilter().filter(searchedText);
                 }
                 return true;
@@ -107,6 +112,8 @@ public class SpeakersListFragment extends Fragment
             return;
         }
 
+        mLayoutContent = getView().findViewById(R.id.layout_content);
+        mLayoutPlaceholder = getView().findViewById(R.id.layout_placeholder);
         mProgressBar = (ProgressBar) getView().findViewById(R.id.progressBar);
         mTxtNoSearchResult = (TextView) getView().findViewById(R.id.txtSearchEmpty);
         mListView = (ListView) getView().findViewById(R.id.listSpeakers);
@@ -130,15 +137,28 @@ public class SpeakersListFragment extends Fragment
             return;
         }
 
-        SparseBooleanArray letterPositions = generateFirstLetterPositions(speakers);
-        if (mSpeakersAdapter == null) {
-            mSpeakersAdapter = new SpeakersAdapter(getActivity(), speakers, letterPositions);
-            mSpeakersAdapter.setOnFilterChangeListener(SpeakersListFragment.this);
-            mListView.setOnItemClickListener(SpeakersListFragment.this);
-            mListView.setAdapter(mSpeakersAdapter);
+        if (speakers == null || speakers.isEmpty()) {
+            mLayoutContent.setVisibility(View.GONE);
+            mLayoutPlaceholder.setVisibility(View.VISIBLE);
         } else {
-            mSpeakersAdapter.setData(speakers, letterPositions);
-            mSpeakersAdapter.notifyDataSetChanged();
+            mLayoutContent.setVisibility(View.VISIBLE);
+            mLayoutPlaceholder.setVisibility(View.GONE);
+
+            SparseBooleanArray letterPositions = generateFirstLetterPositions(speakers);
+            if (mSpeakersAdapter == null) {
+                mSpeakersAdapter = new SpeakersAdapter(getActivity(), speakers, letterPositions);
+                mSpeakersAdapter.setOnFilterChangeListener(SpeakersListFragment.this);
+                mListView.setOnItemClickListener(SpeakersListFragment.this);
+                mListView.setAdapter(mSpeakersAdapter);
+            } else {
+                mSpeakersAdapter.setData(speakers, letterPositions);
+            }
+
+            if (!TextUtils.isEmpty(lastSearchRequest)) {
+                mSpeakersAdapter.getFilter().filter(lastSearchRequest);
+            } else {
+                mSpeakersAdapter.notifyDataSetChanged();
+            }
         }
         mProgressBar.setVisibility(View.GONE);
     }

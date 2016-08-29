@@ -38,9 +38,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_27"
+                    android:textSize="@dimen/text_size_16"
                     android:textStyle="bold"
-                    app:custom_font="@string/smythe_regular"
+                    app:custom_font="@string/montserrat_regular"
                     tools:text="@string/lorem_ipsum" />
 
                 <com.ls.ui.view.FontTextView
@@ -106,13 +106,6 @@
 
                 </LinearLayout>
 
-                <View
-                        android:id="@+id/topDivider"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginLeft="72dp"
-                        android:background="@color/white_200"/>
-
                 <LinearLayout
                         android:id="@+id/holderSpeakers"
                         android:layout_width="match_parent"
@@ -126,6 +119,33 @@
                         android:layout_marginLeft="72dp"
                         android:background="@color/white_200"/>
 
+                <LinearLayout
+                    android:id="@+id/imgEmptyView"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="60dp"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_no_details" />
+
+                    <com.ls.ui.view.FontTextView
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        app:custom_font="@string/roboto_regular"
+                        android:clickable="false"
+                        android:textColor="#bbbbbb"
+                        android:textSize="@dimen/text_size_medium"
+                        android:text="No Details" />
+
+                </LinearLayout>
 
                 <WebView
                     android:id="@+id/webView"
@@ -184,7 +204,7 @@
         android:id="@+id/viewToolbar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="@color/event"
+        android:background="@color/primary"
         android:visibility="visible" />
 
     <android.support.v7.widget.Toolbar
@@ -205,14 +225,6 @@
             android:textStyle="bold"
             tools:text="DrupalCon" />
     </android.support.v7.widget.Toolbar>
-
-    <ImageView
-        android:id="@+id/imgEmptyView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:src="@drawable/ic_no_details"
-        android:visibility="gone" />
 
     <ProgressBar
         android:id="@+id/progressBar"

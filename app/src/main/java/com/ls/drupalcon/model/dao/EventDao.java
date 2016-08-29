@@ -86,6 +86,12 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
         getFacade().execSQL(query, args);
     }
 
+    public void deleteByEventAndSpeaker(long eventId, long speakerId) {
+        String[] args = ArrayUtils.build(eventId,speakerId);
+        String query = mContext.getString(R.string.delete_event_and_speaker_by_event_and_speaker_id);
+        getFacade().execSQL(query, args);
+    }
+
     public void insertEventSpeaker(long eventId, long speakerId) {
         String[] bindArgs = ArrayUtils.build(eventId, speakerId);
         getFacade().execSQL(mContext.getString(R.string.insert_event_speaker), bindArgs);
@@ -280,6 +286,15 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
         return selectDistrictTimeRangeSafe(selectionArgs, query);
     }
 
+    public List<TimeRange> selectDistrictFavTimeRangeSafe(int eventClass, List<Long> favoriteEventIds, long date) {
+        String[] selectionArgs = ArrayUtils.build(eventClass, date);
+
+        String rawQuery = mContext.getString(R.string.select_distinct_fav_time_range);
+        String query = String.format(rawQuery, getArrayAsString(favoriteEventIds));
+
+        return selectDistrictTimeRangeSafe(selectionArgs, query);
+    }
+
     private List<TimeRange> selectDistrictTimeRangeSafe(String[] selectionArgs, String query) {
         ILAPIDBFacade facade = getFacade();
         List<TimeRange> dataList = new ArrayList<TimeRange>();
@@ -463,7 +478,63 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
                 String speakerName = parser.readString("_speaker_name");
                 if (speakerName != null) {
                     String[] speakerNames = speakerName.split(",");
-                    for(int count = 0;count < speakerNames.length - 1;count++) {
+                    for(int count = 0;count < speakerNames.length;count++) {
+                        lastItem.addSpeaker(speakerNames[count]);
+                    }
+                }
+
+                lastId = eventId;
+                moved = cursor.moveToNext();
+            }
+            cursor.close();
+
+        } finally {
+            facade.close();
+        }
+
+        return dataList;
+    }
+
+    public List<EventListItem> selectFavoriteProgramItemsSafe(List<Long> eventIds, long date) {
+        String[] selectionArgs = ArrayUtils.build(date);
+        String rawQuery = mContext.getString(R.string.select_fav_program_items_by_date_and_fav_ids);
+        String query = String.format(rawQuery, getArrayAsString(eventIds));
+
+        ILAPIDBFacade facade = getFacade();
+        List<EventListItem> dataList = new ArrayList<>();
+
+        try {
+            facade.open();
+
+            Cursor cursor = facade.query(query, selectionArgs);
+            CursorStringParser parser = new CursorStringParser(cursor);
+
+            ProgramItem lastItem = new ProgramItem();
+            long lastId = -1;
+
+            boolean moved = cursor.moveToFirst();
+            while (moved) {
+                if (mShouldBreak) {
+                    break;
+                }
+
+                long eventId = cursor.getLong(cursor.getColumnIndex("_id"));
+                if (lastId != eventId) {
+                    lastItem = new ProgramItem();
+                    Event event = new Event();
+                    event.initializePartly(parser);
+
+                    lastItem.setTrack(parser.readString("track_name"));
+                    lastItem.setLevel(parser.readString("level_name"));
+
+                    lastItem.setEvent(event);
+                    dataList.add(lastItem);
+                }
+
+                String speakerName = parser.readString("_speaker_name");
+                if (speakerName != null) {
+                    String[] speakerNames = speakerName.split(",");
+                    for(int count = 0;count < speakerNames.length;count++) {
                         lastItem.addSpeaker(speakerNames[count]);
                     }
                 }
@@ -507,7 +578,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
                 String speakerName = parser.readString("_speaker_name");
                 if (speakerName != null) {
                     String[] speakerNames = speakerName.split(",");
-                    for(int count = 0;count < speakerNames.length - 1;count++) {
+                    for(int count = 0;count < speakerNames.length;count++) {
                         item.addSpeaker(speakerNames[count]);
                     }
                 }

@@ -23,6 +23,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
+/**
+ * Use  {@link com.ls.ui.fragment.AboutFragment} instead
+ */
 public class AboutActivity extends ActionBarActivity {
 
     private AboutListAdapter adapter;
