@@ -77,19 +77,19 @@ public class DateUtils {
     }
 
     public boolean isAfterCurrentFate(long millis) {
-        boolean isAfter = false;
-
-        Calendar currCalendar = Calendar.getInstance();
-        currCalendar.setTimeZone(mTimezone);
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(millis);
-        calendar.setTimeZone(mTimezone);
-
-        if (calendar.after(currCalendar)) {
-            isAfter = true;
-        }
-        return isAfter;
+//        boolean isAfter = false;
+//
+//        Calendar currCalendar = Calendar.getInstance();
+//        currCalendar.setTimeZone(mTimezone);
+//
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTimeInMillis(millis);
+//        calendar.setTimeZone(mTimezone);
+//
+//        if (calendar.after(currCalendar)) {
+//            isAfter = true;
+//        }
+        return millis > System.currentTimeMillis();
     }
 
     public synchronized String getTime(Context context, long millis) {
