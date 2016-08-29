@@ -27,7 +27,7 @@ public class DateUtils {
         mDateFormat.setTimeZone(mTimezone);
     }
 
-    public void setTimezone(String theTimezoneId) {
+    public synchronized void setTimezone(String theTimezoneId) {
         mTimezone = TimeZone.getTimeZone(theTimezoneId);
         mDateFormat.setTimeZone(mTimezone);
     }
@@ -41,7 +41,7 @@ public class DateUtils {
     }
 
     @Nullable
-    public Date convertEventDayDate(String day) {
+    public synchronized  Date convertEventDayDate(String day) {
         mDateFormat.applyPattern("d-MM-yyyy");
 
         try {
@@ -92,7 +92,7 @@ public class DateUtils {
         return isAfter;
     }
 
-    public String getTime(Context context, long millis) {
+    public synchronized String getTime(Context context, long millis) {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(millis);
@@ -100,22 +100,11 @@ public class DateUtils {
 
 
         if (DateFormat.is24HourFormat(context)) {
-//            mDateFormat.applyPattern("HH:mm");
-//            return mDateFormat.format(new Date(millis));
-
-
-            int hr = calendar.get(Calendar.HOUR_OF_DAY);
-            int min = calendar.get(Calendar.MINUTE);
-            return String.format("%02d:%02d", hr, min);
-
+            mDateFormat.applyPattern("HH:mm");
+            return mDateFormat.format(new Date(millis));
         } else {
-//            mDateFormat.applyPattern("hh:mm aa");
-//            return mDateFormat.format(new Date(millis));
-
-            int hr = (calendar.get(Calendar.HOUR) == 0) ? 12 : calendar.get(Calendar.HOUR) ;
-            int min = calendar.get(Calendar.MINUTE);
-            String AmPm = calendar.getDisplayName(Calendar.AM_PM, Calendar.SHORT, Locale.US);
-            return String.format("%02d:%02d", hr, min) + " " + AmPm;
+            mDateFormat.applyPattern("hh:mm aa");
+            return mDateFormat.format(new Date(millis));
         }
     }
 
@@ -127,7 +116,7 @@ public class DateUtils {
         return calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.US);
     }
 
-    public String getWeekNameAndDate(long millis) {
+    public synchronized String getWeekNameAndDate(long millis) {
         mDateFormat.applyPattern("EEE d");
         return mDateFormat.format(new Date(millis));
     }
