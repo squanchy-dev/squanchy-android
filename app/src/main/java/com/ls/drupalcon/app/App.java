@@ -1,9 +1,11 @@
 package com.ls.drupalcon.app;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Tracker;
+import android.app.Application;
+import android.content.Context;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 import com.ls.drupal.DrupalClient;
 import com.ls.drupalcon.R;
 import com.ls.drupalcon.model.AppDatabaseInfo;
@@ -15,12 +17,9 @@ import com.ls.util.image.DrupalImageView;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 
-import android.content.Context;
-import android.support.multidex.MultiDexApplication;
-
 import io.fabric.sdk.android.Fabric;
 
-public class App extends MultiDexApplication {
+public class App extends Application {
 
     private static Context mContext;
 
