@@ -23,4 +23,9 @@ android {
             }
         }
     }
+
+    lintOptions {
+        lintConfig file("$rootProject.projectDir/config/lint.xml")
+        abortOnError false
+    }
 }

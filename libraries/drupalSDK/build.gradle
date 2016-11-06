@@ -27,6 +27,11 @@ android {
     }
 
     useLibrary 'org.apache.http.legacy'
+
+    lintOptions {
+        lintConfig file("$rootProject.projectDir/config/lint.xml")
+        abortOnError false
+    }
 }
 
 dependencies {
