@@ -13,7 +13,7 @@
             android:visibility="invisible"
             android:background="@color/white_200"/>
 
-    <com.ls.ui.view.FontTextView
+    <com.connfa.ui.view.FontTextView
             android:id="@+id/txtTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

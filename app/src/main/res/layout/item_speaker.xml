@@ -7,7 +7,7 @@
   android:background="@drawable/selector_light"
   android:minHeight="72dp">
 
-  <com.ls.ui.view.FontTextView
+  <com.connfa.ui.view.FontTextView
     android:id="@+id/txtFirstLetter"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
     android:layout_centerVertical="true"
     android:paddingLeft="41dp">
 
-    <com.ls.ui.view.CircleImageView
+    <com.connfa.ui.view.CircleImageView
       android:id="@+id/imgPhoto"
       android:layout_width="40dp"
       android:layout_height="40dp"
@@ -39,7 +39,7 @@
       android:layout_toRightOf="@+id/imgPhoto"
       android:orientation="vertical">
 
-      <com.ls.ui.view.FontTextView
+      <com.connfa.ui.view.FontTextView
         android:id="@+id/txtName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
         app:custom_font="@string/roboto_regular"
         tools:text="Lorem ipsum" />
 
-      <com.ls.ui.view.FontTextView
+      <com.connfa.ui.view.FontTextView
         android:id="@+id/txtOrgAndJobTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
