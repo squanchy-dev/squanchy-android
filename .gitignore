@@ -44,5 +44,6 @@ local.properties
 # Heap dump captures
 captures/
 
+app/google-services.json
 team-props/*.properties
 team-props/*.keystore
