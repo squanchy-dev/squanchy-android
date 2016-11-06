@@ -43,7 +43,6 @@ android {
 
         versionCode Integer.parseInt(project.VERSION_CODE)
         versionName project.VERSION_NAME
-        multiDexEnabled true
 
         manifestPlaceholders += [
                 fabricApiKey: buildProperties.secrets['fabricApiKey'].string
@@ -73,7 +72,6 @@ android {
 dependencies {
     compile libraries.app.annotations
     compile libraries.app.gson
-    compile libraries.app.multidex
 
     compile libraries.app.shadowLayout
     compile libraries.app.materialTabStrip

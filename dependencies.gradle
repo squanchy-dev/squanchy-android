@@ -6,7 +6,6 @@ ext {
                     crashlytics     : 'com.crashlytics.sdk.android:crashlytics:2.6.5',
                     gson            : 'com.google.code.gson:gson:2.8.0',
                     materialTabStrip: 'com.jpardogo.materialtabstrip:library:1.0.8',
-                    multidex        : 'com.android.support:multidex:1.0.1',
                     parallaxScroll  : 'com.github.nirhart:parallaxscroll:1.0',
                     playAnalytics   : 'com.google.android.gms:play-services-analytics:9.8.0',
                     playMaps        : 'com.google.android.gms:play-services-maps:9.8.0',
