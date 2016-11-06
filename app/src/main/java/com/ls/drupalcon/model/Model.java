@@ -143,8 +143,8 @@ public class Model {
         return programManager;
     }
 
-    ProgramManager createProgramManager() {
-        return new ProgramManager(client);
+    ProgramManager createProgramManager(Context context) {
+        return new ProgramManager(client, context);
     }
 
     public UpdatesManager getUpdatesManager() {
@@ -187,19 +187,19 @@ public class Model {
         typesManager = new TypesManager(client);
         levelsManager = new LevelsManager(client);
         tracksManager = new TracksManager(client);
-        speakerManager = new SpeakerManager(client);
+        speakerManager = new SpeakerManager(client, context);
         locationmanager = new LocationManager(client);
-        socialManager = new SocialManager(client);
-        bofsManager = new BofsManager(client);
+        socialManager = new SocialManager(client, context);
+        bofsManager = new BofsManager(client, context);
         poisManager = new PoisManager(client);
         infoManager = new InfoManager(client);
-        programManager = new ProgramManager(client);
-        eventManager = new EventManager(client);
-        favoriteManager = new FavoriteManager();
+        programManager = new ProgramManager(client, context);
+        eventManager = new EventManager(client, context);
+        favoriteManager = new FavoriteManager(context);
 
-        updatesManager = new UpdatesManager(client);
+        updatesManager = new UpdatesManager(client, context);
         settingsManager = new SettingsManager(client);
-        floorPlansManager = new FloorPlansManager(client);
+        floorPlansManager = new FloorPlansManager(client, context);
     }
 
     //Initialization

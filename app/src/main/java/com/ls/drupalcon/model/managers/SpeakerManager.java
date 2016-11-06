@@ -1,8 +1,9 @@
 package com.ls.drupalcon.model.managers;
 
+import android.content.Context;
+
 import com.ls.drupal.AbstractBaseDrupalEntity;
 import com.ls.drupal.DrupalClient;
-import com.ls.drupalcon.app.App;
 import com.ls.drupalcon.model.dao.EventDao;
 import com.ls.drupalcon.model.dao.SpeakerDao;
 import com.ls.drupalcon.model.data.Speaker;
@@ -12,11 +13,14 @@ import java.util.List;
 
 public class SpeakerManager extends SynchronousItemManager<Speaker.Holder, Object, String> {
 
+    private final Context mContext;
+
     private SpeakerDao mSpeakerDao;
 
-    public SpeakerManager(DrupalClient client) {
+    public SpeakerManager(DrupalClient client, Context context) {
         super(client);
-        mSpeakerDao = new SpeakerDao(App.getContext());
+        this.mContext = context;
+        this.mSpeakerDao = new SpeakerDao(context);
     }
 
     @Override
@@ -36,7 +40,7 @@ public class SpeakerManager extends SynchronousItemManager<Speaker.Holder, Objec
             return false;
         }
 
-        EventDao eventDao = new EventDao(App.getContext());
+        EventDao eventDao = new EventDao(mContext);
         mSpeakerDao.saveOrUpdateDataSafe(speakers);
         for (Speaker speaker : speakers) {
             if (speaker != null) {
@@ -64,7 +68,7 @@ public class SpeakerManager extends SynchronousItemManager<Speaker.Holder, Objec
 
     public Speaker getSpeakerById(long id) {
         List<Speaker> speakerById = mSpeakerDao.getSpeakerById(id);
-        if (!speakerById.isEmpty()){
+        if (!speakerById.isEmpty()) {
             return speakerById.get(0);
         } else {
             return null;

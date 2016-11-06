@@ -1,11 +1,20 @@
 package com.ls.ui.drawer;
 
 import com.ls.drupalcon.R;
-import com.ls.drupalcon.app.App;
 
 public class DrawerMenu {
 
-    public enum DrawerItem {Program, Bofs, Social, SocialMedia, Favorites, FloorPlan ,Location, Speakers, About}
+    public enum DrawerItem {
+        PROGRAM,
+        BOFS,
+        SOCIAL,
+        SOCIAL_MEDIA,
+        FAVORITES,
+        FLOOR_PLAN,
+        LOCATION,
+        SPEAKERS,
+        ABOUT
+    }
 
     public static final int[] MENU_ICON_RES = {
             R.drawable.menu_icon_program,
@@ -31,16 +40,16 @@ public class DrawerMenu {
             R.drawable.menu_icon_about_sel
     };
 
-    public static final String[] MENU_STRING_ARRAY = {
-            App.getContext().getString(R.string.Sessions),
-            App.getContext().getString(R.string.bofs),
-            App.getContext().getString(R.string.social_events),
-            App.getContext().getString(R.string.social_media),
-            App.getContext().getString(R.string.my_schedule),
-            App.getContext().getString(R.string.floor_plan),
-            App.getContext().getString(R.string.location),
-            App.getContext().getString(R.string.speakers),
-            App.getContext().getString(R.string.about)
-           
+    public static final int[] MENU_STRING_RES_ARRAY = {
+            R.string.Sessions,
+            R.string.bofs,
+            R.string.social_events,
+            R.string.social_media,
+            R.string.my_schedule,
+            R.string.floor_plan,
+            R.string.location,
+            R.string.speakers,
+            R.string.about
+
     };
 }

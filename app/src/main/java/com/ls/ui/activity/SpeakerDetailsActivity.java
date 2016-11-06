@@ -1,6 +1,5 @@
 package com.ls.ui.activity;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -23,7 +22,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.ls.drupalcon.R;
-import com.ls.drupalcon.app.App;
 import com.ls.drupalcon.model.Model;
 import com.ls.drupalcon.model.UpdatesManager;
 import com.ls.drupalcon.model.dao.EventDao;
@@ -257,10 +255,14 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
     }
 
     private void loadSpeakerEvents(final Speaker speaker) {
+        // This still sucks but as a temporary workaround I'd rather keep using the app context
+        // rather than leaking the activity context.
+        final EventDao eventDao = new EventDao(getApplicationContext());
+
         new AsyncTask<Void, Void, List<SpeakerDetailsEvent>>() {
+
             @Override
             protected List<SpeakerDetailsEvent> doInBackground(Void... params) {
-                EventDao eventDao = new EventDao(App.getContext());
                 return eventDao.getEventsBySpeakerId(speaker.getId());
             }
 

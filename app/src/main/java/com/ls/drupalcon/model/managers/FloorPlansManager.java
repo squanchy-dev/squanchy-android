@@ -1,26 +1,18 @@
 package com.ls.drupalcon.model.managers;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+
 import com.ls.drupal.AbstractBaseDrupalEntity;
-import com.ls.drupal.AbstractDrupalByteEntity;
 import com.ls.drupal.DrupalByteEntity;
 import com.ls.drupal.DrupalClient;
-import com.ls.drupal.DrupalImageEntity;
-import com.ls.drupalcon.app.App;
 import com.ls.drupalcon.model.dao.FloorPlanDao;
-import com.ls.drupalcon.model.dao.LocationDao;
 import com.ls.drupalcon.model.data.FloorPlan;
-import com.ls.drupalcon.model.data.Location;
 import com.ls.drupalcon.model.requests.FloorPlansRequest;
-import com.ls.drupalcon.model.requests.LocationRequest;
 import com.ls.http.base.BaseRequest;
 import com.ls.http.base.ResponseData;
 import com.ls.util.L;
 import com.ls.utils.FileUtils;
-
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 
 import java.util.Collections;
 import java.util.List;
@@ -29,10 +21,14 @@ import java.util.concurrent.CountDownLatch;
 
 public class FloorPlansManager extends SynchronousItemManager<FloorPlan.Holder, Object, String> {
 
+    private final Context mContext;
+
     private FloorPlanDao mFloorPlansDAO;
-    public FloorPlansManager(DrupalClient client) {
+
+    public FloorPlansManager(DrupalClient client, Context context) {
         super(client);
-        mFloorPlansDAO = new FloorPlanDao();
+        this.mFloorPlansDAO = new FloorPlanDao();
+        this.mContext = context;
     }
 
     @Override
@@ -56,11 +52,11 @@ public class FloorPlansManager extends SynchronousItemManager<FloorPlan.Holder, 
         mFloorPlansDAO.saveOrUpdateDataSafe(plans);
         for (FloorPlan floor : plans) {
             if (floor != null) {
-                if (!floor.isDeleted()){
-                  if(!loadImageForFloor(floor)){
-                      L.e("Image loading failed:" + floor.getImageURL());
-                      return false;
-                  }
+                if (!floor.isDeleted()) {
+                    if (!loadImageForFloor(floor)) {
+                        L.e("Image loading failed:" + floor.getImageURL());
+                        return false;
+                    }
                 }
             }
         }
@@ -68,8 +64,8 @@ public class FloorPlansManager extends SynchronousItemManager<FloorPlan.Holder, 
         for (FloorPlan floor : plans) {
             if (floor != null) {
                 if (floor.isDeleted()) {
-                    if(mFloorPlansDAO.deleteDataSafe(floor.getId()) > 0) {
-                        FileUtils.deleteStoredFile(floor.getFilePath(), App.getContext());
+                    if (mFloorPlansDAO.deleteDataSafe(floor.getId()) > 0) {
+                        FileUtils.deleteStoredFile(floor.getFilePath(), mContext);
                     }
                 }
             }
@@ -84,8 +80,8 @@ public class FloorPlansManager extends SynchronousItemManager<FloorPlan.Holder, 
         return result;
     }
 
-    public Bitmap getImageForPlan(FloorPlan plan,int requiredWidth,int requiredHeight){
-        Bitmap planImage = FileUtils.readBitmapFromStoredFile(plan.getFilePath(),requiredWidth, requiredHeight, App.getContext());
+    public Bitmap getImageForPlan(FloorPlan plan, int requiredWidth, int requiredHeight) {
+        Bitmap planImage = FileUtils.readBitmapFromStoredFile(plan.getFilePath(), requiredWidth, requiredHeight, mContext);
         return planImage;
     }
 
@@ -113,25 +109,21 @@ public class FloorPlansManager extends SynchronousItemManager<FloorPlan.Holder, 
 //        }
 //    }
 
-    private boolean loadImageForFloor(final FloorPlan floor){
+    private boolean loadImageForFloor(final FloorPlan floor) {
         //Load new image
-        DrupalByteEntity imageEntity = new DrupalByteEntity(getClient())
-        {
+        DrupalByteEntity imageEntity = new DrupalByteEntity(getClient()) {
             @Override
-            protected String getPath()
-            {
+            protected String getPath() {
                 return floor.getImageURL();
             }
 
             @Override
-            protected Map<String, String> getItemRequestPostParameters()
-            {
+            protected Map<String, String> getItemRequestPostParameters() {
                 return null;
             }
 
             @Override
-            protected Map<String, Object> getItemRequestGetParameters(BaseRequest.RequestMethod method)
-            {
+            protected Map<String, Object> getItemRequestGetParameters(BaseRequest.RequestMethod method) {
                 return null;
             }
         };
@@ -143,11 +135,11 @@ public class FloorPlansManager extends SynchronousItemManager<FloorPlan.Holder, 
             imageEntity.pullFromServer(true, floor.getImageURL(), new AbstractBaseDrupalEntity.OnEntityRequestListener() {
                 @Override
                 public void onRequestCompleted(AbstractBaseDrupalEntity entity, Object tag, ResponseData data) {
-                    byte[]imageData = (byte[]) data.getData();
+                    byte[] imageData = (byte[]) data.getData();
 
                     //Store image
                     if (imageData != null && imageData.length > 0) {
-                        result.isSuccessful = FileUtils.writeBytesToStorage(floor.getFilePath(), imageData, App.getContext());
+                        result.isSuccessful = FileUtils.writeBytesToStorage(floor.getFilePath(), imageData, mContext);
                     } else {
                         result.isSuccessful = false;
                     }
@@ -168,14 +160,14 @@ public class FloorPlansManager extends SynchronousItemManager<FloorPlan.Holder, 
             });
 
             latch.await();
-        } catch (InterruptedException e){
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
         return result.isSuccessful;
     }
 
-    private class ResponseResult{
+    private class ResponseResult {
         public boolean isSuccessful;
     }
 }

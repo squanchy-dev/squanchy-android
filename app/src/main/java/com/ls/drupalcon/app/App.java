@@ -1,9 +1,10 @@
 package com.ls.drupalcon.app;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Tracker;
+import android.support.multidex.MultiDexApplication;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 import com.ls.drupal.DrupalClient;
 import com.ls.drupalcon.R;
 import com.ls.drupalcon.model.AppDatabaseInfo;
@@ -15,29 +16,22 @@ import com.ls.util.image.DrupalImageView;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 
-import android.content.Context;
-import android.support.multidex.MultiDexApplication;
-
 import io.fabric.sdk.android.Fabric;
 
 public class App extends MultiDexApplication {
-
-    private static Context mContext;
 
     @Override
     public void onCreate() {
         super.onCreate();
 //        if (!BuildConfig.DEBUG) {
-            TwitterAuthConfig authConfig = new TwitterAuthConfig(
-                    getString(R.string.api_value_twitter_api_key),
-                    getString(R.string.api_value_twitter_secret));
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(
+                getString(R.string.api_value_twitter_api_key),
+                getString(R.string.api_value_twitter_secret));
 //        }
 
-        mContext = getApplicationContext();
-
-        LAPIDBRegister.getInstance().register(mContext, new AppDatabaseInfo(mContext));
-        PreferencesManager.initializeInstance(mContext);
-        Model.instance(mContext);
+        LAPIDBRegister.getInstance().register(this, new AppDatabaseInfo(this));
+        PreferencesManager.initializeInstance(this);
+        Model.instance(this);
         DrupalClient client = new DrupalClient(
                 null,
                 Model.instance().createNewQueue(getApplicationContext()),
@@ -46,10 +40,6 @@ public class App extends MultiDexApplication {
         );
         DrupalImageView.setupSharedClient(client);
         Fabric.with(this, new Crashlytics(), new Twitter(authConfig));
-    }
-
-    public static Context getContext() {
-        return mContext;
     }
 
     public synchronized Tracker getTracker() {

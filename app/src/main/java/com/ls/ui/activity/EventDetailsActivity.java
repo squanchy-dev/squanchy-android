@@ -164,7 +164,9 @@ public class EventDetailsActivity extends StackKeeperActivity {
     }
 
     private void loadEvent() {
-        if (mEventId == -1) return;
+        if (mEventId == -1) {
+            return;
+        }
 
         new AsyncTask<Void, Void, EventDetailsEvent>() {
             @Override
@@ -283,7 +285,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
         if (TextUtils.isEmpty(event.getTrack()) &&
                 TextUtils.isEmpty(event.getLevel()) &&
                 TextUtils.isEmpty(event.getDescription()) &&
-                mSpeakerList.isEmpty()){
+                mSpeakerList.isEmpty()) {
             findViewById(R.id.imgEmptyView).setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.imgEmptyView).setVisibility(View.GONE);
@@ -297,11 +299,9 @@ public class EventDetailsActivity extends StackKeeperActivity {
         checkBoxFavorite.setChecked(mIsFavorite);
 
         RelativeLayout layoutFavorite = (RelativeLayout) findViewById(R.id.layoutFavorite);
-        layoutFavorite.setOnClickListener(new View.OnClickListener()
-        {
+        layoutFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 checkBoxFavorite.setChecked(!checkBoxFavorite.isChecked());
                 mIsFavorite = checkBoxFavorite.isChecked();
                 setFavorite();
@@ -356,10 +356,10 @@ public class EventDetailsActivity extends StackKeeperActivity {
     }
 
     private void setFavorite() {
+        final FavoriteManager manager = new FavoriteManager(EventDetailsActivity.this.getApplicationContext());
         new Thread(new Runnable() {
             @Override
             public void run() {
-                FavoriteManager manager = new FavoriteManager();
                 manager.setFavoriteEvent(mEventId, mIsFavorite);
             }
         }).start();
