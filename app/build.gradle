@@ -43,9 +43,9 @@ android {
         }
     }
 
-    dexOptions {
-        // preDexLibraries = false      TODO can we remove this?
-        javaMaxHeapSize "4g"
+    lintOptions {
+        lintConfig file("$rootProject.projectDir/config/lint.xml")
+        abortOnError false
     }
 }
 

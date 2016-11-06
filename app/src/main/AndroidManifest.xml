@@ -20,7 +20,6 @@
     android:icon="@drawable/ic_launcher"
     android:label="@string/app_name"
     android:theme="@style/Theme.DrupalCon.Home"
-    android:largeHeap="true"
     android:supportsRtl="false"
     tools:ignore="GoogleAppIndexingWarning">
 
@@ -68,7 +67,8 @@
 
     <meta-data
       android:name="io.fabric.ApiKey"
-      android:value="nope" />
+      android:value="e92185b02a2fa31062b797232c3d5cccf9867952" />
+
   </application>
 
 </manifest>
