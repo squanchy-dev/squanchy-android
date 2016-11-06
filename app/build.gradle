@@ -65,7 +65,7 @@ android {
     }
 
     lintOptions {
-        lintConfig file("$rootProject.projectDir/config/lint.xml")
+        lintConfig file("$rootProject.projectDir/team-props/lint.xml")
         abortOnError false
     }
 }

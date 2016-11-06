@@ -45,3 +45,4 @@ local.properties
 captures/
 
 team-props/*.properties
+team-props/*.keystore
