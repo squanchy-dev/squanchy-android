@@ -74,6 +74,7 @@ android {
 dependencies {
     compile libraries.app.annotations
     compile libraries.app.gson
+    compile libraries.volley
 
     compile libraries.app.shadowLayout
     compile libraries.app.materialTabStrip

@@ -36,7 +36,7 @@ public class ResponseListenersSet {
     private Map<Request, List<ListenerHolder>> listeners;
     public ResponseListenersSet()
     {
-        listeners = new HashMap<Request, List<ListenerHolder>>();
+        listeners = new HashMap<>();
     }
 
     /**
@@ -58,7 +58,7 @@ public class ResponseListenersSet {
 
         if(listenersList == null)
         {
-            listenersList = new LinkedList<ListenerHolder>();
+            listenersList = new LinkedList<>();
             listeners.put(request,listenersList);
             result = true;
         }else{

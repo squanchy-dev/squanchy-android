@@ -37,7 +37,13 @@ public class App extends Application {
         LAPIDBRegister.getInstance().register(mContext, new AppDatabaseInfo(mContext));
         PreferencesManager.initializeInstance(mContext);
         Model.instance(mContext);
-        DrupalImageView.setupSharedClient(new DrupalClient(null, Model.instance().createNewQueue(getApplicationContext()), BaseRequest.RequestFormat.JSON, null));
+        DrupalClient client = new DrupalClient(
+                null,
+                Model.instance().createNewQueue(getApplicationContext()),
+                BaseRequest.RequestFormat.JSON,
+                null
+        );
+        DrupalImageView.setupSharedClient(client);
         Fabric.with(this, new Crashlytics(), new Twitter(authConfig));
     }
 

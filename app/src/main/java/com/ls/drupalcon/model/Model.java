@@ -1,5 +1,8 @@
 package com.ls.drupalcon.model;
 
+import android.content.Context;
+import android.os.Environment;
+
 import com.android.volley.Network;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.BasicNetwork;
@@ -31,11 +34,6 @@ import com.ls.drupalcon.model.managers.TypesManager;
 import com.ls.http.base.BaseRequest;
 import com.ls.http.base.ResponseData;
 
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.os.Environment;
-
 import java.io.File;
 import java.net.CookieHandler;
 import java.net.CookieManager;
@@ -44,25 +42,21 @@ import java.net.CookieStore;
 
 public class Model {
 
-    public static final int CACHE_DISK_USAGE_BYTES = 20 * 1024 * 1024;
-    public static final int REQUEST_TIMEOUT_MLLIS = 60 * 1000;
+    private static final int CACHE_DISK_USAGE_BYTES = 20 * 1024 * 1024;
+    private static final int REQUEST_TIMEOUT_MLLIS = 60 * 1000;
 
     private static Model instance;
-    public static Model instance(Context theContext)
-    {
-        if (instance == null)
-        {
+
+    public static Model instance(Context theContext) {
+        if (instance == null) {
             instance = new Model(theContext);
         }
 
         return instance;
     }
 
-
-    public static Model instance()
-    {
-        if (instance == null)
-        {
+    public static Model instance() {
+        if (instance == null) {
             throw new IllegalStateException("Called method on uninitialized model");
         }
 
@@ -109,7 +103,7 @@ public class Model {
         return cookieStore;
     }
 
-    public TypesManager getTypesManager() {
+    TypesManager getTypesManager() {
         return typesManager;
     }
 
@@ -120,7 +114,6 @@ public class Model {
     public TracksManager getTracksManager() {
         return tracksManager;
     }
-
 
     public SpeakerManager getSpeakerManager() {
         return speakerManager;
@@ -138,7 +131,7 @@ public class Model {
         return bofsManager;
     }
 
-    public PoisManager getPoisManager() {
+    PoisManager getPoisManager() {
         return poisManager;
     }
 
@@ -150,7 +143,7 @@ public class Model {
         return programManager;
     }
 
-    public ProgramManager createProgramManager() {
+    ProgramManager createProgramManager() {
         return new ProgramManager(client);
     }
 
@@ -166,12 +159,11 @@ public class Model {
         return favoriteManager;
     }
 
-    public SettingsManager getSettingsManager() {
+    SettingsManager getSettingsManager() {
         return settingsManager;
     }
 
-    public FloorPlansManager getFloorPlansManager()
-    {
+    public FloorPlansManager getFloorPlansManager() {
         return floorPlansManager;
     }
 
@@ -181,20 +173,15 @@ public class Model {
 
     /**
      * NOTE: login is performed in synchroneus way so you must never call it from UI thread.
-     * @param userName
-     * @param password
-     * @return
      */
-    public ResponseData performLogin(String userName, String password)
-    {
+    public ResponseData performLogin(String userName, String password) {
         return this.loginManager.login(userName, password, queue);
     }
 
-    private Model(Context context)
-    {
+    private Model(Context context) {
         loginManager = new LoginManager();
         queue = createNoCachedQueue(context);
-        client = new DrupalClient(context.getString(R.string.api_value_base_url),queue, BaseRequest.RequestFormat.JSON,loginManager);
+        client = new DrupalClient(context.getString(R.string.api_value_base_url), queue, BaseRequest.RequestFormat.JSON, loginManager);
         client.setRequestTimeout(REQUEST_TIMEOUT_MLLIS);
 
         typesManager = new TypesManager(client);
@@ -215,30 +202,14 @@ public class Model {
         floorPlansManager = new FloorPlansManager(client);
     }
 
-
     //Initialization
 
-    public RequestQueue createNewQueue(Context context)
-    {
+    public RequestQueue createNewQueue(Context context) {
         cookieStore = new HURLCookieStore(context);
         CookieManager cmrCookieMan = new CookieManager(cookieStore, CookiePolicy.ACCEPT_ALL);
         CookieHandler.setDefault(cmrCookieMan);
 
-        HttpStack stack;
-
-        String userAgent = "volley/0";
-        try {
-            String packageName = context.getPackageName();
-            PackageInfo info = context.getPackageManager().getPackageInfo(packageName, 0);
-            userAgent = packageName + "/" + info.versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
-        }
-
-
-        stack =  new RedirectHurlStack();
-
-
-
+        HttpStack stack = new RedirectHurlStack();
         return newRequestQueue(context, stack);
     }
 
@@ -247,26 +218,12 @@ public class Model {
         CookieManager cmrCookieMan = new CookieManager(cookieStore, CookiePolicy.ACCEPT_ALL);
         CookieHandler.setDefault(cmrCookieMan);
 
-        HttpStack stack;
-
-        String userAgent = "volley/0";
-        try {
-            String packageName = context.getPackageName();
-            PackageInfo info = context.getPackageManager().getPackageInfo(packageName, 0);
-            userAgent = packageName + "/" + info.versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
-        }
-
-        stack =  new RedirectHurlStack();
-
+        HttpStack stack = new RedirectHurlStack();
         return newNoCachedRequestQueue(stack);
     }
 
     /**
      * volley's default implementation uses internal cache only so we've implemented our, allowing external cache usage.
-     * @param context
-     * @param stack
-     * @return
      */
     private static RequestQueue newRequestQueue(Context context, HttpStack stack) {
 
@@ -286,7 +243,7 @@ public class Model {
 
         Network network = new BasicNetwork(stack);
 
-        RequestQueue queue = new RequestQueue(new DiskBasedCache(cacheDir, CACHE_DISK_USAGE_BYTES), network,1);
+        RequestQueue queue = new RequestQueue(new DiskBasedCache(cacheDir, CACHE_DISK_USAGE_BYTES), network, 1);
         queue.start();
 
         return queue;
@@ -298,7 +255,7 @@ public class Model {
         }
 
         Network network = new BasicNetwork(stack);
-        RequestQueue queue = new RequestQueue(new NoCache(), network,1);
+        RequestQueue queue = new RequestQueue(new NoCache(), network, 1);
         queue.start();
 
         return queue;
@@ -316,7 +273,7 @@ public class Model {
         typesManager.clear();
     }
 
-    protected ILAPIDBFacade getFacade() {
+    ILAPIDBFacade getFacade() {
         return LAPIDBRegister.getInstance().lookup(AppDatabaseInfo.DATABASE_NAME);
     }
 }
