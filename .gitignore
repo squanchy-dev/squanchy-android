@@ -43,3 +43,6 @@ local.properties
 
 # Heap dump captures
 captures/
+
+team-props/*.properties
+team-props/*.keystore

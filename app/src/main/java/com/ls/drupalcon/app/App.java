@@ -1,6 +1,7 @@
 package com.ls.drupalcon.app;
 
-import android.support.multidex.MultiDexApplication;
+import android.app.Application;
+import android.content.Context;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.analytics.GoogleAnalytics;
@@ -18,7 +19,7 @@ import com.twitter.sdk.android.core.TwitterAuthConfig;
 
 import io.fabric.sdk.android.Fabric;
 
-public class App extends MultiDexApplication {
+public class App extends Application {
 
     @Override
     public void onCreate() {

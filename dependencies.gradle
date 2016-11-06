@@ -1,0 +1,17 @@
+ext {
+    libraries = [
+            app: [
+                    annotations     : 'org.jetbrains:annotations:13.0',
+                    appCompat       : 'com.android.support:appcompat-v7:25.0.0',
+                    crashlytics     : 'com.crashlytics.sdk.android:crashlytics:2.6.5',
+                    gson            : 'com.google.code.gson:gson:2.8.0',
+                    materialTabStrip: 'com.jpardogo.materialtabstrip:library:1.0.8',
+                    parallaxScroll  : 'com.github.nirhart:parallaxscroll:1.0',
+                    playAnalytics   : 'com.google.android.gms:play-services-analytics:9.8.0',
+                    playMaps        : 'com.google.android.gms:play-services-maps:9.8.0',
+                    shadowLayout    : 'com.github.dmytrodanylyk.shadow-layout:library:1.0.2',
+                    twitter         : 'com.twitter.sdk.android:twitter:2.1.1',
+                    volley          : 'com.mcxiaoke.volley:library:1.0.19'
+            ]
+    ]
+}
