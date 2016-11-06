@@ -1,5 +1,7 @@
 package com.ls.drupalcon.model.managers;
 
+import android.content.Context;
+
 import com.ls.drupal.AbstractBaseDrupalEntity;
 import com.ls.drupal.DrupalClient;
 import com.ls.drupalcon.model.PreferencesManager;
@@ -13,8 +15,8 @@ import java.util.List;
 
 public class SocialManager extends EventManager {
 
-    public SocialManager(DrupalClient client) {
-        super(client);
+    public SocialManager(DrupalClient client, Context context) {
+        super(client, context);
     }
 
     @Override

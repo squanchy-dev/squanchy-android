@@ -1,5 +1,7 @@
 package com.ls.drupalcon.model.managers;
 
+import android.content.Context;
+
 import com.ls.drupal.AbstractBaseDrupalEntity;
 import com.ls.drupal.DrupalClient;
 import com.ls.drupalcon.model.PreferencesManager;
@@ -13,8 +15,8 @@ import java.util.List;
 
 public class BofsManager extends EventManager {
 
-    public BofsManager(DrupalClient client) {
-        super(client);
+    public BofsManager(DrupalClient client, Context context) {
+        super(client, context);
     }
 
     @Override
@@ -65,10 +67,6 @@ public class BofsManager extends EventManager {
         }
         return true;
     }
-
-//    public List<Long> getBofsDays() {
-//        return mEventDao.selectDistrictDateSafe(Event.BOFS_CLASS);
-//    }
 
     public List<Long> getBofsDays() {
         List<Long> levelIds = PreferencesManager.getInstance().loadExpLevel();

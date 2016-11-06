@@ -1,19 +1,5 @@
 package com.ls.ui.adapter;
 
-import com.ls.drupalcon.R;
-import com.ls.drupalcon.app.App;
-import com.ls.drupalcon.model.data.Event;
-import com.ls.drupalcon.model.data.Level;
-import com.ls.drupalcon.model.data.Type;
-import com.ls.ui.adapter.item.BofsItem;
-import com.ls.ui.adapter.item.EventListItem;
-import com.ls.ui.adapter.item.HeaderItem;
-import com.ls.ui.adapter.item.ProgramItem;
-import com.ls.ui.adapter.item.SocialItem;
-import com.ls.ui.adapter.item.TimeRangeItem;
-import com.ls.ui.drawer.DrawerManager;
-import com.ls.utils.DateUtils;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
@@ -27,14 +13,25 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ls.drupalcon.R;
+import com.ls.drupalcon.model.data.Event;
+import com.ls.drupalcon.model.data.Level;
+import com.ls.drupalcon.model.data.Type;
+import com.ls.ui.adapter.item.BofsItem;
+import com.ls.ui.adapter.item.EventListItem;
+import com.ls.ui.adapter.item.HeaderItem;
+import com.ls.ui.adapter.item.ProgramItem;
+import com.ls.ui.adapter.item.SocialItem;
+import com.ls.ui.adapter.item.TimeRangeItem;
+import com.ls.ui.drawer.DrawerManager;
+import com.ls.utils.DateUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class EventsAdapter extends BaseAdapter {
 
     private static final int TYPE_COUNT = 5;
-    private static final int SINGLE_LINE_COUNT = 1;
-    private static final int MULTI_LINE_COUNT = 3;
 
     private Context mContext;
     private List<EventListItem> mData;
@@ -242,9 +239,9 @@ public class EventsAdapter extends BaseAdapter {
             holder.txtFrom.setText(fromTime);
             holder.txtTo.setText(String.format(mContext.getString(R.string.to), toTime));
         } else {
-            holder.txtFrom.setText(App.getContext().getString(R.string.twenty_four_hours));
-            holder.txtFrom.setTextSize(TypedValue.COMPLEX_UNIT_PX, App.getContext().getResources().getDimension(R.dimen.text_size_micro));
-            holder.txtTo.setText(App.getContext().getString(R.string.access));
+            holder.txtFrom.setText(mContext.getString(R.string.twenty_four_hours));
+            holder.txtFrom.setTextSize(TypedValue.COMPLEX_UNIT_PX, mContext.getResources().getDimension(R.dimen.text_size_micro));
+            holder.txtTo.setText(mContext.getString(R.string.access));
         }
 
         holder.txtFrom.setVisibility(View.VISIBLE);

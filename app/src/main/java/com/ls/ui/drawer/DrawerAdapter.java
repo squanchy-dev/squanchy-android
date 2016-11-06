@@ -1,6 +1,7 @@
 package com.ls.ui.drawer;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,18 +11,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ls.drupalcon.R;
-import com.ls.drupalcon.app.App;
 
 import java.util.List;
 
 public class DrawerAdapter extends BaseAdapter {
-    private List<DrawerMenuItem> menu;
+
+    private final Resources mResources;
+
+    private List<DrawerMenuItem> menuItems;
     private LayoutInflater inflater;
     private int selectedPos = 0;
 
-    public DrawerAdapter(Context theContext, List<DrawerMenuItem> theMenu) {
-        inflater = (LayoutInflater) theContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        menu = theMenu;
+    public DrawerAdapter(Context context, List<DrawerMenuItem> menuItems) {
+        this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.menuItems = menuItems;
+        this.mResources = context.getResources();
     }
 
     public void setSelectedPos(int selectedPos) {
@@ -30,24 +34,24 @@ public class DrawerAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return menu.size(); //+ 1 because header was added to list
+        return menuItems.size(); //+ 1 because header was added to list
     }
 
     @Override
     public DrawerMenuItem getItem(int position) {
-        return menu.get(position);
+        return menuItems.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return menu.get(position).getId();
+        return menuItems.get(position).getId();
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         View result;
 
-        DrawerMenuItem item = menu.get(position);
+        DrawerMenuItem item = menuItems.get(position);
 
         if (item.isGroup()) {
             result = inflater.inflate(R.layout.item_drawer_group, parent, false);
@@ -63,7 +67,7 @@ public class DrawerAdapter extends BaseAdapter {
 
         if (position == selectedPos) {
             image.setImageResource(item.getSelIconRes());
-            txtName.setTextColor(App.getContext().getResources().getColor(R.color.item_selection));
+            txtName.setTextColor(mResources.getColor(R.color.item_selection));
         } else {
             image.setImageResource(item.getIconRes());
         }
@@ -84,19 +88,14 @@ public class DrawerAdapter extends BaseAdapter {
 
     @Override
     public boolean isEnabled(int position) {
-        DrawerMenuItem item = menu.get(position);
-
-        if (item.isGroup()) {
-            return false;
-        } else {
-            return true;
-        }
+        DrawerMenuItem item = menuItems.get(position);
+        return !item.isGroup();
     }
 
     public OnDrawerItemClickListener mListener;
 
     public interface OnDrawerItemClickListener {
-        public void onDrawerItemClicked(int position);
+        void onDrawerItemClicked(int position);
     }
 
     public void setDrawerItemClickListener(OnDrawerItemClickListener listener) {

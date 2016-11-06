@@ -1,5 +1,7 @@
 package com.ls.drupalcon.model.managers;
 
+import android.content.Context;
+
 import com.ls.drupal.AbstractBaseDrupalEntity;
 import com.ls.drupal.DrupalClient;
 import com.ls.drupalcon.model.PreferencesManager;
@@ -13,8 +15,8 @@ import java.util.List;
 
 public class ProgramManager extends EventManager {
 
-    public ProgramManager(DrupalClient client) {
-        super(client);
+    public ProgramManager(DrupalClient client, Context context) {
+        super(client, context);
     }
 
     @Override
@@ -87,7 +89,7 @@ public class ProgramManager extends EventManager {
         return mEventDao.selectProgramItemsSafe(eventClass, day, levelIds, trackIds);
     }
 
-    public List<EventListItem> getFavoriteProgramItemsSafe(List<Long> favoriteEventIds, long day){
+    public List<EventListItem> getFavoriteProgramItemsSafe(List<Long> favoriteEventIds, long day) {
         return mEventDao.selectFavoriteProgramItemsSafe(favoriteEventIds, day);
     }
 }

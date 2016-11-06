@@ -1,7 +1,9 @@
 package com.ls.drupalcon.model;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+
 import com.ls.drupalcon.R;
-import com.ls.drupalcon.app.App;
 import com.ls.drupalcon.model.dao.EventDao;
 import com.ls.drupalcon.model.dao.InfoDao;
 import com.ls.drupalcon.model.dao.LevelDao;
@@ -14,10 +16,6 @@ import com.ls.drupalcon.model.database.DBInfo;
 import com.ls.drupalcon.model.database.IMigrationTask;
 import com.ls.utils.FileUtils;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.database.sqlite.SQLiteDatabase;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,16 +23,16 @@ import java.util.List;
 public class AppDatabaseInfo implements DBInfo, IMigrationTask {
 
     public static final String DATABASE_NAME = "drupal_db";
-    public static final int DATABASE_VERSION = 11;
+    private static final int DATABASE_VERSION = 11;
 
     private static final String TABLE_EVENT_SPEAKER = "table_event_and_speaker";
     private static final String TABLE_FAVORITE_EVENTS = "table_favorite_events";
     private static final String DELETE_TABLE_IF_EXIST = "DROP TABLE IF EXISTS ";
 
-    private Resources mResources;
+    private Context mContext;
 
-    public AppDatabaseInfo(Context theContext) {
-        this.mResources = theContext.getResources();
+    public AppDatabaseInfo(Context context) {
+        this.mContext = context;
     }
 
     @Override
@@ -74,19 +72,19 @@ public class AppDatabaseInfo implements DBInfo, IMigrationTask {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase theDb, int oldVersion, int newVersion) {
-        if (newVersion > oldVersion){
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        if (newVersion > oldVersion) {
             PreferencesManager.getInstance().saveLastUpdateDate(null);
             List<String> dbDropList = generateDropQueryList();
             List<String> dbSchemaQueryList = generateCreationQueryList();
 
             for (String query : dbDropList) {
-                theDb.execSQL(query);
+                db.execSQL(query);
             }
-            FileUtils.deleteDataStorageDirectory(App.getContext());
+            FileUtils.deleteDataStorageDirectory(mContext);
 
             for (String query : dbSchemaQueryList) {
-                theDb.execSQL(query);
+                db.execSQL(query);
             }
 
         }
@@ -118,6 +116,6 @@ public class AppDatabaseInfo implements DBInfo, IMigrationTask {
     }
 
     private void addStringWithIdToList(List<String> theList, int theId) {
-        theList.add(this.mResources.getString(theId));
+        theList.add(mContext.getResources().getString(theId));
     }
 }

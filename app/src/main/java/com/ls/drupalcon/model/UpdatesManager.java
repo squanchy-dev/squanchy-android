@@ -1,8 +1,11 @@
 package com.ls.drupalcon.model;
 
+import android.content.Context;
+import android.os.AsyncTask;
+import android.text.TextUtils;
+
 import com.ls.drupal.DrupalClient;
 import com.ls.drupalcon.R;
-import com.ls.drupalcon.app.App;
 import com.ls.drupalcon.model.data.UpdateDate;
 import com.ls.drupalcon.model.database.ILAPIDBFacade;
 import com.ls.drupalcon.model.managers.SynchronousItemManager;
@@ -10,15 +13,12 @@ import com.ls.http.base.BaseRequest;
 import com.ls.http.base.RequestConfig;
 import com.ls.http.base.ResponseData;
 import com.ls.ui.drawer.DrawerManager;
-import com.ls.util.L;
 import com.ls.util.ObserverHolder;
-import org.jetbrains.annotations.NotNull;
-
-import android.os.AsyncTask;
-import android.text.TextUtils;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 
 public class UpdatesManager {
 
@@ -41,6 +41,8 @@ public class UpdatesManager {
     public static final String IF_MODIFIED_SINCE_HEADER = "If-Modified-Since";
     public static final String LAST_MODIFIED_HEADER = "Last-Modified";
 
+    private final Context mContext;
+
     public static int convertEventIdToEventModePos(int eventModePos) {
         switch (eventModePos) {
             case PROGRAMS_REQUEST_ID:
@@ -53,7 +55,8 @@ public class UpdatesManager {
         return 0;
     }
 
-    public UpdatesManager(@NotNull DrupalClient client) {
+    public UpdatesManager(@NotNull DrupalClient client, Context context) {
+        this.mContext = context;
         mUpdateListeners = new ObserverHolder<>();
         mClient = client;
     }
@@ -113,7 +116,7 @@ public class UpdatesManager {
         config.setResponseFormat(BaseRequest.ResponseFormat.JSON);
         config.setRequestFormat(BaseRequest.RequestFormat.JSON);
         config.setResponseClassSpecifier(UpdateDate.class);
-        String baseURL =  App.getContext().getString(R.string.api_value_base_url);
+        String baseURL = mContext.getString(R.string.api_value_base_url);
         BaseRequest checkForUpdatesRequest = new BaseRequest(BaseRequest.RequestMethod.GET, baseURL + "checkUpdates", config);
         String lastDate = PreferencesManager.getInstance().getLastUpdateDate();
         checkForUpdatesRequest.addRequestHeader(IF_MODIFIED_SINCE_HEADER, lastDate);
@@ -161,7 +164,6 @@ public class UpdatesManager {
             facade.endTransactions();
             facade.close();
         }
-
 
     }
 
