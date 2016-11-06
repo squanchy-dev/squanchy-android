@@ -5,7 +5,7 @@
   <!--CREATE TABLES-->
   <!--==============================================================-->
 
-  <string name="create_table_type">
+  <string name="create_table_type" translatable="false">
         CREATE TABLE table_type (
         _id				        INTEGER,
         name				    TEXT,
@@ -15,7 +15,7 @@
         )
     </string>
 
-  <string name="create_table_speaker">
+  <string name="create_table_speaker" translatable="false">
         CREATE TABLE table_speaker (
         _id				        INTEGER,
         first_name				TEXT,
@@ -31,7 +31,7 @@
         )
     </string>
 
-  <string name="create_table_level">
+  <string name="create_table_level" translatable="false">
         CREATE TABLE table_level (
         _id				        INTEGER,
         level_name				TEXT,
@@ -40,7 +40,7 @@
         )
     </string>
 
-  <string name="create_table_track">
+  <string name="create_table_track" translatable="false">
         CREATE TABLE table_track (
         _id				        INTEGER,
         track_name				TEXT,
@@ -49,7 +49,7 @@
         )
     </string>
 
-  <string name="create_table_location">
+  <string name="create_table_location" translatable="false">
         CREATE TABLE table_location (
         _id				        INTEGER,
         location_name			TEXT,
@@ -62,7 +62,7 @@
         )
     </string>
 
-  <string name="create_table_info">
+  <string name="create_table_info" translatable="false">
         CREATE TABLE table_info (
         _id				        INTEGER,
         info_title        		TEXT,
@@ -72,7 +72,7 @@
         )
     </string>
 
-  <string name="create_table_poi">
+  <string name="create_table_poi" translatable="false">
         CREATE TABLE table_poi (
         _id				        INTEGER,
         poi_name        		TEXT,
@@ -84,7 +84,7 @@
         )
     </string>
 
-  <string name="create_table_event">
+  <string name="create_table_event" translatable="false">
         CREATE TABLE table_event (
         _id				        INTEGER,
         _date			        INTEGER,
@@ -104,20 +104,20 @@
         )
     </string>
 
-  <string name="create_table_event_and_speaker">
+  <string name="create_table_event_and_speaker" translatable="false">
         CREATE TABLE table_event_and_speaker (
         _event_id		         INTEGER,
         _speaker_id			     INTEGER
         )
     </string>
 
-  <string name="create_table_favorite_events">
+  <string name="create_table_favorite_events" translatable="false">
         CREATE TABLE table_favorite_events (
         _event_id		         INTEGER
         )
     </string>
 
-  <string name="create_table_floor_plans">
+  <string name="create_table_floor_plans" translatable="false">
         CREATE TABLE table_floor_plans (
         _id                      STRING,
         _name                    STRING,
@@ -131,12 +131,12 @@
   <!--INSERT-->
   <!--==============================================================-->
 
-  <string name="insert_event_speaker">
+  <string name="insert_event_speaker" translatable="false">
         INSERT INTO table_event_and_speaker (_event_id, _speaker_id)
         VALUES (?,?)
     </string>
 
-  <string name="insert_favorite_event">
+  <string name="insert_favorite_event" translatable="false">
         INSERT INTO table_favorite_events (_event_id)
         VALUES (?)
     </string>
@@ -145,7 +145,7 @@
   <!--UPDATE -->
   <!--==============================================================-->
 
-  <string name="update_event_favorite">
+  <string name="update_event_favorite" translatable="false">
         UPDATE table_event
         SET _favorite=?
         WHERE _id=?
@@ -155,26 +155,26 @@
   <!--DELETE  -->
   <!--==============================================================-->
 
-  <string name="delete_event_favorite">
+  <string name="delete_event_favorite" translatable="false">
         DELETE FROM table_favorite_events
         WHERE _event_id=?
     </string>
 
-  <string name="delete_event_and_speaker">
+  <string name="delete_event_and_speaker" translatable="false">
         DELETE FROM table_event_and_speaker
     </string>
 
-  <string name="delete_event_and_speaker_by_speaker_id">
+  <string name="delete_event_and_speaker_by_speaker_id" translatable="false">
         DELETE FROM table_event_and_speaker
         WHERE _speaker_id =?
     </string>
 
-  <string name="delete_event_and_speaker_by_event_id">
+  <string name="delete_event_and_speaker_by_event_id" translatable="false">
         DELETE FROM table_event_and_speaker
         WHERE _event_id =?
     </string>
 
-  <string name="delete_event_and_speaker_by_event_and_speaker_id">
+  <string name="delete_event_and_speaker_by_event_and_speaker_id" translatable="false">
         DELETE FROM table_event_and_speaker
         WHERE _event_id =? AND _speaker_id =?
     </string>
@@ -183,85 +183,85 @@
   <!--SELECT-->
   <!--==============================================================-->
 
-  <string name="select_speaker_events">
+  <string name="select_speaker_events" translatable="false">
         SELECT _event_id
         FROM table_event_and_speaker
         WHERE _speaker_id=?
     </string>
 
-  <string name="select_speaker_events_ids">
+  <string name="select_speaker_events_ids" translatable="false">
         SELECT _event_id
         FROM table_event_and_speaker
     </string>
 
-  <string name="select_event_speakers">
+  <string name="select_event_speakers" translatable="false">
         SELECT _speaker_id
         FROM table_event_and_speaker
         WHERE _event_id=?
     </string>
 
-  <string name="select_events_by_class">
+  <string name="select_events_by_class" translatable="false">
         SELECT *
         FROM table_event
         WHERE _event_class=?
         ORDER BY _order
     </string>
 
-  <string name="select_events_by_class_and_date">
+  <string name="select_events_by_class_and_date" translatable="false">
         SELECT *
         FROM table_event
         WHERE _event_class=? and _date=?
         ORDER BY _id, _order
     </string>
 
-  <string name="select_date_distinct">
+  <string name="select_date_distinct" translatable="false">
         SELECT DISTINCT _date
         FROM table_event
         ORDER BY _date
     </string>
 
-  <string name="select_favorite_date_distinct">
+  <string name="select_favorite_date_distinct" translatable="false">
         SELECT DISTINCT _date
         FROM table_event
         WHERE _favorite=1
         ORDER BY _date
     </string>
 
-  <string name="select_date_distinct_by_class">
+  <string name="select_date_distinct_by_class" translatable="false">
         SELECT DISTINCT _date
         FROM table_event
         WHERE _event_class=?
         ORDER BY _date
     </string>
 
-  <string name="select_date_distinct_by_class_and_expLevel_ids">
+  <string name="select_date_distinct_by_class_and_expLevel_ids" translatable="false">
         SELECT DISTINCT _date
         FROM table_event
         WHERE _event_class=? and _experience_level IN (%s)
         ORDER BY _date
     </string>
 
-  <string name="select_date_distinct_by_class_and_track_ids">
+  <string name="select_date_distinct_by_class_and_track_ids" translatable="false">
         SELECT DISTINCT _date
         FROM table_event
         WHERE _event_class=? and _track IN (%s)
         ORDER BY _date
     </string>
 
-  <string name="select_date_distinct_by_class_and_expLevel_ids_and_track_ids">
+  <string name="select_date_distinct_by_class_and_expLevel_ids_and_track_ids" translatable="false">
         SELECT DISTINCT _date
         FROM table_event
         WHERE _event_class=? and _experience_level IN (%1$s) and _track IN (%2$s)
         ORDER BY _date
     </string>
 
-  <string name="select_favorite_events">
+  <string name="select_favorite_events" translatable="false">
         SELECT _event_id
         FROM table_favorite_events
         ORDER BY _event_id
     </string>
 
-  <string name="select_distinct_time_range">
+  <string name="select_distinct_time_range" translatable="false">
         SELECT _from, _to, _date
         FROM table_event
         WHERE _event_class=? and _date=?
@@ -269,7 +269,7 @@
         ORDER BY  _from, _to
     </string>
 
-  <string name="select_distinct_time_range_by_expLevel_ids">
+  <string name="select_distinct_time_range_by_expLevel_ids" translatable="false">
         SELECT _from, _to, _date
         FROM table_event
         WHERE _event_class=? and _date=? and _experience_level IN (%s)
@@ -277,7 +277,7 @@
         ORDER BY  _from, _to
     </string>
 
-  <string name="select_distinct_time_range_by_track_ids">
+  <string name="select_distinct_time_range_by_track_ids" translatable="false">
         SELECT _from, _to, _date
         FROM table_event
         WHERE _event_class=? and _date=? and _track IN (%s)
@@ -285,7 +285,7 @@
         ORDER BY  _from, _to
     </string>
 
-  <string name="select_distinct_time_range_by_expLevel_and_track_ids">
+  <string name="select_distinct_time_range_by_expLevel_and_track_ids" translatable="false">
         SELECT _from, _to, _date
         FROM table_event
         WHERE _event_class=? and _date=? and _experience_level IN (%1$s) and _track IN (%2$s)
@@ -293,7 +293,7 @@
         ORDER BY  _from, _to
     </string>
 
-  <string name="select_distinct_fav_time_range">
+  <string name="select_distinct_fav_time_range" translatable="false">
         SELECT _from, _to, _date
         FROM table_event
         WHERE _event_class=? and _date=? and _id IN (%s)
@@ -302,7 +302,7 @@
     </string>
 
 
-  <string name="select_distinct_time_range_by_event_ids">
+  <string name="select_distinct_time_range_by_event_ids" translatable="false">
         SELECT _from, _to, _date
         FROM table_event
         WHERE _id IN (%s)
@@ -310,21 +310,21 @@
         ORDER BY _date, _from, _to
     </string>
 
-  <string name="select_events_by_ids">
+  <string name="select_events_by_ids" translatable="false">
         SELECT *
         FROM table_event
         WHERE _id IN (%s)
         ORDER BY _order
     </string>
 
-  <string name="select_events_by_ids_and_date">
+  <string name="select_events_by_ids_and_date" translatable="false">
         SELECT *
         FROM table_event
         WHERE _id IN (%s) AND _date=?
         ORDER BY _order
     </string>
 
-  <string name="select_program_items_by_date_and_track_ids">
+  <string name="select_program_items_by_date_and_track_ids" translatable="false">
         SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class,
         e._favorite, e._order, e._experience_level, t.track_name, l.level_name, e._track,
             (SELECT group_concat(first_name|| \' \' ||last_name,\',\')
@@ -346,7 +346,7 @@
         ORDER BY e._id, e._order
     </string>
 
-  <string name="select_program_items_by_date_and_expLevel_ids">
+  <string name="select_program_items_by_date_and_expLevel_ids" translatable="false">
         SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class, e._track,
         e._favorite, e._order, e._experience_level, t.track_name, l.level_name,
             (SELECT group_concat(first_name|| \' \' ||last_name,\',\')
@@ -367,7 +367,7 @@
         ORDER BY e._id, e._order
     </string>
 
-  <string name="select_program_items_by_date_and_track_ids_and_expLevel_ids">
+  <string name="select_program_items_by_date_and_track_ids_and_expLevel_ids" translatable="false">
         SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class, e._track,
         e._favorite, e._order, e._experience_level, t.track_name, l.level_name,
             (SELECT group_concat(first_name|| \' \' ||last_name,\',\')
@@ -388,7 +388,7 @@
         ORDER BY e._id, e._order
     </string>
 
-  <string name="select_program_items_by_date">
+  <string name="select_program_items_by_date" translatable="false">
         SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class, e._track,
         e._favorite, e._order, e._experience_level, t.track_name, l.level_name,
             (SELECT group_concat(first_name|| \' \' ||last_name,\',\')
@@ -409,7 +409,7 @@
         ORDER BY e._order, e._id
     </string>
 
-  <string name="select_fav_program_items_by_date_and_fav_ids">
+  <string name="select_fav_program_items_by_date_and_fav_ids" translatable="false">
         SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class, e._track,
         e._favorite, e._order, e._experience_level, t.track_name, l.level_name,
             (SELECT group_concat(first_name|| \' \' ||last_name,\',\')
@@ -430,7 +430,7 @@
         ORDER BY e._id, e._order
     </string>
 
-  <string name="select_events_partly_class_and_date">
+  <string name="select_events_partly_class_and_date" translatable="false">
         SELECT e._id, e._date, e._from, e._to, e._type, e._experience_level, e._track,
                e._name, e._place, e._event_class, e._favorite, e._order,
              (SELECT group_concat(first_name|| \' \' ||last_name,\',\')
@@ -449,7 +449,7 @@
         ORDER BY _id, e._order
     </string>
 
-  <string name="select_speakers_ordered_by_name">
+  <string name="select_speakers_ordered_by_name" translatable="false">
         SELECT *
         FROM table_speaker
         ORDER BY first_name|| \' \' ||last_name COLLATE NOCASE, _order
