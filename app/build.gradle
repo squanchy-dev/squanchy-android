@@ -49,7 +49,7 @@ android {
         ]
     }
 
-    if (System.getenv('CI') != true) {
+    if (System.getenv('CI') == null) {
         signingConfigs {
             config {
                 signingConfigProperties buildProperties.releaseSigningConfig
