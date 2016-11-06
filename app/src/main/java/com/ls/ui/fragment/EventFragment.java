@@ -101,7 +101,7 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
             levelIds = PreferencesManager.getInstance().loadExpLevel();
             trackIds = PreferencesManager.getInstance().loadTracks();
         }
-        mGenerator = new EventGenerator();
+        mGenerator = new EventGenerator(getContext());
     }
 
     private void initViews() {

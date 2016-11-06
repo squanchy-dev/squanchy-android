@@ -1,8 +1,9 @@
 package com.ls.drupalcon.model.managers;
 
+import android.content.Context;
+
 import com.ls.drupal.AbstractBaseDrupalEntity;
 import com.ls.drupal.DrupalClient;
-import com.ls.drupalcon.app.App;
 import com.ls.drupalcon.model.dao.EventDao;
 import com.ls.drupalcon.model.data.Event;
 import com.ls.drupalcon.model.data.EventDetailsEvent;
@@ -14,9 +15,9 @@ public class EventManager extends SynchronousItemManager<Event.Holder, Object, S
 
     protected EventDao mEventDao;
 
-    public EventManager(DrupalClient client) {
+    public EventManager(DrupalClient client, Context context) {
         super(client);
-        mEventDao = new EventDao(App.getContext());
+        mEventDao = new EventDao(context);
     }
 
     @Override
@@ -34,7 +35,7 @@ public class EventManager extends SynchronousItemManager<Event.Holder, Object, S
         return false;
     }
 
-    public void saveEventSpeakers(Event data) {
+    void saveEventSpeakers(Event data) {
         Long eventId = data.getId();
         List<Long> speakerEventIds = mEventDao.selectEventSpeakersSafe(eventId);
 
@@ -47,12 +48,12 @@ public class EventManager extends SynchronousItemManager<Event.Holder, Object, S
         }
 
         //Delete removed speakers
-        for(Long speakerId:speakerEventIds){
-            mEventDao.deleteByEventAndSpeaker(eventId,speakerId);
+        for (Long speakerId : speakerEventIds) {
+            mEventDao.deleteByEventAndSpeaker(eventId, speakerId);
         }
     }
 
-    public void deleteEvent(Event data) {
+    void deleteEvent(Event data) {
         mEventDao.deleteDataSafe(data.getId());
         mEventDao.deleteEventAndSpeakerByEvent(data.getId());
         mEventDao.setFavoriteSafe(data.getId(), false);
@@ -76,12 +77,6 @@ public class EventManager extends SynchronousItemManager<Event.Holder, Object, S
 
     public List<Long> getEventSpeakerSafe(long id) {
         return mEventDao.selectEventSpeakersSafe(id);
-    }
-
-    public List<Event> getEventsByIdsAndDaySafe(long day) {
-        FavoriteManager favoriteManager = new FavoriteManager();
-        List<Long> favoriteEventIds = favoriteManager.getFavoriteEventsSafe();
-        return mEventDao.selectEventsByIdsAndDaySafe(favoriteEventIds, day);
     }
 
     public void clear() {

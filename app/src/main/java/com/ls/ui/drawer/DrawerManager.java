@@ -10,97 +10,98 @@ import com.ls.ui.fragment.FloorPlanFragment;
 import com.ls.ui.fragment.LocationFragment;
 import com.ls.ui.fragment.SocialMediaFragment;
 import com.ls.ui.fragment.SpeakersListFragment;
+
 import org.jetbrains.annotations.NotNull;
 
 public class DrawerManager {
 
-	public enum EventMode {Program, Bofs, Social, Speakers, Favorites, Location, About}
+    public enum EventMode {Program, Bofs, Social, Speakers, Favorites, Location, About}
 
-	private FragmentManager fragmentManager;
-	private int fragmentHolderId;
-	private EventMode currentEventMode;
+    private FragmentManager fragmentManager;
+    private int fragmentHolderId;
+    private EventMode currentEventMode;
 
-	public static DrawerManager getInstance(FragmentManager theFragmentManager, int theMainFragmentId) {
-		return new DrawerManager(theFragmentManager, theMainFragmentId);
-	}
+    public static DrawerManager getInstance(FragmentManager theFragmentManager, int theMainFragmentId) {
+        return new DrawerManager(theFragmentManager, theMainFragmentId);
+    }
 
-	private DrawerManager(FragmentManager theFragmentManager, int theMainFragmentId) {
-		this.fragmentManager = theFragmentManager;
-		this.fragmentHolderId = theMainFragmentId;
-	}
+    private DrawerManager(FragmentManager theFragmentManager, int theMainFragmentId) {
+        this.fragmentManager = theFragmentManager;
+        this.fragmentHolderId = theMainFragmentId;
+    }
 
-	public void setFragment(@NotNull DrawerMenu.DrawerItem mode) {
-		Fragment fragment;
-		String fragmentTag = null;
+    public void setFragment(@NotNull DrawerMenu.DrawerItem mode) {
+        Fragment fragment;
+        String fragmentTag = null;
 
-		switch (mode) {
-			case Program:
-				fragment = EventHolderFragment.newInstance(DrawerMenu.DrawerItem.Program.ordinal());
-				fragmentTag = EventHolderFragment.TAG;
-				break;
+        switch (mode) {
+            case PROGRAM:
+                fragment = EventHolderFragment.newInstance(DrawerMenu.DrawerItem.PROGRAM.ordinal());
+                fragmentTag = EventHolderFragment.TAG;
+                break;
 
-			case Bofs:
-				fragment = EventHolderFragment.newInstance(DrawerMenu.DrawerItem.Bofs.ordinal());
-				fragmentTag = EventHolderFragment.TAG;
-				break;
+            case BOFS:
+                fragment = EventHolderFragment.newInstance(DrawerMenu.DrawerItem.BOFS.ordinal());
+                fragmentTag = EventHolderFragment.TAG;
+                break;
 
-			case Social:
-				fragment = EventHolderFragment.newInstance(DrawerMenu.DrawerItem.Social.ordinal());
-				fragmentTag = EventHolderFragment.TAG;
-				break;
+            case SOCIAL:
+                fragment = EventHolderFragment.newInstance(DrawerMenu.DrawerItem.SOCIAL.ordinal());
+                fragmentTag = EventHolderFragment.TAG;
+                break;
 
-			case Favorites:
-				fragment = EventHolderFragment.newInstance(DrawerMenu.DrawerItem.Favorites.ordinal());
-				fragmentTag = EventHolderFragment.TAG;
-				break;
+            case FAVORITES:
+                fragment = EventHolderFragment.newInstance(DrawerMenu.DrawerItem.FAVORITES.ordinal());
+                fragmentTag = EventHolderFragment.TAG;
+                break;
 
-			case Speakers:
-				fragment = new SpeakersListFragment();
-				fragmentTag = SpeakersListFragment.TAG;
-				break;
+            case SPEAKERS:
+                fragment = new SpeakersListFragment();
+                fragmentTag = SpeakersListFragment.TAG;
+                break;
 
-			case FloorPlan:
-				fragment = new FloorPlanFragment();
-				fragmentTag = FloorPlanFragment.TAG;
-				break;
+            case FLOOR_PLAN:
+                fragment = new FloorPlanFragment();
+                fragmentTag = FloorPlanFragment.TAG;
+                break;
 
-			case Location:
-				fragment = new LocationFragment();
-				fragmentTag = LocationFragment.TAG;
-				break;
-			case SocialMedia:
-				fragment = new SocialMediaFragment();
-				fragmentTag = SocialMediaFragment.TAG;
-				break;
-			case About:
-				fragment = new AboutFragment();
-				fragmentTag = SocialMediaFragment.TAG;
-				break;
-			default:
-				fragment = EventHolderFragment.newInstance(EventMode.Program.ordinal());
-		}
-		fragmentManager.beginTransaction().replace(fragmentHolderId, fragment, fragmentTag).commit();
-	}
+            case LOCATION:
+                fragment = new LocationFragment();
+                fragmentTag = LocationFragment.TAG;
+                break;
+            case SOCIAL_MEDIA:
+                fragment = new SocialMediaFragment();
+                fragmentTag = SocialMediaFragment.TAG;
+                break;
+            case ABOUT:
+                fragment = new AboutFragment();
+                fragmentTag = SocialMediaFragment.TAG;
+                break;
+            default:
+                fragment = EventHolderFragment.newInstance(EventMode.Program.ordinal());
+        }
+        fragmentManager.beginTransaction().replace(fragmentHolderId, fragment, fragmentTag).commit();
+    }
 
-	public void reloadPrograms(@NotNull DrawerMenu.DrawerItem mode) {
-		Fragment fragment;
-		switch (mode) {
-			case Program:
-				fragment = EventHolderFragment.newInstance(DrawerMenu.DrawerItem.Program.ordinal());
-				break;
+    public void reloadPrograms(@NotNull DrawerMenu.DrawerItem mode) {
+        Fragment fragment;
+        switch (mode) {
+            case PROGRAM:
+                fragment = EventHolderFragment.newInstance(DrawerMenu.DrawerItem.PROGRAM.ordinal());
+                break;
 
-			case Bofs:
-				fragment = EventHolderFragment.newInstance(DrawerMenu.DrawerItem.Bofs.ordinal());
-				break;
+            case BOFS:
+                fragment = EventHolderFragment.newInstance(DrawerMenu.DrawerItem.BOFS.ordinal());
+                break;
 
-			case Social:
-				fragment = EventHolderFragment.newInstance(DrawerMenu.DrawerItem.Social.ordinal());
-				break;
-			default:
-				fragment = EventHolderFragment.newInstance(EventMode.Program.ordinal());
-		}
-		FragmentTransaction ft = fragmentManager.beginTransaction();
-		ft.replace(fragmentHolderId, fragment, EventHolderFragment.TAG);
-		ft.commitAllowingStateLoss();
-	}
+            case SOCIAL:
+                fragment = EventHolderFragment.newInstance(DrawerMenu.DrawerItem.SOCIAL.ordinal());
+                break;
+            default:
+                fragment = EventHolderFragment.newInstance(EventMode.Program.ordinal());
+        }
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(fragmentHolderId, fragment, EventHolderFragment.TAG);
+        ft.commitAllowingStateLoss();
+    }
 }

@@ -1,12 +1,12 @@
 package com.ls.drupalcon.model;
 
+import android.content.Context;
+
 import com.ls.drupalcon.R;
-import com.ls.drupalcon.app.App;
 import com.ls.drupalcon.model.data.Event;
 import com.ls.drupalcon.model.data.Speaker;
 import com.ls.drupalcon.model.data.TimeRange;
 import com.ls.drupalcon.model.data.Track;
-import com.ls.drupalcon.model.data.Type;
 import com.ls.drupalcon.model.managers.BofsManager;
 import com.ls.drupalcon.model.managers.EventManager;
 import com.ls.drupalcon.model.managers.FavoriteManager;
@@ -19,9 +19,6 @@ import com.ls.ui.adapter.item.EventListItem;
 import com.ls.ui.adapter.item.HeaderItem;
 import com.ls.ui.adapter.item.ProgramItem;
 import com.ls.ui.adapter.item.TimeRangeItem;
-import com.ls.util.L;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,7 +27,11 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
+
 public class EventGenerator {
+
+    private final Context mContext;
 
     private EventManager mEventManager;
     private BofsManager mBofsManager;
@@ -39,11 +40,12 @@ public class EventGenerator {
 
     private boolean mShouldBreak;
 
-    public EventGenerator() {
-        mEventManager = Model.instance().getEventManager();
-        mBofsManager = Model.instance().getBofsManager();
-        mSocialManager = Model.instance().getSocialManager();
-        mProgramManager = Model.instance().createProgramManager();
+    public EventGenerator(Context context) {
+        this.mContext = context;
+        this.mEventManager = Model.instance().getEventManager();
+        this.mBofsManager = Model.instance().getBofsManager();
+        this.mSocialManager = Model.instance().getSocialManager();
+        this.mProgramManager = Model.instance().createProgramManager(context);
     }
 
     public List<EventListItem> generate(long day, int eventClass, @NotNull EventItemCreator eventItemCreator) {
@@ -95,14 +97,9 @@ public class EventGenerator {
         return getEventItems(eventItemCreator, eventListItems, ranges);
     }
 
-//    public List<EventListItem> generateForFavorites(long day) {
-//        List<Event> events = mEventManager.getEventsByIdsAndDaySafe(day);
-//        return sortFavorites(fetchEventItems(events));
-//    }
-
     public List<EventListItem> generateForFavorites(long day, @NotNull EventItemCreator eventItemCreator) {
 
-        FavoriteManager favoriteManager = new FavoriteManager();
+        FavoriteManager favoriteManager = new FavoriteManager(mContext);
         List<Long> favoriteEventIds = favoriteManager.getFavoriteEventsSafe();
 
         List<EventListItem> eventListItems = mProgramManager.getFavoriteProgramItemsSafe(favoriteEventIds, day);
@@ -115,15 +112,15 @@ public class EventGenerator {
 
     private List<EventListItem> sortFavorites(List<Long> favoriteEventIds, List<EventListItem> eventListItems, long day,
                                               @NotNull EventItemCreator eventItemCreator) {
-        List<EventListItem> result = new ArrayList<EventListItem>();
+        List<EventListItem> result = new ArrayList<>();
 
         if (eventListItems.isEmpty()) {
             return result;
         }
 
-        List<EventListItem> schedules = new ArrayList<EventListItem>();
-        List<EventListItem> bofs = new ArrayList<EventListItem>();
-        List<EventListItem> socials = new ArrayList<EventListItem>();
+        List<EventListItem> schedules = new ArrayList<>();
+        List<EventListItem> bofs = new ArrayList<>();
+        List<EventListItem> socials = new ArrayList<>();
 
         for (EventListItem eventListItem : eventListItems) {
             Event event = eventListItem.getEvent();
@@ -140,7 +137,7 @@ public class EventGenerator {
 
             List<TimeRange> ranges = mEventManager.getDistrictFavoriteTimeRangeSafe(Event.PROGRAM_CLASS, favoriteEventIds, day);
             schedules = getEventItems(eventItemCreator, schedules, ranges);
-            schedules.add(0, new HeaderItem(App.getContext().getString(R.string.Sessions)));
+            schedules.add(0, new HeaderItem(mContext.getString(R.string.Sessions)));
 
         }
 
@@ -148,7 +145,7 @@ public class EventGenerator {
 
             List<TimeRange> ranges = mEventManager.getDistrictFavoriteTimeRangeSafe(Event.BOFS_CLASS, favoriteEventIds, day);
             bofs = getEventItems(eventItemCreator, bofs, ranges);
-            bofs.add(0, new HeaderItem(App.getContext().getString(R.string.bofs)));
+            bofs.add(0, new HeaderItem(mContext.getString(R.string.bofs)));
 
         }
 
@@ -156,7 +153,7 @@ public class EventGenerator {
 
             List<TimeRange> ranges = mEventManager.getDistrictFavoriteTimeRangeSafe(Event.SOCIALS_CLASS, favoriteEventIds, day);
             socials = getEventItems(eventItemCreator, socials, ranges);
-            socials.add(0, new HeaderItem(App.getContext().getString(R.string.social_events)));
+            socials.add(0, new HeaderItem(mContext.getString(R.string.social_events)));
 
         }
 
@@ -168,14 +165,14 @@ public class EventGenerator {
     }
 
     private List<EventListItem> getEventItems(EventItemCreator eventItemCreator, List<EventListItem> events, List<TimeRange> ranges) {
-        List<EventListItem> result = new ArrayList<EventListItem>();
+        List<EventListItem> result = new ArrayList<>();
 
         for (TimeRange timeRange : ranges) {
             if (mShouldBreak) {
                 return result;
             }
 
-            List<EventListItem> timeRangeEvents = new ArrayList<EventListItem>();
+            List<EventListItem> timeRangeEvents = new ArrayList<>();
             for (EventListItem eventListItem : events) {
                 Event event = eventListItem.getEvent();
                 if (event == null) {
@@ -200,7 +197,7 @@ public class EventGenerator {
 
         for (Event event : events) {
             List<Long> speakersIds = mEventManager.getEventSpeakerSafe(event.getId());
-            List<Speaker> speakers = new ArrayList<Speaker>();
+            List<Speaker> speakers = new ArrayList<>();
             List<String> speakersNames = new ArrayList<>();
 
             for (Long id : speakersIds) {
@@ -222,76 +219,10 @@ public class EventGenerator {
         return result;
     }
 
-//    private List<EventListItem> generateEventItems(List<EventListItem> eventListItems,
-//                                                   EventItemCreator eventItemCreator) {
-//        TracksManager tracksManager = Model.instance().getTracksManager();
-//        List<EventListItem> result = new ArrayList<EventListItem>();
-//
-//        if (eventListItems.size() > 0) {
-//            EventListItem item = eventListItems.get(0);
-//            Event event = item.getEvent();
-//            if (event == null) {
-//                return result;
-//            }
-//
-//            long typeId = event.getType();
-//
-//            TimeRangeItem timeRangeItem = (TimeRangeItem) eventItemCreator.getItem(event);
-//            if (event.getTimeRange().getFromTime() != null) {
-//                Calendar eventFromTime = event.getTimeRange().getFromTime();
-//                long eventDate = event.getTimeRange().getDate();
-//                Date date = parseEventDate(eventFromTime, eventDate);
-//                timeRangeItem.setDate(date);
-//            }
-//            timeRangeItem.setSpeakers(item.getSpeakers());
-//
-//            Track track = tracksManager.getTrack(event.getTrack());
-//            timeRangeItem.setTrack(track != null ? track.getName() : null);
-//            L.e("Adding items:" + eventListItems);
-//            switch ((int) typeId) {
-//
-//                case Type.NONE:
-//                case Type.SPEACH:
-//                case Type.SPEACH_OF_DAY:
-//
-//                    if (eventListItems.get(0) instanceof ProgramItem) {
-//                        ProgramItem firstItem = (ProgramItem) eventListItems.get(0);
-////                        timeRangeItem.setSpeakers(firstItem.getSpeakers());
-//                        timeRangeItem.setTrack(firstItem.getTrack());
-//                    }
-//
-//                    if (eventListItems.size() > 1) {
-//                        timeRangeItem.setFirst(true);
-//                        eventListItems.remove(0);
-//                        eventListItems.get(eventListItems.size() - 1).setLast(true);
-//                        result.add(timeRangeItem);
-//                        result.addAll(eventListItems);
-//                    } else {
-//                        result.add(timeRangeItem);
-//                    }
-//                    break;
-//
-//                case Type.GROUP:
-//                case Type.WALKING:
-//                case Type.COFFEBREAK:
-//                case Type.LUNCH:
-//                case Type.REGISTRATION:
-//                case Type.ALL_DAY:
-//                    default:
-//                    result.add(timeRangeItem);
-//                    break;
-//            }
-//
-//        }
-//        L.e("Result items:" + result);
-//
-//        return result;
-//    }
-
     private List<EventListItem> generateEventItems(List<EventListItem> eventListItems,
-            EventItemCreator eventItemCreator) {
+                                                   EventItemCreator eventItemCreator) {
         TracksManager tracksManager = Model.instance().getTracksManager();
-        List<EventListItem> result = new ArrayList<EventListItem>();
+        List<EventListItem> result = new ArrayList<>();
 
         if (eventListItems.size() > 0) {
             EventListItem item = eventListItems.get(0);

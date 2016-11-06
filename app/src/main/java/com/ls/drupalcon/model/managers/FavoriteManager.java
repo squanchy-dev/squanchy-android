@@ -1,6 +1,7 @@
 package com.ls.drupalcon.model.managers;
 
-import com.ls.drupalcon.app.App;
+import android.content.Context;
+
 import com.ls.drupalcon.model.dao.EventDao;
 
 import java.util.List;
@@ -9,8 +10,8 @@ public class FavoriteManager {
 
     private EventDao mEventDao;
 
-    public FavoriteManager() {
-        mEventDao = new EventDao(App.getContext());
+    public FavoriteManager(Context context) {
+        mEventDao = new EventDao(context);
     }
 
     public List<Long> getFavoriteEventDays() {
