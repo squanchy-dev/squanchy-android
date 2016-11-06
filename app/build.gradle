@@ -49,6 +49,23 @@ android {
                         .or(buildProperties.env['FABRIC_API_KEY'])
                         .string
         ]
+
+        resValueString 'api_value_twitter_api_key', buildProperties.secrets['twitterApiKey']
+                .or(buildProperties.env['TWITTER_API_KEY'])
+                .string
+
+        resValueString 'api_value_twitter_secret', buildProperties.secrets['twitterSecret']
+                .or(buildProperties.env['TWITTER_SECRET'])
+                .string
+
+        resValueString 'api_value_google_maps_api_key', buildProperties.secrets['googleMapsApiKey']
+                .or(buildProperties.env['GOOGLE_MAPS_API_KEY'])
+                .string
+
+        resValueString 'api_value_base_url', buildProperties.secrets['baseUrl']
+                .or(buildProperties.env['BASE_URL'])
+                .string
+
     }
 
     if (System.getenv('CI') == null) {
