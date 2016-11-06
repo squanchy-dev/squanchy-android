@@ -37,7 +37,7 @@ android {
     buildToolsVersion project.BUILD_TOOLS_VERSION
 
     defaultConfig {
-        applicationId buildProperties.application['applicationId'].string
+        applicationId buildProperties.application['applicationId'].or('com.ls.drupalconapp').string
         minSdkVersion Integer.parseInt(project.MIN_SDK_VERSION)
         targetSdkVersion Integer.parseInt(project.TARGET_SDK_VERSION)
 
@@ -45,21 +45,23 @@ android {
         versionName project.VERSION_NAME
 
         manifestPlaceholders += [
-                fabricApiKey: buildProperties.secrets['fabricApiKey'].string
+                fabricApiKey: buildProperties.secrets['fabricApiKey'].or('').string
         ]
     }
 
-    signingConfigs {
-        config {
-            signingConfigProperties buildProperties.releaseSigningConfig
+    if (System.getenv('CI') != true) {
+        signingConfigs {
+            config {
+                signingConfigProperties buildProperties.releaseSigningConfig
+            }
         }
-    }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
+        buildTypes {
+            release {
+                minifyEnabled false
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+                signingConfig signingConfigs.config
+            }
         }
     }
 
