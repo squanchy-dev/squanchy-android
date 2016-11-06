@@ -68,10 +68,6 @@ public class BofsManager extends EventManager {
         return true;
     }
 
-//    public List<Long> getBofsDays() {
-//        return mEventDao.selectDistrictDateSafe(Event.BOFS_CLASS);
-//    }
-
     public List<Long> getBofsDays() {
         List<Long> levelIds = PreferencesManager.getInstance().loadExpLevel();
         List<Long> trackIds = PreferencesManager.getInstance().loadTracks();
