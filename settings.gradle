@@ -1,5 +1,3 @@
 include ':app'
-include ':ParallaxScroll'
 include ':drupalSDK'
 project(':drupalSDK').projectDir = new File('libraries/drupalSDK')
-project(':ParallaxScroll').projectDir = new File('libraries/ParallaxScroll')
