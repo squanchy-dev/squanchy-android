@@ -22,6 +22,11 @@
 
 package com.ls.drupal;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
+
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -36,11 +41,6 @@ import com.ls.http.base.RequestConfig;
 import com.ls.http.base.ResponseData;
 import com.ls.util.internal.VolleyResponseUtils;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.text.TextUtils;
-
 import java.util.List;
 import java.util.Map;
 
@@ -50,7 +50,12 @@ import java.util.Map;
  * @author lemberg
  */
 public class DrupalClient implements OnResponseListener {
-    public enum DuplicateRequestPolicy {ALLOW,ATTACH,REJECT}
+
+    public enum DuplicateRequestPolicy {
+        ALLOW,
+        ATTACH,
+        REJECT
+    }
 
     private final RequestFormat requestFormat;
     private String baseURL;
@@ -65,7 +70,7 @@ public class DrupalClient implements OnResponseListener {
 
     private DuplicateRequestPolicy duplicateRequestPolicy = DuplicateRequestPolicy.ATTACH;
 
-    public static interface OnResponseListener {
+    public interface OnResponseListener {
 
         void onResponseReceived(ResponseData data, Object tag);
 
@@ -100,7 +105,7 @@ public class DrupalClient implements OnResponseListener {
      * @param theBaseURL this URL will be appended with {@link AbstractBaseDrupalEntity#getPath()}
      * @param theContext application context, used to create request queue
      */
-    public DrupalClient(@NonNull String theBaseURL, @NonNull Context theContext) {
+    public DrupalClient(@Nullable String theBaseURL, @NonNull Context theContext) {
         this(theBaseURL, theContext, null);
     }
 
@@ -109,7 +114,7 @@ public class DrupalClient implements OnResponseListener {
      * @param theContext application context, used to create request queue
      * @param theFormat  server request/response format. Defines format of serialized objects and server response format, see {@link com.ls.http.base.BaseRequest.RequestFormat}
      */
-    public DrupalClient(@NonNull String theBaseURL, @NonNull Context theContext, @Nullable RequestFormat theFormat) {
+    public DrupalClient(@Nullable String theBaseURL, @NonNull Context theContext, @Nullable RequestFormat theFormat) {
         this(theBaseURL, theContext, theFormat, null);
     }
 
@@ -119,14 +124,12 @@ public class DrupalClient implements OnResponseListener {
      * @param theFormat       server request/response format. Defines format of serialized objects and server response format, see {@link com.ls.http.base.BaseRequest.RequestFormat}
      * @param theLoginManager contains user profile data and can update request parameters and headers in order to apply it.
      */
-    public DrupalClient(@NonNull String theBaseURL, @NonNull Context theContext, @Nullable RequestFormat theFormat, @Nullable ILoginManager theLoginManager) {
+    public DrupalClient(@Nullable String theBaseURL, @NonNull Context theContext, @Nullable RequestFormat theFormat, @Nullable ILoginManager theLoginManager) {
         this(theBaseURL, getDefaultQueue(theContext), theFormat, theLoginManager);
     }
 
-    @SuppressWarnings("null")
-    private static
     @NonNull
-    RequestQueue getDefaultQueue(@NonNull Context theContext) {
+    private static RequestQueue getDefaultQueue(@NonNull Context theContext) {
         return Volley.newRequestQueue(theContext.getApplicationContext());
     }
 
@@ -136,7 +139,7 @@ public class DrupalClient implements OnResponseListener {
      * @param theFormat       server request/response format. Defines format of serialized objects and server response format, see {@link com.ls.http.base.BaseRequest.RequestFormat}
      * @param theLoginManager contains user profile data and can update request parameters and headers in order to apply it.
      */
-    public DrupalClient(@NonNull String theBaseURL, @NonNull RequestQueue theQueue, @Nullable RequestFormat theFormat, @Nullable ILoginManager theLoginManager) {
+    public DrupalClient(@Nullable String theBaseURL, @NonNull RequestQueue theQueue, @Nullable RequestFormat theFormat, @Nullable ILoginManager theLoginManager) {
         this.listeners = new ResponseListenersSet();
         this.queue = theQueue;
         this.setBaseURL(theBaseURL);
@@ -182,20 +185,19 @@ public class DrupalClient implements OnResponseListener {
         request.setTag(tag);
         request.setResponseListener(this);
         this.loginManager.applyLoginDataToRequest(request);
-        request.setSmartComparisonEnabled(this.duplicateRequestPolicy !=DuplicateRequestPolicy.ALLOW);
+        request.setSmartComparisonEnabled(this.duplicateRequestPolicy != DuplicateRequestPolicy.ALLOW);
 
-        boolean wasRegisterred ;
+        boolean wasRegisterred;
         boolean skipDuplicateRequestListeners = this.duplicateRequestPolicy == DrupalClient.DuplicateRequestPolicy.REJECT;
         synchronized (listeners) {
-            wasRegisterred = this.listeners.registerListenerForRequest(request, listener,tag,skipDuplicateRequestListeners);
+            wasRegisterred = this.listeners.registerListenerForRequest(request, listener, tag, skipDuplicateRequestListeners);
         }
 
-        if(wasRegisterred||synchronous) {
+        if (wasRegisterred || synchronous) {
             this.onNewRequestStarted();
             return request.performRequest(synchronous, queue);
-        }else{
-            if(skipDuplicateRequestListeners && listener != null)
-            {
+        } else {
+            if (skipDuplicateRequestListeners && listener != null) {
                 listener.onCancel(tag);
             }
             return null;
@@ -296,12 +298,11 @@ public class DrupalClient implements OnResponseListener {
         return result;
     }
 
-
     /**
-     * @param entity                 Object, specifying request parameters, retrieved data will be merged to this object.
-     * @param config                 Entity, containing additional request parameters
-     * @param tag                    will be attached to request and returned in listener callback, can be used in order to cancel request
-     * @param synchronous            if true - result will be returned synchronously.
+     * @param entity      Object, specifying request parameters, retrieved data will be merged to this object.
+     * @param config      Entity, containing additional request parameters
+     * @param tag         will be attached to request and returned in listener callback, can be used in order to cancel request
+     * @param synchronous if true - result will be returned synchronously.
      * @return ResponseData object or null if request was asynchronous.
      */
     public ResponseData getObject(AbstractBaseDrupalEntity entity, RequestConfig config, Object tag, OnResponseListener listener, boolean synchronous) {
@@ -312,14 +313,14 @@ public class DrupalClient implements OnResponseListener {
     }
 
     /**
-     * @param entity                 Object, specifying request parameters
-     * @param config                 Entity, containing additional request parameters
-     * @param tag                    will be attached to request and returned in listener callback, can be used in order to cancel request
-     * @param synchronous            if true - result will be returned synchronously.
+     * @param entity      Object, specifying request parameters
+     * @param config      Entity, containing additional request parameters
+     * @param tag         will be attached to request and returned in listener callback, can be used in order to cancel request
+     * @param synchronous if true - result will be returned synchronously.
      * @return ResponseData object or null if request was asynchronous.
      */
     public ResponseData postObject(AbstractBaseDrupalEntity entity, RequestConfig config, Object tag, OnResponseListener listener, boolean synchronous) {
-        BaseRequest request = new BaseRequest(RequestMethod.POST, getURLForEntity(entity),  applyDefaultFormat(config));
+        BaseRequest request = new BaseRequest(RequestMethod.POST, getURLForEntity(entity), applyDefaultFormat(config));
         Map<String, String> postParams = entity.getItemRequestPostParameters();
         if (postParams == null || postParams.isEmpty()) {
             request.setObjectToPost(entity.getManagedData());
@@ -332,10 +333,10 @@ public class DrupalClient implements OnResponseListener {
     }
 
     /**
-     * @param entity                 Object, specifying request parameters
-     * @param config                 Entity, containing additional request parameters
-     * @param tag                    will be attached to request and returned in listener callback, can be used in order to cancel request
-     * @param synchronous            if true - result will be returned synchronously.
+     * @param entity      Object, specifying request parameters
+     * @param config      Entity, containing additional request parameters
+     * @param tag         will be attached to request and returned in listener callback, can be used in order to cancel request
+     * @param synchronous if true - result will be returned synchronously.
      * @return ResponseData object or null if request was asynchronous.
      */
     public ResponseData putObject(AbstractBaseDrupalEntity entity, RequestConfig config, Object tag, OnResponseListener listener, boolean synchronous) {
@@ -351,12 +352,11 @@ public class DrupalClient implements OnResponseListener {
         return this.performRequest(request, tag, listener, synchronous);
     }
 
-
     /**
-     * @param entity                 Object, specifying request parameters, must have "createFootPrint" called before.
-     * @param config                 Entity, containing additional request parameters
-     * @param tag                    will be attached to request and returned in listener callback, can be used in order to cancel request
-     * @param synchronous            if true - result will be returned synchronously.
+     * @param entity      Object, specifying request parameters, must have "createFootPrint" called before.
+     * @param config      Entity, containing additional request parameters
+     * @param tag         will be attached to request and returned in listener callback, can be used in order to cancel request
+     * @param synchronous if true - result will be returned synchronously.
      * @return ResponseData object or null if request was asynchronous.
      */
     public ResponseData patchObject(AbstractBaseDrupalEntity entity, RequestConfig config, Object tag, OnResponseListener listener, boolean synchronous) {
@@ -368,14 +368,14 @@ public class DrupalClient implements OnResponseListener {
     }
 
     /**
-     * @param entity                 Object, specifying request parameters
-     * @param config                 Entity, containing additional request parameters
-     * @param tag                    will be attached to request and returned in listener callback, can be used in order to cancel request
-     * @param synchronous            if true - result will be returned synchronously.
+     * @param entity      Object, specifying request parameters
+     * @param config      Entity, containing additional request parameters
+     * @param tag         will be attached to request and returned in listener callback, can be used in order to cancel request
+     * @param synchronous if true - result will be returned synchronously.
      * @return ResponseData object or null if request was asynchronous.
      */
     public ResponseData deleteObject(AbstractBaseDrupalEntity entity, RequestConfig config, Object tag, OnResponseListener listener,
-            boolean synchronous) {
+                                     boolean synchronous) {
         BaseRequest request = new BaseRequest(RequestMethod.DELETE, getURLForEntity(entity), applyDefaultFormat(config));
         request.setGetParameters(entity.getItemRequestGetParameters(RequestMethod.DELETE));
         request.addRequestHeaders(entity.getItemRequestHeaders(RequestMethod.DELETE));
@@ -396,15 +396,12 @@ public class DrupalClient implements OnResponseListener {
         this.requestTimeout = requestTimeout;
     }
 
-    private RequestConfig applyDefaultFormat(RequestConfig config)
-    {
-        if(config == null)
-        {
+    private RequestConfig applyDefaultFormat(RequestConfig config) {
+        if (config == null) {
             config = new RequestConfig();
         }
 
-        if(config.getRequestFormat()==null)
-        {
+        if (config.getRequestFormat() == null) {
             config.setRequestFormat(this.requestFormat);
         }
 
@@ -416,10 +413,9 @@ public class DrupalClient implements OnResponseListener {
 
         boolean pathAlreadyHasDomain = !TextUtils.isEmpty(path) && (path.startsWith("http://") || path.startsWith("https://"));
 
-        if(TextUtils.isEmpty(baseURL)||pathAlreadyHasDomain)
-        {
+        if (TextUtils.isEmpty(baseURL) || pathAlreadyHasDomain) {
             return path;
-        }else {
+        } else {
             if (!TextUtils.isEmpty(path) && path.charAt(0) == '/') {
                 path = path.substring(1);
             }
@@ -533,11 +529,12 @@ public class DrupalClient implements OnResponseListener {
 
     /**
      * Sets duplicate request handling policy according to parameter provided. Only simultaneous requests are compared (executing at the same time).
+     *
      * @param duplicateRequestPolicy in case if
-     *      "ALLOW" - all requests are performed
-     *      "ATTACH" - only first unique request from queue will be performed all other listeners will be attached to this request and triggered.
-     *      "REJECT" - only first unique request from queue will be performed and it's listener triggered. "onCancel()" listener method will be called for all requests skipped.
-     * Default value is "ALLOW"
+     *                               "ALLOW" - all requests are performed
+     *                               "ATTACH" - only first unique request from queue will be performed all other listeners will be attached to this request and triggered.
+     *                               "REJECT" - only first unique request from queue will be performed and it's listener triggered. "onCancel()" listener method will be called for all requests skipped.
+     *                               Default value is "ALLOW"
      */
     public void setDuplicateRequestPolicy(DuplicateRequestPolicy duplicateRequestPolicy) {
         this.duplicateRequestPolicy = duplicateRequestPolicy;
@@ -557,7 +554,7 @@ public class DrupalClient implements OnResponseListener {
                     synchronized (listeners) {
                         List<ResponseListenersSet.ListenerHolder> listenerList = listeners.getListenersForRequest(request);
 
-                        if (theListener == null || (listenerList != null &&  holderListContainsListener(listenerList,theListener))) {
+                        if (theListener == null || (listenerList != null && holderListContainsListener(listenerList, theListener))) {
                             if (listenerList != null) {
                                 listeners.removeListenersForRequest(request);
                                 for (ResponseListenersSet.ListenerHolder holder : listenerList) {
@@ -575,18 +572,14 @@ public class DrupalClient implements OnResponseListener {
         });
     }
 
-    protected static boolean holderListContainsListener( List<ResponseListenersSet.ListenerHolder> listenerList,OnResponseListener theListener)
-    {
-        if(theListener == null)
-        {
+    protected static boolean holderListContainsListener(List<ResponseListenersSet.ListenerHolder> listenerList, OnResponseListener theListener) {
+        if (theListener == null) {
             return false;
         }
 
         boolean listContainsListener = false;
-        for(ResponseListenersSet.ListenerHolder holder:listenerList)
-        {
-            if(theListener.equals(holder.getListener()))
-            {
+        for (ResponseListenersSet.ListenerHolder holder : listenerList) {
+            if (theListener.equals(holder.getListener())) {
                 listContainsListener = true;
             }
         }
@@ -617,14 +610,12 @@ public class DrupalClient implements OnResponseListener {
         if (!TextUtils.isEmpty(theBaseURL) && theBaseURL.charAt(theBaseURL.length() - 1) != '/') {
             theBaseURL += '/';
         }
-        ;
         this.baseURL = theBaseURL;
     }
 
     public String getBaseURL() {
         return baseURL;
     }
-
 
     private void onNewRequestStarted() {
         if (this.progressListener != null) {

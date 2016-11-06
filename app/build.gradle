@@ -65,6 +65,7 @@ dependencies {
     compile 'org.jetbrains:annotations:13.0'
     compile 'com.jpardogo.materialtabstrip:library:1.0.8'
     compile 'com.android.support:support-v4:25.0.0'
+    compile 'com.mcxiaoke.volley:library:1.0.19'
     compile('com.twitter.sdk.android:twitter:2.1.1') {
         transitive = true
     }
