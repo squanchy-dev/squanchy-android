@@ -1,11 +1,6 @@
 package com.ls.ui.dialog;
 
-import com.ls.drupalcon.R;
-import com.ls.drupalcon.model.PreferencesManager;
-import com.ls.drupalcon.model.data.Level;
-import com.ls.drupalcon.model.data.Track;
-import com.ls.ui.adapter.FilterDialogAdapter;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -19,9 +14,17 @@ import android.view.Window;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
+import com.ls.drupalcon.R;
+import com.ls.drupalcon.model.PreferencesManager;
+import com.ls.drupalcon.model.data.Level;
+import com.ls.drupalcon.model.data.Track;
+import com.ls.ui.adapter.FilterDialogAdapter;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 
 public class FilterDialog extends DialogFragment {
 
@@ -70,11 +73,11 @@ public class FilterDialog extends DialogFragment {
     }
 
     @Override
+    @NotNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.dialog_filter, null);
+        View view = createDialogView();
 
         initViews(view);
 
@@ -84,6 +87,12 @@ public class FilterDialog extends DialogFragment {
         result.setCanceledOnTouchOutside(true);
 
         return result;
+    }
+
+    @SuppressLint("InflateParams")  // We don't have a parent for dialogs' views
+    private View createDialogView() {
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        return inflater.inflate(R.layout.dialog_filter, null);
     }
 
     private void initViews(View view) {
