@@ -12,7 +12,7 @@ echo '{
       "client_info": {
         "mobilesdk_app_id": "0",
         "android_client_info": {
-          "package_name": "com.connfa.dummiladisciassette"
+          "package_name": "com.ls.drupalconapp"
         }
       },
       "api_key": [
