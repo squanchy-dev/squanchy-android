@@ -2,14 +2,14 @@ package com.connfa;
 
 import android.app.Application;
 
-import com.crashlytics.android.Crashlytics;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Tracker;
-import com.ls.drupal.DrupalClient;
 import com.connfa.model.AppDatabaseInfo;
 import com.connfa.model.Model;
 import com.connfa.model.PreferencesManager;
 import com.connfa.model.database.LAPIDBRegister;
+import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
+import com.ls.drupal.DrupalClient;
 import com.ls.http.base.BaseRequest;
 import com.ls.util.image.DrupalImageView;
 import com.twitter.sdk.android.Twitter;

@@ -1,12 +1,12 @@
 package com.connfa.ui.receiver;
 
-import org.jetbrains.annotations.NotNull;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
+
+import org.jetbrains.annotations.NotNull;
 
 public class ReceiverManager {
     public static final String EXTRAS_EVENT_ID = "EXTRAS_EVENT_ID";

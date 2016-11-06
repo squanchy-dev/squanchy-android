@@ -4,7 +4,6 @@ import com.connfa.model.AppDatabaseInfo;
 import com.connfa.model.data.InfoItem;
 import com.connfa.model.database.AbstractEntityDAO;
 
-
 public class InfoDao extends AbstractEntityDAO<InfoItem, Long> {
 
     public static final String TABLE_NAME = "table_info";

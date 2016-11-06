@@ -47,18 +47,16 @@ public abstract class EventListItem {
         mSpeakers.add(speaker);
     }
 
-
     @Override
-    public String toString()
-    {
-        if(mEvent != null) {
+    public String toString() {
+        if (mEvent != null) {
             return "TimeRangeItem{" +
                     "mEvent=" + mEvent.getName() +
-                    "mEventType="+ mEvent.getType()+"} ";
-        }else{
+                    "mEventType=" + mEvent.getType() + "} ";
+        } else {
             return "TimeRangeItem{" +
                     "mEvent=" + "no event" +
-                    "} " ;
+                    "} ";
         }
     }
 

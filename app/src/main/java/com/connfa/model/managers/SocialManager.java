@@ -2,13 +2,13 @@ package com.connfa.model.managers;
 
 import android.content.Context;
 
-import com.ls.drupal.AbstractBaseDrupalEntity;
-import com.ls.drupal.DrupalClient;
 import com.connfa.model.PreferencesManager;
 import com.connfa.model.data.Event;
 import com.connfa.model.requests.SocialRequest;
 import com.connfa.ui.adapter.item.EventListItem;
 import com.connfa.utils.DateUtils;
+import com.ls.drupal.AbstractBaseDrupalEntity;
+import com.ls.drupal.DrupalClient;
 
 import java.util.Date;
 import java.util.List;

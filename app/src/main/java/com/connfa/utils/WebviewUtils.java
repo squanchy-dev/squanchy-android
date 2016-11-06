@@ -12,17 +12,17 @@ import com.connfa.R;
 
 public class WebviewUtils {
 
-	public static String getHtml(Activity activity, String body) {
-		String css = activity.getString(R.string.css);
-		return String.format("<html><header>%s</header><body>%s</body></html>", css, body);
-	}
+    public static String getHtml(Activity activity, String body) {
+        String css = activity.getString(R.string.css);
+        return String.format("<html><header>%s</header><body>%s</body></html>", css, body);
+    }
 
-	public static void openUrl(@NonNull Context context, @NonNull String url) {
-		try {
-			Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-			context.startActivity(intent);
-		} catch (ActivityNotFoundException e) {
-			Toast.makeText(context, R.string.no_default_browser_found, Toast.LENGTH_SHORT).show();
-		}
-	}
+    public static void openUrl(@NonNull Context context, @NonNull String url) {
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(context, R.string.no_default_browser_found, Toast.LENGTH_SHORT).show();
+        }
+    }
 }

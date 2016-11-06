@@ -40,27 +40,22 @@ public class DatabaseFacade
 		return instance;
 	}*/
 
-
     public DatabaseFacade(Context theContext, DBInfo theDbInfo) {
         this.context = theContext;
         this.dbInfo = theDbInfo;
     }
 
-
     public void beginTransactions() {
         db.beginTransaction();
     }
-
 
     public void setTransactionSuccesfull() {
         db.setTransactionSuccessful();
     }
 
-
     public void endTransactions() {
         db.endTransaction();
     }
-
 
     public synchronized DatabaseFacade open()
             throws SQLException {
@@ -74,7 +69,6 @@ public class DatabaseFacade
         return this;
     }
 
-
     public synchronized void close() {
         if (openCounter == 1) {
             this.db.close();
@@ -83,7 +77,6 @@ public class DatabaseFacade
 
         openCounter--;
     }
-
 
     public boolean containsRecord(String theTable, String theWhereClause, String[] theColumns) {
         boolean result = false;
@@ -105,7 +98,6 @@ public class DatabaseFacade
 
         return result;
     }
-
 
     public boolean containsRecord(String theTable, String theWhereClause, String[] selectionArgs,
                                   String[] theColumns) {
@@ -129,11 +121,9 @@ public class DatabaseFacade
         return result;
     }
 
-
     public Cursor query(String theQuery, String[] selectionArgs) {
         return db.rawQuery(theQuery, selectionArgs);
     }
-
 
     public long save(String theTable, ContentValues theValues) {
         return db.insert(theTable, null, theValues);
@@ -149,22 +139,18 @@ public class DatabaseFacade
         return db.update(theTable, theValues, theWhereClause, null);
     }
 
-
     public int update(String theTable, String theWhereClause, String[] whereArgs,
                       ContentValues theValues) {
         return db.update(theTable, theValues, theWhereClause, whereArgs);
     }
 
-
     public int delete(String theTable, String theWhereClause, String[] whereArgs) {
         return db.delete(theTable, theWhereClause, whereArgs);
     }
 
-
     public int delete(String theTable, String theWhereClause) {
         return db.delete(theTable, theWhereClause, null);
     }
-
 
     public void insert(String sqlQuery) {
         db.execSQL(sqlQuery);
@@ -174,11 +160,9 @@ public class DatabaseFacade
         db.execSQL(sqlQuery, bindArgs);
     }
 
-
     public int clearTable(String theTable) {
         return this.delete(theTable, null, null);
     }
-
 
     public Cursor getAllRecords(String theTable, String[] theColumns, String theSelection) {
         Cursor cursor = db.query(true,
@@ -194,7 +178,6 @@ public class DatabaseFacade
         return cursor;
     }
 
-
     public Cursor getAllRecords(String theTable, String[] theColumns, String theSelection,
                                 String[] selectionArgs) {
         Cursor cursor = db.query(true,
@@ -209,7 +192,6 @@ public class DatabaseFacade
 
         return cursor;
     }
-
 
     public String getQuery(int theResId) {
         return context.getString(theResId);

@@ -26,5 +26,4 @@ public class ProgramItem extends EventListItem {
         mLevel = level;
     }
 
-
 }

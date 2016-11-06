@@ -1,12 +1,10 @@
 package com.connfa.utils;
 
-import com.connfa.model.PreferencesManager;
-
-import org.jetbrains.annotations.NotNull;
-
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.text.format.DateFormat;
+
+import com.connfa.model.PreferencesManager;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,6 +12,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import org.jetbrains.annotations.NotNull;
 
 public class DateUtils {
 
@@ -41,7 +41,7 @@ public class DateUtils {
     }
 
     @Nullable
-    public synchronized  Date convertEventDayDate(String day) {
+    public synchronized Date convertEventDayDate(String day) {
         mDateFormat.applyPattern("d-MM-yyyy");
 
         try {
@@ -97,7 +97,6 @@ public class DateUtils {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(millis);
         calendar.setTimeZone(mTimezone);
-
 
         if (DateFormat.is24HourFormat(context)) {
             mDateFormat.applyPattern("HH:mm");

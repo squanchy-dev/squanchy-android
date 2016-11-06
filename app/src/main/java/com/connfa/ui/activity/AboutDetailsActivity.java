@@ -89,11 +89,9 @@ public class AboutDetailsActivity extends StateActivity {
             String css = "<link rel='stylesheet' href='css/style.css' type='text/css'>";
             String html = "<html><header>" + css + "</header>" + "<body>" + content + "</body></html>";
             webView.loadDataWithBaseURL("file:///android_asset/", html, "text/html", "UTF-8", null);
-            webView.setWebViewClient(new WebViewClient()
-            {
+            webView.setWebViewClient(new WebViewClient() {
                 @Override
-                public boolean shouldOverrideUrlLoading(WebView view, String url)
-                {
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
                     WebviewUtils.openUrl(AboutDetailsActivity.this, url);
                     return true;
                 }

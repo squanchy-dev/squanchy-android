@@ -13,20 +13,20 @@ import java.util.Map;
 
 public class TypefaceManger {
 
-	private static final Map<String, Typeface> typefaces = new HashMap<>(13);
+    private static final Map<String, Typeface> typefaces = new HashMap<>(13);
 
-	public static Typeface getTypeface(String fontName, Context context) {
-		Typeface ret = typefaces.get(fontName);
+    public static Typeface getTypeface(String fontName, Context context) {
+        Typeface ret = typefaces.get(fontName);
 
-		if (ret == null) {
-			ret = Typeface.createFromAsset(context.getAssets(), "fonts/" + fontName);
-			typefaces.put(fontName, ret);
-		}
+        if (ret == null) {
+            ret = Typeface.createFromAsset(context.getAssets(), "fonts/" + fontName);
+            typefaces.put(fontName, ret);
+        }
 
-		return ret;
-	}
+        return ret;
+    }
 
-	public static Typeface getTypeface(int fontNameId, Context context) {
-		return getTypeface(context.getString(fontNameId), context);
-	}
+    public static Typeface getTypeface(int fontNameId, Context context) {
+        return getTypeface(context.getString(fontNameId), context);
+    }
 }

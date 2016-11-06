@@ -1,16 +1,13 @@
 package com.connfa.model.data;
 
-import com.google.gson.annotations.SerializedName;
+import android.content.ContentValues;
+import android.database.Cursor;
 
 import com.connfa.model.PreferencesManager;
 import com.connfa.model.database.AbstractEntity;
 import com.connfa.model.database.AbstractEntityDAO;
 import com.connfa.utils.CursorStringParser;
-
-import org.jetbrains.annotations.NotNull;
-
-import android.content.ContentValues;
-import android.database.Cursor;
+import com.google.gson.annotations.SerializedName;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,7 +17,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class Event extends AbstractEntity<Long> implements Comparable<Event>{
+import org.jetbrains.annotations.NotNull;
+
+public class Event extends AbstractEntity<Long> implements Comparable<Event> {
 
     //TODO think about better event classes separation
     public static final int PROGRAM_CLASS = 1;
@@ -133,7 +132,7 @@ public class Event extends AbstractEntity<Long> implements Comparable<Event>{
         mName = parser.readString("_name");
         mTrack = parser.readLong("_track");
         mPlace = parser.readString("_place");
-        mExperienceLevel =  parser.readLong("_experience_level");
+        mExperienceLevel = parser.readLong("_experience_level");
 
         mEventClass = parser.readInt("_event_class");
         mIsFavorite = parser.readBoolean("_favorite");
@@ -328,15 +327,13 @@ public class Event extends AbstractEntity<Long> implements Comparable<Event>{
 
     @Override
     public int compareTo(@NotNull Event event) {
-        int result =  mFromTime.compareTo(event.getFromTime());
-        if(result == 0)
-        {
-            if(mOrder == event.mOrder)
-            {
+        int result = mFromTime.compareTo(event.getFromTime());
+        if (result == 0) {
+            if (mOrder == event.mOrder) {
                 result = 0;
-            }else if(mOrder > event.mOrder){
+            } else if (mOrder > event.mOrder) {
                 result = 1;
-            }else{
+            } else {
                 result = -1;
             }
         }

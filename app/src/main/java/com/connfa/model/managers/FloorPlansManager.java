@@ -3,16 +3,16 @@ package com.connfa.model.managers;
 import android.content.Context;
 import android.graphics.Bitmap;
 
-import com.ls.drupal.AbstractBaseDrupalEntity;
-import com.ls.drupal.DrupalByteEntity;
-import com.ls.drupal.DrupalClient;
 import com.connfa.model.dao.FloorPlanDao;
 import com.connfa.model.data.FloorPlan;
 import com.connfa.model.requests.FloorPlansRequest;
+import com.connfa.utils.FileUtils;
+import com.ls.drupal.AbstractBaseDrupalEntity;
+import com.ls.drupal.DrupalByteEntity;
+import com.ls.drupal.DrupalClient;
 import com.ls.http.base.BaseRequest;
 import com.ls.http.base.ResponseData;
 import com.ls.util.L;
-import com.connfa.utils.FileUtils;
 
 import java.util.Collections;
 import java.util.List;

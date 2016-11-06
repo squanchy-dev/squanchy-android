@@ -35,7 +35,6 @@ import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
 
-
 public class EventHolderFragment extends Fragment {
 
     public static final String TAG = "ProjectsFragment";
@@ -125,10 +124,8 @@ public class EventHolderFragment extends Fragment {
 //        favoriteReceiver.unregister(getActivity());
 //    }
 
-
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState)
-    {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Model.instance().getUpdatesManager().registerUpdateListener(updateReceiver);
         favoriteReceiver.register(getActivity());
@@ -139,8 +136,7 @@ public class EventHolderFragment extends Fragment {
     }
 
     @Override
-    public void onDestroyView()
-    {
+    public void onDestroyView() {
         Model.instance().getUpdatesManager().unregisterUpdateListener(updateReceiver);
         favoriteReceiver.unregister(getActivity());
         super.onDestroyView();
@@ -217,7 +213,6 @@ public class EventHolderFragment extends Fragment {
         }
         return dayList;
     }
-
 
     private void updateViews(List<Long> dayList) {
 
@@ -310,7 +305,7 @@ public class EventHolderFragment extends Fragment {
         for (int id : requestIds) {
             int eventModePos = UpdatesManager.convertEventIdToEventModePos(id);
             if (eventModePos == mEventMode.ordinal() ||
-                    (mEventMode == DrawerManager.EventMode.Favorites && isEventItem(id)) ) {
+                    (mEventMode == DrawerManager.EventMode.Favorites && isEventItem(id))) {
                 new LoadData().execute();
                 break;
             }

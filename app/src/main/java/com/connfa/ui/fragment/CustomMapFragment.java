@@ -6,13 +6,13 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 
-
 public class CustomMapFragment extends SupportMapFragment implements OnMapReadyCallback {
 
     public interface OnActivityCreatedListener {
 
         void onActivityCreated(GoogleMap googleMap);
     }
+
     private OnActivityCreatedListener mListener;
 
     public static CustomMapFragment newInstance(OnActivityCreatedListener listener) {

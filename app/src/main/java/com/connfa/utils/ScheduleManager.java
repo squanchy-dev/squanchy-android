@@ -1,12 +1,12 @@
 package com.connfa.utils;
 
-import com.connfa.model.data.EventDetailsEvent;
-import com.connfa.receiver.NotifyReceiver;
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+
+import com.connfa.model.data.EventDetailsEvent;
+import com.connfa.receiver.NotifyReceiver;
 
 public class ScheduleManager {
     private Context mContext;

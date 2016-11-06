@@ -9,7 +9,6 @@ import com.connfa.model.database.AbstractEntityDAO;
 
 import java.util.List;
 
-
 public class SpeakerDao extends AbstractEntityDAO<Speaker, Long> {
 
     public static final String TABLE_NAME = "table_speaker";

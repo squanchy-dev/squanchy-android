@@ -30,13 +30,11 @@ public abstract class AbstractEntityDAO<ClassToSave extends AbstractEntity<Class
      */
     protected abstract String[] getKeyColumns();
 
-
     protected ILAPIDBFacade getFacade() {
         ILAPIDBFacade dbFacade = LAPIDBRegister.getInstance().lookup(getDatabaseName());
 
         return dbFacade;
     }
-
 
     public boolean containsData(ClassToSave theObj) {
         ILAPIDBFacade facade = getFacade();
@@ -126,7 +124,6 @@ public abstract class AbstractEntityDAO<ClassToSave extends AbstractEntity<Class
         return result;
     }
 
-
     public List<ClassToSave> querySafe(final String theQuery, final String[] theArguments) {
         ILAPIDBFacade facade = getFacade();
 
@@ -160,7 +157,6 @@ public abstract class AbstractEntityDAO<ClassToSave extends AbstractEntity<Class
         return result;
     }
 
-
     public List<ClassToSave> getDataBySqlQuery(final String theSqlQuery, final String[] theArguments) {
         List<ClassToSave> result = new LinkedList<ClassToSave>();
 
@@ -184,7 +180,6 @@ public abstract class AbstractEntityDAO<ClassToSave extends AbstractEntity<Class
 
         return result;
     }
-
 
     public List<ClassToSave> getDataBySqlQuerySafe(final String theSqlQuery, final String[] theArguments) {
         ILAPIDBFacade facade = getFacade();
@@ -214,7 +209,6 @@ public abstract class AbstractEntityDAO<ClassToSave extends AbstractEntity<Class
             facade.close();
         }
     }
-
 
     public List<ClassToSave> getData(ClassId theObj) {
         return getData(getSearchCondition(), getSearchConditionArguments(theObj));
@@ -309,7 +303,6 @@ public abstract class AbstractEntityDAO<ClassToSave extends AbstractEntity<Class
         return facade.save(getTableName(), values);
     }
 
-
     public int updateData(final ClassToSave theObj) {
         if (theObj == null) {
             throw new IllegalArgumentException("Object can't be null");
@@ -322,12 +315,10 @@ public abstract class AbstractEntityDAO<ClassToSave extends AbstractEntity<Class
                 getSearchConditionArguments(theObj.getId()), values);
     }
 
-
     protected String getSqlQuery(int theResId) {
         ILAPIDBFacade facade = getFacade();
         return facade.getQuery(theResId);
     }
-
 
     public void clearData() {
         ILAPIDBFacade facade = getFacade();
@@ -337,7 +328,6 @@ public abstract class AbstractEntityDAO<ClassToSave extends AbstractEntity<Class
     public static int getIntFromBool(boolean theValue) {
         return theValue ? 1 : 0;
     }
-
 
     public static boolean getBoolFromInt(int theValue) {
         return theValue >= 1;

@@ -1,9 +1,9 @@
 package com.connfa.model.requests;
 
-import com.ls.drupal.AbstractDrupalEntityContainer;
-import com.ls.drupal.DrupalClient;
 import com.connfa.model.PreferencesManager;
 import com.connfa.model.UpdatesManager;
+import com.ls.drupal.AbstractDrupalEntityContainer;
+import com.ls.drupal.DrupalClient;
 import com.ls.http.base.BaseRequest;
 import com.ls.http.base.ResponseData;
 
@@ -18,20 +18,19 @@ public abstract class BaseSafeConsumeContainerRequest<T> extends AbstractDrupalE
 
     @Override
     protected void consumeObject(ResponseData entity) {
-        if(entity.getData() != null) {
+        if (entity.getData() != null) {
             super.consumeObject(entity);
         }
     }
 
     @Override
-    protected Map<String, String> getItemRequestHeaders(BaseRequest.RequestMethod method)
-    {
-        if(method != BaseRequest.RequestMethod.GET){
+    protected Map<String, String> getItemRequestHeaders(BaseRequest.RequestMethod method) {
+        if (method != BaseRequest.RequestMethod.GET) {
             return super.getItemRequestHeaders(method);
         }
 
         String lastDate = PreferencesManager.getInstance().getLastUpdateDate();
-        Map<String,String> result = new HashMap<>();
+        Map<String, String> result = new HashMap<>();
         result.put(UpdatesManager.IF_MODIFIED_SINCE_HEADER, lastDate);
         return result;
     }

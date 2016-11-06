@@ -22,7 +22,7 @@ public class FloorSelectorAdapter extends BaseAdapter implements ThemedSpinnerAd
     private final LayoutInflater mInflater;
     private List<String> mNames;
 
-    public FloorSelectorAdapter(Context context,List<String> names) {
+    public FloorSelectorAdapter(Context context, List<String> names) {
         mDropDownHelper = new ThemedSpinnerAdapter.Helper(context);
         mInflater = LayoutInflater.from(context);
         mNames = new ArrayList<>(names);
@@ -47,38 +47,34 @@ public class FloorSelectorAdapter extends BaseAdapter implements ThemedSpinnerAd
             convertView = inflater.inflate(R.layout.fr_floor_plan_spinner, parent, false);
         }
 
-        TextView label = (TextView)convertView.findViewById(R.id.spinnerTarget);
+        TextView label = (TextView) convertView.findViewById(R.id.spinnerTarget);
         label.setText(mNames.get(position));
 
         return convertView;
     }
 
     @Override
-    public int getCount()
-    {
+    public int getCount() {
         return mNames.size();
     }
 
     @Override
-    public Object getItem(int position)
-    {
+    public Object getItem(int position) {
         return mNames.get(position);
     }
 
     @Override
-    public long getItemId(int position)
-    {
+    public long getItemId(int position) {
         return position;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
-    {
+    public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.fr_floor_plan_spinner, parent, false);
         }
 
-        TextView label = (TextView)convertView.findViewById(R.id.spinnerTarget);
+        TextView label = (TextView) convertView.findViewById(R.id.spinnerTarget);
         label.setText(mNames.get(position));
 
         return convertView;

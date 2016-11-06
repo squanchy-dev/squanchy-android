@@ -14,45 +14,45 @@ import com.connfa.R;
 
 public class FontTextView extends TextView {
 
-	public FontTextView(Context context) {
-		super(context);
-	}
+    public FontTextView(Context context) {
+        super(context);
+    }
 
-	public FontTextView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		applyAttributes(attrs);
-	}
+    public FontTextView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        applyAttributes(attrs);
+    }
 
-	public FontTextView(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-		applyAttributes(attrs);
-	}
+    public FontTextView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        applyAttributes(attrs);
+    }
 
-	private void applyAttributes(AttributeSet attrs) {
-		if (isInEditMode()) {
-			return;
-		}
-		TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.FontTextView);
-		String font = array.getString(R.styleable.FontTextView_custom_font);
-		if (font != null) {
-			setTypeface(font);
-		}
-		array.recycle();
-	}
+    private void applyAttributes(AttributeSet attrs) {
+        if (isInEditMode()) {
+            return;
+        }
+        TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.FontTextView);
+        String font = array.getString(R.styleable.FontTextView_custom_font);
+        if (font != null) {
+            setTypeface(font);
+        }
+        array.recycle();
+    }
 
-	public void setTypeface(final String fontName) {
-		setTypeface(TypefaceManger.getTypeface(fontName, getContext()));
-	}
+    public void setTypeface(final String fontName) {
+        setTypeface(TypefaceManger.getTypeface(fontName, getContext()));
+    }
 
-	public void setTypeface(final String theName, int theStyle) {
-		this.setTypeface(TypefaceManger.getTypeface(theName, getContext()), theStyle);
-	}
+    public void setTypeface(final String theName, int theStyle) {
+        this.setTypeface(TypefaceManger.getTypeface(theName, getContext()), theStyle);
+    }
 
-	public void setTypeface(int theNameResId) {
-		this.setTypeface(TypefaceManger.getTypeface(getContext().getString(theNameResId), this.getContext()));
-	}
+    public void setTypeface(int theNameResId) {
+        this.setTypeface(TypefaceManger.getTypeface(getContext().getString(theNameResId), this.getContext()));
+    }
 
-	public void setTypeface(int theNameResId, int theStyle) {
-		this.setTypeface(TypefaceManger.getTypeface(getContext().getString(theNameResId), this.getContext()), theStyle);
-	}
+    public void setTypeface(int theNameResId, int theStyle) {
+        this.setTypeface(TypefaceManger.getTypeface(getContext().getString(theNameResId), this.getContext()), theStyle);
+    }
 }

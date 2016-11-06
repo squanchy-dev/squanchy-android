@@ -16,10 +16,9 @@ import java.io.InputStreamReader;
 /**
  * Created on 23.12.2014.
  */
-public class FileUtils
-{
-    public static boolean writeBitmapToStorage(String name, Bitmap data, Context context){
-        if(data == null){
+public class FileUtils {
+    public static boolean writeBitmapToStorage(String name, Bitmap data, Context context) {
+        if (data == null) {
             return false;
         }
         FileOutputStream out = null;
@@ -48,8 +47,8 @@ public class FileUtils
         }
     }
 
-    public static boolean writeBytesToStorage(String name, byte[] data, Context context){
-        if(data == null){
+    public static boolean writeBytesToStorage(String name, byte[] data, Context context) {
+        if (data == null) {
             return false;
         }
         FileOutputStream out = null;
@@ -79,8 +78,7 @@ public class FileUtils
         }
     }
 
-    public static void writeToFileToStorage(String name, String data, Context theContext)
-    {
+    public static void writeToFileToStorage(String name, String data, Context theContext) {
         FileWriter fileWritter = null;
         try {
             File file = getFileWithName(name, theContext);
@@ -97,7 +95,7 @@ public class FileUtils
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if(fileWritter != null) {
+            if (fileWritter != null) {
                 try {
                     fileWritter.close();
                 } catch (IOException e) {
@@ -107,8 +105,7 @@ public class FileUtils
         }
     }
 
-    public static void deleteStoredFile(String name, Context theContext)
-    {
+    public static void deleteStoredFile(String name, Context theContext) {
         try {
             File file = getFileWithName(name, theContext);
             deleteFile(file);
@@ -117,14 +114,12 @@ public class FileUtils
         }
     }
 
-    public static void deleteDataStorageDirectory(Context theContext)
-    {
+    public static void deleteDataStorageDirectory(Context theContext) {
         File dataStorageDirectory = getDataFilesDirectory(theContext);
         deleteFile(dataStorageDirectory);
     }
 
-    public static String readFromStoredFile(String name, Context theContext)
-    {
+    public static String readFromStoredFile(String name, Context theContext) {
         FileInputStream fin = null;
         try {
             File fl = getFileWithName(name, theContext);
@@ -136,7 +131,7 @@ public class FileUtils
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if(fin != null) {
+            if (fin != null) {
                 try {
                     fin.close();
                 } catch (IOException e) {
@@ -147,8 +142,7 @@ public class FileUtils
         return null;
     }
 
-    public static Bitmap readBitmapFromStoredFile(String name, Context theContext)
-    {
+    public static Bitmap readBitmapFromStoredFile(String name, Context theContext) {
         FileInputStream fin = null;
         try {
             File fl = getFileWithName(name, theContext);
@@ -156,10 +150,10 @@ public class FileUtils
             return BitmapFactory.decodeStream(fin);
         } catch (IOException e) {
             e.printStackTrace();
-        }  catch (Error error) {
+        } catch (Error error) {
             error.printStackTrace();
         } finally {
-            if(fin != null) {
+            if (fin != null) {
                 try {
                     fin.close();
                 } catch (IOException e) {
@@ -170,9 +164,8 @@ public class FileUtils
         return null;
     }
 
-    public static Bitmap readBitmapFromStoredFile(String name, int reqWidth,int reqHeight, Context theContext)
-    {
-        L.e("Reading bitmap:"+name);
+    public static Bitmap readBitmapFromStoredFile(String name, int reqWidth, int reqHeight, Context theContext) {
+        L.e("Reading bitmap:" + name);
         FileInputStream fin = null;
         try {
             File fl = getFileWithName(name, theContext);
@@ -189,13 +182,13 @@ public class FileUtils
             options.inJustDecodeBounds = false;
             fin = new FileInputStream(fl);
 
-            return BitmapFactory.decodeStream(fin,null,options);
+            return BitmapFactory.decodeStream(fin, null, options);
         } catch (IOException e) {
             e.printStackTrace();
-        }  catch (Error error) {
+        } catch (Error error) {
             error.printStackTrace();
         } finally {
-            if(fin != null) {
+            if (fin != null) {
                 try {
                     fin.close();
                 } catch (IOException e) {
@@ -206,8 +199,7 @@ public class FileUtils
         return null;
     }
 
-    private static void deleteFile(File fileOrDirectory)
-    {
+    private static void deleteFile(File fileOrDirectory) {
         if (fileOrDirectory.isDirectory()) {
             for (File child : fileOrDirectory.listFiles()) {
                 deleteFile(child);
@@ -216,8 +208,7 @@ public class FileUtils
         fileOrDirectory.delete();
     }
 
-    private static String convertStreamToString(InputStream is) throws IOException
-    {
+    private static String convertStreamToString(InputStream is) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuilder sb = new StringBuilder();
         String line = null;
@@ -228,8 +219,7 @@ public class FileUtils
         return sb.toString();
     }
 
-    private static File getFileWithName(String theName, Context theContext) throws IOException
-    {
+    private static File getFileWithName(String theName, Context theContext) throws IOException {
 //
 //        String state = Environment.getExternalStorageState();
 //
@@ -246,14 +236,12 @@ public class FileUtils
         return new File(storageDir, cleanFileName(theName));
     }
 
-    private static File getDataFilesDirectory(Context theContext)
-    {
+    private static File getDataFilesDirectory(Context theContext) {
         File storageDir = theContext.getFilesDir();
         return new File(storageDir, "databaseFiles");
     }
 
-    private static String cleanFileName(String fileName)
-    {
+    private static String cleanFileName(String fileName) {
         return fileName.replaceAll("[|?*<\":>+\\[\\]/']", "-");
     }
 
@@ -270,7 +258,7 @@ public class FileUtils
 
             inSampleSize = heightRatio > widthRatio ? heightRatio : widthRatio;
         }
-        L.e("Sample size:"+inSampleSize);
+        L.e("Sample size:" + inSampleSize);
         return inSampleSize;
     }
 }

@@ -21,8 +21,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SocialMediaFragment extends Fragment
-{
+public class SocialMediaFragment extends Fragment {
 
     public static final String TAG = "SocialMediaFragment";
     private View rootView;
@@ -35,20 +34,18 @@ public class SocialMediaFragment extends Fragment
         }
     };
 
-    public SocialMediaFragment()
-    {
+    public SocialMediaFragment() {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState)
-    {
+                             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_social_media, container, false);
         mLayoutPlaceholder = rootView.findViewById(R.id.layout_placeholder);
         return rootView;
     }
+
     private void updateData(List<Integer> requestIds) {
         for (int id : requestIds) {
             if (UpdatesManager.SETTINGS_REQUEST_ID == id) {
@@ -59,8 +56,7 @@ public class SocialMediaFragment extends Fragment
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState)
-    {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rootView = view;
 
@@ -71,7 +67,7 @@ public class SocialMediaFragment extends Fragment
 
     private void fillView() {
 
-        if(!NetworkUtils.isOn(getActivity()) ){
+        if (!NetworkUtils.isOn(getActivity())) {
             rootView.findViewById(R.id.txtNoConnection).setVisibility(View.VISIBLE);
             rootView.findViewById(R.id.list_view).setVisibility(View.GONE);
             rootView.findViewById(R.id.progressBar).setVisibility(View.GONE);
@@ -95,12 +91,11 @@ public class SocialMediaFragment extends Fragment
             }
         });
 
-        ListView list = (ListView)rootView.findViewById(R.id.list_view);
+        ListView list = (ListView) rootView.findViewById(R.id.list_view);
 
         list.setEmptyView(mLayoutPlaceholder);
         list.setAdapter(adapter);
     }
-
 
     @Override
     public void onDestroyView() {

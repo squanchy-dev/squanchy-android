@@ -1,24 +1,22 @@
 package com.connfa.model.data;
 
-import com.google.gson.annotations.SerializedName;
+import android.content.ContentValues;
+import android.database.Cursor;
 
 import com.connfa.model.database.AbstractEntity;
 import com.connfa.utils.CursorStringParser;
-
-import org.jetbrains.annotations.NotNull;
-
-import android.content.ContentValues;
-import android.database.Cursor;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Created on 09.06.2016.
  */
-public class FloorPlan extends AbstractEntity<String> implements Comparable<FloorPlan>
-{
+public class FloorPlan extends AbstractEntity<String> implements Comparable<FloorPlan> {
     public final static String COLUMN_ID = "_id";
     private final static String COLUMN_NAME = "_name";
     private final static String COLUMN_IMAGE_URL = "_image_url";
@@ -36,47 +34,40 @@ public class FloorPlan extends AbstractEntity<String> implements Comparable<Floo
     @SerializedName("order")
     private double mOrder;
 
-    public String getName()
-    {
+    public String getName() {
         return mName;
     }
 
-    public String getImageURL()
-    {
+    public String getImageURL() {
         return mImageURL;
     }
 
-    public boolean isDeleted()
-    {
+    public boolean isDeleted() {
         return mDeleted;
     }
 
-    public double getOrder()
-    {
+    public double getOrder() {
         return mOrder;
     }
 
     @Override
-    public String getId()
-    {
+    public String getId() {
         return mId;
     }
 
     @Override
-    public ContentValues getContentValues()
-    {
+    public ContentValues getContentValues() {
         ContentValues result = new ContentValues();
-        result.put(COLUMN_ID,mId);
-        result.put(COLUMN_NAME,mName);
-        result.put(COLUMN_IMAGE_URL,mImageURL);
-        result.put(COLUMN_DELETED,mDeleted);
-        result.put(COLUMN_ORDER,mOrder);
+        result.put(COLUMN_ID, mId);
+        result.put(COLUMN_NAME, mName);
+        result.put(COLUMN_IMAGE_URL, mImageURL);
+        result.put(COLUMN_DELETED, mDeleted);
+        result.put(COLUMN_ORDER, mOrder);
         return result;
     }
 
     @Override
-    public void initialize(Cursor cursor)
-    {
+    public void initialize(Cursor cursor) {
         CursorStringParser parser = new CursorStringParser(cursor);
         mId = parser.readString(COLUMN_ID);
         mName = parser.readString(COLUMN_NAME);
@@ -89,20 +80,19 @@ public class FloorPlan extends AbstractEntity<String> implements Comparable<Floo
     public int compareTo(@NotNull FloorPlan event) {
 
         int result;
-        if(mOrder == event.mOrder)
-        {
+        if (mOrder == event.mOrder) {
             result = 0;
-        }else if(mOrder > event.mOrder){
+        } else if (mOrder > event.mOrder) {
             result = 1;
-        }else{
-             result = -1;
+        } else {
+            result = -1;
         }
 
         return result;
     }
 
-    public String getFilePath(){
-        return "FloorImages" + File.separator + this.getName()+"-"+this.getId();
+    public String getFilePath() {
+        return "FloorImages" + File.separator + this.getName() + "-" + this.getId();
     }
 
     public static class Holder {
@@ -116,8 +106,7 @@ public class FloorPlan extends AbstractEntity<String> implements Comparable<Floo
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "FloorPlan{" +
                 "mId='" + mId + '\'' +
                 ", mName='" + mName + '\'' +

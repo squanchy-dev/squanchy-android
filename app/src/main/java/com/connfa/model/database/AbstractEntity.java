@@ -10,9 +10,7 @@ public abstract class AbstractEntity<IdClass> {
 
     public abstract IdClass getId();
 
-
     public abstract ContentValues getContentValues();
-
 
     public abstract void initialize(Cursor theCursor);
 }

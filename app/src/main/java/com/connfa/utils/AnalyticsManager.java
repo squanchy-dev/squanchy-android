@@ -1,11 +1,10 @@
 package com.connfa.utils;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
+import android.app.Activity;
 
 import com.connfa.App;
-
-import android.app.Activity;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 public class AnalyticsManager {
 

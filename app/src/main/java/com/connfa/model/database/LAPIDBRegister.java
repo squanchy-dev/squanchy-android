@@ -17,14 +17,11 @@ public class LAPIDBRegister {
         return instance;
     }
 
-
     private Map<String, ILAPIDBFacade> map;
-
 
     private LAPIDBRegister() {
         this.map = new HashMap<String, ILAPIDBFacade>();
     }
-
 
     public void register(Context theContext, DBInfo theDbInfo) {
         if (theDbInfo == null) {
@@ -39,11 +36,9 @@ public class LAPIDBRegister {
         this.map.put(databaseName, new DatabaseFacade(theContext, theDbInfo));
     }
 
-
     public void unregister(String theDatabaseName) {
         this.map.remove(theDatabaseName);
     }
-
 
     public ILAPIDBFacade lookup(String theDatabaseName) {
         if (theDatabaseName == null) {
@@ -52,6 +47,5 @@ public class LAPIDBRegister {
 
         return this.map.get(theDatabaseName);
     }
-
 
 }

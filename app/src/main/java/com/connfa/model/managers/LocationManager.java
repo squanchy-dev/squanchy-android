@@ -1,16 +1,17 @@
 package com.connfa.model.managers;
 
-import com.ls.drupal.AbstractBaseDrupalEntity;
-import com.ls.drupal.DrupalClient;
 import com.connfa.model.dao.LocationDao;
 import com.connfa.model.data.Location;
 import com.connfa.model.requests.LocationRequest;
+import com.ls.drupal.AbstractBaseDrupalEntity;
+import com.ls.drupal.DrupalClient;
 
 import java.util.List;
 
 public class LocationManager extends SynchronousItemManager<Location.Holder, Object, String> {
 
     private LocationDao mLocationDao;
+
     public LocationManager(DrupalClient client) {
         super(client);
         mLocationDao = new LocationDao();

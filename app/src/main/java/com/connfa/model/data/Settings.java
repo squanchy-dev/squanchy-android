@@ -51,13 +51,11 @@ public class Settings {
         this.timeZone = timeZone;
     }
 
-    public String getTwitterSearchQuery()
-    {
+    public String getTwitterSearchQuery() {
         return twitterSearchQuery;
     }
 
-    public void setTwitterSearchQuery(String twitterSearchQuery)
-    {
+    public void setTwitterSearchQuery(String twitterSearchQuery) {
         this.twitterSearchQuery = twitterSearchQuery;
     }
 }

@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Level extends AbstractEntity<Long>{
+public class Level extends AbstractEntity<Long> {
 
     public static final int BEGINNER = 1;
     public static final int INTERMEDIATE = 2;

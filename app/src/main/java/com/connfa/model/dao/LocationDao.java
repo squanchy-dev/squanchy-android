@@ -4,7 +4,6 @@ import com.connfa.model.AppDatabaseInfo;
 import com.connfa.model.data.Location;
 import com.connfa.model.database.AbstractEntityDAO;
 
-
 public class LocationDao extends AbstractEntityDAO<Location, Long> {
 
     public static final String TABLE_NAME = "table_location";

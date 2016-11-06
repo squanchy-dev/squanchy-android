@@ -1,11 +1,10 @@
 package com.connfa.model.database;
 
-
-import com.connfa.model.PreferencesManager;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.connfa.model.PreferencesManager;
 
 import java.util.Iterator;
 

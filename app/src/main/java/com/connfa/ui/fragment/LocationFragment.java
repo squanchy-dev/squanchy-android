@@ -82,7 +82,9 @@ public class LocationFragment extends Fragment implements CustomMapFragment.OnAc
     }
 
     private void fillMapViews(List<Location> locations) {
-        if (mGoogleMap == null) return;
+        if (mGoogleMap == null) {
+            return;
+        }
 
         if (locations == null || locations.isEmpty()) {
             TextView textViewAddress = (TextView) getView().findViewById(R.id.txtAddress);
@@ -109,7 +111,9 @@ public class LocationFragment extends Fragment implements CustomMapFragment.OnAc
     }
 
     private void fillTextViews(Location location) {
-        if (getView() == null) return;
+        if (getView() == null) {
+            return;
+        }
 
         TextView txtAmsterdam = (TextView) getView().findViewById(R.id.txtPlace);
         TextView txtAddress = (TextView) getView().findViewById(R.id.txtAddress);

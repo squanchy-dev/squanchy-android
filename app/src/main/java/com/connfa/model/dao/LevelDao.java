@@ -4,7 +4,6 @@ import com.connfa.model.AppDatabaseInfo;
 import com.connfa.model.data.Level;
 import com.connfa.model.database.AbstractEntityDAO;
 
-
 public class LevelDao extends AbstractEntityDAO<Level, Long> {
 
     public static final String TABLE_NAME = "table_level";

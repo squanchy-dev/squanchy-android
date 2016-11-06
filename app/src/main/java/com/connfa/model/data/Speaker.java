@@ -1,14 +1,13 @@
 package com.connfa.model.data;
 
-import com.google.gson.annotations.SerializedName;
-
-import com.connfa.model.database.AbstractEntity;
-import com.connfa.utils.CursorParser;
-
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.connfa.model.database.AbstractEntity;
+import com.connfa.utils.CursorParser;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +46,6 @@ public class Speaker extends AbstractEntity<Long> implements Parcelable, Compara
 
     @SerializedName("deleted")
     private boolean mDeleted;
-
 
     public Speaker() {
     }

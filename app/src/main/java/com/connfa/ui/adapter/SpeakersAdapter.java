@@ -159,7 +159,9 @@ public class SpeakersAdapter extends BaseAdapter implements Filterable {
         protected void publishResults(CharSequence constraint, FilterResults results) {
             mSpeakersFiltered = (ArrayList<Speaker>) results.values;
             mLetterPositions = SpeakersListFragment.generateFirstLetterPositions(mSpeakersFiltered);
-            if (mListener != null) mListener.onFilterChange(mSpeakersFiltered.size());
+            if (mListener != null) {
+                mListener.onFilterChange(mSpeakersFiltered.size());
+            }
             notifyDataSetChanged();
         }
     }

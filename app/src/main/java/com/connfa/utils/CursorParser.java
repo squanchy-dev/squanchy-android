@@ -2,7 +2,6 @@ package com.connfa.utils;
 
 import android.database.Cursor;
 
-
 //TODO: remove automatic index counter form parser. It's unreliable.
 public class CursorParser {
 

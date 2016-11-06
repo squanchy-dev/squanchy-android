@@ -1,12 +1,12 @@
 package com.connfa.model.managers;
 
-import com.ls.drupal.AbstractBaseDrupalEntity;
-import com.ls.drupal.DrupalClient;
 import com.connfa.model.Model;
 import com.connfa.model.dao.TrackDao;
 import com.connfa.model.data.Level;
 import com.connfa.model.data.Track;
 import com.connfa.model.requests.TracksRequest;
+import com.ls.drupal.AbstractBaseDrupalEntity;
+import com.ls.drupal.DrupalClient;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -34,7 +34,9 @@ public class TracksManager extends SynchronousItemManager<Track.Holder, Object, 
     @Override
     protected boolean storeResponse(Track.Holder requestResponse, String tag) {
         List<Track> tracks = requestResponse.getTracks();
-        if (tracks == null) return false;
+        if (tracks == null) {
+            return false;
+        }
 
         mTrackDao.saveOrUpdateDataSafe(tracks);
         for (Track track : tracks) {

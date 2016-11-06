@@ -4,7 +4,7 @@ import com.ls.drupal.AbstractBaseDrupalEntity;
 import com.ls.drupal.DrupalClient;
 import com.ls.http.base.ResponseData;
 
-public abstract class SynchronousItemManager<FetchRequestResponseToManage ,ParametersClass,TagClass> {
+public abstract class SynchronousItemManager<FetchRequestResponseToManage, ParametersClass, TagClass> {
     private DrupalClient client;
 
     protected abstract AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client, ParametersClass requestParams);
@@ -25,8 +25,8 @@ public abstract class SynchronousItemManager<FetchRequestResponseToManage ,Param
         int statusCode = response.getStatusCode();
         if (statusCode > 0 && statusCode < 400) {
 
-            FetchRequestResponseToManage responseObj = (FetchRequestResponseToManage)response.getData();
-            if(responseObj != null) {
+            FetchRequestResponseToManage responseObj = (FetchRequestResponseToManage) response.getData();
+            if (responseObj != null) {
                 return storeResponse(responseObj, tag);
             }
         }
@@ -38,8 +38,7 @@ public abstract class SynchronousItemManager<FetchRequestResponseToManage ,Param
         return fetchData(null);
     }
 
-    public DrupalClient getClient()
-    {
+    public DrupalClient getClient() {
         return client;
     }
 }

@@ -85,7 +85,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
     }
 
     public void deleteByEventAndSpeaker(long eventId, long speakerId) {
-        String[] args = ArrayUtils.build(eventId,speakerId);
+        String[] args = ArrayUtils.build(eventId, speakerId);
         String query = mContext.getString(R.string.delete_event_and_speaker_by_event_and_speaker_id);
         getFacade().execSQL(query, args);
     }
@@ -250,7 +250,6 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
         return dataList;
     }
 
-
     public List<TimeRange> selectDistrictTimeRangeSafe(List<Long> eventIds) {
         String query = mContext.getString(R.string.select_distinct_time_range_by_event_ids);
         return selectDistrictTimeRangeSafe(null, String.format(query, getArrayAsString(eventIds)));
@@ -335,7 +334,6 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
 
         return dataList;
     }
-
 
     public List<SpeakerDetailsEvent> getEventsBySpeakerId(long speakerId) {
         ArrayList<SpeakerDetailsEvent> ret = new ArrayList<SpeakerDetailsEvent>();
@@ -476,7 +474,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
                 String speakerName = parser.readString("_speaker_name");
                 if (speakerName != null) {
                     String[] speakerNames = speakerName.split(",");
-                    for(int count = 0;count < speakerNames.length;count++) {
+                    for (int count = 0; count < speakerNames.length; count++) {
                         lastItem.addSpeaker(speakerNames[count]);
                     }
                 }
@@ -532,7 +530,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
                 String speakerName = parser.readString("_speaker_name");
                 if (speakerName != null) {
                     String[] speakerNames = speakerName.split(",");
-                    for(int count = 0;count < speakerNames.length;count++) {
+                    for (int count = 0; count < speakerNames.length; count++) {
                         lastItem.addSpeaker(speakerNames[count]);
                     }
                 }
@@ -576,7 +574,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
                 String speakerName = parser.readString("_speaker_name");
                 if (speakerName != null) {
                     String[] speakerNames = speakerName.split(",");
-                    for(int count = 0;count < speakerNames.length;count++) {
+                    for (int count = 0; count < speakerNames.length; count++) {
                         item.addSpeaker(speakerNames[count]);
                     }
                 }
@@ -621,13 +619,12 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
                 String speakerName = parser.readString("_speaker_name");
                 if (speakerName != null) {
                     String[] speakerNames = speakerName.split(",");
-                    for(int count = 0;count < speakerNames.length;count++) {
+                    for (int count = 0; count < speakerNames.length; count++) {
                         item.addSpeaker(speakerNames[count]);
                     }
                 }
 
                 dataList.add(item);
-
 
                 moved = cursor.moveToNext();
             }

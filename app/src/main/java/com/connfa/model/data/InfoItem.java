@@ -1,18 +1,17 @@
 package com.connfa.model.data;
 
-import com.google.gson.annotations.SerializedName;
+import android.content.ContentValues;
+import android.database.Cursor;
 
 import com.connfa.model.database.AbstractEntity;
 import com.connfa.utils.CursorParser;
-
-import android.content.ContentValues;
-import android.database.Cursor;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class InfoItem extends AbstractEntity<Long>{
+public class InfoItem extends AbstractEntity<Long> {
 
     @SerializedName("infoId")
     private long mId;
@@ -73,26 +72,25 @@ public class InfoItem extends AbstractEntity<Long>{
         mDeleted = parser.readBoolean();
     }
 
-    public static class General  {
+    public static class General {
 
         @SerializedName("title")
-        private HashMap <String, String> mTitles = new HashMap<String, String>();
+        private HashMap<String, String> mTitles = new HashMap<String, String>();
 
-        public String getMajorTitle(){
+        public String getMajorTitle() {
             return mTitles.get("titleMajor");
         }
 
-        public String getMinorTitle(){
+        public String getMinorTitle() {
             return mTitles.get("titleMinor");
         }
 
         @SerializedName("info")
         private List<InfoItem> mInfo = new ArrayList<InfoItem>();
 
-        public List<InfoItem> getInfo(){
+        public List<InfoItem> getInfo() {
             return mInfo;
         }
-
 
     }
 

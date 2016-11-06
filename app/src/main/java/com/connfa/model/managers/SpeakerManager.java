@@ -2,12 +2,12 @@ package com.connfa.model.managers;
 
 import android.content.Context;
 
-import com.ls.drupal.AbstractBaseDrupalEntity;
-import com.ls.drupal.DrupalClient;
 import com.connfa.model.dao.EventDao;
 import com.connfa.model.dao.SpeakerDao;
 import com.connfa.model.data.Speaker;
 import com.connfa.model.requests.SpeakersRequest;
+import com.ls.drupal.AbstractBaseDrupalEntity;
+import com.ls.drupal.DrupalClient;
 
 import java.util.List;
 

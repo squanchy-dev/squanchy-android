@@ -1,7 +1,5 @@
 package com.connfa.ui.view;
 
-import com.ls.util.image.DrupalImageView;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -12,6 +10,8 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+
+import com.ls.util.image.DrupalImageView;
 
 public class CircleImageView extends DrupalImageView {
 
@@ -78,7 +78,6 @@ public class CircleImageView extends DrupalImageView {
 
         bmp = getSquareBitmap(bmp);
 
-
         if (bmp.getWidth() != radius || bmp.getHeight() != radius) {
             sbmp = Bitmap.createScaledBitmap(bmp, radius, radius, false);
         } else {
@@ -112,6 +111,5 @@ public class CircleImageView extends DrupalImageView {
         int top = (bmp.getHeight() - size) / 2;
         return Bitmap.createBitmap(bmp, left, top, size, size);
     }
-
 
 }

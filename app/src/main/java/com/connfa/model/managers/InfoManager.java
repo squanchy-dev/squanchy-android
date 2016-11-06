@@ -1,11 +1,11 @@
 package com.connfa.model.managers;
 
-import com.ls.drupal.AbstractBaseDrupalEntity;
-import com.ls.drupal.DrupalClient;
 import com.connfa.model.PreferencesManager;
 import com.connfa.model.dao.InfoDao;
 import com.connfa.model.data.InfoItem;
 import com.connfa.model.requests.InfoRequest;
+import com.ls.drupal.AbstractBaseDrupalEntity;
+import com.ls.drupal.DrupalClient;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -36,7 +36,6 @@ public class InfoManager extends SynchronousItemManager<InfoItem.General, Object
         if (infoList == null) {
             return false;
         }
-
 
         mInfoDao.saveOrUpdateDataSafe(infoList);
         for (InfoItem info : infoList) {

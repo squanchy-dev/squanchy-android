@@ -1,11 +1,11 @@
 package com.connfa.model.managers;
 
-import com.ls.drupal.AbstractBaseDrupalEntity;
-import com.ls.drupal.DrupalClient;
 import com.connfa.model.PreferencesManager;
 import com.connfa.model.data.SettingsHolder;
 import com.connfa.model.requests.SettingsRequest;
 import com.connfa.utils.DateUtils;
+import com.ls.drupal.AbstractBaseDrupalEntity;
+import com.ls.drupal.DrupalClient;
 
 public class SettingsManager extends SynchronousItemManager<SettingsHolder, Object, String> {
 

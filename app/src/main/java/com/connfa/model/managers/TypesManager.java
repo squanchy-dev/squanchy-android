@@ -1,10 +1,10 @@
 package com.connfa.model.managers;
 
-import com.ls.drupal.AbstractBaseDrupalEntity;
-import com.ls.drupal.DrupalClient;
 import com.connfa.model.dao.TypeDao;
 import com.connfa.model.data.Type;
 import com.connfa.model.requests.TypesRequest;
+import com.ls.drupal.AbstractBaseDrupalEntity;
+import com.ls.drupal.DrupalClient;
 
 import java.util.List;
 
@@ -30,7 +30,9 @@ public class TypesManager extends SynchronousItemManager<Type.Holder, Object, St
     @Override
     protected boolean storeResponse(Type.Holder requestResponse, String tag) {
         List<Type> types = requestResponse.getTypes();
-        if (types == null) return false;
+        if (types == null) {
+            return false;
+        }
 
         mTypeDao.saveOrUpdateDataSafe(types);
         for (Type type : types) {
