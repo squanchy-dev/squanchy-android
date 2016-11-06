@@ -1,7 +1,18 @@
 package com.ls.ui.activity;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ListView;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
 import com.ls.drupalcon.R;
 import com.ls.drupalcon.app.App;
 import com.ls.drupalcon.model.Model;
@@ -19,18 +30,6 @@ import com.ls.ui.drawer.DrawerMenuItem;
 import com.ls.utils.AnalyticsManager;
 import com.ls.utils.KeyboardUtils;
 import com.ls.utils.ScheduleManager;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -168,7 +167,7 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
 
         ListView listView = (ListView) findViewById(R.id.leftDrawer);
         listView.addHeaderView(
-                getLayoutInflater().inflate(R.layout.nav_drawer_header, null),
+                getLayoutInflater().inflate(R.layout.nav_drawer_header, listView, false),
                 null,
                 false);
         listView.setAdapter(mAdapter);
@@ -297,7 +296,7 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
         return result;
     }
 
-     private void showIrrelevantTimezoneDialogIfNeeded() {
+    private void showIrrelevantTimezoneDialogIfNeeded() {
         if (!IrrelevantTimezoneDialogFragment.isCurrentTimezoneRelevant()
                 && IrrelevantTimezoneDialogFragment.canPresentMessage(this)
                 && !isFinishing()) {

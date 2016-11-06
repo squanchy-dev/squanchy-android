@@ -63,7 +63,7 @@ public class UIUtils {
         }
 
         Spannable spanRAI = new SpannableString(strToSpan + " ");
-        spanRAI.setSpan(new MultiFontsTypefaceSpan("", typeFace),
+        spanRAI.setSpan(new TypefaceSpan(typeFace),
                 0, spanRAI.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         txtView.append(spanRAI);

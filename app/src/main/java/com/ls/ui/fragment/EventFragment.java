@@ -1,5 +1,15 @@
 package com.ls.ui.fragment;
 
+import android.app.Activity;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+
 import com.ls.drupalcon.R;
 import com.ls.drupalcon.model.EventGenerator;
 import com.ls.drupalcon.model.PreferencesManager;
@@ -13,16 +23,6 @@ import com.ls.ui.drawer.DrawerManager;
 import com.ls.ui.receiver.ReceiverManager;
 import com.ls.utils.AnalyticsManager;
 import com.ls.utils.DateUtils;
-
-import android.app.Activity;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -67,7 +67,7 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fr_event, null);
+        return inflater.inflate(R.layout.fr_event, container, false);
     }
 
     @Override
@@ -173,7 +173,6 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
         }
     }
 
-
     private void onItemClick(int position) {
         EventListItem item = mAdapter.getItem(position);
 
@@ -183,7 +182,7 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
             Long eventId = item.getEvent().getId();
             String eventName = item.getEvent().getName();
             AnalyticsManager.sendEvent(getActivity(), R.string.event_category, R.string.action_open, eventId + " " + eventName);
-                EventDetailsActivity.startThisActivity(getActivity(), item.getEvent().getId(), mDay);
+            EventDetailsActivity.startThisActivity(getActivity(), item.getEvent().getId(), mDay);
 //            }
         }
     }
@@ -243,17 +242,17 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 
         EventListItem eventToSelect = null;
 
-        for (EventListItem item : eventListItems){
+        for (EventListItem item : eventListItems) {
 
             if (item instanceof TimeRangeItem) {
 
                 Event event = item.getEvent();
                 calendar.setTimeInMillis(event.getFromMillis());
-                int eventTimeMinutes =  calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+                int eventTimeMinutes = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 
                 int difference = Math.abs(eventTimeMinutes - deviceTimeMinutes);
 
-                if (eventTimeMinutes <= deviceTimeMinutes && minDifference > difference ) {
+                if (eventTimeMinutes <= deviceTimeMinutes && minDifference > difference) {
                     minDifference = difference;
                     eventToSelect = item;
                 }
@@ -261,7 +260,7 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
             }
         }
 
-        if(eventToSelect != null){
+        if (eventToSelect != null) {
             pos = eventListItems.indexOf(eventToSelect);
         }
         return pos;

@@ -28,10 +28,7 @@
     <string name="no_apps_can_perform_this_action">No Apps can perform this action.</string>
     <string name="share">Share</string>
     <string name="no_search_result">No Search Result</string>
-    <string name="TWITTER">TWITTER</string>
-    <string name="WEBSITE">WEBSITE</string>
-    <string name="lorem_ipsum">Lorem ipsum</string>
-    <string name="APPLY">APPLY</string>
+  <string name="APPLY">APPLY</string>
     <string name="CLEAR">CLEAR</string>
     <string name="access">ACCESS</string>
     <string name="placeholder_no_matching_events">No matching events</string>
@@ -52,13 +49,12 @@
     <string name="to">to %s</string>
     <string name="speaker_separator">", "</string>
     <string name="css"><![CDATA[<link rel=\'stylesheet\' href=\'css/style.css\' type=\'text/css\'>]]></string>
-    <string name="irrelevant_timezone_notificaiton"
-            formatted="false"><![CDATA[Event dates are provided in %s (%s) timezone]]></string>
+  <string name="irrelevant_timezone_notification">Event dates are provided in %1$s (%2$s) timezone</string>
     <string name="dont_show_message_again">Don\'t show this message again</string>
     <string name="no_default_browser_found">No default browser found</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="social_media">Social Media</string>
+  <string name="social_media">Social Media</string>
     <string name="floor_plan">Floor Plans</string>
+  <string name="no_details">No Details</string>
 </resources>

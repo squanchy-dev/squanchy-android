@@ -1,85 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_height="match_parent"
-                xmlns:tools="http://schemas.android.com/tools"
-        >
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/header"
-        android:layout_width="match_parent"
+  <ImageView
+    android:id="@+id/header"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:adjustViewBounds="true"
+    android:scaleType="centerCrop"
+    android:src="@drawable/bg_about_header" />
+
+  <View
+    android:id="@+id/divider"
+    android:layout_width="match_parent"
+    android:layout_height="1px"
+    android:layout_below="@+id/header"
+    android:background="@color/white_200" />
+
+  <ListView
+    android:id="@+id/listView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@+id/divider"
+    android:background="@android:color/white"
+    android:cacheColorHint="@android:color/transparent"
+    android:clipToPadding="false"
+    android:divider="@android:color/transparent"
+    android:dividerHeight="0dp"
+    android:listSelector="@drawable/selector_light"
+    tools:visibility="gone" />
+
+  <FrameLayout
+    android:id="@+id/layout_placeholder"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@+id/divider"
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginRight="@dimen/activity_horizontal_margin"
+    android:visibility="gone"
+    tools:visibility="visible">
+
+    <!-- It's just a way of centering stuff (I suppose) -->
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:gravity="center_horizontal"
+      android:orientation="vertical"
+      tools:ignore="UselessParent">
+
+      <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        android:src="@drawable/bg_about_header" />
+        android:layout_gravity="center"
+        android:src="@drawable/ic_no_info" />
 
-    <View
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_below="@+id/header"
-        android:background="@color/white_200" />
-
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/divider"
-        android:background="@android:color/white"
-        android:cacheColorHint="@android:color/transparent"
-        android:clipToPadding="false"
-        tools:visibility="gone"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"
-        android:listSelector="@drawable/selector_light" />
-
-    <FrameLayout
-            android:id="@+id/layout_placeholder"
-            android:layout_width="match_parent"
-            android:visibility="gone"
-            tools:visibility="visible"
-            android:layout_below="@+id/divider"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_height="match_parent">
-
-        <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-            <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_no_info"
-                    android:layout_height="wrap_content" />
-
-            <com.ls.ui.view.FontTextView
-                    android:layout_width="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/margin_top_placeholder_text"
-                    android:layout_height="wrap_content"
-                    android:text="@string/placeholder_info"
-                    app:custom_font="@string/roboto_regular"
-                    android:textSize="@dimen/text_size_placeholder"
-                    android:textColor="@color/placeholder_text" />
-        </LinearLayout>
-
-    </FrameLayout>
-
-    <View
-        android:id="@+id/viewShadow"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="@drawable/shape_shadow"/>
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolBar"
-        android:layout_width="match_parent"
+      <com.ls.ui.view.FontTextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent" />
+        android:layout_marginTop="@dimen/margin_top_placeholder_text"
+        android:gravity="center_horizontal"
+        android:text="@string/placeholder_info"
+        android:textSize="@dimen/text_size_placeholder"
+        android:textColor="@color/placeholder_text"
+        app:custom_font="@string/roboto_regular" />
+    </LinearLayout>
+
+  </FrameLayout>
+
+  <View
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:background="@drawable/shape_shadow" />
+
+  <android.support.v7.widget.Toolbar
+    android:id="@+id/toolBar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent" />
 
 </RelativeLayout>

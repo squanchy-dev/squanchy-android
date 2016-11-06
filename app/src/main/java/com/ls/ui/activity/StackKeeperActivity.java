@@ -7,7 +7,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 
-public class StackKeeperActivity extends StateActivity {
+public abstract class StackKeeperActivity extends StateActivity {
 
     private static final String EXTRAS_STATE = "EXTRAS_STATE";
     private static final String ACTION = "CHECK_STACK";

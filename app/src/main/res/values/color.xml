@@ -33,8 +33,7 @@
 
     <color name="favorite">#4f3b9a</color>
     <color name="link">#4f3b9a</color>
-    <color name="navigation">#1f3e98</color>
 
-    <color name="placeholder_text">#a3a3a3</color>
+  <color name="placeholder_text">#a3a3a3</color>
 
 </resources>

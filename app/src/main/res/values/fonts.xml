@@ -9,6 +9,5 @@
     <string name="roboto_light">"Roboto-Light.ttf"</string>
     <string name="roboto_medium">"Roboto-Medium.ttf"</string>
     <string name="roboto_regular">"Roboto-Regular.ttf"</string>
-    <string name="roboto_thin">"Roboto-Thin.ttf"</string>
-    <string name="montserrat_regular">"Montserrat-Regular.ttf"</string>
+  <string name="montserrat_regular">"Montserrat-Regular.ttf"</string>
 </resources>

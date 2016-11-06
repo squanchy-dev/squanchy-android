@@ -1,8 +1,5 @@
 package com.ls.ui.drawer;
 
-import com.ls.drupalcon.R;
-import com.ls.drupalcon.app.App;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.ls.drupalcon.R;
+import com.ls.drupalcon.app.App;
 
 import java.util.List;
 
@@ -50,9 +50,9 @@ public class DrawerAdapter extends BaseAdapter {
         DrawerMenuItem item = menu.get(position);
 
         if (item.isGroup()) {
-            result = inflater.inflate(R.layout.item_drawer_group, null);
+            result = inflater.inflate(R.layout.item_drawer_group, parent, false);
         } else {
-            result = inflater.inflate(R.layout.item_drawer, null);
+            result = inflater.inflate(R.layout.item_drawer, parent, false);
         }
 
         LinearLayout layoutDrawerItem = (LinearLayout) result.findViewById(R.id.layoutDrawerItem);

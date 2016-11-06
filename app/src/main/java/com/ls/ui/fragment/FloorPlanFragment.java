@@ -1,13 +1,5 @@
 package com.ls.ui.fragment;
 
-import com.ls.drupalcon.R;
-import com.ls.drupalcon.model.Model;
-import com.ls.drupalcon.model.UpdatesManager;
-import com.ls.drupalcon.model.data.FloorPlan;
-import com.ls.ui.adapter.FloorSelectorAdapter;
-import com.ls.ui.view.TouchImageView;
-import com.ls.utils.L;
-
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -21,6 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+
+import com.ls.drupalcon.R;
+import com.ls.drupalcon.model.Model;
+import com.ls.drupalcon.model.UpdatesManager;
+import com.ls.drupalcon.model.data.FloorPlan;
+import com.ls.ui.adapter.FloorSelectorAdapter;
+import com.ls.ui.view.TouchImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +65,7 @@ public class FloorPlanFragment  extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View result = inflater.inflate(R.layout.fr_floor_plan, null);
+        View result = inflater.inflate(R.layout.fr_floor_plan, container, false);
         mLayoutContent = result.findViewById(R.id.layout_content);
         mLayoutPlaceholder = result.findViewById(R.id.layout_placeholder);
         floorSelector = (Spinner)result.findViewById(R.id.spinner);

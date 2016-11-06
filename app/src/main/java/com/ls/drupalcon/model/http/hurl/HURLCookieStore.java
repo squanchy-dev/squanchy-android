@@ -41,11 +41,13 @@ public class HURLCookieStore implements CookieStore {
         }
         cookies.add(cookie);
 
-        SharedPreferences.Editor ediWriter = spePreferences.edit();
-        HashSet<String> setCookies = new HashSet<String>();
+        HashSet<String> setCookies = new HashSet<>();
         setCookies.add(cookie.toString());
-        ediWriter.putStringSet(uri.toString(), spePreferences.getStringSet(uri.toString(), setCookies));
-        ediWriter.commit();
+
+        Set<String> stringSet = spePreferences.getStringSet(uri.toString(), setCookies);
+        spePreferences.edit()
+                .putStringSet(uri.toString(), stringSet)
+                .apply();
 
     }
 
@@ -111,8 +113,9 @@ public class HURLCookieStore implements CookieStore {
 
         List<HttpCookie> lstCookies = mapCookies.get(uri);
 
-        if (lstCookies == null)
+        if (lstCookies == null) {
             mapCookies.put(uri, new ArrayList<HttpCookie>());
+        }
 
         return mapCookies.get(uri);
 
@@ -161,8 +164,9 @@ public class HURLCookieStore implements CookieStore {
 
         List<HttpCookie> lstCookies = mapCookies.get(uri);
 
-        if (lstCookies == null)
+        if (lstCookies == null) {
             return false;
+        }
 
         return lstCookies.remove(cookie);
 
