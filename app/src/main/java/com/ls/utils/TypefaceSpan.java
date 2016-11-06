@@ -3,29 +3,29 @@ package com.ls.utils;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.text.TextPaint;
-import android.text.style.TypefaceSpan;
+import android.text.style.MetricAffectingSpan;
 
-public class MultiFontsTypefaceSpan extends TypefaceSpan {
+public class TypefaceSpan extends MetricAffectingSpan {
 
-    private Typeface newType;
+    private final Typeface typeface;
 
-    public MultiFontsTypefaceSpan(String family, Typeface  type) {
-        super(family);
-        newType = type;
+    TypefaceSpan(Typeface typeface) {
+        super();
+        this.typeface = typeface;
     }
 
     @Override
     public void updateDrawState(TextPaint ds) {
-        applyCustomTypeFace(ds, newType);
+        applyCustomTypeFace(ds, typeface);
     }
 
     @Override
     public void updateMeasureState(TextPaint paint) {
-        applyCustomTypeFace(paint, newType);
+        applyCustomTypeFace(paint, typeface);
     }
 
     private static void applyCustomTypeFace(Paint paint, Typeface tf) {
-        if(tf != null) {
+        if (tf != null) {
             paint.setTypeface(tf);
         }
     }

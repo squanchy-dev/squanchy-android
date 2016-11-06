@@ -27,8 +27,7 @@
             android:groupIndicator="@drawable/group_indicator"/>
 
     <LinearLayout
-            android:id="@+id/btnHolder"
-            android:layout_width="wrap_content"
+      android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_marginBottom="16dp"

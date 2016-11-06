@@ -1,7 +1,27 @@
 package com.ls.ui.activity;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
+import android.annotation.TargetApi;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
 import com.ls.drupalcon.R;
 import com.ls.drupalcon.app.App;
 import com.ls.drupalcon.model.Model;
@@ -17,25 +37,6 @@ import com.ls.utils.AnalyticsManager;
 import com.ls.utils.DateUtils;
 import com.ls.utils.WebviewUtils;
 
-import android.content.Intent;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class SpeakerDetailsActivity extends StackKeeperActivity implements View.OnClickListener {
@@ -144,7 +145,9 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
     }
 
     private void loadSpeakerFromDb() {
-        if (mSpeakerId == -1) return;
+        if (mSpeakerId == -1) {
+            return;
+        }
 
         new AsyncTask<Void, Void, Speaker>() {
             @Override
@@ -189,7 +192,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
         TextView jobTxt = (TextView) findViewById(R.id.txtSpeakerPosition);
         String jobValue = mSpeaker.getJobTitle() + " at " + mSpeaker.getOrganization();
 
-        if ( TextUtils.isEmpty(mSpeaker.getJobTitle()) || TextUtils.isEmpty(mSpeaker.getOrganization()) ){
+        if (TextUtils.isEmpty(mSpeaker.getJobTitle()) || TextUtils.isEmpty(mSpeaker.getOrganization())) {
             jobValue = jobValue.replace(" at ", "");
         }
 
@@ -212,8 +215,21 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
                     completeLoading();
                 }
 
+                @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                        return false;
+                    }
+                    WebviewUtils.openUrl(SpeakerDetailsActivity.this, request.getUrl().toString());
+                    return true;
+                }
+
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        return false;
+                    }
                     WebviewUtils.openUrl(SpeakerDetailsActivity.this, url);
                     return true;
                 }
@@ -264,7 +280,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
         layoutEvents.removeAllViews();
 
         for (SpeakerDetailsEvent event : events) {
-            View eventView = inflater.inflate(R.layout.item_speakers_event, null);
+            View eventView = inflater.inflate(R.layout.item_speakers_event, layoutEvents, false);
             fillEventView(event, eventView);
             layoutEvents.addView(eventView);
         }
@@ -374,7 +390,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
         if (TextUtils.isEmpty(mSpeaker.getTwitterName()) &&
                 TextUtils.isEmpty(mSpeaker.getWebSite()) &&
                 TextUtils.isEmpty(mSpeaker.getCharact()) &&
-                events.isEmpty()){
+                events.isEmpty()) {
             mLayoutPlaceholder.setVisibility(View.VISIBLE);
         } else {
             mLayoutPlaceholder.setVisibility(View.GONE);

@@ -1,54 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:gravity="center_vertical"
-              android:orientation="vertical">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:gravity="center_vertical"
+  android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/layoutDrawerItem"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingRight="16dp" >
+  <LinearLayout
+    android:id="@+id/layoutDrawerItem"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingRight="16dp">
 
-        <ImageView
-            android:id="@+id/image"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:minWidth="8dp"
-            android:scaleType="centerCrop"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
-            android:contentDescription="@string/app_name"/>
+    <ImageView
+      android:id="@+id/image"
+      android:layout_width="wrap_content"
+      android:layout_height="48dp"
+      android:layout_marginLeft="4dp"
+      android:layout_marginRight="4dp"
+      android:minWidth="8dp"
+      android:scaleType="centerCrop" />
 
-        <com.ls.ui.view.FontTextView
-            android:id="@+id/txtName"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:gravity="left|bottom"
-            app:custom_font="@string/roboto_regular"
-            android:singleLine="true"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:textSize="@dimen/text_size_small" />
+    <com.ls.ui.view.FontTextView
+      android:id="@+id/txtName"
+      android:layout_width="0dp"
+      android:layout_height="48dp"
+      android:layout_weight="1"
+      android:gravity="left|bottom"
+      android:maxLines="1"
+      android:textAllCaps="true"
+      android:textStyle="bold"
+      android:textSize="@dimen/text_size_small"
+      app:custom_font="@string/roboto_regular" />
 
-        <com.ls.ui.view.FontTextView
-            android:id="@+id/txtCount"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            app:custom_font="@string/roboto_regular"
-            android:gravity="center_vertical"
-            android:singleLine="true"
-            android:textStyle="bold"
-            android:textSize="@dimen/text_size_small" />
-    </LinearLayout>
+    <com.ls.ui.view.FontTextView
+      android:layout_width="wrap_content"
+      android:layout_height="48dp"
+      android:gravity="center_vertical"
+      android:maxLines="1"
+      android:textStyle="bold"
+      android:textSize="@dimen/text_size_small"
+      app:custom_font="@string/roboto_regular" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#404040" />
+  </LinearLayout>
+
+  <View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="#404040" />
 
 </LinearLayout>

@@ -1,9 +1,5 @@
 package com.ls.ui.dialog;
 
-import com.ls.drupalcon.R;
-import com.ls.drupalcon.model.PreferencesManager;
-import com.ls.utils.DateUtils;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -15,6 +11,10 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
+import com.ls.drupalcon.R;
+import com.ls.drupalcon.model.PreferencesManager;
+import com.ls.utils.DateUtils;
 
 import java.util.TimeZone;
 
@@ -28,7 +28,7 @@ public class IrrelevantTimezoneDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         TimeZone eventTimeZone = PreferencesManager.getInstance().getServerTimeZoneObject();
-        String timezoneNotificationData = String.format(getActivity().getString(R.string.irrelevant_timezone_notificaiton), eventTimeZone.getDisplayName(), eventTimeZone.getID());
+        String timezoneNotificationData = String.format(getActivity().getString(R.string.irrelevant_timezone_notification), eventTimeZone.getDisplayName(), eventTimeZone.getID());
 
         ViewGroup contentView = (ViewGroup) LayoutInflater.from(getActivity()).inflate(R.layout.dialog_timezone_warning,null);
         TextView messageView = (TextView)contentView.findViewById(R.id.messageView);

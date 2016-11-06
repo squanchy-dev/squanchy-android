@@ -62,16 +62,6 @@
         )
     </string>
 
-  <string name="create_table_house_plans">
-        CREATE TABLE table_house_plans (
-        _id				        INTEGER,
-        plan_name    			TEXT,
-        plan_image_url		    TEXT,
-        _order				    DOUBLE,
-        _deleted 				BOOLEAN
-        )
-    </string>
-
   <string name="create_table_info">
         CREATE TABLE table_info (
         _id				        INTEGER,
@@ -189,50 +179,6 @@
         WHERE _event_id =? AND _speaker_id =?
     </string>
 
-  <string name="delete_table_type">
-        DROP TABLE IF EXISTS table_type
-    </string>
-
-  <string name="delete_table_speaker">
-        DROP TABLE IF EXISTS table_speaker
-    </string>
-
-  <string name="delete_table_level">
-        DROP TABLE IF EXISTS table_level
-    </string>
-
-  <string name="delete_table_track">
-        DROP TABLE IF EXISTS table_track
-    </string>
-
-  <string name="delete_table_location">
-        DROP TABLE IF EXISTS table_location
-    </string>
-
-  <string name="delete_table_house_plans">
-        DROP TABLE IF EXISTS table_house_plans
-    </string>
-
-  <string name="delete_table_info">
-        DROP TABLE IF EXISTS table_info
-    </string>
-
-  <string name="delete_table_poi">
-        DROP TABLE IF EXISTS table_poi
-    </string>
-
-  <string name="delete_table_event">
-        DROP TABLE IF EXISTS table_event
-    </string>
-
-  <string name="delete_table_event_and_speaker">
-        DROP TABLE IF EXISTS table_event_and_speaker
-    </string>
-
-  <string name="delete_table_favorite_events">
-        DROP TABLE IF EXISTS table_favorite_events
-    </string>
-
   <!--==============================================================-->
   <!--SELECT-->
   <!--==============================================================-->
@@ -302,10 +248,10 @@
         ORDER BY _date
     </string>
 
-  <string name="select_date_distinct_by_class_and_expLevel_ids_and_track_ids" formatted="false">
+  <string name="select_date_distinct_by_class_and_expLevel_ids_and_track_ids">
         SELECT DISTINCT _date
         FROM table_event
-        WHERE _event_class=? and _experience_level IN (%s) and _track IN (%s)
+        WHERE _event_class=? and _experience_level IN (%1$s) and _track IN (%2$s)
         ORDER BY _date
     </string>
 
@@ -339,15 +285,15 @@
         ORDER BY  _from, _to
     </string>
 
-  <string name="select_distinct_time_range_by_expLevel_and_track_ids" formatted="false">
+  <string name="select_distinct_time_range_by_expLevel_and_track_ids">
         SELECT _from, _to, _date
         FROM table_event
-        WHERE _event_class=? and _date=? and _experience_level IN (%s) and _track IN (%s)
+        WHERE _event_class=? and _date=? and _experience_level IN (%1$s) and _track IN (%2$s)
         GROUP BY  _from, _to
         ORDER BY  _from, _to
     </string>
 
-  <string name="select_distinct_fav_time_range" formatted="false">
+  <string name="select_distinct_fav_time_range">
         SELECT _from, _to, _date
         FROM table_event
         WHERE _event_class=? and _date=? and _id IN (%s)
@@ -421,7 +367,7 @@
         ORDER BY e._id, e._order
     </string>
 
-  <string name="select_program_items_by_date_and_track_ids_and_expLevel_ids" formatted="false">
+  <string name="select_program_items_by_date_and_track_ids_and_expLevel_ids">
         SELECT e._id, e._date, e._from, e._to, e._type, e._name, e._place, e._event_class, e._track,
         e._favorite, e._order, e._experience_level, t.track_name, l.level_name,
             (SELECT group_concat(first_name|| \' \' ||last_name,\',\')
@@ -438,7 +384,7 @@
         LEFT JOIN table_track AS t ON e._track=t._id
         LEFT JOIN table_level AS l ON e._experience_level=l._id
 
-        WHERE e._event_class=? and e._date=? and e._track IN (%s) and e._experience_level IN (%s)
+        WHERE e._event_class=? and e._date=? and e._track IN (%1$s) and e._experience_level IN (%2$s)
         ORDER BY e._id, e._order
     </string>
 
