@@ -31,7 +31,7 @@
 
     </FrameLayout>
 
-    <com.ls.ui.view.TouchImageView
+    <com.connfa.ui.view.TouchImageView
       android:id="@+id/floor_plan_image"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
@@ -59,7 +59,7 @@
       android:src="@drawable/ic_no_floor_plan"
       android:layout_height="wrap_content" />
 
-    <com.ls.ui.view.FontTextView
+    <com.connfa.ui.view.FontTextView
       android:layout_width="wrap_content"
       android:gravity="center_horizontal"
       android:layout_marginTop="@dimen/margin_top_placeholder_text"

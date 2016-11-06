@@ -58,7 +58,7 @@
         android:layout_gravity="center"
         android:src="@drawable/ic_no_info" />
 
-      <com.ls.ui.view.FontTextView
+      <com.connfa.ui.view.FontTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_top_placeholder_text"

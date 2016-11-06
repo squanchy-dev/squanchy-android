@@ -49,7 +49,7 @@
             tools:src="@drawable/ic_no_my_schedule"
             android:layout_height="wrap_content" />
 
-        <com.ls.ui.view.FontTextView
+        <com.connfa.ui.view.FontTextView
             android:id="@+id/text_view_placeholder"
             android:layout_width="wrap_content"
             android:gravity="center_horizontal"

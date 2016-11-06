@@ -3,7 +3,7 @@
              xmlns:app="http://schemas.android.com/apk/res-auto"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="com.ls.ui.fragment.SocialMediaFragment">
+             tools:context="com.connfa.ui.fragment.SocialMediaFragment">
 
     <ListView
             android:layout_width="match_parent"
@@ -28,7 +28,7 @@
                 android:src="@drawable/ic_no_social_media"
                 android:layout_height="wrap_content" />
 
-        <com.ls.ui.view.FontTextView
+        <com.connfa.ui.view.FontTextView
                 android:layout_width="wrap_content"
                 android:gravity="center_horizontal"
                 android:layout_marginTop="@dimen/margin_top_placeholder_text"
@@ -39,7 +39,7 @@
                 android:textColor="@color/placeholder_text" />
     </LinearLayout>
 
-    <com.ls.ui.view.FontTextView
+    <com.connfa.ui.view.FontTextView
         android:id="@+id/txtNoConnection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
