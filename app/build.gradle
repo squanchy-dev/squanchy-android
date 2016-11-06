@@ -45,7 +45,9 @@ android {
         versionName project.VERSION_NAME
 
         manifestPlaceholders += [
-                fabricApiKey: buildProperties.secrets['fabricApiKey'].or('').string
+                fabricApiKey: buildProperties.secrets['fabricApiKey']
+                        .or(buildProperties.env['FABRIC_API_KEY'])
+                        .string
         ]
     }
 
