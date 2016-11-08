@@ -8,15 +8,15 @@ import com.connfa.model.PreferencesManager;
 
 import java.util.Iterator;
 
-public class DatabaseHelper
-        extends SQLiteOpenHelper {
+class DatabaseHelper extends SQLiteOpenHelper {
 
-    private DBInfo dbInfo;
+    private final DBInfo dbInfo;
+    private final Context context;
 
-    public DatabaseHelper(Context theContext, DBInfo theDbInfo) {
-        super(theContext, theDbInfo.getDatabaseName(), null, theDbInfo.getDatabaseVersion());
-
-        this.dbInfo = theDbInfo;
+    public DatabaseHelper(Context context, DBInfo dbInfo) {
+        super(context, dbInfo.getDatabaseName(), null, dbInfo.getDatabaseVersion());
+        this.context = context;
+        this.dbInfo = dbInfo;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class DatabaseHelper
 
     @Override
     public void onUpgrade(SQLiteDatabase theDb, int oldVersion, int newVersion) {
-        PreferencesManager.getInstance().saveLastUpdateDate(null);
+        PreferencesManager.create(context).saveLastUpdateDate(null);
         this.dbInfo.getMigrationTask().onUpgrade(theDb, oldVersion, newVersion);
     }
 

@@ -29,10 +29,10 @@ public class AppDatabaseInfo implements DBInfo, IMigrationTask {
     private static final String TABLE_FAVORITE_EVENTS = "table_favorite_events";
     private static final String DELETE_TABLE_IF_EXIST = "DROP TABLE IF EXISTS ";
 
-    private Context mContext;
+    private Context context;
 
     public AppDatabaseInfo(Context context) {
-        this.mContext = context;
+        this.context = context;
     }
 
     @Override
@@ -74,14 +74,14 @@ public class AppDatabaseInfo implements DBInfo, IMigrationTask {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (newVersion > oldVersion) {
-            PreferencesManager.getInstance().saveLastUpdateDate(null);
+            PreferencesManager.create(context).saveLastUpdateDate(null);
             List<String> dbDropList = generateDropQueryList();
             List<String> dbSchemaQueryList = generateCreationQueryList();
 
             for (String query : dbDropList) {
                 db.execSQL(query);
             }
-            FileUtils.deleteDataStorageDirectory(mContext);
+            FileUtils.deleteDataStorageDirectory(context);
 
             for (String query : dbSchemaQueryList) {
                 db.execSQL(query);
@@ -116,6 +116,6 @@ public class AppDatabaseInfo implements DBInfo, IMigrationTask {
     }
 
     private void addStringWithIdToList(List<String> theList, int theId) {
-        theList.add(mContext.getResources().getString(theId));
+        theList.add(context.getResources().getString(theId));
     }
 }

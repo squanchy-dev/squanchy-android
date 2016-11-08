@@ -40,6 +40,8 @@ public class EventHolderFragment extends Fragment {
     public static final String TAG = "ProjectsFragment";
     private static final String EXTRAS_ARG_MODE = "EXTRAS_ARG_MODE";
 
+    private PreferencesManager preferencesManager;
+
     private ViewPager mViewPager;
     private PagerSlidingTabStrip mPagerTabs;
     private BaseEventDaysPagerAdapter mAdapter;
@@ -82,6 +84,7 @@ public class EventHolderFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        preferencesManager = PreferencesManager.create(getActivity());
     }
 
     @Override
@@ -156,7 +159,7 @@ public class EventHolderFragment extends Fragment {
             return;
         }
 
-        mAdapter = new BaseEventDaysPagerAdapter(getChildFragmentManager());
+        mAdapter = new BaseEventDaysPagerAdapter(getActivity(), getChildFragmentManager());
         mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
         mViewPager.setAdapter(mAdapter);
 
@@ -266,10 +269,9 @@ public class EventHolderFragment extends Fragment {
     private void switchToCurrentDay(List<Long> days) {
         int item = 0;
         for (Long millis : days) {
-            if (DateUtils.getInstance().isToday(millis) ||
-                    DateUtils.getInstance().isAfterCurrentFate(millis)) {
+            if (DateUtils.isToday(getActivity(), millis) || DateUtils.isAfterCurrentFate(millis)) {
                 mViewPager.setCurrentItem(item);
-                break;
+                return;
             }
             item++;
         }
@@ -287,8 +289,8 @@ public class EventHolderFragment extends Fragment {
 
     private void updateFilterState(@NotNull MenuItem filter) {
         mIsFilterUsed = false;
-        List<Long> levelIds = PreferencesManager.getInstance().loadExpLevel();
-        List<Long> trackIds = PreferencesManager.getInstance().loadTracks();
+        List<Long> levelIds = preferencesManager.getExpLevels();
+        List<Long> trackIds = preferencesManager.getTracks();
 
         if (!levelIds.isEmpty() || !trackIds.isEmpty()) {
             mIsFilterUsed = true;

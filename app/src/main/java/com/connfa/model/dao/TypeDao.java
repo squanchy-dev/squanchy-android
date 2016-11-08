@@ -1,5 +1,7 @@
 package com.connfa.model.dao;
 
+import android.content.Context;
+
 import com.connfa.model.AppDatabaseInfo;
 import com.connfa.model.data.Type;
 import com.connfa.model.database.AbstractEntityDAO;
@@ -8,7 +10,8 @@ public class TypeDao extends AbstractEntityDAO<Type, Long> {
 
     public static final String TABLE_NAME = "table_type";
 
-    public TypeDao() {
+    public TypeDao(Context context) {
+        super(context);
     }
 
     @Override

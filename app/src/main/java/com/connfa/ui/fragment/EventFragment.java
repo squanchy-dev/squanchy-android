@@ -98,8 +98,9 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
             mEventMode = DrawerManager.EventMode.values()[eventPost];
 
             mDay = bundle.getLong(EXTRAS_ARG_DAY, 0);
-            levelIds = PreferencesManager.getInstance().loadExpLevel();
-            trackIds = PreferencesManager.getInstance().loadTracks();
+            PreferencesManager preferencesManager = PreferencesManager.create(getActivity());
+            levelIds = preferencesManager.getExpLevels();
+            trackIds = preferencesManager.getTracks();
         }
         mGenerator = new EventGenerator(getContext());
     }
@@ -167,7 +168,7 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
         }
 
         mAdapter.setData(eventListItems, mEventMode);
-        if (DateUtils.getInstance().isToday(mDay) && mEventMode != DrawerManager.EventMode.Favorites) {
+        if (DateUtils.isToday(getActivity(), mDay) && mEventMode != DrawerManager.EventMode.Favorites) {
             int index = getCurrentTimePosition(eventListItems);
             mListView.setSelection(index);
         }
@@ -188,8 +189,8 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
     }
 
 //    private int getCurrentTimePosition(List<EventListItem> eventListItems) {
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTimeZone(DateUtils.getInstance().getTimeZone());
+//        Calendar calendar = Calendar.create();
+//        calendar.setTimeZone(DateUtils.create().getTimeZone());
 //        int deviceHours =  calendar.get(Calendar.HOUR_OF_DAY);
 //        int deviceMinutes =  calendar.get(Calendar.MINUTE);
 //        int nearestHour = 0;
@@ -234,7 +235,7 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 
     private int getCurrentTimePosition(List<EventListItem> eventListItems) {
         Calendar calendar = Calendar.getInstance();
-        calendar.setTimeZone(DateUtils.getInstance().getTimeZone());
+        calendar.setTimeZone(DateUtils.getTimeZone(getActivity()));
         int deviceTimeMinutes = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 
         int minDifference = Integer.MAX_VALUE;

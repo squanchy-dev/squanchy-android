@@ -15,8 +15,8 @@ public class EventManager extends SynchronousItemManager<Event.Holder, Object, S
 
     protected EventDao mEventDao;
 
-    public EventManager(DrupalClient client, Context context) {
-        super(client);
+    public EventManager(Context context, DrupalClient client) {
+        super(context, client);
         mEventDao = new EventDao(context);
     }
 

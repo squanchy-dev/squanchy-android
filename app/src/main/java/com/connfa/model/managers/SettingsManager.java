@@ -1,21 +1,25 @@
 package com.connfa.model.managers;
 
+import android.content.Context;
+
 import com.connfa.model.PreferencesManager;
 import com.connfa.model.data.SettingsHolder;
 import com.connfa.model.requests.SettingsRequest;
-import com.connfa.utils.DateUtils;
 import com.ls.drupal.AbstractBaseDrupalEntity;
 import com.ls.drupal.DrupalClient;
 
 public class SettingsManager extends SynchronousItemManager<SettingsHolder, Object, String> {
 
-    public SettingsManager(DrupalClient client) {
-        super(client);
+    private final PreferencesManager preferencesManager;
+
+    public SettingsManager(Context context, DrupalClient client) {
+        super(context, client);
+        this.preferencesManager = PreferencesManager.create(context);
     }
 
     @Override
     protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client, Object requestParams) {
-        return new SettingsRequest(client);
+        return new SettingsRequest(getContext(), client);
     }
 
     @Override
@@ -25,13 +29,10 @@ public class SettingsManager extends SynchronousItemManager<SettingsHolder, Obje
 
     @Override
     protected boolean storeResponse(SettingsHolder requestResponse, String tag) {
-//        String timeZoneNumber = requestResponse.getSettings().getTimeZone();
-//        String timeZone = String.format("GMT%s", timeZoneNumber);
         String timeZone = requestResponse.getSettings().getTimeZone();
-        PreferencesManager.getInstance().saveTimeZone(timeZone);
-        DateUtils.getInstance().setTimezone(timeZone);
+        preferencesManager.saveTimeZone(timeZone);
         String searchQuery = requestResponse.getSettings().getTwitterSearchQuery();
-        PreferencesManager.getInstance().saveTwitterSearchQuery(searchQuery);
+        preferencesManager.saveTwitterSearchQuery(searchQuery);
         return true;
     }
 }

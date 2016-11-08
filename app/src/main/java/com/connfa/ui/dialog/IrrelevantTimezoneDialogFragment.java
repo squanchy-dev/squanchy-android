@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -15,7 +16,6 @@ import android.widget.TextView;
 
 import com.connfa.R;
 import com.connfa.model.PreferencesManager;
-import com.connfa.utils.DateUtils;
 
 import java.util.TimeZone;
 
@@ -26,9 +26,10 @@ public class IrrelevantTimezoneDialogFragment extends DialogFragment {
 
     public static final String TAG = IrrelevantTimezoneDialogFragment.class.getName();
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        TimeZone eventTimeZone = PreferencesManager.getInstance().getServerTimeZoneObject();
+        TimeZone eventTimeZone = PreferencesManager.create(getActivity()).getServerTimeZoneObject();
         String timezoneNotificationData = String.format(getActivity().getString(R.string.irrelevant_timezone_notification), eventTimeZone.getDisplayName(), eventTimeZone.getID());
 
         ViewGroup contentView = createDialogView();
@@ -58,12 +59,6 @@ public class IrrelevantTimezoneDialogFragment extends DialogFragment {
     @SuppressLint("InflateParams")  // We don't have a parent for dialogs' views
     private ViewGroup createDialogView() {
         return (ViewGroup) LayoutInflater.from(getActivity()).inflate(R.layout.dialog_timezone_warning, null);
-    }
-
-    public static boolean isCurrentTimezoneRelevant() {
-        TimeZone eventTimezone = DateUtils.getInstance().getTimeZone();
-        TimeZone curentZone = TimeZone.getDefault();
-        return curentZone.getID().equals(eventTimezone.getID());
     }
 
     public static void setCanPresentMessage(Context context, boolean canPresent) {

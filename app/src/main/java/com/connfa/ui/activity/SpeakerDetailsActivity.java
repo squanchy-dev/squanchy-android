@@ -297,9 +297,9 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
             txtTrack.setVisibility(View.VISIBLE);
         }
 
-        String weekDay = DateUtils.getInstance().getWeekDay(event.getFrom());
-        String fromTime = DateUtils.getInstance().getTime(this, event.getFrom());
-        String toTime = DateUtils.getInstance().getTime(this, event.getTo());
+        String weekDay = DateUtils.getWeekDay(this, event.getFrom());
+        String fromTime = DateUtils.getTime(this, event.getFrom());
+        String toTime = DateUtils.getTime(this, event.getTo());
 
         TextView txtWhere = (TextView) eventView.findViewById(R.id.txtWhere);
         String date = String.format("%s, %s - %s", weekDay, fromTime, toTime);

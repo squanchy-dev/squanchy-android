@@ -1,5 +1,7 @@
 package com.connfa.model.managers;
 
+import android.content.Context;
+
 import com.connfa.model.dao.LocationDao;
 import com.connfa.model.data.Location;
 import com.connfa.model.requests.LocationRequest;
@@ -12,14 +14,14 @@ public class LocationManager extends SynchronousItemManager<Location.Holder, Obj
 
     private LocationDao mLocationDao;
 
-    public LocationManager(DrupalClient client) {
-        super(client);
-        mLocationDao = new LocationDao();
+    public LocationManager(Context context, DrupalClient client) {
+        super(context, client);
+        mLocationDao = new LocationDao(context);
     }
 
     @Override
     protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client, Object requestParams) {
-        return new LocationRequest(client);
+        return new LocationRequest(getContext(), client);
     }
 
     @Override

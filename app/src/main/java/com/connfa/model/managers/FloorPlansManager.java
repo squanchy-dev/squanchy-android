@@ -21,19 +21,16 @@ import java.util.concurrent.CountDownLatch;
 
 public class FloorPlansManager extends SynchronousItemManager<FloorPlan.Holder, Object, String> {
 
-    private final Context mContext;
-
     private FloorPlanDao mFloorPlansDAO;
 
-    public FloorPlansManager(DrupalClient client, Context context) {
-        super(client);
-        this.mFloorPlansDAO = new FloorPlanDao();
-        this.mContext = context;
+    public FloorPlansManager(Context context, DrupalClient client) {
+        super(context, client);
+        this.mFloorPlansDAO = new FloorPlanDao(context);
     }
 
     @Override
     protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client, Object requestParams) {
-        return new FloorPlansRequest(client);
+        return new FloorPlansRequest(getContext(), client);
     }
 
     @Override
@@ -65,7 +62,7 @@ public class FloorPlansManager extends SynchronousItemManager<FloorPlan.Holder, 
             if (floor != null) {
                 if (floor.isDeleted()) {
                     if (mFloorPlansDAO.deleteDataSafe(floor.getId()) > 0) {
-                        FileUtils.deleteStoredFile(floor.getFilePath(), mContext);
+                        FileUtils.deleteStoredFile(floor.getFilePath(), getContext());
                     }
                 }
             }
@@ -81,7 +78,7 @@ public class FloorPlansManager extends SynchronousItemManager<FloorPlan.Holder, 
     }
 
     public Bitmap getImageForPlan(FloorPlan plan, int requiredWidth, int requiredHeight) {
-        Bitmap planImage = FileUtils.readBitmapFromStoredFile(plan.getFilePath(), requiredWidth, requiredHeight, mContext);
+        Bitmap planImage = FileUtils.readBitmapFromStoredFile(plan.getFilePath(), requiredWidth, requiredHeight, getContext());
         return planImage;
     }
 
@@ -139,7 +136,7 @@ public class FloorPlansManager extends SynchronousItemManager<FloorPlan.Holder, 
 
                     //Store image
                     if (imageData != null && imageData.length > 0) {
-                        result.isSuccessful = FileUtils.writeBytesToStorage(floor.getFilePath(), imageData, mContext);
+                        result.isSuccessful = FileUtils.writeBytesToStorage(floor.getFilePath(), imageData, getContext());
                     } else {
                         result.isSuccessful = false;
                     }

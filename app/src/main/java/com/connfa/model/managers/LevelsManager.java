@@ -1,5 +1,7 @@
 package com.connfa.model.managers;
 
+import android.content.Context;
+
 import com.connfa.model.dao.LevelDao;
 import com.connfa.model.data.Level;
 import com.connfa.model.requests.LevelsRequest;
@@ -12,14 +14,14 @@ public class LevelsManager extends SynchronousItemManager<Level.Holder, Object, 
 
     private LevelDao mLevelDao;
 
-    public LevelsManager(DrupalClient client) {
-        super(client);
-        mLevelDao = new LevelDao();
+    public LevelsManager(Context context, DrupalClient client) {
+        super(context, client);
+        mLevelDao = new LevelDao(context);
     }
 
     @Override
     protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client, Object requestParams) {
-        return new LevelsRequest(client);
+        return new LevelsRequest(getContext(), client);
     }
 
     @Override

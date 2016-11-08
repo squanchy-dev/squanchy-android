@@ -39,6 +39,7 @@ public class FilterDialog extends DialogFragment {
     private FilterDialogAdapter mAdapter;
 
     private OnFilterApplied mListener;
+    private PreferencesManager preferencesManager;
 
     public interface OnFilterApplied {
         void onNewFilterApplied();
@@ -63,6 +64,7 @@ public class FilterDialog extends DialogFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mListener = (OnFilterApplied) activity;
+        preferencesManager = PreferencesManager.create(activity);
     }
 
     public void setData(List<Level> levelList, List<Track> trackList) {
@@ -200,16 +202,16 @@ public class FilterDialog extends DialogFragment {
 
     private void saveSelectedItems(List<List<Long>> selectedIds) {
         if (selectedIds != null && !selectedIds.isEmpty()) {
-            PreferencesManager.getInstance().saveExpLevel(selectedIds.get(0));
-            PreferencesManager.getInstance().saveTracks(selectedIds.get(1));
+            preferencesManager.saveExpLevels(selectedIds.get(0));
+            preferencesManager.saveTracks(selectedIds.get(1));
         }
     }
 
     @NonNull
     private List<List<Long>> loadSelectedIds() {
         List<List<Long>> selectedIds = new ArrayList<>();
-        selectedIds.add(PreferencesManager.getInstance().loadExpLevel());
-        selectedIds.add(PreferencesManager.getInstance().loadTracks());
+        selectedIds.add(preferencesManager.getExpLevels());
+        selectedIds.add(preferencesManager.getTracks());
         return selectedIds;
     }
 }

@@ -26,6 +26,7 @@ import com.connfa.ui.drawer.DrawerManager;
 import com.connfa.ui.drawer.DrawerMenu;
 import com.connfa.ui.drawer.DrawerMenuItem;
 import com.connfa.utils.AnalyticsManager;
+import com.connfa.utils.DateUtils;
 import com.connfa.utils.KeyboardUtils;
 import com.connfa.utils.ScheduleManager;
 import com.google.android.gms.analytics.GoogleAnalytics;
@@ -34,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.TimeZone;
 
 public class HomeActivity extends StateActivity implements FilterDialog.OnFilterApplied {
 
@@ -288,12 +290,18 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
     }
 
     private void showIrrelevantTimezoneDialogIfNeeded() {
-        if (!IrrelevantTimezoneDialogFragment.isCurrentTimezoneRelevant()
+        if (!isCurrentTimezoneRelevant()
                 && IrrelevantTimezoneDialogFragment.canPresentMessage(this)
                 && !isFinishing()) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.add(new IrrelevantTimezoneDialogFragment(), IrrelevantTimezoneDialogFragment.TAG);
             ft.commitAllowingStateLoss();
         }
+    }
+
+    public boolean isCurrentTimezoneRelevant() {
+        TimeZone eventTimezone = DateUtils.getTimeZone(this);
+        TimeZone curentZone = TimeZone.getDefault();
+        return curentZone.getID().equals(eventTimezone.getID());
     }
 }

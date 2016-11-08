@@ -1,5 +1,7 @@
 package com.connfa.model.managers;
 
+import android.content.Context;
+
 import com.connfa.model.PreferencesManager;
 import com.connfa.model.dao.InfoDao;
 import com.connfa.model.data.InfoItem;
@@ -13,16 +15,18 @@ import java.util.List;
 
 public class InfoManager extends SynchronousItemManager<InfoItem.General, Object, String> {
 
-    private InfoDao mInfoDao;
+    private InfoDao infoDAO;
+    private final PreferencesManager preferencesManager;
 
-    public InfoManager(DrupalClient client) {
-        super(client);
-        mInfoDao = new InfoDao();
+    public InfoManager(Context context, DrupalClient client) {
+        super(context, client);
+        infoDAO = new InfoDao(context);
+        preferencesManager = PreferencesManager.create(context);
     }
 
     @Override
     protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client, Object requestParams) {
-        return new InfoRequest(client);
+        return new InfoRequest(getContext(), client);
     }
 
     @Override
@@ -37,22 +41,22 @@ public class InfoManager extends SynchronousItemManager<InfoItem.General, Object
             return false;
         }
 
-        mInfoDao.saveOrUpdateDataSafe(infoList);
+        infoDAO.saveOrUpdateDataSafe(infoList);
         for (InfoItem info : infoList) {
             if (info != null) {
                 if (info.isDeleted()) {
-                    mInfoDao.deleteDataSafe(info.getId());
+                    infoDAO.deleteDataSafe(info.getId());
                 }
             }
         }
-        PreferencesManager.getInstance().saveMajorInfoTitle(requestResponse.getMajorTitle());
-        PreferencesManager.getInstance().saveMinorInfoTitle(requestResponse.getMinorTitle());
+        preferencesManager.saveMajorInfoTitle(requestResponse.getMajorTitle());
+        preferencesManager.saveMinorInfoTitle(requestResponse.getMinorTitle());
 
         return true;
     }
 
     public List<InfoItem> getInfo() {
-        List<InfoItem> infoItems = mInfoDao.getAllSafe();
+        List<InfoItem> infoItems = infoDAO.getAllSafe();
         Collections.sort(infoItems, new Comparator<InfoItem>() {
             @Override
             public int compare(InfoItem infoItem, InfoItem infoItem2) {
@@ -64,6 +68,6 @@ public class InfoManager extends SynchronousItemManager<InfoItem.General, Object
     }
 
     public void clear() {
-        mInfoDao.deleteAll();
+        infoDAO.deleteAll();
     }
 }

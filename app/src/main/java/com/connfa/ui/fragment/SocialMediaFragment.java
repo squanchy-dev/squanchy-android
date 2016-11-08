@@ -74,7 +74,7 @@ public class SocialMediaFragment extends Fragment {
             mLayoutPlaceholder.setVisibility(View.GONE);
         }
 
-        String searchQuery = PreferencesManager.getInstance().getTwitterSearchQuery();
+        String searchQuery = PreferencesManager.create(getActivity()).getTwitterSearchQuery();
 
         final SearchTimeline userTimeline = new SearchTimeline.Builder()
                 .query(searchQuery)

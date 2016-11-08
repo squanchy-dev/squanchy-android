@@ -33,7 +33,7 @@ public class EventsAdapter extends BaseAdapter {
 
     private static final int TYPE_COUNT = 5;
 
-    private Context mContext;
+    private Context context;
     private List<EventListItem> mData;
     private LayoutInflater mInflater;
 
@@ -45,7 +45,7 @@ public class EventsAdapter extends BaseAdapter {
     }
 
     public EventsAdapter(Context context) {
-        mContext = context;
+        this.context = context;
         mInflater = LayoutInflater.from(context);
         mData = new ArrayList<>();
     }
@@ -232,16 +232,16 @@ public class EventsAdapter extends BaseAdapter {
     }
 
     private void fillDate(EventHolder holder, Event event) {
-        String fromTime = DateUtils.getInstance().getTime(mContext, event.getFromMillis());
-        String toTime = DateUtils.getInstance().getTime(mContext, event.getToMillis());
+        String fromTime = DateUtils.getTime(context, event.getFromMillis());
+        String toTime = DateUtils.getTime(context, event.getToMillis());
 
         if (!TextUtils.isEmpty(fromTime) && !TextUtils.isEmpty(toTime)) {
             holder.txtFrom.setText(fromTime);
-            holder.txtTo.setText(String.format(mContext.getString(R.string.to), toTime));
+            holder.txtTo.setText(String.format(context.getString(R.string.to), toTime));
         } else {
-            holder.txtFrom.setText(mContext.getString(R.string.twenty_four_hours));
-            holder.txtFrom.setTextSize(TypedValue.COMPLEX_UNIT_PX, mContext.getResources().getDimension(R.dimen.text_size_micro));
-            holder.txtTo.setText(mContext.getString(R.string.access));
+            holder.txtFrom.setText(context.getString(R.string.twenty_four_hours));
+            holder.txtFrom.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.text_size_micro));
+            holder.txtTo.setText(context.getString(R.string.access));
         }
 
         holder.txtFrom.setVisibility(View.VISIBLE);
@@ -260,9 +260,9 @@ public class EventsAdapter extends BaseAdapter {
     private void fillEventInfo(EventHolder holder, Event event, @Nullable String track, @Nullable List<String> speakerNameList) {
         holder.txtTitle.setText(event.getName());
         if (event.isFavorite()) {
-            holder.txtTitle.setTextColor(mContext.getResources().getColor(R.color.link));
+            holder.txtTitle.setTextColor(context.getResources().getColor(R.color.link));
         } else {
-            holder.txtTitle.setTextColor(mContext.getResources().getColor(R.color.black_100));
+            holder.txtTitle.setTextColor(context.getResources().getColor(R.color.black_100));
         }
 
         if (!TextUtils.isEmpty(event.getPlace())) {
@@ -287,7 +287,7 @@ public class EventsAdapter extends BaseAdapter {
                 builder.append(name);
 
                 if (i < speakerNameList.size() - 1) {
-                    builder.append(mContext.getString(R.string.speaker_separator));
+                    builder.append(context.getString(R.string.speaker_separator));
                 }
             }
 
@@ -315,7 +315,7 @@ public class EventsAdapter extends BaseAdapter {
         if (mEventMode == DrawerManager.EventMode.Favorites) {
             holder.layoutTime.setBackgroundColor(Color.TRANSPARENT);
         } else {
-            holder.layoutTime.setBackgroundColor(mContext.getResources().getColor(R.color.grey_400_trans));
+            holder.layoutTime.setBackgroundColor(context.getResources().getColor(R.color.grey_400_trans));
         }
     }
 

@@ -1,5 +1,7 @@
 package com.connfa.model.dao;
 
+import android.content.Context;
+
 import com.connfa.model.AppDatabaseInfo;
 import com.connfa.model.data.FloorPlan;
 import com.connfa.model.database.AbstractEntityDAO;
@@ -7,6 +9,10 @@ import com.connfa.model.database.AbstractEntityDAO;
 public class FloorPlanDao extends AbstractEntityDAO<FloorPlan, String> {
 
     public static final String TABLE_NAME = "table_floor_plans";
+
+    public FloorPlanDao(Context context) {
+        super(context);
+    }
 
     @Override
     protected String getSearchCondition() {

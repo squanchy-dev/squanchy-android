@@ -1,12 +1,19 @@
 package com.connfa.model.database;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public abstract class AbstractEntityDAO<ClassToSave extends AbstractEntity<ClassId>, ClassId> {
+
+    private final Context context;
+
+    public AbstractEntityDAO(Context context) {
+        this.context = context;
+    }
 
     protected abstract String getSearchCondition();
 
@@ -25,31 +32,29 @@ public abstract class AbstractEntityDAO<ClassToSave extends AbstractEntity<Class
     /**
      * This method should return list of columns, used to define unique object
      * in "contains" method
-     *
-     * @return
      */
     protected abstract String[] getKeyColumns();
 
-    protected ILAPIDBFacade getFacade() {
-        ILAPIDBFacade dbFacade = LAPIDBRegister.getInstance().lookup(getDatabaseName());
-
-        return dbFacade;
+    protected Context getContext() {
+        return context;
     }
 
-    public boolean containsData(ClassToSave theObj) {
-        ILAPIDBFacade facade = getFacade();
-        if (theObj.getId() == null) {
-            return false;
-        }
+    protected ILAPIDBFacade getFacade() {
+        return LAPIDBRegister.getInstance().lookup(getDatabaseName());
+    }
 
-        return facade.containsRecord(getTableName(), getSearchCondition(),
-                getSearchConditionArguments(theObj.getId()), getKeyColumns());
+    private boolean containsData(ClassToSave theObj) {
+        ILAPIDBFacade facade = getFacade();
+        return theObj.getId() != null
+                && facade.containsRecord(getTableName(), getSearchCondition(), getSearchConditionArguments(theObj.getId()), getKeyColumns());
+
     }
 
     public int deleteData(ClassId theObj) {
         ILAPIDBFacade facade = getFacade();
         return facade.delete(getTableName(), getSearchCondition(),
-                getSearchConditionArguments(theObj));
+                             getSearchConditionArguments(theObj)
+        );
     }
 
     public int deleteDataSafe(ClassId theObj) {
@@ -59,7 +64,8 @@ public abstract class AbstractEntityDAO<ClassToSave extends AbstractEntity<Class
             facade.open();
 
             return facade.delete(getTableName(), getSearchCondition(),
-                    getSearchConditionArguments(theObj));
+                                 getSearchConditionArguments(theObj)
+            );
         } finally {
             facade.close();
         }
@@ -82,7 +88,7 @@ public abstract class AbstractEntityDAO<ClassToSave extends AbstractEntity<Class
         }
     }
 
-    public List<ClassToSave> getDataSafe(final String theCondition, final String[] theArguments) {
+    public List<ClassToSave> getDataSafe(String theCondition, String[] theArguments) {
         ILAPIDBFacade facade = getFacade();
 
         try {
@@ -99,13 +105,13 @@ public abstract class AbstractEntityDAO<ClassToSave extends AbstractEntity<Class
         return getDataSafe(getSearchCondition(), getSearchConditionArguments(theObj));
     }
 
-    public List<ClassToSave> getData(final String theCondition, final String[] theArguments) {
-        List<ClassToSave> result = new LinkedList<ClassToSave>();
+    public List<ClassToSave> getData(String theCondition, String[] theArguments) {
+        List<ClassToSave> result = new LinkedList<>();
 
         ILAPIDBFacade facade = getFacade();
-        Cursor cursor = null;
-        cursor = facade.getAllRecords(getTableName(), null,
-                theCondition, theArguments);
+        Cursor cursor = facade.getAllRecords(getTableName(), null,
+                                             theCondition, theArguments
+        );
 
         boolean moved = cursor.moveToFirst();
         while (moved) {
@@ -117,14 +123,12 @@ public abstract class AbstractEntityDAO<ClassToSave extends AbstractEntity<Class
             moved = cursor.moveToNext();
         }
 
-//        if (cursor != null) {
         cursor.close();
-//        }
 
         return result;
     }
 
-    public List<ClassToSave> querySafe(final String theQuery, final String[] theArguments) {
+    protected List<ClassToSave> querySafe(String theQuery, String[] theArguments) {
         ILAPIDBFacade facade = getFacade();
 
         try {
@@ -136,12 +140,11 @@ public abstract class AbstractEntityDAO<ClassToSave extends AbstractEntity<Class
         }
     }
 
-    public List<ClassToSave> query(final String theQuery, final String[] theArguments) {
-        List<ClassToSave> result = new LinkedList<ClassToSave>();
+    private List<ClassToSave> query(String theQuery, String[] theArguments) {
+        List<ClassToSave> result = new LinkedList<>();
 
         ILAPIDBFacade facade = getFacade();
-        Cursor cursor = null;
-        cursor = facade.query(theQuery, theArguments);
+        Cursor cursor = facade.query(theQuery, theArguments);
 
         boolean moved = cursor.moveToFirst();
         while (moved) {
@@ -157,12 +160,11 @@ public abstract class AbstractEntityDAO<ClassToSave extends AbstractEntity<Class
         return result;
     }
 
-    public List<ClassToSave> getDataBySqlQuery(final String theSqlQuery, final String[] theArguments) {
-        List<ClassToSave> result = new LinkedList<ClassToSave>();
+    private List<ClassToSave> getDataBySqlQuery(final String theSqlQuery, final String[] theArguments) {
+        List<ClassToSave> result = new LinkedList<>();
 
         ILAPIDBFacade facade = getFacade();
-        Cursor cursor = null;
-        cursor = facade.query(theSqlQuery, theArguments);
+        Cursor cursor = facade.query(theSqlQuery, theArguments);
 
         boolean moved = cursor.moveToFirst();
         while (moved) {
@@ -181,7 +183,7 @@ public abstract class AbstractEntityDAO<ClassToSave extends AbstractEntity<Class
         return result;
     }
 
-    public List<ClassToSave> getDataBySqlQuerySafe(final String theSqlQuery, final String[] theArguments) {
+    public List<ClassToSave> getDataBySqlQuerySafe(String theSqlQuery, String[] theArguments) {
         ILAPIDBFacade facade = getFacade();
         try {
             facade.open();
@@ -192,14 +194,13 @@ public abstract class AbstractEntityDAO<ClassToSave extends AbstractEntity<Class
         }
     }
 
-    public EntityCursor getCursorBySqlQuery(final String theSqlQuery, final String[] theArguments) {
+    public EntityCursor getCursorBySqlQuery(String theSqlQuery, String[] theArguments) {
         ILAPIDBFacade facade = getFacade();
-        Cursor cursor = null;
-        cursor = facade.query(theSqlQuery, theArguments);
+        Cursor cursor = facade.query(theSqlQuery, theArguments);
         return new EntityCursor(cursor);
     }
 
-    public EntityCursor getCursorBySqlQuerySafe(final String theSqlQuery, final String[] theArguments) {
+    public EntityCursor getCursorBySqlQuerySafe(String theSqlQuery, String[] theArguments) {
         ILAPIDBFacade facade = getFacade();
         try {
             facade.open();
@@ -229,7 +230,7 @@ public abstract class AbstractEntityDAO<ClassToSave extends AbstractEntity<Class
         return getData(null, null);
     }
 
-    public void saveDataSafe(final List<ClassToSave> theList) {
+    public void saveDataSafe(List<ClassToSave> theList) {
         ILAPIDBFacade facade = getFacade();
         try {
             facade.open();
@@ -239,7 +240,7 @@ public abstract class AbstractEntityDAO<ClassToSave extends AbstractEntity<Class
         }
     }
 
-    public void saveDataSafe(final ClassToSave theItem) {
+    public void saveDataSafe(ClassToSave theItem) {
         ILAPIDBFacade facade = getFacade();
         try {
             facade.open();
@@ -249,20 +250,20 @@ public abstract class AbstractEntityDAO<ClassToSave extends AbstractEntity<Class
         }
     }
 
-    public void saveData(final List<ClassToSave> theList) {
+    public void saveData(List<ClassToSave> theList) {
         for (ClassToSave obj : theList) {
 //            Log.d("saving", obj.toString());
             saveData(obj);
         }
     }
 
-    public void saveOrUpdateData(final List<ClassToSave> theList) {
+    public void saveOrUpdateData(List<ClassToSave> theList) {
         for (ClassToSave obj : theList) {
             saveOrUpdate(obj);
         }
     }
 
-    public void saveOrUpdateDataSafe(final List<ClassToSave> theList) {
+    public void saveOrUpdateDataSafe(List<ClassToSave> theList) {
         ILAPIDBFacade facade = getFacade();
         try {
             facade.open();
@@ -272,7 +273,7 @@ public abstract class AbstractEntityDAO<ClassToSave extends AbstractEntity<Class
         }
     }
 
-    public void saveOrUpdateSafe(final ClassToSave theObj) {
+    public void saveOrUpdateSafe(ClassToSave theObj) {
         ILAPIDBFacade facade = getFacade();
 
         try {
@@ -283,7 +284,7 @@ public abstract class AbstractEntityDAO<ClassToSave extends AbstractEntity<Class
         }
     }
 
-    public void saveOrUpdate(final ClassToSave theObj) {
+    public void saveOrUpdate(ClassToSave theObj) {
         if (theObj != null) {
             if (!containsData(theObj)) {
                 saveData(theObj);
@@ -293,7 +294,7 @@ public abstract class AbstractEntityDAO<ClassToSave extends AbstractEntity<Class
         }
     }
 
-    public long saveData(final ClassToSave theObj) {
+    public long saveData(ClassToSave theObj) {
         if (theObj == null) {
             throw new IllegalArgumentException("Object can't be null");
         }
@@ -303,7 +304,7 @@ public abstract class AbstractEntityDAO<ClassToSave extends AbstractEntity<Class
         return facade.save(getTableName(), values);
     }
 
-    public int updateData(final ClassToSave theObj) {
+    public int updateData(ClassToSave theObj) {
         if (theObj == null) {
             throw new IllegalArgumentException("Object can't be null");
         }
@@ -312,7 +313,8 @@ public abstract class AbstractEntityDAO<ClassToSave extends AbstractEntity<Class
 
         ILAPIDBFacade facade = getFacade();
         return facade.update(getTableName(), getSearchCondition(),
-                getSearchConditionArguments(theObj.getId()), values);
+                             getSearchConditionArguments(theObj.getId()), values
+        );
     }
 
     protected String getSqlQuery(int theResId) {

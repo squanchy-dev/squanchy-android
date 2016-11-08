@@ -15,13 +15,16 @@ import java.util.List;
 
 public class SocialManager extends EventManager {
 
-    public SocialManager(DrupalClient client, Context context) {
-        super(client, context);
+    private final PreferencesManager preferencesManager;
+
+    public SocialManager(Context context, DrupalClient client) {
+        super(context, client);
+        this.preferencesManager = PreferencesManager.create(context);
     }
 
     @Override
     protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client, Object requestParams) {
-        return new SocialRequest(client);
+        return new SocialRequest(getContext(), client);
     }
 
     @Override
@@ -42,7 +45,7 @@ public class SocialManager extends EventManager {
             for (Event event : day.getEvents()) {
                 if (event != null) {
 
-                    Date date = DateUtils.getInstance().convertEventDayDate(day.getDate());
+                    Date date = DateUtils.convertEventDayDate(getContext(), day.getDate());
                     if (date != null) {
                         event.setDate(date);
                     }
@@ -72,8 +75,8 @@ public class SocialManager extends EventManager {
 //    }
 
     public List<Long> getSocialsDays() {
-        List<Long> levelIds = PreferencesManager.getInstance().loadExpLevel();
-        List<Long> trackIds = PreferencesManager.getInstance().loadTracks();
+        List<Long> levelIds = preferencesManager.getExpLevels();
+        List<Long> trackIds = preferencesManager.getTracks();
 
         if (levelIds.isEmpty() & trackIds.isEmpty()) {
             return mEventDao.selectDistrictDateSafe(Event.SOCIALS_CLASS);

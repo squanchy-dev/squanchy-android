@@ -1,10 +1,13 @@
 package com.connfa.model.managers;
 
+import android.content.Context;
+
 import com.ls.drupal.AbstractBaseDrupalEntity;
 import com.ls.drupal.DrupalClient;
 import com.ls.http.base.ResponseData;
 
 public abstract class SynchronousItemManager<FetchRequestResponseToManage, ParametersClass, TagClass> {
+    private final Context context;
     private DrupalClient client;
 
     protected abstract AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client, ParametersClass requestParams);
@@ -13,7 +16,8 @@ public abstract class SynchronousItemManager<FetchRequestResponseToManage, Param
 
     protected abstract boolean storeResponse(FetchRequestResponseToManage requestResponse, TagClass tag);
 
-    public SynchronousItemManager(DrupalClient client) {
+    public SynchronousItemManager(Context context, DrupalClient client) {
+        this.context = context;
         this.client = client;
     }
 
@@ -36,6 +40,10 @@ public abstract class SynchronousItemManager<FetchRequestResponseToManage, Param
 
     public boolean fetchData() {
         return fetchData(null);
+    }
+
+    public Context getContext() {
+        return context;
     }
 
     public DrupalClient getClient() {

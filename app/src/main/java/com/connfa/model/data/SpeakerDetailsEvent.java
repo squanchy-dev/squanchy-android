@@ -1,5 +1,7 @@
 package com.connfa.model.data;
 
+import android.content.Context;
+
 import com.connfa.utils.DateUtils;
 
 public class SpeakerDetailsEvent {
@@ -34,8 +36,8 @@ public class SpeakerDetailsEvent {
         return date;
     }
 
-    public void setDate(long time) {
-        this.date = DateUtils.getInstance().getWeekDay(time);
+    public void setDate(Context context, long time) {
+        this.date = DateUtils.getWeekDay(context, time);
     }
 
     public String getLevelName() {

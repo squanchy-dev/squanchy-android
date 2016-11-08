@@ -15,13 +15,13 @@ import java.util.List;
 
 public class BofsManager extends EventManager {
 
-    public BofsManager(DrupalClient client, Context context) {
-        super(client, context);
+    public BofsManager(Context context, DrupalClient client) {
+        super(context, client);
     }
 
     @Override
     protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client, Object requestParams) {
-        return new BofsRequest(client);
+        return new BofsRequest(getContext(), client);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class BofsManager extends EventManager {
             for (Event event : day.getEvents()) {
                 if (event != null) {
 
-                    Date date = DateUtils.getInstance().convertEventDayDate(day.getDate());
+                    Date date = DateUtils.convertEventDayDate(getContext(), day.getDate());
                     if (date != null) {
                         event.setDate(date);
                     }
@@ -69,21 +69,23 @@ public class BofsManager extends EventManager {
     }
 
     public List<Long> getBofsDays() {
-        List<Long> levelIds = PreferencesManager.getInstance().loadExpLevel();
-        List<Long> trackIds = PreferencesManager.getInstance().loadTracks();
+        PreferencesManager preferencesManager = PreferencesManager.create(getContext());
+        List<Long> levelIds = preferencesManager.getExpLevels();
+        List<Long> trackIds = preferencesManager.getTracks();
 
-        if (levelIds.isEmpty() & trackIds.isEmpty()) {
+        if (levelIds.isEmpty() && trackIds.isEmpty()) {
             return mEventDao.selectDistrictDateSafe(Event.BOFS_CLASS);
+        }
 
-        } else if (!levelIds.isEmpty() & !trackIds.isEmpty()) {
+        if (!levelIds.isEmpty() && !trackIds.isEmpty()) {
             return mEventDao.selectDistrictDateByTrackAndLevelIdsSafe(Event.BOFS_CLASS, levelIds, trackIds);
+        }
 
-        } else if (!levelIds.isEmpty() & trackIds.isEmpty()) {
+        if (!levelIds.isEmpty() && trackIds.isEmpty()) {
             return mEventDao.selectDistrictDateByLevelIdsSafe(Event.BOFS_CLASS, levelIds);
 
-        } else {
-            return mEventDao.selectDistrictDateByTrackIdsSafe(Event.BOFS_CLASS, trackIds);
         }
+        return mEventDao.selectDistrictDateByTrackIdsSafe(Event.BOFS_CLASS, trackIds);
     }
 
     public List<EventListItem> getBofsItemsSafe(long day) {

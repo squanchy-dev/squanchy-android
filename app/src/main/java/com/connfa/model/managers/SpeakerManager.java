@@ -13,19 +13,16 @@ import java.util.List;
 
 public class SpeakerManager extends SynchronousItemManager<Speaker.Holder, Object, String> {
 
-    private final Context mContext;
-
     private SpeakerDao mSpeakerDao;
 
-    public SpeakerManager(DrupalClient client, Context context) {
-        super(client);
-        this.mContext = context;
+    public SpeakerManager(Context context, DrupalClient client) {
+        super(context, client);
         this.mSpeakerDao = new SpeakerDao(context);
     }
 
     @Override
     protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client, Object requestParams) {
-        return new SpeakersRequest(client);
+        return new SpeakersRequest(getContext(), client);
     }
 
     @Override
@@ -40,7 +37,7 @@ public class SpeakerManager extends SynchronousItemManager<Speaker.Holder, Objec
             return false;
         }
 
-        EventDao eventDao = new EventDao(mContext);
+        EventDao eventDao = new EventDao(getContext());
         mSpeakerDao.saveOrUpdateDataSafe(speakers);
         for (Speaker speaker : speakers) {
             if (speaker != null) {

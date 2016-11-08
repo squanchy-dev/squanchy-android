@@ -11,7 +11,6 @@ import java.util.TimeZone;
 public class PreferencesManager {
 
     private static final String PREF_NAME = "com.ls.drupalconapp.model.MAIN_PREFERENCES";
-
     private static final String TIME_ZONE = "TIME_ZONE";
     private static final String TWITTER_SEARCH_QUERY = "TWITTER_SEARCH_QUERY";
     private static final String KEY_LAST_UPDATE_DATE = "KEY_LAST_UPDATE_DATE";
@@ -20,41 +19,14 @@ public class PreferencesManager {
     private static final String FILTER_EXP_LEVEL = "FILTER_EXP_LEVEL";
     private static final String FILTER_TRACK = "FILTER_TRACK ";
 
-    private static PreferencesManager sInstance;
-    private final SharedPreferences mPref;
+    public static PreferencesManager create(Context context) {
+        return new PreferencesManager(context);
+    }
+
+    private final SharedPreferences sharedPreferences;
 
     private PreferencesManager(Context context) {
-        mPref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-    }
-
-    public static synchronized void initializeInstance(Context context) {
-        if (sInstance == null) {
-            sInstance = new PreferencesManager(context);
-        }
-    }
-
-    public static synchronized PreferencesManager getInstance() {
-        if (sInstance == null) {
-            throw new IllegalStateException(PreferencesManager.class.getSimpleName() +
-                    " is not initialized, call initializeInstance(..) method first.");
-        }
-        return sInstance;
-    }
-
-    public void saveTimeZone(String timeZone) {
-        mPref.edit().putString(TIME_ZONE, timeZone).apply();
-    }
-
-    private String getTimeZone() {
-        return mPref.getString(TIME_ZONE, "");
-    }
-
-    public void saveTwitterSearchQuery(String searchQuery) {
-        mPref.edit().putString(TWITTER_SEARCH_QUERY, searchQuery).apply();
-    }
-
-    public String getTwitterSearchQuery() {
-        return mPref.getString(TWITTER_SEARCH_QUERY, "");
+        sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     }
 
     public TimeZone getServerTimeZoneObject() {
@@ -62,34 +34,45 @@ public class PreferencesManager {
         return TimeZone.getTimeZone(timezoneId);
     }
 
-    public void saveLastUpdateDate(String value) {
-        mPref.edit().putString(KEY_LAST_UPDATE_DATE, value).apply();
+    private String getTimeZone() {
+        return sharedPreferences.getString(TIME_ZONE, "");
+    }
+
+    public void saveTimeZone(String timeZone) {
+        sharedPreferences.edit().putString(TIME_ZONE, timeZone).apply();
+    }
+
+    public String getTwitterSearchQuery() {
+        return sharedPreferences.getString(TWITTER_SEARCH_QUERY, "");
+    }
+
+    public void saveTwitterSearchQuery(String searchQuery) {
+        sharedPreferences.edit().putString(TWITTER_SEARCH_QUERY, searchQuery).apply();
     }
 
     public String getLastUpdateDate() {
-        return mPref.getString(KEY_LAST_UPDATE_DATE, "");
+        return sharedPreferences.getString(KEY_LAST_UPDATE_DATE, "");
     }
 
-    public void saveMajorInfoTitle(String value) {
-        mPref.edit().putString(KEY_INFO_MAJOR_TITLE, value).apply();
+    public void saveLastUpdateDate(String value) {
+        sharedPreferences.edit().putString(KEY_LAST_UPDATE_DATE, value).apply();
     }
 
     public String getMajorInfoTitle() {
-        return mPref.getString(KEY_INFO_MAJOR_TITLE, null);
+        return sharedPreferences.getString(KEY_INFO_MAJOR_TITLE, null);
+    }
+
+    public void saveMajorInfoTitle(String value) {
+        sharedPreferences.edit().putString(KEY_INFO_MAJOR_TITLE, value).apply();
     }
 
     public void saveMinorInfoTitle(String value) {
-        mPref.edit()
+        sharedPreferences.edit()
                 .putString(KEY_INFO_MINOR_TITLE, value)
                 .apply();
     }
 
-    public boolean clear() {
-        return mPref.edit().clear().commit();
-    }
-
-    public void saveExpLevel(List<Long> list) {
-
+    public void saveExpLevels(List<Long> list) {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < list.size(); i++) {
             Long level = list.get(i);
@@ -101,11 +84,11 @@ public class PreferencesManager {
         }
 
         String expLevelAll = builder.toString();
-        mPref.edit().putString(FILTER_EXP_LEVEL, expLevelAll).apply();
+        sharedPreferences.edit().putString(FILTER_EXP_LEVEL, expLevelAll).apply();
     }
 
-    public List<Long> loadExpLevel() {
-        String expLevel = mPref.getString(FILTER_EXP_LEVEL, "");
+    public List<Long> getExpLevels() {
+        String expLevel = sharedPreferences.getString(FILTER_EXP_LEVEL, "");
         List<Long> expLevelList = new ArrayList<>();
 
         if (!TextUtils.isEmpty(expLevel)) {
@@ -117,8 +100,20 @@ public class PreferencesManager {
         return expLevelList;
     }
 
-    public void saveTracks(List<Long> list) {
+    public List<Long> getTracks() {
+        String expLevel = sharedPreferences.getString(FILTER_TRACK, "");
+        List<Long> trackList = new ArrayList<>();
 
+        if (!TextUtils.isEmpty(expLevel)) {
+            String levels[] = expLevel.split(";");
+            for (String level : levels) {
+                trackList.add(Long.valueOf(level));
+            }
+        }
+        return trackList;
+    }
+
+    public void saveTracks(List<Long> list) {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < list.size(); i++) {
             Long track = list.get(i);
@@ -130,19 +125,10 @@ public class PreferencesManager {
         }
 
         String trackAll = builder.toString();
-        mPref.edit().putString(FILTER_TRACK, trackAll).apply();
+        sharedPreferences.edit().putString(FILTER_TRACK, trackAll).apply();
     }
 
-    public List<Long> loadTracks() {
-        String expLevel = mPref.getString(FILTER_TRACK, "");
-        List<Long> trackList = new ArrayList<>();
-
-        if (!TextUtils.isEmpty(expLevel)) {
-            String levels[] = expLevel.split(";");
-            for (String level : levels) {
-                trackList.add(Long.valueOf(level));
-            }
-        }
-        return trackList;
+    public boolean clear() {
+        return sharedPreferences.edit().clear().commit();
     }
 }

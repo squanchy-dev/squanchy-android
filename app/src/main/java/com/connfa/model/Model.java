@@ -144,7 +144,7 @@ public class Model {
     }
 
     ProgramManager createProgramManager(Context context) {
-        return new ProgramManager(client, context);
+        return new ProgramManager(context, client);
     }
 
     public UpdatesManager getUpdatesManager() {
@@ -184,22 +184,22 @@ public class Model {
         client = new DrupalClient(context.getString(R.string.api_value_base_url), queue, BaseRequest.RequestFormat.JSON, loginManager);
         client.setRequestTimeout(REQUEST_TIMEOUT_MLLIS);
 
-        typesManager = new TypesManager(client);
-        levelsManager = new LevelsManager(client);
-        tracksManager = new TracksManager(client);
-        speakerManager = new SpeakerManager(client, context);
-        locationmanager = new LocationManager(client);
-        socialManager = new SocialManager(client, context);
-        bofsManager = new BofsManager(client, context);
-        poisManager = new PoisManager(client);
-        infoManager = new InfoManager(client);
-        programManager = new ProgramManager(client, context);
-        eventManager = new EventManager(client, context);
+        typesManager = new TypesManager(context, client);
+        levelsManager = new LevelsManager(context, client);
+        tracksManager = new TracksManager(context, client);
+        speakerManager = new SpeakerManager(context, client);
+        locationmanager = new LocationManager(context, client);
+        socialManager = new SocialManager(context, client);
+        bofsManager = new BofsManager(context, client);
+        poisManager = new PoisManager(context, client);
+        infoManager = new InfoManager(context, client);
+        programManager = new ProgramManager(context, client);
+        eventManager = new EventManager(context, client);
         favoriteManager = new FavoriteManager(context);
 
-        updatesManager = new UpdatesManager(client, context);
-        settingsManager = new SettingsManager(client);
-        floorPlansManager = new FloorPlansManager(client, context);
+        updatesManager = new UpdatesManager(context, client);
+        settingsManager = new SettingsManager(context, client);
+        floorPlansManager = new FloorPlansManager(context, client);
     }
 
     //Initialization
