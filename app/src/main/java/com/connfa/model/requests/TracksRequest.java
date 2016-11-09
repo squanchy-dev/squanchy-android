@@ -1,5 +1,7 @@
 package com.connfa.model.requests;
 
+import android.content.Context;
+
 import com.connfa.model.data.Track;
 import com.ls.drupal.DrupalClient;
 import com.ls.http.base.BaseRequest;
@@ -8,8 +10,8 @@ import java.util.Map;
 
 public class TracksRequest extends BaseSafeConsumeContainerRequest<Track.Holder> {
 
-    public TracksRequest(DrupalClient client) {
-        super(client, new Track.Holder());
+    public TracksRequest(Context context, DrupalClient client) {
+        super(context, client, new Track.Holder());
     }
 
     @Override

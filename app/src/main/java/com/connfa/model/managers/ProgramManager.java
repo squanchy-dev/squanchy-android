@@ -15,17 +15,20 @@ import java.util.List;
 
 public class ProgramManager extends EventManager {
 
-    public ProgramManager(DrupalClient client, Context context) {
-        super(client, context);
+    PreferencesManager preferencesManager;
+
+    public ProgramManager(Context context, DrupalClient client) {
+        super(context, client);
+        this.preferencesManager = PreferencesManager.create(context);
     }
 
     @Override
-    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client, Object requestParams) {
-        return new SessionsRequest(client);
+    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client) {
+        return new SessionsRequest(getContext(), client);
     }
 
     @Override
-    protected String getEntityRequestTag(Object params) {
+    protected String getEntityRequestTag() {
         return "sessions";
     }
 
@@ -42,7 +45,7 @@ public class ProgramManager extends EventManager {
             for (Event event : day.getEvents()) {
                 if (event != null) {
 
-                    Date date = DateUtils.getInstance().convertEventDayDate(day.getDate());
+                    Date date = DateUtils.convertEventDayDate(getContext(), day.getDate());
                     if (date != null) {
                         event.setDate(date);
                     }
@@ -68,8 +71,8 @@ public class ProgramManager extends EventManager {
     }
 
     public List<Long> getProgramDays() {
-        List<Long> levelIds = PreferencesManager.getInstance().loadExpLevel();
-        List<Long> trackIds = PreferencesManager.getInstance().loadTracks();
+        List<Long> levelIds = preferencesManager.getExpLevels();
+        List<Long> trackIds = preferencesManager.getTracks();
 
         if (levelIds.isEmpty() & trackIds.isEmpty()) {
             return mEventDao.selectDistrictDateSafe(Event.PROGRAM_CLASS);

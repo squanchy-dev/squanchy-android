@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Created on 09.06.2016.
  */
-public class FloorPlan extends AbstractEntity<String> implements Comparable<FloorPlan> {
+public class FloorPlan implements AbstractEntity<String>, Comparable<FloorPlan> {
     public final static String COLUMN_ID = "_id";
     private final static String COLUMN_NAME = "_name";
     private final static String COLUMN_IMAGE_URL = "_image_url";

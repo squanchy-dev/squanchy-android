@@ -15,6 +15,7 @@ public class SpeakerDao extends AbstractEntityDAO<Speaker, Long> {
     private final Context mContext;
 
     public SpeakerDao(Context context) {
+        super(context);
         mContext = context;
     }
 

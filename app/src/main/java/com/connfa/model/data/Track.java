@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Track extends AbstractEntity<Long> {
+public class Track implements AbstractEntity<Long> {
 
     @SerializedName("trackId")
     private long mId;

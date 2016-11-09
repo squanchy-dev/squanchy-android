@@ -6,10 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
-public class DatabaseFacade
-        implements ILAPIDBFacade {
-//
-//	private static DatabaseFacade instance;
+class DatabaseFacade implements ILAPIDBFacade {
 
     private DBInfo dbInfo;
     private DatabaseHelper dbHelper;
@@ -17,32 +14,10 @@ public class DatabaseFacade
 
     private final Context context;
     private int openCounter = 0;
-
-	/*
-    public static DatabaseFacade instance(Context theContext, DBInfo theDbInfo)
-	{
-		if (instance == null)
-		{
-			instance = new DatabaseFacade(theContext, theDbInfo);
-		}
-
-		return instance;
-	}
-
-	
-	public static DatabaseFacade instance()
-	{
-		if (instance == null)
-		{
-			throw new IllegalStateException("Called method on uninitialized database facade");
-		}
-
-		return instance;
-	}*/
-
-    public DatabaseFacade(Context theContext, DBInfo theDbInfo) {
-        this.context = theContext;
-        this.dbInfo = theDbInfo;
+    
+    DatabaseFacade(Context context, DBInfo dbInfo) {
+        this.context = context;
+        this.dbInfo = dbInfo;
     }
 
     public void beginTransactions() {
@@ -78,13 +53,13 @@ public class DatabaseFacade
         openCounter--;
     }
 
-    public boolean containsRecord(String theTable, String theWhereClause, String[] theColumns) {
+    public boolean containsRecord(String table, String whereClause, String[] columns) {
         boolean result = false;
 
         Cursor cursor = db.query(true,
-                theTable,
-                theColumns,
-                theWhereClause,// selection
+                table,
+                columns,
+                whereClause,// selection
                 null,// selection args
                 null,// groupBy
                 null,// having
@@ -94,19 +69,18 @@ public class DatabaseFacade
         result = cursor.getCount() > 0;
 
         cursor.close();
-//        cursor = null;
 
         return result;
     }
 
-    public boolean containsRecord(String theTable, String theWhereClause, String[] selectionArgs,
-                                  String[] theColumns) {
-        boolean result = false;
+    public boolean containsRecord(String table, String whereClause, String[] selectionArgs,
+                                  String[] columns) {
+        boolean result;
 
         Cursor cursor = db.query(true,
-                theTable,
-                theColumns,
-                theWhereClause,// selection
+                table,
+                columns,
+                whereClause,// selection
                 selectionArgs,// selection args
                 null,// groupBy
                 null,// having
@@ -116,40 +90,36 @@ public class DatabaseFacade
         result = cursor.getCount() > 0;
 
         cursor.close();
-//        cursor = null;
 
         return result;
     }
 
-    public Cursor query(String theQuery, String[] selectionArgs) {
-        return db.rawQuery(theQuery, selectionArgs);
+    public Cursor query(String query, String[] selectionArgs) {
+        return db.rawQuery(query, selectionArgs);
     }
 
-    public long save(String theTable, ContentValues theValues) {
-        return db.insert(theTable, null, theValues);
+    public long save(String table, ContentValues values) {
+        return db.insert(table, null, values);
     }
 
     /**
-     * @param theTable
-     * @param theWhereClause
-     * @param theValues
-     * @return returns number of rows affected
+     * @return number of rows affected
      */
-    public int update(String theTable, String theWhereClause, ContentValues theValues) {
-        return db.update(theTable, theValues, theWhereClause, null);
+    public int update(String table, String whereClause, ContentValues values) {
+        return db.update(table, values, whereClause, null);
     }
 
-    public int update(String theTable, String theWhereClause, String[] whereArgs,
-                      ContentValues theValues) {
-        return db.update(theTable, theValues, theWhereClause, whereArgs);
+    public int update(String table, String whereClause, String[] whereArgs,
+                      ContentValues values) {
+        return db.update(table, values, whereClause, whereArgs);
     }
 
-    public int delete(String theTable, String theWhereClause, String[] whereArgs) {
-        return db.delete(theTable, theWhereClause, whereArgs);
+    public int delete(String table, String whereClause, String[] whereArgs) {
+        return db.delete(table, whereClause, whereArgs);
     }
 
-    public int delete(String theTable, String theWhereClause) {
-        return db.delete(theTable, theWhereClause, null);
+    public int delete(String table, String whereClause) {
+        return db.delete(table, whereClause, null);
     }
 
     public void insert(String sqlQuery) {
@@ -160,41 +130,36 @@ public class DatabaseFacade
         db.execSQL(sqlQuery, bindArgs);
     }
 
-    public int clearTable(String theTable) {
-        return this.delete(theTable, null, null);
+    public int clearTable(String table) {
+        return this.delete(table, null, null);
     }
 
-    public Cursor getAllRecords(String theTable, String[] theColumns, String theSelection) {
-        Cursor cursor = db.query(true,
-                theTable,
-                theColumns,
-                theSelection,// selection
-                null,// selection args
-                null,// groupBy
-                null,// having
-                null,// order by
-                null);// limit
-
-        return cursor;
+    public Cursor getAllRecords(String table, String[] columns, String selection) {
+        return db.query(true,
+                        table,
+                        columns,
+                        selection,// selection
+                        null,// selection args
+                        null,// groupBy
+                        null,// having
+                        null,// order by
+                        null);
     }
 
-    public Cursor getAllRecords(String theTable, String[] theColumns, String theSelection,
-                                String[] selectionArgs) {
-        Cursor cursor = db.query(true,
-                theTable,
-                theColumns,
-                theSelection,// selection
-                selectionArgs,// selection args
-                null,// groupBy
-                null,// having
-                null,// order by
-                null);// limit
-
-        return cursor;
+    public Cursor getAllRecords(String table, String[] columns, String selection, String[] selectionArgs) {
+        return db.query(true,
+                        table,
+                        columns,
+                        selection,// selection
+                        selectionArgs,// selection args
+                        null,// groupBy
+                        null,// having
+                        null,// order by
+                        null);
     }
 
-    public String getQuery(int theResId) {
-        return context.getString(theResId);
+    public String getQuery(int resId) {
+        return context.getString(resId);
     }
 
 }

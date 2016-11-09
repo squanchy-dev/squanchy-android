@@ -1,31 +1,36 @@
 package com.connfa.model.managers;
 
+import android.content.Context;
+
 import com.ls.drupal.AbstractBaseDrupalEntity;
 import com.ls.drupal.DrupalClient;
 import com.ls.http.base.ResponseData;
 
-public abstract class SynchronousItemManager<FetchRequestResponseToManage, ParametersClass, TagClass> {
-    private DrupalClient client;
+public abstract class SynchronousItemManager<R, T> {
 
-    protected abstract AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client, ParametersClass requestParams);
+    private final Context context;
+    private final DrupalClient client;
 
-    protected abstract TagClass getEntityRequestTag(ParametersClass params);
-
-    protected abstract boolean storeResponse(FetchRequestResponseToManage requestResponse, TagClass tag);
-
-    public SynchronousItemManager(DrupalClient client) {
+    public SynchronousItemManager(Context context, DrupalClient client) {
+        this.context = context;
         this.client = client;
     }
 
-    public boolean fetchData(ParametersClass requestParams) {
-        AbstractBaseDrupalEntity request = getEntityToFetch(this.client, requestParams);
-        TagClass tag = getEntityRequestTag(requestParams);
+    protected abstract AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client);
+
+    protected abstract T getEntityRequestTag();
+
+    protected abstract boolean storeResponse(R requestResponse, T tag);
+
+    public boolean fetchData() {
+        AbstractBaseDrupalEntity request = getEntityToFetch(client);
+        T tag = getEntityRequestTag();
         ResponseData response = request.pullFromServer(true, tag, null);
 
         int statusCode = response.getStatusCode();
         if (statusCode > 0 && statusCode < 400) {
 
-            FetchRequestResponseToManage responseObj = (FetchRequestResponseToManage) response.getData();
+            R responseObj = (R) response.getData();
             if (responseObj != null) {
                 return storeResponse(responseObj, tag);
             }
@@ -34,8 +39,8 @@ public abstract class SynchronousItemManager<FetchRequestResponseToManage, Param
         return false;
     }
 
-    public boolean fetchData() {
-        return fetchData(null);
+    public Context getContext() {
+        return context;
     }
 
     public DrupalClient getClient() {

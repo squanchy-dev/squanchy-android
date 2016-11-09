@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class InfoItem extends AbstractEntity<Long> {
+public class InfoItem implements AbstractEntity<Long> {
 
     @SerializedName("infoId")
     private long mId;

@@ -1,5 +1,7 @@
 package com.connfa.model.requests;
 
+import android.content.Context;
+
 import com.connfa.model.data.InfoItem;
 import com.ls.drupal.DrupalClient;
 import com.ls.http.base.BaseRequest;
@@ -8,8 +10,8 @@ import java.util.Map;
 
 public class InfoRequest extends BaseSafeConsumeContainerRequest<InfoItem.General> {
 
-    public InfoRequest(DrupalClient client) {
-        super(client, new InfoItem.General());
+    public InfoRequest(Context context, DrupalClient client) {
+        super(context, client, new InfoItem.General());
     }
 
     @Override

@@ -11,22 +11,22 @@ import com.ls.drupal.DrupalClient;
 
 import java.util.List;
 
-public class EventManager extends SynchronousItemManager<Event.Holder, Object, String> {
+public class EventManager extends SynchronousItemManager<Event.Holder, String> {
 
     protected EventDao mEventDao;
 
-    public EventManager(DrupalClient client, Context context) {
-        super(client);
+    public EventManager(Context context, DrupalClient client) {
+        super(context, client);
         mEventDao = new EventDao(context);
     }
 
     @Override
-    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client, Object requestParams) {
+    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client) {
         return null;
     }
 
     @Override
-    protected String getEntityRequestTag(Object params) {
+    protected String getEntityRequestTag() {
         return null;
     }
 

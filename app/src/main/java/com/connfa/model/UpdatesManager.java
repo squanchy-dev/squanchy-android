@@ -35,13 +35,14 @@ public class UpdatesManager {
     public static final int POIS_REQUEST_ID = 10;
     public static final int INFO_REQUEST_ID = 11;
 
-    private DrupalClient mClient;
-    private ObserverHolder<DataUpdatedListener> mUpdateListeners;
+    private final Context context;
+    private final DrupalClient client;
+    private final PreferencesManager preferencesManager;
 
+    private ObserverHolder<DataUpdatedListener> updateListeners;
     public static final String IF_MODIFIED_SINCE_HEADER = "If-Modified-Since";
-    public static final String LAST_MODIFIED_HEADER = "Last-Modified";
 
-    private final Context mContext;
+    public static final String LAST_MODIFIED_HEADER = "Last-Modified";
 
     public static int convertEventIdToEventModePos(int eventModePos) {
         switch (eventModePos) {
@@ -55,10 +56,11 @@ public class UpdatesManager {
         return 0;
     }
 
-    public UpdatesManager(@NotNull DrupalClient client, Context context) {
-        this.mContext = context;
-        mUpdateListeners = new ObserverHolder<>();
-        mClient = client;
+    public UpdatesManager(Context context, DrupalClient client) {
+        this.context = context;
+        this.client = client;
+        this.preferencesManager = PreferencesManager.create(context);
+        updateListeners = new ObserverHolder<>();
     }
 
     public void startLoading(@NotNull final UpdateCallback callback) {
@@ -72,7 +74,7 @@ public class UpdatesManager {
             @Override
             protected void onPostExecute(final List<Integer> result) {
                 if (result != null) {
-                    mUpdateListeners.notifyAllObservers(new ObserverHolder.ObserverNotifier<DataUpdatedListener>() {
+                    updateListeners.notifyAllObservers(new ObserverHolder.ObserverNotifier<DataUpdatedListener>() {
                         @Override
                         public void onNotify(DataUpdatedListener observer) {
                             observer.onDataUpdated(result);
@@ -81,30 +83,26 @@ public class UpdatesManager {
                 }
 
                 if (result != null) {
-                    if (callback != null) {
-                        callback.onDownloadSuccess();
-                    }
-                    mUpdateListeners.notifyAllObservers(new ObserverHolder.ObserverNotifier<DataUpdatedListener>() {
+                    callback.onDownloadSuccess();
+                    updateListeners.notifyAllObservers(new ObserverHolder.ObserverNotifier<DataUpdatedListener>() {
                         @Override
                         public void onNotify(DataUpdatedListener observer) {
                             observer.onDataUpdated(result);
                         }
                     });
                 } else {
-                    if (callback != null) {
-                        callback.onDownloadError();
-                    }
+                    callback.onDownloadError();
                 }
             }
         }.execute();
     }
 
     public void registerUpdateListener(DataUpdatedListener listener) {
-        this.mUpdateListeners.registerObserver(listener);
+        this.updateListeners.registerObserver(listener);
     }
 
     public void unregisterUpdateListener(DataUpdatedListener listener) {
-        this.mUpdateListeners.unregisterObserver(listener);
+        this.updateListeners.unregisterObserver(listener);
     }
 
     /**
@@ -116,11 +114,11 @@ public class UpdatesManager {
         config.setResponseFormat(BaseRequest.ResponseFormat.JSON);
         config.setRequestFormat(BaseRequest.RequestFormat.JSON);
         config.setResponseClassSpecifier(UpdateDate.class);
-        String baseURL = mContext.getString(R.string.api_value_base_url);
+        String baseURL = context.getString(R.string.api_value_base_url);
         BaseRequest checkForUpdatesRequest = new BaseRequest(BaseRequest.RequestMethod.GET, baseURL + "checkUpdates", config);
-        String lastDate = PreferencesManager.getInstance().getLastUpdateDate();
+        String lastDate = preferencesManager.getLastUpdateDate();
         checkForUpdatesRequest.addRequestHeader(IF_MODIFIED_SINCE_HEADER, lastDate);
-        ResponseData updatesData = mClient.performRequest(checkForUpdatesRequest, true);
+        ResponseData updatesData = client.performRequest(checkForUpdatesRequest, true);
 
         int statusCode = updatesData.getStatusCode();
         if (statusCode > 0 && statusCode < 400) {
@@ -156,7 +154,7 @@ public class UpdatesManager {
             if (success) {
                 facade.setTransactionSuccesfull();
                 if (!TextUtils.isEmpty(updateDate.getTime())) {
-                    PreferencesManager.getInstance().saveLastUpdateDate(updateDate.getTime());
+                    preferencesManager.saveLastUpdateDate(updateDate.getTime());
                 }
             }
             return success ? updateIds : null;

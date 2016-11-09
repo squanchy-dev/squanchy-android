@@ -1,5 +1,7 @@
 package com.connfa.model.requests;
 
+import android.content.Context;
+
 import com.connfa.model.PreferencesManager;
 import com.connfa.model.UpdatesManager;
 import com.ls.drupal.AbstractDrupalEntityContainer;
@@ -12,8 +14,11 @@ import java.util.Map;
 
 public abstract class BaseSafeConsumeContainerRequest<T> extends AbstractDrupalEntityContainer<T> {
 
-    public BaseSafeConsumeContainerRequest(DrupalClient client, T theData) {
+    private final PreferencesManager preferencesManager;
+
+    public BaseSafeConsumeContainerRequest(Context context, DrupalClient client, T theData) {
         super(client, theData);
+        preferencesManager = PreferencesManager.create(context);
     }
 
     @Override
@@ -29,7 +34,7 @@ public abstract class BaseSafeConsumeContainerRequest<T> extends AbstractDrupalE
             return super.getItemRequestHeaders(method);
         }
 
-        String lastDate = PreferencesManager.getInstance().getLastUpdateDate();
+        String lastDate = preferencesManager.getLastUpdateDate();
         Map<String, String> result = new HashMap<>();
         result.put(UpdatesManager.IF_MODIFIED_SINCE_HEADER, lastDate);
         return result;

@@ -1,7 +1,6 @@
 package com.connfa.utils;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.text.format.DateFormat;
 
 import com.connfa.model.PreferencesManager;
@@ -13,114 +12,74 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import org.jetbrains.annotations.NotNull;
-
 public class DateUtils {
 
-    private SimpleDateFormat mDateFormat;
-    private TimeZone mTimezone;
-    private static DateUtils mUtils;
-
-    public DateUtils() {
-        mDateFormat = new SimpleDateFormat("", Locale.ENGLISH);
-        mTimezone = PreferencesManager.getInstance().getServerTimeZoneObject();
-        mDateFormat.setTimeZone(mTimezone);
+    public static TimeZone getTimeZone(Context context) {
+        return PreferencesManager.create(context).getServerTimeZoneObject();
     }
 
-    public synchronized void setTimezone(String theTimezoneId) {
-        mTimezone = TimeZone.getTimeZone(theTimezoneId);
-        mDateFormat.setTimeZone(mTimezone);
-    }
-
-    @NotNull
-    public static DateUtils getInstance() {
-        if (mUtils == null) {
-            mUtils = new DateUtils();
-        }
-        return mUtils;
-    }
-
-    @Nullable
-    public synchronized Date convertEventDayDate(String day) {
-        mDateFormat.applyPattern("d-MM-yyyy");
+    public static Date convertEventDayDate(Context context, String day) {
+        SimpleDateFormat dateFormat = getDateFormat("d-MM-yyyy");
+        dateFormat.setTimeZone(getTimeZone(context));
 
         try {
-            return mDateFormat.parse(day);
+            return dateFormat.parse(day);
         } catch (ParseException e) {
             e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
-    public boolean isToday(long millis) {
-        boolean isToday = false;
+    private static SimpleDateFormat getDateFormat(String pattern) {
+        return new SimpleDateFormat(pattern, Locale.ENGLISH);
+    }
 
-        Calendar currCalendar = Calendar.getInstance();
-        currCalendar.setTimeZone(mTimezone);
+    public static boolean isToday(Context context, long millis) {
+        TimeZone timeZone = getTimeZone(context);
+
+        Calendar todayCalendar = Calendar.getInstance();
+        todayCalendar.setTimeZone(timeZone);
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(millis);
-        calendar.setTimeZone(mTimezone);
+        calendar.setTimeZone(timeZone);
 
-        int currYear = currCalendar.get(Calendar.YEAR);
-        int currMonth = currCalendar.get(Calendar.MONTH);
-        int currDay = currCalendar.get(Calendar.DAY_OF_MONTH);
+        int todayYear = todayCalendar.get(Calendar.YEAR);
+        int todayMonth = todayCalendar.get(Calendar.MONTH);
+        int todayDay = todayCalendar.get(Calendar.DAY_OF_MONTH);
 
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        if (currYear == year && currMonth == month && currDay == day) {
-            isToday = true;
-        }
-        return isToday;
+        return (todayYear == year && todayMonth == month && todayDay == day);
     }
 
-    public boolean isAfterCurrentFate(long millis) {
-//        boolean isAfter = false;
-//
-//        Calendar currCalendar = Calendar.getInstance();
-//        currCalendar.setTimeZone(mTimezone);
-//
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTimeInMillis(millis);
-//        calendar.setTimeZone(mTimezone);
-//
-//        if (calendar.after(currCalendar)) {
-//            isAfter = true;
-//        }
+    public static boolean isAfterCurrentFate(long millis) {
         return millis > System.currentTimeMillis();
     }
 
-    public synchronized String getTime(Context context, long millis) {
-
+    public static String getTime(Context context, long millis) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(millis);
-        calendar.setTimeZone(mTimezone);
+        calendar.setTimeZone(getTimeZone(context));
 
         if (DateFormat.is24HourFormat(context)) {
-            mDateFormat.applyPattern("HH:mm");
-            return mDateFormat.format(new Date(millis));
+            return getDateFormat("HH:mm").format(new Date(millis));
         } else {
-            mDateFormat.applyPattern("hh:mm aa");
-            return mDateFormat.format(new Date(millis));
+            return getDateFormat("hh:mm aa").format(new Date(millis));
         }
     }
 
-    public String getWeekDay(long millis) {
+    public static String getWeekDay(Context context, long millis) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(millis);
-        calendar.setTimeZone(mTimezone);
+        calendar.setTimeZone(getTimeZone(context));
 
         return calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.US);
     }
 
-    public synchronized String getWeekNameAndDate(long millis) {
-        mDateFormat.applyPattern("EEE d");
-        return mDateFormat.format(new Date(millis));
-    }
-
-    public TimeZone getTimeZone() {
-        return mTimezone;
+    public static String getWeekNameAndDate(Context context, long millis) {
+        return getDateFormat("EEE d").format(new Date(millis));
     }
 }

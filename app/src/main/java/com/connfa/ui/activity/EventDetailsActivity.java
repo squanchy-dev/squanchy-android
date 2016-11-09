@@ -49,6 +49,8 @@ public class EventDetailsActivity extends StackKeeperActivity {
     public static final String EXTRA_EVENT_ID = "EXTRA_EVENT_ID";
     public static final String EXTRA_DAY = "EXTRA_DAY";
 
+    private PreferencesManager preferencesManager;
+
     private TextView mToolbarTitle;
     private View mViewToolbar;
 
@@ -90,6 +92,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
 
         receiverManager.register(this);
         Model.instance().getUpdatesManager().registerUpdateListener(updateListener);
+        preferencesManager = PreferencesManager.create(this);
 
         initData();
         initToolbar();
@@ -214,9 +217,9 @@ public class EventDetailsActivity extends StackKeeperActivity {
         TextView txtEventName = (TextView) findViewById(R.id.txtEventName);
         txtEventName.setText(eventName);
 
-        String fromTime = DateUtils.getInstance().getTime(this, event.getFrom());
-        String toTime = DateUtils.getInstance().getTime(this, event.getTo());
-        String eventLocation = DateUtils.getInstance().getWeekDay(mEventStartDate) + ", " + fromTime + " - " + toTime;
+        String fromTime = DateUtils.getTime(this, event.getFrom());
+        String toTime = DateUtils.getTime(this, event.getTo());
+        String eventLocation = DateUtils.getWeekDay(this, mEventStartDate) + ", " + fromTime + " - " + toTime;
 
         if (!TextUtils.isEmpty(event.getPlace())) {
             String eventPlace = String.format(" in %s", event.getPlace());
@@ -397,7 +400,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
     }
 
     public Intent createShareIntent(String url) {
-        String shareSubject = PreferencesManager.getInstance().getMajorInfoTitle();
+        String shareSubject = preferencesManager.getMajorInfoTitle();
         ShareCompat.IntentBuilder builder = ShareCompat.IntentBuilder.from(this)
                 .setType("text/plain")
                 .setSubject(shareSubject)

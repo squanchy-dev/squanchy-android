@@ -1,5 +1,7 @@
 package com.connfa.model.managers;
 
+import android.content.Context;
+
 import com.connfa.model.dao.POIDao;
 import com.connfa.model.data.POI;
 import com.connfa.model.requests.PoisRequest;
@@ -10,22 +12,22 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class PoisManager extends SynchronousItemManager<POI.Holder, Object, String> {
+public class PoisManager extends SynchronousItemManager<POI.Holder, String> {
 
     private POIDao mPOIDao;
 
-    public PoisManager(DrupalClient client) {
-        super(client);
-        mPOIDao = new POIDao();
+    public PoisManager(Context context, DrupalClient client) {
+        super(context, client);
+        mPOIDao = new POIDao(context);
     }
 
     @Override
-    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client, Object requestParams) {
-        return new PoisRequest(client);
+    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client) {
+        return new PoisRequest(getContext(), client);
     }
 
     @Override
-    protected String getEntityRequestTag(Object params) {
+    protected String getEntityRequestTag() {
         return "pois";
     }
 

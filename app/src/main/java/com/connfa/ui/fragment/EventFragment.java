@@ -35,21 +35,22 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 
     private List<Long> levelIds;
     private List<Long> trackIds;
-    private long mDay;
 
-    private DrawerManager.EventMode mEventMode;
-    private EventsAdapter mAdapter;
+    private long day;
 
-    private ListView mListView;
-    private ProgressBar mProgressBar;
+    private DrawerManager.EventMode eventMode;
+    private EventsAdapter adapter;
 
-    private EventGenerator mGenerator;
+    private ListView listView;
+    private ProgressBar progressBar;
 
-    private ReceiverManager receiverManager = new ReceiverManager(
+    private EventGenerator generator;
+
+    private final ReceiverManager receiverManager = new ReceiverManager(
             new ReceiverManager.FavoriteUpdatedListener() {
                 @Override
                 public void onFavoriteUpdated(long eventId, boolean isFavorite) {
-                    if (mEventMode != DrawerManager.EventMode.Favorites) {
+                    if (eventMode != DrawerManager.EventMode.Favorites) {
                         new LoadData().execute();
                     }
                 }
@@ -86,7 +87,7 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
 
     @Override
     public void onDestroy() {
-        mGenerator.setShouldBreak(true);
+        generator.setShouldBreak(true);
         receiverManager.unregister(getActivity());
         super.onDestroy();
     }
@@ -95,24 +96,25 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
         Bundle bundle = getArguments();
         if (bundle != null) {
             int eventPost = bundle.getInt(EXTRAS_ARG_MODE, DrawerManager.EventMode.Program.ordinal());
-            mEventMode = DrawerManager.EventMode.values()[eventPost];
+            eventMode = DrawerManager.EventMode.values()[eventPost];
 
-            mDay = bundle.getLong(EXTRAS_ARG_DAY, 0);
-            levelIds = PreferencesManager.getInstance().loadExpLevel();
-            trackIds = PreferencesManager.getInstance().loadTracks();
+            day = bundle.getLong(EXTRAS_ARG_DAY, 0);
+            PreferencesManager preferencesManager = PreferencesManager.create(getActivity());
+            levelIds = preferencesManager.getExpLevels();
+            trackIds = preferencesManager.getTracks();
         }
-        mGenerator = new EventGenerator(getContext());
+        generator = new EventGenerator(getContext());
     }
 
     private void initViews() {
         if (getView() != null) {
-            mProgressBar = (ProgressBar) getView().findViewById(R.id.progressBar);
+            progressBar = (ProgressBar) getView().findViewById(R.id.progressBar);
 
-            mAdapter = new EventsAdapter(getActivity());
-            mAdapter.setOnItemClickListener(this);
+            adapter = new EventsAdapter(getActivity());
+            adapter.setOnItemClickListener(this);
 
-            mListView = (ListView) getView().findViewById(R.id.listView);
-            mListView.setAdapter(mAdapter);
+            listView = (ListView) getView().findViewById(R.id.listView);
+            listView.setAdapter(adapter);
         }
     }
 
@@ -144,101 +146,53 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
     private List<EventListItem> getEventItems() {
         List<EventListItem> eventList = new ArrayList<>();
 
-        switch (mEventMode) {
+        switch (eventMode) {
             case Program:
-                eventList.addAll(mGenerator.generate(mDay, Event.PROGRAM_CLASS, levelIds, trackIds, new SimpleTimeRangeCreator()));
+                eventList.addAll(generator.generate(day, Event.PROGRAM_CLASS, levelIds, trackIds, new SimpleTimeRangeCreator()));
                 break;
             case Bofs:
-                eventList.addAll(mGenerator.generate(mDay, Event.BOFS_CLASS, levelIds, trackIds, new SimpleTimeRangeCreator()));
+                eventList.addAll(generator.generate(day, Event.BOFS_CLASS, levelIds, trackIds, new SimpleTimeRangeCreator()));
                 break;
             case Social:
-                eventList.addAll(mGenerator.generate(mDay, Event.SOCIALS_CLASS, levelIds, trackIds, new SimpleTimeRangeCreator()));
+                eventList.addAll(generator.generate(day, Event.SOCIALS_CLASS, levelIds, trackIds, new SimpleTimeRangeCreator()));
                 break;
             case Favorites:
-                eventList.addAll(mGenerator.generateForFavorites(mDay, new SimpleTimeRangeCreator()));
+                eventList.addAll(generator.generateForFavorites(day, new SimpleTimeRangeCreator()));
                 break;
         }
         return eventList;
     }
 
     private void handleEventsResult(List<EventListItem> eventListItems) {
-        if (mProgressBar != null) {
-            mProgressBar.setVisibility(View.GONE);
+        if (progressBar != null) {
+            progressBar.setVisibility(View.GONE);
         }
 
-        mAdapter.setData(eventListItems, mEventMode);
-        if (DateUtils.getInstance().isToday(mDay) && mEventMode != DrawerManager.EventMode.Favorites) {
+        adapter.setData(eventListItems, eventMode);
+        if (DateUtils.isToday(getActivity(), day) && eventMode != DrawerManager.EventMode.Favorites) {
             int index = getCurrentTimePosition(eventListItems);
-            mListView.setSelection(index);
+            listView.setSelection(index);
         }
     }
 
     private void onItemClick(int position) {
-        EventListItem item = mAdapter.getItem(position);
+        EventListItem item = adapter.getItem(position);
 
         if (item.getEvent() != null && item.getEvent().getId() != 0) {
-//            long type = item.getEvent().getType();
-//            if (type == Type.SPEACH || type == Type.SPEACH_OF_DAY || type == Type.UNKNOWN_TYPE)
             Long eventId = item.getEvent().getId();
             String eventName = item.getEvent().getName();
             AnalyticsManager.sendEvent(getActivity(), R.string.event_category, R.string.action_open, eventId + " " + eventName);
-            EventDetailsActivity.startThisActivity(getActivity(), item.getEvent().getId(), mDay);
-//            }
+            EventDetailsActivity.startThisActivity(getActivity(), item.getEvent().getId(), day);
         }
     }
 
-//    private int getCurrentTimePosition(List<EventListItem> eventListItems) {
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTimeZone(DateUtils.getInstance().getTimeZone());
-//        int deviceHours =  calendar.get(Calendar.HOUR_OF_DAY);
-//        int deviceMinutes =  calendar.get(Calendar.MINUTE);
-//        int nearestHour = 0;
-//        int nearestMinute = 0;
-//        int pos = 0;
-//
-//        for (EventListItem item : eventListItems){
-//
-//            if (item instanceof TimeRangeItem) {
-//
-//                Event event = item.getEvent();
-//                calendar.setTimeInMillis(event.getFromMillis());
-//                int eventHours = calendar.get(Calendar.HOUR_OF_DAY);
-//                int eventMinutes = calendar.get(Calendar.MINUTE);
-//
-//                if (deviceHours >= eventHours && deviceMinutes >= eventMinutes) {
-//                    nearestHour = eventHours;
-//                    nearestMinute = eventMinutes;
-//                }
-//            }
-//        }
-//
-//        for (EventListItem item : eventListItems){
-//
-//            if (item instanceof TimeRangeItem) {
-//
-//                Event event = item.getEvent();
-//                calendar.setTimeInMillis(event.getFromMillis());
-//                int eventHours = calendar.get(Calendar.HOUR_OF_DAY);
-//                int eventMinutes = calendar.get(Calendar.MINUTE);
-//
-//                if (nearestHour == eventHours && nearestMinute == eventMinutes) {
-//                    pos = eventListItems.indexOf(item);
-//                    break;
-//                }
-//            }
-//        }
-//
-//
-//        return pos;
-//    }
-
     private int getCurrentTimePosition(List<EventListItem> eventListItems) {
         Calendar calendar = Calendar.getInstance();
-        calendar.setTimeZone(DateUtils.getInstance().getTimeZone());
+        calendar.setTimeZone(DateUtils.getTimeZone(getActivity()));
         int deviceTimeMinutes = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 
         int minDifference = Integer.MAX_VALUE;
-        int pos = 0;
+        int position = 0;
 
         EventListItem eventToSelect = null;
 
@@ -261,8 +215,8 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
         }
 
         if (eventToSelect != null) {
-            pos = eventListItems.indexOf(eventToSelect);
+            position = eventListItems.indexOf(eventToSelect);
         }
-        return pos;
+        return position;
     }
 }

@@ -1,5 +1,7 @@
 package com.connfa.model.managers;
 
+import android.content.Context;
+
 import com.connfa.model.dao.TypeDao;
 import com.connfa.model.data.Type;
 import com.connfa.model.requests.TypesRequest;
@@ -8,22 +10,22 @@ import com.ls.drupal.DrupalClient;
 
 import java.util.List;
 
-public class TypesManager extends SynchronousItemManager<Type.Holder, Object, String> {
+public class TypesManager extends SynchronousItemManager<Type.Holder, String> {
 
     private TypeDao mTypeDao;
 
-    public TypesManager(DrupalClient client) {
-        super(client);
-        mTypeDao = new TypeDao();
+    public TypesManager(Context context, DrupalClient client) {
+        super(context, client);
+        mTypeDao = new TypeDao(context);
     }
 
     @Override
-    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client, Object requestParams) {
-        return new TypesRequest(client);
+    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client) {
+        return new TypesRequest(getContext(), client);
     }
 
     @Override
-    protected String getEntityRequestTag(Object params) {
+    protected String getEntityRequestTag() {
         return "types";
     }
 

@@ -12,7 +12,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Speaker extends AbstractEntity<Long> implements Parcelable, Comparable<Speaker> {
+public class Speaker implements AbstractEntity<Long>, Parcelable, Comparable<Speaker> {
 
     @SerializedName("speakerId")
     private long mId;

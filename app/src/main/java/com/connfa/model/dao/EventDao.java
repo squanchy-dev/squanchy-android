@@ -2,9 +2,11 @@ package com.connfa.model.dao;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.support.annotation.NonNull;
 
 import com.connfa.R;
 import com.connfa.model.AppDatabaseInfo;
+import com.connfa.model.PreferencesManager;
 import com.connfa.model.data.Event;
 import com.connfa.model.data.EventDetailsEvent;
 import com.connfa.model.data.SpeakerDetailsEvent;
@@ -27,11 +29,14 @@ import java.util.Locale;
 public class EventDao extends AbstractEntityDAO<Event, Long> {
 
     public static final String TABLE_NAME = "table_event";
-    private final Context mContext;
+
+    private final PreferencesManager preferencesManager;
+
     private boolean mShouldBreak;
 
     public EventDao(Context context) {
-        mContext = context;
+        super(context);
+        this.preferencesManager = PreferencesManager.create(context);
     }
 
     @Override
@@ -56,7 +61,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
 
     @Override
     protected Event newInstance() {
-        return new Event();
+        return new Event(PreferencesManager.create(getContext()).getServerTimeZoneObject());
     }
 
     @Override
@@ -66,7 +71,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
 
     @Override
     public int deleteAll() {
-        String query = mContext.getString(R.string.delete_event_and_speaker);
+        String query = getContext().getString(R.string.delete_event_and_speaker);
         getFacade().query(query, null);
 
         return super.deleteAll();
@@ -74,55 +79,55 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
 
     public void deleteEventAndSpeakerBySpeaker(long speakerId) {
         String[] args = ArrayUtils.build(speakerId);
-        String query = mContext.getString(R.string.delete_event_and_speaker_by_speaker_id);
+        String query = getContext().getString(R.string.delete_event_and_speaker_by_speaker_id);
         getFacade().execSQL(query, args);
     }
 
     public void deleteEventAndSpeakerByEvent(long eventId) {
         String[] args = ArrayUtils.build(eventId);
-        String query = mContext.getString(R.string.delete_event_and_speaker_by_event_id);
+        String query = getContext().getString(R.string.delete_event_and_speaker_by_event_id);
         getFacade().execSQL(query, args);
     }
 
     public void deleteByEventAndSpeaker(long eventId, long speakerId) {
         String[] args = ArrayUtils.build(eventId, speakerId);
-        String query = mContext.getString(R.string.delete_event_and_speaker_by_event_and_speaker_id);
+        String query = getContext().getString(R.string.delete_event_and_speaker_by_event_and_speaker_id);
         getFacade().execSQL(query, args);
     }
 
     public void insertEventSpeaker(long eventId, long speakerId) {
         String[] bindArgs = ArrayUtils.build(eventId, speakerId);
-        getFacade().execSQL(mContext.getString(R.string.insert_event_speaker), bindArgs);
+        getFacade().execSQL(getContext().getString(R.string.insert_event_speaker), bindArgs);
     }
 
     public List<Event> selectProgramsSafe() {
         String[] selectionArgs = ArrayUtils.build(Event.PROGRAM_CLASS);
-        String query = mContext.getString(R.string.select_events_by_class);
+        String query = getContext().getString(R.string.select_events_by_class);
 
         return querySafe(query, selectionArgs);
     }
 
     public List<Event> selectBofsSafeSafe() {
         String[] selectionArgs = ArrayUtils.build(Event.BOFS_CLASS);
-        String query = mContext.getString(R.string.select_events_by_class);
+        String query = getContext().getString(R.string.select_events_by_class);
 
         return querySafe(query, selectionArgs);
     }
 
     public List<Event> selectEventsByDaySafe(int eventClass, long date) {
         String[] selectionArgs = ArrayUtils.build(eventClass, date);
-        String query = mContext.getString(R.string.select_events_by_class_and_date);
+        String query = getContext().getString(R.string.select_events_by_class_and_date);
 
         return querySafe(query, selectionArgs);
     }
 
     public List<Event> selectEventsByIdsSafe(List<Long> eventIds) {
-        String query = mContext.getString(R.string.select_events_by_ids);
+        String query = getContext().getString(R.string.select_events_by_ids);
         return querySafe(String.format(query, getArrayAsString(eventIds)), null);
     }
 
     public List<Event> selectEventsByIdsAndDaySafe(List<Long> eventIds, long day) {
-        String query = mContext.getString(R.string.select_events_by_ids_and_date);
+        String query = getContext().getString(R.string.select_events_by_ids_and_date);
         String[] selectionArgs = ArrayUtils.build(day);
         return querySafe(String.format(query, getArrayAsString(eventIds)), selectionArgs);
     }
@@ -150,51 +155,51 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
 
     public List<Long> selectEventSpeakersSafe(long eventId) {
         String[] selectionArgs = ArrayUtils.build(eventId);
-        String query = mContext.getString(R.string.select_event_speakers);
+        String query = getContext().getString(R.string.select_event_speakers);
 
         return selectLongArraySafe(selectionArgs, query);
     }
 
     public List<Long> selectSpeakerEventsSafe(long speakerId) {
         String[] selectionArgs = ArrayUtils.build(speakerId);
-        String query = mContext.getString(R.string.select_speaker_events);
+        String query = getContext().getString(R.string.select_speaker_events);
 
         return selectLongArraySafe(selectionArgs, query);
     }
 
     public List<Long> selectDistrictDateSafe() {
-        String query = mContext.getString(R.string.select_date_distinct);
+        String query = getContext().getString(R.string.select_date_distinct);
         return selectLongArraySafe(null, query);
     }
 
     public List<Long> selectDistrictFavoriteDateSafe() {
-        String query = mContext.getString(R.string.select_favorite_date_distinct);
+        String query = getContext().getString(R.string.select_favorite_date_distinct);
         return selectLongArraySafe(null, query);
     }
 
     public List<Long> selectDistrictDateSafe(int eventClass) {
         String[] selectionArgs = ArrayUtils.build(eventClass);
-        String query = mContext.getString(R.string.select_date_distinct_by_class);
+        String query = getContext().getString(R.string.select_date_distinct_by_class);
         return selectLongArraySafe(selectionArgs, query);
     }
 
     public List<Long> selectDistrictDateByLevelIdsSafe(int eventClass, List<Long> levelIds) {
         String[] selectionArgs = ArrayUtils.build(eventClass);
-        String rawQuery = mContext.getString(R.string.select_date_distinct_by_class_and_expLevel_ids);
+        String rawQuery = getContext().getString(R.string.select_date_distinct_by_class_and_expLevel_ids);
         String query = String.format(rawQuery, getArrayAsString(levelIds));
         return selectLongArraySafe(selectionArgs, query);
     }
 
     public List<Long> selectDistrictDateByTrackIdsSafe(int eventClass, List<Long> trackIds) {
         String[] selectionArgs = ArrayUtils.build(eventClass);
-        String rawQuery = mContext.getString(R.string.select_date_distinct_by_class_and_track_ids);
+        String rawQuery = getContext().getString(R.string.select_date_distinct_by_class_and_track_ids);
         String query = String.format(rawQuery, getArrayAsString(trackIds));
         return selectLongArraySafe(selectionArgs, query);
     }
 
     public List<Long> selectDistrictDateByTrackAndLevelIdsSafe(int eventClass, List<Long> levelIds, List<Long> trackIds) {
         String[] selectionArgs = ArrayUtils.build(eventClass);
-        String rawQuery = mContext.getString(R.string.select_date_distinct_by_class_and_expLevel_ids_and_track_ids);
+        String rawQuery = getContext().getString(R.string.select_date_distinct_by_class_and_expLevel_ids_and_track_ids);
         String query = String.format(rawQuery, getArrayAsString(levelIds), getArrayAsString(trackIds));
         return selectLongArraySafe(selectionArgs, query);
     }
@@ -206,13 +211,13 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
             facade.open();
 
             String[] selectionArgs = ArrayUtils.build(getIntFromBool(isFavorite), evenId);
-            String query = mContext.getString(R.string.update_event_favorite);
+            String query = getContext().getString(R.string.update_event_favorite);
             facade.execSQL(query, selectionArgs);
 
             selectionArgs = ArrayUtils.build(evenId);
             query = isFavorite
-                    ? mContext.getString(R.string.insert_favorite_event)
-                    : mContext.getString(R.string.delete_event_favorite)
+                    ? getContext().getString(R.string.insert_favorite_event)
+                    : getContext().getString(R.string.delete_event_favorite)
             ;
 
             facade.execSQL(query, selectionArgs);
@@ -222,7 +227,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
     }
 
     public List<Long> selectFavoriteEventsSafe() {
-        String query = mContext.getString(R.string.select_favorite_events);
+        String query = getContext().getString(R.string.select_favorite_events);
         return selectLongArraySafe(null, query);
     }
 
@@ -251,13 +256,13 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
     }
 
     public List<TimeRange> selectDistrictTimeRangeSafe(List<Long> eventIds) {
-        String query = mContext.getString(R.string.select_distinct_time_range_by_event_ids);
+        String query = getContext().getString(R.string.select_distinct_time_range_by_event_ids);
         return selectDistrictTimeRangeSafe(null, String.format(query, getArrayAsString(eventIds)));
     }
 
     public List<TimeRange> selectDistrictTimeRangeSafe(int eventClass, long date) {
         String[] selectionArgs = ArrayUtils.build(eventClass, date);
-        String query = mContext.getString(R.string.select_distinct_time_range);
+        String query = getContext().getString(R.string.select_distinct_time_range);
 
         return selectDistrictTimeRangeSafe(selectionArgs, query);
     }
@@ -268,15 +273,15 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
         String query;
 
         if (levelIds.isEmpty() & trackIds.isEmpty()) {
-            query = mContext.getString(R.string.select_distinct_time_range);
+            query = getContext().getString(R.string.select_distinct_time_range);
         } else if (!levelIds.isEmpty() & !trackIds.isEmpty()) {
-            String rawQuery = mContext.getString(R.string.select_distinct_time_range_by_expLevel_and_track_ids);
+            String rawQuery = getContext().getString(R.string.select_distinct_time_range_by_expLevel_and_track_ids);
             query = String.format(rawQuery, getArrayAsString(levelIds), getArrayAsString(trackIds));
         } else if (!levelIds.isEmpty() & trackIds.isEmpty()) {
-            String rawQuery = mContext.getString(R.string.select_distinct_time_range_by_expLevel_ids);
+            String rawQuery = getContext().getString(R.string.select_distinct_time_range_by_expLevel_ids);
             query = String.format(rawQuery, getArrayAsString(levelIds));
         } else {
-            String rawQuery = mContext.getString(R.string.select_distinct_time_range_by_track_ids);
+            String rawQuery = getContext().getString(R.string.select_distinct_time_range_by_track_ids);
             query = String.format(rawQuery, getArrayAsString(trackIds));
         }
 
@@ -286,7 +291,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
     public List<TimeRange> selectDistrictFavTimeRangeSafe(int eventClass, List<Long> favoriteEventIds, long date) {
         String[] selectionArgs = ArrayUtils.build(eventClass, date);
 
-        String rawQuery = mContext.getString(R.string.select_distinct_fav_time_range);
+        String rawQuery = getContext().getString(R.string.select_distinct_fav_time_range);
         String query = String.format(rawQuery, getArrayAsString(favoriteEventIds));
 
         return selectDistrictTimeRangeSafe(selectionArgs, query);
@@ -363,7 +368,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
                 event.setEventName(cursor.getString(cursor.getColumnIndex("_name")));
                 event.setLevelName(cursor.getString(cursor.getColumnIndex("level_name")));
                 event.setTrackName(cursor.getString(cursor.getColumnIndex("track_name")));
-                event.setDate(cursor.getLong(cursor.getColumnIndex("_date")));
+                event.setDate(getContext(), cursor.getLong(cursor.getColumnIndex( "_date")));
                 event.setFavorite(cursor.getInt(cursor.getColumnIndex("_favorite")) == 1);
                 event.setPlace(cursor.getString(cursor.getColumnIndex("_place")));
 
@@ -428,15 +433,15 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
         String query;
 
         if (levelIds.isEmpty() & trackIds.isEmpty()) {
-            query = mContext.getString(R.string.select_program_items_by_date);
+            query = getContext().getString(R.string.select_program_items_by_date);
         } else if (!levelIds.isEmpty() & !trackIds.isEmpty()) {
-            String rawQuery = mContext.getString(R.string.select_program_items_by_date_and_track_ids_and_expLevel_ids);
+            String rawQuery = getContext().getString(R.string.select_program_items_by_date_and_track_ids_and_expLevel_ids);
             query = String.format(rawQuery, getArrayAsString(trackIds), getArrayAsString(levelIds));
         } else if (!levelIds.isEmpty() & trackIds.isEmpty()) {
-            String rawQuery = mContext.getString(R.string.select_program_items_by_date_and_expLevel_ids);
+            String rawQuery = getContext().getString(R.string.select_program_items_by_date_and_expLevel_ids);
             query = String.format(rawQuery, getArrayAsString(levelIds));
         } else {
-            String rawQuery = mContext.getString(R.string.select_program_items_by_date_and_track_ids);
+            String rawQuery = getContext().getString(R.string.select_program_items_by_date_and_track_ids);
             query = String.format(rawQuery, getArrayAsString(trackIds));
         }
 
@@ -461,7 +466,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
                 long eventId = cursor.getLong(cursor.getColumnIndex("_id"));
                 if (lastId != eventId) {
                     lastItem = new ProgramItem();
-                    Event event = new Event();
+                    Event event = buildNewEvent();
                     event.initializePartly(parser);
 
                     lastItem.setTrack(parser.readString("track_name"));
@@ -493,7 +498,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
 
     public List<EventListItem> selectFavoriteProgramItemsSafe(List<Long> eventIds, long date) {
         String[] selectionArgs = ArrayUtils.build(date);
-        String rawQuery = mContext.getString(R.string.select_fav_program_items_by_date_and_fav_ids);
+        String rawQuery = getContext().getString(R.string.select_fav_program_items_by_date_and_fav_ids);
         String query = String.format(rawQuery, getArrayAsString(eventIds));
 
         ILAPIDBFacade facade = getFacade();
@@ -517,7 +522,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
                 long eventId = cursor.getLong(cursor.getColumnIndex("_id"));
                 if (lastId != eventId) {
                     lastItem = new ProgramItem();
-                    Event event = new Event();
+                    Event event = buildNewEvent();
                     event.initializePartly(parser);
 
                     lastItem.setTrack(parser.readString("track_name"));
@@ -549,7 +554,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
 
     public List<EventListItem> selectBofsItemsSafe(int eventClass, long date) {
         String[] selectionArgs = ArrayUtils.build(eventClass, date);
-        String query = mContext.getString(R.string.select_program_items_by_date);
+        String query = getContext().getString(R.string.select_program_items_by_date);
 
         ILAPIDBFacade facade = getFacade();
         List<EventListItem> dataList = new ArrayList<EventListItem>();
@@ -565,7 +570,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
                     break;
                 }
 
-                Event event = new Event();
+                Event event = buildNewEvent();
                 event.initializePartly(parser);
 
                 BofsItem item = new BofsItem();
@@ -592,9 +597,14 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
         return dataList;
     }
 
+    @NonNull
+    private Event buildNewEvent() {
+        return new Event(preferencesManager.getServerTimeZoneObject());
+    }
+
     public List<EventListItem> selectSocialItemsSafe(int eventClass, long date) {
         String[] selectionArgs = ArrayUtils.build(eventClass, date);
-        String query = mContext.getString(R.string.select_events_partly_class_and_date);
+        String query = getContext().getString(R.string.select_events_partly_class_and_date);
 
         ILAPIDBFacade facade = getFacade();
         List<EventListItem> dataList = new ArrayList<EventListItem>();
@@ -610,7 +620,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
                     break;
                 }
 
-                Event event = new Event();
+                Event event = buildNewEvent();
                 event.initializePartly(parser);
 
                 SocialItem item = new SocialItem();
@@ -638,7 +648,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
     }
 
     public List<Long> selectSpeakerEventIds() {
-        String query = mContext.getString(R.string.select_speaker_events_ids);
+        String query = getContext().getString(R.string.select_speaker_events_ids);
 
         ILAPIDBFacade facade = getFacade();
         List<Long> dataList = new ArrayList<Long>();

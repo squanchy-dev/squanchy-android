@@ -1,5 +1,6 @@
 package com.connfa.ui.adapter;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -13,12 +14,14 @@ import java.util.List;
 
 public class BaseEventDaysPagerAdapter extends FragmentStatePagerAdapter {
 
+    private final Context context;
     private DrawerManager.EventMode mEventMode;
 
     private List<Long> mDays;
 
-    public BaseEventDaysPagerAdapter(FragmentManager fm) {
+    public BaseEventDaysPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
+        this.context = context;
         mDays = new ArrayList<>();
     }
 
@@ -67,6 +70,6 @@ public class BaseEventDaysPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return DateUtils.getInstance().getWeekNameAndDate(getDate(position));
+        return DateUtils.getWeekNameAndDate(context, getDate(position));
     }
 }

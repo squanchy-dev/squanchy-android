@@ -11,25 +11,22 @@ import com.ls.drupal.DrupalClient;
 
 import java.util.List;
 
-public class SpeakerManager extends SynchronousItemManager<Speaker.Holder, Object, String> {
-
-    private final Context mContext;
+public class SpeakerManager extends SynchronousItemManager<Speaker.Holder, String> {
 
     private SpeakerDao mSpeakerDao;
 
-    public SpeakerManager(DrupalClient client, Context context) {
-        super(client);
-        this.mContext = context;
+    public SpeakerManager(Context context, DrupalClient client) {
+        super(context, client);
         this.mSpeakerDao = new SpeakerDao(context);
     }
 
     @Override
-    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client, Object requestParams) {
-        return new SpeakersRequest(client);
+    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client) {
+        return new SpeakersRequest(getContext(), client);
     }
 
     @Override
-    protected String getEntityRequestTag(Object params) {
+    protected String getEntityRequestTag() {
         return "speakers";
     }
 
@@ -40,7 +37,7 @@ public class SpeakerManager extends SynchronousItemManager<Speaker.Holder, Objec
             return false;
         }
 
-        EventDao eventDao = new EventDao(mContext);
+        EventDao eventDao = new EventDao(getContext());
         mSpeakerDao.saveOrUpdateDataSafe(speakers);
         for (Speaker speaker : speakers) {
             if (speaker != null) {

@@ -1,5 +1,7 @@
 package com.connfa.model.requests;
 
+import android.content.Context;
+
 import com.connfa.model.data.Type;
 import com.ls.drupal.DrupalClient;
 import com.ls.http.base.BaseRequest;
@@ -8,8 +10,8 @@ import java.util.Map;
 
 public class TypesRequest extends BaseSafeConsumeContainerRequest<Type.Holder> {
 
-    public TypesRequest(DrupalClient client) {
-        super(client, new Type.Holder());
+    public TypesRequest(Context context, DrupalClient client) {
+        super(context, client, new Type.Holder());
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.connfa.model.managers;
 
+import android.content.Context;
+
 import com.connfa.model.Model;
 import com.connfa.model.dao.TrackDao;
 import com.connfa.model.data.Level;
@@ -12,22 +14,22 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class TracksManager extends SynchronousItemManager<Track.Holder, Object, String> {
+public class TracksManager extends SynchronousItemManager<Track.Holder, String> {
 
     private TrackDao mTrackDao;
 
-    public TracksManager(DrupalClient client) {
-        super(client);
-        mTrackDao = new TrackDao();
+    public TracksManager(Context context, DrupalClient client) {
+        super(context, client);
+        mTrackDao = new TrackDao(context);
     }
 
     @Override
-    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client, Object requestParams) {
-        return new TracksRequest(client);
+    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client) {
+        return new TracksRequest(getContext(), client);
     }
 
     @Override
-    protected String getEntityRequestTag(Object params) {
+    protected String getEntityRequestTag() {
         return "tracks";
     }
 

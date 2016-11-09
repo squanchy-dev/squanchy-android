@@ -3,7 +3,6 @@ package com.connfa.model.data;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import com.connfa.model.PreferencesManager;
 import com.connfa.model.database.AbstractEntity;
 import com.connfa.model.database.AbstractEntityDAO;
 import com.connfa.utils.CursorStringParser;
@@ -16,15 +15,18 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import org.jetbrains.annotations.NotNull;
 
-public class Event extends AbstractEntity<Long> implements Comparable<Event> {
+public class Event implements AbstractEntity<Long>, Comparable<Event> {
 
     //TODO think about better event classes separation
     public static final int PROGRAM_CLASS = 1;
     public static final int BOFS_CLASS = 2;
     public static final int SOCIALS_CLASS = 3;
+
+    private final TimeZone serverTimeZone;
 
     @SerializedName("eventId")
     private long mId;
@@ -73,6 +75,10 @@ public class Event extends AbstractEntity<Long> implements Comparable<Event> {
 
     private int mEventClass = -1;
     private boolean mIsFavorite = false;
+
+    public Event(TimeZone serverTimeZone) {
+        this.serverTimeZone = serverTimeZone;
+    }
 
     @Override
     public ContentValues getContentValues() {
@@ -178,10 +184,10 @@ public class Event extends AbstractEntity<Long> implements Comparable<Event> {
         }
     }
 
-    public static String convertTime(Calendar time) {
+    private String convertTime(Calendar time) {
         if (time != null) {
             SimpleDateFormat format = new SimpleDateFormat("kk:mm", Locale.ENGLISH);
-            format.setTimeZone(PreferencesManager.getInstance().getServerTimeZoneObject());
+            format.setTimeZone(serverTimeZone);
             return format.format(time.getTime());
         } else {
             return null;

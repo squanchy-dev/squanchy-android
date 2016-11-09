@@ -44,7 +44,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void startSplash() {
-        String lastUpdate = PreferencesManager.getInstance().getLastUpdateDate();
+        String lastUpdate = PreferencesManager.create(this).getLastUpdateDate();
         boolean isOnline = NetworkUtils.isOn(SplashActivity.this);
 
         if (isOnline) {
