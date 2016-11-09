@@ -36,10 +36,10 @@ public class UpdatesManager {
     public static final int INFO_REQUEST_ID = 11;
 
     private final Context context;
-    private DrupalClient mClient;
+    private final DrupalClient client;
     private final PreferencesManager preferencesManager;
 
-    private ObserverHolder<DataUpdatedListener> mUpdateListeners;
+    private ObserverHolder<DataUpdatedListener> updateListeners;
     public static final String IF_MODIFIED_SINCE_HEADER = "If-Modified-Since";
 
     public static final String LAST_MODIFIED_HEADER = "Last-Modified";
@@ -58,9 +58,9 @@ public class UpdatesManager {
 
     public UpdatesManager(Context context, DrupalClient client) {
         this.context = context;
-        this.mClient = client;
+        this.client = client;
         this.preferencesManager = PreferencesManager.create(context);
-        mUpdateListeners = new ObserverHolder<>();
+        updateListeners = new ObserverHolder<>();
     }
 
     public void startLoading(@NotNull final UpdateCallback callback) {
@@ -74,7 +74,7 @@ public class UpdatesManager {
             @Override
             protected void onPostExecute(final List<Integer> result) {
                 if (result != null) {
-                    mUpdateListeners.notifyAllObservers(new ObserverHolder.ObserverNotifier<DataUpdatedListener>() {
+                    updateListeners.notifyAllObservers(new ObserverHolder.ObserverNotifier<DataUpdatedListener>() {
                         @Override
                         public void onNotify(DataUpdatedListener observer) {
                             observer.onDataUpdated(result);
@@ -86,7 +86,7 @@ public class UpdatesManager {
                     if (callback != null) {
                         callback.onDownloadSuccess();
                     }
-                    mUpdateListeners.notifyAllObservers(new ObserverHolder.ObserverNotifier<DataUpdatedListener>() {
+                    updateListeners.notifyAllObservers(new ObserverHolder.ObserverNotifier<DataUpdatedListener>() {
                         @Override
                         public void onNotify(DataUpdatedListener observer) {
                             observer.onDataUpdated(result);
@@ -102,11 +102,11 @@ public class UpdatesManager {
     }
 
     public void registerUpdateListener(DataUpdatedListener listener) {
-        this.mUpdateListeners.registerObserver(listener);
+        this.updateListeners.registerObserver(listener);
     }
 
     public void unregisterUpdateListener(DataUpdatedListener listener) {
-        this.mUpdateListeners.unregisterObserver(listener);
+        this.updateListeners.unregisterObserver(listener);
     }
 
     /**
@@ -122,7 +122,7 @@ public class UpdatesManager {
         BaseRequest checkForUpdatesRequest = new BaseRequest(BaseRequest.RequestMethod.GET, baseURL + "checkUpdates", config);
         String lastDate = preferencesManager.getLastUpdateDate();
         checkForUpdatesRequest.addRequestHeader(IF_MODIFIED_SINCE_HEADER, lastDate);
-        ResponseData updatesData = mClient.performRequest(checkForUpdatesRequest, true);
+        ResponseData updatesData = client.performRequest(checkForUpdatesRequest, true);
 
         int statusCode = updatesData.getStatusCode();
         if (statusCode > 0 && statusCode < 400) {
