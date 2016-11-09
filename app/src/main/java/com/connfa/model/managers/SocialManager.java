@@ -70,10 +70,6 @@ public class SocialManager extends EventManager {
         return true;
     }
 
-//    public List<Long> getSocialsDays() {
-//        return mEventDao.selectDistrictDateSafe(Event.SOCIALS_CLASS);
-//    }
-
     public List<Long> getSocialsDays() {
         List<Long> levelIds = preferencesManager.getExpLevels();
         List<Long> trackIds = preferencesManager.getTracks();
