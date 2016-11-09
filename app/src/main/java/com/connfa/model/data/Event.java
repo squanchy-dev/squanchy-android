@@ -25,6 +25,7 @@ public class Event extends AbstractEntity<Long> implements Comparable<Event> {
     public static final int PROGRAM_CLASS = 1;
     public static final int BOFS_CLASS = 2;
     public static final int SOCIALS_CLASS = 3;
+
     private final TimeZone serverTimeZone;
 
     @SerializedName("eventId")
