@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Type extends AbstractEntity<Long> {
+public class Type implements AbstractEntity<Long> {
 
     public static final int NONE = 0;
     public static final int SPEACH = 1;

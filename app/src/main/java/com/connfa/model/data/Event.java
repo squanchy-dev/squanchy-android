@@ -19,7 +19,7 @@ import java.util.TimeZone;
 
 import org.jetbrains.annotations.NotNull;
 
-public class Event extends AbstractEntity<Long> implements Comparable<Event> {
+public class Event implements AbstractEntity<Long>, Comparable<Event> {
 
     //TODO think about better event classes separation
     public static final int PROGRAM_CLASS = 1;

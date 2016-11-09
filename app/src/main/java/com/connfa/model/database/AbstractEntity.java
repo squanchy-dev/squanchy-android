@@ -3,14 +3,11 @@ package com.connfa.model.database;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-public abstract class AbstractEntity<IdClass> {
+public interface AbstractEntity<I> {
 
-    public AbstractEntity() {
-    }
+    I getId();
 
-    public abstract IdClass getId();
+    ContentValues getContentValues();
 
-    public abstract ContentValues getContentValues();
-
-    public abstract void initialize(Cursor theCursor);
+    void initialize(Cursor theCursor);
 }
