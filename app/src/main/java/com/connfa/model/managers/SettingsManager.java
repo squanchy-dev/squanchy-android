@@ -8,7 +8,7 @@ import com.connfa.model.requests.SettingsRequest;
 import com.ls.drupal.AbstractBaseDrupalEntity;
 import com.ls.drupal.DrupalClient;
 
-public class SettingsManager extends SynchronousItemManager<SettingsHolder, Object, String> {
+public class SettingsManager extends SynchronousItemManager<SettingsHolder, String> {
 
     private final PreferencesManager preferencesManager;
 
@@ -18,12 +18,12 @@ public class SettingsManager extends SynchronousItemManager<SettingsHolder, Obje
     }
 
     @Override
-    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client, Object requestParams) {
+    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client) {
         return new SettingsRequest(getContext(), client);
     }
 
     @Override
-    protected String getEntityRequestTag(Object params) {
+    protected String getEntityRequestTag() {
         return "settings";
     }
 

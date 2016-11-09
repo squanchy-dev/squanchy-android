@@ -23,12 +23,12 @@ public class ProgramManager extends EventManager {
     }
 
     @Override
-    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client, Object requestParams) {
+    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client) {
         return new SessionsRequest(getContext(), client);
     }
 
     @Override
-    protected String getEntityRequestTag(Object params) {
+    protected String getEntityRequestTag() {
         return "sessions";
     }
 

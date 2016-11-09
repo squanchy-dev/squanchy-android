@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class PoisManager extends SynchronousItemManager<POI.Holder, Object, String> {
+public class PoisManager extends SynchronousItemManager<POI.Holder, String> {
 
     private POIDao mPOIDao;
 
@@ -22,12 +22,12 @@ public class PoisManager extends SynchronousItemManager<POI.Holder, Object, Stri
     }
 
     @Override
-    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client, Object requestParams) {
+    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client) {
         return new PoisRequest(getContext(), client);
     }
 
     @Override
-    protected String getEntityRequestTag(Object params) {
+    protected String getEntityRequestTag() {
         return "pois";
     }
 

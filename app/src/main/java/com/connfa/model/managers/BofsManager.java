@@ -20,12 +20,12 @@ public class BofsManager extends EventManager {
     }
 
     @Override
-    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client, Object requestParams) {
+    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client) {
         return new BofsRequest(getContext(), client);
     }
 
     @Override
-    protected String getEntityRequestTag(Object params) {
+    protected String getEntityRequestTag() {
         return "bofs";
     }
 

@@ -10,7 +10,7 @@ import com.ls.drupal.DrupalClient;
 
 import java.util.List;
 
-public class LevelsManager extends SynchronousItemManager<Level.Holder, Object, String> {
+public class LevelsManager extends SynchronousItemManager<Level.Holder, String> {
 
     private LevelDao mLevelDao;
 
@@ -20,12 +20,12 @@ public class LevelsManager extends SynchronousItemManager<Level.Holder, Object, 
     }
 
     @Override
-    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client, Object requestParams) {
+    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client) {
         return new LevelsRequest(getContext(), client);
     }
 
     @Override
-    protected String getEntityRequestTag(Object params) {
+    protected String getEntityRequestTag() {
         return "levels";
     }
 

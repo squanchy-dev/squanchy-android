@@ -10,7 +10,7 @@ import com.ls.drupal.DrupalClient;
 
 import java.util.List;
 
-public class TypesManager extends SynchronousItemManager<Type.Holder, Object, String> {
+public class TypesManager extends SynchronousItemManager<Type.Holder, String> {
 
     private TypeDao mTypeDao;
 
@@ -20,12 +20,12 @@ public class TypesManager extends SynchronousItemManager<Type.Holder, Object, St
     }
 
     @Override
-    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client, Object requestParams) {
+    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client) {
         return new TypesRequest(getContext(), client);
     }
 
     @Override
-    protected String getEntityRequestTag(Object params) {
+    protected String getEntityRequestTag() {
         return "types";
     }
 

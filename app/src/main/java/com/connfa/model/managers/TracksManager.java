@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class TracksManager extends SynchronousItemManager<Track.Holder, Object, String> {
+public class TracksManager extends SynchronousItemManager<Track.Holder, String> {
 
     private TrackDao mTrackDao;
 
@@ -24,12 +24,12 @@ public class TracksManager extends SynchronousItemManager<Track.Holder, Object, 
     }
 
     @Override
-    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client, Object requestParams) {
+    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client) {
         return new TracksRequest(getContext(), client);
     }
 
     @Override
-    protected String getEntityRequestTag(Object params) {
+    protected String getEntityRequestTag() {
         return "tracks";
     }
 

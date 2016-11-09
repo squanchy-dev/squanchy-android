@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
-public class FloorPlansManager extends SynchronousItemManager<FloorPlan.Holder, Object, String> {
+public class FloorPlansManager extends SynchronousItemManager<FloorPlan.Holder, String> {
 
     private FloorPlanDao mFloorPlansDAO;
 
@@ -29,12 +29,12 @@ public class FloorPlansManager extends SynchronousItemManager<FloorPlan.Holder, 
     }
 
     @Override
-    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client, Object requestParams) {
+    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client) {
         return new FloorPlansRequest(getContext(), client);
     }
 
     @Override
-    protected String getEntityRequestTag(Object params) {
+    protected String getEntityRequestTag() {
         return "floorPlans";
     }
 

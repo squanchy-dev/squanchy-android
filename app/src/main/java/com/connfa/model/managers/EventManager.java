@@ -11,7 +11,7 @@ import com.ls.drupal.DrupalClient;
 
 import java.util.List;
 
-public class EventManager extends SynchronousItemManager<Event.Holder, Object, String> {
+public class EventManager extends SynchronousItemManager<Event.Holder, String> {
 
     protected EventDao mEventDao;
 
@@ -21,12 +21,12 @@ public class EventManager extends SynchronousItemManager<Event.Holder, Object, S
     }
 
     @Override
-    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client, Object requestParams) {
+    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client) {
         return null;
     }
 
     @Override
-    protected String getEntityRequestTag(Object params) {
+    protected String getEntityRequestTag() {
         return null;
     }
 

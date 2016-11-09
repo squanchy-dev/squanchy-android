@@ -10,7 +10,7 @@ import com.ls.drupal.DrupalClient;
 
 import java.util.List;
 
-public class LocationManager extends SynchronousItemManager<Location.Holder, Object, String> {
+public class LocationManager extends SynchronousItemManager<Location.Holder, String> {
 
     private LocationDao mLocationDao;
 
@@ -20,12 +20,12 @@ public class LocationManager extends SynchronousItemManager<Location.Holder, Obj
     }
 
     @Override
-    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client, Object requestParams) {
+    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client) {
         return new LocationRequest(getContext(), client);
     }
 
     @Override
-    protected String getEntityRequestTag(Object params) {
+    protected String getEntityRequestTag() {
         return "location";
     }
 

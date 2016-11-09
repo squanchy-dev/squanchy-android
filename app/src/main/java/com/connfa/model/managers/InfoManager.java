@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class InfoManager extends SynchronousItemManager<InfoItem.General, Object, String> {
+public class InfoManager extends SynchronousItemManager<InfoItem.General, String> {
 
     private InfoDao infoDAO;
     private final PreferencesManager preferencesManager;
@@ -25,12 +25,12 @@ public class InfoManager extends SynchronousItemManager<InfoItem.General, Object
     }
 
     @Override
-    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client, Object requestParams) {
+    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client) {
         return new InfoRequest(getContext(), client);
     }
 
     @Override
-    protected String getEntityRequestTag(Object params) {
+    protected String getEntityRequestTag() {
         return "info";
     }
 
