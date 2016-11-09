@@ -74,7 +74,7 @@ public class AppDatabaseInfo implements DBInfo, IMigrationTask {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (newVersion > oldVersion) {
-            PreferencesManager.create(context).saveLastUpdateDate(null);
+            PreferencesManager.create(context).clearLastUpdateDate();
             List<String> dbDropList = generateDropQueryList();
             List<String> dbSchemaQueryList = generateCreationQueryList();
 

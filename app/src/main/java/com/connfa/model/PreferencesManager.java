@@ -58,6 +58,10 @@ public class PreferencesManager {
         sharedPreferences.edit().putString(KEY_LAST_UPDATE_DATE, value).apply();
     }
 
+    public void clearLastUpdateDate() {
+        saveLastUpdateDate(null);
+    }
+
     public String getMajorInfoTitle() {
         return sharedPreferences.getString(KEY_INFO_MAJOR_TITLE, null);
     }

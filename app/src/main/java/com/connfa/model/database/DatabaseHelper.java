@@ -30,7 +30,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase theDb, int oldVersion, int newVersion) {
-        PreferencesManager.create(context).saveLastUpdateDate(null);
+        PreferencesManager.create(context).clearLastUpdateDate();
         this.dbInfo.getMigrationTask().onUpgrade(theDb, oldVersion, newVersion);
     }
 
