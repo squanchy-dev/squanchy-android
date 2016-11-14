@@ -29,7 +29,6 @@ import com.connfa.ui.drawer.DrawerMenuItem;
 import com.connfa.utils.DateUtils;
 import com.connfa.utils.KeyboardUtils;
 import com.connfa.utils.ScheduleManager;
-import com.google.android.gms.analytics.GoogleAnalytics;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -72,7 +71,6 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
         analytics = Analytics.from(this);
 
         setContentView(R.layout.ac_main);
-        Model.getInstance().getUpdatesManager().registerUpdateListener(updateReceiver);
 
         initToolbar();
         initNavigationDrawer();
@@ -98,20 +96,25 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
     @Override
     protected void onStart() {
         super.onStart();
-        GoogleAnalytics.getInstance(this).reportActivityStart(this);
+
+        Model.getInstance()
+                .getUpdatesManager()
+                .registerUpdateListener(updateReceiver);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        GoogleAnalytics.getInstance(this).reportActivityStop(this);
+
+        Model.getInstance()
+                .getUpdatesManager()
+                .unregisterUpdateListener(updateReceiver);
     }
 
     @Override
     protected void onDestroy() {
-        Model.getInstance().getUpdatesManager().unregisterUpdateListener(updateReceiver);
-        analytics
-                .sendEvent("Application", getString(R.string.action_close));
+        // TODO remove this?
+        analytics.sendEvent("Application", getString(R.string.action_close));
         super.onDestroy();
     }
 

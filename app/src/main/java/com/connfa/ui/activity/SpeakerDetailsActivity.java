@@ -34,7 +34,6 @@ import com.connfa.ui.view.CircleImageView;
 import com.connfa.ui.view.NotifyingScrollView;
 import com.connfa.utils.DateUtils;
 import com.connfa.utils.WebviewUtils;
-import com.google.android.gms.analytics.GoogleAnalytics;
 
 import java.util.List;
 
@@ -83,19 +82,9 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Model.getInstance().getUpdatesManager().unregisterUpdateListener(updateListener);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        GoogleAnalytics.getInstance(this).reportActivityStart(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        GoogleAnalytics.getInstance(this).reportActivityStop(this);
+        Model.getInstance()
+                .getUpdatesManager()
+                .unregisterUpdateListener(updateListener);
     }
 
     @Override
