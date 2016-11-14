@@ -2,6 +2,7 @@ package com.connfa;
 
 import android.app.Application;
 
+import com.connfa.analytics.CrashlyticsErrorsTree;
 import com.connfa.model.AppDatabaseInfo;
 import com.connfa.model.Model;
 import com.connfa.model.database.LAPIDBRegister;
@@ -27,7 +28,7 @@ public class ConnfaApplication extends Application {
 
         LAPIDBRegister.getInstance().register(this, new AppDatabaseInfo(this));
 
-        Timber.plant(new Timber.DebugTree());
+        setupLogging();
 
         Model.createInstance(this);
 
@@ -49,6 +50,13 @@ public class ConnfaApplication extends Application {
         tracker = GoogleAnalytics
                 .getInstance(this)
                 .newTracker(R.xml.global_tracker);
+    }
+
+    private void setupLogging() {
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        }
+        Timber.plant(new CrashlyticsErrorsTree());
     }
 
     public Tracker getTracker() {
