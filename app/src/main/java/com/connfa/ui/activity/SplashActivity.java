@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
 import com.connfa.R;
-import com.connfa.analytics.AnalyticsManager;
+import com.connfa.analytics.Analytics;
 import com.connfa.model.Model;
 import com.connfa.model.PreferencesManager;
 import com.connfa.model.UpdateCallback;
@@ -26,7 +26,9 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_splash);
-        AnalyticsManager.sendEvent(this, "Application", R.string.action_open);
+
+        Analytics.from(this)
+                .sendEvent("Application", getString(R.string.action_open));
 
         mHandler = new Handler();
         mHandler.postDelayed(new Runnable() {

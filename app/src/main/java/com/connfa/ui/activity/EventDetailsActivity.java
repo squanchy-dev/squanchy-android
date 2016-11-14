@@ -24,7 +24,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.connfa.R;
-import com.connfa.analytics.AnalyticsManager;
+import com.connfa.analytics.Analytics;
 import com.connfa.model.Model;
 import com.connfa.model.PreferencesManager;
 import com.connfa.model.UpdatesManager;
@@ -372,7 +372,12 @@ public class EventDetailsActivity extends StackKeeperActivity {
         if (mIsFavorite) {
             actionId = R.string.action_add_to_favorites;
         }
-        AnalyticsManager.sendEvent(this, R.string.event_category, actionId, mEventId + " " + mEvent.getEventName());
+        Analytics.from(this)
+                .sendEvent(
+                        mEventId + " " + mEvent.getEventName(),
+                        getString(R.string.event_category),
+                        getString(actionId)
+                );
         ReceiverManager.updateFavorites(EventDetailsActivity.this, mEventId, mIsFavorite);
     }
 

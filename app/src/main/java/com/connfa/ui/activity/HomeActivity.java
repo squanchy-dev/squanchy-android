@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.connfa.R;
-import com.connfa.analytics.AnalyticsManager;
+import com.connfa.analytics.Analytics;
 import com.connfa.model.Model;
 import com.connfa.model.UpdatesManager;
 import com.connfa.model.data.Level;
@@ -39,28 +39,28 @@ import java.util.TimeZone;
 
 public class HomeActivity extends StateActivity implements FilterDialog.OnFilterApplied {
 
+    private Analytics analytics;
+
     private DrawerManager mFrManager;
     private DrawerAdapter mAdapter;
     private String mPresentTitle;
     private int mSelectedItem = 0;
-    private int mLastSelectedItem = 0;
     private boolean isIntentHandled = false;
 
     private Toolbar mToolbar;
     private DrawerLayout mDrawerLayout;
 
     public FilterDialog mFilterDialog;
-    public boolean mIsDrawerItemClicked;
+    private boolean mIsDrawerItemClicked;
 
     private UpdatesManager.DataUpdatedListener updateReceiver = new UpdatesManager.DataUpdatedListener() {
         @Override
         public void onDataUpdated(List<Integer> requestIds) {
-//            closeFilterDialog();
             initFilterDialog();
         }
     };
 
-    public static void startThisActivity(Activity activity) {
+    static void startThisActivity(Activity activity) {
         Intent intent = new Intent(activity, HomeActivity.class);
         activity.startActivity(intent);
     }
@@ -68,6 +68,9 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        analytics = Analytics.from(this);
+
         setContentView(R.layout.ac_main);
         Model.getInstance().getUpdatesManager().registerUpdateListener(updateReceiver);
 
@@ -107,7 +110,8 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
     @Override
     protected void onDestroy() {
         Model.getInstance().getUpdatesManager().unregisterUpdateListener(updateReceiver);
-        AnalyticsManager.sendEvent(this, "Application", R.string.action_close);
+        analytics
+                .sendEvent("Application", getString(R.string.action_close));
         super.onDestroy();
     }
 
@@ -259,14 +263,13 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
             mAdapter.setSelectedPos(mSelectedItem);
             mAdapter.notifyDataSetChanged();
 
-            AnalyticsManager.sendEvent(this, mPresentTitle + " screen", R.string.action_open);
+            analytics.sendEvent(mPresentTitle + " screen", this.getString(R.string.action_open));
         }
-        mLastSelectedItem = mSelectedItem;
     }
 
     private void initFragmentManager() {
         mFrManager = DrawerManager.getInstance(getSupportFragmentManager(), R.id.mainFragment);
-        AnalyticsManager.sendEvent(this, getString(R.string.Sessions) + " screen", R.string.action_open);
+        analytics.sendEvent(getString(R.string.Sessions) + " screen", getString(R.string.action_open));
         mFrManager.setFragment(DrawerMenu.DrawerItem.PROGRAM);
     }
 

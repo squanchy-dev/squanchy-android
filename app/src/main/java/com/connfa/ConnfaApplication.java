@@ -2,13 +2,12 @@ package com.connfa;
 
 import android.app.Application;
 
+import com.connfa.analytics.Analytics;
 import com.connfa.analytics.CrashlyticsErrorsTree;
 import com.connfa.model.AppDatabaseInfo;
 import com.connfa.model.Model;
 import com.connfa.model.database.LAPIDBRegister;
 import com.crashlytics.android.Crashlytics;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Tracker;
 import com.ls.drupal.DrupalClient;
 import com.ls.http.base.BaseRequest;
 import com.ls.util.image.DrupalImageView;
@@ -20,15 +19,13 @@ import timber.log.Timber;
 
 public class ConnfaApplication extends Application {
 
-    private Tracker tracker;
-
     @Override
     public void onCreate() {
         super.onCreate();
 
-        LAPIDBRegister.getInstance().register(this, new AppDatabaseInfo(this));
+        setupTracking();
 
-        setupLogging();
+        LAPIDBRegister.getInstance().register(this, new AppDatabaseInfo(this));
 
         Model.createInstance(this);
 
@@ -40,6 +37,12 @@ public class ConnfaApplication extends Application {
         );
 
         DrupalImageView.setupSharedClient(client);
+    }
+
+    private void setupTracking() {
+        Analytics analytics = Analytics.from(this);
+        analytics.enableActivityLifecycleLogging();
+        analytics.enableExceptionLogging();
 
         TwitterAuthConfig authConfig = new TwitterAuthConfig(
                 getString(R.string.api_value_twitter_api_key),
@@ -47,19 +50,9 @@ public class ConnfaApplication extends Application {
         );
         Fabric.with(this, new Crashlytics(), new Twitter(authConfig));
 
-        tracker = GoogleAnalytics
-                .getInstance(this)
-                .newTracker(R.xml.global_tracker);
-    }
-
-    private void setupLogging() {
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
         Timber.plant(new CrashlyticsErrorsTree());
-    }
-
-    public Tracker getTracker() {
-        return tracker;
     }
 }
