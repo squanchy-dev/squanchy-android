@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.connfa.R;
+import com.connfa.analytics.AnalyticsManager;
 import com.connfa.model.EventGenerator;
 import com.connfa.model.PreferencesManager;
 import com.connfa.model.data.Event;
@@ -21,7 +22,6 @@ import com.connfa.ui.adapter.item.SimpleTimeRangeCreator;
 import com.connfa.ui.adapter.item.TimeRangeItem;
 import com.connfa.ui.drawer.DrawerManager;
 import com.connfa.ui.receiver.ReceiverManager;
-import com.connfa.utils.AnalyticsManager;
 import com.connfa.utils.DateUtils;
 
 import java.util.ArrayList;

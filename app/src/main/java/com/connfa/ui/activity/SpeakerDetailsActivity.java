@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.connfa.R;
+import com.connfa.analytics.AnalyticsManager;
 import com.connfa.model.Model;
 import com.connfa.model.UpdatesManager;
 import com.connfa.model.dao.EventDao;
@@ -31,7 +32,6 @@ import com.connfa.model.data.SpeakerDetailsEvent;
 import com.connfa.model.managers.SpeakerManager;
 import com.connfa.ui.view.CircleImageView;
 import com.connfa.ui.view.NotifyingScrollView;
-import com.connfa.utils.AnalyticsManager;
 import com.connfa.utils.DateUtils;
 import com.connfa.utils.WebviewUtils;
 import com.google.android.gms.analytics.GoogleAnalytics;

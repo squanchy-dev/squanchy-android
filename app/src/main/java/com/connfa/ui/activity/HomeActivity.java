@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.connfa.R;
+import com.connfa.analytics.AnalyticsManager;
 import com.connfa.model.Model;
 import com.connfa.model.UpdatesManager;
 import com.connfa.model.data.Level;
@@ -25,7 +26,6 @@ import com.connfa.ui.drawer.DrawerAdapter;
 import com.connfa.ui.drawer.DrawerManager;
 import com.connfa.ui.drawer.DrawerMenu;
 import com.connfa.ui.drawer.DrawerMenuItem;
-import com.connfa.utils.AnalyticsManager;
 import com.connfa.utils.DateUtils;
 import com.connfa.utils.KeyboardUtils;
 import com.connfa.utils.ScheduleManager;

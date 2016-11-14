@@ -24,6 +24,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.connfa.R;
+import com.connfa.analytics.AnalyticsManager;
 import com.connfa.model.Model;
 import com.connfa.model.PreferencesManager;
 import com.connfa.model.UpdatesManager;
@@ -36,7 +37,6 @@ import com.connfa.model.managers.SpeakerManager;
 import com.connfa.ui.receiver.ReceiverManager;
 import com.connfa.ui.view.CircleImageView;
 import com.connfa.ui.view.NotifyingScrollView;
-import com.connfa.utils.AnalyticsManager;
 import com.connfa.utils.DateUtils;
 import com.connfa.utils.ScheduleManager;
 import com.connfa.utils.WebviewUtils;

@@ -15,6 +15,7 @@ import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 
 import io.fabric.sdk.android.Fabric;
+import timber.log.Timber;
 
 public class ConnfaApplication extends Application {
 
@@ -25,6 +26,8 @@ public class ConnfaApplication extends Application {
         super.onCreate();
 
         LAPIDBRegister.getInstance().register(this, new AppDatabaseInfo(this));
+
+        Timber.plant(new Timber.DebugTree());
 
         Model.createInstance(this);
 

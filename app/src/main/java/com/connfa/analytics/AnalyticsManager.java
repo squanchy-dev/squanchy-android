@@ -1,4 +1,4 @@
-package com.connfa.utils;
+package com.connfa.analytics;
 
 import android.app.Activity;
 
