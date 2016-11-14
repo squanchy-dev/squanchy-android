@@ -4,17 +4,15 @@ buildscript {
     }
 
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.+'
+        classpath 'io.fabric.tools:gradle:1.22.0'
     }
 }
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
-apply plugin: 'com.google.gms.google-services'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
-
 
 android {
     compileSdkVersion Integer.parseInt(project.COMPILE_SDK_VERSION)
@@ -24,6 +22,7 @@ android {
         applicationId 'com.ls.drupalconapp'
         minSdkVersion Integer.parseInt(project.MIN_SDK_VERSION)
         targetSdkVersion Integer.parseInt(project.TARGET_SDK_VERSION)
+
         versionCode Integer.parseInt(project.VERSION_CODE)
         versionName project.VERSION_NAME
         multiDexEnabled true
@@ -45,29 +44,31 @@ android {
     }
 
     dexOptions {
-        preDexLibraries = false
+        // preDexLibraries = false      TODO can we remove this?
         javaMaxHeapSize "4g"
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':ParallaxScroll')
     compile project(':drupalSDK')
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.1@aar') {
-        transitive = true;
+
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.5') {
+        transitive = true
     }
     compile 'com.github.dmytrodanylyk.shadow-layout:library:1.0.2'
-    compile 'com.android.support:support-v13:23.2.1'
-    compile 'com.android.support:appcompat-v7:23.2.1'
-    compile 'com.google.android.gms:play-services-analytics:9.0.0'
-    compile 'com.google.android.gms:play-services-maps:9.0.0'
-    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.android.support:support-v13:25.0.0'
+    compile 'com.android.support:appcompat-v7:25.0.0'
+    compile 'com.google.android.gms:play-services-analytics:9.8.0'
+    compile 'com.google.android.gms:play-services-maps:9.8.0'
+    compile 'com.google.code.gson:gson:2.8.0'
     compile 'org.jetbrains:annotations:13.0'
     compile 'com.jpardogo.materialtabstrip:library:1.0.8'
-    compile 'com.android.support:support-v4:23.2.1'
-    compile('com.twitter.sdk.android:twitter:1.13.1@aar') {
-        transitive = true;
+    compile 'com.android.support:support-v4:25.0.0'
+    compile('com.twitter.sdk.android:twitter:2.1.1') {
+        transitive = true
     }
     compile 'com.android.support:multidex:1.0.1'
 }
+
+apply plugin: 'com.google.gms.google-services'
