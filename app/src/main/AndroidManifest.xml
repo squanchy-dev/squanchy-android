@@ -46,11 +46,6 @@
       android:screenOrientation="portrait" />
 
     <activity
-      android:name="com.connfa.ui.activity.AboutActivity"
-      android:theme="@style/Theme.DrupalCon.About"
-      android:screenOrientation="portrait" />
-
-    <activity
       android:name="com.connfa.ui.activity.EventDetailsActivity"
       android:theme="@style/Theme.DrupalCon.Event"
       android:screenOrientation="portrait" />
