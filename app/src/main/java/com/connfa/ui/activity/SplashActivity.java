@@ -28,7 +28,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.ac_splash);
 
         Analytics.from(this)
-                .sendEvent("Application", getString(R.string.action_open));
+                .trackEvent("Application", getString(R.string.action_open));
 
         mHandler = new Handler();
         mHandler.postDelayed(new Runnable() {

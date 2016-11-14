@@ -373,7 +373,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
             actionId = R.string.action_add_to_favorites;
         }
         Analytics.from(this)
-                .sendEvent(
+                .trackEvent(
                         getString(R.string.event_category), getString(actionId), mEventId + " " + mEvent.getEventName()
                 );
         ReceiverManager.updateFavorites(EventDetailsActivity.this, mEventId, mIsFavorite);

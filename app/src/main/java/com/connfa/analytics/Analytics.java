@@ -30,11 +30,11 @@ public class Analytics {
         this.crashlytics = crashlytics;
     }
 
-    public void sendEvent(String category, String action) {
-        sendEvent(category, action, null);
+    public void trackEvent(String category, String action) {
+        trackEvent(category, action, null);
     }
 
-    public void sendEvent(String category, String action, @Nullable String label) {
+    public void trackEvent(String category, String action, @Nullable String label) {
         trackOnGoogleAnalytics(category, action, label);
         trackOnCrashlytics(action);
     }

@@ -105,7 +105,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
         }
 
         Analytics.from(this)
-                .sendEvent(
+                .trackEvent(
                         getString(R.string.speaker_category), getString(R.string.action_open), mSpeakerId + " " + mSpeakerName
                 );
     }

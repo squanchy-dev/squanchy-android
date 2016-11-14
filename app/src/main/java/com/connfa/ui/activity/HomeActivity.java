@@ -114,7 +114,7 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
     @Override
     protected void onDestroy() {
         // TODO remove this?
-        analytics.sendEvent("Application", getString(R.string.action_close));
+        analytics.trackEvent("Application", getString(R.string.action_close));
         super.onDestroy();
     }
 
@@ -266,13 +266,13 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
             mAdapter.setSelectedPos(mSelectedItem);
             mAdapter.notifyDataSetChanged();
 
-            analytics.sendEvent(mPresentTitle + " screen", this.getString(R.string.action_open));
+            analytics.trackEvent(mPresentTitle + " screen", this.getString(R.string.action_open));
         }
     }
 
     private void initFragmentManager() {
         mFrManager = DrawerManager.getInstance(getSupportFragmentManager(), R.id.mainFragment);
-        analytics.sendEvent(getString(R.string.Sessions) + " screen", getString(R.string.action_open));
+        analytics.trackEvent(getString(R.string.Sessions) + " screen", getString(R.string.action_open));
         mFrManager.setFragment(DrawerMenu.DrawerItem.PROGRAM);
     }
 

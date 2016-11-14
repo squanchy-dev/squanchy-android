@@ -31,7 +31,7 @@ public class AboutDetailsActivity extends StateActivity {
         initToolbar(aboutTitle);
 
         Analytics.from(this)
-                .sendEvent(
+                .trackEvent(
                         getString(R.string.about_category), getString(R.string.action_open), id + " " + aboutTitle
                 );
     }
