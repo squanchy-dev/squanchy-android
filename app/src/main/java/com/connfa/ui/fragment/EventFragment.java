@@ -183,9 +183,7 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
             String eventName = item.getEvent().getName();
             Analytics.from(getActivity())
                     .sendEvent(
-                            eventId + " " + eventName,
-                            getString(R.string.event_category),
-                            getString(R.string.action_open)
+                            getString(R.string.event_category), getString(R.string.action_open), eventId + " " + eventName
                     );
             EventDetailsActivity.startThisActivity(getActivity(), item.getEvent().getId(), day);
         }

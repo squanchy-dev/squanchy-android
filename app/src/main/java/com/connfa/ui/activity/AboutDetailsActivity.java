@@ -32,9 +32,7 @@ public class AboutDetailsActivity extends StateActivity {
 
         Analytics.from(this)
                 .sendEvent(
-                        id + " " + aboutTitle,
-                        getString(R.string.about_category),
-                        getString(R.string.action_open)
+                        getString(R.string.about_category), getString(R.string.action_open), id + " " + aboutTitle
                 );
     }
 

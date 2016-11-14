@@ -3,7 +3,6 @@ package com.connfa;
 import android.app.Application;
 
 import com.connfa.analytics.Analytics;
-import com.connfa.analytics.CrashlyticsErrorsTree;
 import com.connfa.model.AppDatabaseInfo;
 import com.connfa.model.Model;
 import com.connfa.model.database.LAPIDBRegister;
@@ -40,19 +39,22 @@ public class ConnfaApplication extends Application {
     }
 
     private void setupTracking() {
+        setupFabric();
+
         Analytics analytics = Analytics.from(this);
         analytics.enableActivityLifecycleLogging();
         analytics.enableExceptionLogging();
 
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        }
+    }
+
+    private void setupFabric() {
         TwitterAuthConfig authConfig = new TwitterAuthConfig(
                 getString(R.string.api_value_twitter_api_key),
                 getString(R.string.api_value_twitter_secret)
         );
         Fabric.with(this, new Crashlytics(), new Twitter(authConfig));
-
-        if (BuildConfig.DEBUG) {
-            Timber.plant(new Timber.DebugTree());
-        }
-        Timber.plant(new CrashlyticsErrorsTree());
     }
 }

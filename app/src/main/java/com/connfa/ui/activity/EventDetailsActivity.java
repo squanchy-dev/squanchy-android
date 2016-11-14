@@ -374,9 +374,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
         }
         Analytics.from(this)
                 .sendEvent(
-                        mEventId + " " + mEvent.getEventName(),
-                        getString(R.string.event_category),
-                        getString(actionId)
+                        getString(R.string.event_category), getString(actionId), mEventId + " " + mEvent.getEventName()
                 );
         ReceiverManager.updateFavorites(EventDetailsActivity.this, mEventId, mIsFavorite);
     }
