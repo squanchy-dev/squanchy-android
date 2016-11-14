@@ -52,12 +52,12 @@ public class LocationFragment extends Fragment implements CustomMapFragment.OnAc
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Model.instance().getUpdatesManager().unregisterUpdateListener(updateListener);
+        Model.getInstance().getUpdatesManager().unregisterUpdateListener(updateListener);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        Model.instance().getUpdatesManager().registerUpdateListener(updateListener);
+        Model.getInstance().getUpdatesManager().registerUpdateListener(updateListener);
         replaceMapFragment();
     }
 
@@ -70,7 +70,7 @@ public class LocationFragment extends Fragment implements CustomMapFragment.OnAc
     private class LoadLocations extends AsyncTask<Void, Void, List<Location>> {
         @Override
         protected List<Location> doInBackground(Void... params) {
-            LocationManager locationManager = Model.instance().getLocationManager();
+            LocationManager locationManager = Model.getInstance().getLocationManager();
             return locationManager.getLocations();
         }
 

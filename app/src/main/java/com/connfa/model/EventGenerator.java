@@ -42,10 +42,10 @@ public class EventGenerator {
 
     public EventGenerator(Context context) {
         this.mContext = context;
-        this.mEventManager = Model.instance().getEventManager();
-        this.mBofsManager = Model.instance().getBofsManager();
-        this.mSocialManager = Model.instance().getSocialManager();
-        this.mProgramManager = Model.instance().createProgramManager(context);
+        this.mEventManager = Model.getInstance().getEventManager();
+        this.mBofsManager = Model.getInstance().getBofsManager();
+        this.mSocialManager = Model.getInstance().getSocialManager();
+        this.mProgramManager = Model.getInstance().createProgramManager(context);
     }
 
     public List<EventListItem> generate(long day, int eventClass, @NotNull EventItemCreator eventItemCreator) {
@@ -191,8 +191,8 @@ public class EventGenerator {
     }
 
     private List<EventListItem> fetchEventItems(List<Event> events) {
-        SpeakerManager speakerManager = Model.instance().getSpeakerManager();
-        TracksManager tracksManager = Model.instance().getTracksManager();
+        SpeakerManager speakerManager = Model.getInstance().getSpeakerManager();
+        TracksManager tracksManager = Model.getInstance().getTracksManager();
         List<EventListItem> result = new ArrayList<>();
 
         for (Event event : events) {
@@ -221,7 +221,7 @@ public class EventGenerator {
 
     private List<EventListItem> generateEventItems(List<EventListItem> eventListItems,
                                                    EventItemCreator eventItemCreator) {
-        TracksManager tracksManager = Model.instance().getTracksManager();
+        TracksManager tracksManager = Model.getInstance().getTracksManager();
         List<EventListItem> result = new ArrayList<>();
 
         if (eventListItems.size() > 0) {

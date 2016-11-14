@@ -71,8 +71,8 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_speaker_details);
 
-        Model.instance().getUpdatesManager().registerUpdateListener(updateListener);
-        mSpeakerManager = Model.instance().getSpeakerManager();
+        Model.getInstance().getUpdatesManager().registerUpdateListener(updateListener);
+        mSpeakerManager = Model.getInstance().getSpeakerManager();
 
         initData();
         initToolbar();
@@ -83,7 +83,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Model.instance().getUpdatesManager().unregisterUpdateListener(updateListener);
+        Model.getInstance().getUpdatesManager().unregisterUpdateListener(updateListener);
     }
 
     @Override

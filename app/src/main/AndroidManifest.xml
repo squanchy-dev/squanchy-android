@@ -14,7 +14,7 @@
     android:required="true" />
 
     <application
-        android:name="com.connfa.App"
+      android:name="com.connfa.ConnfaApplication"
         android:allowBackup="true"
         android:fullBackupContent="false"
         android:icon="@drawable/ic_launcher"

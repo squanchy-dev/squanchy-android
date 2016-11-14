@@ -49,7 +49,7 @@ public class AboutActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_about);
-        Model.instance().getUpdatesManager().registerUpdateListener(updateListener);
+        Model.getInstance().getUpdatesManager().registerUpdateListener(updateListener);
         initToolbar();
         initViews();
     }
@@ -57,7 +57,7 @@ public class AboutActivity extends ActionBarActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Model.instance().getUpdatesManager().unregisterUpdateListener(updateListener);
+        Model.getInstance().getUpdatesManager().unregisterUpdateListener(updateListener);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class AboutActivity extends ActionBarActivity {
     }
 
     private void initViews() {
-        InfoManager infoManager = Model.instance().getInfoManager();
+        InfoManager infoManager = Model.getInstance().getInfoManager();
         infoItems = infoManager.getInfo();
 
         ListView listMenu = (ListView) findViewById(R.id.listView);

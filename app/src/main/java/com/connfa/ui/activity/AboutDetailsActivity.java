@@ -41,7 +41,7 @@ public class AboutDetailsActivity extends StateActivity {
         long id = getIntent().getLongExtra(EXTRA_DETAILS_ID, -1);
         initView(aboutContent);
         initToolbar(aboutTitle);
-        Model.instance().getUpdatesManager().registerUpdateListener(updateListener);
+        Model.getInstance().getUpdatesManager().registerUpdateListener(updateListener);
 
         AnalyticsManager.sendEvent(this, R.string.about_category, R.string.action_open, id + " " + aboutTitle);
     }
@@ -61,7 +61,7 @@ public class AboutDetailsActivity extends StateActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Model.instance().getUpdatesManager().unregisterUpdateListener(updateListener);
+        Model.getInstance().getUpdatesManager().unregisterUpdateListener(updateListener);
     }
 
     @Override

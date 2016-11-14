@@ -2,14 +2,14 @@ package com.connfa.utils;
 
 import android.app.Activity;
 
-import com.connfa.App;
+import com.connfa.ConnfaApplication;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 public class AnalyticsManager {
 
     public static void sendEvent(Activity activity, String category, int actionId) {
-        Tracker t = ((App) activity.getApplication()).getTracker();
+        Tracker t = ((ConnfaApplication) activity.getApplication()).getTracker();
         // Build and send an Event.
         t.send(new HitBuilders.EventBuilder()
                 .setCategory(category)
@@ -19,7 +19,7 @@ public class AnalyticsManager {
     }
 
     public static void sendEvent(Activity activity, int categoryId, int actionId, long id) {
-        Tracker t = ((App) activity.getApplication()).getTracker();
+        Tracker t = ((ConnfaApplication) activity.getApplication()).getTracker();
         // Build and send an Event.
         t.send(new HitBuilders.EventBuilder()
                 .setCategory(activity.getString(categoryId))
@@ -29,7 +29,7 @@ public class AnalyticsManager {
     }
 
     public static void sendEvent(Activity activity, int categoryId, int actionId, String title) {
-        Tracker t = ((App) activity.getApplication()).getTracker();
+        Tracker t = ((ConnfaApplication) activity.getApplication()).getTracker();
         // Build and send an Event.
         t.send(new HitBuilders.EventBuilder()
                 .setCategory(activity.getString(categoryId))

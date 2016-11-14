@@ -48,7 +48,7 @@ public class AboutFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Model.instance().getUpdatesManager().registerUpdateListener(updateListener);
+        Model.getInstance().getUpdatesManager().registerUpdateListener(updateListener);
     }
 
     @Nullable
@@ -61,7 +61,7 @@ public class AboutFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        Model.instance().getUpdatesManager().unregisterUpdateListener(updateListener);
+        Model.getInstance().getUpdatesManager().unregisterUpdateListener(updateListener);
         super.onDestroy();
     }
 
@@ -85,7 +85,7 @@ public class AboutFragment extends Fragment {
     }
 
     private void reloadData() {
-        InfoManager infoManager = Model.instance().getInfoManager();
+        InfoManager infoManager = Model.getInstance().getInfoManager();
         infoItems = infoManager.getInfo();
 
         if (infoItems == null || infoItems.isEmpty()) {

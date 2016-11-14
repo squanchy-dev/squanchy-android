@@ -16,7 +16,7 @@ import com.twitter.sdk.android.core.TwitterAuthConfig;
 
 import io.fabric.sdk.android.Fabric;
 
-public class App extends Application {
+public class ConnfaApplication extends Application {
 
     private Tracker tracker;
 
@@ -26,11 +26,11 @@ public class App extends Application {
 
         LAPIDBRegister.getInstance().register(this, new AppDatabaseInfo(this));
 
-        Model.instance(this);
+        Model.createInstance(this);
 
         DrupalClient client = new DrupalClient(
                 null,
-                Model.instance().createNewQueue(getApplicationContext()),
+                Model.getInstance().createNewQueue(getApplicationContext()),
                 BaseRequest.RequestFormat.JSON,
                 null
         );

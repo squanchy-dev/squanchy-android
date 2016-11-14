@@ -62,14 +62,14 @@ public class SpeakersListFragment extends Fragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Model.instance().getUpdatesManager().registerUpdateListener(updateListener);
+        Model.getInstance().getUpdatesManager().registerUpdateListener(updateListener);
         initView();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Model.instance().getUpdatesManager().unregisterUpdateListener(updateListener);
+        Model.getInstance().getUpdatesManager().unregisterUpdateListener(updateListener);
     }
 
     @Override
@@ -121,7 +121,7 @@ public class SpeakersListFragment extends Fragment
         new AsyncTask<Void, Void, List<Speaker>>() {
             @Override
             protected List<Speaker> doInBackground(Void... params) {
-                SpeakerManager manager = Model.instance().getSpeakerManager();
+                SpeakerManager manager = Model.getInstance().getSpeakerManager();
                 return manager.getSpeakers();
             }
 

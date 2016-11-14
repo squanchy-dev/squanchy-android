@@ -31,7 +31,7 @@ public class FileUtils {
             }
 
             out = new FileOutputStream(file);
-            return data.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
+            return data.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap createInstance
             // PNG is a lossless format, the compression factor (100) is ignored
         } catch (Exception e) {
             e.printStackTrace();

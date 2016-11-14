@@ -47,30 +47,11 @@ public class Model {
 
     private static Model instance;
 
-    public static Model instance(Context theContext) {
-        if (instance == null) {
-            instance = new Model(theContext);
-        }
-
-        return instance;
-    }
-
-    public static Model instance() {
-        if (instance == null) {
-            throw new IllegalStateException("Called method on uninitialized model");
-        }
-
-        return instance;
-    }
-
     private DrupalClient client;
     private LoginManager loginManager;
     private CookieStore cookieStore;
     private RequestQueue queue;
 
-    /**
-     * Managers
-     */
     private TypesManager typesManager;
     private LevelsManager levelsManager;
     private TracksManager tracksManager;
@@ -86,6 +67,21 @@ public class Model {
     private FavoriteManager favoriteManager;
     private SettingsManager settingsManager;
     private FloorPlansManager floorPlansManager;
+
+    public static void createInstance(Context context) {
+        if (instance != null) {
+            throw new IllegalStateException("Instance already initialized.");
+        }
+        instance = new Model(context);
+    }
+
+    public static Model getInstance() {
+        if (instance == null) {
+            throw new IllegalStateException("Instance not initialized yet. Make sure you call createInstance() first.");
+        }
+
+        return instance;
+    }
 
     public DrupalClient getClient() {
         return client;
@@ -172,7 +168,7 @@ public class Model {
     }
 
     /**
-     * NOTE: login is performed in synchroneus way so you must never call it from UI thread.
+     * NOTE: login is performed in synchronous way so you must never call it from UI thread.
      */
     public ResponseData performLogin(String userName, String password) {
         return this.loginManager.login(userName, password, queue);

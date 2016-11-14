@@ -68,7 +68,7 @@ public class TracksManager extends SynchronousItemManager<Track.Holder, String> 
     }
 
     public List<Level> getLevels() {
-        LevelsManager levelManager = Model.instance().getLevelsManager();
+        LevelsManager levelManager = Model.getInstance().getLevelsManager();
 
         List<Level> levels = levelManager.getLevels();
         Collections.sort(levels, new Comparator<Level>() {

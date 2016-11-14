@@ -69,7 +69,7 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_main);
-        Model.instance().getUpdatesManager().registerUpdateListener(updateReceiver);
+        Model.getInstance().getUpdatesManager().registerUpdateListener(updateReceiver);
 
         initToolbar();
         initNavigationDrawer();
@@ -106,7 +106,7 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
 
     @Override
     protected void onDestroy() {
-        Model.instance().getUpdatesManager().unregisterUpdateListener(updateReceiver);
+        Model.getInstance().getUpdatesManager().unregisterUpdateListener(updateReceiver);
         AnalyticsManager.sendEvent(this, "Application", R.string.action_close);
         super.onDestroy();
     }
@@ -178,7 +178,7 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
         new AsyncTask<Void, Void, List<EventListItem>>() {
             @Override
             protected List<EventListItem> doInBackground(Void... params) {
-                TracksManager tracksManager = Model.instance().getTracksManager();
+                TracksManager tracksManager = Model.getInstance().getTracksManager();
                 List<Track> trackList = tracksManager.getTracks();
                 List<Level> levelList = tracksManager.getLevels();
 

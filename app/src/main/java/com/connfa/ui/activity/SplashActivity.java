@@ -60,7 +60,7 @@ public class SplashActivity extends AppCompatActivity {
         new AsyncTask<Void, Void, UpdatesManager>() {
             @Override
             protected UpdatesManager doInBackground(Void... params) {
-                UpdatesManager manager = Model.instance().getUpdatesManager();
+                UpdatesManager manager = Model.getInstance().getUpdatesManager();
                 manager.checkForDatabaseUpdate();
                 return manager;
             }

@@ -140,7 +140,7 @@ public class UpdatesManager {
         if (updateIds == null || updateIds.isEmpty()) {
             return new LinkedList<>();
         }
-        ILAPIDBFacade facade = Model.instance().getFacade();
+        ILAPIDBFacade facade = Model.getInstance().getFacade();
         try {
             facade.open();
             facade.beginTransactions();
@@ -170,51 +170,51 @@ public class UpdatesManager {
         SynchronousItemManager manager;
         switch (id) {
             case SETTINGS_REQUEST_ID:
-                manager = Model.instance().getSettingsManager();
+                manager = Model.getInstance().getSettingsManager();
                 break;
 
             case TYPES_REQUEST_ID:
-                manager = Model.instance().getTypesManager();
+                manager = Model.getInstance().getTypesManager();
                 break;
 
             case LEVELS_REQUEST_ID:
-                manager = Model.instance().getLevelsManager();
+                manager = Model.getInstance().getLevelsManager();
                 break;
 
             case TRACKS_REQUEST_ID:
-                manager = Model.instance().getTracksManager();
+                manager = Model.getInstance().getTracksManager();
                 break;
 
             case SPEAKERS_REQUEST_ID:
-                manager = Model.instance().getSpeakerManager();
+                manager = Model.getInstance().getSpeakerManager();
                 break;
 
             case LOCATIONS_REQUEST_ID:
-                manager = Model.instance().getLocationManager();
+                manager = Model.getInstance().getLocationManager();
                 break;
 
             case PROGRAMS_REQUEST_ID:
-                manager = Model.instance().getProgramManager();
+                manager = Model.getInstance().getProgramManager();
                 break;
 
             case BOFS_REQUEST_ID:
-                manager = Model.instance().getBofsManager();
+                manager = Model.getInstance().getBofsManager();
                 break;
 
             case SOCIALS_REQUEST_ID:
-                manager = Model.instance().getSocialManager();
+                manager = Model.getInstance().getSocialManager();
                 break;
 
             case POIS_REQUEST_ID:
-                manager = Model.instance().getPoisManager();
+                manager = Model.getInstance().getPoisManager();
                 break;
 
             case INFO_REQUEST_ID:
-                manager = Model.instance().getInfoManager();
+                manager = Model.getInstance().getInfoManager();
                 break;
 
             case FLOOR_PLANS_REQUEST_ID:
-                manager = Model.instance().getFloorPlansManager();
+                manager = Model.getInstance().getFloorPlansManager();
                 break;
 
             default:
@@ -234,7 +234,7 @@ public class UpdatesManager {
     }
 
     public void checkForDatabaseUpdate() {
-        ILAPIDBFacade facade = Model.instance().getFacade();
+        ILAPIDBFacade facade = Model.getInstance().getFacade();
         facade.open();
         facade.close();
     }

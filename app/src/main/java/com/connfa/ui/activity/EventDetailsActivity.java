@@ -91,7 +91,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
         setContentView(R.layout.ac_event_details);
 
         receiverManager.register(this);
-        Model.instance().getUpdatesManager().registerUpdateListener(updateListener);
+        Model.getInstance().getUpdatesManager().registerUpdateListener(updateListener);
         preferencesManager = PreferencesManager.create(this);
 
         initData();
@@ -132,7 +132,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
     protected void onDestroy() {
         super.onDestroy();
         receiverManager.unregister(this);
-        Model.instance().getUpdatesManager().unregisterUpdateListener(updateListener);
+        Model.getInstance().getUpdatesManager().unregisterUpdateListener(updateListener);
     }
 
     private void initData() {
@@ -174,11 +174,11 @@ public class EventDetailsActivity extends StackKeeperActivity {
         new AsyncTask<Void, Void, EventDetailsEvent>() {
             @Override
             protected EventDetailsEvent doInBackground(Void... params) {
-                SpeakerManager speakerManager = Model.instance().getSpeakerManager();
+                SpeakerManager speakerManager = Model.getInstance().getSpeakerManager();
                 mSpeakerList.clear();
                 mSpeakerList.addAll(speakerManager.getSpeakersByEventId(mEventId));
 
-                EventManager eventManager = Model.instance().getEventManager();
+                EventManager eventManager = Model.getInstance().getEventManager();
                 return eventManager.getEventById(mEventId);
             }
 

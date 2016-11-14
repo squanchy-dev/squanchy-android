@@ -51,12 +51,12 @@ public class FloorPlanFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Model.instance().getUpdatesManager().registerUpdateListener(updateListener);
+        Model.getInstance().getUpdatesManager().registerUpdateListener(updateListener);
     }
 
     @Override
     public void onDestroy() {
-        Model.instance().getUpdatesManager().unregisterUpdateListener(updateListener);
+        Model.getInstance().getUpdatesManager().unregisterUpdateListener(updateListener);
         super.onDestroy();
     }
 
@@ -106,7 +106,7 @@ public class FloorPlanFragment extends Fragment {
 
         @Override
         protected List<FloorPlan> doInBackground(Void... params) {
-            return Model.instance().getFloorPlansManager().getFloorPlans();
+            return Model.getInstance().getFloorPlansManager().getFloorPlans();
         }
 
         @Override
@@ -146,7 +146,7 @@ public class FloorPlanFragment extends Fragment {
 
         @Override
         protected Drawable doInBackground(FloorPlan... params) {
-            Bitmap planImage = Model.instance().getFloorPlansManager().getImageForPlan(params[0],
+            Bitmap planImage = Model.getInstance().getFloorPlansManager().getImageForPlan(params[0],
                     REDCOMMENDED_FLOOR_IMAGE_WIDTH, REDCOMMENDED_FLOOR_IMAGE_HEIGHT);
             if (planImage != null) {
                 return new BitmapDrawable(null, planImage);
