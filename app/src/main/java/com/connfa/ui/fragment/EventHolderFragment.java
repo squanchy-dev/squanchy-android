@@ -111,7 +111,7 @@ public class EventHolderFragment extends Fragment {
 //    @Override
 //    public void onActivityCreated(Bundle savedInstanceState) {
 //        super.onActivityCreated(savedInstanceState);
-//        Model.instance().getUpdatesManager().registerUpdateListener(updateReceiver);
+//        Model.createInstance().getUpdatesManager().registerUpdateListener(updateReceiver);
 //        favoriteReceiver.register(getActivity());
 //
 //        initData();
@@ -123,14 +123,14 @@ public class EventHolderFragment extends Fragment {
 //    @Override
 //    public void onDestroy() {
 //        super.onDestroy();
-//        Model.instance().getUpdatesManager().unregisterUpdateListener(updateReceiver);
+//        Model.createInstance().getUpdatesManager().unregisterUpdateListener(updateReceiver);
 //        favoriteReceiver.unregister(getActivity());
 //    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Model.instance().getUpdatesManager().registerUpdateListener(updateReceiver);
+        Model.getInstance().getUpdatesManager().registerUpdateListener(updateReceiver);
         favoriteReceiver.register(getActivity());
 
         initData();
@@ -140,7 +140,7 @@ public class EventHolderFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        Model.instance().getUpdatesManager().unregisterUpdateListener(updateReceiver);
+        Model.getInstance().getUpdatesManager().unregisterUpdateListener(updateReceiver);
         favoriteReceiver.unregister(getActivity());
         super.onDestroyView();
     }
@@ -198,19 +198,19 @@ public class EventHolderFragment extends Fragment {
         List<Long> dayList = new ArrayList<>();
         switch (mEventMode) {
             case Bofs:
-                BofsManager bofsManager = Model.instance().getBofsManager();
+                BofsManager bofsManager = Model.getInstance().getBofsManager();
                 dayList.addAll(bofsManager.getBofsDays());
                 break;
             case Social:
-                SocialManager socialManager = Model.instance().getSocialManager();
+                SocialManager socialManager = Model.getInstance().getSocialManager();
                 dayList.addAll(socialManager.getSocialsDays());
                 break;
             case Favorites:
-                FavoriteManager favoriteManager = Model.instance().getFavoriteManager();
+                FavoriteManager favoriteManager = Model.getInstance().getFavoriteManager();
                 dayList.addAll(favoriteManager.getFavoriteEventDays());
                 break;
             default:
-                ProgramManager programManager = Model.instance().getProgramManager();
+                ProgramManager programManager = Model.getInstance().getProgramManager();
                 dayList.addAll(programManager.getProgramDays());
                 break;
         }

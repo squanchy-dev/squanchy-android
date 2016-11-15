@@ -11,6 +11,7 @@ ext {
                     playMaps        : 'com.google.android.gms:play-services-maps:9.8.0',
                     shadowLayout    : 'com.github.dmytrodanylyk.shadow-layout:library:1.0.2',
                     twitter         : 'com.twitter.sdk.android:twitter:2.1.1',
+                    timber          : 'com.jakewharton.timber:timber:4.3.1',
                     volley          : 'com.mcxiaoke.volley:library:1.0.19'
             ]
     ]

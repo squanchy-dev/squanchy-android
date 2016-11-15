@@ -8,12 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
 import com.connfa.R;
+import com.connfa.analytics.Analytics;
 import com.connfa.model.Model;
 import com.connfa.model.PreferencesManager;
 import com.connfa.model.UpdateCallback;
 import com.connfa.model.UpdatesManager;
 import com.connfa.ui.dialog.NoConnectionDialog;
-import com.connfa.utils.AnalyticsManager;
 import com.connfa.utils.NetworkUtils;
 import com.ls.util.L;
 
@@ -26,7 +26,9 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_splash);
-        AnalyticsManager.sendEvent(this, "Application", R.string.action_open);
+
+        Analytics.from(this)
+                .trackEvent("Application", getString(R.string.action_open));
 
         mHandler = new Handler();
         mHandler.postDelayed(new Runnable() {
@@ -60,7 +62,7 @@ public class SplashActivity extends AppCompatActivity {
         new AsyncTask<Void, Void, UpdatesManager>() {
             @Override
             protected UpdatesManager doInBackground(Void... params) {
-                UpdatesManager manager = Model.instance().getUpdatesManager();
+                UpdatesManager manager = Model.getInstance().getUpdatesManager();
                 manager.checkForDatabaseUpdate();
                 return manager;
             }

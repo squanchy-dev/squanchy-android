@@ -24,6 +24,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.connfa.R;
+import com.connfa.analytics.Analytics;
 import com.connfa.model.Model;
 import com.connfa.model.PreferencesManager;
 import com.connfa.model.UpdatesManager;
@@ -36,7 +37,6 @@ import com.connfa.model.managers.SpeakerManager;
 import com.connfa.ui.receiver.ReceiverManager;
 import com.connfa.ui.view.CircleImageView;
 import com.connfa.ui.view.NotifyingScrollView;
-import com.connfa.utils.AnalyticsManager;
 import com.connfa.utils.DateUtils;
 import com.connfa.utils.ScheduleManager;
 import com.connfa.utils.WebviewUtils;
@@ -91,7 +91,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
         setContentView(R.layout.ac_event_details);
 
         receiverManager.register(this);
-        Model.instance().getUpdatesManager().registerUpdateListener(updateListener);
+        Model.getInstance().getUpdatesManager().registerUpdateListener(updateListener);
         preferencesManager = PreferencesManager.create(this);
 
         initData();
@@ -132,7 +132,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
     protected void onDestroy() {
         super.onDestroy();
         receiverManager.unregister(this);
-        Model.instance().getUpdatesManager().unregisterUpdateListener(updateListener);
+        Model.getInstance().getUpdatesManager().unregisterUpdateListener(updateListener);
     }
 
     private void initData() {
@@ -174,11 +174,11 @@ public class EventDetailsActivity extends StackKeeperActivity {
         new AsyncTask<Void, Void, EventDetailsEvent>() {
             @Override
             protected EventDetailsEvent doInBackground(Void... params) {
-                SpeakerManager speakerManager = Model.instance().getSpeakerManager();
+                SpeakerManager speakerManager = Model.getInstance().getSpeakerManager();
                 mSpeakerList.clear();
                 mSpeakerList.addAll(speakerManager.getSpeakersByEventId(mEventId));
 
-                EventManager eventManager = Model.instance().getEventManager();
+                EventManager eventManager = Model.getInstance().getEventManager();
                 return eventManager.getEventById(mEventId);
             }
 
@@ -372,7 +372,10 @@ public class EventDetailsActivity extends StackKeeperActivity {
         if (mIsFavorite) {
             actionId = R.string.action_add_to_favorites;
         }
-        AnalyticsManager.sendEvent(this, R.string.event_category, actionId, mEventId + " " + mEvent.getEventName());
+        Analytics.from(this)
+                .trackEvent(
+                        getString(R.string.event_category), getString(actionId), mEventId + " " + mEvent.getEventName()
+                );
         ReceiverManager.updateFavorites(EventDetailsActivity.this, mEventId, mIsFavorite);
     }
 

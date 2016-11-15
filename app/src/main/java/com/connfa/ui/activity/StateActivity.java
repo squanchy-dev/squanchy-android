@@ -27,7 +27,7 @@ public abstract class StateActivity extends AppCompatActivity {
     }
 
     private void checkForUpdates() {
-        UpdatesManager manager = Model.instance().getUpdatesManager();
+        UpdatesManager manager = Model.getInstance().getUpdatesManager();
         manager.startLoading(null);
     }
 }

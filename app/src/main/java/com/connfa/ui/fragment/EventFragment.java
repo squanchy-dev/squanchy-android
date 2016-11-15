@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.connfa.R;
+import com.connfa.analytics.Analytics;
 import com.connfa.model.EventGenerator;
 import com.connfa.model.PreferencesManager;
 import com.connfa.model.data.Event;
@@ -21,7 +22,6 @@ import com.connfa.ui.adapter.item.SimpleTimeRangeCreator;
 import com.connfa.ui.adapter.item.TimeRangeItem;
 import com.connfa.ui.drawer.DrawerManager;
 import com.connfa.ui.receiver.ReceiverManager;
-import com.connfa.utils.AnalyticsManager;
 import com.connfa.utils.DateUtils;
 
 import java.util.ArrayList;
@@ -181,7 +181,10 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
         if (item.getEvent() != null && item.getEvent().getId() != 0) {
             Long eventId = item.getEvent().getId();
             String eventName = item.getEvent().getName();
-            AnalyticsManager.sendEvent(getActivity(), R.string.event_category, R.string.action_open, eventId + " " + eventName);
+            Analytics.from(getActivity())
+                    .trackEvent(
+                            getString(R.string.event_category), getString(R.string.action_open), eventId + " " + eventName
+                    );
             EventDetailsActivity.startThisActivity(getActivity(), item.getEvent().getId(), day);
         }
     }

@@ -60,7 +60,7 @@ public class SocialMediaFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         rootView = view;
 
-        Model.instance().getUpdatesManager().registerUpdateListener(updateReceiver);
+        Model.getInstance().getUpdatesManager().registerUpdateListener(updateReceiver);
 
         fillView();
     }
@@ -99,7 +99,7 @@ public class SocialMediaFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        Model.instance().getUpdatesManager().unregisterUpdateListener(updateReceiver);
+        Model.getInstance().getUpdatesManager().unregisterUpdateListener(updateReceiver);
         super.onDestroyView();
     }
 }

@@ -9,6 +9,8 @@ public class LAPIDBRegister {
 
     private static LAPIDBRegister instance;
 
+    private Map<String, ILAPIDBFacade> map;
+
     public synchronized static LAPIDBRegister getInstance() {
         if (instance == null) {
             instance = new LAPIDBRegister();
@@ -17,35 +19,33 @@ public class LAPIDBRegister {
         return instance;
     }
 
-    private Map<String, ILAPIDBFacade> map;
-
     private LAPIDBRegister() {
-        this.map = new HashMap<String, ILAPIDBFacade>();
+        this.map = new HashMap<>();
     }
 
-    public void register(Context theContext, DBInfo theDbInfo) {
-        if (theDbInfo == null) {
+    public void register(Context context, DBInfo dbInfo) {
+        if (dbInfo == null) {
             throw new IllegalArgumentException("DBInfo can't be null");
         }
 
-        String databaseName = theDbInfo.getDatabaseName();
-        if (this.map.containsKey(databaseName)) {
+        String databaseName = dbInfo.getDatabaseName();
+        if (map.containsKey(databaseName)) {
             return;
         }
 
-        this.map.put(databaseName, new DatabaseFacade(theContext, theDbInfo));
+        map.put(databaseName, new DatabaseFacade(context, dbInfo));
     }
 
-    public void unregister(String theDatabaseName) {
-        this.map.remove(theDatabaseName);
+    public void unregister(String databaseName) {
+        map.remove(databaseName);
     }
 
-    public ILAPIDBFacade lookup(String theDatabaseName) {
-        if (theDatabaseName == null) {
+    public ILAPIDBFacade lookup(String databaseName) {
+        if (databaseName == null) {
             throw new IllegalArgumentException("Database name can't be null");
         }
 
-        return this.map.get(theDatabaseName);
+        return map.get(databaseName);
     }
 
 }

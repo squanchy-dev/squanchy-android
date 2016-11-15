@@ -104,6 +104,7 @@ dependencies {
     compile libraries.app.shadowLayout
     compile libraries.app.materialTabStrip
     compile libraries.app.parallaxScroll
+    compile libraries.app.timber
 
     compile libraries.app.appCompat
     compile libraries.app.playAnalytics

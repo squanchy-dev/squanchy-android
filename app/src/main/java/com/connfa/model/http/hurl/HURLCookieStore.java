@@ -22,7 +22,7 @@ public class HURLCookieStore implements CookieStore {
      */
     private Map<URI, List<HttpCookie>> mapCookies = new HashMap<URI, List<HttpCookie>>();
     /*
-     * The instance of the shared preferences
+     * The createInstance of the shared preferences
      */
     private final SharedPreferences spePreferences;
 

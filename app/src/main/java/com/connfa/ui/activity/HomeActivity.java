@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.connfa.R;
+import com.connfa.analytics.Analytics;
 import com.connfa.model.Model;
 import com.connfa.model.UpdatesManager;
 import com.connfa.model.data.Level;
@@ -25,11 +26,9 @@ import com.connfa.ui.drawer.DrawerAdapter;
 import com.connfa.ui.drawer.DrawerManager;
 import com.connfa.ui.drawer.DrawerMenu;
 import com.connfa.ui.drawer.DrawerMenuItem;
-import com.connfa.utils.AnalyticsManager;
 import com.connfa.utils.DateUtils;
 import com.connfa.utils.KeyboardUtils;
 import com.connfa.utils.ScheduleManager;
-import com.google.android.gms.analytics.GoogleAnalytics;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,28 +38,28 @@ import java.util.TimeZone;
 
 public class HomeActivity extends StateActivity implements FilterDialog.OnFilterApplied {
 
+    private Analytics analytics;
+
     private DrawerManager mFrManager;
     private DrawerAdapter mAdapter;
     private String mPresentTitle;
     private int mSelectedItem = 0;
-    private int mLastSelectedItem = 0;
     private boolean isIntentHandled = false;
 
     private Toolbar mToolbar;
     private DrawerLayout mDrawerLayout;
 
     public FilterDialog mFilterDialog;
-    public boolean mIsDrawerItemClicked;
+    private boolean mIsDrawerItemClicked;
 
     private UpdatesManager.DataUpdatedListener updateReceiver = new UpdatesManager.DataUpdatedListener() {
         @Override
         public void onDataUpdated(List<Integer> requestIds) {
-//            closeFilterDialog();
             initFilterDialog();
         }
     };
 
-    public static void startThisActivity(Activity activity) {
+    static void startThisActivity(Activity activity) {
         Intent intent = new Intent(activity, HomeActivity.class);
         activity.startActivity(intent);
     }
@@ -68,8 +67,10 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        analytics = Analytics.from(this);
+
         setContentView(R.layout.ac_main);
-        Model.instance().getUpdatesManager().registerUpdateListener(updateReceiver);
 
         initToolbar();
         initNavigationDrawer();
@@ -95,19 +96,25 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
     @Override
     protected void onStart() {
         super.onStart();
-        GoogleAnalytics.getInstance(this).reportActivityStart(this);
+
+        Model.getInstance()
+                .getUpdatesManager()
+                .registerUpdateListener(updateReceiver);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        GoogleAnalytics.getInstance(this).reportActivityStop(this);
+
+        Model.getInstance()
+                .getUpdatesManager()
+                .unregisterUpdateListener(updateReceiver);
     }
 
     @Override
     protected void onDestroy() {
-        Model.instance().getUpdatesManager().unregisterUpdateListener(updateReceiver);
-        AnalyticsManager.sendEvent(this, "Application", R.string.action_close);
+        // TODO remove this?
+        analytics.trackEvent("Application", getString(R.string.action_close));
         super.onDestroy();
     }
 
@@ -178,7 +185,7 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
         new AsyncTask<Void, Void, List<EventListItem>>() {
             @Override
             protected List<EventListItem> doInBackground(Void... params) {
-                TracksManager tracksManager = Model.instance().getTracksManager();
+                TracksManager tracksManager = Model.getInstance().getTracksManager();
                 List<Track> trackList = tracksManager.getTracks();
                 List<Level> levelList = tracksManager.getLevels();
 
@@ -259,14 +266,13 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
             mAdapter.setSelectedPos(mSelectedItem);
             mAdapter.notifyDataSetChanged();
 
-            AnalyticsManager.sendEvent(this, mPresentTitle + " screen", R.string.action_open);
+            analytics.trackEvent(mPresentTitle + " screen", this.getString(R.string.action_open));
         }
-        mLastSelectedItem = mSelectedItem;
     }
 
     private void initFragmentManager() {
         mFrManager = DrawerManager.getInstance(getSupportFragmentManager(), R.id.mainFragment);
-        AnalyticsManager.sendEvent(this, getString(R.string.Sessions) + " screen", R.string.action_open);
+        analytics.trackEvent(getString(R.string.Sessions) + " screen", getString(R.string.action_open));
         mFrManager.setFragment(DrawerMenu.DrawerItem.PROGRAM);
     }
 

@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.connfa.R;
+import com.connfa.analytics.Analytics;
 import com.connfa.model.Model;
 import com.connfa.model.UpdatesManager;
 import com.connfa.model.dao.EventDao;
@@ -31,10 +32,8 @@ import com.connfa.model.data.SpeakerDetailsEvent;
 import com.connfa.model.managers.SpeakerManager;
 import com.connfa.ui.view.CircleImageView;
 import com.connfa.ui.view.NotifyingScrollView;
-import com.connfa.utils.AnalyticsManager;
 import com.connfa.utils.DateUtils;
 import com.connfa.utils.WebviewUtils;
-import com.google.android.gms.analytics.GoogleAnalytics;
 
 import java.util.List;
 
@@ -71,8 +70,8 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_speaker_details);
 
-        Model.instance().getUpdatesManager().registerUpdateListener(updateListener);
-        mSpeakerManager = Model.instance().getSpeakerManager();
+        Model.getInstance().getUpdatesManager().registerUpdateListener(updateListener);
+        mSpeakerManager = Model.getInstance().getSpeakerManager();
 
         initData();
         initToolbar();
@@ -83,19 +82,9 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Model.instance().getUpdatesManager().unregisterUpdateListener(updateListener);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        GoogleAnalytics.getInstance(this).reportActivityStart(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        GoogleAnalytics.getInstance(this).reportActivityStop(this);
+        Model.getInstance()
+                .getUpdatesManager()
+                .unregisterUpdateListener(updateListener);
     }
 
     @Override
@@ -114,7 +103,11 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
         if (mSpeaker != null) {
             mSpeakerName = String.format("%s %s", mSpeaker.getFirstName(), mSpeaker.getLastName());
         }
-        AnalyticsManager.sendEvent(this, R.string.speaker_category, R.string.action_open, mSpeakerId + " " + mSpeakerName);
+
+        Analytics.from(this)
+                .trackEvent(
+                        getString(R.string.speaker_category), getString(R.string.action_open), mSpeakerId + " " + mSpeakerName
+                );
     }
 
     private void initToolbar() {
