@@ -2,6 +2,7 @@ package com.connfa.model.http.hurl;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import java.net.CookieStore;
 import java.net.HttpCookie;
@@ -15,161 +16,134 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import timber.log.Timber;
+
+/**
+ * @deprecated this should really be the HTTP client's job
+ */
 public class HURLCookieStore implements CookieStore {
 
-    /*
-     * The memory storage of the cookies
-     */
-    private Map<URI, List<HttpCookie>> mapCookies = new HashMap<URI, List<HttpCookie>>();
-    /*
-     * The createInstance of the shared preferences
-     */
-    private final SharedPreferences spePreferences;
+    private static final String COOKIE_PREFS_FILENAME = "cookies-store";
+
+    private final SharedPreferences preferences;
+    private final Map<URI, List<HttpCookie>> cookiesMap;
+
+    public static HURLCookieStore newInstance(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(COOKIE_PREFS_FILENAME, 0);
+
+        Map<URI, List<HttpCookie>> cookiesMap = new HashMap<>();
+        Map<String, ?> preferencesMap = preferences.getAll();
+        for (String preferenceKey : preferencesMap.keySet()) {
+            addToMap(preferences, preferenceKey, cookiesMap);
+        }
+
+        return new HURLCookieStore(preferences, cookiesMap);
+    }
+
+    private HURLCookieStore(SharedPreferences preferences, Map<URI, List<HttpCookie>> cookiesMap) {
+        this.preferences = preferences;
+        this.cookiesMap = cookiesMap;
+    }
+
+    private static void addToMap(SharedPreferences preferences, String key, Map<URI, List<HttpCookie>> cookiesMap) {
+        URI uri;
+        try {
+            uri = new URI(key);
+        } catch (URISyntaxException e) {
+            Timber.log(Log.WARN, e, "Error parsing URI: %s", key);
+            return;
+        }
+
+        String rawCookie = preferences.getString(key, null);
+        if (rawCookie == null) {
+            removeFromPreferences(preferences, key);
+            return;
+        }
+        addToMap(uri, rawCookie, cookiesMap);
+    }
+
+    private static void removeFromPreferences(SharedPreferences preferences, String key) {
+        preferences.edit()
+                .remove(key)
+                .apply();
+    }
+
+    private static void addToMap(URI uri, String rawCookie, Map<URI, List<HttpCookie>> cookiesMap) {
+        List<HttpCookie> cookies;
+        if (cookiesMap.containsKey(uri)) {
+            cookies = cookiesMap.get(uri);
+        } else {
+            cookies = new ArrayList<>();
+        }
+        cookies.addAll(HttpCookie.parse(rawCookie));
+        cookiesMap.put(uri, cookies);
+    }
 
     /*
      * @see java.net.CookieStore#add(java.net.URI, java.net.HttpCookie)
      */
     public void add(URI uri, HttpCookie cookie) {
-
-        System.out.println("add");
-        System.out.println(cookie.toString());
-
-        List<HttpCookie> cookies = mapCookies.get(uri);
+        List<HttpCookie> cookies = cookiesMap.get(uri);
         if (cookies == null) {
-            cookies = new ArrayList<HttpCookie>();
-            mapCookies.put(uri, cookies);
+            cookies = new ArrayList<>();
+            cookiesMap.put(uri, cookies);
         }
         cookies.add(cookie);
-
         HashSet<String> setCookies = new HashSet<>();
         setCookies.add(cookie.toString());
-
-        Set<String> stringSet = spePreferences.getStringSet(uri.toString(), setCookies);
-        spePreferences.edit()
+        Set<String> stringSet = preferences.getStringSet(uri.toString(), setCookies);
+        preferences.edit()
                 .putStringSet(uri.toString(), stringSet)
                 .apply();
-
-    }
-
-    /*
-     * Constructor
-     *
-     * @param  ctxContext the context of the Activity
-     */
-    @SuppressWarnings("unchecked")
-    public HURLCookieStore(Context ctxContext) {
-
-        spePreferences = ctxContext.getSharedPreferences("CookiePrefsFile", 0);
-        Map<String, ?> prefsMap = spePreferences.getAll();
-
-        for (Map.Entry<String, ?> entry : prefsMap.entrySet()) {
-
-            for (String strCookie : (HashSet<String>) entry.getValue()) {
-
-                if (!mapCookies.containsKey(entry.getKey())) {
-
-                    List<HttpCookie> lstCookies = new ArrayList<HttpCookie>();
-                    lstCookies.addAll(HttpCookie.parse(strCookie));
-
-                    try {
-
-                        mapCookies.put(new URI(entry.getKey()), lstCookies);
-
-                    } catch (URISyntaxException e) {
-
-                        e.printStackTrace();
-
-                    }
-
-                } else {
-
-                    List<HttpCookie> lstCookies = mapCookies.get(entry.getKey());
-                    lstCookies.addAll(HttpCookie.parse(strCookie));
-
-                    try {
-
-                        mapCookies.put(new URI(entry.getKey()), lstCookies);
-
-                    } catch (URISyntaxException e) {
-
-                        e.printStackTrace();
-
-                    }
-
-                }
-
-                System.out.println(entry.getKey() + ": " + strCookie);
-
-            }
-
-        }
-
     }
 
     /*
      * @see java.net.CookieStore#get(java.net.URI)
      */
     public List<HttpCookie> get(URI uri) {
-
-        List<HttpCookie> lstCookies = mapCookies.get(uri);
-
+        List<HttpCookie> lstCookies = cookiesMap.get(uri);
         if (lstCookies == null) {
-            mapCookies.put(uri, new ArrayList<HttpCookie>());
+            cookiesMap.put(uri, new ArrayList<HttpCookie>());
         }
-
-        return mapCookies.get(uri);
-
+        return cookiesMap.get(uri);
     }
 
     /*
      * @see java.net.CookieStore#removeAll()
      */
     public boolean removeAll() {
-
-        mapCookies.clear();
+        cookiesMap.clear();
         return true;
-
     }
 
     /*
      * @see java.net.CookieStore#getCookies()
      */
     public List<HttpCookie> getCookies() {
-
-        Collection<List<HttpCookie>> values = mapCookies.values();
-
-        List<HttpCookie> result = new ArrayList<HttpCookie>();
+        Collection<List<HttpCookie>> values = cookiesMap.values();
+        List<HttpCookie> result = new ArrayList<>();
         for (List<HttpCookie> value : values) {
             result.addAll(value);
         }
-
         return result;
-
     }
 
     /*
      * @see java.net.CookieStore#getURIs()
      */
     public List<URI> getURIs() {
-
-        Set<URI> keys = mapCookies.keySet();
-        return new ArrayList<URI>(keys);
-
+        Set<URI> keys = cookiesMap.keySet();
+        return new ArrayList<>(keys);
     }
 
     /*
      * @see java.net.CookieStore#remove(java.net.URI, java.net.HttpCookie)
      */
     public boolean remove(URI uri, HttpCookie cookie) {
-
-        List<HttpCookie> lstCookies = mapCookies.get(uri);
-
-        if (lstCookies == null) {
+        List<HttpCookie> cookies = cookiesMap.get(uri);
+        if (cookies == null) {
             return false;
         }
-
-        return lstCookies.remove(cookie);
-
+        return cookies.remove(cookie);
     }
-
 }
