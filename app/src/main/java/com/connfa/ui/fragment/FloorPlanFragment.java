@@ -2,8 +2,6 @@ package com.connfa.ui.fragment;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,7 +17,8 @@ import com.connfa.model.Model;
 import com.connfa.model.UpdatesManager;
 import com.connfa.model.data.FloorPlan;
 import com.connfa.ui.adapter.FloorSelectorAdapter;
-import com.connfa.ui.view.TouchImageView;
+import com.davemorrissey.labs.subscaleview.ImageSource;
+import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +32,7 @@ public class FloorPlanFragment extends Fragment {
     private View mLayoutContent, mLayoutPlaceholder;
     private Spinner floorSelector;
     private List<FloorPlan> plans;
-    private TouchImageView floorImage;
+    private SubsamplingScaleImageView floorImage;
 
     private UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener() {
         @Override
@@ -77,28 +76,12 @@ public class FloorPlanFragment extends Fragment {
             }
         });
 
-        floorImage = (TouchImageView) result.findViewById(R.id.floor_plan_image);
+        floorImage = (SubsamplingScaleImageView) result.findViewById(R.id.floor_plan_image);
 
         new LoadPlansTask().execute();
 
         return result;
     }
-
-//    void resolveTitleVisibility(){
-//        AppCompatActivity activity = (AppCompatActivity)this.getActivity();
-//        if(activity != null && activity.getSupportActionBar() != null) {
-//            ActionBar actionBar = activity.getSupportActionBar();
-//            if(this.isResumed()) {
-//                if (plans != null && !plans.isEmpty()) {
-//                    actionBar.setTitle("");
-//                    actionBar.setCustomView(actionbarLayout);
-//                } else {
-//                    actionBar.setTitle(R.string.floor_plan);
-//                    actionBar.setCustomView(null);
-//                }
-//            }
-//        }
-//    }
 
     private class LoadPlansTask extends AsyncTask<Void, Void, List<FloorPlan>> {
 
@@ -132,33 +115,36 @@ public class FloorPlanFragment extends Fragment {
         }
     }
 
-    private class LoadPlanImageTask extends AsyncTask<FloorPlan, Void, Drawable> {
+    private class LoadPlanImageTask extends AsyncTask<FloorPlan, Void, ImageSource> {
 
         @Override
         protected void onPreExecute() {
             floorSelector.setEnabled(false);
             floorSelector.setClickable(false);
-            floorImage.setImageDrawable(null);
-            super.onPreExecute();
         }
 
         @Override
-        protected Drawable doInBackground(FloorPlan... params) {
-            Bitmap planImage = Model.getInstance().getFloorPlansManager().getImageForPlan(params[0],
-                    RECOMMENDED_FLOOR_IMAGE_WIDTH, RECOMMENDED_FLOOR_IMAGE_HEIGHT);
+        protected ImageSource doInBackground(FloorPlan... params) {
+            Bitmap planImage = Model.getInstance()
+                    .getFloorPlansManager()
+                    .getImageForPlan(
+                            params[0],
+                            RECOMMENDED_FLOOR_IMAGE_WIDTH,
+                            RECOMMENDED_FLOOR_IMAGE_HEIGHT
+                    );
+
             if (planImage != null) {
-                return new BitmapDrawable(null, planImage);
+                return ImageSource.bitmap(planImage);
             }
             return null;
         }
 
         @Override
-        protected void onPostExecute(Drawable drawable) {
-            super.onPostExecute(drawable);
+        protected void onPostExecute(ImageSource imageSource) {
             floorSelector.setEnabled(true);
             floorSelector.setClickable(true);
-            floorImage.setZoom(1);
-            floorImage.setImageDrawable(drawable);
+            floorImage.setImage(imageSource);
+            floorImage.resetScaleAndCenter();
         }
     }
 
