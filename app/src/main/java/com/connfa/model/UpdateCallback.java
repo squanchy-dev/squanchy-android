@@ -1,8 +1,8 @@
 package com.connfa.model;
 
-public abstract class UpdateCallback {
+public interface UpdateCallback {
 
-    abstract public void onDownloadSuccess();
+    void onDownloadSuccess();
 
-    abstract public void onDownloadError();
+    void onDownloadError();
 }

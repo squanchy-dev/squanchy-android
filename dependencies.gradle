@@ -10,6 +10,7 @@ ext {
                     playAnalytics   : 'com.google.android.gms:play-services-analytics:9.8.0',
                     playMaps        : 'com.google.android.gms:play-services-maps:9.8.0',
                     shadowLayout    : 'com.github.dmytrodanylyk.shadow-layout:library:1.0.2',
+                    scaleImageView  : 'com.davemorrissey.labs:subsampling-scale-image-view:3.6.0',
                     twitter         : 'com.twitter.sdk.android:twitter:2.1.1',
                     timber          : 'com.jakewharton.timber:timber:4.3.1',
                     volley          : 'com.mcxiaoke.volley:library:1.0.19'
