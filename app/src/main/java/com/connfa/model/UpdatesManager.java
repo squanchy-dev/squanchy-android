@@ -20,6 +20,8 @@ import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
 
+import timber.log.Timber;
+
 public class UpdatesManager {
 
     public static final int SETTINGS_REQUEST_ID = 0;
@@ -128,8 +130,8 @@ public class UpdatesManager {
             }
             updateDate.setTime(updatesData.getHeaders().get(LAST_MODIFIED_HEADER));
             return loadData(updateDate);
-
         } else {
+            Timber.e("Update loading failed. Status code: %d", statusCode);
             return null;
         }
     }

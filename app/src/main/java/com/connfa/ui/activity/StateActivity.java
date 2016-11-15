@@ -4,9 +4,12 @@ import android.content.ComponentCallbacks2;
 import android.support.v7.app.AppCompatActivity;
 
 import com.connfa.model.Model;
+import com.connfa.model.UpdateCallback;
 import com.connfa.model.UpdatesManager;
 
-public abstract class StateActivity extends AppCompatActivity {
+import timber.log.Timber;
+
+public abstract class StateActivity extends AppCompatActivity implements UpdateCallback {
 
     private static boolean wasInBackground = false;
 
@@ -28,6 +31,16 @@ public abstract class StateActivity extends AppCompatActivity {
 
     private void checkForUpdates() {
         UpdatesManager manager = Model.getInstance().getUpdatesManager();
-        manager.startLoading(null);
+        manager.startLoading(this);
+    }
+
+    @Override
+    public void onDownloadSuccess() {
+        Timber.d("Update downloaded");
+    }
+
+    @Override
+    public void onDownloadError() {
+        Timber.d("Unable to download data update (see log above for error)");
     }
 }
