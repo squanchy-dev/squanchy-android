@@ -20,7 +20,6 @@ import com.connfa.model.UpdatesManager;
 import com.connfa.model.data.InfoItem;
 import com.connfa.model.managers.InfoManager;
 import com.connfa.ui.activity.AboutDetailsActivity;
-import com.connfa.utils.L;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +39,6 @@ public class AboutFragment extends Fragment {
     private UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener() {
         @Override
         public void onDataUpdated(List<Integer> requestIds) {
-            L.d("AboutFragment");
             reloadData();
         }
     };

@@ -24,12 +24,10 @@ import com.connfa.ui.view.TouchImageView;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created on 09.06.2016.
- */
 public class FloorPlanFragment extends Fragment {
-    public static int REDCOMMENDED_FLOOR_IMAGE_HEIGHT = Resources.getSystem().getDisplayMetrics().heightPixels * 2;
-    public static int REDCOMMENDED_FLOOR_IMAGE_WIDTH = Resources.getSystem().getDisplayMetrics().widthPixels * 2;
+
+    private static int RECOMMENDED_FLOOR_IMAGE_HEIGHT = Resources.getSystem().getDisplayMetrics().heightPixels * 2;
+    private static int RECOMMENDED_FLOOR_IMAGE_WIDTH = Resources.getSystem().getDisplayMetrics().widthPixels * 2;
 
     public static final String TAG = "FloorPlanFragment";
     private View mLayoutContent, mLayoutPlaceholder;
@@ -147,7 +145,7 @@ public class FloorPlanFragment extends Fragment {
         @Override
         protected Drawable doInBackground(FloorPlan... params) {
             Bitmap planImage = Model.getInstance().getFloorPlansManager().getImageForPlan(params[0],
-                    REDCOMMENDED_FLOOR_IMAGE_WIDTH, REDCOMMENDED_FLOOR_IMAGE_HEIGHT);
+                    RECOMMENDED_FLOOR_IMAGE_WIDTH, RECOMMENDED_FLOOR_IMAGE_HEIGHT);
             if (planImage != null) {
                 return new BitmapDrawable(null, planImage);
             }

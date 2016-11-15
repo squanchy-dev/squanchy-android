@@ -201,7 +201,7 @@ public class Model {
     //Initialization
 
     public RequestQueue createNewQueue(Context context) {
-        cookieStore = new HURLCookieStore(context);
+        cookieStore = HURLCookieStore.newInstance(context);
         CookieManager cmrCookieMan = new CookieManager(cookieStore, CookiePolicy.ACCEPT_ALL);
         CookieHandler.setDefault(cmrCookieMan);
 
@@ -210,7 +210,7 @@ public class Model {
     }
 
     private RequestQueue createNoCachedQueue(Context context) {
-        cookieStore = new HURLCookieStore(context);
+        cookieStore = HURLCookieStore.newInstance(context);
         CookieManager cmrCookieMan = new CookieManager(cookieStore, CookiePolicy.ACCEPT_ALL);
         CookieHandler.setDefault(cmrCookieMan);
 
