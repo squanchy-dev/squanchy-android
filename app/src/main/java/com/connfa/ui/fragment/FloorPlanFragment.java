@@ -29,6 +29,7 @@ public class FloorPlanFragment extends Fragment {
     private static int RECOMMENDED_FLOOR_IMAGE_WIDTH = Resources.getSystem().getDisplayMetrics().widthPixels * 2;
 
     public static final String TAG = "FloorPlanFragment";
+
     private View mLayoutContent, mLayoutPlaceholder;
     private Spinner floorSelector;
     private List<FloorPlan> plans;
