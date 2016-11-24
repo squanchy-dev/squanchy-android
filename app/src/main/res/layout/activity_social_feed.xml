@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical">
+
+  <android.support.v7.widget.Toolbar
+    android:id="@+id/toolbar"
+    style="@style/Connfa.Toolbar.SocialFeed"
+    android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/toolbar_height" />
+
+  <FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+      android:id="@+id/empty_view"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_margin="64dp"
+      android:gravity="center"
+      android:text="@string/no_tweets_for_query"
+      android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+      android:visibility="gone"
+      tools:visibility="visible" />
+
+
+    <android.support.v4.widget.SwipeRefreshLayout
+      android:id="@+id/swipe_refresh_container"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      tools:context=".social.SocialFeedActivity">
+
+      <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="#e1e8ed"
+        android:dividerHeight="1dp"
+        android:drawSelectorOnTop="false" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+  </FrameLayout>
+
+</LinearLayout>
