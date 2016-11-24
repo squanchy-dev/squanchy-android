@@ -28,20 +28,20 @@ public class BaseEventDaysPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Long date = getDate(position);
-        Fragment fragment = EventFragment.newInstance(DrawerManager.EventMode.Program.ordinal(), date);
+        Fragment fragment = EventFragment.newInstance(DrawerManager.EventMode.PROGRAM.ordinal(), date);
 
         switch (mEventMode) {
-            case Program:
-                fragment = EventFragment.newInstance(DrawerManager.EventMode.Program.ordinal(), date);
+            case PROGRAM:
+                fragment = EventFragment.newInstance(DrawerManager.EventMode.PROGRAM.ordinal(), date);
                 break;
-            case Bofs:
-                fragment = EventFragment.newInstance(DrawerManager.EventMode.Bofs.ordinal(), date);
+            case BOFS:
+                fragment = EventFragment.newInstance(DrawerManager.EventMode.BOFS.ordinal(), date);
                 break;
-            case Social:
-                fragment = EventFragment.newInstance(DrawerManager.EventMode.Social.ordinal(), date);
+            case SOCIAL:
+                fragment = EventFragment.newInstance(DrawerManager.EventMode.SOCIAL.ordinal(), date);
                 break;
-            case Favorites:
-                fragment = EventFragment.newInstance(DrawerManager.EventMode.Favorites.ordinal(), date);
+            case FAVORITES:
+                fragment = EventFragment.newInstance(DrawerManager.EventMode.FAVORITES.ordinal(), date);
                 break;
         }
         return fragment;

@@ -50,7 +50,7 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
             new ReceiverManager.FavoriteUpdatedListener() {
                 @Override
                 public void onFavoriteUpdated(long eventId, boolean isFavorite) {
-                    if (eventMode != DrawerManager.EventMode.Favorites) {
+                    if (eventMode != DrawerManager.EventMode.FAVORITES) {
                         new LoadData().execute();
                     }
                 }
@@ -95,7 +95,7 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
     private void initData() {
         Bundle bundle = getArguments();
         if (bundle != null) {
-            int eventPost = bundle.getInt(EXTRAS_ARG_MODE, DrawerManager.EventMode.Program.ordinal());
+            int eventPost = bundle.getInt(EXTRAS_ARG_MODE, DrawerManager.EventMode.PROGRAM.ordinal());
             eventMode = DrawerManager.EventMode.values()[eventPost];
 
             day = bundle.getLong(EXTRAS_ARG_DAY, 0);
@@ -147,16 +147,16 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
         List<EventListItem> eventList = new ArrayList<>();
 
         switch (eventMode) {
-            case Program:
+            case PROGRAM:
                 eventList.addAll(generator.generate(day, Event.PROGRAM_CLASS, levelIds, trackIds, new SimpleTimeRangeCreator()));
                 break;
-            case Bofs:
+            case BOFS:
                 eventList.addAll(generator.generate(day, Event.BOFS_CLASS, levelIds, trackIds, new SimpleTimeRangeCreator()));
                 break;
-            case Social:
+            case SOCIAL:
                 eventList.addAll(generator.generate(day, Event.SOCIALS_CLASS, levelIds, trackIds, new SimpleTimeRangeCreator()));
                 break;
-            case Favorites:
+            case FAVORITES:
                 eventList.addAll(generator.generateForFavorites(day, new SimpleTimeRangeCreator()));
                 break;
         }
@@ -169,7 +169,7 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
         }
 
         adapter.setData(eventListItems, eventMode);
-        if (DateUtils.isToday(getActivity(), day) && eventMode != DrawerManager.EventMode.Favorites) {
+        if (DateUtils.isToday(getActivity(), day) && eventMode != DrawerManager.EventMode.FAVORITES) {
             int index = getCurrentTimePosition(eventListItems);
             listView.setSelection(index);
         }
