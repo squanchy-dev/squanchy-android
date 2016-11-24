@@ -368,7 +368,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
                 event.setEventName(cursor.getString(cursor.getColumnIndex("_name")));
                 event.setLevelName(cursor.getString(cursor.getColumnIndex("level_name")));
                 event.setTrackName(cursor.getString(cursor.getColumnIndex("track_name")));
-                event.setDate(getContext(), cursor.getLong(cursor.getColumnIndex( "_date")));
+                event.setDate(getContext(), cursor.getLong(cursor.getColumnIndex("_date")));
                 event.setFavorite(cursor.getInt(cursor.getColumnIndex("_favorite")) == 1);
                 event.setPlace(cursor.getString(cursor.getColumnIndex("_place")));
 
