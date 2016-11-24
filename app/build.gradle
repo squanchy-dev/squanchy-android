@@ -97,6 +97,8 @@ android {
 }
 
 dependencies {
+    compile project(':drupalSDK')
+
     compile libraries.app.annotations
     compile libraries.app.gson
     compile libraries.app.volley
@@ -114,8 +116,7 @@ dependencies {
     compile(libraries.app.crashlytics) {
         transitive = true
     }
-    compile project(':drupalSDK')
-    compile libraries.app.twitter
+    compile libraries.app.tweetUi
 }
 
 apply plugin: 'com.google.gms.google-services'
