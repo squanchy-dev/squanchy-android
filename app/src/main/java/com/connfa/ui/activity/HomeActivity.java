@@ -259,7 +259,9 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
     private void changeFragment() {
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         DrawerMenuItem item = mAdapter.getItem(mSelectedItem);
-        if (!item.isGroup() && mFrManager != null) {
+        if (isSocialFeedAt(mSelectedItem)) {
+            startActivity(new Intent(this, SocialFeedActivity.class));
+        } else if (!item.isGroup() && mFrManager != null) {
             mFrManager.setFragment(DrawerMenu.DrawerItem.values()[mSelectedItem]);
             mPresentTitle = getString(DrawerMenu.MENU_STRING_RES_ARRAY[mSelectedItem]);
             mToolbar.setTitle(mPresentTitle);
@@ -269,6 +271,10 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
 
             analytics.trackEvent(mPresentTitle + " screen", getString(R.string.action_open));
         }
+    }
+
+    private boolean isSocialFeedAt(int position) {
+        return DrawerMenu.DrawerItem.values()[mSelectedItem] == DrawerMenu.DrawerItem.SOCIAL_MEDIA;
     }
 
     private void initFragmentManager() {
