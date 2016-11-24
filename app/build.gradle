@@ -72,6 +72,10 @@ android {
                 .or(buildProperties.env['BASE_URL'])
                 .string
 
+        resValueString 'social_query', buildProperties.application['socialQuery']
+                .or('#AndroidDev')
+                .string
+
     }
 
     if (System.getenv('CI') == null) {

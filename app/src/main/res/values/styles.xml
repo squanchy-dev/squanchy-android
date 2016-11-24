@@ -11,7 +11,11 @@
     <item name="colorPrimary">@color/primary</item>
   </style>
 
-  <style name="Theme.Connfa.SocialFeed" parent="Theme.Connfa.Home" />
+  <style name="Theme.Connfa.SocialFeed" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorControlNormal">@color/white_200</item>
+    <item name="colorPrimaryDark">@color/primary_dark</item>
+    <item name="colorPrimary">@color/primary</item>
+  </style>
 
   <style name="Theme.Connfa.Speaker" parent="Theme.Connfa">
     <item name="colorPrimaryDark">@color/speaker_primary</item>
@@ -30,5 +34,14 @@
     <item name="colorPrimary">@color/primary</item>
     <item name="colorControlNormal">@color/white</item>
   </style>
+
+  <style name="Connfa" />
+
+  <style name="Connfa.Toolbar" parent="Widget.AppCompat.Light.ActionBar">
+    <item name="android:background">@color/primary</item>
+    <item name="elevation">6dp</item>
+  </style>
+
+  <style name="Connfa.Toolbar.SocialFeed" />
 
 </resources>

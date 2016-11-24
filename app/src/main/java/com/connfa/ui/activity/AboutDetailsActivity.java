@@ -72,7 +72,7 @@ public class AboutDetailsActivity extends StateActivity {
     }
 
     private void initToolbar(String title) {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             toolbar.setTitle(title);
             setSupportActionBar(toolbar);
