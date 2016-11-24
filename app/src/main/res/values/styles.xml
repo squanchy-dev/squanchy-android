@@ -11,6 +11,8 @@
     <item name="colorPrimary">@color/primary</item>
   </style>
 
+  <style name="Theme.Connfa.SocialFeed" parent="Theme.Connfa.Home" />
+
   <style name="Theme.Connfa.Speaker" parent="Theme.Connfa">
     <item name="colorPrimaryDark">@color/speaker_primary</item>
     <item name="colorPrimary">@color/speaker_primary</item>

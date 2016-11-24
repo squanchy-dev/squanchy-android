@@ -50,6 +50,9 @@
       android:theme="@style/Theme.Connfa.Event"
       android:screenOrientation="portrait" />
 
+    <activity android:name=".social.SocialFeedActivity"
+      android:theme="Theme.DrupalCon.SocialFeed"/>
+
     <receiver android:name="com.connfa.receiver.NotifyReceiver" />
 
     <meta-data
