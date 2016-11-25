@@ -17,5 +17,6 @@
   <dimen name="activity_horizontal_margin">16dp</dimen>
   <dimen name="text_size_placeholder">14sp</dimen>
   <dimen name="margin_top_placeholder_text">20dp</dimen>
+  <dimen name="toolbar_height">56dp</dimen>
 
 </resources>

@@ -20,6 +20,8 @@ import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
+ *
+ * @deprecated Use {@link com.connfa.social.SocialFeedActivity} instead.
  */
 public class SocialMediaFragment extends Fragment {
 

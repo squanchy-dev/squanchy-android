@@ -10,8 +10,9 @@ import com.crashlytics.android.Crashlytics;
 import com.ls.drupal.DrupalClient;
 import com.ls.http.base.BaseRequest;
 import com.ls.util.image.DrupalImageView;
-import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.tweetui.TweetUi;
 
 import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
@@ -55,6 +56,6 @@ public class ConnfaApplication extends Application {
                 getString(R.string.api_value_twitter_api_key),
                 getString(R.string.api_value_twitter_secret)
         );
-        Fabric.with(this, new Crashlytics(), new Twitter(authConfig));
+        Fabric.with(this, new Crashlytics(), new TwitterCore(authConfig), new TweetUi());
     }
 }
