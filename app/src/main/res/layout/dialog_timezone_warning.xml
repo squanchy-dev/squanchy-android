@@ -6,7 +6,7 @@
               android:layout_height="match_parent"
               android:padding="16dp">
 
-    <com.ls.ui.view.FontTextView
+    <com.connfa.ui.view.FontTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:custom_font="@string/roboto_regular"

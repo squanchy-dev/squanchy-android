@@ -6,7 +6,7 @@
               android:background="@android:color/white"
               android:orientation="vertical">
 
-        <com.ls.ui.view.FontTextView
+        <com.connfa.ui.view.FontTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
@@ -27,8 +27,7 @@
             android:groupIndicator="@drawable/group_indicator"/>
 
     <LinearLayout
-            android:id="@+id/btnHolder"
-            android:layout_width="wrap_content"
+      android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_marginBottom="16dp"
@@ -37,7 +36,7 @@
             android:layout_marginTop="8dp"
             android:orientation="horizontal">
 
-        <com.ls.ui.view.FontTextView
+        <com.connfa.ui.view.FontTextView
                 android:id="@+id/btnClear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -54,7 +53,7 @@
                 android:textColor="@color/primary"
                 android:textSize="@dimen/text_size_small"/>
 
-            <com.ls.ui.view.FontTextView
+            <com.connfa.ui.view.FontTextView
                 android:id="@+id/btnApply"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

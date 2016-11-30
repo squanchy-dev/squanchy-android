@@ -1,17 +1,35 @@
+apply from: '../dependencies.gradle'
+
 buildscript {
     repositories {
         maven { url 'https://maven.fabric.io/public' }
+        jcenter()
     }
 
     dependencies {
         classpath 'io.fabric.tools:gradle:1.22.0'
+        classpath 'com.novoda:build-properties-plugin:1.2.1'
     }
 }
+
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply plugin: 'com.novoda.build-properties'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
+}
+
+buildProperties {
+    application {
+        file project.file('../team-props/application.properties')
+    }
+    secrets {
+        file project.file('../team-props/secrets.properties')
+    }
+    releaseSigningConfig {
+        file project.file('../team-props/releaseSigningConfig.properties')
+    }
 }
 
 android {
@@ -19,56 +37,85 @@ android {
     buildToolsVersion project.BUILD_TOOLS_VERSION
 
     defaultConfig {
-        applicationId 'com.ls.drupalconapp'
+        applicationId buildProperties.application['applicationId']
+                .or(buildProperties.env['APPLICATION_ID'])
+                .string
         minSdkVersion Integer.parseInt(project.MIN_SDK_VERSION)
         targetSdkVersion Integer.parseInt(project.TARGET_SDK_VERSION)
 
         versionCode Integer.parseInt(project.VERSION_CODE)
         versionName project.VERSION_NAME
-        multiDexEnabled true
+
+        resValueString 'app_name', buildProperties.application['applicationName']
+                .or('Connfa')
+                .string
+
+        manifestPlaceholders += [
+                fabricApiKey: buildProperties.secrets['fabricApiKey']
+                        .or(buildProperties.env['FABRIC_API_KEY'])
+                        .string
+        ]
+
+        resValueString 'api_value_twitter_api_key', buildProperties.secrets['twitterApiKey']
+                .or(buildProperties.env['TWITTER_API_KEY'])
+                .string
+
+        resValueString 'api_value_twitter_secret', buildProperties.secrets['twitterSecret']
+                .or(buildProperties.env['TWITTER_SECRET'])
+                .string
+
+        resValueString 'api_value_google_maps_api_key', buildProperties.secrets['googleMapsApiKey']
+                .or(buildProperties.env['GOOGLE_MAPS_API_KEY'])
+                .string
+
+        resValueString 'api_value_base_url', buildProperties.secrets['baseUrl']
+                .or(buildProperties.env['BASE_URL'])
+                .string
+
     }
-    signingConfigs {
-        config {
-            keyAlias 'drupalcon'
-            keyPassword 'lembergsolutions'
-            storeFile file('keystore/keystore.keystore')
-            storePassword 'lembergsolutions'
+
+    if (System.getenv('CI') == null) {
+        signingConfigs {
+            config {
+                signingConfigProperties buildProperties.releaseSigningConfig
+            }
         }
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
+
+        buildTypes {
+            release {
+                minifyEnabled false
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+                signingConfig signingConfigs.config
+            }
         }
     }
 
-    dexOptions {
-        // preDexLibraries = false      TODO can we remove this?
-        javaMaxHeapSize "4g"
+    lintOptions {
+        lintConfig file("$rootProject.projectDir/team-props/lint.xml")
+        abortOnError false
     }
 }
 
 dependencies {
-    compile project(':ParallaxScroll')
-    compile project(':drupalSDK')
+    compile libraries.app.annotations
+    compile libraries.app.gson
+    compile libraries.app.volley
 
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.5') {
+    compile libraries.app.shadowLayout
+    compile libraries.app.materialTabStrip
+    compile libraries.app.parallaxScroll
+    compile libraries.app.scaleImageView
+    compile libraries.app.timber
+
+    compile libraries.app.appCompat
+    compile libraries.app.playAnalytics
+    compile libraries.app.playMaps
+
+    compile(libraries.app.crashlytics) {
         transitive = true
     }
-    compile 'com.github.dmytrodanylyk.shadow-layout:library:1.0.2'
-    compile 'com.android.support:support-v13:25.0.0'
-    compile 'com.android.support:appcompat-v7:25.0.0'
-    compile 'com.google.android.gms:play-services-analytics:9.8.0'
-    compile 'com.google.android.gms:play-services-maps:9.8.0'
-    compile 'com.google.code.gson:gson:2.8.0'
-    compile 'org.jetbrains:annotations:13.0'
-    compile 'com.jpardogo.materialtabstrip:library:1.0.8'
-    compile 'com.android.support:support-v4:25.0.0'
-    compile('com.twitter.sdk.android:twitter:2.1.1') {
-        transitive = true
-    }
-    compile 'com.android.support:multidex:1.0.1'
+    compile project(':drupalSDK')
+    compile libraries.app.twitter
 }
 
 apply plugin: 'com.google.gms.google-services'

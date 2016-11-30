@@ -1,82 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/holderSpeaker"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/selector_light"
-    android:minHeight="72dp"
-    android:orientation="horizontal">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:background="@drawable/selector_light"
+  android:minHeight="72dp">
 
-    <com.ls.ui.view.FontTextView
-        android:id="@+id/txtFirstLetter"
+  <com.connfa.ui.view.FontTextView
+    android:id="@+id/txtFirstLetter"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerVertical="true"
+    android:layout_marginLeft="21dp"
+    android:textColor="@color/primary"
+    android:textSize="@dimen/text_size_large"
+    app:custom_font="@string/roboto_regular" />
+
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerVertical="true"
+    android:paddingLeft="41dp">
+
+    <com.connfa.ui.view.CircleImageView
+      android:id="@+id/imgPhoto"
+      android:layout_width="40dp"
+      android:layout_height="40dp"
+      android:layout_centerVertical="true"
+      android:layout_margin="16dp"
+      android:scaleType="centerCrop"
+      app:noImageResource="@drawable/ic_default_avatar_small" />
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_centerVertical="true"
+      android:layout_toRightOf="@+id/imgPhoto"
+      android:orientation="vertical">
+
+      <com.connfa.ui.view.FontTextView
+        android:id="@+id/txtName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="21dp"
+        android:textColor="@color/black_100"
+        android:textSize="@dimen/text_size_15"
         app:custom_font="@string/roboto_regular"
-        android:textColor="@color/primary"
-        android:textSize="@dimen/text_size_large" />
+        tools:text="Lorem ipsum" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        android:paddingLeft="41dp">
-
-        <com.ls.ui.view.CircleImageView
-            android:id="@+id/imgPhoto"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerVertical="true"
-            android:layout_margin="16dp"
-            android:scaleType="centerCrop"
-            app:noImageResource="@drawable/ic_default_avatar_small"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/imgPhoto"
-            android:orientation="vertical">
-
-            <com.ls.ui.view.FontTextView
-                android:id="@+id/txtName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black_100"
-                android:textSize="@dimen/text_size_15"
-                app:custom_font="@string/roboto_regular"
-                tools:text="Lorem ipsum" />
-
-            <com.ls.ui.view.FontTextView
-                android:id="@+id/txtOrgAndJobTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingRight="16dp"
-                android:singleLine="true"
-                app:custom_font="@string/roboto_regular"
-                android:textColor="@color/grey_200"
-                android:textSize="@dimen/text_size_13"
-                tools:text="Lorem ipsum" />
-
-        </LinearLayout>
-    </RelativeLayout>
-
-    <FrameLayout
-        android:id="@+id/divider"
-        android:layout_width="fill_parent"
+      <com.connfa.ui.view.FontTextView
+        android:id="@+id/txtOrgAndJobTitle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:visibility="invisible">
+        android:maxLines="1"
+        android:paddingRight="16dp"
+        android:textColor="@color/grey_200"
+        android:textSize="@dimen/text_size_13"
+        app:custom_font="@string/roboto_regular"
+        tools:text="Lorem ipsum" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_gravity="right"
-            android:layout_marginLeft="58dp"
-            android:background="@color/white_200" />
-    </FrameLayout>
+    </LinearLayout>
+
+  </RelativeLayout>
+
+  <FrameLayout
+    android:id="@+id/divider"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:visibility="invisible">
+
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:layout_gravity="right"
+      android:layout_marginLeft="58dp"
+      android:background="@color/white_200" />
+
+  </FrameLayout>
 
 </RelativeLayout>
