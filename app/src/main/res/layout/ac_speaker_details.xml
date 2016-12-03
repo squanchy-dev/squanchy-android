@@ -224,7 +224,7 @@
       android:background="@color/speaker" />
 
     <android.support.v7.widget.Toolbar
-      android:id="@+id/toolBar"
+      android:id="@+id/toolbar"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_below="@id/viewStatusBarTrans"

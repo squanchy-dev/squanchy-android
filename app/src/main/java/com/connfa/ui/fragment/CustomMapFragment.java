@@ -12,6 +12,7 @@ public class CustomMapFragment extends SupportMapFragment implements OnMapReadyC
 
         void onActivityCreated(GoogleMap googleMap);
     }
+
     private OnActivityCreatedListener mListener;
 
     public static CustomMapFragment newInstance(OnActivityCreatedListener listener) {

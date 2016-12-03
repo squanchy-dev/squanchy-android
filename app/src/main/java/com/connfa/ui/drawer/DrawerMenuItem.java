@@ -1,6 +1,7 @@
 package com.connfa.ui.drawer;
 
 public class DrawerMenuItem {
+
     private long id;
     private String name;
     private int iconRes;

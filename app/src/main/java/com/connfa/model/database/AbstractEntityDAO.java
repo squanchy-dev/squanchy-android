@@ -53,7 +53,7 @@ public abstract class AbstractEntityDAO<E extends AbstractEntity<I>, I> {
     public final int deleteData(I entity) {
         ILAPIDBFacade facade = getFacade();
         return facade.delete(getTableName(), getSearchCondition(),
-                             getSearchConditionArguments(entity)
+                getSearchConditionArguments(entity)
         );
     }
 
@@ -64,7 +64,7 @@ public abstract class AbstractEntityDAO<E extends AbstractEntity<I>, I> {
             facade.open();
 
             return facade.delete(getTableName(), getSearchCondition(),
-                                 getSearchConditionArguments(entity)
+                    getSearchConditionArguments(entity)
             );
         } finally {
             facade.close();
@@ -110,7 +110,7 @@ public abstract class AbstractEntityDAO<E extends AbstractEntity<I>, I> {
 
         ILAPIDBFacade facade = getFacade();
         Cursor cursor = facade.getAllRecords(getTableName(), null,
-                                             condition, arguments
+                condition, arguments
         );
 
         boolean moved = cursor.moveToFirst();
@@ -293,7 +293,7 @@ public abstract class AbstractEntityDAO<E extends AbstractEntity<I>, I> {
 
         ILAPIDBFacade facade = getFacade();
         return facade.update(getTableName(), getSearchCondition(),
-                             getSearchConditionArguments(entity.getId()), values
+                getSearchConditionArguments(entity.getId()), values
         );
     }
 
