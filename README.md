@@ -4,4 +4,4 @@ Connfa is an open source platform for conferences to provide web and native apps
 
 # Setting up the app
 
-See `docs/setup.md`.
+See [`docs/setup.md`](docs/setup.md).
