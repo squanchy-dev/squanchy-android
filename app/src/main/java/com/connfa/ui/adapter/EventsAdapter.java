@@ -312,7 +312,7 @@ public class EventsAdapter extends BaseAdapter {
     }
 
     private void fillFavorite(EventHolder holder) {
-        if (mEventMode == DrawerManager.EventMode.Favorites) {
+        if (mEventMode == DrawerManager.EventMode.FAVORITES) {
             holder.layoutTime.setBackgroundColor(Color.TRANSPARENT);
         } else {
             holder.layoutTime.setBackgroundColor(context.getResources().getColor(R.color.grey_400_trans));

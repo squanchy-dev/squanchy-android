@@ -148,7 +148,7 @@ public class EventHolderFragment extends Fragment {
     private void initData() {
         Bundle bundle = getArguments();
         if (bundle != null) {
-            int eventPos = bundle.getInt(EXTRAS_ARG_MODE, DrawerManager.EventMode.Program.ordinal());
+            int eventPos = bundle.getInt(EXTRAS_ARG_MODE, DrawerManager.EventMode.PROGRAM.ordinal());
             mEventMode = DrawerManager.EventMode.values()[eventPos];
         }
     }
@@ -172,9 +172,9 @@ public class EventHolderFragment extends Fragment {
         mTextViewNoContent = (TextView) view.findViewById(R.id.text_view_placeholder);
         mImageViewNoContent = (ImageView) view.findViewById(R.id.image_view_placeholder);
 
-        if (mEventMode == DrawerManager.EventMode.Program ||
-                mEventMode == DrawerManager.EventMode.Bofs ||
-                mEventMode == DrawerManager.EventMode.Social) {
+        if (mEventMode == DrawerManager.EventMode.PROGRAM ||
+                mEventMode == DrawerManager.EventMode.BOFS ||
+                mEventMode == DrawerManager.EventMode.SOCIAL) {
             setHasOptionsMenu(true);
         } else {
             setHasOptionsMenu(false);
@@ -197,15 +197,15 @@ public class EventHolderFragment extends Fragment {
     private List<Long> getDayList() {
         List<Long> dayList = new ArrayList<>();
         switch (mEventMode) {
-            case Bofs:
+            case BOFS:
                 BofsManager bofsManager = Model.getInstance().getBofsManager();
                 dayList.addAll(bofsManager.getBofsDays());
                 break;
-            case Social:
+            case SOCIAL:
                 SocialManager socialManager = Model.getInstance().getSocialManager();
                 dayList.addAll(socialManager.getSocialsDays());
                 break;
-            case Favorites:
+            case FAVORITES:
                 FavoriteManager favoriteManager = Model.getInstance().getFavoriteManager();
                 dayList.addAll(favoriteManager.getFavoriteEventDays());
                 break;
@@ -236,19 +236,19 @@ public class EventHolderFragment extends Fragment {
                 int imageResId = 0, textResId = 0;
 
                 switch (mEventMode) {
-                    case Program:
+                    case PROGRAM:
                         imageResId = R.drawable.ic_no_session;
                         textResId = R.string.placeholder_sessions;
                         break;
-                    case Bofs:
+                    case BOFS:
                         imageResId = R.drawable.ic_no_bofs;
                         textResId = R.string.placeholder_bofs;
                         break;
-                    case Social:
+                    case SOCIAL:
                         imageResId = R.drawable.ic_no_social_events;
                         textResId = R.string.placeholder_social_events;
                         break;
-                    case Favorites:
+                    case FAVORITES:
                         imageResId = R.drawable.ic_no_my_schedule;
                         textResId = R.string.placeholder_schedule;
                         break;
@@ -307,7 +307,7 @@ public class EventHolderFragment extends Fragment {
         for (int id : requestIds) {
             int eventModePos = UpdatesManager.convertEventIdToEventModePos(id);
             if (eventModePos == mEventMode.ordinal() ||
-                    (mEventMode == DrawerManager.EventMode.Favorites && isEventItem(id))) {
+                    (mEventMode == DrawerManager.EventMode.FAVORITES && isEventItem(id))) {
                 new LoadData().execute();
                 break;
             }
@@ -322,7 +322,7 @@ public class EventHolderFragment extends Fragment {
 
     private void updateFavorites() {
         if (getView() != null) {
-            if (mEventMode == DrawerManager.EventMode.Favorites) {
+            if (mEventMode == DrawerManager.EventMode.FAVORITES) {
                 new LoadData().execute();
             }
         }

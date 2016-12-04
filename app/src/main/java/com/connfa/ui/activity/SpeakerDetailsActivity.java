@@ -111,7 +111,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
     }
 
     private void initToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             toolbar.setTitle("");
             setSupportActionBar(toolbar);

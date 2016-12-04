@@ -1,64 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:background="@android:color/white"
+  android:orientation="vertical">
+
+  <com.astuetz.PagerSlidingTabStrip
+    android:id="@+id/pager_tab_strip"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@android:color/white"
+    android:layout_height="48dip"
+    android:textSize="13sp"
+    android:textColor="#FFF"
+    android:textStyle="normal"
+    android:background="@color/primary"
+    app:pstsDividerColor="#00000000"
+    app:pstsIndicatorColor="@color/white"
+    app:pstsTextStyle="normal"
+    app:pstsTabPaddingLeftRight="35dp"
+    app:pstsTextSelectedStyle="normal"
+    app:pstsIndicatorHeight="3dp" />
+
+  <android.support.v4.view.ViewPager
+    android:layout_below="@+id/pager_tab_strip"
+    tools:visibility="gone"
+    android:id="@+id/viewPager"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"></android.support.v4.view.ViewPager>
+
+  <LinearLayout
+    android:id="@+id/layout_placeholder"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:gravity="center_horizontal"
+    android:visibility="gone"
+    tools:visibility="visible"
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginRight="@dimen/activity_horizontal_margin"
     android:orientation="vertical">
 
-    <com.astuetz.PagerSlidingTabStrip
-        android:id="@+id/pager_tab_strip"
-        android:layout_width="match_parent"
-        android:layout_height="48dip"
-        android:textSize= "13sp"
-        android:textColor= "#FFF"
-        android:textStyle = "normal"
-        android:background="@color/primary"
-        app:pstsDividerColor="#00000000"
-        app:pstsIndicatorColor="@color/white"
-        app:pstsTextStyle = "normal"
-        app:pstsTabPaddingLeftRight ="35dp"
-        app:pstsTextSelectedStyle  ="normal"
-        app:pstsIndicatorHeight="3dp" />
+    <ImageView
+      android:id="@+id/image_view_placeholder"
+      android:layout_width="wrap_content"
+      android:layout_gravity="center"
+      tools:src="@drawable/ic_no_my_schedule"
+      android:layout_height="wrap_content" />
 
-    <android.support.v4.view.ViewPager
-        android:layout_below="@+id/pager_tab_strip"
-        tools:visibility="gone"
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </android.support.v4.view.ViewPager>
-
-    <LinearLayout
-        android:id="@+id/layout_placeholder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center_horizontal"
-        android:visibility="gone"
-        tools:visibility="visible"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/image_view_placeholder"
-            android:layout_width="wrap_content"
-            android:layout_gravity="center"
-            tools:src="@drawable/ic_no_my_schedule"
-            android:layout_height="wrap_content" />
-
-        <com.connfa.ui.view.FontTextView
-            android:id="@+id/text_view_placeholder"
-            android:layout_width="wrap_content"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="@dimen/margin_top_placeholder_text"
-            android:layout_height="wrap_content"
-            tools:text="@string/placeholder_schedule"
-            app:custom_font="@string/roboto_regular"
-            android:textSize="@dimen/text_size_placeholder"
-            android:textColor="@color/placeholder_text" />
-    </LinearLayout>
+    <com.connfa.ui.view.FontTextView
+      android:id="@+id/text_view_placeholder"
+      android:layout_width="wrap_content"
+      android:gravity="center_horizontal"
+      android:layout_marginTop="@dimen/margin_top_placeholder_text"
+      android:layout_height="wrap_content"
+      tools:text="@string/placeholder_schedule"
+      app:custom_font="@string/roboto_regular"
+      android:textSize="@dimen/text_size_placeholder"
+      android:textColor="@color/placeholder_text" />
+  </LinearLayout>
 
 </RelativeLayout>

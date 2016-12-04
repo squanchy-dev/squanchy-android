@@ -49,11 +49,11 @@ public class UpdatesManager {
     public static int convertEventIdToEventModePos(int eventModePos) {
         switch (eventModePos) {
             case PROGRAMS_REQUEST_ID:
-                return DrawerManager.EventMode.Program.ordinal();
+                return DrawerManager.EventMode.PROGRAM.ordinal();
             case BOFS_REQUEST_ID:
-                return DrawerManager.EventMode.Bofs.ordinal();
+                return DrawerManager.EventMode.BOFS.ordinal();
             case SOCIALS_REQUEST_ID:
-                return DrawerManager.EventMode.Social.ordinal();
+                return DrawerManager.EventMode.SOCIAL.ordinal();
         }
         return 0;
     }

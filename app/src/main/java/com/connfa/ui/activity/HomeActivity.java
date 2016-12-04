@@ -19,6 +19,7 @@ import com.connfa.model.UpdatesManager;
 import com.connfa.model.data.Level;
 import com.connfa.model.data.Track;
 import com.connfa.model.managers.TracksManager;
+import com.connfa.social.SocialFeedActivity;
 import com.connfa.ui.adapter.item.EventListItem;
 import com.connfa.ui.dialog.FilterDialog;
 import com.connfa.ui.dialog.IrrelevantTimezoneDialogFragment;
@@ -125,7 +126,7 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
 
     private void initToolbar() {
         mPresentTitle = getString(DrawerMenu.MENU_STRING_RES_ARRAY[0]);
-        mToolbar = (Toolbar) findViewById(R.id.toolBar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle(mPresentTitle);
         setSupportActionBar(mToolbar);
     }
@@ -258,7 +259,9 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
     private void changeFragment() {
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         DrawerMenuItem item = mAdapter.getItem(mSelectedItem);
-        if (!item.isGroup() && mFrManager != null) {
+        if (isSocialFeedAt(mSelectedItem)) {
+            startActivity(new Intent(this, SocialFeedActivity.class));
+        } else if (!item.isGroup() && mFrManager != null) {
             mFrManager.setFragment(DrawerMenu.DrawerItem.values()[mSelectedItem]);
             mPresentTitle = getString(DrawerMenu.MENU_STRING_RES_ARRAY[mSelectedItem]);
             mToolbar.setTitle(mPresentTitle);
@@ -266,12 +269,16 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
             mAdapter.setSelectedPos(mSelectedItem);
             mAdapter.notifyDataSetChanged();
 
-            analytics.trackEvent(mPresentTitle + " screen", this.getString(R.string.action_open));
+            analytics.trackEvent(mPresentTitle + " screen", getString(R.string.action_open));
         }
     }
 
+    private boolean isSocialFeedAt(int position) {
+        return DrawerMenu.DrawerItem.values()[mSelectedItem] == DrawerMenu.DrawerItem.SOCIAL_MEDIA;
+    }
+
     private void initFragmentManager() {
-        mFrManager = DrawerManager.getInstance(getSupportFragmentManager(), R.id.mainFragment);
+        mFrManager = new DrawerManager(getSupportFragmentManager(), R.id.fragment_container);
         analytics.trackEvent(getString(R.string.Sessions) + " screen", getString(R.string.action_open));
         mFrManager.setFragment(DrawerMenu.DrawerItem.PROGRAM);
     }

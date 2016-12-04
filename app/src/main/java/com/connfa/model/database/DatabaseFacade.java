@@ -14,7 +14,7 @@ class DatabaseFacade implements ILAPIDBFacade {
 
     private final Context context;
     private int openCounter = 0;
-    
+
     DatabaseFacade(Context context, DBInfo dbInfo) {
         this.context = context;
         this.dbInfo = dbInfo;
@@ -136,26 +136,26 @@ class DatabaseFacade implements ILAPIDBFacade {
 
     public Cursor getAllRecords(String table, String[] columns, String selection) {
         return db.query(true,
-                        table,
-                        columns,
-                        selection,// selection
-                        null,// selection args
-                        null,// groupBy
-                        null,// having
-                        null,// order by
-                        null);
+                table,
+                columns,
+                selection,// selection
+                null,// selection args
+                null,// groupBy
+                null,// having
+                null,// order by
+                null);
     }
 
     public Cursor getAllRecords(String table, String[] columns, String selection, String[] selectionArgs) {
         return db.query(true,
-                        table,
-                        columns,
-                        selection,// selection
-                        selectionArgs,// selection args
-                        null,// groupBy
-                        null,// having
-                        null,// order by
-                        null);
+                table,
+                columns,
+                selection,// selection
+                selectionArgs,// selection args
+                null,// groupBy
+                null,// having
+                null,// order by
+                null);
     }
 
     public String getQuery(int resId) {

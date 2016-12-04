@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical">
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:orientation="vertical">
 
-    <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:visibility="invisible"
-            android:background="@color/white_200"/>
+  <View
+    android:id="@+id/divider"
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:visibility="invisible"
+    android:background="@color/white_200" />
 
-    <com.connfa.ui.view.FontTextView
-            android:id="@+id/txtTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/selector_light"
-            android:gravity="center_vertical"
-            app:custom_font="@string/roboto_regular"
-            android:paddingBottom="16dp"
-            android:paddingLeft="24dp"
-            android:paddingRight="24dp"
-            android:paddingTop="16dp"
-            android:textColor="@color/black_100"
-            android:textSize="@dimen/text_size_medium"
-            tools:text="Lorem ipsum"/>
+  <com.connfa.ui.view.FontTextView
+    android:id="@+id/txtTitle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/selector_light"
+    android:gravity="center_vertical"
+    app:custom_font="@string/roboto_regular"
+    android:paddingBottom="16dp"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp"
+    android:paddingTop="16dp"
+    android:textColor="@color/black_100"
+    android:textSize="@dimen/text_size_medium"
+    tools:text="Lorem ipsum" />
 
 </LinearLayout>

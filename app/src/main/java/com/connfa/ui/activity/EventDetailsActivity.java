@@ -147,7 +147,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
         mToolbarTitle.setAlpha(0f);
         mViewToolbar.setAlpha(0f);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             toolbar.setTitle("");
             setSupportActionBar(toolbar);

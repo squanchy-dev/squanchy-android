@@ -10,7 +10,7 @@
 
   <application
     android:name="com.connfa.ConnfaApplication"
-    android:theme="@style/Theme.DrupalCon.Home"
+    android:theme="@style/Theme.Connfa.Home"
     android:allowBackup="true"
     android:fullBackupContent="false"
     android:icon="@drawable/ic_launcher"
@@ -20,7 +20,7 @@
 
     <activity
       android:name="com.connfa.ui.activity.SplashActivity"
-      android:theme="@style/Theme.DrupalCon.Home"
+      android:theme="@style/Theme.Connfa.Home"
       android:label="@string/app_name"
       android:screenOrientation="portrait">
       <intent-filter>
@@ -31,23 +31,29 @@
 
     <activity
       android:name="com.connfa.ui.activity.HomeActivity"
-      android:theme="@style/Theme.DrupalCon.Home"
+      android:theme="@style/Theme.Connfa.Home"
       android:launchMode="singleTask"
       android:screenOrientation="portrait" />
 
     <activity
       android:name="com.connfa.ui.activity.SpeakerDetailsActivity"
-      android:theme="@style/Theme.DrupalCon.Speaker"
+      android:theme="@style/Theme.Connfa.Speaker"
       android:screenOrientation="portrait" />
 
     <activity
       android:name="com.connfa.ui.activity.AboutDetailsActivity"
-      android:theme="@style/Theme.DrupalCon.About"
+      android:theme="@style/Theme.Connfa.About"
       android:screenOrientation="portrait" />
 
     <activity
       android:name="com.connfa.ui.activity.EventDetailsActivity"
-      android:theme="@style/Theme.DrupalCon.Event"
+      android:theme="@style/Theme.Connfa.Event"
+      android:screenOrientation="portrait" />
+
+    <activity
+      android:name="com.connfa.social.SocialFeedActivity"
+      android:label="@string/activity_social_feed"
+      android:theme="@style/Theme.Connfa.SocialFeed"
       android:screenOrientation="portrait" />
 
     <receiver android:name="com.connfa.receiver.NotifyReceiver" />
