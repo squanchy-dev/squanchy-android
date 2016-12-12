@@ -26,17 +26,18 @@ local.properties
 *.iml
 *.ipr
 *.iws
-**/.idea/shelf
-**/.idea/workspace.xml
-**/.idea/tasks.xml
-**/.idea/datasources.xml
-**/.idea/dataSources.ids
-**/.idea/gradle.xml
-**/.idea/misc.xml
-**/.idea/modules.xml
-**/.idea/libraries
-**/.idea/dictionaries
-**/.idea/runConfigurations.xml
+**/.idea/
+
+# IDEA/Android Studio Ignore exceptions
+!/.idea/vcs.xml
+!/.idea/fileTemplates/
+!/.idea/inspectionProfiles/
+!/.idea/scopes/
+!/.idea/codeStyleSettings.xml
+!/.idea/.name
+!/.idea/encodings.xml
+!/.idea/copyright/
+!/.idea/compiler.xml
 
 # OSX
 *.DS_Store
