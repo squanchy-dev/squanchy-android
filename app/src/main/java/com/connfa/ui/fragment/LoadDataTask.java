@@ -10,18 +10,17 @@ import com.connfa.model.managers.ProgramManager;
 import com.connfa.model.managers.SocialManager;
 import com.connfa.ui.drawer.DrawerManager;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
 class LoadDataTask extends AsyncTask<Void, Void, List<Long>> {
 
     private final DrawerManager.EventMode eventMode;
-    private final WeakReference<LoadDataTaskCallback> callbackRef;
+    private final LoadDataTaskCallback callback;
 
     LoadDataTask(DrawerManager.EventMode eventMode, LoadDataTaskCallback callback) {
         this.eventMode = eventMode;
-        this.callbackRef = new WeakReference<>(callback);
+        this.callback = callback;
     }
 
     @Override
@@ -60,7 +59,6 @@ class LoadDataTask extends AsyncTask<Void, Void, List<Long>> {
 
     @Override
     protected void onPostExecute(@Nullable List<Long> result) {
-        LoadDataTaskCallback callback = callbackRef.get();
         if (result != null && callback != null) {
             callback.onDataLoaded(result);
         }
