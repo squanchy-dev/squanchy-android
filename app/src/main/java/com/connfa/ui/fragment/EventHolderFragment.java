@@ -100,25 +100,6 @@ public class EventHolderFragment extends Fragment {
         return true;
     }
 
-//    @Override
-//    public void onActivityCreated(Bundle savedInstanceState) {
-//        super.onActivityCreated(savedInstanceState);
-//        Model.createInstance().getUpdatesManager().registerUpdateListener(updateReceiver);
-//        favoriteReceiver.register(getActivity());
-//
-//        initData();
-//        initView();
-//        new LoadData().execute();
-//    }
-//
-//
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//        Model.createInstance().getUpdatesManager().unregisterUpdateListener(updateReceiver);
-//        favoriteReceiver.unregister(getActivity());
-//    }
-
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -177,72 +158,6 @@ public class EventHolderFragment extends Fragment {
             setHasOptionsMenu(true);
         } else {
             setHasOptionsMenu(false);
-        }
-    }
-
-    private void updateViews(List<Long> dayList) {
-
-//        if(!isResumed()){
-//            return;
-//        }
-
-        if (dayList.isEmpty()) {
-            tabStrip.setVisibility(View.GONE);
-            layoutPlaceholder.setVisibility(View.VISIBLE);
-
-            if (isFilterUsed) {
-                emptyImageView.setVisibility(View.GONE);
-                emptyLabel.setText(getString(R.string.placeholder_no_matching_events));
-            } else {
-                emptyImageView.setVisibility(View.VISIBLE);
-
-                int imageResId = 0, textResId = 0;
-
-                switch (eventMode) {
-                    case PROGRAM:
-                        imageResId = R.drawable.ic_no_session;
-                        textResId = R.string.placeholder_sessions;
-                        break;
-                    case BOFS:
-                        imageResId = R.drawable.ic_no_bofs;
-                        textResId = R.string.placeholder_bofs;
-                        break;
-                    case SOCIAL:
-                        imageResId = R.drawable.ic_no_social_events;
-                        textResId = R.string.placeholder_social_events;
-                        break;
-                    case FAVORITES:
-                        imageResId = R.drawable.ic_no_my_schedule;
-                        textResId = R.string.placeholder_schedule;
-                        break;
-                }
-
-                emptyImageView.setImageResource(imageResId);
-                emptyLabel.setText(getString(textResId));
-            }
-        } else {
-            layoutPlaceholder.setVisibility(View.GONE);
-            tabStrip.setVisibility(View.VISIBLE);
-        }
-
-        adapter.setData(dayList, eventMode);
-        switchToCurrentDay(dayList);
-    }
-
-    private void switchToCurrentDay(List<Long> days) {
-        FragmentActivity activity = getActivity();
-        if (activity == null) {
-            Timber.e("Trying to switch day while not attached to an activity");
-            return;
-        }
-
-        int item = 0;
-        for (Long millis : days) {
-            if (DateUtils.isToday(activity, millis) || DateUtils.isAfterCurrentDate(millis)) {
-                viewPager.setCurrentItem(item);
-                return;
-            }
-            item++;
         }
     }
 
@@ -308,8 +223,71 @@ public class EventHolderFragment extends Fragment {
     private final LoadDataTask.LoadDataTaskCallback loadDataCallback = new LoadDataTask.LoadDataTaskCallback() {
         @Override
         public void onDataLoaded(List<Long> result) {
-            updateViews(result);
+            if (isResumed()) {
+                updateViews(result);
+            }
         }
     };
+
+    private void updateViews(List<Long> dayList) {
+        if (dayList.isEmpty()) {
+            tabStrip.setVisibility(View.GONE);
+            layoutPlaceholder.setVisibility(View.VISIBLE);
+
+            if (isFilterUsed) {
+                emptyImageView.setVisibility(View.GONE);
+                emptyLabel.setText(getString(R.string.placeholder_no_matching_events));
+            } else {
+                emptyImageView.setVisibility(View.VISIBLE);
+
+                int imageResId = 0, textResId = 0;
+
+                switch (eventMode) {
+                    case PROGRAM:
+                        imageResId = R.drawable.ic_no_session;
+                        textResId = R.string.placeholder_sessions;
+                        break;
+                    case BOFS:
+                        imageResId = R.drawable.ic_no_bofs;
+                        textResId = R.string.placeholder_bofs;
+                        break;
+                    case SOCIAL:
+                        imageResId = R.drawable.ic_no_social_events;
+                        textResId = R.string.placeholder_social_events;
+                        break;
+                    case FAVORITES:
+                        imageResId = R.drawable.ic_no_my_schedule;
+                        textResId = R.string.placeholder_schedule;
+                        break;
+                }
+
+                emptyImageView.setImageResource(imageResId);
+                emptyLabel.setText(getString(textResId));
+            }
+        } else {
+            layoutPlaceholder.setVisibility(View.GONE);
+            tabStrip.setVisibility(View.VISIBLE);
+        }
+
+        adapter.setData(dayList, eventMode);
+        switchToCurrentDay(dayList);
+    }
+
+    private void switchToCurrentDay(List<Long> days) {
+        FragmentActivity activity = getActivity();
+        if (activity == null) {
+            Timber.e("Trying to switch day while not attached to an activity");
+            return;
+        }
+
+        int item = 0;
+        for (Long millis : days) {
+            if (DateUtils.isToday(activity, millis) || DateUtils.isAfterCurrentDate(millis)) {
+                viewPager.setCurrentItem(item);
+                return;
+            }
+            item++;
+        }
+    }
 
 }
