@@ -55,7 +55,7 @@ public class DateUtils {
         return (todayYear == year && todayMonth == month && todayDay == day);
     }
 
-    public static boolean isAfterCurrentFate(long millis) {
+    public static boolean isAfterCurrentDate(long millis) {
         return millis > System.currentTimeMillis();
     }
 
