@@ -34,11 +34,13 @@ public class FloorPlanFragment extends Fragment {
     private Spinner floorSelector;
     private List<FloorPlan> plans;
     private SubsamplingScaleImageView floorImage;
+    private LoadPlansTask loadPlansTask;
 
     @Override
     public void onStart() {
         super.onStart();
         Model.getInstance().getUpdatesManager().registerUpdateListener(updateListener);
+        loadFloorPlans();
     }
 
     @Override
@@ -47,24 +49,24 @@ public class FloorPlanFragment extends Fragment {
         mLayoutContent = result.findViewById(R.id.layout_content);
         mLayoutPlaceholder = result.findViewById(R.id.layout_placeholder);
         floorSelector = (Spinner) result.findViewById(R.id.spinner);
-        floorSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                loadPlanImage(plans.get(position));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        floorSelector.setOnItemSelectedListener(itemSelectedListener);
 
         floorImage = (SubsamplingScaleImageView) result.findViewById(R.id.floor_plan_image);
 
-        new LoadPlansTask(loadPlansCallback).execute();
-
         return result;
     }
+
+    private final AdapterView.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            loadPlanImage(plans.get(position));
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+            // Do nothing
+        }
+    };
 
     private void loadPlanImage(FloorPlan floorPlan) {
         floorSelector.setEnabled(false);
@@ -82,6 +84,29 @@ public class FloorPlanFragment extends Fragment {
             floorImage.resetScaleAndCenter();
         }
     };
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Model.getInstance().getUpdatesManager().unregisterUpdateListener(updateListener);
+    }
+
+    private final UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener() {
+        @Override
+        public void onDataUpdated(List<Integer> requestIds) {
+            if (requestIds.contains(UpdatesManager.FLOOR_PLANS_REQUEST_ID)) {
+                loadFloorPlans();
+            }
+        }
+    };
+
+    private void loadFloorPlans() {
+        if (loadPlansTask != null) {
+            loadPlansTask.cancel(true);
+        }
+        loadPlansTask = new LoadPlansTask(loadPlansCallback);
+        loadPlansTask.execute();
+    }
 
     private final LoadPlansTask.LoadPlansTaskCallback loadPlansCallback = new LoadPlansTask.LoadPlansTaskCallback() {
         @Override
@@ -112,22 +137,6 @@ public class FloorPlanFragment extends Fragment {
         floorSelector.setVisibility(floorPlans.isEmpty() ? View.INVISIBLE : View.VISIBLE);
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        Model.getInstance().getUpdatesManager().unregisterUpdateListener(updateListener);
-    }
-
-    private final UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener() {
-        @Override
-        public void onDataUpdated(List<Integer> requestIds) {
-
-            if (requestIds.contains(UpdatesManager.FLOOR_PLANS_REQUEST_ID)) {
-                new LoadPlansTask(loadPlansCallback).execute();
-            }
-        }
-    };
-
     private static class LoadPlansTask extends AsyncTask<Void, Void, List<FloorPlan>> {
 
         private final LoadPlansTaskCallback callback;
@@ -143,7 +152,7 @@ public class FloorPlanFragment extends Fragment {
 
         @Override
         protected void onPostExecute(@Nullable List<FloorPlan> floorPlans) {
-            if (floorPlans != null) {
+            if (floorPlans != null && !isCancelled()) {
                 callback.onPlansLoaded(floorPlans);
             }
         }
@@ -176,7 +185,7 @@ public class FloorPlanFragment extends Fragment {
 
         @Override
         protected void onPostExecute(@Nullable Bitmap planImage) {
-            if (planImage != null) {
+            if (planImage != null && !isCancelled()) {
                 callback.onPlanImageLoaded(planImage);
             }
         }
