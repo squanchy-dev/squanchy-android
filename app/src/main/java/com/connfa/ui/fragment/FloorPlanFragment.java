@@ -95,18 +95,22 @@ public class FloorPlanFragment extends Fragment {
                 mLayoutContent.setVisibility(View.VISIBLE);
                 mLayoutPlaceholder.setVisibility(View.GONE);
 
-                List<String> names = new ArrayList<>(floorPlans.size());
-                for (FloorPlan plan : floorPlans) {
-                    names.add(plan.getName());
-                }
-
-                FloorSelectorAdapter floorsAdapter = new FloorSelectorAdapter(floorSelector.getContext(), names);
-                floorSelector.setAdapter(floorsAdapter);
-
-                floorSelector.setVisibility(floorPlans.isEmpty() ? View.INVISIBLE : View.VISIBLE);
+                display(floorPlans);
             }
         }
     };
+
+    private void display(List<FloorPlan> floorPlans) {
+        List<String> names = new ArrayList<>(floorPlans.size());
+        for (FloorPlan plan : floorPlans) {
+            names.add(plan.getName());
+        }
+
+        FloorSelectorAdapter floorsAdapter = new FloorSelectorAdapter(floorSelector.getContext(), names);
+        floorSelector.setAdapter(floorsAdapter);
+
+        floorSelector.setVisibility(floorPlans.isEmpty() ? View.INVISIBLE : View.VISIBLE);
+    }
 
     @Override
     public void onStop() {
