@@ -35,27 +35,10 @@ public class FloorPlanFragment extends Fragment {
     private List<FloorPlan> plans;
     private SubsamplingScaleImageView floorImage;
 
-    private UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener() {
-        @Override
-        public void onDataUpdated(List<Integer> requestIds) {
-
-            if (requestIds.contains(UpdatesManager.FLOOR_PLANS_REQUEST_ID)) {
-                new LoadPlansTask(loadPlansCallback).execute();
-            }
-
-        }
-    };
-
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onStart() {
+        super.onStart();
         Model.getInstance().getUpdatesManager().registerUpdateListener(updateListener);
-    }
-
-    @Override
-    public void onDestroy() {
-        Model.getInstance().getUpdatesManager().unregisterUpdateListener(updateListener);
-        super.onDestroy();
     }
 
     @Override
@@ -121,6 +104,22 @@ public class FloorPlanFragment extends Fragment {
                 floorSelector.setAdapter(floorsAdapter);
 
                 floorSelector.setVisibility(floorPlans.isEmpty() ? View.INVISIBLE : View.VISIBLE);
+            }
+        }
+    };
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Model.getInstance().getUpdatesManager().unregisterUpdateListener(updateListener);
+    }
+
+    private final UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener() {
+        @Override
+        public void onDataUpdated(List<Integer> requestIds) {
+
+            if (requestIds.contains(UpdatesManager.FLOOR_PLANS_REQUEST_ID)) {
+                new LoadPlansTask(loadPlansCallback).execute();
             }
         }
     };
