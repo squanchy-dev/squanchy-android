@@ -40,7 +40,7 @@ public class FloorPlanFragment extends Fragment {
         public void onDataUpdated(List<Integer> requestIds) {
 
             if (requestIds.contains(UpdatesManager.FLOOR_PLANS_REQUEST_ID)) {
-                new LoadPlansTask().execute();
+                new LoadPlansTask(loadPlansCallback).execute();
             }
 
         }
@@ -60,7 +60,6 @@ public class FloorPlanFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View result = inflater.inflate(R.layout.fr_floor_plan, container, false);
         mLayoutContent = result.findViewById(R.id.layout_content);
         mLayoutPlaceholder = result.findViewById(R.id.layout_placeholder);
@@ -68,7 +67,7 @@ public class FloorPlanFragment extends Fragment {
         floorSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                new LoadPlanImageTask().execute(plans.get(position));
+                loadPlanImage(plans.get(position));
             }
 
             @Override
@@ -79,24 +78,34 @@ public class FloorPlanFragment extends Fragment {
 
         floorImage = (SubsamplingScaleImageView) result.findViewById(R.id.floor_plan_image);
 
-        new LoadPlansTask().execute();
+        new LoadPlansTask(loadPlansCallback).execute();
 
         return result;
     }
 
-    private class LoadPlansTask extends AsyncTask<Void, Void, List<FloorPlan>> {
+    private void loadPlanImage(FloorPlan floorPlan) {
+        floorSelector.setEnabled(false);
+        floorSelector.setClickable(false);
+        new LoadPlanImageTask(loadPlanImageCallback)
+                .execute(floorPlan);
+    }
 
+    private final LoadPlanImageTask.LoadPlanImageTaskCallback loadPlanImageCallback = new LoadPlanImageTask.LoadPlanImageTaskCallback() {
         @Override
-        protected List<FloorPlan> doInBackground(Void... params) {
-            return Model.getInstance().getFloorPlansManager().getFloorPlans();
+        public void onPlanImageLoaded(Bitmap planImage) {
+            floorSelector.setEnabled(true);
+            floorSelector.setClickable(true);
+            floorImage.setImage(ImageSource.bitmap(planImage));
+            floorImage.resetScaleAndCenter();
         }
+    };
 
+    private final LoadPlansTask.LoadPlansTaskCallback loadPlansCallback = new LoadPlansTask.LoadPlansTaskCallback() {
         @Override
-        protected void onPostExecute(List<FloorPlan> floorPlans) {
-            super.onPostExecute(floorPlans);
+        public void onPlansLoaded(List<FloorPlan> floorPlans) {
             plans = floorPlans;
 
-            if (plans == null || plans.isEmpty()) {
+            if (floorPlans == null || floorPlans.isEmpty()) {
                 mLayoutContent.setVisibility(View.GONE);
                 mLayoutPlaceholder.setVisibility(View.VISIBLE);
             } else {
@@ -104,49 +113,74 @@ public class FloorPlanFragment extends Fragment {
                 mLayoutPlaceholder.setVisibility(View.GONE);
 
                 List<String> names = new ArrayList<>(floorPlans.size());
-                for (FloorPlan plan : plans) {
+                for (FloorPlan plan : floorPlans) {
                     names.add(plan.getName());
                 }
 
                 FloorSelectorAdapter floorsAdapter = new FloorSelectorAdapter(floorSelector.getContext(), names);
                 floorSelector.setAdapter(floorsAdapter);
 
-                floorSelector.setVisibility(plans.isEmpty() ? View.INVISIBLE : View.VISIBLE);
+                floorSelector.setVisibility(floorPlans.isEmpty() ? View.INVISIBLE : View.VISIBLE);
             }
+        }
+    };
+
+    private static class LoadPlansTask extends AsyncTask<Void, Void, List<FloorPlan>> {
+
+        private final LoadPlansTaskCallback callback;
+
+        LoadPlansTask(LoadPlansTaskCallback callback) {
+            this.callback = callback;
+        }
+
+        @Override
+        protected List<FloorPlan> doInBackground(Void... params) {
+            return Model.getInstance().getFloorPlansManager().getFloorPlans();
+        }
+
+        @Override
+        protected void onPostExecute(@Nullable List<FloorPlan> floorPlans) {
+            if (floorPlans != null) {
+                callback.onPlansLoaded(floorPlans);
+            }
+        }
+
+        interface LoadPlansTaskCallback {
+
+            void onPlansLoaded(List<FloorPlan> floorPlans);
         }
     }
 
-    private class LoadPlanImageTask extends AsyncTask<FloorPlan, Void, ImageSource> {
+    private static class LoadPlanImageTask extends AsyncTask<FloorPlan, Void, Bitmap> {
 
-        @Override
-        protected void onPreExecute() {
-            floorSelector.setEnabled(false);
-            floorSelector.setClickable(false);
+        private final LoadPlanImageTaskCallback callback;
+
+        LoadPlanImageTask(LoadPlanImageTaskCallback callback) {
+            this.callback = callback;
         }
 
         @Override
-        protected ImageSource doInBackground(FloorPlan... params) {
-            Bitmap planImage = Model.getInstance()
+        @Nullable
+        protected Bitmap doInBackground(FloorPlan... params) {
+            return Model.getInstance()
                     .getFloorPlansManager()
                     .getImageForPlan(
                             params[0],
                             RECOMMENDED_FLOOR_IMAGE_WIDTH,
                             RECOMMENDED_FLOOR_IMAGE_HEIGHT
                     );
-
-            if (planImage != null) {
-                return ImageSource.bitmap(planImage);
-            }
-            return null;
         }
 
         @Override
-        protected void onPostExecute(ImageSource imageSource) {
-            floorSelector.setEnabled(true);
-            floorSelector.setClickable(true);
-            floorImage.setImage(imageSource);
-            floorImage.resetScaleAndCenter();
+        protected void onPostExecute(@Nullable Bitmap planImage) {
+            if (planImage != null) {
+                callback.onPlanImageLoaded(planImage);
+            }
+        }
+
+        interface LoadPlanImageTaskCallback {
+
+            void onPlanImageLoaded(Bitmap planImage);
         }
     }
-
 }
