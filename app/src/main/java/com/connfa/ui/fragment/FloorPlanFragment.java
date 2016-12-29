@@ -35,6 +35,7 @@ public class FloorPlanFragment extends Fragment {
     private List<FloorPlan> plans;
     private SubsamplingScaleImageView floorImage;
     private LoadPlansTask loadPlansTask;
+    private LoadPlanImageTask loadPlanImageTask;
 
     @Override
     public void onStart() {
@@ -69,10 +70,15 @@ public class FloorPlanFragment extends Fragment {
     };
 
     private void loadPlanImage(FloorPlan floorPlan) {
+        if (loadPlanImageTask != null) {
+            loadPlanImageTask.cancel(true);
+        }
+
         floorSelector.setEnabled(false);
         floorSelector.setClickable(false);
-        new LoadPlanImageTask(loadPlanImageCallback)
-                .execute(floorPlan);
+
+        loadPlanImageTask = new LoadPlanImageTask(loadPlanImageCallback);
+        loadPlanImageTask.execute(floorPlan);
     }
 
     private final LoadPlanImageTask.LoadPlanImageTaskCallback loadPlanImageCallback = new LoadPlanImageTask.LoadPlanImageTaskCallback() {
