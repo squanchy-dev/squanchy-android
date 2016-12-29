@@ -30,7 +30,8 @@ public class FloorPlanFragment extends Fragment {
 
     public static final String TAG = "FloorPlanFragment";
 
-    private View mLayoutContent, mLayoutPlaceholder;
+    private View contentView;
+    private View placeholderView;
     private Spinner floorSelector;
     private List<FloorPlan> plans;
     private SubsamplingScaleImageView floorImage;
@@ -47,8 +48,8 @@ public class FloorPlanFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View result = inflater.inflate(R.layout.fr_floor_plan, container, false);
-        mLayoutContent = result.findViewById(R.id.layout_content);
-        mLayoutPlaceholder = result.findViewById(R.id.layout_placeholder);
+        contentView = result.findViewById(R.id.layout_content);
+        placeholderView = result.findViewById(R.id.layout_placeholder);
         floorSelector = (Spinner) result.findViewById(R.id.spinner);
         floorSelector.setOnItemSelectedListener(itemSelectedListener);
 
@@ -120,11 +121,11 @@ public class FloorPlanFragment extends Fragment {
             plans = floorPlans;
 
             if (floorPlans == null || floorPlans.isEmpty()) {
-                mLayoutContent.setVisibility(View.GONE);
-                mLayoutPlaceholder.setVisibility(View.VISIBLE);
+                contentView.setVisibility(View.GONE);
+                placeholderView.setVisibility(View.VISIBLE);
             } else {
-                mLayoutContent.setVisibility(View.VISIBLE);
-                mLayoutPlaceholder.setVisibility(View.GONE);
+                contentView.setVisibility(View.VISIBLE);
+                placeholderView.setVisibility(View.GONE);
 
                 display(floorPlans);
             }
