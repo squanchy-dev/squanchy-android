@@ -39,13 +39,6 @@ public class FloorPlanFragment extends Fragment {
     private LoadPlanImageTask loadPlanImageTask;
 
     @Override
-    public void onStart() {
-        super.onStart();
-        Model.getInstance().getUpdatesManager().registerUpdateListener(updateListener);
-        loadFloorPlans();
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View result = inflater.inflate(R.layout.fr_floor_plan, container, false);
         contentView = result.findViewById(R.id.layout_content);
@@ -56,6 +49,13 @@ public class FloorPlanFragment extends Fragment {
         floorImage = (SubsamplingScaleImageView) result.findViewById(R.id.floor_plan_image);
 
         return result;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Model.getInstance().getUpdatesManager().registerUpdateListener(updateListener);
+        loadFloorPlans();
     }
 
     private final AdapterView.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {
