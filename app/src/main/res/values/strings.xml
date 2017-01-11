@@ -44,7 +44,8 @@
   <string name="dont_miss_it">Don\'t miss it!</string>
   <string name="twenty_four_hours">24 HOURS</string>
   <string name="Attention">Attention</string>
-  <string name="start_in_5_minutes_in">"In 5 minutes, in "</string>
+  <string name="start_in_5_minutes_in_place">"In 5 minutes, in %s"</string>
+  <string name="start_in_5_minutes_in_place_speakers">"In 5 minutes, in %1$s\n%2$s"</string>
   <string name="to">to %s</string>
   <string name="speaker_separator">", "</string>
   <string name="css"><![CDATA[<link rel=\'stylesheet\' href=\'css/style.css\' type=\'text/css\'>]]></string>

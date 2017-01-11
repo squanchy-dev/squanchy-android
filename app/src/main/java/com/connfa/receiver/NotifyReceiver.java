@@ -64,13 +64,12 @@ public class NotifyReceiver extends BroadcastReceiver {
     }
 
     private CharSequence createContentText(Context context, EventDetailsEvent event) {
-        return context.getString(R.string.start_in_5_minutes_in) + event.getPlace();
+        return context.getString(R.string.start_in_5_minutes_in_place, event.getPlace());
     }
 
     private CharSequence createBigText(Context context, EventDetailsEvent event, List<Speaker> speakerList) {
         String speakersNames = createSpeakersNames(speakerList);
-        return context.getString(R.string.start_in_5_minutes_in) + event.getPlace()
-                + "\n" + speakersNames;
+        return context.getString(R.string.start_in_5_minutes_in_place_speakers,  event.getPlace(), speakersNames);
     }
 
     private String createSpeakersNames(List<Speaker> speakerList) {
