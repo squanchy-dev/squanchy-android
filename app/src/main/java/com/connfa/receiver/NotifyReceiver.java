@@ -77,16 +77,23 @@ public class NotifyReceiver extends BroadcastReceiver {
             return "";
         }
         StringBuilder sb = new StringBuilder("by ");
-        for (int i = 0; i < speakerList.size() - 1; i++) {
+        for (int i = 0; i < speakerList.size(); i++) {
             sb.append(createSpeakerFullName(speakerList.get(i)));
-            if (i < speakerList.size() - 2) {
+            if (isBeforeSecondToLast(speakerList, i)) {
                 sb.append(", ");
-            } else if (i == speakerList.size() - 2) {
+            } else if (isSecondToLast(speakerList, i)) {
                 sb.append(" and ");
             }
         }
-        sb.append(createSpeakerFullName(speakerList.get(speakerList.size() - 1)));
         return sb.toString();
+    }
+
+    private boolean isBeforeSecondToLast(List<Speaker> speakerList, int i) {
+        return i < speakerList.size() - 2;
+    }
+
+    private boolean isSecondToLast(List<Speaker> speakerList, int i) {
+        return i == speakerList.size() - 2;
     }
 
     private String createSpeakerFullName(Speaker speaker) {
