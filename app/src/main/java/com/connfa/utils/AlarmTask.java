@@ -5,7 +5,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
-import com.connfa.R;
 import com.connfa.model.data.EventDetailsEvent;
 import com.connfa.receiver.NotifyReceiver;
 
@@ -13,7 +12,6 @@ public class AlarmTask implements Runnable {
 
     public static final String EXTRA_ID = "EXTRA_ID";
     public static final String EXTRA_DAY = "EXTRA_DAY";
-    public static final String EXTRA_TEXT = "EXTRA_TEXT";
     private static final int FIVE_MINUTES = 5 * 60 * 1000;
 
     private final AlarmManager am;
@@ -36,8 +34,6 @@ public class AlarmTask implements Runnable {
         intent.putExtra(EXTRA_ID, event.getEventId());
         intent.putExtra(EXTRA_DAY, day);
 
-        String notifyText = event.getEventName() + context.getString(R.string.start_in_5_minutes);
-        intent.putExtra(EXTRA_TEXT, notifyText);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int) event.getEventId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         am.set(AlarmManager.RTC_WAKEUP, startMillis - FIVE_MINUTES, pendingIntent);
