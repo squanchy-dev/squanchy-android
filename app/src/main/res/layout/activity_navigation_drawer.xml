@@ -5,7 +5,7 @@
   android:layout_height="match_parent">
 
   <FrameLayout
-    android:id="@+id/content_root"
+    android:id="@+id/navigation_drawer_main_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
 
