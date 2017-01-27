@@ -6,13 +6,14 @@ import com.connfa.model.Model;
 import com.connfa.model.dao.TrackDao;
 import com.connfa.model.data.Level;
 import com.connfa.model.data.Track;
-import com.connfa.model.requests.TracksRequest;
-import com.ls.drupal.AbstractBaseDrupalEntity;
+import com.connfa.service.ConnfaRepository;
 import com.ls.drupal.DrupalClient;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import io.reactivex.Observable;
 
 public class TracksManager extends SynchronousItemManager<Track.Holder, String> {
 
@@ -24,17 +25,12 @@ public class TracksManager extends SynchronousItemManager<Track.Holder, String> 
     }
 
     @Override
-    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client) {
-        return new TracksRequest(getContext(), client);
-    }
-
-    @Override
     protected String getEntityRequestTag() {
         return "tracks";
     }
 
     @Override
-    protected boolean storeResponse(Track.Holder requestResponse, String tag) {
+    public boolean storeResponse(Track.Holder requestResponse, String tag) {
         List<Track> tracks = requestResponse.getTracks();
         if (tracks == null) {
             return false;
@@ -49,6 +45,11 @@ public class TracksManager extends SynchronousItemManager<Track.Holder, String> 
             }
         }
         return true;
+    }
+
+    @Override
+    protected Observable<Track.Holder> doFetch(ConnfaRepository repository) {
+        return repository.tracks();
     }
 
     public List<Track> getTracks() {

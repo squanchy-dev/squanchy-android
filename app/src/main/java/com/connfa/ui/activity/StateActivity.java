@@ -29,6 +29,12 @@ public abstract class StateActivity extends AppCompatActivity implements UpdateC
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Model.getInstance().getUpdatesManager().close();
+    }
+
     private void checkForUpdates() {
         UpdatesManager manager = Model.getInstance().getUpdatesManager();
         manager.startLoading(this);

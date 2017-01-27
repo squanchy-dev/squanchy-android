@@ -38,23 +38,18 @@ public abstract class AbstractMultipartDrupalEntity extends AbstractBaseDrupalEn
      */
 	public AbstractMultipartDrupalEntity(DrupalClient client)
 	{
-		super(client);		
+		super(client);
 	}
-	
+
 	@Override
 	public @NonNull
     Object getManagedData()
-	{		
+	{
 		return this;
 	}
 
     @Override
     public ResponseData pullFromServer(boolean synchronous, Object tag, OnEntityRequestListener listener) {
-        throw new UnsupportedOperationException("This operation isn't supported by multipart entity");
-    }
-
-    @Override
-    public ResponseData patchServerData(boolean synchronous, Class<?> resultClass, Object tag, OnEntityRequestListener listener) throws IllegalStateException {
         throw new UnsupportedOperationException("This operation isn't supported by multipart entity");
     }
 

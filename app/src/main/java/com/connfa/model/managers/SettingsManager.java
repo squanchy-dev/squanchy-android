@@ -4,9 +4,10 @@ import android.content.Context;
 
 import com.connfa.model.PreferencesManager;
 import com.connfa.model.data.SettingsHolder;
-import com.connfa.model.requests.SettingsRequest;
-import com.ls.drupal.AbstractBaseDrupalEntity;
+import com.connfa.service.ConnfaRepository;
 import com.ls.drupal.DrupalClient;
+
+import io.reactivex.Observable;
 
 public class SettingsManager extends SynchronousItemManager<SettingsHolder, String> {
 
@@ -18,21 +19,21 @@ public class SettingsManager extends SynchronousItemManager<SettingsHolder, Stri
     }
 
     @Override
-    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client) {
-        return new SettingsRequest(getContext(), client);
-    }
-
-    @Override
     protected String getEntityRequestTag() {
         return "settings";
     }
 
     @Override
-    protected boolean storeResponse(SettingsHolder requestResponse, String tag) {
+    public boolean storeResponse(SettingsHolder requestResponse, String tag) {
         String timeZone = requestResponse.getSettings().getTimeZone();
         preferencesManager.saveTimeZone(timeZone);
         String searchQuery = requestResponse.getSettings().getTwitterSearchQuery();
         preferencesManager.saveTwitterSearchQuery(searchQuery);
         return true;
+    }
+
+    @Override
+    protected Observable<SettingsHolder> doFetch(ConnfaRepository repository) {
+        return repository.settings();
     }
 }

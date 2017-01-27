@@ -5,11 +5,12 @@ import android.content.Context;
 import com.connfa.model.dao.EventDao;
 import com.connfa.model.dao.SpeakerDao;
 import com.connfa.model.data.Speaker;
-import com.connfa.model.requests.SpeakersRequest;
-import com.ls.drupal.AbstractBaseDrupalEntity;
+import com.connfa.service.ConnfaRepository;
 import com.ls.drupal.DrupalClient;
 
 import java.util.List;
+
+import io.reactivex.Observable;
 
 public class SpeakerManager extends SynchronousItemManager<Speaker.Holder, String> {
 
@@ -21,17 +22,12 @@ public class SpeakerManager extends SynchronousItemManager<Speaker.Holder, Strin
     }
 
     @Override
-    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client) {
-        return new SpeakersRequest(getContext(), client);
-    }
-
-    @Override
     protected String getEntityRequestTag() {
         return "speakers";
     }
 
     @Override
-    protected boolean storeResponse(Speaker.Holder requestResponse, String tag) {
+    public boolean storeResponse(Speaker.Holder requestResponse, String tag) {
         List<Speaker> speakers = requestResponse.getSpeakers();
         if (speakers == null) {
             return false;
@@ -49,6 +45,11 @@ public class SpeakerManager extends SynchronousItemManager<Speaker.Holder, Strin
         }
 
         return true;
+    }
+
+    @Override
+    protected Observable<Speaker.Holder> doFetch(ConnfaRepository repository) {
+        return repository.speakers();
     }
 
     public List<Speaker> getSpeakers() {

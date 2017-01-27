@@ -32,7 +32,6 @@ import com.connfa.model.managers.TracksManager;
 import com.connfa.model.managers.TypesManager;
 import com.ls.drupal.DrupalClient;
 import com.ls.http.base.BaseRequest;
-import com.ls.http.base.ResponseData;
 
 import java.io.File;
 import java.net.CookieHandler;
@@ -48,9 +47,7 @@ public class Model {
     private static Model instance;
 
     private DrupalClient client;
-    private LoginManager loginManager;
     private CookieStore cookieStore;
-    private RequestQueue queue;
 
     private TypesManager typesManager;
     private LevelsManager levelsManager;
@@ -85,18 +82,6 @@ public class Model {
 
     public DrupalClient getClient() {
         return client;
-    }
-
-    public RequestQueue getQueue() {
-        return queue;
-    }
-
-    public LoginManager getLoginManager() {
-        return loginManager;
-    }
-
-    public CookieStore getCookieStore() {
-        return cookieStore;
     }
 
     TypesManager getTypesManager() {
@@ -163,20 +148,9 @@ public class Model {
         return floorPlansManager;
     }
 
-    public void setSettingsManager(SettingsManager settingsManager) {
-        this.settingsManager = settingsManager;
-    }
-
-    /**
-     * NOTE: login is performed in synchronous way so you must never call it from UI thread.
-     */
-    public ResponseData performLogin(String userName, String password) {
-        return this.loginManager.login(userName, password, queue);
-    }
-
     private Model(Context context) {
-        loginManager = new LoginManager();
-        queue = createNoCachedQueue(context);
+        LoginManager loginManager = new LoginManager();
+        RequestQueue queue = createNoCachedQueue(context);
         client = new DrupalClient(context.getString(R.string.api_value_base_url), queue, BaseRequest.RequestFormat.JSON, loginManager);
         client.setRequestTimeout(REQUEST_TIMEOUT_MLLIS);
 
@@ -193,7 +167,7 @@ public class Model {
         eventManager = new EventManager(context, client);
         favoriteManager = new FavoriteManager(context);
 
-        updatesManager = new UpdatesManager(context, client);
+        updatesManager = new UpdatesManager(context);
         settingsManager = new SettingsManager(context, client);
         floorPlansManager = new FloorPlansManager(context, client);
     }
@@ -255,18 +229,6 @@ public class Model {
         queue.start();
 
         return queue;
-    }
-
-    protected void clearAllDao() {
-        eventManager.clear();
-        infoManager.clear();
-        levelsManager.clear();
-        locationmanager.clear();
-        poisManager.clear();
-        socialManager.clear();
-        speakerManager.clear();
-        tracksManager.clear();
-        typesManager.clear();
     }
 
     ILAPIDBFacade getFacade() {

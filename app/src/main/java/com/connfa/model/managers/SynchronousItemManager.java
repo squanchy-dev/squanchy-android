@@ -2,9 +2,15 @@ package com.connfa.model.managers;
 
 import android.content.Context;
 
-import com.ls.drupal.AbstractBaseDrupalEntity;
+import com.connfa.model.database.ILAPIDBFacade;
+import com.connfa.service.ConnfaRepository;
 import com.ls.drupal.DrupalClient;
-import com.ls.http.base.ResponseData;
+
+import java.util.concurrent.Callable;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.functions.Function;
 
 public abstract class SynchronousItemManager<R, T> {
 
@@ -16,27 +22,38 @@ public abstract class SynchronousItemManager<R, T> {
         this.client = client;
     }
 
-    protected abstract AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client);
-
     protected abstract T getEntityRequestTag();
 
-    protected abstract boolean storeResponse(R requestResponse, T tag);
+    public abstract boolean storeResponse(R requestResponse, T tag);
 
-    public boolean fetchData() {
-        AbstractBaseDrupalEntity request = getEntityToFetch(client);
-        T tag = getEntityRequestTag();
-        ResponseData response = request.pullFromServer(true, tag, null);
+    public Observable<R> fetch(ConnfaRepository repository, ILAPIDBFacade facade) {
+        return doFetch(repository)
+                .flatMap(asyncStoreResponse(facade));
+    }
 
-        int statusCode = response.getStatusCode();
-        if (statusCode > 0 && statusCode < 400) {
+    protected abstract Observable<R> doFetch(ConnfaRepository repository);
 
-            R responseObj = (R) response.getData();
-            if (responseObj != null) {
-                return storeResponse(responseObj, tag);
+    private Function<R, ObservableSource<R>> asyncStoreResponse(final ILAPIDBFacade facade) {
+        return new Function<R, ObservableSource<R>>() {
+            @Override
+            public ObservableSource<R> apply(final R r) throws Exception {
+                return Observable.fromCallable(new Callable<R>() {
+                    @Override
+                    public R call() throws Exception {
+                        try {
+                            facade.beginTransactions();
+                            boolean result = storeResponse(r, getEntityRequestTag());
+                            if (result) {
+                                facade.setTransactionSuccesfull();
+                            }
+                        } finally {
+                            facade.endTransactions();
+                        }
+                        return r;
+                    }
+                });
             }
-        }
-
-        return false;
+        };
     }
 
     public Context getContext() {

@@ -114,6 +114,11 @@ dependencies {
     compile libraries.app.appCompat
     compile libraries.app.playAnalytics
     compile libraries.app.playMaps
+    compile libraries.app.retrofit
+    compile libraries.app.retrofitGson
+    compile libraries.app.retrofitRx
+    compile libraries.app.rx
+    compile libraries.app.rxAndroid
 
     compile(libraries.app.crashlytics) {
         transitive = true

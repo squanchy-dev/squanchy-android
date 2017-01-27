@@ -4,14 +4,15 @@ import android.content.Context;
 
 import com.connfa.model.PreferencesManager;
 import com.connfa.model.data.Event;
-import com.connfa.model.requests.SessionsRequest;
+import com.connfa.service.ConnfaRepository;
 import com.connfa.ui.adapter.item.EventListItem;
 import com.connfa.utils.DateUtils;
-import com.ls.drupal.AbstractBaseDrupalEntity;
 import com.ls.drupal.DrupalClient;
 
 import java.util.Date;
 import java.util.List;
+
+import io.reactivex.Observable;
 
 public class ProgramManager extends EventManager {
 
@@ -23,17 +24,12 @@ public class ProgramManager extends EventManager {
     }
 
     @Override
-    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client) {
-        return new SessionsRequest(getContext(), client);
-    }
-
-    @Override
     protected String getEntityRequestTag() {
         return "sessions";
     }
 
     @Override
-    protected boolean storeResponse(Event.Holder requestResponse, String tag) {
+    public boolean storeResponse(Event.Holder requestResponse, String tag) {
         List<Event.Day> sessions = requestResponse.getDays();
         if (sessions == null) {
             return false;
@@ -68,6 +64,11 @@ public class ProgramManager extends EventManager {
             }
         }
         return true;
+    }
+
+    @Override
+    protected Observable<Event.Holder> doFetch(ConnfaRepository repository) {
+        return repository.sessions();
     }
 
     public List<Long> getProgramDays() {

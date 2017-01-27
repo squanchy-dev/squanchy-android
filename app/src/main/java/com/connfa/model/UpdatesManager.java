@@ -1,28 +1,31 @@
 package com.connfa.model;
 
 import android.content.Context;
-import android.os.AsyncTask;
-import android.text.TextUtils;
 
-import com.connfa.R;
-import com.connfa.model.data.UpdateDate;
+import com.connfa.ConnfaApplication;
 import com.connfa.model.database.ILAPIDBFacade;
 import com.connfa.model.managers.SynchronousItemManager;
+import com.connfa.service.ConnfaRepository;
+import com.connfa.service.model.Updates;
 import com.connfa.ui.drawer.DrawerManager;
-import com.ls.drupal.DrupalClient;
-import com.ls.http.base.BaseRequest;
-import com.ls.http.base.RequestConfig;
-import com.ls.http.base.ResponseData;
 import com.ls.util.ObserverHolder;
 
-import java.util.LinkedList;
+import java.io.Closeable;
 import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import timber.log.Timber;
 
-public class UpdatesManager {
+public class UpdatesManager implements Closeable {
 
     public static final int SETTINGS_REQUEST_ID = 0;
     public static final int TYPES_REQUEST_ID = 1;
@@ -38,13 +41,9 @@ public class UpdatesManager {
     public static final int INFO_REQUEST_ID = 11;
 
     private final Context context;
-    private final DrupalClient client;
-    private final PreferencesManager preferencesManager;
 
     private ObserverHolder<DataUpdatedListener> updateListeners;
-    public static final String IF_MODIFIED_SINCE_HEADER = "If-Modified-Since";
-
-    public static final String LAST_MODIFIED_HEADER = "Last-Modified";
+    private CompositeDisposable disposables = new CompositeDisposable();
 
     public static int convertEventIdToEventModePos(int eventModePos) {
         switch (eventModePos) {
@@ -58,45 +57,144 @@ public class UpdatesManager {
         return 0;
     }
 
-    public UpdatesManager(Context context, DrupalClient client) {
+    public UpdatesManager(Context context) {
         this.context = context;
-        this.client = client;
-        this.preferencesManager = PreferencesManager.create(context);
         updateListeners = new ObserverHolder<>();
     }
 
     public void startLoading(@NotNull final UpdateCallback callback) {
-        new AsyncTask<Void, Void, List<Integer>>() {
+        final ConnfaRepository repository = ((ConnfaApplication) context.getApplicationContext()).getConnfaRepository();
+        final ILAPIDBFacade facade = Model.getInstance().getFacade();
 
+        Disposable disposable = repository.updates()
+                .flatMap(updateData(repository, facade, Model.getInstance()))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(notifyObservers(callback), notifyError(callback));
+        disposables.add(disposable);
+    }
+
+    private Function<Updates, ObservableSource<List<Integer>>> updateData(final ConnfaRepository repository, final ILAPIDBFacade facade, final Model model) {
+        return new Function<Updates, ObservableSource<List<Integer>>>() {
             @Override
-            protected List<Integer> doInBackground(Void... params) {
-                return doPerformLoading();
+            public ObservableSource<List<Integer>> apply(final Updates updates) throws Exception {
+                return Observable.fromIterable(updates.ids())
+                        .doOnSubscribe(open(facade))
+                        .flatMap(fetchData(repository, facade, model))
+                        .doOnTerminate(close(facade))
+                        .map(new Function<Integer, List<Integer>>() {
+                            @Override
+                            public List<Integer> apply(Integer integer) throws Exception {
+                                return updates.ids();
+                            }
+                        });
             }
+        };
+    }
 
+    private Function<Integer, ObservableSource<Integer>> fetchData(final ConnfaRepository repository, final ILAPIDBFacade facade, final Model model) {
+        return new Function<Integer, ObservableSource<Integer>>() {
             @Override
-            protected void onPostExecute(final List<Integer> result) {
-                if (result != null) {
-                    updateListeners.notifyAllObservers(new ObserverHolder.ObserverNotifier<DataUpdatedListener>() {
-                        @Override
-                        public void onNotify(DataUpdatedListener observer) {
-                            observer.onDataUpdated(result);
-                        }
-                    });
-                }
+            public ObservableSource<Integer> apply(final Integer id) throws Exception {
+                return Observable.just(id)
+                        .map(managerById(model))
+                        .flatMap(fetchManagerData(id, repository, facade));
+            }
+        };
+    }
 
-                if (result != null) {
-                    callback.onDownloadSuccess();
-                    updateListeners.notifyAllObservers(new ObserverHolder.ObserverNotifier<DataUpdatedListener>() {
-                        @Override
-                        public void onNotify(DataUpdatedListener observer) {
-                            observer.onDataUpdated(result);
-                        }
-                    });
-                } else {
-                    callback.onDownloadError();
+    private Function<SynchronousItemManager, ObservableSource<Integer>> fetchManagerData(final Integer id, final ConnfaRepository repository, final ILAPIDBFacade facade) {
+        return new Function<SynchronousItemManager, ObservableSource<Integer>>() {
+            @Override
+            public ObservableSource<Integer> apply(SynchronousItemManager manager) throws Exception {
+                //noinspection unchecked
+                return manager.fetch(repository, facade)
+                        .map(new Function() {
+                            @Override
+                            public Integer apply(Object o) throws Exception {
+                                return id;
+                            }
+                        });
+            }
+        };
+    }
+
+    private Function<? super Integer, SynchronousItemManager> managerById(final Model instance) {
+        return new Function<Integer, SynchronousItemManager>() {
+            @Override
+            public SynchronousItemManager apply(Integer id) throws Exception {
+                switch (id) {
+                    case SETTINGS_REQUEST_ID:
+                        return instance.getSettingsManager();
+                    case TYPES_REQUEST_ID:
+                        return instance.getTypesManager();
+                    case LEVELS_REQUEST_ID:
+                        return instance.getLevelsManager();
+                    case TRACKS_REQUEST_ID:
+                        return instance.getTracksManager();
+                    case SPEAKERS_REQUEST_ID:
+                        return instance.getSpeakerManager();
+                    case LOCATIONS_REQUEST_ID:
+                        return instance.getLocationManager();
+                    case PROGRAMS_REQUEST_ID:
+                        return instance.getProgramManager();
+                    case BOFS_REQUEST_ID:
+                        return instance.getBofsManager();
+                    case SOCIALS_REQUEST_ID:
+                        return instance.getSocialManager();
+                    case POIS_REQUEST_ID:
+                        return instance.getPoisManager();
+                    case INFO_REQUEST_ID:
+                        return instance.getInfoManager();
+                    case FLOOR_PLANS_REQUEST_ID:
+                        return instance.getFloorPlansManager();
+                    default:
+                        throw new IllegalArgumentException("Id not recognized: " + id);
                 }
             }
-        }.execute();
+        };
+    }
+
+    private Consumer<Disposable> open(final ILAPIDBFacade facade) {
+        return new Consumer<Disposable>() {
+            @Override
+            public void accept(Disposable disposable) throws Exception {
+                facade.open();
+            }
+        };
+    }
+
+    private Action close(final ILAPIDBFacade facade) {
+        return new Action() {
+            @Override
+            public void run() throws Exception {
+                facade.close();
+            }
+        };
+    }
+
+    private Consumer<List<Integer>> notifyObservers(final UpdateCallback callback) {
+        return new Consumer<List<Integer>>() {
+            @Override
+            public void accept(final List<Integer> ids) throws Exception {
+                updateListeners.notifyAllObservers(new ObserverHolder.ObserverNotifier<DataUpdatedListener>() {
+                    @Override
+                    public void onNotify(DataUpdatedListener observer) {
+                        observer.onDataUpdated(ids);
+                    }
+                });
+                callback.onDownloadSuccess();
+            }
+        };
+    }
+
+    private Consumer<Throwable> notifyError(final UpdateCallback callback) {
+        return new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Timber.e(throwable);
+                callback.onDownloadError();
+            }
+        };
     }
 
     public void registerUpdateListener(DataUpdatedListener listener) {
@@ -107,127 +205,9 @@ public class UpdatesManager {
         this.updateListeners.unregisterObserver(listener);
     }
 
-    /**
-     * @return return updated request id's list in case of success or null in case of failure
-     */
-
-    private List<Integer> doPerformLoading() {
-        RequestConfig config = new RequestConfig();
-        config.setResponseFormat(BaseRequest.ResponseFormat.JSON);
-        config.setRequestFormat(BaseRequest.RequestFormat.JSON);
-        config.setResponseClassSpecifier(UpdateDate.class);
-        String baseURL = context.getString(R.string.api_value_base_url);
-        BaseRequest checkForUpdatesRequest = new BaseRequest(BaseRequest.RequestMethod.GET, baseURL + "checkUpdates", config);
-        String lastDate = preferencesManager.getLastUpdateDate();
-        checkForUpdatesRequest.addRequestHeader(IF_MODIFIED_SINCE_HEADER, lastDate);
-        ResponseData updatesData = client.performRequest(checkForUpdatesRequest, true);
-
-        int statusCode = updatesData.getStatusCode();
-        if (statusCode > 0 && statusCode < 400) {
-            UpdateDate updateDate = (UpdateDate) updatesData.getData();
-            if (updateDate == null) {
-                return new LinkedList<>();
-            }
-            updateDate.setTime(updatesData.getHeaders().get(LAST_MODIFIED_HEADER));
-            return loadData(updateDate);
-        } else {
-            Timber.e("Update loading failed. Status code: %d", statusCode);
-            return null;
-        }
-    }
-
-    private List<Integer> loadData(UpdateDate updateDate) {
-
-        List<Integer> updateIds = updateDate.getIdsForUpdate();
-        if (updateIds == null || updateIds.isEmpty()) {
-            return new LinkedList<>();
-        }
-        ILAPIDBFacade facade = Model.getInstance().getFacade();
-        try {
-            facade.open();
-            facade.beginTransactions();
-            boolean success = true;
-            for (Integer i : updateIds) {
-                success = sendRequestById(i);
-                if (!success) {
-                    break;
-                }
-            }
-            if (success) {
-                facade.setTransactionSuccesfull();
-                if (!TextUtils.isEmpty(updateDate.getTime())) {
-                    preferencesManager.saveLastUpdateDate(updateDate.getTime());
-                }
-            }
-            return success ? updateIds : null;
-        } finally {
-            facade.endTransactions();
-            facade.close();
-        }
-
-    }
-
-    private boolean sendRequestById(int id) {
-
-        SynchronousItemManager manager;
-        switch (id) {
-            case SETTINGS_REQUEST_ID:
-                manager = Model.getInstance().getSettingsManager();
-                break;
-
-            case TYPES_REQUEST_ID:
-                manager = Model.getInstance().getTypesManager();
-                break;
-
-            case LEVELS_REQUEST_ID:
-                manager = Model.getInstance().getLevelsManager();
-                break;
-
-            case TRACKS_REQUEST_ID:
-                manager = Model.getInstance().getTracksManager();
-                break;
-
-            case SPEAKERS_REQUEST_ID:
-                manager = Model.getInstance().getSpeakerManager();
-                break;
-
-            case LOCATIONS_REQUEST_ID:
-                manager = Model.getInstance().getLocationManager();
-                break;
-
-            case PROGRAMS_REQUEST_ID:
-                manager = Model.getInstance().getProgramManager();
-                break;
-
-            case BOFS_REQUEST_ID:
-                manager = Model.getInstance().getBofsManager();
-                break;
-
-            case SOCIALS_REQUEST_ID:
-                manager = Model.getInstance().getSocialManager();
-                break;
-
-            case POIS_REQUEST_ID:
-                manager = Model.getInstance().getPoisManager();
-                break;
-
-            case INFO_REQUEST_ID:
-                manager = Model.getInstance().getInfoManager();
-                break;
-
-            case FLOOR_PLANS_REQUEST_ID:
-                manager = Model.getInstance().getFloorPlansManager();
-                break;
-
-            default:
-                return true;
-        }
-
-        if (manager != null) {
-            return manager.fetchData();
-        }
-
-        return false;
+    @Override
+    public void close() {
+        disposables.clear();
     }
 
     public interface DataUpdatedListener {
@@ -240,4 +220,5 @@ public class UpdatesManager {
         facade.open();
         facade.close();
     }
+
 }

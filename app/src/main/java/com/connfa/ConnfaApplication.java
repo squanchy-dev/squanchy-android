@@ -6,6 +6,7 @@ import com.connfa.analytics.Analytics;
 import com.connfa.model.AppDatabaseInfo;
 import com.connfa.model.Model;
 import com.connfa.model.database.LAPIDBRegister;
+import com.connfa.service.ConnfaRepository;
 import com.crashlytics.android.Crashlytics;
 import com.ls.drupal.DrupalClient;
 import com.ls.http.base.BaseRequest;
@@ -18,6 +19,8 @@ import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 
 public class ConnfaApplication extends Application {
+
+    private ConnfaRepository repository;
 
     @Override
     public void onCreate() {
@@ -37,6 +40,8 @@ public class ConnfaApplication extends Application {
         );
 
         DrupalImageView.setupSharedClient(client);
+
+        repository = ConnfaRepository.newInstance(this);
     }
 
     private void setupTracking() {
@@ -57,5 +62,9 @@ public class ConnfaApplication extends Application {
                 getString(R.string.api_value_twitter_secret)
         );
         Fabric.with(this, new Crashlytics(), new TwitterCore(authConfig), new TweetUi());
+    }
+
+    public ConnfaRepository getConnfaRepository() {
+        return repository;
     }
 }
