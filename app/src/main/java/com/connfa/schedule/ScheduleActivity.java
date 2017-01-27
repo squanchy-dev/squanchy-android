@@ -1,6 +1,9 @@
 package com.connfa.schedule;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -18,7 +21,17 @@ public class ScheduleActivity extends NavigationDrawerActivity {
 
     @Override
     protected void initializeActivity(Bundle savedInstanceState) {
-        // TODO
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setupToolbar(toolbar);
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabstrip);
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void setupToolbar(Toolbar toolbar) {
+        setSupportActionBar(toolbar);
+        toolbar.setTitle(R.string.activity_schedule);
     }
 
     @Override

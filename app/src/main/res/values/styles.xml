@@ -4,13 +4,19 @@
 
   <style name="Connfa" />
 
-  <style name="Connfa.Toolbar" parent="Widget.AppCompat.Light.ActionBar">
-    <item name="android:background">@color/primary</item>
-    <item name="elevation">6dp</item>
+  <style name="Connfa.Appbar" parent="None">
+    <item name="android:background">?attr/colorPrimary</item>
+    <item name="android:elevation">@dimen/toolbar_elevation</item>
   </style>
 
-  <style name="Connfa.Toolbar.SocialFeed" parent="None" />
+  <style name="Connfa.Toolbar" parent="Widget.AppCompat.Light.ActionBar" />
 
-  <style name="Connfa.Toolbar.Schedule" parent="None" />
+  <style name="Connfa.Toolbar.SocialFeed" />
+
+  <style name="Connfa.Toolbar.Schedule" />
+
+  <style name="Connfa.Tabs" parent="Widget.Design.TabLayout" />
+
+  <style name="Connfa.Tabs.Schedule" parent="None" />
 
 </resources>
