@@ -3,6 +3,7 @@ ext {
             app: [
                     annotations     : 'org.jetbrains:annotations:13.0',
                     appCompat       : 'com.android.support:appcompat-v7:25.0.1',
+                    autoValue       : 'com.google.auto.value:auto-value:1.3',
                     crashlytics     : 'com.crashlytics.sdk.android:crashlytics:2.6.5',
                     gson            : 'com.google.code.gson:gson:2.8.0',
                     materialTabStrip: 'com.jpardogo.materialtabstrip:library:1.0.8',
