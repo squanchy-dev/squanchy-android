@@ -29,7 +29,7 @@ public class ProgramManager extends EventManager {
     }
 
     @Override
-    public boolean storeResponse(Event.Holder requestResponse, String tag) {
+    protected boolean storeResponse(Event.Holder requestResponse, String tag) {
         List<Event.Day> sessions = requestResponse.getDays();
         if (sessions == null) {
             return false;

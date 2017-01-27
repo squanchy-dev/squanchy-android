@@ -30,7 +30,7 @@ public class TracksManager extends SynchronousItemManager<Track.Holder, String> 
     }
 
     @Override
-    public boolean storeResponse(Track.Holder requestResponse, String tag) {
+    protected boolean storeResponse(Track.Holder requestResponse, String tag) {
         List<Track> tracks = requestResponse.getTracks();
         if (tracks == null) {
             return false;

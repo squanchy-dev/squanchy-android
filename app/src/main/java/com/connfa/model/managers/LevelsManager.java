@@ -26,7 +26,7 @@ public class LevelsManager extends SynchronousItemManager<Level.Holder, String> 
     }
 
     @Override
-    public boolean storeResponse(Level.Holder requestResponse, String tag) {
+    protected boolean storeResponse(Level.Holder requestResponse, String tag) {
         List<Level> levels = requestResponse.getLevels();
         if (levels == null) {
             return false;

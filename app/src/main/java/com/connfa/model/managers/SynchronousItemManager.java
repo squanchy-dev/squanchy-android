@@ -24,7 +24,7 @@ public abstract class SynchronousItemManager<R, T> {
 
     protected abstract T getEntityRequestTag();
 
-    public abstract boolean storeResponse(R requestResponse, T tag);
+    protected abstract boolean storeResponse(R requestResponse, T tag);
 
     public Observable<R> fetch(ConnfaRepository repository, ILAPIDBFacade facade) {
         return doFetch(repository)

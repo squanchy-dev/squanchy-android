@@ -26,7 +26,7 @@ public class LocationManager extends SynchronousItemManager<Location.Holder, Str
     }
 
     @Override
-    public boolean storeResponse(Location.Holder requestResponse, String tag) {
+    protected boolean storeResponse(Location.Holder requestResponse, String tag) {
         List<Location> locations = requestResponse.getLocations();
         if (locations == null) {
             return false;

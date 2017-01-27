@@ -31,7 +31,7 @@ public class InfoManager extends SynchronousItemManager<InfoItem.General, String
     }
 
     @Override
-    public boolean storeResponse(InfoItem.General requestResponse, String tag) {
+    protected boolean storeResponse(InfoItem.General requestResponse, String tag) {
         List<InfoItem> infoList = requestResponse.getInfo();
         if (infoList == null) {
             return false;

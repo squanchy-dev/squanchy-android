@@ -36,7 +36,7 @@ public class FloorPlansManager extends SynchronousItemManager<FloorPlan.Holder, 
     }
 
     @Override
-    public boolean storeResponse(FloorPlan.Holder requestResponse, String tag) {
+    protected boolean storeResponse(FloorPlan.Holder requestResponse, String tag) {
         List<FloorPlan> plans = requestResponse.getFloorPlans();
         if (plans == null) {
             return false;

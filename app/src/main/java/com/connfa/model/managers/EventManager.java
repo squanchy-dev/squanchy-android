@@ -28,7 +28,7 @@ public class EventManager extends SynchronousItemManager<Event.Holder, String> {
     }
 
     @Override
-    public boolean storeResponse(Event.Holder requestResponse, String tag) {
+    protected boolean storeResponse(Event.Holder requestResponse, String tag) {
         return false;
     }
 

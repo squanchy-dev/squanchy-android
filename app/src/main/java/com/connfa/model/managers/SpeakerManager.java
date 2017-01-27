@@ -27,7 +27,7 @@ public class SpeakerManager extends SynchronousItemManager<Speaker.Holder, Strin
     }
 
     @Override
-    public boolean storeResponse(Speaker.Holder requestResponse, String tag) {
+    protected boolean storeResponse(Speaker.Holder requestResponse, String tag) {
         List<Speaker> speakers = requestResponse.getSpeakers();
         if (speakers == null) {
             return false;

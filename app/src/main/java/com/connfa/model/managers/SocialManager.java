@@ -29,7 +29,7 @@ public class SocialManager extends EventManager {
     }
 
     @Override
-    public boolean storeResponse(Event.Holder requestResponse, String tag) {
+    protected boolean storeResponse(Event.Holder requestResponse, String tag) {
         List<Event.Day> socials = requestResponse.getDays();
         if (socials == null) {
             return false;

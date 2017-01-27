@@ -26,7 +26,7 @@ public class TypesManager extends SynchronousItemManager<Type.Holder, String> {
     }
 
     @Override
-    public boolean storeResponse(Type.Holder requestResponse, String tag) {
+    protected boolean storeResponse(Type.Holder requestResponse, String tag) {
         List<Type> types = requestResponse.getTypes();
         if (types == null) {
             return false;

@@ -26,7 +26,7 @@ public class BofsManager extends EventManager {
     }
 
     @Override
-    public boolean storeResponse(Event.Holder requestResponse, String tag) {
+    protected boolean storeResponse(Event.Holder requestResponse, String tag) {
         List<Event.Day> bofs = requestResponse.getDays();
         if (bofs == null) {
             return false;

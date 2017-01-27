@@ -24,7 +24,7 @@ public class SettingsManager extends SynchronousItemManager<SettingsHolder, Stri
     }
 
     @Override
-    public boolean storeResponse(SettingsHolder requestResponse, String tag) {
+    protected boolean storeResponse(SettingsHolder requestResponse, String tag) {
         String timeZone = requestResponse.getSettings().getTimeZone();
         preferencesManager.saveTimeZone(timeZone);
         String searchQuery = requestResponse.getSettings().getTwitterSearchQuery();

@@ -28,7 +28,7 @@ public class PoisManager extends SynchronousItemManager<POI.Holder, String> {
     }
 
     @Override
-    public boolean storeResponse(POI.Holder requestResponse, String tag) {
+    protected boolean storeResponse(POI.Holder requestResponse, String tag) {
         List<POI> pois = requestResponse.getPOIs();
         if (pois == null) {
             return false;
