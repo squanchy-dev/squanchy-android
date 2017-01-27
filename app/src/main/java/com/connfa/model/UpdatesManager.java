@@ -40,10 +40,9 @@ public class UpdatesManager implements Closeable {
     public static final int POIS_REQUEST_ID = 10;
     public static final int INFO_REQUEST_ID = 11;
 
-    private final Context context;
-
     private ObserverHolder<DataUpdatedListener> updateListeners;
     private CompositeDisposable disposables = new CompositeDisposable();
+    private final ConnfaRepository repository;
 
     public static int convertEventIdToEventModePos(int eventModePos) {
         switch (eventModePos) {
@@ -58,12 +57,11 @@ public class UpdatesManager implements Closeable {
     }
 
     public UpdatesManager(Context context) {
-        this.context = context;
+        repository = ((ConnfaApplication) context.getApplicationContext()).getConnfaRepository();
         updateListeners = new ObserverHolder<>();
     }
 
     public void startLoading(@NotNull final UpdateCallback callback) {
-        final ConnfaRepository repository = ((ConnfaApplication) context.getApplicationContext()).getConnfaRepository();
         final ILAPIDBFacade facade = Model.getInstance().getFacade();
 
         Disposable disposable = repository.updates()
