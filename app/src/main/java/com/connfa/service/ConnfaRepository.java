@@ -44,12 +44,17 @@ public final class ConnfaRepository {
     }
 
     public Observable<Updates> updates() {
-        return service.updates().map(new Function<ApiUpdates, Updates>() {
+        return service.updates()
+                .map(toUpdates());
+    }
+
+    private Function<ApiUpdates, Updates> toUpdates() {
+        return new Function<ApiUpdates, Updates>() {
             @Override
             public Updates apply(ApiUpdates updates) throws Exception {
                 return new Updates(updates.idsForUpdate);
             }
-        });
+        };
     }
 
     public Observable<Event.Holder> bofs() {
