@@ -20,8 +20,6 @@ import timber.log.Timber;
 
 public class ConnfaApplication extends Application {
 
-    private ConnfaRepository repository;
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -30,7 +28,8 @@ public class ConnfaApplication extends Application {
 
         LAPIDBRegister.getInstance().register(this, new AppDatabaseInfo(this));
 
-        Model.createInstance(this);
+        ConnfaRepository repository = ConnfaRepository.newInstance(this);
+        Model.createInstance(this, repository);
 
         DrupalClient client = new DrupalClient(
                 null,
@@ -41,7 +40,6 @@ public class ConnfaApplication extends Application {
 
         DrupalImageView.setupSharedClient(client);
 
-        repository = ConnfaRepository.newInstance(this);
     }
 
     private void setupTracking() {
@@ -62,9 +60,5 @@ public class ConnfaApplication extends Application {
                 getString(R.string.api_value_twitter_secret)
         );
         Fabric.with(this, new Crashlytics(), new TwitterCore(authConfig), new TweetUi());
-    }
-
-    public ConnfaRepository getConnfaRepository() {
-        return repository;
     }
 }

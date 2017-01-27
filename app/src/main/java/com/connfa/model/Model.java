@@ -30,6 +30,7 @@ import com.connfa.model.managers.SocialManager;
 import com.connfa.model.managers.SpeakerManager;
 import com.connfa.model.managers.TracksManager;
 import com.connfa.model.managers.TypesManager;
+import com.connfa.service.ConnfaRepository;
 import com.ls.drupal.DrupalClient;
 import com.ls.http.base.BaseRequest;
 
@@ -65,11 +66,11 @@ public class Model {
     private SettingsManager settingsManager;
     private FloorPlansManager floorPlansManager;
 
-    public static void createInstance(Context context) {
+    public static void createInstance(Context context, ConnfaRepository repository) {
         if (instance != null) {
             throw new IllegalStateException("Instance already initialized.");
         }
-        instance = new Model(context);
+        instance = new Model(context, repository);
     }
 
     public static Model getInstance() {
@@ -148,7 +149,7 @@ public class Model {
         return floorPlansManager;
     }
 
-    private Model(Context context) {
+    private Model(Context context, ConnfaRepository repository) {
         LoginManager loginManager = new LoginManager();
         RequestQueue queue = createNoCachedQueue(context);
         client = new DrupalClient(context.getString(R.string.api_value_base_url), queue, BaseRequest.RequestFormat.JSON, loginManager);
@@ -167,7 +168,7 @@ public class Model {
         eventManager = new EventManager(context, client);
         favoriteManager = new FavoriteManager(context);
 
-        updatesManager = new UpdatesManager(context);
+        updatesManager = new UpdatesManager(repository);
         settingsManager = new SettingsManager(context, client);
         floorPlansManager = new FloorPlansManager(context, client);
     }

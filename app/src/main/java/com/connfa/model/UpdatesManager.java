@@ -1,8 +1,5 @@
 package com.connfa.model;
 
-import android.content.Context;
-
-import com.connfa.ConnfaApplication;
 import com.connfa.model.database.ILAPIDBFacade;
 import com.connfa.model.managers.SynchronousItemManager;
 import com.connfa.service.ConnfaRepository;
@@ -56,8 +53,8 @@ public class UpdatesManager implements Closeable {
         return 0;
     }
 
-    public UpdatesManager(Context context) {
-        repository = ((ConnfaApplication) context.getApplicationContext()).getConnfaRepository();
+    public UpdatesManager(ConnfaRepository repository) {
+        this.repository = repository;
         updateListeners = new ObserverHolder<>();
     }
 
