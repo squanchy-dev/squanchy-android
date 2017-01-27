@@ -1,14 +1,18 @@
 ext {
+    supportLibVersion = '25.1.0'
+    playServicesVersion = '10.0.1'
+
     libraries = [
             app: [
                     annotations     : 'org.jetbrains:annotations:13.0',
-                    appCompat       : 'com.android.support:appcompat-v7:25.0.1',
+                    supportAppCompat: "com.android.support:appcompat-v7:${supportLibVersion}",
+                    supportDesign   : "com.android.support:design:${supportLibVersion}",
                     crashlytics     : 'com.crashlytics.sdk.android:crashlytics:2.6.5',
                     gson            : 'com.google.code.gson:gson:2.8.0',
                     materialTabStrip: 'com.jpardogo.materialtabstrip:library:1.0.8',
                     parallaxScroll  : 'com.github.nirhart:parallaxscroll:1.0',
-                    playAnalytics   : 'com.google.android.gms:play-services-analytics:10.0.1',
-                    playMaps        : 'com.google.android.gms:play-services-maps:10.0.1',
+                    playAnalytics   : "com.google.android.gms:play-services-analytics:${playServicesVersion}",
+                    playMaps        : "com.google.android.gms:play-services-maps:${playServicesVersion}",
                     shadowLayout    : 'com.github.dmytrodanylyk.shadow-layout:library:1.0.2',
                     scaleImageView  : 'com.davemorrissey.labs:subsampling-scale-image-view:3.6.0',
                     tweetUi         : 'com.twitter.sdk.android:tweet-ui:2.2.0',

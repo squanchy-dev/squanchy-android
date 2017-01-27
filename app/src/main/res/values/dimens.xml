@@ -19,4 +19,6 @@
   <dimen name="margin_top_placeholder_text">20dp</dimen>
   <dimen name="toolbar_height">56dp</dimen>
 
+  <dimen name="navigation_drawer_width">288dp</dimen>
+
 </resources>

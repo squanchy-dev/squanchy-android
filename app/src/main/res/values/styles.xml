@@ -44,4 +44,6 @@
 
   <style name="Connfa.Toolbar.SocialFeed" />
 
+  <style name="Connfa.Toolbar.Schedule" />
+
 </resources>

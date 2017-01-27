@@ -111,7 +111,8 @@ dependencies {
     compile libraries.app.scaleImageView
     compile libraries.app.timber
 
-    compile libraries.app.appCompat
+    compile libraries.app.supportAppCompat
+    compile libraries.app.supportDesign
     compile libraries.app.playAnalytics
     compile libraries.app.playMaps
 
