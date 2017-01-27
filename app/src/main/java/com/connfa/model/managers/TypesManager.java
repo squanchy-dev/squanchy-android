@@ -4,11 +4,12 @@ import android.content.Context;
 
 import com.connfa.model.dao.TypeDao;
 import com.connfa.model.data.Type;
-import com.connfa.model.requests.TypesRequest;
-import com.ls.drupal.AbstractBaseDrupalEntity;
+import com.connfa.service.ConnfaRepository;
 import com.ls.drupal.DrupalClient;
 
 import java.util.List;
+
+import io.reactivex.Observable;
 
 public class TypesManager extends SynchronousItemManager<Type.Holder, String> {
 
@@ -17,11 +18,6 @@ public class TypesManager extends SynchronousItemManager<Type.Holder, String> {
     public TypesManager(Context context, DrupalClient client) {
         super(context, client);
         mTypeDao = new TypeDao(context);
-    }
-
-    @Override
-    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client) {
-        return new TypesRequest(getContext(), client);
     }
 
     @Override
@@ -45,6 +41,11 @@ public class TypesManager extends SynchronousItemManager<Type.Holder, String> {
             }
         }
         return true;
+    }
+
+    @Override
+    protected Observable<Type.Holder> doFetch(ConnfaRepository repository) {
+        return repository.types();
     }
 
     public List<Type> getTypes() {

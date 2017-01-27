@@ -4,13 +4,14 @@ import android.content.Context;
 
 import com.connfa.model.dao.POIDao;
 import com.connfa.model.data.POI;
-import com.connfa.model.requests.PoisRequest;
-import com.ls.drupal.AbstractBaseDrupalEntity;
+import com.connfa.service.ConnfaRepository;
 import com.ls.drupal.DrupalClient;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import io.reactivex.Observable;
 
 public class PoisManager extends SynchronousItemManager<POI.Holder, String> {
 
@@ -19,11 +20,6 @@ public class PoisManager extends SynchronousItemManager<POI.Holder, String> {
     public PoisManager(Context context, DrupalClient client) {
         super(context, client);
         mPOIDao = new POIDao(context);
-    }
-
-    @Override
-    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client) {
-        return new PoisRequest(getContext(), client);
     }
 
     @Override
@@ -47,6 +43,11 @@ public class PoisManager extends SynchronousItemManager<POI.Holder, String> {
             }
         }
         return true;
+    }
+
+    @Override
+    protected Observable<POI.Holder> doFetch(ConnfaRepository repository) {
+        return repository.pois();
     }
 
     public List<POI> getPOIs() {

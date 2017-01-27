@@ -5,13 +5,14 @@ import android.content.Context;
 import com.connfa.model.PreferencesManager;
 import com.connfa.model.dao.InfoDao;
 import com.connfa.model.data.InfoItem;
-import com.connfa.model.requests.InfoRequest;
-import com.ls.drupal.AbstractBaseDrupalEntity;
+import com.connfa.service.ConnfaRepository;
 import com.ls.drupal.DrupalClient;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import io.reactivex.Observable;
 
 public class InfoManager extends SynchronousItemManager<InfoItem.General, String> {
 
@@ -22,11 +23,6 @@ public class InfoManager extends SynchronousItemManager<InfoItem.General, String
         super(context, client);
         infoDAO = new InfoDao(context);
         preferencesManager = PreferencesManager.create(context);
-    }
-
-    @Override
-    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client) {
-        return new InfoRequest(getContext(), client);
     }
 
     @Override
@@ -53,6 +49,11 @@ public class InfoManager extends SynchronousItemManager<InfoItem.General, String
         preferencesManager.saveMinorInfoTitle(requestResponse.getMinorTitle());
 
         return true;
+    }
+
+    @Override
+    protected Observable<InfoItem.General> doFetch(ConnfaRepository repository) {
+        return repository.info();
     }
 
     public List<InfoItem> getInfo() {
