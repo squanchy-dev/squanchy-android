@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.connfa.R;
+import com.connfa.model.data.Event;
 import com.connfa.schedule.domain.SchedulePage;
 
 import java.util.Collections;
@@ -34,9 +35,14 @@ public class ScheduleViewPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        SchedulePageView itemView = (SchedulePageView) LayoutInflater.from(context).inflate(R.layout.page_schedule, container, false);
-        container.addView(itemView);
-        return itemView;
+        SchedulePageView pageView = (SchedulePageView) LayoutInflater.from(context)
+                .inflate(R.layout.page_schedule, container, false);
+
+        List<Event> events = pages.get(position).events();
+        pageView.updateWith(events);
+        container.addView(pageView);
+
+        return pageView;
     }
 
     @Override
