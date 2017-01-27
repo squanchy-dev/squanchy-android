@@ -76,12 +76,16 @@ public class UpdatesManager implements Closeable {
                         .doOnSubscribe(open(facade))
                         .flatMap(fetchData(repository, facade, model))
                         .doOnTerminate(close(facade))
-                        .map(new Function<Integer, List<Integer>>() {
-                            @Override
-                            public List<Integer> apply(Integer integer) throws Exception {
-                                return updates.ids();
-                            }
-                        });
+                        .map(returnIds(updates));
+            }
+        };
+    }
+
+    private Function<Integer, List<Integer>> returnIds(final Updates updates) {
+        return new Function<Integer, List<Integer>>() {
+            @Override
+            public List<Integer> apply(Integer integer) throws Exception {
+                return updates.ids();
             }
         };
     }
