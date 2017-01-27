@@ -2,4 +2,5 @@
 <android.support.design.widget.NavigationView xmlns:android="http://schemas.android.com/apk/res/android"
   android:id="@+id/navigation_drawer"
   android:layout_width="@dimen/navigation_drawer_width"
-  android:layout_height="match_parent" />
+  android:layout_height="match_parent"
+  android:layout_gravity="start" />
