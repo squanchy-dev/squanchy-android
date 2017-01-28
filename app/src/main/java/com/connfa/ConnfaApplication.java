@@ -6,6 +6,7 @@ import com.connfa.analytics.Analytics;
 import com.connfa.model.AppDatabaseInfo;
 import com.connfa.model.Model;
 import com.connfa.model.database.LAPIDBRegister;
+import com.connfa.service.ConnfaRepository;
 import com.crashlytics.android.Crashlytics;
 import com.ls.drupal.DrupalClient;
 import com.ls.http.base.BaseRequest;
@@ -27,7 +28,8 @@ public class ConnfaApplication extends Application {
 
         LAPIDBRegister.getInstance().register(this, new AppDatabaseInfo(this));
 
-        Model.createInstance(this);
+        ConnfaRepository repository = ConnfaRepository.newInstance(this);
+        Model.createInstance(this, repository);
 
         DrupalClient client = new DrupalClient(
                 null,
@@ -37,6 +39,7 @@ public class ConnfaApplication extends Application {
         );
 
         DrupalImageView.setupSharedClient(client);
+
     }
 
     private void setupTracking() {

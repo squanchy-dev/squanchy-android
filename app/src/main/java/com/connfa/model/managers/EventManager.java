@@ -6,10 +6,12 @@ import com.connfa.model.dao.EventDao;
 import com.connfa.model.data.Event;
 import com.connfa.model.data.EventDetailsEvent;
 import com.connfa.model.data.TimeRange;
-import com.ls.drupal.AbstractBaseDrupalEntity;
+import com.connfa.service.ConnfaRepository;
 import com.ls.drupal.DrupalClient;
 
 import java.util.List;
+
+import io.reactivex.Observable;
 
 public class EventManager extends SynchronousItemManager<Event.Holder, String> {
 
@@ -21,11 +23,6 @@ public class EventManager extends SynchronousItemManager<Event.Holder, String> {
     }
 
     @Override
-    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client) {
-        return null;
-    }
-
-    @Override
     protected String getEntityRequestTag() {
         return null;
     }
@@ -33,6 +30,11 @@ public class EventManager extends SynchronousItemManager<Event.Holder, String> {
     @Override
     protected boolean storeResponse(Event.Holder requestResponse, String tag) {
         return false;
+    }
+
+    @Override
+    protected Observable<Event.Holder> doFetch(ConnfaRepository repository) {
+        throw new UnsupportedOperationException("You can't do this.");
     }
 
     void saveEventSpeakers(Event data) {

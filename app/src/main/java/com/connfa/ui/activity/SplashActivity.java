@@ -41,6 +41,7 @@ public class SplashActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        Model.getInstance().getUpdatesManager().close();
         mHandler.removeCallbacksAndMessages(null);
         super.onDestroy();
     }

@@ -23,7 +23,6 @@
 package com.ls.drupal;
 
 import com.ls.http.base.BaseRequest;
-import com.ls.http.base.ResponseData;
 
 /**
  * Created on 22.04.2015.
@@ -39,21 +38,6 @@ public abstract class AbstractDrupalByteEntity<T> extends AbstractBaseDrupalEnti
     @Override
     protected BaseRequest.ResponseFormat getItemResponseFormat(BaseRequest.RequestMethod method) {
         return BaseRequest.ResponseFormat.BYTE;
-    }
-
-    @Override
-    public ResponseData postToServer(boolean synchronous, Class<?> resultClass, Object tag, OnEntityRequestListener listener) {
-        throw new UnsupportedOperationException("This operation isn't supported by byte entity");
-    }
-
-    @Override
-    public ResponseData putToServer(boolean synchronous, Class<?> resultClass, Object tag, OnEntityRequestListener listener) {
-        throw new UnsupportedOperationException("This operation isn't supported by byte entity");
-    }
-
-    @Override
-    public ResponseData patchServerData(boolean synchronous, Class<?> resultClass, Object tag, OnEntityRequestListener listener) throws IllegalStateException {
-        throw new UnsupportedOperationException("This operation isn't supported by byte entity");
     }
 
     @Override

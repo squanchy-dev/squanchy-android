@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 
 import com.connfa.model.dao.FloorPlanDao;
 import com.connfa.model.data.FloorPlan;
-import com.connfa.model.requests.FloorPlansRequest;
+import com.connfa.service.ConnfaRepository;
 import com.connfa.utils.FileUtils;
 import com.ls.drupal.AbstractBaseDrupalEntity;
 import com.ls.drupal.DrupalByteEntity;
@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
+import io.reactivex.Observable;
+
 public class FloorPlansManager extends SynchronousItemManager<FloorPlan.Holder, String> {
 
     private FloorPlanDao mFloorPlansDAO;
@@ -26,11 +28,6 @@ public class FloorPlansManager extends SynchronousItemManager<FloorPlan.Holder, 
     public FloorPlansManager(Context context, DrupalClient client) {
         super(context, client);
         this.mFloorPlansDAO = new FloorPlanDao(context);
-    }
-
-    @Override
-    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client) {
-        return new FloorPlansRequest(getContext(), client);
     }
 
     @Override
@@ -69,6 +66,11 @@ public class FloorPlansManager extends SynchronousItemManager<FloorPlan.Holder, 
         }
 
         return true;
+    }
+
+    @Override
+    protected Observable<FloorPlan.Holder> doFetch(ConnfaRepository repository) {
+        return repository.floorPlans();
     }
 
     public List<FloorPlan> getFloorPlans() {

@@ -4,11 +4,12 @@ import android.content.Context;
 
 import com.connfa.model.dao.LevelDao;
 import com.connfa.model.data.Level;
-import com.connfa.model.requests.LevelsRequest;
-import com.ls.drupal.AbstractBaseDrupalEntity;
+import com.connfa.service.ConnfaRepository;
 import com.ls.drupal.DrupalClient;
 
 import java.util.List;
+
+import io.reactivex.Observable;
 
 public class LevelsManager extends SynchronousItemManager<Level.Holder, String> {
 
@@ -17,11 +18,6 @@ public class LevelsManager extends SynchronousItemManager<Level.Holder, String> 
     public LevelsManager(Context context, DrupalClient client) {
         super(context, client);
         mLevelDao = new LevelDao(context);
-    }
-
-    @Override
-    protected AbstractBaseDrupalEntity getEntityToFetch(DrupalClient client) {
-        return new LevelsRequest(getContext(), client);
     }
 
     @Override
@@ -45,6 +41,11 @@ public class LevelsManager extends SynchronousItemManager<Level.Holder, String> 
             }
         }
         return true;
+    }
+
+    @Override
+    protected Observable<Level.Holder> doFetch(ConnfaRepository repository) {
+        return repository.levels();
     }
 
     public Level getLevel(long levelId) {
