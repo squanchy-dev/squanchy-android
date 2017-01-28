@@ -40,8 +40,11 @@ android {
         applicationId buildProperties.application['applicationId']
                 .or(buildProperties.env['APPLICATION_ID'])
                 .string
+        
         minSdkVersion Integer.parseInt(project.MIN_SDK_VERSION)
         targetSdkVersion Integer.parseInt(project.TARGET_SDK_VERSION)
+
+        multiDexEnabled true
 
         versionCode Integer.parseInt(project.VERSION_CODE)
         versionName project.VERSION_NAME
