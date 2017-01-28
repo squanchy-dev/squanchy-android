@@ -1,14 +1,24 @@
 package com.connfa.schedule;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.connfa.R;
 import com.connfa.navigation.NavigationDrawerActivity;
 import com.connfa.navigation.Navigator;
+import com.connfa.schedule.domain.SchedulePage;
+import com.connfa.schedule.view.ScheduleViewPagerAdapter;
+
+import java.util.Collections;
+import java.util.Date;
 
 public class ScheduleActivity extends NavigationDrawerActivity {
+
+    private ScheduleViewPagerAdapter viewPagerAdapter;
 
     @Override
     protected void inflateActivityContent(ViewGroup parent) {
@@ -18,7 +28,35 @@ public class ScheduleActivity extends NavigationDrawerActivity {
 
     @Override
     protected void initializeActivity(Bundle savedInstanceState) {
-        // TODO
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setupToolbar(toolbar);
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabstrip);
+        tabLayout.setupWithViewPager(viewPager);
+
+        viewPagerAdapter = new ScheduleViewPagerAdapter(this);
+        viewPager.setAdapter(viewPagerAdapter);
+    }
+
+    private void setupToolbar(Toolbar toolbar) {
+        setSupportActionBar(toolbar);
+        toolbar.setTitle(R.string.activity_schedule);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // TODO start fetching data
+        viewPagerAdapter.updateWith(Collections.singletonList(new SchedulePage(new Date())));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        // TODO stop data flow
     }
 
     @Override
@@ -31,4 +69,5 @@ public class ScheduleActivity extends NavigationDrawerActivity {
             }
         };
     }
+
 }

@@ -33,7 +33,7 @@
 
     <activity
       android:name="com.connfa.schedule.ScheduleActivity"
-      android:theme="@style/Theme.Connfa.Home"
+      android:theme="@style/Theme.Connfa.Schedule"
       android:label="@string/app_name">
 
       <intent-filter>

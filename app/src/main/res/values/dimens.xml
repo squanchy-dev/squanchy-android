@@ -21,4 +21,6 @@
 
   <dimen name="navigation_drawer_width">288dp</dimen>
 
+  <dimen name="toolbar_elevation">6dp</dimen>
+
 </resources>
