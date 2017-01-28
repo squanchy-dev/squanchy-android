@@ -5,7 +5,6 @@ import android.content.Context;
 import com.connfa.model.PreferencesManager;
 import com.connfa.model.data.SettingsHolder;
 import com.connfa.service.ConnfaRepository;
-import com.ls.drupal.DrupalClient;
 
 import io.reactivex.Observable;
 
@@ -13,8 +12,8 @@ public class SettingsManager extends SynchronousItemManager<SettingsHolder, Stri
 
     private final PreferencesManager preferencesManager;
 
-    public SettingsManager(Context context, DrupalClient client) {
-        super(context, client);
+    public SettingsManager(Context context) {
+        super(context);
         this.preferencesManager = PreferencesManager.create(context);
     }
 

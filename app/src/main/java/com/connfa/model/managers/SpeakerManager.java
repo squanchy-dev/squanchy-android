@@ -6,7 +6,6 @@ import com.connfa.model.dao.EventDao;
 import com.connfa.model.dao.SpeakerDao;
 import com.connfa.model.data.Speaker;
 import com.connfa.service.ConnfaRepository;
-import com.ls.drupal.DrupalClient;
 
 import java.util.List;
 
@@ -16,8 +15,8 @@ public class SpeakerManager extends SynchronousItemManager<Speaker.Holder, Strin
 
     private SpeakerDao mSpeakerDao;
 
-    public SpeakerManager(Context context, DrupalClient client) {
-        super(context, client);
+    public SpeakerManager(Context context) {
+        super(context);
         this.mSpeakerDao = new SpeakerDao(context);
     }
 

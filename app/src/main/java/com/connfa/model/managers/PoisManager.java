@@ -5,7 +5,6 @@ import android.content.Context;
 import com.connfa.model.dao.POIDao;
 import com.connfa.model.data.POI;
 import com.connfa.service.ConnfaRepository;
-import com.ls.drupal.DrupalClient;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -17,8 +16,8 @@ public class PoisManager extends SynchronousItemManager<POI.Holder, String> {
 
     private POIDao mPOIDao;
 
-    public PoisManager(Context context, DrupalClient client) {
-        super(context, client);
+    public PoisManager(Context context) {
+        super(context);
         mPOIDao = new POIDao(context);
     }
 

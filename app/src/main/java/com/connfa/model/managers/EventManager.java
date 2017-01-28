@@ -7,7 +7,6 @@ import com.connfa.model.data.Event;
 import com.connfa.model.data.EventDetailsEvent;
 import com.connfa.model.data.TimeRange;
 import com.connfa.service.ConnfaRepository;
-import com.ls.drupal.DrupalClient;
 
 import java.util.List;
 
@@ -17,8 +16,8 @@ public class EventManager extends SynchronousItemManager<Event.Holder, String> {
 
     protected EventDao mEventDao;
 
-    public EventManager(Context context, DrupalClient client) {
-        super(context, client);
+    public EventManager(Context context) {
+        super(context);
         mEventDao = new EventDao(context);
     }
 

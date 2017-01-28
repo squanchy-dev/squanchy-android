@@ -6,7 +6,6 @@ import com.connfa.model.PreferencesManager;
 import com.connfa.model.dao.InfoDao;
 import com.connfa.model.data.InfoItem;
 import com.connfa.service.ConnfaRepository;
-import com.ls.drupal.DrupalClient;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -19,8 +18,8 @@ public class InfoManager extends SynchronousItemManager<InfoItem.General, String
     private InfoDao infoDAO;
     private final PreferencesManager preferencesManager;
 
-    public InfoManager(Context context, DrupalClient client) {
-        super(context, client);
+    public InfoManager(Context context) {
+        super(context);
         infoDAO = new InfoDao(context);
         preferencesManager = PreferencesManager.create(context);
     }
