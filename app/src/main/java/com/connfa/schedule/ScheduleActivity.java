@@ -49,7 +49,7 @@ public class ScheduleActivity extends NavigationDrawerActivity {
         super.onStart();
 
         // TODO start fetching data
-        viewPagerAdapter.updateWith(Collections.singletonList(new SchedulePage(new Date())));
+        viewPagerAdapter.updateWith(Collections.singletonList(SchedulePage.create(new Date())));
     }
 
     @Override
