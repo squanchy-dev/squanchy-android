@@ -8,21 +8,22 @@ import com.connfa.utils.DateUtils;
 import com.google.auto.value.AutoValue;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+
+import org.joda.time.DateTime;
 
 @AutoValue
 public abstract class SchedulePage {
 
-    public static SchedulePage create(Date date) {
+    public static SchedulePage create(DateTime date) {
         return new AutoValue_SchedulePage(date, dummyEvents());
     }
 
     private static List<Event> dummyEvents() {
         Event event = new Event(TimeZone.getDefault());
         event.setId(123456);
-        event.setDate(new Date());
+        event.setDate(DateTime.now().toDate());
         event.setName("Test event \uD83C\uDF4C");
         event.setTrack(0);
         event.setSpeakers(Collections.<Long>emptyList());
@@ -33,11 +34,11 @@ public abstract class SchedulePage {
         return Collections.singletonList(event);
     }
 
-    public abstract Date date();
+    public abstract DateTime date();
 
     public abstract List<Event> events();
 
     public String formattedTitle(Context context) {
-        return DateUtils.getWeekNameAndDate(context, date().getTime());
+        return DateUtils.getWeekNameAndDate(context, date().getMillis());
     }
 }
