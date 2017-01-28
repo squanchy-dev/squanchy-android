@@ -7,7 +7,6 @@ import com.connfa.model.data.Event;
 import com.connfa.service.ConnfaRepository;
 import com.connfa.ui.adapter.item.EventListItem;
 import com.connfa.utils.DateUtils;
-import com.ls.drupal.DrupalClient;
 
 import java.util.Date;
 import java.util.List;
@@ -18,8 +17,8 @@ public class SocialManager extends EventManager {
 
     private final PreferencesManager preferencesManager;
 
-    public SocialManager(Context context, DrupalClient client) {
-        super(context, client);
+    public SocialManager(Context context) {
+        super(context);
         this.preferencesManager = PreferencesManager.create(context);
     }
 

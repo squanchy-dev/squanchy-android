@@ -126,7 +126,7 @@ public class Model {
     }
 
     ProgramManager createProgramManager(Context context) {
-        return new ProgramManager(context, client);
+        return new ProgramManager(context);
     }
 
     public UpdatesManager getUpdatesManager() {
@@ -155,21 +155,21 @@ public class Model {
         client = new DrupalClient(context.getString(R.string.api_value_base_url), queue, BaseRequest.RequestFormat.JSON, loginManager);
         client.setRequestTimeout(REQUEST_TIMEOUT_MLLIS);
 
-        typesManager = new TypesManager(context, client);
-        levelsManager = new LevelsManager(context, client);
-        tracksManager = new TracksManager(context, client);
-        speakerManager = new SpeakerManager(context, client);
-        locationmanager = new LocationManager(context, client);
-        socialManager = new SocialManager(context, client);
-        bofsManager = new BofsManager(context, client);
-        poisManager = new PoisManager(context, client);
-        infoManager = new InfoManager(context, client);
-        programManager = new ProgramManager(context, client);
-        eventManager = new EventManager(context, client);
+        typesManager = new TypesManager(context);
+        levelsManager = new LevelsManager(context);
+        tracksManager = new TracksManager(context);
+        speakerManager = new SpeakerManager(context);
+        locationmanager = new LocationManager(context);
+        socialManager = new SocialManager(context);
+        bofsManager = new BofsManager(context);
+        poisManager = new PoisManager(context);
+        infoManager = new InfoManager(context);
+        programManager = new ProgramManager(context);
+        eventManager = new EventManager(context);
         favoriteManager = new FavoriteManager(context);
 
         updatesManager = new UpdatesManager(repository);
-        settingsManager = new SettingsManager(context, client);
+        settingsManager = new SettingsManager(context);
         floorPlansManager = new FloorPlansManager(context, client);
     }
 
