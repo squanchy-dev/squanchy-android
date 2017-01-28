@@ -24,9 +24,11 @@ import io.reactivex.Observable;
 public class FloorPlansManager extends SynchronousItemManager<FloorPlan.Holder, String> {
 
     private FloorPlanDao mFloorPlansDAO;
+    private DrupalClient client;
 
     public FloorPlansManager(Context context, DrupalClient client) {
-        super(context, client);
+        super(context);
+        this.client = client;
         this.mFloorPlansDAO = new FloorPlanDao(context);
     }
 
@@ -110,7 +112,7 @@ public class FloorPlansManager extends SynchronousItemManager<FloorPlan.Holder, 
 
     private boolean loadImageForFloor(final FloorPlan floor) {
         //Load new image
-        DrupalByteEntity imageEntity = new DrupalByteEntity(getClient()) {
+        DrupalByteEntity imageEntity = new DrupalByteEntity(client) {
             @Override
             protected String getPath() {
                 return floor.getImageURL();

@@ -5,7 +5,6 @@ import android.content.Context;
 import com.connfa.model.dao.LocationDao;
 import com.connfa.model.data.Location;
 import com.connfa.service.ConnfaRepository;
-import com.ls.drupal.DrupalClient;
 
 import java.util.List;
 
@@ -15,8 +14,8 @@ public class LocationManager extends SynchronousItemManager<Location.Holder, Str
 
     private LocationDao mLocationDao;
 
-    public LocationManager(Context context, DrupalClient client) {
-        super(context, client);
+    public LocationManager(Context context) {
+        super(context);
         mLocationDao = new LocationDao(context);
     }
 

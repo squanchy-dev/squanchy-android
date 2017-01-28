@@ -5,7 +5,6 @@ import android.content.Context;
 import com.connfa.model.dao.TypeDao;
 import com.connfa.model.data.Type;
 import com.connfa.service.ConnfaRepository;
-import com.ls.drupal.DrupalClient;
 
 import java.util.List;
 
@@ -15,8 +14,8 @@ public class TypesManager extends SynchronousItemManager<Type.Holder, String> {
 
     private TypeDao mTypeDao;
 
-    public TypesManager(Context context, DrupalClient client) {
-        super(context, client);
+    public TypesManager(Context context) {
+        super(context);
         mTypeDao = new TypeDao(context);
     }
 

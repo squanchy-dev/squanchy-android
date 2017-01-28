@@ -7,7 +7,6 @@ import com.connfa.model.dao.TrackDao;
 import com.connfa.model.data.Level;
 import com.connfa.model.data.Track;
 import com.connfa.service.ConnfaRepository;
-import com.ls.drupal.DrupalClient;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -19,8 +18,8 @@ public class TracksManager extends SynchronousItemManager<Track.Holder, String> 
 
     private TrackDao mTrackDao;
 
-    public TracksManager(Context context, DrupalClient client) {
-        super(context, client);
+    public TracksManager(Context context) {
+        super(context);
         mTrackDao = new TrackDao(context);
     }
 

@@ -5,7 +5,6 @@ import android.content.Context;
 import com.connfa.model.dao.LevelDao;
 import com.connfa.model.data.Level;
 import com.connfa.service.ConnfaRepository;
-import com.ls.drupal.DrupalClient;
 
 import java.util.List;
 
@@ -15,8 +14,8 @@ public class LevelsManager extends SynchronousItemManager<Level.Holder, String> 
 
     private LevelDao mLevelDao;
 
-    public LevelsManager(Context context, DrupalClient client) {
-        super(context, client);
+    public LevelsManager(Context context) {
+        super(context);
         mLevelDao = new LevelDao(context);
     }
 
