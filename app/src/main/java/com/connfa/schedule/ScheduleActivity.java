@@ -14,7 +14,8 @@ import com.connfa.schedule.domain.SchedulePage;
 import com.connfa.schedule.view.ScheduleViewPagerAdapter;
 
 import java.util.Collections;
-import java.util.Date;
+
+import org.joda.time.DateTime;
 
 public class ScheduleActivity extends NavigationDrawerActivity {
 
@@ -49,7 +50,7 @@ public class ScheduleActivity extends NavigationDrawerActivity {
         super.onStart();
 
         // TODO start fetching data
-        viewPagerAdapter.updateWith(Collections.singletonList(new SchedulePage(new Date())));
+        viewPagerAdapter.updateWith(Collections.singletonList(SchedulePage.create(DateTime.now())));
     }
 
     @Override

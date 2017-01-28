@@ -5,28 +5,25 @@ import android.content.Context;
 import com.connfa.model.data.Event;
 import com.connfa.model.data.Level;
 import com.connfa.utils.DateUtils;
+import com.google.auto.value.AutoValue;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-public class SchedulePage {
+import org.joda.time.DateTime;
 
-    private final Date date;           // TODO use JodaTime
+@AutoValue
+public abstract class SchedulePage {
 
-    public SchedulePage(Date date) {
-        this.date = date;
+    public static SchedulePage create(DateTime date) {
+        return new AutoValue_SchedulePage(date, dummyEvents());
     }
 
-    public String formattedTitle(Context context) {
-        return DateUtils.getWeekNameAndDate(context, date.getTime());
-    }
-
-    public List<Event> events() {
+    private static List<Event> dummyEvents() {
         Event event = new Event(TimeZone.getDefault());
         event.setId(123456);
-        event.setDate(new Date());
+        event.setDate(DateTime.now().toDate());
         event.setName("Test event \uD83C\uDF4C");
         event.setTrack(0);
         event.setSpeakers(Collections.<Long>emptyList());
@@ -35,5 +32,13 @@ public class SchedulePage {
         event.setType(0);
         event.setExperienceLevel(Level.INTERMEDIATE);
         return Collections.singletonList(event);
+    }
+
+    public abstract DateTime date();
+
+    public abstract List<Event> events();
+
+    public String formattedTitle(Context context) {
+        return DateUtils.getWeekNameAndDate(context, date().getMillis());
     }
 }

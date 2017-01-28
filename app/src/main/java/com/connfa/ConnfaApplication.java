@@ -15,6 +15,8 @@ import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.tweetui.TweetUi;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 
@@ -23,6 +25,8 @@ public class ConnfaApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        JodaTimeAndroid.init(this);
 
         setupTracking();
 
