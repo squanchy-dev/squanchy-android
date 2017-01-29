@@ -12,33 +12,21 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 
+import static org.joda.time.format.ISODateTimeFormat.date;
+
 @AutoValue
 public abstract class SchedulePage {
 
-    public static SchedulePage create(DateTime date) {
-        return new AutoValue_SchedulePage(date, dummyEvents());
+    // todo parse date, format it
+    public static SchedulePage create(String date, List<Event> events) {
+        return new AutoValue_SchedulePage(date, events);
     }
 
-    private static List<Event> dummyEvents() {
-        Event event = Event.builder()
-                .id(123456)
-                .title("Test event \uD83C\uDF4C")
-                .place("Rome, Italy")
-                .placeVisibility(View.VISIBLE)
-                .trackVisibility(View.GONE)
-                .speakers("Carl Urbane, Lee Onwards")
-                .speakersVisibility(View.VISIBLE)
-                .experienceLevelIcon(R.drawable.ic_experience_intermediate)
-                .build();
-
-        return Collections.singletonList(event);
-    }
-
-    public abstract DateTime date();
+    public abstract String title();
 
     public abstract List<Event> events();
 
-    public String formattedTitle(Context context) {
-        return DateUtils.getWeekNameAndDate(context, date().getMillis());
+    private static String formattedTitle(Context context, DateTime date) {
+        return DateUtils.getWeekNameAndDate(context, date.getMillis());
     }
 }

@@ -52,7 +52,7 @@ public class ScheduleViewPagerAdapter extends PagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return pages.get(position).formattedTitle(context);
+        return pages.get(position).title();
     }
 
     @Override

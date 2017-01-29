@@ -10,16 +10,18 @@ import android.view.ViewGroup;
 import com.connfa.R;
 import com.connfa.navigation.NavigationDrawerActivity;
 import com.connfa.navigation.Navigator;
-import com.connfa.schedule.domain.view.SchedulePage;
+import com.connfa.schedule.service.ScheduleActivityService;
 import com.connfa.schedule.view.ScheduleViewPagerAdapter;
+import com.connfa.service.firebase.FirebaseConnfaRepository;
 
-import java.util.Collections;
-
-import org.joda.time.DateTime;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 public class ScheduleActivity extends NavigationDrawerActivity {
 
     private ScheduleViewPagerAdapter viewPagerAdapter;
+    private ScheduleActivityService service;
+    private Disposable subscription;
 
     @Override
     protected void inflateActivityContent(ViewGroup parent) {
@@ -38,6 +40,8 @@ public class ScheduleActivity extends NavigationDrawerActivity {
 
         viewPagerAdapter = new ScheduleViewPagerAdapter(this);
         viewPager.setAdapter(viewPagerAdapter);
+
+        service = new ScheduleActivityService(FirebaseConnfaRepository.newInstance(this));
     }
 
     private void setupToolbar(Toolbar toolbar) {
@@ -49,15 +53,16 @@ public class ScheduleActivity extends NavigationDrawerActivity {
     protected void onStart() {
         super.onStart();
 
-        // TODO start fetching data
-        viewPagerAdapter.updateWith(Collections.singletonList(SchedulePage.create(DateTime.now())));
+        subscription = service.schedule()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(schedule -> viewPagerAdapter.updateWith(schedule.pages()));
     }
 
     @Override
     protected void onStop() {
         super.onStop();
 
-        // TODO stop data flow
+        subscription.dispose();
     }
 
     @Override
@@ -70,5 +75,4 @@ public class ScheduleActivity extends NavigationDrawerActivity {
             }
         };
     }
-
 }
