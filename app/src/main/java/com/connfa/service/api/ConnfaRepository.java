@@ -1,4 +1,4 @@
-package com.connfa.service;
+package com.connfa.service.api;
 
 import android.content.Context;
 
@@ -13,7 +13,6 @@ import com.connfa.model.data.SettingsHolder;
 import com.connfa.model.data.Speaker;
 import com.connfa.model.data.Track;
 import com.connfa.model.data.Type;
-import com.connfa.service.api.ConnfaService;
 import com.connfa.service.model.Updates;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 

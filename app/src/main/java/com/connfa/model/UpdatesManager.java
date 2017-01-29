@@ -2,7 +2,7 @@ package com.connfa.model;
 
 import com.connfa.model.database.ILAPIDBFacade;
 import com.connfa.model.managers.SynchronousItemManager;
-import com.connfa.service.ConnfaRepository;
+import com.connfa.service.api.ConnfaRepository;
 import com.connfa.service.model.Updates;
 import com.connfa.ui.drawer.DrawerManager;
 import com.ls.util.ObserverHolder;
