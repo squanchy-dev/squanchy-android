@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.connfa.R;
 import com.connfa.navigation.NavigationDrawerActivity;
 import com.connfa.navigation.Navigator;
-import com.connfa.schedule.domain.SchedulePage;
+import com.connfa.schedule.domain.view.SchedulePage;
 import com.connfa.schedule.view.ScheduleViewPagerAdapter;
 
 import java.util.Collections;

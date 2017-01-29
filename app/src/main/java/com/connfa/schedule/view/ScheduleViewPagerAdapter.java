@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.connfa.R;
-import com.connfa.model.data.Event;
-import com.connfa.schedule.domain.SchedulePage;
+import com.connfa.schedule.domain.view.SchedulePage;
+import com.connfa.schedule.domain.view.Event;
 
 import java.util.Collections;
 import java.util.List;

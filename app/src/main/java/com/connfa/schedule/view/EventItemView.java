@@ -1,7 +1,6 @@
 package com.connfa.schedule.view;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -9,8 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.connfa.R;
-import com.connfa.model.data.Event;
 import com.connfa.model.data.Level;
+import com.connfa.schedule.domain.view.Event;
 
 public class EventItemView extends FrameLayout {
 
@@ -44,21 +43,17 @@ public class EventItemView extends FrameLayout {
     }
 
     public void updateWith(Event event) {
-        titleView.setText(event.getName());
+        titleView.setText(event.title());
 
-        if (TextUtils.isEmpty(event.getPlace())) {
-            placeContainer.setVisibility(View.GONE);
-        } else {
-            placeView.setText(event.getPlace());
-            placeContainer.setVisibility(View.VISIBLE);
-        }
+        placeView.setText(event.place());
+        placeContainer.setVisibility(event.placeVisibility());
 
-        trackView.setVisibility(View.GONE);
+        trackView.setVisibility(event.trackVisibility());
 
-        speakersView.setText("Carl Urbane, Lee Onwards");
-        speakersContainer.setVisibility(View.VISIBLE);
+        speakersView.setText(event.speakers());
+        speakersContainer.setVisibility(event.speakersVisibility());
 
-        int icon = Level.getIcon(event.getExperienceLevel());
-        experienceIconView.setImageResource(icon);
+        experienceIconView.setImageResource(event.experienceLevelIcon());
     }
+
 }

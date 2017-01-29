@@ -1,15 +1,14 @@
-package com.connfa.schedule.domain;
+package com.connfa.schedule.domain.view;
 
 import android.content.Context;
+import android.view.View;
 
-import com.connfa.model.data.Event;
-import com.connfa.model.data.Level;
+import com.connfa.R;
 import com.connfa.utils.DateUtils;
 import com.google.auto.value.AutoValue;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.TimeZone;
 
 import org.joda.time.DateTime;
 
@@ -21,16 +20,17 @@ public abstract class SchedulePage {
     }
 
     private static List<Event> dummyEvents() {
-        Event event = new Event(TimeZone.getDefault());
-        event.setId(123456);
-        event.setDate(DateTime.now().toDate());
-        event.setName("Test event \uD83C\uDF4C");
-        event.setTrack(0);
-        event.setSpeakers(Collections.<Long>emptyList());
-        event.setFromTime("2017-01-31T08:00:00Z");
-        event.setToTime("2017-01-31T08:00:00Z");
-        event.setType(0);
-        event.setExperienceLevel(Level.INTERMEDIATE);
+        Event event = Event.builder()
+                .id(123456)
+                .title("Test event \uD83C\uDF4C")
+                .place("Rome, Italy")
+                .placeVisibility(View.VISIBLE)
+                .trackVisibility(View.GONE)
+                .speakers("Carl Urbane, Lee Onwards")
+                .speakersVisibility(View.VISIBLE)
+                .experienceLevelIcon(R.drawable.ic_experience_intermediate)
+                .build();
+
         return Collections.singletonList(event);
     }
 
