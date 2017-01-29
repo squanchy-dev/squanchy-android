@@ -11,6 +11,10 @@ buildscript {
     }
 }
 
+plugins {
+    id "me.tatarka.retrolambda" version "3.5.0"
+}
+
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply plugin: 'com.novoda.build-properties'
@@ -35,6 +39,11 @@ buildProperties {
 android {
     compileSdkVersion Integer.parseInt(project.COMPILE_SDK_VERSION)
     buildToolsVersion project.BUILD_TOOLS_VERSION
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
     defaultConfig {
         applicationId buildProperties.application['applicationId']
@@ -129,6 +138,8 @@ dependencies {
 
     apt libraries.app.autoValue
     provided libraries.app.autoValue
+
+    retrolambdaConfig libraries.app.retrolambda
 }
 
 apply plugin: 'com.google.gms.google-services'
