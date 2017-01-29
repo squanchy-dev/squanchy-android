@@ -2,6 +2,7 @@ package com.connfa.schedule.domain.view;
 
 import android.support.annotation.DrawableRes;
 
+import com.connfa.support.view.Visibility;
 import com.google.auto.value.AutoValue;
 
 @AutoValue
@@ -17,12 +18,15 @@ public abstract class Event {
 
     public abstract String place();
 
+    @Visibility
     public abstract int placeVisibility();
 
+    @Visibility
     public abstract int trackVisibility();
 
     public abstract String speakers();
 
+    @Visibility
     public abstract int speakersVisibility();
 
     @DrawableRes
@@ -36,13 +40,13 @@ public abstract class Event {
 
         public abstract Builder place(String place);
 
-        public abstract Builder placeVisibility(int placeVisibility);
+        public abstract Builder placeVisibility(@Visibility int placeVisibility);
 
-        public abstract Builder trackVisibility(int trackVisibility);
+        public abstract Builder trackVisibility(@Visibility int trackVisibility);
 
         public abstract Builder speakers(String speakers);
 
-        public abstract Builder speakersVisibility(int speakersVisibility);
+        public abstract Builder speakersVisibility(@Visibility int speakersVisibility);
 
         public abstract Builder experienceLevelIcon(@DrawableRes int experienceLevelIcon);
 
