@@ -47,6 +47,7 @@ public class SchedulePageView extends FrameLayout implements PageView<List<Event
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(callback, true);    // TODO move off the UI thread
         adapter.updateWith(newData);
         diffResult.dispatchUpdatesTo(adapter);
+        progressBar.setVisibility(GONE);
     }
 
     private static class EventsDiffCallback extends DiffUtil.Callback {
