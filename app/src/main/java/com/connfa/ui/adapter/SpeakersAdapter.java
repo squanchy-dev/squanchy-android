@@ -130,26 +130,26 @@ public class SpeakersAdapter extends BaseAdapter implements Filterable {
 
             FilterResults results = new FilterResults();
 
-            final List<Speaker> speakersList = mSpeakers;
+            final List<Speaker> speakers = mSpeakers;
 
-            int count = speakersList.size();
+            int count = speakers.size();
 
-            final List<Speaker> nlist = new ArrayList<Speaker>(count);
+            final List<Speaker> filteredSpeakers = new ArrayList<>(count);
 
             String filterableString;
 
-            for (int i = 0; i < count; i++) {
-                String firstName = speakersList.get(i).getFirstName();
-                String lastName = speakersList.get(i).getLastName();
+            for (Speaker speaker : speakers) {
+                String firstName = speaker.getFirstName();
+                String lastName = speaker.getLastName();
 
                 filterableString = firstName + " " + lastName;
                 if (filterableString.toLowerCase().contains(filterString)) {
-                    nlist.add(speakersList.get(i));
+                    filteredSpeakers.add(speaker);
                 }
             }
 
-            results.values = nlist;
-            results.count = nlist.size();
+            results.values = filteredSpeakers;
+            results.count = filteredSpeakers.size();
 
             return results;
         }

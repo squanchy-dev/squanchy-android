@@ -13,6 +13,7 @@ import com.connfa.R;
 import com.connfa.model.data.Event;
 
 import java.util.List;
+import java.util.Objects;
 
 public class SchedulePageView extends FrameLayout implements PageView<List<Event>> {
 
@@ -73,7 +74,7 @@ public class SchedulePageView extends FrameLayout implements PageView<List<Event
         public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
             Event oldEvent = oldEvents.get(oldItemPosition);
             Event newEvent = newEvents.get(newItemPosition);
-            return oldEvent.getId() == newEvent.getId();
+            return oldEvent.getId().equals(newEvent.getId());
         }
 
         @Override

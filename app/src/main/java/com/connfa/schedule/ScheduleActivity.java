@@ -62,12 +62,8 @@ public class ScheduleActivity extends NavigationDrawerActivity {
 
     @Override
     protected Navigator navigate() {
-        return new Navigator() {
-
-            @Override
-            public void up() {
-                // TODO
-            }
+        return () -> {
+            // TODO
         };
     }
 

@@ -78,19 +78,16 @@ public class EventGenerator {
             return new ArrayList<>();
         }
 
-        Collections.sort(eventListItems, new Comparator<EventListItem>() {
-            @Override
-            public int compare(EventListItem first, EventListItem second) {
-                double order1 = first.getEvent().getOrder();
-                double order2 = second.getEvent().getOrder();
+        Collections.sort(eventListItems, (first, second) -> {
+            double order1 = first.getEvent().getOrder();
+            double order2 = second.getEvent().getOrder();
 
-                if (order1 > order2) {
-                    return 1;
-                } else if (order1 < order2) {
-                    return -1;
-                } else {
-                    return 0;
-                }
+            if (order1 > order2) {
+                return 1;
+            } else if (order1 < order2) {
+                return -1;
+            } else {
+                return 0;
             }
         });
 

@@ -71,12 +71,7 @@ public class EventDetailsActivity extends StackKeeperActivity {
                 }
             });
 
-    private UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener() {
-        @Override
-        public void onDataUpdated(List<Integer> requestIds) {
-            loadEvent();
-        }
-    };
+    private UpdatesManager.DataUpdatedListener updateListener = requestIds -> loadEvent();
 
     public static void startThisActivity(Activity activity, long eventId, long day) {
         Intent intent = new Intent(activity, EventDetailsActivity.class);
@@ -302,13 +297,10 @@ public class EventDetailsActivity extends StackKeeperActivity {
         checkBoxFavorite.setChecked(mIsFavorite);
 
         RelativeLayout layoutFavorite = (RelativeLayout) findViewById(R.id.layoutFavorite);
-        layoutFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkBoxFavorite.setChecked(!checkBoxFavorite.isChecked());
-                mIsFavorite = checkBoxFavorite.isChecked();
-                setFavorite();
-            }
+        layoutFavorite.setOnClickListener(v -> {
+            checkBoxFavorite.setChecked(!checkBoxFavorite.isChecked());
+            mIsFavorite = checkBoxFavorite.isChecked();
+            setFavorite();
         });
     }
 
@@ -347,25 +339,17 @@ public class EventDetailsActivity extends StackKeeperActivity {
         TextView txtJob = (TextView) speakerView.findViewById(R.id.txtOrgAndJobTitle);
         txtJob.setText(organization + space + jobTitle);
 
-        speakerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(EventDetailsActivity.this, SpeakerDetailsActivity.class);
-                intent.putExtra(SpeakerDetailsActivity.EXTRA_SPEAKER_ID, speaker.getId());
-                intent.putExtra(SpeakerDetailsActivity.EXTRA_SPEAKER, speaker);
-                startActivity(intent);
-            }
+        speakerView.setOnClickListener(view -> {
+            Intent intent = new Intent(EventDetailsActivity.this, SpeakerDetailsActivity.class);
+            intent.putExtra(SpeakerDetailsActivity.EXTRA_SPEAKER_ID, speaker.getId());
+            intent.putExtra(SpeakerDetailsActivity.EXTRA_SPEAKER, speaker);
+            startActivity(intent);
         });
     }
 
     private void setFavorite() {
         final FavoriteManager manager = new FavoriteManager(EventDetailsActivity.this.getApplicationContext());
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                manager.setFavoriteEvent(mEventId, mIsFavorite);
-            }
-        }).start();
+        new Thread(() -> manager.setFavoriteEvent(mEventId, mIsFavorite)).start();
         setToNotificationQueue();
 
         int actionId = R.string.action_remove_from_favorites;

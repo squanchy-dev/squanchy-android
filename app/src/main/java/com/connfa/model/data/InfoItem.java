@@ -75,7 +75,7 @@ public class InfoItem implements AbstractEntity<Long> {
     public static class General {
 
         @SerializedName("title")
-        private HashMap<String, String> mTitles = new HashMap<String, String>();
+        private HashMap<String, String> mTitles = new HashMap<>();
 
         public String getMajorTitle() {
             return mTitles.get("titleMajor");
@@ -86,7 +86,7 @@ public class InfoItem implements AbstractEntity<Long> {
         }
 
         @SerializedName("info")
-        private List<InfoItem> mInfo = new ArrayList<InfoItem>();
+        private List<InfoItem> mInfo = new ArrayList<>();
 
         public List<InfoItem> getInfo() {
             return mInfo;

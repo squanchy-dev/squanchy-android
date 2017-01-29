@@ -49,12 +49,7 @@ public final class ConnfaRepository {
     }
 
     private Function<ApiUpdates, Updates> toUpdates() {
-        return new Function<ApiUpdates, Updates>() {
-            @Override
-            public Updates apply(ApiUpdates updates) throws Exception {
-                return new Updates(updates.idsForUpdate);
-            }
-        };
+        return updates -> new Updates(updates.idsForUpdate);
     }
 
     public Observable<Event.Holder> bofs() {

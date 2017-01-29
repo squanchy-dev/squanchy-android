@@ -131,7 +131,7 @@ public class Type implements AbstractEntity<Long> {
     public static class Holder {
 
         @SerializedName("types")
-        private List<Type> mTypes = new ArrayList<Type>();
+        private List<Type> mTypes = new ArrayList<>();
 
         public List<Type> getTypes() {
             return mTypes;

@@ -134,12 +134,7 @@ public class EventFragment extends Fragment implements EventsAdapter.Listener {
     private void updateViewsUI(final List<EventListItem> eventList) {
         Activity activity = getActivity();
         if (activity != null) {
-            activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    handleEventsResult(eventList);
-                }
-            });
+            activity.runOnUiThread(() -> handleEventsResult(eventList));
         }
     }
 

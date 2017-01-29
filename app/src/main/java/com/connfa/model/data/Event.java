@@ -350,7 +350,7 @@ public class Event implements AbstractEntity<Long>, Comparable<Event> {
     public static class Holder {
 
         @SerializedName("days")
-        private List<Day> mDays = new ArrayList<Day>();
+        private List<Day> mDays = new ArrayList<>();
 
         public List<Day> getDays() {
             return mDays;
@@ -363,20 +363,20 @@ public class Event implements AbstractEntity<Long>, Comparable<Event> {
         private String date;
 
         @SerializedName("programEvents")
-        private List<Event> mProgramEvents = new ArrayList<Event>();
+        private List<Event> mProgramEvents = new ArrayList<>();
 
         @SerializedName("bofsEvents")
-        private List<Event> mBofsEvents = new ArrayList<Event>();
+        private List<Event> mBofsEvents = new ArrayList<>();
 
         @SerializedName("events") // perhaps this field will be renamed to "socialEvents" in future
-        private List<Event> mSocialsEvents = new ArrayList<Event>();
+        private List<Event> mSocialsEvents = new ArrayList<>();
 
         public String getDate() {
             return date;
         }
 
         public List<Event> getEvents() {
-            List<Event> result = new ArrayList<Event>();
+            List<Event> result = new ArrayList<>();
             result.addAll(mProgramEvents);
             result.addAll(mBofsEvents);
             result.addAll(mSocialsEvents);

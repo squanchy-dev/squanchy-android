@@ -42,7 +42,7 @@ public class AppDatabaseInfo implements DBInfo, IMigrationTask {
 
     @Override
     public List<String> getTableNameList() {
-        List<String> dbTableNameList = new ArrayList<String>();
+        List<String> dbTableNameList = new ArrayList<>();
         dbTableNameList.add(TypeDao.TABLE_NAME);
         dbTableNameList.add(SpeakerDao.TABLE_NAME);
         dbTableNameList.add(LevelDao.TABLE_NAME);

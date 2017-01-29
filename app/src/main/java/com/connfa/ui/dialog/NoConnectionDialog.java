@@ -9,22 +9,22 @@ import android.support.v4.app.FragmentActivity;
 
 import com.connfa.R;
 
+import org.jetbrains.annotations.NotNull;
+
 public class NoConnectionDialog extends DialogFragment {
 
     public static final String TAG = "NoConnectionDialog";
 
     @Override
+    @NotNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
         alertDialog.setTitle(R.string.Attention);
         alertDialog.setMessage(R.string.NoConnectionMessage);
-        alertDialog.setPositiveButton(getActivity().getString(android.R.string.ok),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                });
+        alertDialog.setPositiveButton(
+                getActivity().getString(android.R.string.ok),
+                (dialog, which) -> finish()
+        );
 
         return alertDialog.create();
     }

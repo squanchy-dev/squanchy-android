@@ -98,12 +98,9 @@ public class FloorPlanFragment extends Fragment {
         Model.getInstance().getUpdatesManager().unregisterUpdateListener(updateListener);
     }
 
-    private final UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener() {
-        @Override
-        public void onDataUpdated(List<Integer> requestIds) {
-            if (requestIds.contains(UpdatesManager.FLOOR_PLANS_REQUEST_ID)) {
-                loadFloorPlans();
-            }
+    private final UpdatesManager.DataUpdatedListener updateListener = requestIds -> {
+        if (requestIds.contains(UpdatesManager.FLOOR_PLANS_REQUEST_ID)) {
+            loadFloorPlans();
         }
     };
 

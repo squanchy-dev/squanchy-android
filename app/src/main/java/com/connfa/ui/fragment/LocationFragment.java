@@ -31,12 +31,7 @@ public class LocationFragment extends Fragment implements CustomMapFragment.OnAc
     public static final String TAG = "LocationsFragment";
     private GoogleMap mGoogleMap;
 
-    private UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener() {
-        @Override
-        public void onDataUpdated(List<Integer> requestIds) {
-            replaceMapFragment();
-        }
-    };
+    private UpdatesManager.DataUpdatedListener updateListener = requestIds -> replaceMapFragment();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,6 +63,7 @@ public class LocationFragment extends Fragment implements CustomMapFragment.OnAc
     }
 
     private class LoadLocations extends AsyncTask<Void, Void, List<Location>> {
+
         @Override
         protected List<Location> doInBackground(Void... params) {
             LocationManager locationManager = Model.getInstance().getLocationManager();
@@ -86,20 +82,23 @@ public class LocationFragment extends Fragment implements CustomMapFragment.OnAc
             return;
         }
 
-        if (locations == null || locations.isEmpty()) {
-            TextView textViewAddress = (TextView) getView().findViewById(R.id.txtAddress);
+        View view = getView();
+        if (view != null && locations == null || locations.isEmpty()) {
+            TextView textViewAddress = (TextView) view.findViewById(R.id.txtAddress);
             textViewAddress.setText(getString(R.string.placeholder_location));
         }
 
-        for (int i = 0; i < locations.size(); i++) {
-            Location location = locations.get(i);
-            LatLng position = new LatLng(location.getLat(), location.getLon());
-            mGoogleMap.addMarker(new MarkerOptions().position(position));
+        if (locations != null) {
+            for (int i = 0; i < locations.size(); i++) {
+                Location location = locations.get(i);
+                LatLng position = new LatLng(location.getLat(), location.getLon());
+                mGoogleMap.addMarker(new MarkerOptions().position(position));
 
-            if (i == 0) {
-                CameraPosition camPos = new CameraPosition(position, ZOOM_LEVEL, TILT_LEVEL, BEARING_LEVEL);
-                mGoogleMap.moveCamera(CameraUpdateFactory.newCameraPosition(camPos));
-                fillTextViews(location);
+                if (i == 0) {
+                    CameraPosition camPos = new CameraPosition(position, ZOOM_LEVEL, TILT_LEVEL, BEARING_LEVEL);
+                    mGoogleMap.moveCamera(CameraUpdateFactory.newCameraPosition(camPos));
+                    fillTextViews(location);
+                }
             }
         }
 

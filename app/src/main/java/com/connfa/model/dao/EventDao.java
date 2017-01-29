@@ -233,7 +233,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
 
     private List<Long> selectLongArraySafe(String[] selectionArgs, String query) {
         ILAPIDBFacade facade = getFacade();
-        List<Long> dataList = new ArrayList<Long>();
+        List<Long> dataList = new ArrayList<>();
 
         try {
             facade.open();
@@ -299,7 +299,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
 
     private List<TimeRange> selectDistrictTimeRangeSafe(String[] selectionArgs, String query) {
         ILAPIDBFacade facade = getFacade();
-        List<TimeRange> dataList = new ArrayList<TimeRange>();
+        List<TimeRange> dataList = new ArrayList<>();
 
         try {
             facade.open();
@@ -341,7 +341,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
     }
 
     public List<SpeakerDetailsEvent> getEventsBySpeakerId(long speakerId) {
-        ArrayList<SpeakerDetailsEvent> ret = new ArrayList<SpeakerDetailsEvent>();
+        ArrayList<SpeakerDetailsEvent> ret = new ArrayList<>();
         String query =
                 "SELECT table_event._id, _from, _to, _date, _name, _favorite, _place, level_name, track_name FROM table_event "
                         +
@@ -557,7 +557,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
         String query = getContext().getString(R.string.select_program_items_by_date);
 
         ILAPIDBFacade facade = getFacade();
-        List<EventListItem> dataList = new ArrayList<EventListItem>();
+        List<EventListItem> dataList = new ArrayList<>();
 
         try {
             facade.open();
@@ -607,7 +607,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
         String query = getContext().getString(R.string.select_events_partly_class_and_date);
 
         ILAPIDBFacade facade = getFacade();
-        List<EventListItem> dataList = new ArrayList<EventListItem>();
+        List<EventListItem> dataList = new ArrayList<>();
 
         try {
             facade.open();
@@ -651,7 +651,7 @@ public class EventDao extends AbstractEntityDAO<Event, Long> {
         String query = getContext().getString(R.string.select_speaker_events_ids);
 
         ILAPIDBFacade facade = getFacade();
-        List<Long> dataList = new ArrayList<Long>();
+        List<Long> dataList = new ArrayList<>();
 
         try {
             facade.open();
