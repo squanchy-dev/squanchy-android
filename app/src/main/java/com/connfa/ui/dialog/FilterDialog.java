@@ -117,7 +117,7 @@ public class FilterDialog extends DialogFragment {
                     width - (int) getResources().getDimension(R.dimen.exp_list_indicator_bounds_right));
         }
 
-        List<String> listDataHeader = new ArrayList<String>();
+        List<String> listDataHeader = new ArrayList<>();
         listDataHeader.add(getActivity().getString(R.string.exp_levels));
         listDataHeader.add(getActivity().getString(R.string.tracks));
 
@@ -160,21 +160,15 @@ public class FilterDialog extends DialogFragment {
 
     private void initButtons(View view) {
         TextView txtApply = (TextView) view.findViewById(R.id.btnApply);
-        txtApply.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                applyFilter();
-                dismissAllowingStateLoss();
-            }
+        txtApply.setOnClickListener(view12 -> {
+            applyFilter();
+            dismissAllowingStateLoss();
         });
 
         TextView txtClear = (TextView) view.findViewById(R.id.btnClear);
-        txtClear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clearFilter();
-                dismissAllowingStateLoss();
-            }
+        txtClear.setOnClickListener(view1 -> {
+            clearFilter();
+            dismissAllowingStateLoss();
         });
     }
 

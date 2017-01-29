@@ -51,15 +51,12 @@ public class SocialFeedActivity extends AppCompatActivity {
 
         swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_container);
 
-        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                if (refreshingData) {
-                    Timber.i("Timeline refresh already underway, ignoring new refresh request");
-                    return;
-                }
-                refreshTimeline();
+        swipeLayout.setOnRefreshListener(() -> {
+            if (refreshingData) {
+                Timber.i("Timeline refresh already underway, ignoring new refresh request");
+                return;
             }
+            refreshTimeline();
         });
     }
 

@@ -103,7 +103,7 @@ public class HURLCookieStore implements CookieStore {
     public List<HttpCookie> get(URI uri) {
         List<HttpCookie> lstCookies = cookiesMap.get(uri);
         if (lstCookies == null) {
-            cookiesMap.put(uri, new ArrayList<HttpCookie>());
+            cookiesMap.put(uri, new ArrayList<>());
         }
         return cookiesMap.get(uri);
     }

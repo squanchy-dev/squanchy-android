@@ -13,6 +13,7 @@ import com.connfa.R;
 import com.connfa.schedule.domain.view.Event;
 
 import java.util.List;
+import java.util.Objects;
 
 public class SchedulePageView extends FrameLayout implements PageView<List<Event>> {
 

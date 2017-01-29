@@ -47,8 +47,8 @@ public class FilterDialogAdapter extends BaseExpandableListAdapter {
         mTrackList = new ArrayList<>();
 
         mSelectedIds = new ArrayList<>();
-        mSelectedIds.add(new ArrayList<Long>());
-        mSelectedIds.add(new ArrayList<Long>());
+        mSelectedIds.add(new ArrayList<>());
+        mSelectedIds.add(new ArrayList<>());
     }
 
     @Override
@@ -98,17 +98,14 @@ public class FilterDialogAdapter extends BaseExpandableListAdapter {
 
         TextView txtHeader = (TextView) convertView.findViewById(R.id.txtTitle);
         txtHeader.setText(getGroup(groupPosition));
-        txtHeader.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isExpanded) {
-                    divider.setVisibility(View.VISIBLE);
-                } else {
-                    divider.setVisibility(View.INVISIBLE);
-                }
-
-                mListener.onGroupClicked(groupPosition);
+        txtHeader.setOnClickListener(v -> {
+            if (!isExpanded) {
+                divider.setVisibility(View.VISIBLE);
+            } else {
+                divider.setVisibility(View.INVISIBLE);
             }
+
+            mListener.onGroupClicked(groupPosition);
         });
 
         return convertView;
@@ -152,12 +149,9 @@ public class FilterDialogAdapter extends BaseExpandableListAdapter {
             checkBox.setChecked(false);
         }
 
-        convertView.findViewById(R.id.layoutChild).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mListener != null) {
-                    mListener.onChildClicked(groupPosition, childPosition);
-                }
+        convertView.findViewById(R.id.layoutChild).setOnClickListener(v -> {
+            if (mListener != null) {
+                mListener.onChildClicked(groupPosition, childPosition);
             }
         });
 

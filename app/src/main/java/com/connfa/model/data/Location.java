@@ -121,7 +121,7 @@ public class Location implements AbstractEntity<Long> {
     public static class Holder {
 
         @SerializedName("locations")
-        private List<Location> mLocations = new ArrayList<Location>();
+        private List<Location> mLocations = new ArrayList<>();
 
         public List<Location> getLocations() {
             return mLocations;

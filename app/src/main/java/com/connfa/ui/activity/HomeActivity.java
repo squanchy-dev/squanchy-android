@@ -53,12 +53,7 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
     public FilterDialog mFilterDialog;
     private boolean mIsDrawerItemClicked;
 
-    private UpdatesManager.DataUpdatedListener updateReceiver = new UpdatesManager.DataUpdatedListener() {
-        @Override
-        public void onDataUpdated(List<Integer> requestIds) {
-            initFilterDialog();
-        }
-    };
+    private UpdatesManager.DataUpdatedListener updateReceiver = requestIds -> initFilterDialog();
 
     static void startThisActivity(Activity activity) {
         Intent intent = new Intent(activity, HomeActivity.class);
@@ -167,12 +162,7 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
     private void initNavigationDrawerList() {
         List<DrawerMenuItem> menu = getNavigationDrawerItems();
         mAdapter = new DrawerAdapter(this, menu);
-        mAdapter.setDrawerItemClickListener(new DrawerAdapter.OnDrawerItemClickListener() {
-            @Override
-            public void onDrawerItemClicked(int position) {
-                onItemClick(position);
-            }
-        });
+        mAdapter.setDrawerItemClickListener(position -> onItemClick(position));
 
         ListView listView = (ListView) findViewById(R.id.leftDrawer);
         listView.addHeaderView(
@@ -190,13 +180,10 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
                 List<Track> trackList = tracksManager.getTracks();
                 List<Level> levelList = tracksManager.getLevels();
 
-                Collections.sort(trackList, new Comparator<Track>() {
-                    @Override
-                    public int compare(Track track1, Track track2) {
-                        String name1 = track1.getName();
-                        String name2 = track2.getName();
-                        return name1.compareToIgnoreCase(name2);
-                    }
+                Collections.sort(trackList, (track1, track2) -> {
+                    String name1 = track1.getName();
+                    String name2 = track2.getName();
+                    return name1.compareToIgnoreCase(name2);
                 });
 
                 String[] tracks = new String[trackList.size()];
@@ -284,7 +271,7 @@ public class HomeActivity extends StateActivity implements FilterDialog.OnFilter
     }
 
     private List<DrawerMenuItem> getNavigationDrawerItems() {
-        List<DrawerMenuItem> result = new ArrayList<DrawerMenuItem>();
+        List<DrawerMenuItem> result = new ArrayList<>();
 
         for (int i = 0; i < DrawerMenu.MENU_STRING_RES_ARRAY.length; i++) {
             DrawerMenuItem menuItem = new DrawerMenuItem();

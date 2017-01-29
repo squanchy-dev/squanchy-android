@@ -73,7 +73,7 @@ public class Track implements AbstractEntity<Long> {
     public static class Holder {
 
         @SerializedName("tracks")
-        private List<Track> mTracks = new ArrayList<Track>();
+        private List<Track> mTracks = new ArrayList<>();
 
         public List<Track> getTracks() {
             return mTracks;

@@ -82,8 +82,7 @@ public class FloorPlansManager extends SynchronousItemManager<FloorPlan.Holder, 
     }
 
     public Bitmap getImageForPlan(FloorPlan plan, int requiredWidth, int requiredHeight) {
-        Bitmap planImage = FileUtils.readBitmapFromStoredFile(plan.getFilePath(), requiredWidth, requiredHeight, getContext());
-        return planImage;
+        return FileUtils.readBitmapFromStoredFile(plan.getFilePath(), requiredWidth, requiredHeight, getContext());
     }
 
     public void clear() {

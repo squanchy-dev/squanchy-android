@@ -14,7 +14,7 @@ public abstract class EventListItem {
     public static final int TYPE_SECTION_NAME = 4;
 
     private Event mEvent;
-    private List<String> mSpeakers = new ArrayList<String>();
+    private List<String> mSpeakers = new ArrayList<>();
     private boolean isLast = false;
 
     abstract public int getAdapterType();
@@ -31,8 +31,8 @@ public abstract class EventListItem {
         this.isLast = isLast;
     }
 
-    public boolean isLast() {
-        return isLast;
+    public boolean isNotLast() {
+        return !isLast;
     }
 
     public List<String> getSpeakers() {

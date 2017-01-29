@@ -76,7 +76,7 @@ public class RedirectHurlStack implements HttpStack {
 
     private HttpResponse performRequest(Request<?> request, Map<String, String> additionalHeaders,
                                         String url) throws AuthFailureError, IOException {
-        HashMap<String, String> map = new HashMap<String, String>();
+        HashMap<String, String> map = new HashMap<>();
         map.putAll(request.getHeaders());
         map.putAll(additionalHeaders);
         if (mUrlRewriter != null) {

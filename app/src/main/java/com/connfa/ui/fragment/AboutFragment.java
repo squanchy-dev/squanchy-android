@@ -36,12 +36,7 @@ public class AboutFragment extends Fragment {
     private AboutListAdapter adapter;
     private List<InfoItem> infoItems;
 
-    private UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener() {
-        @Override
-        public void onDataUpdated(List<Integer> requestIds) {
-            reloadData();
-        }
-    };
+    private UpdatesManager.DataUpdatedListener updateListener = requestIds -> reloadData();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,12 +62,7 @@ public class AboutFragment extends Fragment {
 
         mLayoutPlaceholder = root.findViewById(R.id.layout_placeholder);
         mListMenu = (ListView) root.findViewById(R.id.listView);
-        mListMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                onItemClicked(position);
-            }
-        });
+        mListMenu.setOnItemClickListener((adapterView, view, position, l) -> onItemClicked(position));
 
         if (adapter == null) {
             adapter = new AboutListAdapter(null, root.getContext());
