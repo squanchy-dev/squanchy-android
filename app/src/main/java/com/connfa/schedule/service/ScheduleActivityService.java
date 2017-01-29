@@ -28,7 +28,7 @@ public class ScheduleActivityService {
         Observable<FirebaseEvent.Holder> eventObservable = repository.sessions();
         Observable<FirebaseSpeaker.Holder> speakersObservable = repository.speakers();
 
-        return Observable.zip(
+        return Observable.combineLatest(
                 eventObservable,
                 speakersObservable,
                 (eventHolder, speakerHolder) -> {

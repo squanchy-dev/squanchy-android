@@ -97,7 +97,7 @@ public final class FirebaseConnfaRepository {
         return Observable.create(new ObservableOnSubscribe<T>() {
             @Override
             public void subscribe(final ObservableEmitter<T> e) throws Exception {
-                database.child(path).addListenerForSingleValueEvent(new ValueEventListener() {
+                database.child(path).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         final T value = dataSnapshot.getValue(clazz);
