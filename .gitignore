@@ -26,7 +26,7 @@ local.properties
 *.iml
 *.ipr
 *.iws
-**/.idea/
+/.idea/*
 
 # IDEA/Android Studio Ignore exceptions
 !/.idea/vcs.xml
