@@ -57,7 +57,7 @@ android {
         versionCode Integer.parseInt(project.VERSION_CODE)
         versionName project.VERSION_NAME
 
-        resValueString 'app_name', (buildProperties.application['applicationName'] | 'Connfa').string
+        resValueString 'app_name', (buildProperties.application['applicationName'] | "Connfa").string
 
         manifestPlaceholders += [
                 fabricApiKey: (buildProperties.secrets['fabricApiKey'] | buildProperties.env['FABRIC_API_KEY']).string
@@ -71,7 +71,7 @@ android {
 
         resValueString 'api_value_base_url', (buildProperties.secrets['baseUrl'] | buildProperties.env['BASE_URL']).string
 
-        resValueString 'social_query', (buildProperties.application['socialQuery'] | '#AndroidDev').string
+        resValueString 'social_query', (buildProperties.application['socialQuery'] | "#AndroidDev").string
     }
 
     if (System.getenv('CI') == null) {
