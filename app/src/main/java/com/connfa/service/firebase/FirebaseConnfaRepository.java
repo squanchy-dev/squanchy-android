@@ -1,10 +1,5 @@
 package com.connfa.service.firebase;
 
-import android.content.Context;
-
-import com.connfa.R;
-import com.connfa.service.api.ConnfaRepository;
-import com.connfa.service.api.ConnfaService;
 import com.connfa.service.firebase.model.FirebaseEvent;
 import com.connfa.service.firebase.model.FirebaseFloorPlan;
 import com.connfa.service.firebase.model.FirebaseInfoItem;
@@ -15,28 +10,21 @@ import com.connfa.service.firebase.model.FirebaseSettings;
 import com.connfa.service.firebase.model.FirebaseSpeaker;
 import com.connfa.service.firebase.model.FirebaseTrack;
 import com.connfa.service.firebase.model.FirebaseType;
-import com.connfa.service.model.Updates;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-
-import java.util.Arrays;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public final class FirebaseConnfaRepository {
+
     private final DatabaseReference database;
 
-    public static FirebaseConnfaRepository newInstance(Context context) {
+    public static FirebaseConnfaRepository newInstance() {
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         return new FirebaseConnfaRepository(database);
     }
@@ -94,22 +82,19 @@ public final class FirebaseConnfaRepository {
     }
 
     private <T> Observable<T> observeChild(final String path, final Class<T> clazz) {
-        return Observable.create(new ObservableOnSubscribe<T>() {
-            @Override
-            public void subscribe(final ObservableEmitter<T> e) throws Exception {
-                database.child(path).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        final T value = dataSnapshot.getValue(clazz);
-                        e.onNext(value);
-                    }
+        return Observable.create((ObservableEmitter<T> e) -> {
+            database.child(path).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    final T value = dataSnapshot.getValue(clazz);
+                    e.onNext(value);
+                }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        e.onError(databaseError.toException());
-                    }
-                });
-            }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    e.onError(databaseError.toException());
+                }
+            });
         }).observeOn(Schedulers.io());
     }
 }

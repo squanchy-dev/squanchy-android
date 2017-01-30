@@ -41,7 +41,7 @@ public class ScheduleActivity extends NavigationDrawerActivity {
         viewPagerAdapter = new ScheduleViewPagerAdapter(this);
         viewPager.setAdapter(viewPagerAdapter);
 
-        service = new ScheduleActivityService(FirebaseConnfaRepository.newInstance(this));
+        service = new ScheduleActivityService(FirebaseConnfaRepository.newInstance());
     }
 
     private void setupToolbar(Toolbar toolbar) {
