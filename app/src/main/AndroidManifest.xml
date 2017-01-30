@@ -81,7 +81,9 @@
       android:name="io.fabric.ApiKey"
       android:value="${fabricApiKey}" />
 
-    <activity android:name="com.connfa.eventdetails.EventDetailsActivity" />
+    <activity
+      android:name="com.connfa.eventdetails.EventDetailsActivity"
+      android:theme="@style/Theme.Connfa.EventDetails" />
   </application>
 
 </manifest>
