@@ -6,12 +6,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
-import com.connfa.PageView;
 import com.connfa.schedule.domain.view.Event;
 
 import java.util.List;
 
-public class SchedulePageView extends RecyclerView implements PageView<List<Event>> {
+public class SchedulePageView extends RecyclerView {
 
     private EventsAdapter adapter;
 
@@ -33,11 +32,10 @@ public class SchedulePageView extends RecyclerView implements PageView<List<Even
         setAdapter(adapter);
     }
 
-    @Override
-    public void updateWith(List<Event> newData) {
+    void updateWith(List<Event> newData, ScheduleViewPagerAdapter.OnEventClickedListener listener) {
         DiffUtil.Callback callback = new EventsDiffCallback(adapter.events(), newData);
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(callback, true);    // TODO move off the UI thread
-        adapter.updateWith(newData);
+        adapter.updateWith(newData, listener);
         diffResult.dispatchUpdatesTo(adapter);
     }
 

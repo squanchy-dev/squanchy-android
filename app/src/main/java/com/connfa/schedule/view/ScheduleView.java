@@ -37,8 +37,8 @@ public class ScheduleView extends CoordinatorLayout {
         viewPager.setAdapter(viewPagerAdapter);
     }
 
-    public void updateWith(Schedule schedule) {
-        viewPagerAdapter.updateWith(schedule.pages());
+    public void updateWith(Schedule schedule, ScheduleViewPagerAdapter.OnEventClickedListener listener) {
+        viewPagerAdapter.updateWith(schedule.pages(), listener);
         progressBar.setVisibility(GONE);
     }
 }
