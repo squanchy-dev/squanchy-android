@@ -33,10 +33,6 @@ public final class FirebaseConnfaRepository {
         this.database = database;
     }
 
-    public Observable<FirebaseEvent.Holder> bofs() {
-        return observeChild("bofs", FirebaseEvent.Holder.class);
-    }
-
     public Observable<FirebaseSettings.Holder> settings() {
         return observeChild("settings", FirebaseSettings.Holder.class);
     }

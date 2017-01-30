@@ -5,18 +5,14 @@ import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.widget.FrameLayout;
-import android.widget.ProgressBar;
 
 import com.connfa.PageView;
-import com.connfa.R;
 import com.connfa.schedule.domain.view.Event;
 
 import java.util.List;
 
-public class SchedulePageView extends FrameLayout implements PageView<List<Event>> {
+public class SchedulePageView extends RecyclerView implements PageView<List<Event>> {
 
-    private ProgressBar progressBar;
     private EventsAdapter adapter;
 
     public SchedulePageView(Context context, AttributeSet attrs) {
@@ -31,13 +27,10 @@ public class SchedulePageView extends FrameLayout implements PageView<List<Event
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        progressBar = (ProgressBar) findViewById(R.id.progressbar);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
+        setLayoutManager(layoutManager);
         adapter = new EventsAdapter(getContext());
-        recyclerView.setAdapter(adapter);
+        setAdapter(adapter);
     }
 
     @Override
@@ -46,7 +39,6 @@ public class SchedulePageView extends FrameLayout implements PageView<List<Event
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(callback, true);    // TODO move off the UI thread
         adapter.updateWith(newData);
         diffResult.dispatchUpdatesTo(adapter);
-        progressBar.setVisibility(GONE);
     }
 
     private static class EventsDiffCallback extends DiffUtil.Callback {

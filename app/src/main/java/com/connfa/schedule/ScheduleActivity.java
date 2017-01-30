@@ -1,8 +1,6 @@
 package com.connfa.schedule;
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -11,7 +9,7 @@ import com.connfa.R;
 import com.connfa.navigation.NavigationDrawerActivity;
 import com.connfa.navigation.Navigator;
 import com.connfa.schedule.service.ScheduleActivityService;
-import com.connfa.schedule.view.ScheduleViewPagerAdapter;
+import com.connfa.schedule.view.ScheduleView;
 import com.connfa.service.firebase.FirebaseConnfaRepository;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -19,7 +17,7 @@ import io.reactivex.disposables.Disposable;
 
 public class ScheduleActivity extends NavigationDrawerActivity {
 
-    private ScheduleViewPagerAdapter viewPagerAdapter;
+    private ScheduleView scheduleView;
     private ScheduleActivityService service;
     private Disposable subscription;
 
@@ -34,13 +32,7 @@ public class ScheduleActivity extends NavigationDrawerActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setupToolbar(toolbar);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabstrip);
-        tabLayout.setupWithViewPager(viewPager);
-
-        viewPagerAdapter = new ScheduleViewPagerAdapter(this);
-        viewPager.setAdapter(viewPagerAdapter);
-
+        scheduleView = (ScheduleView) findViewById(R.id.content_root);
         service = new ScheduleActivityService(FirebaseConnfaRepository.newInstance());
     }
 
@@ -55,7 +47,7 @@ public class ScheduleActivity extends NavigationDrawerActivity {
 
         subscription = service.schedule()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(schedule -> viewPagerAdapter.updateWith(schedule.pages()));
+                .subscribe(schedule -> scheduleView.updateWith(schedule));
     }
 
     @Override
