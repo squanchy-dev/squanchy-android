@@ -30,7 +30,7 @@ import com.connfa.model.managers.SocialManager;
 import com.connfa.model.managers.SpeakerManager;
 import com.connfa.model.managers.TracksManager;
 import com.connfa.model.managers.TypesManager;
-import com.connfa.service.ConnfaRepository;
+import com.connfa.service.api.ConnfaRepository;
 import com.ls.drupal.DrupalClient;
 import com.ls.http.base.BaseRequest;
 

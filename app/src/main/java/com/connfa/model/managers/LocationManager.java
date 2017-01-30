@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.connfa.model.dao.LocationDao;
 import com.connfa.model.data.Location;
-import com.connfa.service.ConnfaRepository;
+import com.connfa.service.api.ConnfaRepository;
 
 import java.util.List;
 

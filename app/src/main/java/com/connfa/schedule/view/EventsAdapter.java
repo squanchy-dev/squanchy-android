@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.connfa.R;
-import com.connfa.model.data.Event;
+import com.connfa.schedule.domain.view.Event;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,7 +24,7 @@ class EventsAdapter extends RecyclerView.Adapter<EventViewHolder> {
 
     @Override
     public long getItemId(int position) {
-        return events.get(position).getId();
+        return events.get(position).id();
     }
 
     @Override

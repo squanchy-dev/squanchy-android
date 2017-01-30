@@ -6,7 +6,7 @@ import com.connfa.analytics.Analytics;
 import com.connfa.model.AppDatabaseInfo;
 import com.connfa.model.Model;
 import com.connfa.model.database.LAPIDBRegister;
-import com.connfa.service.ConnfaRepository;
+import com.connfa.service.api.ConnfaRepository;
 import com.crashlytics.android.Crashlytics;
 import com.ls.drupal.DrupalClient;
 import com.ls.http.base.BaseRequest;

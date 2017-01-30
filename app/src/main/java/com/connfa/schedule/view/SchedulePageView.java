@@ -10,7 +10,7 @@ import android.widget.ProgressBar;
 
 import com.connfa.PageView;
 import com.connfa.R;
-import com.connfa.model.data.Event;
+import com.connfa.schedule.domain.view.Event;
 
 import java.util.List;
 import java.util.Objects;
@@ -48,6 +48,7 @@ public class SchedulePageView extends FrameLayout implements PageView<List<Event
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(callback, true);    // TODO move off the UI thread
         adapter.updateWith(newData);
         diffResult.dispatchUpdatesTo(adapter);
+        progressBar.setVisibility(GONE);
     }
 
     private static class EventsDiffCallback extends DiffUtil.Callback {
@@ -74,7 +75,7 @@ public class SchedulePageView extends FrameLayout implements PageView<List<Event
         public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
             Event oldEvent = oldEvents.get(oldItemPosition);
             Event newEvent = newEvents.get(newItemPosition);
-            return oldEvent.getId().equals(newEvent.getId());
+            return oldEvent.id() == newEvent.id();
         }
 
         @Override

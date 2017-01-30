@@ -6,7 +6,7 @@ import com.connfa.model.Model;
 import com.connfa.model.dao.TrackDao;
 import com.connfa.model.data.Level;
 import com.connfa.model.data.Track;
-import com.connfa.service.ConnfaRepository;
+import com.connfa.service.api.ConnfaRepository;
 
 import java.util.Collections;
 import java.util.Comparator;

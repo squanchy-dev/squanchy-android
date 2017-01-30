@@ -3,7 +3,7 @@ package com.connfa.model.managers;
 import android.content.Context;
 
 import com.connfa.model.database.ILAPIDBFacade;
-import com.connfa.service.ConnfaRepository;
+import com.connfa.service.api.ConnfaRepository;
 
 import java.util.concurrent.Callable;
 

@@ -1,4 +1,4 @@
-package com.connfa.service;
+package com.connfa.service.api;
 
 import android.content.Context;
 
@@ -14,12 +14,10 @@ import com.connfa.model.data.Speaker;
 import com.connfa.model.data.Track;
 import com.connfa.model.data.Type;
 import com.connfa.service.api.ConnfaService;
-import com.connfa.service.api.model.updates.ApiUpdates;
 import com.connfa.service.model.Updates;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import io.reactivex.Observable;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -44,12 +42,7 @@ public final class ConnfaRepository {
     }
 
     public Observable<Updates> updates() {
-        return service.updates()
-                .map(toUpdates());
-    }
-
-    private Function<ApiUpdates, Updates> toUpdates() {
-        return updates -> new Updates(updates.idsForUpdate);
+        return service.updates();
     }
 
     public Observable<Event.Holder> bofs() {

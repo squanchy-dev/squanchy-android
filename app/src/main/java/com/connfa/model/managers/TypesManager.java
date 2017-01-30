@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.connfa.model.dao.TypeDao;
 import com.connfa.model.data.Type;
-import com.connfa.service.ConnfaRepository;
+import com.connfa.service.api.ConnfaRepository;
 
 import java.util.List;
 

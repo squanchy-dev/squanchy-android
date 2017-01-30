@@ -47,7 +47,7 @@ android {
 
     defaultConfig {
         applicationId((buildProperties.application['applicationId'] | buildProperties.env['APPLICATION_ID']).string)
-        
+
         minSdkVersion Integer.parseInt(project.MIN_SDK_VERSION)
         targetSdkVersion Integer.parseInt(project.TARGET_SDK_VERSION)
 
@@ -112,19 +112,24 @@ dependencies {
 
     compile libraries.app.playAnalytics
     compile libraries.app.playMaps
-    
+
+    compile libraries.app.firebase
+    compile libraries.app.firebaseDb
+
     compile libraries.app.retrofit
     compile libraries.app.retrofitGson
     compile libraries.app.retrofitRx
-    
+
     compile libraries.app.rx
     compile libraries.app.rxAndroid
-    
+
     compile libraries.app.supportAppCompat
     compile libraries.app.supportDesign
 
-    compile(libraries.app.crashlytics)
+    compile libraries.app.crashlytics
     compile libraries.app.tweetUi
+
+    compile libraries.app.viewPagerAdapter
 
     apt libraries.app.autoValue
     provided libraries.app.autoValue

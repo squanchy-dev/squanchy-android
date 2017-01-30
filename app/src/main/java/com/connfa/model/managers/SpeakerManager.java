@@ -5,7 +5,7 @@ import android.content.Context;
 import com.connfa.model.dao.EventDao;
 import com.connfa.model.dao.SpeakerDao;
 import com.connfa.model.data.Speaker;
-import com.connfa.service.ConnfaRepository;
+import com.connfa.service.api.ConnfaRepository;
 
 import java.util.List;
 

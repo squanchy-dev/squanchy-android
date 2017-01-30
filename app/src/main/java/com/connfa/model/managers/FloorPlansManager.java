@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 
 import com.connfa.model.dao.FloorPlanDao;
 import com.connfa.model.data.FloorPlan;
-import com.connfa.service.ConnfaRepository;
+import com.connfa.service.api.ConnfaRepository;
 import com.connfa.utils.FileUtils;
 import com.ls.drupal.AbstractBaseDrupalEntity;
 import com.ls.drupal.DrupalByteEntity;

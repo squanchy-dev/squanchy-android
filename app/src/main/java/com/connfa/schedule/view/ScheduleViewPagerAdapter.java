@@ -1,19 +1,19 @@
 package com.connfa.schedule.view;
 
 import android.content.Context;
-import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.connfa.R;
-import com.connfa.model.data.Event;
-import com.connfa.schedule.domain.SchedulePage;
+import com.connfa.schedule.domain.view.Event;
+import com.connfa.schedule.domain.view.SchedulePage;
+import com.novoda.viewpageradapter.ViewPagerAdapter;
 
 import java.util.Collections;
 import java.util.List;
 
-public class ScheduleViewPagerAdapter extends PagerAdapter {
+public class ScheduleViewPagerAdapter extends ViewPagerAdapter<SchedulePageView> {
 
     private final Context context;
 
@@ -34,25 +34,20 @@ public class ScheduleViewPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
-        SchedulePageView pageView = (SchedulePageView) LayoutInflater.from(context)
+    protected SchedulePageView createView(ViewGroup container, int position) {
+        return (SchedulePageView) LayoutInflater.from(context)
                 .inflate(R.layout.page_schedule, container, false);
-
-        List<Event> events = pages.get(position).events();
-        pageView.updateWith(events);
-        container.addView(pageView);
-
-        return pageView;
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object view) {
-        container.removeView((View) view);
+    protected void bindView(SchedulePageView view, int position) {
+        List<Event> events = pages.get(position).events();
+        view.updateWith(events);
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return pages.get(position).formattedTitle(context);
+        return pages.get(position).title();
     }
 
     @Override

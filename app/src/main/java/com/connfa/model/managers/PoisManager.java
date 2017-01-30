@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.connfa.model.dao.POIDao;
 import com.connfa.model.data.POI;
-import com.connfa.service.ConnfaRepository;
+import com.connfa.service.api.ConnfaRepository;
 
 import java.util.Collections;
 import java.util.Comparator;

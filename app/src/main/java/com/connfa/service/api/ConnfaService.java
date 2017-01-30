@@ -10,14 +10,14 @@ import com.connfa.model.data.SettingsHolder;
 import com.connfa.model.data.Speaker;
 import com.connfa.model.data.Track;
 import com.connfa.model.data.Type;
-import com.connfa.service.api.model.updates.ApiUpdates;
+import com.connfa.service.model.Updates;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 
 public interface ConnfaService {
     @GET("checkUpdates")
-    Observable<ApiUpdates> updates();
+    Observable<Updates> updates();
 
     @GET("getBofs")
     Observable<Event.Holder> bofs();
