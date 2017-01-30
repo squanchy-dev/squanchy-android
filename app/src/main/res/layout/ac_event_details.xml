@@ -217,7 +217,7 @@
       android:textColor="@color/white"
       android:textSize="@dimen/text_size_20"
       android:textStyle="bold"
-      tools:text="DrupalCon" />
+      tools:text="Just an anonymous conference" />
 
   </android.support.v7.widget.Toolbar>
 

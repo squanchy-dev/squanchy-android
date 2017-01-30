@@ -90,7 +90,7 @@
             android:textColor="@color/black_100"
             android:textSize="@dimen/text_size_medium"
             app:custom_font="@string/roboto_regular"
-            tools:text="Dinner with Drupal" />
+            tools:text="Dinner with you" />
 
           <ImageView
             android:id="@+id/imgExperience"
