@@ -2,6 +2,12 @@ ext {
     supportLibVersion = '25.1.0'
     playServicesVersion = '10.0.1'
 
+    gradlePlugins = [
+            fabric              : 'io.fabric.tools:gradle:1.22.0',
+            buildProperties     : 'com.novoda:build-properties-plugin:1.2.1',
+            androidApt          : 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+    ]
+
     libraries = [
             app: [
                     annotations     : 'org.jetbrains:annotations:13.0',
