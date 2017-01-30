@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.connfa.R;
-import com.connfa.model.data.Level;
 import com.connfa.schedule.domain.view.Event;
 
 public class EventItemView extends FrameLayout {
@@ -55,5 +54,4 @@ public class EventItemView extends FrameLayout {
 
         experienceIconView.setImageResource(event.experienceLevelIcon());
     }
-
 }

@@ -13,11 +13,9 @@ import com.connfa.R;
 import com.connfa.schedule.domain.view.Event;
 
 import java.util.List;
-import java.util.Objects;
 
 public class SchedulePageView extends FrameLayout implements PageView<List<Event>> {
 
-    private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private EventsAdapter adapter;
 
@@ -34,7 +32,7 @@ public class SchedulePageView extends FrameLayout implements PageView<List<Event
         super.onFinishInflate();
 
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);

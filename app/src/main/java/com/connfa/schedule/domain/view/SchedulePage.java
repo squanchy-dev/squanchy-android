@@ -1,18 +1,13 @@
 package com.connfa.schedule.domain.view;
 
 import android.content.Context;
-import android.view.View;
 
-import com.connfa.R;
 import com.connfa.utils.DateUtils;
 import com.google.auto.value.AutoValue;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.joda.time.DateTime;
-
-import static org.joda.time.format.ISODateTimeFormat.date;
 
 @AutoValue
 public abstract class SchedulePage {

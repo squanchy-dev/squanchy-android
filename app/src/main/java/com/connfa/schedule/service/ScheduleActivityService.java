@@ -41,7 +41,7 @@ public class ScheduleActivityService {
                                     firebaseEvent.experienceLevel,
                                     map(
                                             map(firebaseEvent.speakers, speakerId -> find(
-                                                    speakerHolder.speakers, speaker -> speaker.speakerId == speakerId)
+                                                    speakerHolder.speakers, speaker -> speaker.speakerId.equals(speakerId))
                                             ),
                                             speaker -> speaker == null ? "" : speaker.firstName + " " + speaker.lastName
                                     ))

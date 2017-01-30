@@ -19,8 +19,7 @@ public abstract class Event {
             int experienceLevel,
             List<String> speakers
     ) {
-
-        return builder()
+        return new AutoValue_Event.Builder()
                 .id(eventId)
                 .title(title)
                 .place(place)
@@ -46,12 +45,12 @@ public abstract class Event {
     }
 
     // TODO: move in its own enum
-    public static final int BEGINNER = 1;
-    public static final int INTERMEDIATE = 2;
-    public static final int ADVANCED = 3;
+    private static final int BEGINNER = 1;
+    private static final int INTERMEDIATE = 2;
+    private static final int ADVANCED = 3;
 
     @DrawableRes
-    public static int experienceLevelIconFor(int level) {
+    private static int experienceLevelIconFor(int level) {
         switch (level) {
             case BEGINNER:
                 return R.drawable.ic_experience_beginner;
@@ -65,10 +64,6 @@ public abstract class Event {
             default:
                 throw new IllegalArgumentException("Level " + level + " is invalid");
         }
-    }
-
-    public static Builder builder() {
-        return new AutoValue_Event.Builder();
     }
 
     public abstract long id();
@@ -92,7 +87,7 @@ public abstract class Event {
     public abstract int experienceLevelIcon();
 
     @AutoValue.Builder
-    public static abstract class Builder {
+    public abstract static class Builder {
 
         public abstract Builder id(long id);
 
