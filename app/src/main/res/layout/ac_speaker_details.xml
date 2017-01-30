@@ -239,7 +239,7 @@
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_20"
         android:textStyle="bold"
-        tools:text="DrupalCon" />
+        tools:text="Anonymous conf" />
     </android.support.v7.widget.Toolbar>
   </RelativeLayout>
 
