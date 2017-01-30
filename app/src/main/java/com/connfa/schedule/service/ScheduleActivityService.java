@@ -12,7 +12,6 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.connfa.R.color.speaker;
 import static com.connfa.support.lang.Lists.find;
 import static com.connfa.support.lang.Lists.map;
 
