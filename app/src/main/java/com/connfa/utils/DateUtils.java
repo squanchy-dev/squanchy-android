@@ -79,7 +79,7 @@ public class DateUtils {
         return calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.US);
     }
 
-    public static String getWeekNameAndDate(Context context, long millis) {
+    public static String getWeekNameAndDate(long millis) {
         return getDateFormat("EEE d").format(new Date(millis));
     }
 }

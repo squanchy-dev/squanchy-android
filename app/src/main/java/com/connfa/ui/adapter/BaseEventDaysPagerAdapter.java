@@ -70,6 +70,6 @@ public class BaseEventDaysPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return DateUtils.getWeekNameAndDate(context, getDate(position));
+        return DateUtils.getWeekNameAndDate(getDate(position));
     }
 }
