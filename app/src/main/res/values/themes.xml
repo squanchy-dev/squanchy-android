@@ -43,6 +43,8 @@
 
   <style name="Theme.Connfa.Schedule" parent="Theme.ConnfaNew" />
 
-  <style name="Theme.Connfa.EventDetails" parent="Theme.ConnfaNew" />
+  <style name="Theme.Connfa.EventDetails" parent="Theme.ConnfaNew">
+    <item name="android:statusBarColor">#0000</item>
+  </style>
 
 </resources>
