@@ -5,7 +5,7 @@ import android.content.Context;
 import com.connfa.model.PreferencesManager;
 import com.connfa.model.dao.InfoDao;
 import com.connfa.model.data.InfoItem;
-import com.connfa.service.ConnfaRepository;
+import com.connfa.service.api.ConnfaRepository;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -57,12 +57,7 @@ public class InfoManager extends SynchronousItemManager<InfoItem.General, String
 
     public List<InfoItem> getInfo() {
         List<InfoItem> infoItems = infoDAO.getAllSafe();
-        Collections.sort(infoItems, new Comparator<InfoItem>() {
-            @Override
-            public int compare(InfoItem infoItem, InfoItem infoItem2) {
-                return Double.compare(infoItem.getOrder(), infoItem2.getOrder());
-            }
-        });
+        Collections.sort(infoItems, (infoItem, infoItem2) -> Double.compare(infoItem.getOrder(), infoItem2.getOrder()));
 
         return infoItems;
     }

@@ -2,7 +2,7 @@ package com.connfa.model;
 
 import com.connfa.model.database.ILAPIDBFacade;
 import com.connfa.model.managers.SynchronousItemManager;
-import com.connfa.service.ConnfaRepository;
+import com.connfa.service.api.ConnfaRepository;
 import com.connfa.service.model.Updates;
 import com.connfa.ui.drawer.DrawerManager;
 import com.ls.util.ObserverHolder;
@@ -69,130 +69,83 @@ public class UpdatesManager implements Closeable {
     }
 
     private Function<Updates, ObservableSource<List<Integer>>> updateData(final ConnfaRepository repository, final ILAPIDBFacade facade, final Model model) {
-        return new Function<Updates, ObservableSource<List<Integer>>>() {
-            @Override
-            public ObservableSource<List<Integer>> apply(final Updates updates) throws Exception {
-                return Observable.fromIterable(updates.ids())
-                        .doOnSubscribe(open(facade))
-                        .flatMap(fetchData(repository, facade, model))
-                        .doOnTerminate(close(facade))
-                        .map(returnIds(updates));
-            }
-        };
+        return updates -> Observable.fromIterable(updates.ids())
+                .doOnSubscribe(open(facade))
+                .flatMap(fetchData(repository, facade, model))
+                .doOnTerminate(close(facade))
+                .map(returnIds(updates));
     }
 
     private Function<Integer, List<Integer>> returnIds(final Updates updates) {
-        return new Function<Integer, List<Integer>>() {
-            @Override
-            public List<Integer> apply(Integer integer) throws Exception {
-                return updates.ids();
-            }
-        };
+        return integer -> updates.ids();
     }
 
     private Function<Integer, ObservableSource<Integer>> fetchData(final ConnfaRepository repository, final ILAPIDBFacade facade, final Model model) {
-        return new Function<Integer, ObservableSource<Integer>>() {
-            @Override
-            public ObservableSource<Integer> apply(final Integer id) throws Exception {
-                return Observable.just(id)
-                        .map(managerById(model))
-                        .flatMap(fetchManagerData(id, repository, facade));
-            }
-        };
+        return id -> Observable.just(id)
+                .map(managerById(model))
+                .flatMap(fetchManagerData(id, repository, facade));
     }
 
     private Function<SynchronousItemManager, ObservableSource<Integer>> fetchManagerData(final Integer id, final ConnfaRepository repository, final ILAPIDBFacade facade) {
-        return new Function<SynchronousItemManager, ObservableSource<Integer>>() {
-            @Override
-            public ObservableSource<Integer> apply(SynchronousItemManager manager) throws Exception {
-                //noinspection unchecked
-                return manager.fetch(repository, facade)
-                        .map(new Function() {
-                            @Override
-                            public Integer apply(Object o) throws Exception {
-                                return id;
-                            }
-                        });
-            }
+        return manager -> {
+            //noinspection unchecked
+            return manager.fetch(repository, facade)
+                    .map(o -> id);
         };
     }
 
     private Function<? super Integer, SynchronousItemManager> managerById(final Model instance) {
-        return new Function<Integer, SynchronousItemManager>() {
-            @Override
-            public SynchronousItemManager apply(Integer id) throws Exception {
-                switch (id) {
-                    case SETTINGS_REQUEST_ID:
-                        return instance.getSettingsManager();
-                    case TYPES_REQUEST_ID:
-                        return instance.getTypesManager();
-                    case LEVELS_REQUEST_ID:
-                        return instance.getLevelsManager();
-                    case TRACKS_REQUEST_ID:
-                        return instance.getTracksManager();
-                    case SPEAKERS_REQUEST_ID:
-                        return instance.getSpeakerManager();
-                    case LOCATIONS_REQUEST_ID:
-                        return instance.getLocationManager();
-                    case PROGRAMS_REQUEST_ID:
-                        return instance.getProgramManager();
-                    case BOFS_REQUEST_ID:
-                        return instance.getBofsManager();
-                    case SOCIALS_REQUEST_ID:
-                        return instance.getSocialManager();
-                    case POIS_REQUEST_ID:
-                        return instance.getPoisManager();
-                    case INFO_REQUEST_ID:
-                        return instance.getInfoManager();
-                    case FLOOR_PLANS_REQUEST_ID:
-                        return instance.getFloorPlansManager();
-                    default:
-                        throw new IllegalArgumentException("Id not recognized: " + id);
-                }
+        return (Function<Integer, SynchronousItemManager>) id -> {
+            switch (id) {
+                case SETTINGS_REQUEST_ID:
+                    return instance.getSettingsManager();
+                case TYPES_REQUEST_ID:
+                    return instance.getTypesManager();
+                case LEVELS_REQUEST_ID:
+                    return instance.getLevelsManager();
+                case TRACKS_REQUEST_ID:
+                    return instance.getTracksManager();
+                case SPEAKERS_REQUEST_ID:
+                    return instance.getSpeakerManager();
+                case LOCATIONS_REQUEST_ID:
+                    return instance.getLocationManager();
+                case PROGRAMS_REQUEST_ID:
+                    return instance.getProgramManager();
+                case BOFS_REQUEST_ID:
+                    return instance.getBofsManager();
+                case SOCIALS_REQUEST_ID:
+                    return instance.getSocialManager();
+                case POIS_REQUEST_ID:
+                    return instance.getPoisManager();
+                case INFO_REQUEST_ID:
+                    return instance.getInfoManager();
+                case FLOOR_PLANS_REQUEST_ID:
+                    return instance.getFloorPlansManager();
+                default:
+                    throw new IllegalArgumentException("Id not recognized: " + id);
             }
         };
     }
 
     private Consumer<Disposable> open(final ILAPIDBFacade facade) {
-        return new Consumer<Disposable>() {
-            @Override
-            public void accept(Disposable disposable) throws Exception {
-                facade.open();
-            }
-        };
+        return disposable -> facade.open();
     }
 
     private Action close(final ILAPIDBFacade facade) {
-        return new Action() {
-            @Override
-            public void run() throws Exception {
-                facade.close();
-            }
-        };
+        return () -> facade.close();
     }
 
     private Consumer<List<Integer>> notifyObservers(final UpdateCallback callback) {
-        return new Consumer<List<Integer>>() {
-            @Override
-            public void accept(final List<Integer> ids) throws Exception {
-                updateListeners.notifyAllObservers(new ObserverHolder.ObserverNotifier<DataUpdatedListener>() {
-                    @Override
-                    public void onNotify(DataUpdatedListener observer) {
-                        observer.onDataUpdated(ids);
-                    }
-                });
-                callback.onDownloadSuccess();
-            }
+        return ids -> {
+            updateListeners.notifyAllObservers(observer -> observer.onDataUpdated(ids));
+            callback.onDownloadSuccess();
         };
     }
 
     private Consumer<Throwable> notifyError(final UpdateCallback callback) {
-        return new Consumer<Throwable>() {
-            @Override
-            public void accept(Throwable throwable) throws Exception {
-                Timber.e(throwable);
-                callback.onDownloadError();
-            }
+        return throwable -> {
+            Timber.e(throwable);
+            callback.onDownloadError();
         };
     }
 

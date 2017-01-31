@@ -52,12 +52,7 @@ public class EventHolderFragment extends Fragment {
 
     private boolean isFilterUsed;
 
-    private ReceiverManager favoriteReceiver = new ReceiverManager(new ReceiverManager.FavoriteUpdatedListener() {
-        @Override
-        public void onFavoriteUpdated(long eventId, boolean isFavorite) {
-            updateFavorites();
-        }
-    });
+    private ReceiverManager favoriteReceiver = new ReceiverManager((eventId, isFavorite) -> updateFavorites());
 
     public static EventHolderFragment newInstance(int modePos) {
         EventHolderFragment fragment = new EventHolderFragment();
@@ -118,12 +113,7 @@ public class EventHolderFragment extends Fragment {
         super.onDestroyView();
     }
 
-    private UpdatesManager.DataUpdatedListener updateReceiver = new UpdatesManager.DataUpdatedListener() {
-        @Override
-        public void onDataUpdated(List<Integer> requestIds) {
-            updateData(requestIds);
-        }
-    };
+    private UpdatesManager.DataUpdatedListener updateReceiver = requestIds -> updateData(requestIds);
 
     private void initData() {
         Bundle bundle = getArguments();
@@ -220,12 +210,9 @@ public class EventHolderFragment extends Fragment {
         loadDataTask.execute();
     }
 
-    private final LoadDataTask.LoadDataTaskCallback loadDataCallback = new LoadDataTask.LoadDataTaskCallback() {
-        @Override
-        public void onDataLoaded(List<Long> result) {
-            if (isResumed()) {
-                updateViews(result);
-            }
+    private final LoadDataTask.LoadDataTaskCallback loadDataCallback = result -> {
+        if (isResumed()) {
+            updateViews(result);
         }
     };
 

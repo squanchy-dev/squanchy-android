@@ -76,12 +76,7 @@ public class DrawerAdapter extends BaseAdapter {
             result.findViewById(R.id.divider).setVisibility(View.VISIBLE);
         }
 
-        layoutDrawerItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.onDrawerItemClicked(position);
-            }
-        });
+        layoutDrawerItem.setOnClickListener(v -> mListener.onDrawerItemClicked(position));
 
         return result;
     }

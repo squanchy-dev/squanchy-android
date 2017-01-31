@@ -54,7 +54,6 @@ class DatabaseFacade implements ILAPIDBFacade {
     }
 
     public boolean containsRecord(String table, String whereClause, String[] columns) {
-        boolean result = false;
 
         Cursor cursor = db.query(true,
                 table,
@@ -66,11 +65,11 @@ class DatabaseFacade implements ILAPIDBFacade {
                 null,// order by
                 null);// limit
 
-        result = cursor.getCount() > 0;
+        boolean containsRecord = cursor.getCount() > 0;
 
         cursor.close();
 
-        return result;
+        return containsRecord;
     }
 
     public boolean containsRecord(String table, String whereClause, String[] selectionArgs,
@@ -161,5 +160,4 @@ class DatabaseFacade implements ILAPIDBFacade {
     public String getQuery(int resId) {
         return context.getString(resId);
     }
-
 }

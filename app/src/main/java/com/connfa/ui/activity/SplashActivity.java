@@ -31,12 +31,7 @@ public class SplashActivity extends AppCompatActivity {
                 .trackEvent("Application", getString(R.string.action_open));
 
         mHandler = new Handler();
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startSplash();
-            }
-        }, SPLASH_DURATION);
+        mHandler.postDelayed(() -> startSplash(), SPLASH_DURATION);
     }
 
     @Override

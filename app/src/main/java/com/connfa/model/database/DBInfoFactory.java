@@ -1,7 +1,6 @@
 package com.connfa.model.database;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -9,16 +8,17 @@ import java.util.List;
 
 public class DBInfoFactory {
 
-    public static DBInfo create(final Context theContext, final List<String> theTableNameList,
-                                final List<Integer> theResIdList, final int theDatabaseVersion, final String theDatabaseName) {
-        DBInfo result = new DBInfo() {
+    public static DBInfo create(final Context context, final List<String> tableNames,
+                                final List<Integer> resIdList, final int databaseVersion, final String databaseName) {
+
+        return new DBInfo() {
 
             @Override
             public List<String> getTableCreationQueries() {
-                final List<String> queryList = new ArrayList<String>();
+                final List<String> queryList = new ArrayList<>();
 
-                for (Integer resId : theResIdList) {
-                    queryList.add(theContext.getString(resId));
+                for (Integer resId : resIdList) {
+                    queryList.add(context.getString(resId));
                 }
 
                 return queryList;
@@ -26,40 +26,31 @@ public class DBInfoFactory {
 
             @Override
             public List<String> getTableNameList() {
-                if (theTableNameList == null) {
+                if (tableNames == null) {
                     throw new IllegalArgumentException("The table name list cannot be null");
                 }
 
-                return theTableNameList;
+                return tableNames;
             }
 
             @Override
             public int getDatabaseVersion() {
-                return theDatabaseVersion;
+                return databaseVersion;
             }
 
             @Override
             public String getDatabaseName() {
-                return theDatabaseName;
+                return databaseName;
             }
 
             @Override
             public IMigrationTask getMigrationTask() {
-                return new IMigrationTask() {
-
-                    @Override
-                    public void onUpgrade(SQLiteDatabase theDb, int oldVersion, int newVersion) {
-                        Iterator<String> it = theTableNameList.iterator();
-                        while (it.hasNext()) {
-                            String tableName = it.next();
-                            theDb.execSQL("DROP TABLE IF EXISTS " + tableName);
-                        }
+                return (theDb, oldVersion, newVersion) -> {
+                    for (String tableName : tableNames) {
+                        theDb.execSQL("DROP TABLE IF EXISTS " + tableName);
                     }
                 };
             }
         };
-
-        return result;
     }
-
 }

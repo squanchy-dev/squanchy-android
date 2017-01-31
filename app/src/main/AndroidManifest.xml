@@ -18,11 +18,24 @@
     android:supportsRtl="false"
     tools:ignore="GoogleAppIndexingWarning">
 
+    <!-- TODO remove this activity altogether -->
+    <!--<activity-->
+      <!--android:name="com.connfa.ui.activity.SplashActivity"-->
+      <!--android:theme="@style/Theme.Connfa.Home"-->
+      <!--android:label="@string/app_name"-->
+      <!--android:screenOrientation="portrait">-->
+      <!---->
+      <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.MAIN" />-->
+        <!--<category android:name="android.intent.category.LAUNCHER" />-->
+      <!--</intent-filter>-->
+    <!--</activity>-->
+
     <activity
-      android:name="com.connfa.ui.activity.SplashActivity"
-      android:theme="@style/Theme.Connfa.Home"
-      android:label="@string/app_name"
-      android:screenOrientation="portrait">
+      android:name="com.connfa.schedule.ScheduleActivity"
+      android:theme="@style/Theme.Connfa.Schedule"
+      android:label="@string/app_name">
+
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
@@ -52,11 +65,23 @@
 
     <activity
       android:name="com.connfa.social.SocialFeedActivity"
-      android:label="@string/activity_social_feed"
       android:theme="@style/Theme.Connfa.SocialFeed"
+      android:label="@string/activity_social_feed"
       android:screenOrientation="portrait" />
 
     <receiver android:name="com.connfa.receiver.NotifyReceiver" />
+
+    <service android:name="com.connfa.push.PushMessagingService">
+      <intent-filter>
+        <action android:name="com.google.firebase.MESSAGING_EVENT" />
+      </intent-filter>
+    </service>
+
+    <service android:name="com.connfa.push.PushInstanceIDService">
+      <intent-filter>
+        <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+      </intent-filter>
+    </service>
 
     <meta-data
       android:name="com.google.android.gms.version"
@@ -68,6 +93,9 @@
       android:name="io.fabric.ApiKey"
       android:value="${fabricApiKey}" />
 
+    <activity
+      android:name="com.connfa.eventdetails.EventDetailsActivity"
+      android:theme="@style/Theme.Connfa.EventDetails" />
   </application>
 
 </manifest>

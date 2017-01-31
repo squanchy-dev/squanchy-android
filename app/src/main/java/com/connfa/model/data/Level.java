@@ -82,7 +82,7 @@ public class Level implements AbstractEntity<Long> {
     public static class Holder {
 
         @SerializedName("levels")
-        private List<Level> mLevels = new ArrayList<Level>();
+        private List<Level> mLevels = new ArrayList<>();
 
         public List<Level> getLevels() {
             return mLevels;

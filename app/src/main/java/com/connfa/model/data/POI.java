@@ -113,7 +113,7 @@ public class POI implements AbstractEntity<Long> {
     public static class Holder {
 
         @SerializedName("poi")
-        private List<POI> mPOIs = new ArrayList<POI>();
+        private List<POI> mPOIs = new ArrayList<>();
 
         public List<POI> getPOIs() {
             return mPOIs;

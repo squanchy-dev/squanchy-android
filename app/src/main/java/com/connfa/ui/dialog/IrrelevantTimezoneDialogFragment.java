@@ -39,14 +39,11 @@ public class IrrelevantTimezoneDialogFragment extends DialogFragment {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setTitle(R.string.Attention);
         alertDialogBuilder.setView(contentView);
-        alertDialogBuilder.setPositiveButton(getActivity().getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                CheckBox dontShowBox = (CheckBox) ((Dialog) dialog).findViewById(R.id.chk_dont_ask_again);
+        alertDialogBuilder.setPositiveButton(getActivity().getString(android.R.string.ok), (dialog, which) -> {
+            CheckBox dontShowBox = (CheckBox) ((Dialog) dialog).findViewById(R.id.chk_dont_ask_again);
 
-                if (dontShowBox.isChecked()) {
-                    setCanPresentMessage(dontShowBox.getContext(), false);
-                }
+            if (dontShowBox.isChecked()) {
+                setCanPresentMessage(dontShowBox.getContext(), false);
             }
         });
 

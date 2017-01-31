@@ -233,7 +233,7 @@ public class Speaker implements AbstractEntity<Long>, Parcelable, Comparable<Spe
     public static class Holder {
 
         @SerializedName("speakers")
-        private List<Speaker> mSpeakers = new ArrayList<Speaker>();
+        private List<Speaker> mSpeakers = new ArrayList<>();
 
         public List<Speaker> getSpeakers() {
             return mSpeakers;

@@ -6,7 +6,7 @@ import com.connfa.model.dao.EventDao;
 import com.connfa.model.data.Event;
 import com.connfa.model.data.EventDetailsEvent;
 import com.connfa.model.data.TimeRange;
-import com.connfa.service.ConnfaRepository;
+import com.connfa.service.api.ConnfaRepository;
 
 import java.util.List;
 

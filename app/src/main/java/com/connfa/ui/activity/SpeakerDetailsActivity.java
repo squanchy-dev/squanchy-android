@@ -58,12 +58,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
     private boolean mIsDataLoaded;
     private boolean mIsWebLoaded;
 
-    private UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener() {
-        @Override
-        public void onDataUpdated(List<Integer> requestIds) {
-            loadSpeakerFromDb();
-        }
-    };
+    private UpdatesManager.DataUpdatedListener updateListener = requestIds -> loadSpeakerFromDb();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -302,12 +297,7 @@ public class SpeakerDetailsActivity extends StackKeeperActivity implements View.
         }
 
         initEventExpLevel(eventView, event);
-        eventView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EventDetailsActivity.startThisActivity(SpeakerDetailsActivity.this, event.getEventId(), event.getFrom());
-            }
-        });
+        eventView.setOnClickListener(view -> EventDetailsActivity.startThisActivity(SpeakerDetailsActivity.this, event.getEventId(), event.getFrom()));
     }
 
     private void initEventExpLevel(View eventView, SpeakerDetailsEvent event) {

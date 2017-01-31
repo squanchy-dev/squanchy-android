@@ -154,7 +154,7 @@ public class EventsAdapter extends BaseAdapter {
         fillEventInfo(holder, event, null, bofsItem.getSpeakers());
         fillEventClickAbility(holder.layoutRoot, holder.txtPlace, event, position);
         fillFavorite(holder);
-        fillDivider(holder, !bofsItem.isLast());
+        fillDivider(holder, bofsItem.isNotLast());
 
         return resultView;
     }
@@ -178,7 +178,7 @@ public class EventsAdapter extends BaseAdapter {
 
         fillEventInfo(holder, event, programItem.getTrack(), programItem.getSpeakers());
         fillIcon(holder, event.getType());
-        fillDivider(holder, !programItem.isLast());
+        fillDivider(holder, programItem.isNotLast());
         fillFavorite(holder);
         fillEventClickAbility(holder.layoutRoot, holder.txtPlace, event, position);
 
@@ -330,12 +330,7 @@ public class EventsAdapter extends BaseAdapter {
 //            txtPlace.setMaxLines(MULTI_LINE_COUNT);
             layoutRoot.setClickable(false);
         } else {
-            layoutRoot.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mListener.onClick(position);
-                }
-            });
+            layoutRoot.setOnClickListener(v -> mListener.onClick(position));
         }
     }
 

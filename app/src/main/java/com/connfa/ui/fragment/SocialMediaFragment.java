@@ -29,12 +29,7 @@ public class SocialMediaFragment extends Fragment {
     private View rootView;
     private View mLayoutPlaceholder;
 
-    private UpdatesManager.DataUpdatedListener updateReceiver = new UpdatesManager.DataUpdatedListener() {
-        @Override
-        public void onDataUpdated(List<Integer> requestIds) {
-            updateData(requestIds);
-        }
-    };
+    private UpdatesManager.DataUpdatedListener updateReceiver = requestIds -> updateData(requestIds);
 
     public SocialMediaFragment() {
         // Required empty public constructor

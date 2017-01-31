@@ -1,47 +1,22 @@
 <resources>
 
-  <style name="Theme.Connfa" parent="Theme.AppCompat.NoActionBar">
-    <item name="android:windowBackground">@color/white</item>
-    <item name="colorAccent">@color/grey_100</item>
-    <item name="colorControlNormal">@color/white_200</item>
-  </style>
-
-  <style name="Theme.Connfa.Home" parent="Theme.Connfa">
-    <item name="colorPrimaryDark">@color/primary_dark</item>
-    <item name="colorPrimary">@color/primary</item>
-  </style>
-
-  <style name="Theme.Connfa.SocialFeed" parent="Theme.AppCompat.Light.NoActionBar">
-    <item name="colorControlNormal">@color/white_200</item>
-    <item name="colorPrimaryDark">@color/primary_dark</item>
-    <item name="colorPrimary">@color/primary</item>
-  </style>
-
-  <style name="Theme.Connfa.Speaker" parent="Theme.Connfa">
-    <item name="colorPrimaryDark">@color/speaker_primary</item>
-    <item name="colorPrimary">@color/speaker_primary</item>
-    <item name="colorControlNormal">@color/white</item>
-  </style>
-
-  <style name="Theme.Connfa.Event" parent="Theme.Connfa">
-    <item name="colorPrimaryDark">@color/event_primary</item>
-    <item name="colorPrimary">@color/event_primary</item>
-    <item name="colorControlNormal">@color/white</item>
-  </style>
-
-  <style name="Theme.Connfa.About" parent="Theme.Connfa">
-    <item name="colorPrimaryDark">@color/primary_dark</item>
-    <item name="colorPrimary">@color/primary</item>
-    <item name="colorControlNormal">@color/white</item>
-  </style>
+  <style name="None" />
 
   <style name="Connfa" />
 
-  <style name="Connfa.Toolbar" parent="Widget.AppCompat.Light.ActionBar">
-    <item name="android:background">@color/primary</item>
-    <item name="elevation">6dp</item>
+  <style name="Connfa.Appbar" parent="None">
+    <item name="android:background">?attr/colorPrimary</item>
+    <item name="android:elevation">@dimen/toolbar_elevation</item>
   </style>
 
+  <style name="Connfa.Toolbar" parent="Widget.AppCompat.Light.ActionBar" />
+
   <style name="Connfa.Toolbar.SocialFeed" />
+
+  <style name="Connfa.Toolbar.Schedule" />
+
+  <style name="Connfa.Tabs" parent="Widget.Design.TabLayout" />
+
+  <style name="Connfa.Tabs.Schedule" parent="None" />
 
 </resources>

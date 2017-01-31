@@ -41,12 +41,7 @@ public class SpeakersListFragment extends Fragment
 
     private ProgressBar mProgressBar;
 
-    private UpdatesManager.DataUpdatedListener updateListener = new UpdatesManager.DataUpdatedListener() {
-        @Override
-        public void onDataUpdated(List<Integer> requestIds) {
-            initView();
-        }
-    };
+    private UpdatesManager.DataUpdatedListener updateListener = requestIds -> initView();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

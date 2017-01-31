@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.connfa.model.dao.POIDao;
 import com.connfa.model.data.POI;
-import com.connfa.service.ConnfaRepository;
+import com.connfa.service.api.ConnfaRepository;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -51,12 +51,7 @@ public class PoisManager extends SynchronousItemManager<POI.Holder, String> {
 
     public List<POI> getPOIs() {
         List<POI> pois = mPOIDao.getAllSafe();
-        Collections.sort(pois, new Comparator<POI>() {
-            @Override
-            public int compare(POI poi, POI poi2) {
-                return Double.compare(poi.getOrder(), poi2.getOrder());
-            }
-        });
+        Collections.sort(pois, (poi, poi2) -> Double.compare(poi.getOrder(), poi2.getOrder()));
         return pois;
     }
 

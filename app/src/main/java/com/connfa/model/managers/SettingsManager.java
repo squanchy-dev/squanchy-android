@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.connfa.model.PreferencesManager;
 import com.connfa.model.data.SettingsHolder;
-import com.connfa.service.ConnfaRepository;
+import com.connfa.service.api.ConnfaRepository;
 
 import io.reactivex.Observable;
 

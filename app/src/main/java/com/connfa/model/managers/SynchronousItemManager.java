@@ -3,7 +3,7 @@ package com.connfa.model.managers;
 import android.content.Context;
 
 import com.connfa.model.database.ILAPIDBFacade;
-import com.connfa.service.ConnfaRepository;
+import com.connfa.service.api.ConnfaRepository;
 
 import java.util.concurrent.Callable;
 
@@ -31,26 +31,18 @@ public abstract class SynchronousItemManager<R, T> {
     protected abstract Observable<R> doFetch(ConnfaRepository repository);
 
     private Function<R, ObservableSource<R>> asyncStoreResponse(final ILAPIDBFacade facade) {
-        return new Function<R, ObservableSource<R>>() {
-            @Override
-            public ObservableSource<R> apply(final R r) throws Exception {
-                return Observable.fromCallable(new Callable<R>() {
-                    @Override
-                    public R call() throws Exception {
-                        try {
-                            facade.beginTransactions();
-                            boolean result = storeResponse(r, getEntityRequestTag());
-                            if (result) {
-                                facade.setTransactionSuccesfull();
-                            }
-                        } finally {
-                            facade.endTransactions();
-                        }
-                        return r;
-                    }
-                });
+        return r -> Observable.fromCallable(() -> {
+            try {
+                facade.beginTransactions();
+                boolean result = storeResponse(r, getEntityRequestTag());
+                if (result) {
+                    facade.setTransactionSuccesfull();
+                }
+            } finally {
+                facade.endTransactions();
             }
-        };
+            return r;
+        });
     }
 
     public Context getContext() {
