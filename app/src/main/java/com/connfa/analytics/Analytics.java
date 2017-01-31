@@ -2,6 +2,7 @@ package com.connfa.analytics;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.connfa.R;
@@ -10,23 +11,27 @@ import com.crashlytics.android.answers.CustomEvent;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders.EventBuilder;
 import com.google.android.gms.analytics.Tracker;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import timber.log.Timber;
 
 public class Analytics {
 
     private final Tracker googleTracker;
+    private final FirebaseAnalytics firebaseAnalytics;
     private final Crashlytics crashlytics;
 
     public static Analytics from(Context context) {
         Application application = (Application) context.getApplicationContext();
         Tracker tracker = GoogleAnalytics.getInstance(application)
                 .newTracker(R.xml.global_tracker);
-        return new Analytics(tracker, Crashlytics.getInstance());
+        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(context);
+        return new Analytics(tracker, firebaseAnalytics, Crashlytics.getInstance());
     }
 
-    private Analytics(Tracker googleTracker, Crashlytics crashlytics) {
+    private Analytics(Tracker googleTracker, FirebaseAnalytics firebaseAnalytics, Crashlytics crashlytics) {
         this.googleTracker = googleTracker;
+        this.firebaseAnalytics = firebaseAnalytics;
         this.crashlytics = crashlytics;
     }
 
@@ -36,6 +41,7 @@ public class Analytics {
 
     public void trackEvent(String category, String action, @Nullable String label) {
         trackOnGoogleAnalytics(category, action, label);
+        trackOnFirebaseAnalytics(category, action, label);
         trackOnCrashlytics(action);
     }
 
@@ -45,6 +51,15 @@ public class Analytics {
             eventBuilder.setLabel(label);
         }
         googleTracker.send(eventBuilder.build());
+    }
+
+    private void trackOnFirebaseAnalytics(String category, String action, @Nullable String label) {
+        Bundle bundle = new Bundle();
+        bundle.putString("action", action);
+        if (label != null) {
+            bundle.putString("label", label);
+        }
+        firebaseAnalytics.logEvent(category, bundle);
     }
 
     private void trackOnCrashlytics(String action) {
