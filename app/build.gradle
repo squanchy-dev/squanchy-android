@@ -115,6 +115,7 @@ dependencies {
 
     compile libraries.app.firebase
     compile libraries.app.firebaseDb
+    compile libraries.app.firebaseMessaging
 
     compile libraries.app.retrofit
     compile libraries.app.retrofitGson
