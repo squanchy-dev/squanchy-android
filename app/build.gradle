@@ -57,21 +57,16 @@ android {
         versionCode Integer.parseInt(project.VERSION_CODE)
         versionName project.VERSION_NAME
 
-        resValueString 'app_name', (buildProperties.application['applicationName'] | "Connfa").string
-
         manifestPlaceholders += [
                 fabricApiKey: (buildProperties.secrets['fabricApiKey'] | buildProperties.env['FABRIC_API_KEY']).string
         ]
 
-        resValueString 'api_value_twitter_api_key', (buildProperties.secrets['twitterApiKey'] | buildProperties.env['TWITTER_API_KEY']).string
-
-        resValueString 'api_value_twitter_secret', (buildProperties.secrets['twitterSecret'] | buildProperties.env['TWITTER_SECRET']).string
-
-        resValueString 'api_value_google_maps_api_key', (buildProperties.secrets['googleMapsApiKey'] | buildProperties.env['GOOGLE_MAPS_API_KEY']).string
-
-        resValueString 'api_value_base_url', (buildProperties.secrets['baseUrl'] | buildProperties.env['BASE_URL']).string
-
-        resValueString 'social_query', (buildProperties.application['socialQuery'] | "#AndroidDev").string
+        resValueProperty 'app_name', (buildProperties.application['applicationName'] | "Connfa")
+        resValueProperty 'api_value_twitter_api_key', (buildProperties.secrets['twitterApiKey'] | buildProperties.env['TWITTER_API_KEY'])
+        resValueProperty 'api_value_twitter_secret', (buildProperties.secrets['twitterSecret'] | buildProperties.env['TWITTER_SECRET'])
+        resValueProperty 'api_value_google_maps_api_key', (buildProperties.secrets['googleMapsApiKey'] | buildProperties.env['GOOGLE_MAPS_API_KEY'])
+        resValueProperty 'api_value_base_url', (buildProperties.secrets['baseUrl'] | buildProperties.env['BASE_URL'])
+        resValueProperty 'social_query', (buildProperties.application['socialQuery'] | "#AndroidDev")
     }
 
     if (System.getenv('CI') == null) {
