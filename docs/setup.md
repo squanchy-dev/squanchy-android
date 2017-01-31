@@ -40,3 +40,9 @@ This file contains a bunch of private configuration details that are not needed 
  * `googleMapsApiKey` is the API key for [Google Maps](https://developers.google.com/maps/documentation/android-api/signup). This is used for the venue map and directions
  * `twitterApiKey` and `twitterSecret` are used by the Twitter SDK. You can obtain them by enabling the Twitter Kit in Fabric; just click the corresponding button in the Fabric plugin UI in Android Studio, grab the keys from wherever it adds them, move them to the properties file, and revert whatever other changes the wizard might have done to the code
  * `baseUrl` is the URL to use as prefix when composing the HTTP requests to the backend
+
+### Google Play Store keys
+
+There is also a `play-store-keys.json` file that you can generate from your Developer Account in the Play Store. In order to do so, please follow
+the instructions [here](https://github.com/Triple-T/gradle-play-publisher#google-play-service-account).
+Please note that when you change a property on the settings, you will have to download the new JSON file.

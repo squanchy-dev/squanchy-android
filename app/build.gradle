@@ -5,9 +5,9 @@ buildscript {
     }
 
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.22.0'
-        classpath 'com.novoda:build-properties-plugin:1.2.1'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath gradlePlugins.fabric
+        classpath gradlePlugins.buildProperties
+        classpath gradlePlugins.androidApt
     }
 }
 
@@ -19,6 +19,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply plugin: 'com.novoda.build-properties'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'com.github.triplet.play'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -93,6 +94,10 @@ android {
         lintConfig file("$rootProject.projectDir/team-props/lint.xml")
         abortOnError false
     }
+}
+
+play {
+    jsonFile = file('../team-props/play-store-keys.json')
 }
 
 dependencies {
