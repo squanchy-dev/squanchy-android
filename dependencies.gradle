@@ -1,5 +1,5 @@
 ext {
-    supportLibVersion = '25.1.0'
+    supportLibVersion = '25.1.1'
     playServicesVersion = '10.0.1'
 
     gradlePlugins = [
