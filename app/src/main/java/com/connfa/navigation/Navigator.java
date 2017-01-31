@@ -4,6 +4,6 @@ public interface Navigator {
 
     void up();
 
-    // TODO
+    void toEventDetails(/* TODO create eventId and pass it here */);
 
 }

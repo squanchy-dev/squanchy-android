@@ -1,6 +1,7 @@
 package com.connfa.schedule.view;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +20,16 @@ public class ScheduleViewPagerAdapter extends ViewPagerAdapter<SchedulePageView>
 
     private List<SchedulePage> pages = Collections.emptyList();
 
-    public ScheduleViewPagerAdapter(Context context) {
+    @Nullable
+    private OnEventClickedListener listener;
+
+    ScheduleViewPagerAdapter(Context context) {
         this.context = context;
     }
 
-    public void updateWith(List<SchedulePage> pages) {
+    void updateWith(List<SchedulePage> pages, OnEventClickedListener listener) {
         this.pages = pages;
+        this.listener = listener;
         notifyDataSetChanged();
     }
 
@@ -42,7 +47,7 @@ public class ScheduleViewPagerAdapter extends ViewPagerAdapter<SchedulePageView>
     @Override
     protected void bindView(SchedulePageView view, int position) {
         List<Event> events = pages.get(position).events();
-        view.updateWith(events);
+        view.updateWith(events, listener);
     }
 
     @Override
@@ -53,5 +58,10 @@ public class ScheduleViewPagerAdapter extends ViewPagerAdapter<SchedulePageView>
     @Override
     public boolean isViewFromObject(View view, Object object) {
         return view == object;
+    }
+
+    public interface OnEventClickedListener {
+
+        void onEventClicked(/* TODO pass eventId  */);
     }
 }

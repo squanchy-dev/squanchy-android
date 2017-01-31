@@ -41,7 +41,7 @@ public class EventItemView extends FrameLayout {
         experienceIconView = (ImageView) findViewById(R.id.imgExperience);
     }
 
-    public void updateWith(Event event) {
+    void updateWith(Event event) {
         titleView.setText(event.title());
 
         placeView.setText(event.place());
