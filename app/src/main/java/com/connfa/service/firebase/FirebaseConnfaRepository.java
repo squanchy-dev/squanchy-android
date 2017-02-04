@@ -13,7 +13,6 @@ import com.connfa.service.firebase.model.FirebaseType;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import io.reactivex.Observable;
@@ -23,11 +22,6 @@ import io.reactivex.schedulers.Schedulers;
 public final class FirebaseConnfaRepository {
 
     private final DatabaseReference database;
-
-    public static FirebaseConnfaRepository newInstance() {
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-        return new FirebaseConnfaRepository(database);
-    }
 
     public FirebaseConnfaRepository(DatabaseReference database) {
         this.database = database;
