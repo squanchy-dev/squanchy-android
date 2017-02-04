@@ -1,4 +1,4 @@
-package com.connfa.schedule.service;
+package com.connfa.schedule;
 
 import com.connfa.schedule.domain.view.Event;
 import com.connfa.schedule.domain.view.Schedule;
@@ -15,11 +15,11 @@ import io.reactivex.schedulers.Schedulers;
 import static com.connfa.support.lang.Lists.find;
 import static com.connfa.support.lang.Lists.map;
 
-public class ScheduleActivityService {
+class ScheduleService {
 
     private final FirebaseConnfaRepository repository;
 
-    public ScheduleActivityService(FirebaseConnfaRepository repository) {
+    ScheduleService(FirebaseConnfaRepository repository) {
         this.repository = repository;
     }
 
