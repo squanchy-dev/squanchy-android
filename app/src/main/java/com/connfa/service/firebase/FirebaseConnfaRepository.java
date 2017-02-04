@@ -29,7 +29,7 @@ public final class FirebaseConnfaRepository {
         return new FirebaseConnfaRepository(database);
     }
 
-    private FirebaseConnfaRepository(DatabaseReference database) {
+    public FirebaseConnfaRepository(DatabaseReference database) {
         this.database = database;
     }
 
