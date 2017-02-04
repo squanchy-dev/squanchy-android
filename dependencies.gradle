@@ -1,6 +1,7 @@
 ext {
     supportLibVersion = '25.1.1'
     playServicesVersion = '10.0.1'
+    daggerVersion = '2.9'
 
     gradlePlugins = [
             fabric              : 'io.fabric.tools:gradle:1.22.0',
@@ -13,6 +14,8 @@ ext {
                     annotations      : 'org.jetbrains:annotations:13.0',
                     autoValue        : 'com.google.auto.value:auto-value:1.3',
                     crashlytics      : 'com.crashlytics.sdk.android:crashlytics:2.6.6',
+                    dagger           : "com.google.dagger:dagger:${daggerVersion}",
+                    daggerCompiler   : "com.google.dagger:dagger-compiler:${daggerVersion}",
                     firebase         : "com.google.firebase:firebase-core:${playServicesVersion}",
                     firebaseDb       : "com.google.firebase:firebase-database:${playServicesVersion}",
                     firebaseMessaging: "com.google.firebase:firebase-messaging:${playServicesVersion}",

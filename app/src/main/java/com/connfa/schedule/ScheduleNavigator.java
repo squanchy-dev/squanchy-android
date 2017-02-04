@@ -1,4 +1,4 @@
-package com.connfa.schedule.navigation;
+package com.connfa.schedule;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,11 +6,11 @@ import android.content.Intent;
 import com.connfa.eventdetails.EventDetailsActivity;
 import com.connfa.navigation.Navigator;
 
-public class ScheduleActivityNavigator implements Navigator {
+class ScheduleNavigator implements Navigator {
 
     private final Context context;
 
-    public ScheduleActivityNavigator(Context context) {
+    ScheduleNavigator(Context context) {
         this.context = context;
     }
 

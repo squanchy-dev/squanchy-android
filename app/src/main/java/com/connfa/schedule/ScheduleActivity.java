@@ -8,11 +8,8 @@ import android.view.ViewGroup;
 import com.connfa.R;
 import com.connfa.navigation.NavigationDrawerActivity;
 import com.connfa.navigation.Navigator;
-import com.connfa.schedule.navigation.ScheduleActivityNavigator;
-import com.connfa.schedule.service.ScheduleActivityService;
 import com.connfa.schedule.view.ScheduleView;
 import com.connfa.schedule.view.ScheduleViewPagerAdapter;
-import com.connfa.service.firebase.FirebaseConnfaRepository;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -22,7 +19,7 @@ public class ScheduleActivity extends NavigationDrawerActivity implements Schedu
     private Navigator navigator;
 
     private ScheduleView scheduleView;
-    private ScheduleActivityService service;
+    private ScheduleService service;
     private Disposable subscription;
 
     @Override
@@ -37,9 +34,10 @@ public class ScheduleActivity extends NavigationDrawerActivity implements Schedu
         setupToolbar(toolbar);
 
         scheduleView = (ScheduleView) findViewById(R.id.content_root);
-        service = new ScheduleActivityService(FirebaseConnfaRepository.newInstance());
+        ScheduleComponent component = ScheduleInjector.obtain(this);
 
-        navigator = new ScheduleActivityNavigator(this);
+        service = component.service();
+        navigator = component.navigator();
     }
 
     private void setupToolbar(Toolbar toolbar) {
