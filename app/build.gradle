@@ -135,6 +135,9 @@ dependencies {
     apt libraries.app.autoValue
     provided libraries.app.autoValue
 
+    compile libraries.app.dagger
+    apt libraries.app.daggerCompiler
+
     retrolambdaConfig libraries.app.retrolambda
 }
 
