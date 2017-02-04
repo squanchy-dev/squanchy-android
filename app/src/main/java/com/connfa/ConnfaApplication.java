@@ -1,8 +1,10 @@
 package com.connfa;
 
 import android.app.Application;
+import android.support.annotation.MainThread;
 
 import com.connfa.analytics.Analytics;
+import com.connfa.injection.ApplicationComponent;
 import com.connfa.model.AppDatabaseInfo;
 import com.connfa.model.Model;
 import com.connfa.model.database.LAPIDBRegister;
@@ -21,6 +23,8 @@ import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 
 public class ConnfaApplication extends Application {
+
+    private ApplicationComponent applicationComponent;
 
     @Override
     public void onCreate() {
@@ -43,7 +47,6 @@ public class ConnfaApplication extends Application {
         );
 
         DrupalImageView.setupSharedClient(client);
-
     }
 
     private void setupTracking() {
@@ -64,5 +67,14 @@ public class ConnfaApplication extends Application {
                 getString(R.string.api_value_twitter_secret)
         );
         Fabric.with(this, new Crashlytics(), new TwitterCore(authConfig), new TweetUi());
+    }
+
+    @MainThread
+    public ApplicationComponent applicationComponent() {
+        if (applicationComponent == null) {
+            applicationComponent = ApplicationComponent.Factory.create(this);
+        }
+
+        return applicationComponent;
     }
 }
