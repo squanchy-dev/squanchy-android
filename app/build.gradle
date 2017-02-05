@@ -96,8 +96,6 @@ play {
 }
 
 dependencies {
-    compile project(':drupalSDK')
-
     compile libraries.app.annotations
     compile libraries.app.gson
     compile libraries.app.volley
