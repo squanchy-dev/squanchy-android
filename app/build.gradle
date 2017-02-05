@@ -96,28 +96,15 @@ play {
 }
 
 dependencies {
-    compile libraries.app.annotations
-    compile libraries.app.gson
-    compile libraries.app.volley
-
-    compile libraries.app.shadowLayout
-    compile libraries.app.materialTabStrip
-    compile libraries.app.parallaxScroll
-    compile libraries.app.scaleImageView
     compile libraries.app.timber
 
     compile libraries.app.jodaTimeAndroid
 
     compile libraries.app.playAnalytics
-    compile libraries.app.playMaps
 
     compile libraries.app.firebase
     compile libraries.app.firebaseDb
     compile libraries.app.firebaseMessaging
-
-    compile libraries.app.retrofit
-    compile libraries.app.retrofitGson
-    compile libraries.app.retrofitRx
 
     compile libraries.app.rx
     compile libraries.app.rxAndroid
