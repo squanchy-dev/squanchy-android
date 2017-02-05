@@ -4,7 +4,7 @@ import android.content.Context;
 
 import net.squanchy.model.dao.TypeDao;
 import net.squanchy.model.data.Type;
-import net.squanchy.service.api.ConnfaRepository;
+import net.squanchy.service.api.SquanchyRepository;
 
 import java.util.List;
 
@@ -43,7 +43,7 @@ public class TypesManager extends SynchronousItemManager<Type.Holder, String> {
     }
 
     @Override
-    protected Observable<Type.Holder> doFetch(ConnfaRepository repository) {
+    protected Observable<Type.Holder> doFetch(SquanchyRepository repository) {
         return repository.types();
     }
 

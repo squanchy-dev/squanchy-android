@@ -6,7 +6,7 @@ import net.squanchy.model.dao.EventDao;
 import net.squanchy.model.data.Event;
 import net.squanchy.model.data.EventDetailsEvent;
 import net.squanchy.model.data.TimeRange;
-import net.squanchy.service.api.ConnfaRepository;
+import net.squanchy.service.api.SquanchyRepository;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class EventManager extends SynchronousItemManager<Event.Holder, String> {
     }
 
     @Override
-    protected Observable<Event.Holder> doFetch(ConnfaRepository repository) {
+    protected Observable<Event.Holder> doFetch(SquanchyRepository repository) {
         throw new UnsupportedOperationException("You can't do this.");
     }
 

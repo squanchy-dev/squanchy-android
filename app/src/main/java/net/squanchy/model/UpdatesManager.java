@@ -1,14 +1,15 @@
 package net.squanchy.model;
 
-import net.squanchy.model.database.ILAPIDBFacade;
-import net.squanchy.model.managers.SynchronousItemManager;
-import net.squanchy.service.api.ConnfaRepository;
-import net.squanchy.service.model.Updates;
-import net.squanchy.ui.drawer.DrawerManager;
 import com.ls.util.ObserverHolder;
 
 import java.io.Closeable;
 import java.util.List;
+
+import net.squanchy.model.database.ILAPIDBFacade;
+import net.squanchy.model.managers.SynchronousItemManager;
+import net.squanchy.service.api.SquanchyRepository;
+import net.squanchy.service.model.Updates;
+import net.squanchy.ui.drawer.DrawerManager;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -39,7 +40,7 @@ public class UpdatesManager implements Closeable {
 
     private ObserverHolder<DataUpdatedListener> updateListeners;
     private CompositeDisposable disposables = new CompositeDisposable();
-    private final ConnfaRepository repository;
+    private final SquanchyRepository repository;
 
     public static int convertEventIdToEventModePos(int eventModePos) {
         switch (eventModePos) {
@@ -53,7 +54,7 @@ public class UpdatesManager implements Closeable {
         return 0;
     }
 
-    public UpdatesManager(ConnfaRepository repository) {
+    public UpdatesManager(SquanchyRepository repository) {
         this.repository = repository;
         updateListeners = new ObserverHolder<>();
     }
@@ -68,7 +69,7 @@ public class UpdatesManager implements Closeable {
         disposables.add(disposable);
     }
 
-    private Function<Updates, ObservableSource<List<Integer>>> updateData(final ConnfaRepository repository, final ILAPIDBFacade facade, final Model model) {
+    private Function<Updates, ObservableSource<List<Integer>>> updateData(final SquanchyRepository repository, final ILAPIDBFacade facade, final Model model) {
         return updates -> Observable.fromIterable(updates.ids())
                 .doOnSubscribe(open(facade))
                 .flatMap(fetchData(repository, facade, model))
@@ -80,13 +81,13 @@ public class UpdatesManager implements Closeable {
         return integer -> updates.ids();
     }
 
-    private Function<Integer, ObservableSource<Integer>> fetchData(final ConnfaRepository repository, final ILAPIDBFacade facade, final Model model) {
+    private Function<Integer, ObservableSource<Integer>> fetchData(final SquanchyRepository repository, final ILAPIDBFacade facade, final Model model) {
         return id -> Observable.just(id)
                 .map(managerById(model))
                 .flatMap(fetchManagerData(id, repository, facade));
     }
 
-    private Function<SynchronousItemManager, ObservableSource<Integer>> fetchManagerData(final Integer id, final ConnfaRepository repository, final ILAPIDBFacade facade) {
+    private Function<SynchronousItemManager, ObservableSource<Integer>> fetchManagerData(final Integer id, final SquanchyRepository repository, final ILAPIDBFacade facade) {
         return manager -> {
             //noinspection unchecked
             return manager.fetch(repository, facade)

@@ -4,7 +4,7 @@ import android.content.Context;
 
 import net.squanchy.model.PreferencesManager;
 import net.squanchy.model.data.SettingsHolder;
-import net.squanchy.service.api.ConnfaRepository;
+import net.squanchy.service.api.SquanchyRepository;
 
 import io.reactivex.Observable;
 
@@ -32,7 +32,7 @@ public class SettingsManager extends SynchronousItemManager<SettingsHolder, Stri
     }
 
     @Override
-    protected Observable<SettingsHolder> doFetch(ConnfaRepository repository) {
+    protected Observable<SettingsHolder> doFetch(SquanchyRepository repository) {
         return repository.settings();
     }
 }

@@ -19,11 +19,11 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.schedulers.Schedulers;
 
-public final class FirebaseConnfaRepository {
+public final class FirebaseSquanchyRepository {
 
     private final DatabaseReference database;
 
-    public FirebaseConnfaRepository(DatabaseReference database) {
+    public FirebaseSquanchyRepository(DatabaseReference database) {
         this.database = database;
     }
 

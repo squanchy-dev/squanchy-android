@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 
 import net.squanchy.model.dao.FloorPlanDao;
 import net.squanchy.model.data.FloorPlan;
-import net.squanchy.service.api.ConnfaRepository;
+import net.squanchy.service.api.SquanchyRepository;
 import net.squanchy.utils.FileUtils;
 import com.ls.drupal.AbstractBaseDrupalEntity;
 import com.ls.drupal.DrupalByteEntity;
@@ -71,7 +71,7 @@ public class FloorPlansManager extends SynchronousItemManager<FloorPlan.Holder, 
     }
 
     @Override
-    protected Observable<FloorPlan.Holder> doFetch(ConnfaRepository repository) {
+    protected Observable<FloorPlan.Holder> doFetch(SquanchyRepository repository) {
         return repository.floorPlans();
     }
 

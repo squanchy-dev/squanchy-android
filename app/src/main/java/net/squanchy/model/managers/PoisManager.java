@@ -4,7 +4,7 @@ import android.content.Context;
 
 import net.squanchy.model.dao.POIDao;
 import net.squanchy.model.data.POI;
-import net.squanchy.service.api.ConnfaRepository;
+import net.squanchy.service.api.SquanchyRepository;
 
 import java.util.Collections;
 import java.util.List;
@@ -44,7 +44,7 @@ public class PoisManager extends SynchronousItemManager<POI.Holder, String> {
     }
 
     @Override
-    protected Observable<POI.Holder> doFetch(ConnfaRepository repository) {
+    protected Observable<POI.Holder> doFetch(SquanchyRepository repository) {
         return repository.pois();
     }
 

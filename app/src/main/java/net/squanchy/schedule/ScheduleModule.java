@@ -1,6 +1,6 @@
 package net.squanchy.schedule;
 
-import net.squanchy.service.firebase.FirebaseConnfaRepository;
+import net.squanchy.service.firebase.FirebaseSquanchyRepository;
 
 import dagger.Module;
 import dagger.Provides;
@@ -15,7 +15,7 @@ class ScheduleModule {
     }
 
     @Provides
-    ScheduleService scheduleService(FirebaseConnfaRepository repository) {
+    ScheduleService scheduleService(FirebaseSquanchyRepository repository) {
         return new ScheduleService(repository);
     }
 

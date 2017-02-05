@@ -6,7 +6,7 @@ import net.squanchy.model.Model;
 import net.squanchy.model.dao.TrackDao;
 import net.squanchy.model.data.Level;
 import net.squanchy.model.data.Track;
-import net.squanchy.service.api.ConnfaRepository;
+import net.squanchy.service.api.SquanchyRepository;
 
 import java.util.Collections;
 import java.util.List;
@@ -46,7 +46,7 @@ public class TracksManager extends SynchronousItemManager<Track.Holder, String> 
     }
 
     @Override
-    protected Observable<Track.Holder> doFetch(ConnfaRepository repository) {
+    protected Observable<Track.Holder> doFetch(SquanchyRepository repository) {
         return repository.tracks();
     }
 

@@ -3,7 +3,7 @@ package net.squanchy.schedule;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Schedule;
 import net.squanchy.schedule.domain.view.SchedulePage;
-import net.squanchy.service.firebase.FirebaseConnfaRepository;
+import net.squanchy.service.firebase.FirebaseSquanchyRepository;
 import net.squanchy.service.firebase.model.FirebaseEvent;
 import net.squanchy.service.firebase.model.FirebaseSpeaker;
 
@@ -17,9 +17,9 @@ import static net.squanchy.support.lang.Lists.map;
 
 class ScheduleService {
 
-    private final FirebaseConnfaRepository repository;
+    private final FirebaseSquanchyRepository repository;
 
-    ScheduleService(FirebaseConnfaRepository repository) {
+    ScheduleService(FirebaseSquanchyRepository repository) {
         this.repository = repository;
     }
 

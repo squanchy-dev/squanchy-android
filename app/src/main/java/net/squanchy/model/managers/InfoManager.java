@@ -5,7 +5,7 @@ import android.content.Context;
 import net.squanchy.model.PreferencesManager;
 import net.squanchy.model.dao.InfoDao;
 import net.squanchy.model.data.InfoItem;
-import net.squanchy.service.api.ConnfaRepository;
+import net.squanchy.service.api.SquanchyRepository;
 
 import java.util.Collections;
 import java.util.List;
@@ -50,7 +50,7 @@ public class InfoManager extends SynchronousItemManager<InfoItem.General, String
     }
 
     @Override
-    protected Observable<InfoItem.General> doFetch(ConnfaRepository repository) {
+    protected Observable<InfoItem.General> doFetch(SquanchyRepository repository) {
         return repository.info();
     }
 

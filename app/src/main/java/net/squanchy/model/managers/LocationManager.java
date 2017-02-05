@@ -4,7 +4,7 @@ import android.content.Context;
 
 import net.squanchy.model.dao.LocationDao;
 import net.squanchy.model.data.Location;
-import net.squanchy.service.api.ConnfaRepository;
+import net.squanchy.service.api.SquanchyRepository;
 
 import java.util.List;
 
@@ -43,7 +43,7 @@ public class LocationManager extends SynchronousItemManager<Location.Holder, Str
     }
 
     @Override
-    protected Observable<Location.Holder> doFetch(ConnfaRepository repository) {
+    protected Observable<Location.Holder> doFetch(SquanchyRepository repository) {
         return repository.locations();
     }
 

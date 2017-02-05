@@ -10,7 +10,7 @@ import java.util.TimeZone;
 
 public class PreferencesManager {
 
-    private static final String PREF_NAME = "com.connfa";
+    private static final String PREF_NAME = "net.squanchy";
     private static final String TIME_ZONE = "TIME_ZONE";
     private static final String TWITTER_SEARCH_QUERY = "TWITTER_SEARCH_QUERY";
     private static final String KEY_LAST_UPDATE_DATE = "KEY_LAST_UPDATE_DATE";

@@ -4,7 +4,7 @@ import android.content.Context;
 
 import net.squanchy.model.dao.LevelDao;
 import net.squanchy.model.data.Level;
-import net.squanchy.service.api.ConnfaRepository;
+import net.squanchy.service.api.SquanchyRepository;
 
 import java.util.List;
 
@@ -43,7 +43,7 @@ public class LevelsManager extends SynchronousItemManager<Level.Holder, String> 
     }
 
     @Override
-    protected Observable<Level.Holder> doFetch(ConnfaRepository repository) {
+    protected Observable<Level.Holder> doFetch(SquanchyRepository repository) {
         return repository.levels();
     }
 

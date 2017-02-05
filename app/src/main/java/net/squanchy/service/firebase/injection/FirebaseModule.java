@@ -1,9 +1,10 @@
 package net.squanchy.service.firebase.injection;
 
-import net.squanchy.injection.ApplicationLifecycle;
-import net.squanchy.service.firebase.FirebaseConnfaRepository;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import net.squanchy.injection.ApplicationLifecycle;
+import net.squanchy.service.firebase.FirebaseSquanchyRepository;
 
 import dagger.Module;
 import dagger.Provides;
@@ -18,7 +19,7 @@ public class FirebaseModule {
 
     @ApplicationLifecycle
     @Provides
-    FirebaseConnfaRepository firebaseConnfaRepository(DatabaseReference database) {
-        return new FirebaseConnfaRepository(database);
+    FirebaseSquanchyRepository firebaseSquanchyRepository(DatabaseReference database) {
+        return new FirebaseSquanchyRepository(database);
     }
 }

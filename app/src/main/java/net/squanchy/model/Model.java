@@ -30,7 +30,7 @@ import net.squanchy.model.managers.SocialManager;
 import net.squanchy.model.managers.SpeakerManager;
 import net.squanchy.model.managers.TracksManager;
 import net.squanchy.model.managers.TypesManager;
-import net.squanchy.service.api.ConnfaRepository;
+import net.squanchy.service.api.SquanchyRepository;
 import com.ls.drupal.DrupalClient;
 import com.ls.http.base.BaseRequest;
 
@@ -66,7 +66,7 @@ public class Model {
     private SettingsManager settingsManager;
     private FloorPlansManager floorPlansManager;
 
-    public static void createInstance(Context context, ConnfaRepository repository) {
+    public static void createInstance(Context context, SquanchyRepository repository) {
         if (instance != null) {
             throw new IllegalStateException("Instance already initialized.");
         }
@@ -149,7 +149,7 @@ public class Model {
         return floorPlansManager;
     }
 
-    private Model(Context context, ConnfaRepository repository) {
+    private Model(Context context, SquanchyRepository repository) {
         LoginManager loginManager = new LoginManager();
         RequestQueue queue = createNoCachedQueue(context);
         client = new DrupalClient(context.getString(R.string.api_value_base_url), queue, BaseRequest.RequestFormat.JSON, loginManager);

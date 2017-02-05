@@ -15,7 +15,7 @@ import net.squanchy.service.model.Updates;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 
-public interface ConnfaService {
+public interface SquanchyService {
     @GET("checkUpdates")
     Observable<Updates> updates();
 

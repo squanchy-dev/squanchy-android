@@ -4,7 +4,7 @@ import android.content.Context;
 
 import net.squanchy.model.PreferencesManager;
 import net.squanchy.model.data.Event;
-import net.squanchy.service.api.ConnfaRepository;
+import net.squanchy.service.api.SquanchyRepository;
 import net.squanchy.ui.adapter.item.EventListItem;
 import net.squanchy.utils.DateUtils;
 
@@ -66,7 +66,7 @@ public class SocialManager extends EventManager {
     }
 
     @Override
-    protected Observable<Event.Holder> doFetch(ConnfaRepository repository) {
+    protected Observable<Event.Holder> doFetch(SquanchyRepository repository) {
         return repository.socialEvents();
     }
 

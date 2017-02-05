@@ -1,7 +1,7 @@
 package net.squanchy.injection;
 
-import net.squanchy.ConnfaApplication;
-import net.squanchy.service.firebase.FirebaseConnfaRepository;
+import net.squanchy.SquanchyApplication;
+import net.squanchy.service.firebase.FirebaseSquanchyRepository;
 import net.squanchy.service.firebase.injection.FirebaseModule;
 
 import dagger.Component;
@@ -10,7 +10,7 @@ import dagger.Component;
 @Component(modules = {FirebaseModule.class})
 public interface ApplicationComponent {
 
-    FirebaseConnfaRepository firebaseConnfaRepository();
+    FirebaseSquanchyRepository firebaseSquanchyRepository();
 
     class Factory {
 
@@ -18,7 +18,7 @@ public interface ApplicationComponent {
             // non-instantiable
         }
 
-        public static ApplicationComponent create(ConnfaApplication application) {
+        public static ApplicationComponent create(SquanchyApplication application) {
             return DaggerApplicationComponent.builder()
                     .firebaseModule(new FirebaseModule())
                     .build();

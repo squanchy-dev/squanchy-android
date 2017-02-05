@@ -2,6 +2,8 @@ package net.squanchy.service.api;
 
 import android.content.Context;
 
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+
 import net.squanchy.R;
 import net.squanchy.model.data.Event;
 import net.squanchy.model.data.FloorPlan;
@@ -14,17 +16,17 @@ import net.squanchy.model.data.Speaker;
 import net.squanchy.model.data.Track;
 import net.squanchy.model.data.Type;
 import net.squanchy.service.model.Updates;
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public final class ConnfaRepository {
-    private final ConnfaService service;
+public final class SquanchyRepository {
 
-    public static ConnfaRepository newInstance(Context context) {
+    private final SquanchyService service;
+
+    public static SquanchyRepository newInstance(Context context) {
         String baseUrl = context.getString(R.string.api_value_base_url);
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -32,11 +34,11 @@ public final class ConnfaRepository {
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .build();
-        ConnfaService service = retrofit.create(ConnfaService.class);
-        return new ConnfaRepository(service);
+        SquanchyService service = retrofit.create(SquanchyService.class);
+        return new SquanchyRepository(service);
     }
 
-    private ConnfaRepository(ConnfaService service) {
+    private SquanchyRepository(SquanchyService service) {
         this.service = service;
     }
 

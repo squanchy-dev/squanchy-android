@@ -2,7 +2,7 @@ package net.squanchy.injection;
 
 import android.content.Context;
 
-import net.squanchy.ConnfaApplication;
+import net.squanchy.SquanchyApplication;
 
 public final class ApplicationInjector {
 
@@ -11,6 +11,6 @@ public final class ApplicationInjector {
     }
 
     public static ApplicationComponent obtain(Context context) {
-        return ((ConnfaApplication) context.getApplicationContext()).applicationComponent();
+        return ((SquanchyApplication) context.getApplicationContext()).applicationComponent();
     }
 }
