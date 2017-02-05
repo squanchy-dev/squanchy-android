@@ -4,3 +4,4 @@ Squanchy is brought to you by:
  * Daniele Conti - [@fourlastor](https://github.com/fourlastor)
  * Roberto Orgiu - [@tiwiz](https://github.com/tiwiz)
  * Lorenzo Quiroli - [@quiro91](https://github.com/tiwiz)
+ * Daniele Bonaldo - [@danybony](https://github.com/danybony)
