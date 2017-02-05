@@ -6,7 +6,7 @@
   android:layout_height="match_parent"
   android:background="@android:color/white">
 
-  <com.squanchy.ui.view.NotifyingScrollView
+  <net.squanchy.ui.view.NotifyingScrollView
     android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -33,7 +33,7 @@
         android:background="@android:color/white"
         android:orientation="vertical">
 
-        <com.squanchy.ui.view.FontTextView
+        <net.squanchy.ui.view.FontTextView
           android:id="@+id/txtSpeakerName"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
           app:custom_font="@string/montserrat_regular"
           tools:text="Lorem Ipsum" />
 
-        <com.squanchy.ui.view.FontTextView
+        <net.squanchy.ui.view.FontTextView
           android:id="@+id/txtSpeakerPosition"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -125,7 +125,7 @@
             android:layout_gravity="center"
             android:src="@drawable/ic_no_details" />
 
-          <com.squanchy.ui.view.FontTextView
+          <net.squanchy.ui.view.FontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -171,7 +171,7 @@
               android:layout_gravity="center"
               android:src="@drawable/ic_no_details" />
 
-            <com.squanchy.ui.view.FontTextView
+            <net.squanchy.ui.view.FontTextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/margin_top_placeholder_text"
@@ -193,7 +193,7 @@
 
       </LinearLayout>
 
-      <com.squanchy.ui.view.CircleImageView
+      <net.squanchy.ui.view.CircleImageView
         android:id="@+id/imgPhoto"
         android:layout_width="96dp"
         android:layout_height="96dp"
@@ -205,7 +205,7 @@
 
     </RelativeLayout>
 
-  </com.squanchy.ui.view.NotifyingScrollView>
+  </net.squanchy.ui.view.NotifyingScrollView>
 
   <View
     android:layout_width="match_parent"
