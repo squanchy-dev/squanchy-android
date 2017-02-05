@@ -24,7 +24,7 @@
     android:paddingLeft="24dp"
     android:paddingRight="24dp">
 
-    <com.connfa.ui.view.FontTextView
+    <com.squanchy.ui.view.FontTextView
       android:id="@+id/txtPlace"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
       app:custom_font="@string/montserrat_regular"
       android:textSize="@dimen/text_size_20" />
 
-    <com.connfa.ui.view.FontTextView
+    <com.squanchy.ui.view.FontTextView
       android:id="@+id/txtAddress"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"

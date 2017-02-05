@@ -7,7 +7,7 @@
   android:layout_height="match_parent"
   android:background="@color/white">
 
-  <com.connfa.ui.view.NotifyingScrollView
+  <com.squanchy.ui.view.NotifyingScrollView
     android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -33,7 +33,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <com.connfa.ui.view.FontTextView
+        <com.squanchy.ui.view.FontTextView
           android:id="@+id/txtEventName"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
           android:textStyle="bold"
           app:custom_font="@string/montserrat_regular" />
 
-        <com.connfa.ui.view.FontTextView
+        <com.squanchy.ui.view.FontTextView
           android:id="@+id/label_where"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
           android:orientation="vertical"
           android:padding="16dp">
 
-          <com.connfa.ui.view.FontTextView
+          <com.squanchy.ui.view.FontTextView
             android:id="@+id/txtTrack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.connfa.ui.view.FontTextView
+            <com.squanchy.ui.view.FontTextView
               android:id="@+id/txtExpLevel"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
@@ -129,7 +129,7 @@
             android:layout_gravity="center"
             android:src="@drawable/ic_no_details" />
 
-          <com.connfa.ui.view.FontTextView
+          <com.squanchy.ui.view.FontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -187,7 +187,7 @@
       </com.dd.ShadowLayout>
 
     </RelativeLayout>
-  </com.connfa.ui.view.NotifyingScrollView>
+  </com.squanchy.ui.view.NotifyingScrollView>
 
   <View
     android:layout_width="match_parent"

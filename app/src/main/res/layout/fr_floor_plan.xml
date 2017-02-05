@@ -59,7 +59,7 @@
       android:src="@drawable/ic_no_floor_plan"
       android:layout_height="wrap_content" />
 
-    <com.connfa.ui.view.FontTextView
+    <com.squanchy.ui.view.FontTextView
       android:layout_width="wrap_content"
       android:gravity="center_horizontal"
       android:layout_marginTop="@dimen/margin_top_placeholder_text"

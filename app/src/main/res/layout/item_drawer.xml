@@ -23,7 +23,7 @@
       android:layout_marginRight="24dp"
       android:src="@drawable/menu_icon_bofs" />
 
-    <com.connfa.ui.view.FontTextView
+    <com.squanchy.ui.view.FontTextView
       android:id="@+id/txtName"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"

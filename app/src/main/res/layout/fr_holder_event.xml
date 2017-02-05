@@ -48,7 +48,7 @@
       android:layout_gravity="center"
       tools:src="@drawable/ic_no_my_schedule" />
 
-    <com.connfa.ui.view.FontTextView
+    <com.squanchy.ui.view.FontTextView
       android:id="@+id/text_view_placeholder"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"

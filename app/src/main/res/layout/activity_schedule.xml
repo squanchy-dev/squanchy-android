@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.connfa.schedule.view.ScheduleView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.squanchy.schedule.view.ScheduleView xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/content_root"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context="com.connfa.schedule.ScheduleActivity">
+  tools:context="com.squanchy.schedule.ScheduleActivity">
 
   <android.support.design.widget.AppBarLayout
     style="@style/Connfa.Appbar"
@@ -41,4 +41,4 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center" />
 
-</com.connfa.schedule.view.ScheduleView>
+</com.squanchy.schedule.view.ScheduleView>
