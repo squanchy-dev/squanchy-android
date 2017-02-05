@@ -5,3 +5,4 @@ Squanchy is brought to you by:
  * Roberto Orgiu - [@tiwiz](https://github.com/tiwiz)
  * Lorenzo Quiroli - [@quiro91](https://github.com/quiro91)
  * Daniele Bonaldo - [@danybony](https://github.com/danybony)
+ * Francesco Pontillo - [@frapontillo](https://github.com/frapontillo)
