@@ -1,4 +1,4 @@
-package net.squanchy.receiver;
+package net.squanchy.notification;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -8,21 +8,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
+import java.util.List;
+
 import net.squanchy.R;
+import net.squanchy.eventdetails.EventDetailsActivity;
 import net.squanchy.model.Model;
 import net.squanchy.model.data.EventDetailsEvent;
 import net.squanchy.model.data.Speaker;
 import net.squanchy.model.managers.EventManager;
 import net.squanchy.model.managers.SpeakerManager;
-import net.squanchy.ui.activity.EventDetailsActivity;
-import net.squanchy.ui.activity.HomeActivity;
-import net.squanchy.utils.AlarmTask;
-
-import java.util.List;
 
 import static android.R.attr.id;
 
-public class NotifyReceiver extends BroadcastReceiver {
+public class NotificationAlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, Intent intent) {
@@ -44,7 +42,7 @@ public class NotifyReceiver extends BroadcastReceiver {
         String title = event.getEventName();
         int icon = android.R.drawable.ic_dialog_info;
 
-        Intent intent = new Intent(context, HomeActivity.class);
+        Intent intent = new Intent(context, EventDetailsActivity.class);
         intent.putExtra(EventDetailsActivity.EXTRA_EVENT_ID, id);
         intent.putExtra(EventDetailsActivity.EXTRA_DAY, day);
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);

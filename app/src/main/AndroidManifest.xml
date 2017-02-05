@@ -69,7 +69,7 @@
       android:label="@string/activity_social_feed"
       android:screenOrientation="portrait" />
 
-    <receiver android:name="net.squanchy.receiver.NotifyReceiver" />
+    <receiver android:name="net.squanchy.notification.NotificationAlarmReceiver" />
 
     <service android:name="net.squanchy.push.PushMessagingService">
       <intent-filter>
