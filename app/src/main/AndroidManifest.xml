@@ -10,7 +10,7 @@
 
   <application
     android:name="net.squanchy.SquanchyApplication"
-    android:theme="@style/Theme.Connfa.Home"
+    android:theme="@style/Theme.Squanchy.Home"
     android:allowBackup="true"
     android:fullBackupContent="false"
     android:icon="@mipmap/ic_launcher"
@@ -20,8 +20,8 @@
 
     <!-- TODO remove this activity altogether -->
     <!--<activity-->
-      <!--android:name="com.connfa.ui.activity.SplashActivity"-->
-      <!--android:theme="@style/Theme.Connfa.Home"-->
+      <!--android:name="com.squanchy.ui.activity.SplashActivity"-->
+      <!--android:theme="@style/Theme.Squanchy.Home"-->
       <!--android:label="@string/app_name"-->
       <!--android:screenOrientation="portrait">-->
       <!---->
@@ -33,7 +33,7 @@
 
     <activity
       android:name="net.squanchy.schedule.ScheduleActivity"
-      android:theme="@style/Theme.Connfa.Schedule"
+      android:theme="@style/Theme.Squanchy.Schedule"
       android:label="@string/app_name">
 
       <intent-filter>
@@ -44,28 +44,28 @@
 
     <activity
       android:name="net.squanchy.ui.activity.HomeActivity"
-      android:theme="@style/Theme.Connfa.Home"
+      android:theme="@style/Theme.Squanchy.Home"
       android:launchMode="singleTask"
       android:screenOrientation="portrait" />
 
     <activity
       android:name="net.squanchy.ui.activity.SpeakerDetailsActivity"
-      android:theme="@style/Theme.Connfa.Speaker"
+      android:theme="@style/Theme.Squanchy.Speaker"
       android:screenOrientation="portrait" />
 
     <activity
       android:name="net.squanchy.ui.activity.AboutDetailsActivity"
-      android:theme="@style/Theme.Connfa.About"
+      android:theme="@style/Theme.Squanchy.About"
       android:screenOrientation="portrait" />
 
     <activity
       android:name="net.squanchy.ui.activity.EventDetailsActivity"
-      android:theme="@style/Theme.Connfa.Event"
+      android:theme="@style/Theme.Squanchy.Event"
       android:screenOrientation="portrait" />
 
     <activity
       android:name="net.squanchy.social.SocialFeedActivity"
-      android:theme="@style/Theme.Connfa.SocialFeed"
+      android:theme="@style/Theme.Squanchy.SocialFeed"
       android:label="@string/activity_social_feed"
       android:screenOrientation="portrait" />
 
@@ -95,7 +95,7 @@
 
     <activity
       android:name="net.squanchy.eventdetails.EventDetailsActivity"
-      android:theme="@style/Theme.Connfa.EventDetails" />
+      android:theme="@style/Theme.Squanchy.EventDetails" />
   </application>
 
 </manifest>

@@ -12,7 +12,7 @@ echo '{
       "client_info": {
         "mobilesdk_app_id": "0",
         "android_client_info": {
-          "package_name": "com.connfa.droidcon"
+          "package_name": "net.squanchy.example"
         }
       },
       "api_key": [

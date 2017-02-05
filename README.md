@@ -1,7 +1,20 @@
-# Connfa
+# Squanchy
 
-Connfa is an open source platform for conferences to provide web and native apps to their attendees. Documentation is available on [http://connfa.com/](http://connfa.com/). The project is supported by [Lemberg Solutions](http://lemberg.co.uk) and by independent contributors (see CONTRIBUTORS.md).
+Squanchy is an open source schedule platform for conferences.
+
+It was born as a fork of [Connfa](http://connfa.com), but later diverged to embrace different design decision and user needs.
+ 
+Documentation is available on [http://squanchy.com/](http://squanchy.com/). The project is maintained by independent contributors (see CONTRIBUTORS.md).
 
 # Setting up the app
 
-See [`docs/setup.md`](docs/setup.md).
+Starting your own conference app is easy and requires very little effort. See [`docs/setup.md`](docs/setup.md) for detailed instructions.
+
+Please note that this app uses some third party services:
+ * Firebase (Realtime DB, Push messages, etc)
+ * Fabric/Crashlytics
+ * Google Analytics
+ 
+While not all of them are strictly necessary for the app to work (with the exception of Firebase's RTDB), it is currently not possible for the code to work without them.
+We plan on eventually abstracting away the implementations so that they would simply be disabled if there is no API configured, but we haven't done it yet.
+If you need to use Squanchy without some of those implementations, please contribute back to mainline your changes.  

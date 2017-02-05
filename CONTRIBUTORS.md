@@ -1,6 +1,8 @@
-Connfa is brought to you by:
+Squanchy is brought to you by:
 
- * [Lemberg Solutions](http://lemberg.co.uk) - [@lemberg](https://github.com/lemberg)
  * Sebastiano Poggi - [@rock3r](https://github.com/rock3r)
- * Francesco Pontillo - [@frapontillo](https://github.com/frapontillo)
+ * Daniele Conti - [@fourlastor](https://github.com/fourlastor)
  * Roberto Orgiu - [@tiwiz](https://github.com/tiwiz)
+ * Lorenzo Quiroli - [@quiro91](https://github.com/quiro91)
+ * Daniele Bonaldo - [@danybony](https://github.com/danybony)
+ * Francesco Pontillo - [@frapontillo](https://github.com/frapontillo)
