@@ -23,7 +23,7 @@
       android:minWidth="8dp"
       android:scaleType="centerCrop" />
 
-    <com.connfa.ui.view.FontTextView
+    <net.squanchy.ui.view.FontTextView
       android:id="@+id/txtName"
       android:layout_width="0dp"
       android:layout_height="48dp"
@@ -35,7 +35,7 @@
       android:textSize="@dimen/text_size_small"
       app:custom_font="@string/roboto_regular" />
 
-    <com.connfa.ui.view.FontTextView
+    <net.squanchy.ui.view.FontTextView
       android:layout_width="wrap_content"
       android:layout_height="48dp"
       android:gravity="center_vertical"

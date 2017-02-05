@@ -1,0 +1,173 @@
+package net.squanchy.model.managers;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+
+import net.squanchy.model.dao.FloorPlanDao;
+import net.squanchy.model.data.FloorPlan;
+import net.squanchy.service.api.SquanchyRepository;
+import net.squanchy.utils.FileUtils;
+import com.ls.drupal.AbstractBaseDrupalEntity;
+import com.ls.drupal.DrupalByteEntity;
+import com.ls.drupal.DrupalClient;
+import com.ls.http.base.BaseRequest;
+import com.ls.http.base.ResponseData;
+import com.ls.util.L;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+
+import io.reactivex.Observable;
+
+public class FloorPlansManager extends SynchronousItemManager<FloorPlan.Holder, String> {
+
+    private FloorPlanDao mFloorPlansDAO;
+    private DrupalClient client;
+
+    public FloorPlansManager(Context context, DrupalClient client) {
+        super(context);
+        this.client = client;
+        this.mFloorPlansDAO = new FloorPlanDao(context);
+    }
+
+    @Override
+    protected String getEntityRequestTag() {
+        return "floorPlans";
+    }
+
+    @Override
+    protected boolean storeResponse(FloorPlan.Holder requestResponse, String tag) {
+        List<FloorPlan> plans = requestResponse.getFloorPlans();
+        if (plans == null) {
+            return false;
+        }
+
+        L.e("Plans loaded:" + plans);
+        mFloorPlansDAO.saveOrUpdateDataSafe(plans);
+        for (FloorPlan floor : plans) {
+            if (floor != null) {
+                if (!floor.isDeleted()) {
+                    if (!loadImageForFloor(floor)) {
+                        L.e("Image loading failed:" + floor.getImageURL());
+                        return false;
+                    }
+                }
+            }
+        }
+
+        for (FloorPlan floor : plans) {
+            if (floor != null) {
+                if (floor.isDeleted()) {
+                    if (mFloorPlansDAO.deleteDataSafe(floor.getId()) > 0) {
+                        FileUtils.deleteStoredFile(floor.getFilePath(), getContext());
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    protected Observable<FloorPlan.Holder> doFetch(SquanchyRepository repository) {
+        return repository.floorPlans();
+    }
+
+    public List<FloorPlan> getFloorPlans() {
+        List<FloorPlan> result = mFloorPlansDAO.getAllSafe();
+        Collections.sort(result);
+        return result;
+    }
+
+    public Bitmap getImageForPlan(FloorPlan plan, int requiredWidth, int requiredHeight) {
+        return FileUtils.readBitmapFromStoredFile(plan.getFilePath(), requiredWidth, requiredHeight, getContext());
+    }
+
+    public void clear() {
+        mFloorPlansDAO.deleteAll();
+    }
+
+//    private boolean loadImageForFloor(FloorPlan floor){
+//        //Load new image
+//        DrupalImageEntity imageEntity = new DrupalImageEntity(getClient());
+//        imageEntity.setImagePath(floor.getImageURL());
+//        try {
+//            imageEntity.pullFromServer(true, floor.getImageURL(), null);
+//            Drawable imageDrawable = imageEntity.getManagedData();
+//
+//            //Store image
+//            if (imageDrawable instanceof BitmapDrawable) {
+//                Bitmap image = ((BitmapDrawable) imageDrawable).getBitmap();
+//                return FileUtils.writeBitmapToStorage(floor.getFilePath(), image, App.getContext());
+//            } else {
+//                return false;
+//            }
+//        }catch (Error e){
+//            return false;
+//        }
+//    }
+
+    private boolean loadImageForFloor(final FloorPlan floor) {
+        //Load new image
+        DrupalByteEntity imageEntity = new DrupalByteEntity(client) {
+            @Override
+            protected String getPath() {
+                return floor.getImageURL();
+            }
+
+            @Override
+            protected Map<String, String> getItemRequestPostParameters() {
+                return null;
+            }
+
+            @Override
+            protected Map<String, Object> getItemRequestGetParameters(BaseRequest.RequestMethod method) {
+                return null;
+            }
+        };
+
+        final CountDownLatch latch = new CountDownLatch(1);
+        final ResponseResult result = new ResponseResult();
+
+        try {
+            imageEntity.pullFromServer(true, floor.getImageURL(), new AbstractBaseDrupalEntity.OnEntityRequestListener() {
+                @Override
+                public void onRequestCompleted(AbstractBaseDrupalEntity entity, Object tag, ResponseData data) {
+                    byte[] imageData = (byte[]) data.getData();
+
+                    //Store image
+                    if (imageData != null && imageData.length > 0) {
+                        result.isSuccessful = FileUtils.writeBytesToStorage(floor.getFilePath(), imageData, getContext());
+                    } else {
+                        result.isSuccessful = false;
+                    }
+                    latch.countDown();
+                }
+
+                @Override
+                public void onRequestFailed(AbstractBaseDrupalEntity entity, Object tag, ResponseData data) {
+                    result.isSuccessful = false;
+                    latch.countDown();
+                }
+
+                @Override
+                public void onRequestCanceled(AbstractBaseDrupalEntity entity, Object tag) {
+                    result.isSuccessful = false;
+                    latch.countDown();
+                }
+            });
+
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return result.isSuccessful;
+    }
+
+    private class ResponseResult {
+        public boolean isSuccessful;
+    }
+}

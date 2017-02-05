@@ -22,7 +22,7 @@
       android:paddingBottom="12dp"
       android:paddingTop="12dp">
 
-      <com.connfa.ui.view.FontTextView
+      <net.squanchy.ui.view.FontTextView
         android:id="@+id/txtFrom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
         tools:visibility="visible"
         tools:text="03:30" />
 
-      <com.connfa.ui.view.FontTextView
+      <net.squanchy.ui.view.FontTextView
         android:id="@+id/txtTo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
           android:layout_height="wrap_content"
           android:orientation="horizontal">
 
-          <com.connfa.ui.view.FontTextView
+          <net.squanchy.ui.view.FontTextView
             android:id="@+id/txtTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -99,7 +99,7 @@
 
         </LinearLayout>
 
-        <com.connfa.ui.view.FontTextView
+        <net.squanchy.ui.view.FontTextView
           android:id="@+id/txtTrack"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -128,7 +128,7 @@
             android:alpha="0.7"
             android:src="@drawable/ic_speakers" />
 
-          <com.connfa.ui.view.FontTextView
+          <net.squanchy.ui.view.FontTextView
             android:id="@+id/txtSpeakers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -158,7 +158,7 @@
             android:alpha="0.7"
             android:src="@drawable/ic_place" />
 
-          <com.connfa.ui.view.FontTextView
+          <net.squanchy.ui.view.FontTextView
             android:id="@+id/txtPlace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
