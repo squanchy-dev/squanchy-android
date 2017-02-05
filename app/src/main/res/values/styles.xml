@@ -2,21 +2,21 @@
 
   <style name="None" />
 
-  <style name="Connfa" />
+  <style name="Squanchy" />
 
-  <style name="Connfa.Appbar" parent="None">
+  <style name="Squanchy.Appbar" parent="None">
     <item name="android:background">?attr/colorPrimary</item>
     <item name="android:elevation">@dimen/toolbar_elevation</item>
   </style>
 
-  <style name="Connfa.Toolbar" parent="Widget.AppCompat.Light.ActionBar" />
+  <style name="Squanchy.Toolbar" parent="Widget.AppCompat.Light.ActionBar" />
 
-  <style name="Connfa.Toolbar.SocialFeed" />
+  <style name="Squanchy.Toolbar.SocialFeed" />
 
-  <style name="Connfa.Toolbar.Schedule" />
+  <style name="Squanchy.Toolbar.Schedule" />
 
-  <style name="Connfa.Tabs" parent="Widget.Design.TabLayout" />
+  <style name="Squanchy.Tabs" parent="Widget.Design.TabLayout" />
 
-  <style name="Connfa.Tabs.Schedule" parent="None" />
+  <style name="Squanchy.Tabs.Schedule" parent="None" />
 
 </resources>
