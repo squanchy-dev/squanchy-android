@@ -1,10 +1,10 @@
-# Setting up Connfa
+# Setting up Squanchy
 
-To be able to run Connfa, you'll need to set it up first. The setup process consists in setting a few properties and obtain a bunch of API keys. You don't need to touch anything in the application code, all the configuration is held in the `team-props` folder.
+To be able to run Squanchy, you'll need to set it up first. The setup process consists in setting a few properties and obtain a bunch of API keys. You don't need to touch anything in the application code, all the configuration is held in the `team-props` folder.
 
 ## Checklist
 
-These are all the properties and API keys you'll need to set up Connfa correctly:
+These are all the properties and API keys you'll need to set up Squanchy correctly:
 
  * A package name (e.g., `com.myconference`)
  * A query for the social feed, which is used to populate the Twitter feed (e.g., `#AndroidDev`)
@@ -16,7 +16,7 @@ These are all the properties and API keys you'll need to set up Connfa correctly
 
 ## How to set the properties up
 
-Connfa uses Novoda's [Gradle Build Properties plugin](https://github.com/novoda/gradle-build-properties-plugin) to make the configuration effortless. In a nutshell, all those settings are specified through three files in the `team-props` folder:
+Squanchy uses Novoda's [Gradle Build Properties plugin](https://github.com/novoda/gradle-build-properties-plugin) to make the configuration effortless. In a nutshell, all those settings are specified through three files in the `team-props` folder:
  * `application.properties`
  * `secrets.properties`
  * `releaseSigningConfig.properties`
