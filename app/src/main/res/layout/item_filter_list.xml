@@ -17,7 +17,7 @@
     android:paddingLeft="24dp"
     android:paddingRight="16dp">
 
-    <net.squanchy.ui.view.FontTextView
+    <TextView
       android:id="@+id/txtItemTitle"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
@@ -26,7 +26,6 @@
       android:layout_marginTop="16dp"
       android:layout_weight="1"
       android:maxLines="2"
-      app:custom_font="@string/roboto_regular"
       android:textColor="#949494"
       android:textSize="@dimen/text_size_medium"
       tools:text="Lorem Ipsum" />

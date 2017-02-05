@@ -47,13 +47,12 @@
       android:src="@drawable/ic_no_details"
       android:layout_height="wrap_content" />
 
-    <net.squanchy.ui.view.FontTextView
+    <TextView
       android:layout_width="wrap_content"
       android:gravity="center_horizontal"
       android:layout_marginTop="@dimen/margin_top_placeholder_text"
       android:layout_height="wrap_content"
       android:text="@string/placeholder_no_details"
-      app:custom_font="@string/roboto_regular"
       android:textSize="@dimen/text_size_placeholder"
       android:textColor="@color/placeholder_text" />
   </LinearLayout>

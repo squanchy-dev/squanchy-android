@@ -28,25 +28,23 @@
       android:src="@drawable/ic_no_social_media"
       android:layout_height="wrap_content" />
 
-    <net.squanchy.ui.view.FontTextView
+    <TextView
       android:layout_width="wrap_content"
       android:gravity="center_horizontal"
       android:layout_marginTop="@dimen/margin_top_placeholder_text"
       android:layout_height="wrap_content"
       android:text="@string/placeholder_social_media"
-      app:custom_font="@string/roboto_regular"
       android:textSize="@dimen/text_size_placeholder"
       android:textColor="@color/placeholder_text" />
   </LinearLayout>
 
-  <net.squanchy.ui.view.FontTextView
+  <TextView
     android:id="@+id/txtNoConnection"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:gravity="center"
     android:visibility="gone"
-    app:custom_font="@string/roboto_regular"
     android:textSize="@dimen/text_size_medium"
     android:textColor="@color/grey_100"
     android:text="@string/NoConnectionMessage" />

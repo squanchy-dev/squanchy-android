@@ -8,14 +8,13 @@
   android:paddingLeft="16dp"
   android:paddingBottom="16dp">
 
-  <net.squanchy.ui.view.CircleImageView
+  <ImageView
     android:id="@+id/imgPhoto"
     android:layout_width="40dp"
     android:layout_height="40dp"
     android:layout_centerVertical="true"
     android:layout_marginTop="16dp"
-    android:scaleType="centerCrop"
-    app:noImageResource="@drawable/ic_default_avatar_small" />
+    android:scaleType="centerCrop" />
 
   <LinearLayout
     android:layout_width="match_parent"
@@ -25,7 +24,7 @@
     android:layout_marginLeft="16dp"
     android:orientation="vertical">
 
-    <net.squanchy.ui.view.FontTextView
+    <TextView
       android:id="@+id/txtName"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -33,16 +32,14 @@
       android:maxLines="1"
       android:textColor="@color/grey_500"
       android:textSize="@dimen/text_size_15"
-      app:custom_font="@string/roboto_regular"
       tools:text="Lorem ipsum" />
 
-    <net.squanchy.ui.view.FontTextView
+    <TextView
       android:id="@+id/txtOrgAndJobTitle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:textColor="@color/grey_300"
       android:textSize="@dimen/text_size_13"
-      app:custom_font="@string/roboto_regular"
       tools:text="Lorem ipsum" />
   </LinearLayout>
 

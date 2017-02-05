@@ -24,24 +24,22 @@
     android:paddingLeft="24dp"
     android:paddingRight="24dp">
 
-    <net.squanchy.ui.view.FontTextView
+    <TextView
       android:id="@+id/txtPlace"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
       android:minLines="2"
       android:textColor="@color/grey_400"
       android:layout_marginBottom="4dp"
-      app:custom_font="@string/montserrat_regular"
       android:textSize="@dimen/text_size_20" />
 
-    <net.squanchy.ui.view.FontTextView
+    <TextView
       android:id="@+id/txtAddress"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:minLines="2"
       android:paddingTop="3dp"
       android:textColor="@color/grey_200"
-      app:custom_font="@string/roboto_light"
       android:textSize="@dimen/text_size_medium" />
   </LinearLayout>
 

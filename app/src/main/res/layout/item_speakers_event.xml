@@ -21,34 +21,31 @@
     android:padding="16dp"
     android:orientation="vertical">
 
-    <net.squanchy.ui.view.FontTextView
+    <TextView
       android:id="@+id/txtArticleName"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:textSize="@dimen/text_size_16"
       tools:text="Title"
-      app:custom_font="@string/roboto_regular"
       android:textColor="@color/grey_500"
       android:gravity="center_vertical"
       android:textStyle="bold"
       android:layout_marginBottom="3dp" />
 
-    <net.squanchy.ui.view.FontTextView
+    <TextView
       android:id="@+id/txtWhere"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       tools:text="date"
-      app:custom_font="@string/roboto_bold"
       android:textColor="@color/event_date"
       android:textSize="@dimen/text_size_small"
       android:layout_marginBottom="3dp" />
 
-    <net.squanchy.ui.view.FontTextView
+    <TextView
       android:id="@+id/txtTrack"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       tools:text="track"
-      app:custom_font="@string/roboto_regular"
       android:textColor="@color/grey_500"
       android:textSize="@dimen/text_size_small"
       android:layout_marginBottom="3dp"
@@ -59,12 +56,11 @@
       android:layout_height="wrap_content"
       android:orientation="horizontal">
 
-      <net.squanchy.ui.view.FontTextView
+      <TextView
         android:id="@+id/txtExpLevel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="Exp Level:"
-        app:custom_font="@string/roboto_regular"
         android:textColor="@color/grey_500"
         android:visibility="gone"
         android:textSize="@dimen/text_size_small"

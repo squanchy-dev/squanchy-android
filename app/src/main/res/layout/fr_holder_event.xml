@@ -48,7 +48,7 @@
       android:layout_gravity="center"
       tools:src="@drawable/ic_no_my_schedule" />
 
-    <net.squanchy.ui.view.FontTextView
+    <TextView
       android:id="@+id/text_view_placeholder"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -56,7 +56,6 @@
       android:gravity="center_horizontal"
       android:textSize="@dimen/text_size_placeholder"
       android:textColor="@color/placeholder_text"
-      app:custom_font="@string/roboto_regular"
       tools:text="@string/placeholder_schedule" />
 
   </LinearLayout>

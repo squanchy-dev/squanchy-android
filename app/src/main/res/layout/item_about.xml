@@ -6,7 +6,7 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
-  <net.squanchy.ui.view.FontTextView
+  <TextView
     android:id="@+id/txtTitle"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -15,7 +15,6 @@
     android:maxLines="1"
     android:ellipsize="end"
     tools:text="ALALAL"
-    app:custom_font="@string/roboto_medium"
     android:gravity="center_vertical"
     android:padding="16dp"
     android:layout_gravity="center_vertical" />

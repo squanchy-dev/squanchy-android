@@ -33,23 +33,21 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <net.squanchy.ui.view.FontTextView
+        <TextView
           android:id="@+id/txtEventName"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:textColor="@color/white"
           android:textSize="@dimen/text_size_16"
-          android:textStyle="bold"
-          app:custom_font="@string/montserrat_regular" />
+          android:textStyle="bold" />
 
-        <net.squanchy.ui.view.FontTextView
+        <TextView
           android:id="@+id/label_where"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginTop="8dp"
           android:textColor="@color/white_100"
-          android:textSize="@dimen/text_size_small"
-          app:custom_font="@string/roboto_regular" />
+          android:textSize="@dimen/text_size_small" />
       </LinearLayout>
 
       <LinearLayout
@@ -67,29 +65,27 @@
           android:orientation="vertical"
           android:padding="16dp">
 
-          <net.squanchy.ui.view.FontTextView
+          <TextView
             android:id="@+id/txtTrack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:textColor="@color/grey_500"
-            android:textSize="@dimen/text_size_15"
-            app:custom_font="@string/roboto_regular" />
+            android:textSize="@dimen/text_size_15" />
 
           <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <net.squanchy.ui.view.FontTextView
+            <TextView
               android:id="@+id/txtExpLevel"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_gravity="bottom"
               android:layout_marginRight="8dp"
               android:textColor="@color/grey_500"
-              android:textSize="@dimen/text_size_15"
-              app:custom_font="@string/roboto_regular" />
+              android:textSize="@dimen/text_size_15" />
 
             <ImageView
               android:id="@+id/imgExperience"
@@ -129,7 +125,7 @@
             android:layout_gravity="center"
             android:src="@drawable/ic_no_details" />
 
-          <net.squanchy.ui.view.FontTextView
+          <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -137,8 +133,7 @@
             android:clickable="false"
             android:textColor="#bbbbbb"
             android:textSize="@dimen/text_size_medium"
-            android:text="@string/no_details"
-            app:custom_font="@string/roboto_regular" />
+            android:text="@string/no_details" />
 
         </LinearLayout>
 

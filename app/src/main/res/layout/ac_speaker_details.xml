@@ -33,7 +33,7 @@
         android:background="@android:color/white"
         android:orientation="vertical">
 
-        <net.squanchy.ui.view.FontTextView
+        <TextView
           android:id="@+id/txtSpeakerName"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -43,10 +43,9 @@
           android:gravity="center_vertical"
           android:textColor="@color/black_100"
           android:textSize="@dimen/text_size_20"
-          app:custom_font="@string/montserrat_regular"
           tools:text="Lorem Ipsum" />
 
-        <net.squanchy.ui.view.FontTextView
+        <TextView
           android:id="@+id/txtSpeakerPosition"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -56,7 +55,6 @@
           android:background="@android:color/white"
           android:textColor="@color/black_100"
           android:textSize="@dimen/text_size_small"
-          app:custom_font="@string/roboto_regular"
           tools:text="Lorem Ipsum" />
 
         <LinearLayout
@@ -125,7 +123,7 @@
             android:layout_gravity="center"
             android:src="@drawable/ic_no_details" />
 
-          <net.squanchy.ui.view.FontTextView
+          <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -133,8 +131,7 @@
             android:clickable="false"
             android:textColor="#bbbbbb"
             android:textSize="@dimen/text_size_medium"
-            android:text="@string/no_details"
-            app:custom_font="@string/roboto_regular" />
+            android:text="@string/no_details" />
 
         </LinearLayout>
 
@@ -171,15 +168,14 @@
               android:layout_gravity="center"
               android:src="@drawable/ic_no_details" />
 
-            <net.squanchy.ui.view.FontTextView
+            <TextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/margin_top_placeholder_text"
               android:gravity="center_horizontal"
               android:text="@string/placeholder_no_details"
               android:textSize="@dimen/text_size_placeholder"
-              android:textColor="@color/placeholder_text"
-              app:custom_font="@string/roboto_regular" />
+              android:textColor="@color/placeholder_text" />
           </LinearLayout>
         </FrameLayout>
 
@@ -193,15 +189,14 @@
 
       </LinearLayout>
 
-      <net.squanchy.ui.view.CircleImageView
+      <ImageView
         android:id="@+id/imgPhoto"
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginTop="116dp"
-        android:scaleType="fitXY"
-        app:noImageResource="@drawable/ic_default_avatar_small" />
+        android:scaleType="fitXY" />
 
     </RelativeLayout>
 
