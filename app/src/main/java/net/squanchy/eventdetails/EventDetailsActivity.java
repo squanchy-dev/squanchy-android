@@ -8,6 +8,9 @@ import net.squanchy.R;
 
 public class EventDetailsActivity extends AppCompatActivity {
 
+    public static final String EXTRA_EVENT_ID = "event_id";
+    public static final String EXTRA_DAY = "day";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

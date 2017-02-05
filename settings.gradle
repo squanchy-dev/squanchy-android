@@ -1,3 +1,1 @@
 include ':app'
-include ':drupalSDK'
-project(':drupalSDK').projectDir = new File('libraries/drupalSDK')
