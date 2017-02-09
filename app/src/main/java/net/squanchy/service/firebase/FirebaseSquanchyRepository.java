@@ -1,5 +1,10 @@
 package net.squanchy.service.firebase;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+
 import net.squanchy.service.firebase.model.FirebaseEvent;
 import net.squanchy.service.firebase.model.FirebaseFloorPlan;
 import net.squanchy.service.firebase.model.FirebaseInfoItem;
@@ -10,10 +15,6 @@ import net.squanchy.service.firebase.model.FirebaseSettings;
 import net.squanchy.service.firebase.model.FirebaseSpeaker;
 import net.squanchy.service.firebase.model.FirebaseTrack;
 import net.squanchy.service.firebase.model.FirebaseType;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -71,12 +72,32 @@ public final class FirebaseSquanchyRepository {
         return observeChild("sessions", FirebaseEvent.Holder.class);
     }
 
+    public Observable<FirebaseEvent> event(int dayId, int eventId) {
+        return Observable.create((ObservableEmitter<FirebaseEvent> e) -> {
+            DatabaseReference day = database.child("sessions").child("days").child(String.valueOf(dayId));
+            DatabaseReference event = day.child("events").child(String.valueOf(eventId));
+
+            event.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    FirebaseEvent value = dataSnapshot.getValue(FirebaseEvent.class);
+                    e.onNext(value);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    e.onError(databaseError.toException());
+                }
+            });
+        }).observeOn(Schedulers.io());
+    }
+
     private <T> Observable<T> observeChild(final String path, final Class<T> clazz) {
         return Observable.create((ObservableEmitter<T> e) -> {
             database.child(path).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    final T value = dataSnapshot.getValue(clazz);
+                    T value = dataSnapshot.getValue(clazz);
                     e.onNext(value);
                 }
 
