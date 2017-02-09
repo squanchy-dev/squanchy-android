@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import net.squanchy.R;
 import net.squanchy.navigation.NavigationDrawerActivity;
 import net.squanchy.navigation.Navigator;
+import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.view.ScheduleView;
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter;
 
@@ -67,7 +68,7 @@ public class ScheduleActivity extends NavigationDrawerActivity implements Schedu
     }
 
     @Override
-    public void onEventClicked() {
-        navigate().toEventDetails();
+    public void onEventClicked(Event event) {
+        navigate().toEventDetails(event.day(), (int) event.id());
     }
 }
