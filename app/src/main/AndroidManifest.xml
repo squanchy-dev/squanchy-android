@@ -36,6 +36,8 @@
       android:label="@string/activity_social_feed"
       android:screenOrientation="portrait" />
 
+    <activity android:name=".speaker.SpeakerListActivity"/>
+
     <receiver android:name="net.squanchy.notification.NotificationAlarmReceiver" />
 
     <service android:name="net.squanchy.push.PushMessagingService">
