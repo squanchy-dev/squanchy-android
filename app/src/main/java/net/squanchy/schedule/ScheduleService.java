@@ -15,6 +15,7 @@ import net.squanchy.support.lang.Lists;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.BiFunction;
+import io.reactivex.schedulers.Schedulers;
 
 import static net.squanchy.support.lang.Lists.find;
 import static net.squanchy.support.lang.Lists.map;
@@ -28,52 +29,55 @@ class ScheduleService {
     }
 
     public Observable<Schedule> schedule() {
-        Observable<FirebaseSchedule> eventObservable = repository.sessions();
+        Observable<FirebaseSchedule> sessionsObservable = repository.sessions();
         Observable<FirebaseSpeakers> speakersObservable = repository.speakers();
 
         return Observable.combineLatest(
-                eventObservable,
+                sessionsObservable,
                 speakersObservable,
                 composeIntoSchedule()
-        );
+        ).subscribeOn(Schedulers.io());
     }
 
     private BiFunction<FirebaseSchedule, FirebaseSpeakers, Schedule> composeIntoSchedule() {
-        return (eventHolder, speakerHolder) -> {
-            List<SchedulePage> pages = map(eventHolder.days, toSchedulePage(eventHolder, speakerHolder));
+        return (apiSchedule, apiSpeakers) -> {
+            List<SchedulePage> pages = map(apiSchedule.days, toSchedulePage(apiSchedule, apiSpeakers));
             return Schedule.create(pages);
         };
     }
 
-    private Lists.Function<FirebaseDay, SchedulePage> toSchedulePage(FirebaseSchedule eventHolder, FirebaseSpeakers speakerHolder) {
-        return day -> SchedulePage.create(
-                day.date,
-                map(day.events, toEvent(eventHolder, speakerHolder, day))
-        );
+    private Lists.Function<FirebaseDay, SchedulePage> toSchedulePage(FirebaseSchedule apiSchedule, FirebaseSpeakers apiSpeakers) {
+        return apiDay -> {
+            int dayId = apiSchedule.days.indexOf(apiDay);
+            return SchedulePage.create(
+                    apiDay.date,
+                    map(apiDay.events, toEvent(apiSpeakers, dayId))
+            );
+        };
     }
 
-    private Lists.Function<FirebaseEvent, Event> toEvent(FirebaseSchedule eventHolder, FirebaseSpeakers speakerHolder, FirebaseDay day) {
-        return firebaseEvent -> {
-            List<FirebaseSpeaker> speakers = speakersForEvent(firebaseEvent, speakerHolder);
+    private Lists.Function<FirebaseEvent, Event> toEvent(FirebaseSpeakers apiSpeakers, int dayId) {
+        return apiEvent -> {
+            List<FirebaseSpeaker> speakers = speakersForEvent(apiEvent, apiSpeakers);
             return Event.create(
-                    firebaseEvent.eventId,
-                    eventHolder.days.indexOf(day),      // TODO do this less crappily
-                    firebaseEvent.name,
-                    firebaseEvent.place,
-                    firebaseEvent.experienceLevel,
+                    apiEvent.eventId,
+                    dayId,      // TODO do this less crappily
+                    apiEvent.name,
+                    apiEvent.place,
+                    apiEvent.experienceLevel,
                     map(speakers, toSpeakerName()));
         };
     }
 
-    private List<FirebaseSpeaker> speakersForEvent(FirebaseEvent firebaseEvent, FirebaseSpeakers speakerHolder) {
-        return map(firebaseEvent.speakers, speakerId -> findSpeaker(speakerHolder, speakerId));
+    private List<FirebaseSpeaker> speakersForEvent(FirebaseEvent apiEvent, FirebaseSpeakers apiSpeakers) {
+        return map(apiEvent.speakers, speakerId -> findSpeaker(apiSpeakers, speakerId));
     }
 
-    private FirebaseSpeaker findSpeaker(FirebaseSpeakers speakerHolder, Long speakerId) {
-        return find(speakerHolder.speakers, speaker -> speaker.speakerId.equals(speakerId));
+    private FirebaseSpeaker findSpeaker(FirebaseSpeakers apiSpeakers, long speakerId) {
+        return find(apiSpeakers.speakers, apiSpeaker -> apiSpeaker.speakerId.equals(speakerId));
     }
 
     private Lists.Function<FirebaseSpeaker, String> toSpeakerName() {
-        return firebaseSpeaker -> firebaseSpeaker != null ? firebaseSpeaker.firstName + " " + firebaseSpeaker.lastName : null;
+        return apiSpeaker -> apiSpeaker != null ? apiSpeaker.firstName + " " + apiSpeaker.lastName : null;
     }
 }
