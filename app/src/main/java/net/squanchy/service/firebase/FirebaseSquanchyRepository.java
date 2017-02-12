@@ -73,23 +73,7 @@ public final class FirebaseSquanchyRepository {
     }
 
     public Observable<FirebaseEvent> event(int dayId, int eventId) {
-        return Observable.create((ObservableEmitter<FirebaseEvent> e) -> {
-            DatabaseReference day = database.child("sessions").child("days").child(String.valueOf(dayId));
-            DatabaseReference event = day.child("events").child(String.valueOf(eventId));
-
-            event.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    FirebaseEvent value = dataSnapshot.getValue(FirebaseEvent.class);
-                    e.onNext(value);
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    e.onError(databaseError.toException());
-                }
-            });
-        }).observeOn(Schedulers.io());
+        return observeChild(String.format("sessions/days/%1$d/events/%2$d", dayId, eventId), FirebaseEvent.class);
     }
 
     private <T> Observable<T> observeChild(final String path, final Class<T> clazz) {
