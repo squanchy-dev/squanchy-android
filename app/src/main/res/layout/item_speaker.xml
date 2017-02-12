@@ -21,7 +21,7 @@
     android:textColor="@android:color/primary_text_light"
     android:paddingEnd="16dp"
     android:paddingStart="16dp"
-    android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+    android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
     tools:text="Speaker Name" />
 
 </LinearLayout>
