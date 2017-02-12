@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
@@ -21,10 +22,16 @@ public class SpeakerPageView extends FrameLayout {
 
     public SpeakerPageView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
+        initView(context);
     }
 
     public SpeakerPageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        initView(context);
+    }
+
+    private void initView(Context context){
+        LayoutInflater.from(context).inflate(R.layout.page_speakers, this, true);
     }
 
     @Override
