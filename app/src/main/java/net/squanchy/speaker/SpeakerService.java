@@ -1,9 +1,9 @@
 package net.squanchy.speaker;
 
 
-import net.squanchy.service.firebase.FirebaseSquanchyRepository;
-
 import java.util.List;
+
+import net.squanchy.service.firebase.FirebaseSquanchyRepository;
 
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -25,6 +25,5 @@ class SpeakerService {
                 .map(Speaker::create)
                 .toList()
                 .subscribeOn(Schedulers.io());
-
     }
 }

@@ -10,6 +10,4 @@ import dagger.Component;
 interface SpeakerComponent {
 
     SpeakerService service();
-
-    SpeakerNavigator navigator();
 }

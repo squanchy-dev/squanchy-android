@@ -5,16 +5,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Collections;
+import java.util.List;
+
 import net.squanchy.R;
 import net.squanchy.speaker.Speaker;
 
-import java.util.List;
-
 public class SpeakerAdapter extends RecyclerView.Adapter<SpeakerViewHolder> {
 
-    private List<Speaker> speakerList;
+    private List<Speaker> speakerList = Collections.emptyList();
 
-    public SpeakerAdapter(List<Speaker> speakerList) {
+    public SpeakerAdapter() {
+    }
+
+    public void setSpeakerList(List<Speaker> speakerList) {
         this.speakerList = speakerList;
     }
 

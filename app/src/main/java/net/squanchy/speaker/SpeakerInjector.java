@@ -11,7 +11,7 @@ final class SpeakerInjector {
     public static SpeakerComponent obtain(SpeakerListActivity activity) {
         return DaggerSpeakerComponent.builder()
                 .applicationComponent(ApplicationInjector.obtain(activity))
-                .speakerModule(new SpeakerModule(activity))
+                .speakerModule(new SpeakerModule())
                 .build();
     }
 }

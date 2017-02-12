@@ -24,6 +24,4 @@ public class SpeakerViewHolder extends RecyclerView.ViewHolder {
 
         speakerName.setText(speaker.getCompleteName());
     }
-
-
 }
