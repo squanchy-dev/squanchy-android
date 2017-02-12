@@ -3,17 +3,19 @@ package net.squanchy.schedule.domain.view;
 import android.support.annotation.DrawableRes;
 import android.view.View;
 
-import net.squanchy.R;
-import net.squanchy.support.view.Visibility;
 import com.google.auto.value.AutoValue;
 
 import java.util.List;
+
+import net.squanchy.R;
+import net.squanchy.support.view.Visibility;
 
 @AutoValue
 public abstract class Event {
 
     public static Event create(
             long eventId,
+            int dayId,
             String title,
             String place,
             int experienceLevel,
@@ -21,6 +23,7 @@ public abstract class Event {
     ) {
         return new AutoValue_Event.Builder()
                 .id(eventId)
+                .day(dayId)
                 .title(title)
                 .place(place)
                 .placeVisibility(place.isEmpty() ? View.GONE : View.VISIBLE)
@@ -86,10 +89,14 @@ public abstract class Event {
     @DrawableRes
     public abstract int experienceLevelIcon();
 
+    public abstract int day();
+
     @AutoValue.Builder
     public abstract static class Builder {
 
         public abstract Builder id(long id);
+
+        public abstract Builder day(int day);
 
         public abstract Builder title(String title);
 
