@@ -21,16 +21,9 @@
             android:layout_height="?attr/actionBarSize"
             app:layout_collapseMode="none"/>
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabstrip"
-            style="@style/Squanchy.Tabs.SpeakerList"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_collapseMode="pin"/>
-
     </android.support.design.widget.AppBarLayout>
 
-    <net.squanchy.speaker.view.SpeakerPageView
+    <net.squanchy.speaker.view.SpeakersView
       android:id="@+id/speakersView"
       android:layout_width="match_parent"
       android:layout_height="match_parent"/>
