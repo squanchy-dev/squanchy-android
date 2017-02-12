@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import net.squanchy.speaker.view.SpeakersView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
-public class SpeakerListActivity extends AppCompatActivity implements SpeakersView.OnSpeakerClickedListener{
+public class SpeakerListActivity extends AppCompatActivity implements SpeakersView.OnSpeakerClickedListener {
 
     private SpeakersView speakerPageView;
     private View progressBar;
@@ -49,7 +50,7 @@ public class SpeakerListActivity extends AppCompatActivity implements SpeakersVi
                 .subscribe(this::onSuccess);
     }
 
-    private void onSuccess(List<Speaker> speakers){
+    private void onSuccess(List<Speaker> speakers) {
         progressBar.setVisibility(View.GONE);
         speakerPageView.updateWith(speakers, this);
     }
@@ -62,6 +63,6 @@ public class SpeakerListActivity extends AppCompatActivity implements SpeakersVi
 
     @Override
     public void onSpeakerClicked(long speakerId) {
-
+        Toast.makeText(this, "You've clicked speaker with id " + speakerId, Toast.LENGTH_SHORT).show();
     }
 }
