@@ -14,12 +14,15 @@ import net.squanchy.speaker.Speaker;
 public class SpeakerAdapter extends RecyclerView.Adapter<SpeakerViewHolder> {
 
     private List<Speaker> speakerList = Collections.emptyList();
+    private SpeakersView.OnSpeakerClickedListener listener;
 
     public SpeakerAdapter() {
     }
 
-    public void setSpeakerList(List<Speaker> speakerList) {
+    public void updateWith(List<Speaker> speakerList, SpeakersView.OnSpeakerClickedListener listener) {
         this.speakerList = speakerList;
+        this.listener = listener;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -30,7 +33,7 @@ public class SpeakerAdapter extends RecyclerView.Adapter<SpeakerViewHolder> {
 
     @Override
     public void onBindViewHolder(SpeakerViewHolder holder, int position) {
-        holder.bindTo(speakerList.get(position));
+        holder.bindTo(speakerList.get(position), listener);
     }
 
     @Override
