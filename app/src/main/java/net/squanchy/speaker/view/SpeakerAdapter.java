@@ -1,5 +1,6 @@
 package net.squanchy.speaker.view;
 
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,7 @@ public class SpeakerAdapter extends RecyclerView.Adapter<SpeakerViewHolder> {
     public SpeakerAdapter() {
     }
 
-    public void updateWith(List<Speaker> speakerList, SpeakersView.OnSpeakerClickedListener listener) {
+    public void updateWith(List<Speaker> speakerList, @Nullable SpeakersView.OnSpeakerClickedListener listener) {
         this.speakerList = speakerList;
         this.listener = listener;
         notifyDataSetChanged();

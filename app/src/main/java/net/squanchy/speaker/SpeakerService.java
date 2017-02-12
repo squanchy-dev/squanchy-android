@@ -1,5 +1,6 @@
 package net.squanchy.speaker;
 
+import java.util.Collections;
 import java.util.List;
 
 import net.squanchy.service.firebase.FirebaseSquanchyRepository;
@@ -20,6 +21,7 @@ class SpeakerService {
 
         return repository.speakers()
                 .map(firebaseSpeaker -> firebaseSpeaker.speakers)
-                .map(list -> map(list, Speaker::create));
+                .map(list -> map(list, Speaker::create))
+                .doOnNext(Collections::sort);
     }
 }

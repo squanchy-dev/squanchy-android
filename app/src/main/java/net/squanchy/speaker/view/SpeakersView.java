@@ -30,6 +30,7 @@ public class SpeakersView extends RecyclerView {
         setLayoutManager(layoutManager);
         adapter = new SpeakerAdapter();
         setAdapter(adapter);
+        setClipToPadding(false);
     }
 
     public void updateWith(List<Speaker> newData, OnSpeakerClickedListener listener) {
