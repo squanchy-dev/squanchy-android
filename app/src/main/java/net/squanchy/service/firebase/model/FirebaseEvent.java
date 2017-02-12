@@ -31,21 +31,4 @@ public class FirebaseEvent {
     public Boolean deleted;
 
     public String version;
-
-    public static class Holder {
-
-        public List<Day> days;
-
-    }
-
-    public static class Day {
-
-        public String date;
-
-        public List<FirebaseEvent> programEvents;
-
-        public List<FirebaseEvent> bofsEvents;
-
-        public List<FirebaseEvent> events;
-    }
 }

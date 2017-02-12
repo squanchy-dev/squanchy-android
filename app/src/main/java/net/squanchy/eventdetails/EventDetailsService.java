@@ -3,7 +3,7 @@ package net.squanchy.eventdetails;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.service.firebase.FirebaseSquanchyRepository;
 import net.squanchy.service.firebase.model.FirebaseEvent;
-import net.squanchy.service.firebase.model.FirebaseSpeaker;
+import net.squanchy.service.firebase.model.FirebaseSpeakers;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
@@ -21,7 +21,7 @@ class EventDetailsService {
 
     public Observable<Event> event(int dayId, int eventId) {
         Observable<FirebaseEvent> eventObservable = repository.event(dayId, eventId);
-        Observable<FirebaseSpeaker.Holder> speakersObservable = repository.speakers();
+        Observable<FirebaseSpeakers> speakersObservable = repository.speakers();
 
         return Observable.combineLatest(
                 eventObservable,
