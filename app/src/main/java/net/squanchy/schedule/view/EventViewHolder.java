@@ -15,7 +15,7 @@ class EventViewHolder extends RecyclerView.ViewHolder {
         ((EventItemView) itemView).updateWith(event);
         itemView.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onEventClicked();  // TODO pass in eventId
+                listener.onEventClicked(event);
             }
         });
     }

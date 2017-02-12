@@ -6,13 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import net.squanchy.R;
-import net.squanchy.schedule.domain.view.Event;
-import net.squanchy.schedule.domain.view.SchedulePage;
 import com.novoda.viewpageradapter.ViewPagerAdapter;
 
 import java.util.Collections;
 import java.util.List;
+
+import net.squanchy.R;
+import net.squanchy.schedule.domain.view.Event;
+import net.squanchy.schedule.domain.view.SchedulePage;
 
 public class ScheduleViewPagerAdapter extends ViewPagerAdapter<SchedulePageView> {
 
@@ -62,6 +63,6 @@ public class ScheduleViewPagerAdapter extends ViewPagerAdapter<SchedulePageView>
 
     public interface OnEventClickedListener {
 
-        void onEventClicked(/* TODO pass eventId  */);
+        void onEventClicked(Event event);
     }
 }

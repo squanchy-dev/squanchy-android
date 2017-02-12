@@ -1,13 +1,13 @@
 package net.squanchy.schedule;
 
+import java.util.List;
+
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Schedule;
 import net.squanchy.schedule.domain.view.SchedulePage;
 import net.squanchy.service.firebase.FirebaseSquanchyRepository;
 import net.squanchy.service.firebase.model.FirebaseEvent;
 import net.squanchy.service.firebase.model.FirebaseSpeaker;
-
-import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
@@ -36,6 +36,7 @@ class ScheduleService {
                             day.date,
                             map(day.events, firebaseEvent -> Event.create(
                                     firebaseEvent.eventId,
+                                    eventHolder.days.indexOf(day),      // TODO do this less crappily
                                     firebaseEvent.name,
                                     firebaseEvent.place,
                                     firebaseEvent.experienceLevel,

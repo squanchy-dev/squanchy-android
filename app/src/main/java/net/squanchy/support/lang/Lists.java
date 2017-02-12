@@ -11,7 +11,7 @@ public final class Lists {
             return Collections.emptyList();
         }
 
-        List<R> result = new ArrayList<R>(list.size());
+        List<R> result = new ArrayList<>(list.size());
         for (T t : list) {
             result.add(function.apply(t));
         }

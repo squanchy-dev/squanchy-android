@@ -20,7 +20,8 @@ class ScheduleNavigator implements Navigator {
     }
 
     @Override
-    public void toEventDetails() {
-        context.startActivity(new Intent(context, EventDetailsActivity.class));
+    public void toEventDetails(int dayId, int eventId) {
+        Intent intent = EventDetailsActivity.createIntent(context, dayId, eventId);
+        context.startActivity(intent);
     }
 }
