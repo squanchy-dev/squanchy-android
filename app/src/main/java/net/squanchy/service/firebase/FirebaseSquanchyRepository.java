@@ -6,15 +6,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import net.squanchy.service.firebase.model.FirebaseEvent;
-import net.squanchy.service.firebase.model.FirebaseFloorPlan;
-import net.squanchy.service.firebase.model.FirebaseInfoItem;
-import net.squanchy.service.firebase.model.FirebaseLevel;
-import net.squanchy.service.firebase.model.FirebaseLocation;
-import net.squanchy.service.firebase.model.FirebasePoi;
+import net.squanchy.service.firebase.model.FirebaseFloorPlans;
+import net.squanchy.service.firebase.model.FirebaseInfoItems;
+import net.squanchy.service.firebase.model.FirebaseLevels;
+import net.squanchy.service.firebase.model.FirebaseLocations;
+import net.squanchy.service.firebase.model.FirebasePois;
+import net.squanchy.service.firebase.model.FirebaseSchedule;
 import net.squanchy.service.firebase.model.FirebaseSettings;
-import net.squanchy.service.firebase.model.FirebaseSpeaker;
-import net.squanchy.service.firebase.model.FirebaseTrack;
-import net.squanchy.service.firebase.model.FirebaseType;
+import net.squanchy.service.firebase.model.FirebaseSpeakers;
+import net.squanchy.service.firebase.model.FirebaseTracks;
+import net.squanchy.service.firebase.model.FirebaseTypes;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -28,48 +29,48 @@ public final class FirebaseSquanchyRepository {
         this.database = database;
     }
 
-    public Observable<FirebaseSettings.Holder> settings() {
-        return observeChild("settings", FirebaseSettings.Holder.class);
+    public Observable<FirebaseSettings> settings() {
+        return observeChild("settings", FirebaseSettings.class);
     }
 
-    public Observable<FirebaseFloorPlan.Holder> floorPlans() {
-        return observeChild("floorPlans", FirebaseFloorPlan.Holder.class);
+    public Observable<FirebaseFloorPlans> floorPlans() {
+        return observeChild("floorPlans", FirebaseFloorPlans.class);
     }
 
-    public Observable<FirebaseInfoItem.General> info() {
-        return observeChild("info", FirebaseInfoItem.General.class);
+    public Observable<FirebaseInfoItems> info() {
+        return observeChild("info", FirebaseInfoItems.class);
     }
 
-    public Observable<FirebaseLevel.Holder> levels() {
-        return observeChild("levels", FirebaseLevel.Holder.class);
+    public Observable<FirebaseLevels> levels() {
+        return observeChild("levels", FirebaseLevels.class);
     }
 
-    public Observable<FirebaseLocation.Holder> locations() {
-        return observeChild("locations", FirebaseLocation.Holder.class);
+    public Observable<FirebaseLocations> locations() {
+        return observeChild("locations", FirebaseLocations.class);
     }
 
-    public Observable<FirebasePoi.Holder> pois() {
-        return observeChild("pois", FirebasePoi.Holder.class);
+    public Observable<FirebasePois> pois() {
+        return observeChild("pois", FirebasePois.class);
     }
 
-    public Observable<FirebaseSpeaker.Holder> speakers() {
-        return observeChild("speakers", FirebaseSpeaker.Holder.class);
+    public Observable<FirebaseSpeakers> speakers() {
+        return observeChild("speakers", FirebaseSpeakers.class);
     }
 
-    public Observable<FirebaseTrack.Holder> tracks() {
-        return observeChild("tracks", FirebaseTrack.Holder.class);
+    public Observable<FirebaseTracks> tracks() {
+        return observeChild("tracks", FirebaseTracks.class);
     }
 
-    public Observable<FirebaseType.Holder> types() {
-        return observeChild("types", FirebaseType.Holder.class);
+    public Observable<FirebaseTypes> types() {
+        return observeChild("types", FirebaseTypes.class);
     }
 
-    public Observable<FirebaseEvent.Holder> socialEvents() {
-        return observeChild("socialEvents", FirebaseEvent.Holder.class);
+    public Observable<FirebaseSchedule> socialEvents() {
+        return observeChild("socialEvents", FirebaseSchedule.class);
     }
 
-    public Observable<FirebaseEvent.Holder> sessions() {
-        return observeChild("sessions", FirebaseEvent.Holder.class);
+    public Observable<FirebaseSchedule> sessions() {
+        return observeChild("sessions", FirebaseSchedule.class);
     }
 
     public Observable<FirebaseEvent> event(int dayId, int eventId) {

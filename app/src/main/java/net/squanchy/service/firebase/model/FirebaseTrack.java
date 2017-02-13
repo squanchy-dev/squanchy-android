@@ -1,7 +1,5 @@
 package net.squanchy.service.firebase.model;
 
-import java.util.List;
-
 public class FirebaseTrack {
 
     public Long trackId;
@@ -11,10 +9,4 @@ public class FirebaseTrack {
     public Long order;
 
     public Boolean deleted;
-
-    public static class Holder {
-
-        public List<FirebaseTrack> tracks;
-
-    }
 }
