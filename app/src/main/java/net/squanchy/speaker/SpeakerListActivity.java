@@ -14,6 +14,7 @@ import net.squanchy.speaker.view.SpeakersView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import timber.log.Timber;
 
 public class SpeakerListActivity extends AppCompatActivity implements SpeakersView.OnSpeakerClickedListener {
 
@@ -47,7 +48,7 @@ public class SpeakerListActivity extends AppCompatActivity implements SpeakersVi
         super.onStart();
         subscription = service.speakers()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onSuccess);
+                .subscribe(this::onSuccess, Timber::e);
     }
 
     private void onSuccess(List<Speaker> speakers) {
