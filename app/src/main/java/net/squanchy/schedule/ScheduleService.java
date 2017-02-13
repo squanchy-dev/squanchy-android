@@ -35,11 +35,11 @@ class ScheduleService {
         return Observable.combineLatest(
                 sessionsObservable,
                 speakersObservable,
-                composeIntoSchedule()
+                combineIntoSchedule()
         ).subscribeOn(Schedulers.io());
     }
 
-    private BiFunction<FirebaseSchedule, FirebaseSpeakers, Schedule> composeIntoSchedule() {
+    private BiFunction<FirebaseSchedule, FirebaseSpeakers, Schedule> combineIntoSchedule() {
         return (apiSchedule, apiSpeakers) -> {
             List<SchedulePage> pages = map(apiSchedule.days, toSchedulePage(apiSchedule, apiSpeakers));
             return Schedule.create(pages);
