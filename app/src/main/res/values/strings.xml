@@ -59,5 +59,7 @@
   <string name="no_tweets_for_query">No Tweets for %s… yet</string>
   <string name="activity_social_feed">Social Feed</string>
   <string name="activity_schedule">Schedule</string>
+  <string name="activity_favorites">Favorites</string>
+  <string name="activity_speakers">Speakers</string>
 
 </resources>
