@@ -24,4 +24,19 @@ class ScheduleNavigator implements Navigator {
         Intent intent = EventDetailsActivity.createIntent(context, dayId, eventId);
         context.startActivity(intent);
     }
+
+    @Override
+    public void toSchedule() {
+
+    }
+
+    @Override
+    public void toFavorites() {
+
+    }
+
+    @Override
+    public void toSpeakers() {
+
+    }
 }

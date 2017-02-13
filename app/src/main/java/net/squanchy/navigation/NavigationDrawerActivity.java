@@ -2,13 +2,18 @@ package net.squanchy.navigation;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import net.squanchy.R;
 import net.squanchy.navigation.drawer.NavigationDrawer;
+import net.squanchy.navigation.drawer.SelectionNavigator;
 
 public abstract class NavigationDrawerActivity extends AppCompatActivity {
 
@@ -34,6 +39,19 @@ public abstract class NavigationDrawerActivity extends AppCompatActivity {
         inflateActivityContent(container);
 
         initializeActivity(savedInstanceState);
+
+        SelectionNavigator.initWith((NavigationView) drawerContents, navigate());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                navigationDrawer.open();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     protected abstract void inflateActivityContent(ViewGroup parent);
