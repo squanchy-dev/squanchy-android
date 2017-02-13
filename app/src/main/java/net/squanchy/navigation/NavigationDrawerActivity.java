@@ -22,6 +22,7 @@ public abstract class NavigationDrawerActivity extends AppCompatActivity {
     private NavigationDrawer navigationDrawer;
     private ViewGroup container;
     private ActionBarDrawerToggle drawerToggle;
+    private DrawerLayout drawerLayout;
 
     @Override
     public final void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
@@ -34,7 +35,7 @@ public abstract class NavigationDrawerActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_navigation_drawer);
 
-        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         View drawerContents = findViewById(R.id.navigation_drawer);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, 0, 0);
         drawerLayout.addDrawerListener(drawerToggle);
@@ -47,6 +48,12 @@ public abstract class NavigationDrawerActivity extends AppCompatActivity {
         initializeActivity(savedInstanceState);
 
         SelectionNavigator.initWith((NavigationView) drawerContents, navigate());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        drawerLayout.removeDrawerListener(drawerToggle);
     }
 
     @Override
