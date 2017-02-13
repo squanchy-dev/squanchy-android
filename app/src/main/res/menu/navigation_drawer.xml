@@ -7,16 +7,16 @@
       android:id="@+id/navigation_schedule"
       android:checked="true"
       android:title="@string/activity_schedule"
-      android:icon="@drawable/ic_schedule"/>
+      android:icon="@drawable/ic_schedule" />
 
     <item
       android:id="@+id/navigation_favorites"
       android:title="@string/activity_favorites"
-      android:icon="@drawable/ic_favorite"/>
+      android:icon="@drawable/ic_favorite" />
 
     <item
       android:id="@+id/navigation_speakers"
       android:title="@string/activity_speakers"
-      android:icon="@drawable/ic_speaker"/>
+      android:icon="@drawable/ic_speaker" />
   </group>
 </menu>
