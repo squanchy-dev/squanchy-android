@@ -61,5 +61,6 @@
   <string name="activity_schedule">Schedule</string>
   <string name="activity_favorites">Favorites</string>
   <string name="activity_speakers">Speakers</string>
+  <string name="activity_speaker_list">Speakers</string>
 
 </resources>
