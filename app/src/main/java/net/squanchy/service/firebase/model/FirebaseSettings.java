@@ -11,10 +11,4 @@ public class FirebaseSettings {
     public String timeZone;
 
     public String twitterSearchQuery;
-
-    public static class Holder {
-
-        public FirebaseSettings settings;
-
-    }
 }

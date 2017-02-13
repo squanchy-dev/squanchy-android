@@ -1,7 +1,5 @@
 package net.squanchy.service.firebase.model;
 
-import java.util.List;
-
 public class FirebaseSpeaker {
 
     public Long speakerId;
@@ -27,10 +25,4 @@ public class FirebaseSpeaker {
     public Boolean deleted;
 
     public String email;
-
-    public static class Holder {
-
-        public List<FirebaseSpeaker> speakers;
-
-    }
 }
