@@ -15,12 +15,12 @@ public class SpeakersView extends RecyclerView {
 
     private SpeakerAdapter adapter;
 
-    public SpeakersView(Context context) {
-        super(context);
-    }
-
     public SpeakersView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+    }
+
+    public SpeakersView(Context context, @Nullable AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
     }
 
     @Override
