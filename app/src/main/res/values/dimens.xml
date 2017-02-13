@@ -22,5 +22,6 @@
   <dimen name="navigation_drawer_width">288dp</dimen>
 
   <dimen name="toolbar_elevation">6dp</dimen>
+  <dimen name="speaker_name_padding">16dp</dimen>
 
 </resources>

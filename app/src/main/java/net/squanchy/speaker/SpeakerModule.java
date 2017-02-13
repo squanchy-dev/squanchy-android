@@ -12,5 +12,4 @@ class SpeakerModule {
     SpeakerService speakerService(FirebaseSquanchyRepository repository) {
         return new SpeakerService(repository);
     }
-
 }
