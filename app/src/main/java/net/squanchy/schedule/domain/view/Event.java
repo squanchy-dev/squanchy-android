@@ -8,6 +8,7 @@ import com.google.auto.value.AutoValue;
 import java.util.List;
 
 import net.squanchy.R;
+import net.squanchy.speaker.Speaker;
 import net.squanchy.support.view.Visibility;
 
 @AutoValue
@@ -19,7 +20,7 @@ public abstract class Event {
             String title,
             String place,
             int experienceLevel,
-            List<String> speakers
+            List<Speaker> speakers
     ) {
         return new AutoValue_Event.Builder()
                 .id(eventId)
@@ -27,24 +28,11 @@ public abstract class Event {
                 .title(title)
                 .place(place)
                 .placeVisibility(place.isEmpty() ? View.GONE : View.VISIBLE)
-                .speakers(speakerNames(speakers))
+                .speakers(speakers)
                 .speakersVisibility(speakers.isEmpty() ? View.GONE : View.VISIBLE)
                 .trackVisibility(View.GONE) // todo add track
                 .experienceLevelIcon(experienceLevelIconFor(experienceLevel))
                 .build();
-    }
-
-    private static String speakerNames(List<String> speakers) {
-        StringBuilder speakersBuilder = new StringBuilder();
-        for (String speaker : speakers) {
-            if (speakersBuilder.length() > 0) {
-                speakersBuilder.append(", ");
-            }
-
-            speakersBuilder.append(speaker);
-        }
-
-        return speakersBuilder.toString();
     }
 
     // TODO: move in its own enum
@@ -81,7 +69,7 @@ public abstract class Event {
     @Visibility
     public abstract int trackVisibility();
 
-    public abstract String speakers();
+    public abstract List<Speaker> speakers();
 
     @Visibility
     public abstract int speakersVisibility();
@@ -90,6 +78,19 @@ public abstract class Event {
     public abstract int experienceLevelIcon();
 
     public abstract int day();
+
+    public String speakerNames() {
+        StringBuilder speakersBuilder = new StringBuilder();
+        for (Speaker speaker : speakers()) {
+            if (speakersBuilder.length() > 0) {
+                speakersBuilder.append(", ");
+            }
+
+            speakersBuilder.append(speaker.getCompleteName());
+        }
+
+        return speakersBuilder.toString();
+    }
 
     @AutoValue.Builder
     public abstract static class Builder {
@@ -106,7 +107,7 @@ public abstract class Event {
 
         public abstract Builder trackVisibility(@Visibility int trackVisibility);
 
-        public abstract Builder speakers(String speakers);
+        public abstract Builder speakers(List<Speaker> speakers);
 
         public abstract Builder speakersVisibility(@Visibility int speakersVisibility);
 

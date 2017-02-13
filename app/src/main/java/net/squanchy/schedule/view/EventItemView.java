@@ -49,7 +49,7 @@ public class EventItemView extends FrameLayout {
 
         trackView.setVisibility(event.trackVisibility());
 
-        speakersView.setText(event.speakers());
+        speakersView.setText(event.speakerNames());
         speakersContainer.setVisibility(event.speakersVisibility());
 
         experienceIconView.setImageResource(event.experienceLevelIcon());

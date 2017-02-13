@@ -11,6 +11,7 @@ import net.squanchy.service.firebase.model.FirebaseEvent;
 import net.squanchy.service.firebase.model.FirebaseSchedule;
 import net.squanchy.service.firebase.model.FirebaseSpeaker;
 import net.squanchy.service.firebase.model.FirebaseSpeakers;
+import net.squanchy.speaker.Speaker;
 import net.squanchy.support.lang.Lists;
 
 import io.reactivex.Observable;
@@ -65,7 +66,8 @@ class ScheduleService {
                     apiEvent.name,
                     apiEvent.place,
                     apiEvent.experienceLevel,
-                    map(speakers, toSpeakerName()));
+                    map(speakers, toSpeaker())
+            );
         };
     }
 
@@ -77,7 +79,7 @@ class ScheduleService {
         return find(apiSpeakers.speakers, apiSpeaker -> apiSpeaker.speakerId.equals(speakerId));
     }
 
-    private Lists.Function<FirebaseSpeaker, String> toSpeakerName() {
-        return apiSpeaker -> apiSpeaker != null ? apiSpeaker.firstName + " " + apiSpeaker.lastName : null;
+    private Lists.Function<FirebaseSpeaker, Speaker> toSpeaker() {
+        return apiSpeaker -> apiSpeaker != null ? Speaker.create(apiSpeaker) : null;
     }
 }
