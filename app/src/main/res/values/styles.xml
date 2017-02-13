@@ -15,8 +15,12 @@
 
   <style name="Squanchy.Toolbar.Schedule" />
 
+  <style name="Squanchy.Toolbar.SpeakerList" />
+
   <style name="Squanchy.Tabs" parent="Widget.Design.TabLayout" />
 
   <style name="Squanchy.Tabs.Schedule" parent="None" />
+
+  <style name="Squanchy.Tabs.SpeakerList" parent="None" />
 
 </resources>
