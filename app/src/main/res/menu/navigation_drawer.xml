@@ -16,7 +16,7 @@
 
     <item
       android:id="@+id/navigation_speakers"
-      android:title="@string/activity_speakers"
+      android:title="@string/activity_speaker_list"
       android:icon="@drawable/ic_speaker" />
   </group>
 </menu>
