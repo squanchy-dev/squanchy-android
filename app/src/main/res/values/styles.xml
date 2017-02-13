@@ -13,10 +13,17 @@
 
   <style name="Squanchy.Toolbar.SocialFeed" />
 
-  <style name="Squanchy.Toolbar.Schedule" />
+  <style name="Squanchy.Toolbar.Schedule" parent="Widget.AppCompat.Toolbar">
+    <item name="android:textColorSecondary">@android:color/white</item>
+  </style>
 
   <style name="Squanchy.Tabs" parent="Widget.Design.TabLayout" />
 
   <style name="Squanchy.Tabs.Schedule" parent="None" />
+
+  <!--Hackish solution - it just works -->
+  <style name="HamburgerColorStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
+    <item name="color">@android:color/white</item>
+  </style>
 
 </resources>
