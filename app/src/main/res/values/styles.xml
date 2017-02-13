@@ -9,7 +9,7 @@
     <item name="android:elevation">@dimen/toolbar_elevation</item>
   </style>
 
-  <style name="Squanchy.Toolbar" parent="Widget.AppCompat.Light.ActionBar" />
+  <style name="Squanchy.Toolbar" parent="Theme.AppCompat" />
 
   <style name="Squanchy.Toolbar.SocialFeed" />
 
