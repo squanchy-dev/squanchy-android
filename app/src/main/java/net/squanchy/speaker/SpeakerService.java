@@ -1,6 +1,7 @@
 package net.squanchy.speaker;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import net.squanchy.service.firebase.FirebaseSquanchyRepository;
@@ -22,6 +23,9 @@ class SpeakerService {
         return repository.speakers()
                 .map(firebaseSpeaker -> firebaseSpeaker.speakers)
                 .map(list -> map(list, Speaker::create))
-                .doOnNext(Collections::sort);
+                .doOnNext(list -> Collections.sort(list, speakerNameComparator));
     }
+
+    private static final Comparator<Speaker> speakerNameComparator =
+            (speaker1, speaker2) -> speaker1.fullName().compareToIgnoreCase(speaker2.fullName());
 }

@@ -21,6 +21,6 @@
 
   <style name="Squanchy.Tabs.Schedule" parent="None" />
 
-    <style name="Squanchy.Tabs.SpeakerList" parent="None" />
+  <style name="Squanchy.Tabs.SpeakerList" parent="None" />
 
 </resources>
