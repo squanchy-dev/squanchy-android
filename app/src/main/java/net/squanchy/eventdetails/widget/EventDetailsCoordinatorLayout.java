@@ -12,6 +12,7 @@ public class EventDetailsCoordinatorLayout extends CoordinatorLayout {
 
     private FloatingActionButton floatingActionButton;
     private EventDetailsHeaderLayout headerLayout;
+    private EventDetailsLayout detailsLayout;
 
     public EventDetailsCoordinatorLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -27,9 +28,11 @@ public class EventDetailsCoordinatorLayout extends CoordinatorLayout {
 
         floatingActionButton = (FloatingActionButton) findViewById(R.id.favorite_fab);
         headerLayout = (EventDetailsHeaderLayout) findViewById(R.id.event_details_header);
+        detailsLayout = (EventDetailsLayout) findViewById(R.id.event_details);
     }
 
     public void updateWith(Event event) {
         headerLayout.updateWith(event);
+        detailsLayout.updateWith(event);
     }
 }
