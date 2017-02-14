@@ -15,7 +15,7 @@ import net.squanchy.speaker.Speaker;
 
 class SpeakerAdapter extends RecyclerView.Adapter<SpeakerViewHolder> {
 
-    private List<Speaker> speakerList = Collections.emptyList();
+    private List<Speaker> speakers = Collections.emptyList();
     @Nullable
     private SpeakersView.OnSpeakerClickedListener listener;
     private final Context context;
@@ -25,13 +25,18 @@ class SpeakerAdapter extends RecyclerView.Adapter<SpeakerViewHolder> {
         setHasStableIds(true);
     }
 
-    public void updateWith(List<Speaker> speakerList, @Nullable SpeakersView.OnSpeakerClickedListener listener) {
-        this.speakerList = speakerList;
-        this.listener = listener;
+    @Override
+    public long getItemId(int position) {
+        return speakers.get(position).id();
     }
 
     public List<Speaker> speakers() {
-        return speakerList;
+        return speakers;
+    }
+
+    public void updateWith(List<Speaker> speakerList, @Nullable SpeakersView.OnSpeakerClickedListener listener) {
+        this.speakers = speakerList;
+        this.listener = listener;
     }
 
     @Override
@@ -42,11 +47,11 @@ class SpeakerAdapter extends RecyclerView.Adapter<SpeakerViewHolder> {
 
     @Override
     public void onBindViewHolder(SpeakerViewHolder holder, int position) {
-        holder.updateWith(speakerList.get(position), listener);
+        holder.updateWith(speakers.get(position), listener);
     }
 
     @Override
     public int getItemCount() {
-        return speakerList.size();
+        return speakers.size();
     }
 }
