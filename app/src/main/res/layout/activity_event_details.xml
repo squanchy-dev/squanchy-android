@@ -50,7 +50,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <net.squanchy.eventdetails.widget.EventDetailsView
+    <net.squanchy.eventdetails.widget.EventDetailsLayout
       android:id="@+id/event_details"
       android:layout_width="match_parent"
       android:layout_height="wrap_content" />
