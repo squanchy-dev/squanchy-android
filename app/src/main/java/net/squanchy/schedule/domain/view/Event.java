@@ -86,7 +86,7 @@ public abstract class Event {
                 speakersBuilder.append(", ");
             }
 
-            speakersBuilder.append(speaker.getCompleteName());
+            speakersBuilder.append(speaker.fullName());
         }
 
         return speakersBuilder.toString();
