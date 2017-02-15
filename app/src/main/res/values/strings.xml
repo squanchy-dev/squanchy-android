@@ -10,7 +10,10 @@
   <string name="social_events">Social Events</string>
   <string name="search">Search</string>
   <string name="filter">Filter</string>
-  <string name="experience_level">Experience level:</string>
+  <string name="experience_level">Experience level: %s</string>
+  <string name="experience_level_beginner">beginner</string>
+  <string name="experience_level_intermediate">intermediate</string>
+  <string name="experience_level_advanced">advanced</string>
   <string name="tracks">Tracks</string>
   <string name="exp_levels">Experience Levels</string>
   <string name="NoConnectionMessage">Internet connection is not available at this moment. Please, try later</string>

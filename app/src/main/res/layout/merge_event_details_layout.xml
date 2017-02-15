@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  tools:layout_width="match_parent"
+  tools:layout_height="match_parent"
+  tools:parentTag="LinearLayout"
+  tools:orientation="vertical">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <net.squanchy.eventdetails.widget.ExperienceLevelIconView
+      android:id="@+id/experience_level_icon"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content" />
+
+    <TextView
+      android:id="@+id/experience_level_label"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:padding="8dp"
+      android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+      tools:text="Android" />
+
+  </LinearLayout>
+
+  <TextView
+    android:id="@+id/track_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+    tools:text="Android" />
+
+  <TextView
+    android:id="@+id/place_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:drawableStart="@drawable/ic_place"
+    android:padding="8dp"
+    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+    tools:text="Big room, 1st floor" />
+
+  <TextView
+    android:id="@+id/speakers_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:drawableStart="@drawable/ic_speakers"
+    android:padding="8dp"
+    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+    tools:text="Otto Von Bismark, Ruby Rubacuori, Ivan The Terrible" />
+
+</merge>
