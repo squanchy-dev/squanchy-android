@@ -37,4 +37,6 @@
 
   <color name="placeholder_text">#a3a3a3</color>
 
+  <color name="notification_led_color">@color/accent</color>
+
 </resources>

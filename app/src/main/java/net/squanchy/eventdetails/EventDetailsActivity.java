@@ -20,7 +20,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     private EventDetailsService service;
     private Disposable subscription;
 
-    public static Intent createIntent(Context context, int dayId, int eventId) {
+    public static Intent createIntent(Context context, int dayId, long eventId) {
         Intent intent = new Intent(context, EventDetailsActivity.class);
         intent.putExtra(EXTRA_DAY, dayId);
         intent.putExtra(EXTRA_EVENT_ID, eventId);
