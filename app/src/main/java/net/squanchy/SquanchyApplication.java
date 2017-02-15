@@ -4,6 +4,7 @@ import android.app.Application;
 import android.support.annotation.MainThread;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.firebase.database.FirebaseDatabase;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.tweetui.TweetUi;
@@ -24,8 +25,8 @@ public class SquanchyApplication extends Application {
         super.onCreate();
 
         JodaTimeAndroid.init(this);
-
         setupTracking();
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
     }
 
     private void setupTracking() {
