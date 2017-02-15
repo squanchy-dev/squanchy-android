@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<net.squanchy.eventdetails.widget.EventDetailsCoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/event_details_root"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:fitsSystemWindows="true">
@@ -12,8 +13,8 @@
     android:layout_height="wrap_content"
     android:fitsSystemWindows="true">
 
-    <android.support.design.widget.CollapsingToolbarLayout
-      android:id="@+id/collapsing_toolbar"
+    <net.squanchy.eventdetails.widget.EventDetailsHeaderLayout
+      android:id="@+id/event_details_header"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:fitsSystemWindows="true"
@@ -37,9 +38,10 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:layout_collapseMode="pin"
+        app:titleTextColor="?android:textColorPrimary"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    </android.support.design.widget.CollapsingToolbarLayout>
+    </net.squanchy.eventdetails.widget.EventDetailsHeaderLayout>
 
   </android.support.design.widget.AppBarLayout>
 
@@ -48,20 +50,10 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <LinearLayout
+    <net.squanchy.eventdetails.widget.EventDetailsLayout
+      android:id="@+id/event_details"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical">
-
-      <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:paddingBottom="600dp"
-        android:text="Temp test lol stuff what is this I don't even\n\n\n\n\n\nOh hey I can scroll!\n\n\n\n\n\n\nSuch hax0r 👨‍💻"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"/>
-
-    </LinearLayout>
+      android:layout_height="wrap_content" />
 
   </android.support.v4.widget.NestedScrollView>
 
@@ -75,4 +67,4 @@
     app:layout_anchor="@id/appbar"
     app:layout_anchorGravity="bottom|end" />
 
-</android.support.design.widget.CoordinatorLayout>
+</net.squanchy.eventdetails.widget.EventDetailsCoordinatorLayout>

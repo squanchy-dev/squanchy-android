@@ -16,7 +16,7 @@ public class SpeakersView extends RecyclerView {
     private SpeakerAdapter adapter;
 
     public SpeakersView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs, 0);
     }
 
     public SpeakersView(Context context, @Nullable AttributeSet attrs, int defStyle) {
@@ -35,7 +35,7 @@ public class SpeakersView extends RecyclerView {
     }
 
     public void updateWith(List<Speaker> newData, OnSpeakerClickedListener listener) {
-        DiffUtil.Callback callback = new SpeakerDiffCallback(adapter.speakers(), newData);
+        DiffUtil.Callback callback = new SpeakerDiffCallback(adapter.speakers(), newData);       // TODO move off of the UI thread
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(callback, true);
         adapter.updateWith(newData, listener);
         diffResult.dispatchUpdatesTo(adapter);
@@ -68,16 +68,16 @@ public class SpeakersView extends RecyclerView {
 
         @Override
         public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-            Speaker oldEvent = oldSpeakers.get(oldItemPosition);
-            Speaker newEvent = newSpeakers.get(newItemPosition);
-            return oldEvent.id() == newEvent.id();
+            Speaker oldSpeaker = oldSpeakers.get(oldItemPosition);
+            Speaker newSpeaker = newSpeakers.get(newItemPosition);
+            return oldSpeaker.id() == newSpeaker.id();
         }
 
         @Override
         public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-            Speaker oldEvent = oldSpeakers.get(oldItemPosition);
-            Speaker newEvent = newSpeakers.get(newItemPosition);
-            return oldEvent.equals(newEvent);
+            Speaker oldSpeaker = oldSpeakers.get(oldItemPosition);
+            Speaker newSpeaker = newSpeakers.get(newItemPosition);
+            return oldSpeaker.equals(newSpeaker);
         }
     }
 }
