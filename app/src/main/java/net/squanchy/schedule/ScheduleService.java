@@ -65,7 +65,7 @@ class ScheduleService {
                     dayId,      // TODO do this less crappily
                     apiEvent.name,
                     apiEvent.place,
-                    ExperienceLevel.fromRawLevel(apiEvent.experienceLevel),
+                    ExperienceLevel.fromRawLevel(apiEvent.experienceLevel - 1), // TODO fix the data
                     map(speakers, toSpeakerName()));
         };
     }
