@@ -2,6 +2,7 @@ package net.squanchy.eventdetails;
 
 import java.util.List;
 
+import net.squanchy.eventdetails.domain.view.ExperienceLevel;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.service.firebase.FirebaseSquanchyRepository;
 import net.squanchy.service.firebase.model.FirebaseEvent;
@@ -43,7 +44,7 @@ class EventDetailsService {
                     dayId,
                     apiEvent.name,
                     apiEvent.place,
-                    apiEvent.experienceLevel,
+                    ExperienceLevel.fromRawLevel(apiEvent.experienceLevel),
                     map(speakers, toSpeakerName())
             );
         };

@@ -51,7 +51,7 @@ public class EventDetailsLayout extends LinearLayout {
         placeView.setVisibility(event.placeVisibility());
         placeView.setText(event.place());
         speakersView.setVisibility(event.speakersVisibility());
-        speakersView.setText(event.speakers());
+        speakersView.setText(event.speakersNames());
         trackView.setVisibility(event.trackVisibility());
         experienceLevelIconView.setExperienceLevel(ExperienceLevel.BEGINNER);
         experienceLevelLabelView.setText(ExperienceLevel.BEGINNER.labelStringResId());
