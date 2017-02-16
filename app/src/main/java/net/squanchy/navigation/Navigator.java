@@ -6,4 +6,10 @@ public interface Navigator {
 
     void toEventDetails(int dayId, int eventId);
 
+    void toSchedule();
+
+    void toFavorites();
+
+    void toSpeakers();
+
 }

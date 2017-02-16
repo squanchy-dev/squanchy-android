@@ -9,11 +9,13 @@
     <item name="android:elevation">@dimen/toolbar_elevation</item>
   </style>
 
-  <style name="Squanchy.Toolbar" parent="Widget.AppCompat.Light.ActionBar" />
+  <style name="Squanchy.Toolbar" parent="Theme.AppCompat" />
 
   <style name="Squanchy.Toolbar.SocialFeed" />
 
-  <style name="Squanchy.Toolbar.Schedule" />
+  <style name="Squanchy.Toolbar.Schedule" parent="Widget.AppCompat.Toolbar">
+    <item name="android:textColorSecondary">@android:color/white</item>
+  </style>
 
   <style name="Squanchy.Toolbar.SpeakerList" />
 
@@ -22,5 +24,10 @@
   <style name="Squanchy.Tabs.Schedule" parent="None" />
 
   <style name="Squanchy.Tabs.SpeakerList" parent="None" />
+
+  <!--Hackish solution - it just works -->
+  <style name="HamburgerColorStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
+    <item name="color">@android:color/white</item>
+  </style>
 
 </resources>

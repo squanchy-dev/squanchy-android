@@ -1,6 +1,8 @@
 package net.squanchy.schedule;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -44,6 +46,9 @@ public class ScheduleActivity extends NavigationDrawerActivity implements Schedu
     private void setupToolbar(Toolbar toolbar) {
         setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.activity_schedule);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     @Override
