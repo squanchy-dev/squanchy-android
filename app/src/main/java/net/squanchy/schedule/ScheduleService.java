@@ -2,6 +2,7 @@ package net.squanchy.schedule;
 
 import java.util.List;
 
+import net.squanchy.eventdetails.domain.view.ExperienceLevel;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Schedule;
 import net.squanchy.schedule.domain.view.SchedulePage;
@@ -64,7 +65,7 @@ class ScheduleService {
                     dayId,      // TODO do this less crappily
                     apiEvent.name,
                     apiEvent.place,
-                    apiEvent.experienceLevel,
+                    ExperienceLevel.fromRawLevel(apiEvent.experienceLevel - 1), // TODO fix the data
                     map(speakers, toSpeakerName()));
         };
     }

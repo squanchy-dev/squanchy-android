@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.squanchy.R;
-import net.squanchy.speaker.Speaker;
+import net.squanchy.speaker.domain.view.Speaker;
 
 class SpeakerAdapter extends RecyclerView.Adapter<SpeakerViewHolder> {
 
@@ -34,8 +34,8 @@ class SpeakerAdapter extends RecyclerView.Adapter<SpeakerViewHolder> {
         return speakers;
     }
 
-    public void updateWith(List<Speaker> speakerList, @Nullable SpeakersView.OnSpeakerClickedListener listener) {
-        this.speakers = speakerList;
+    public void updateWith(List<Speaker> speakers, @Nullable SpeakersView.OnSpeakerClickedListener listener) {
+        this.speakers = speakers;
         this.listener = listener;
     }
 

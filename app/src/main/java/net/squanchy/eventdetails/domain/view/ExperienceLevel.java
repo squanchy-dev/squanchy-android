@@ -13,6 +13,10 @@ public enum ExperienceLevel {
     private final int rawLevel;
     private final int labelStringResId;
 
+    public static ExperienceLevel fromRawLevel(@IntRange(from = 0, to = 2) int rawLevel) {
+        return ExperienceLevel.values()[rawLevel];
+    }
+
     ExperienceLevel(int rawLevel, @StringRes int labelStringResId) {
         this.rawLevel = rawLevel;
         this.labelStringResId = labelStringResId;

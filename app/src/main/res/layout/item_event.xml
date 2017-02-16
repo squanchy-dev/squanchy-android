@@ -87,12 +87,11 @@
             android:textSize="@dimen/text_size_medium"
             tools:text="Dinner with you" />
 
-          <ImageView
-            android:id="@+id/imgExperience"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_gravity="center"
-            tools:src="@drawable/ic_experience_advanced" />
+          <net.squanchy.eventdetails.widget.ExperienceLevelIconView
+            android:id="@+id/experience_level_icon"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_gravity="center" />
 
         </LinearLayout>
 

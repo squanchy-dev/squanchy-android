@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 
 import java.util.List;
 
-import net.squanchy.speaker.Speaker;
+import net.squanchy.speaker.domain.view.Speaker;
 
 public class SpeakersView extends RecyclerView {
 
