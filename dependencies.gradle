@@ -12,6 +12,7 @@ ext {
     libraries = [
             app: [
                     autoValue        : 'com.google.auto.value:auto-value:1.3',
+                    calligraphy      : 'uk.co.chrisjenx:calligraphy:2.2.0',
                     crashlytics      : 'com.crashlytics.sdk.android:crashlytics:2.6.6',
                     dagger           : "com.google.dagger:dagger:${daggerVersion}",
                     daggerCompiler   : "com.google.dagger:dagger-compiler:${daggerVersion}",
@@ -27,8 +28,7 @@ ext {
                     supportDesign    : "com.android.support:design:${supportLibVersion}",
                     timber           : 'com.jakewharton.timber:timber:4.3.1',
                     tweetUi          : 'com.twitter.sdk.android:tweet-ui:2.2.0',
-                    viewPagerAdapter : 'com.novoda:view-pager-adapter:0.9.1',
-                    calligraphy      : 'uk.co.chrisjenx:calligraphy:2.2.0'
+                    viewPagerAdapter : 'com.novoda:view-pager-adapter:0.9.1'
             ]
     ]
 }
