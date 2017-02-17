@@ -117,6 +117,8 @@ dependencies {
 
     compile libraries.app.viewPagerAdapter
 
+    compile libraries.app.calligraphy
+
     apt libraries.app.autoValue
     provided libraries.app.autoValue
 

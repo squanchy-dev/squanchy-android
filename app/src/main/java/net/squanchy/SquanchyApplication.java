@@ -11,6 +11,7 @@ import com.twitter.sdk.android.tweetui.TweetUi;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 import net.squanchy.analytics.Analytics;
+import net.squanchy.fonts.TypefaceManager;
 import net.squanchy.injection.ApplicationComponent;
 
 import io.fabric.sdk.android.Fabric;
@@ -27,6 +28,7 @@ public class SquanchyApplication extends Application {
         JodaTimeAndroid.init(this);
         setupTracking();
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        TypefaceManager.init();
     }
 
     private void setupTracking() {

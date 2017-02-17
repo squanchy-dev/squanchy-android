@@ -8,9 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import net.squanchy.R;
+import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.navigation.drawer.NavigationDrawer;
 
-public abstract class NavigationDrawerActivity extends AppCompatActivity {
+public abstract class NavigationDrawerActivity extends TypefaceStyleableActivity {
 
     private NavigationDrawer navigationDrawer;
     private ViewGroup container;

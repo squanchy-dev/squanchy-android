@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string name="default_typeface_regular">fonts/Quicksand-Regular.ttf</string>
+  <string name="default_typeface_medium">fonts/Quicksand-Medium.ttf</string>
+  <string name="default_typeface_light">fonts/Quicksand-Light.ttf</string>
+  <string name="default_typeface_bold">fonts/Quicksand-Bold.ttf</string>
+  <string name="title_typeface">fonts/LeagueSpartan-Bold.otf</string>
+
+</resources>
