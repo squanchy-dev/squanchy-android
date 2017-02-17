@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+  <color name="primary">#ec6e61</color>
+  <color name="primary_dark">#d76255</color>
+  <color name="primary_dark_text">#c25246</color>
+  <color name="accent">#67b6e2</color>
+
+  <color name="primary_blue">#80c7db</color>
+  <color name="primary_dark_blue">#5ea1b3</color>
+  <color name="primary_dark_text_blue">#498a9c</color>
+
+  <color name="primary_purple">#9d6acf</color>
+  <color name="primary_dark_purple">#8051ae</color>
+
+  <color name="primary_azure">#1da1f2</color>
+
+  <color name="status_bar">#11000000</color>
+
+  <color name="text_inverse">#ffffff</color>
+
+  <color name="button_inverse">#fafdff</color>
+  <color name="button_inverse_text_blue">#68929e</color>
+  <color name="button_inverse_text">#bc5c51</color>
+
+  <color name="primary_text">#4e4e4e</color>
+  <color name="secondary_text">#6b6b6b</color>
+  <color name="tertiary_text">#4d4d4d</color>
+  <color name="hint_text">#bfbfbf</color>
+  <color name="text_inverse_inactive">#99ffffff</color>
+
+  <color name="shadows">#19000000</color>
+  <color name="white_87">#ddffffff</color>
+  ˚
+</resources>
