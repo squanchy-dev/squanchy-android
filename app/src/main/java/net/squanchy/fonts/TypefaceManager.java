@@ -12,7 +12,6 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class TypefaceManager {
 
     public static void init() {
-
         CalligraphyConfig.initDefault(createConfiguration());
     }
 
