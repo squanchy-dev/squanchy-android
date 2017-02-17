@@ -6,4 +6,5 @@
   <string name="default_typeface_light">fonts/Quicksand-Light.ttf</string>
   <string name="default_typeface_bold">fonts/Quicksand-Bold.ttf</string>
   <string name="title_typeface">fonts/LeagueSpartan-Bold.otf</string>
+
 </resources>

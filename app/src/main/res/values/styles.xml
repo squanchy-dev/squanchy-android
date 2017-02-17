@@ -7,11 +7,10 @@
   <style name="Squanchy.Appbar" parent="None">
     <item name="android:background">?attr/colorPrimary</item>
     <item name="android:elevation">@dimen/toolbar_elevation</item>
-    <item name="fontPath">@string/title_typeface</item>
   </style>
 
   <style name="Squanchy.Toolbar" parent="Widget.AppCompat.Light.ActionBar" >
-    <item name="fontPath">@string/title_typeface</item>
+    <item name="fontPath">?titleTypeface</item>
   </style>
 
   <style name="Squanchy.Toolbar.SocialFeed" />

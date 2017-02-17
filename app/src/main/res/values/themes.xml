@@ -5,6 +5,11 @@
     <item name="android:windowBackground">@color/white</item>
     <item name="colorAccent">@color/grey_100</item>
     <item name="colorControlNormal">@color/white_200</item>
+    <item name="titleTypeface">@string/title_typeface</item>
+    <item name="defaultRegularTypeface">@string/default_typeface_regular</item>
+    <item name="defaultMediumTypeface">@string/default_typeface_medium</item>
+    <item name="defaultBoldTypeface">@string/default_typeface_bold</item>
+    <item name="defaultLightTypeface">@string/default_typeface_light</item>
   </style>
 
   <style name="Theme.Squanchy.Home" parent="Theme.Squanchy">
