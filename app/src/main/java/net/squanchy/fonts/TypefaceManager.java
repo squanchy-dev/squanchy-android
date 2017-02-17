@@ -9,7 +9,7 @@ import net.squanchy.R;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class CalligraphyManager {
+public class TypefaceManager {
 
     public static void init() {
 
@@ -23,7 +23,7 @@ public class CalligraphyManager {
                 .build();
     }
 
-    public static ContextWrapper attachBaseContext(@NonNull Context context) {
+    static ContextWrapper attachBaseContext(@NonNull Context context) {
         return CalligraphyContextWrapper.wrap(context);
     }
 }

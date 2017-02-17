@@ -7,6 +7,6 @@ public class TypefaceStyleableActivity extends AppCompatActivity{
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyManager.attachBaseContext(newBase));
+        super.attachBaseContext(TypefaceManager.attachBaseContext(newBase));
     }
 }
