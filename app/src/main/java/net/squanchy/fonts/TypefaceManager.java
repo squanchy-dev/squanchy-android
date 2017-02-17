@@ -13,10 +13,10 @@ public class TypefaceManager {
 
     public static void init() {
 
-        CalligraphyConfig.initDefault(createConfigurationBuilder());
+        CalligraphyConfig.initDefault(createConfiguration());
     }
 
-    private static CalligraphyConfig createConfigurationBuilder() {
+    private static CalligraphyConfig createConfiguration() {
         return new CalligraphyConfig.Builder()
                 .setDefaultFontPath("fonts/Quicksand-Regular.ttf")
                 .setFontAttrId(R.attr.fontPath)
