@@ -28,6 +28,7 @@ ext {
                     timber           : 'com.jakewharton.timber:timber:4.3.1',
                     tweetUi          : 'com.twitter.sdk.android:tweet-ui:2.2.0',
                     viewPagerAdapter : 'com.novoda:view-pager-adapter:0.9.1',
+                    calligraphy      : 'uk.co.chrisjenx:calligraphy:2.2.0'
             ]
     ]
 }
