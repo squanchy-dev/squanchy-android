@@ -1,7 +1,8 @@
 package net.squanchy.injection;
 
 import net.squanchy.SquanchyApplication;
-import net.squanchy.service.firebase.FirebaseSquanchyRepository;
+import net.squanchy.service.firebase.FirebaseDbService;
+import net.squanchy.service.firebase.injection.DbServiceType;
 import net.squanchy.service.firebase.injection.FirebaseModule;
 
 import dagger.Component;
@@ -10,7 +11,8 @@ import dagger.Component;
 @Component(modules = {FirebaseModule.class})
 public interface ApplicationComponent {
 
-    FirebaseSquanchyRepository firebaseSquanchyRepository();
+    @DbServiceType(DbServiceType.Type.AUTHENTICATED)
+    FirebaseDbService firebaseDbService();
 
     class Factory {
 

@@ -6,7 +6,7 @@ import net.squanchy.eventdetails.domain.view.ExperienceLevel;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Schedule;
 import net.squanchy.schedule.domain.view.SchedulePage;
-import net.squanchy.service.firebase.FirebaseSquanchyRepository;
+import net.squanchy.service.firebase.FirebaseDbService;
 import net.squanchy.service.firebase.model.FirebaseDay;
 import net.squanchy.service.firebase.model.FirebaseEvent;
 import net.squanchy.service.firebase.model.FirebaseSchedule;
@@ -23,15 +23,15 @@ import static net.squanchy.support.lang.Lists.map;
 
 class ScheduleService {
 
-    private final FirebaseSquanchyRepository repository;
+    private final FirebaseDbService dbService;
 
-    ScheduleService(FirebaseSquanchyRepository repository) {
-        this.repository = repository;
+    ScheduleService(FirebaseDbService dbService) {
+        this.dbService = dbService;
     }
 
     public Observable<Schedule> schedule() {
-        Observable<FirebaseSchedule> sessionsObservable = repository.sessions();
-        Observable<FirebaseSpeakers> speakersObservable = repository.speakers();
+        Observable<FirebaseSchedule> sessionsObservable = dbService.sessions();
+        Observable<FirebaseSpeakers> speakersObservable = dbService.speakers();
 
         return Observable.combineLatest(
                 sessionsObservable,
