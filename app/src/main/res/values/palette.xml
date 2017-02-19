@@ -18,8 +18,6 @@
 
   <color name="status_bar">#11000000</color>
 
-  <color name="text_inverse">#ffffff</color>
-
   <color name="button_inverse">#fafdff</color>
   <color name="button_inverse_text_blue">#68929e</color>
   <color name="button_inverse_text">#bc5c51</color>
@@ -28,6 +26,8 @@
   <color name="secondary_text">#6b6b6b</color>
   <color name="tertiary_text">#4d4d4d</color>
   <color name="hint_text">#bfbfbf</color>
+
+  <color name="text_inverse">#ffffff</color>
   <color name="text_inverse_inactive">#99ffffff</color>
 
   <color name="shadows">#19000000</color>
