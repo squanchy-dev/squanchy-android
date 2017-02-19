@@ -7,7 +7,7 @@
 
   <application
     android:name="net.squanchy.SquanchyApplication"
-    android:theme="@style/Theme.Squanchy.Home"
+    android:theme="@style/Theme.Squanchy"
     android:allowBackup="true"
     android:fullBackupContent="false"
     android:icon="@mipmap/ic_launcher"
