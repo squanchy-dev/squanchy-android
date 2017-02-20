@@ -42,4 +42,22 @@
     <item name="fontPath">?defaultMediumTypeface</item>
   </style>
 
+  <style name="Schedule.Card.Timestamp" parent="None">
+    <item name="android:gravity">start|center_vertical</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.Card.Timestamp</item>
+  </style>
+
+  <style name="Schedule.Card.Title" parent="None">
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.Card.Title</item>
+  </style>
+
+  <style name="Schedule.Card.Speaker.Photo" parent="None" />
+
+  <style name="Schedule.Card.Speaker.Name" parent="None">
+    <item name="android:gravity">start|center_vertical</item>
+    <item name="android:lineSpacingExtra">@dimen/card_speaker_line_spacing_extra</item>
+    <item name="android:lineSpacingMultiplier">1</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.Card.Speaker</item>
+  </style>
+
 </resources>
