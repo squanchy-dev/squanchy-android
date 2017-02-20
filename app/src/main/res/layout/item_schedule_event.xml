@@ -3,7 +3,8 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:padding="@dimen/card_padding">
+  android:padding="@dimen/card_padding"
+  tools:layout_margin="16dp">
 
   <!-- TODO extract styles -->
   <RelativeLayout
@@ -19,6 +20,7 @@
       android:layout_toStartOf="@+id/experience_level_icon"
       android:layout_alignTop="@+id/experience_level_icon"
       android:layout_alignBottom="@+id/experience_level_icon"
+      android:gravity="start|center_vertical"
       android:textAppearance="@style/TextAppearance.Squanchy.Card.Timestamp"
       tools:text="12:00" />
 
@@ -37,6 +39,26 @@
       android:layout_marginTop="@dimen/card_title_margin_top"
       android:textAppearance="@style/TextAppearance.Squanchy.Card.Title"
       tools:text="Designing for an Android future" />
+
+    <net.squanchy.support.widget.CircleImageView
+      android:id="@+id/speaker_photo"
+      android:layout_width="@dimen/card_speaker_photo"
+      android:layout_height="@dimen/card_speaker_photo"
+      android:layout_below="@+id/title"
+      android:layout_marginTop="@dimen/card_speaker_margin_top"
+      android:layout_marginEnd="@dimen/card_speaker_margin_end"
+      android:src="?colorAccent" />
+
+    <TextView
+      android:id="@+id/speaker_name"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignTop="@+id/speaker_photo"
+      android:layout_alignBottom="@+id/speaker_photo"
+      android:layout_toEndOf="@+id/speaker_photo"
+      android:gravity="start|center_vertical"
+      android:textAppearance="@style/TextAppearance.Squanchy.Card.Speaker"
+      tools:text="Qi Qu" />
 
   </RelativeLayout>
 

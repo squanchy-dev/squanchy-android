@@ -36,4 +36,10 @@
     <item name="fontPath">?titleTypeface</item>
   </style>
 
+  <style name="TextAppearance.Squanchy.Card.Speaker" parent="None">
+    <item name="android:textColor">?android:textColorSecondary</item>
+    <item name="android:textSize">@dimen/card_speaker</item>
+    <item name="fontPath">?defaultMediumTypeface</item>
+  </style>
+
 </resources>
