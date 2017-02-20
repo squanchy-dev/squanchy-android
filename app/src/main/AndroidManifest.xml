@@ -20,10 +20,7 @@
       android:theme="@style/Theme.Squanchy.Schedule"
       android:label="@string/app_name">
 
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.LAUNCHER" />
-      </intent-filter>
+
     </activity>
 
     <activity
@@ -38,6 +35,13 @@
 
     <activity android:name="net.squanchy.speaker.SpeakerListActivity"
         android:label="@string/activity_speaker_list"/>
+    
+    <activity android:name=".navigation.BottomNavigationActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
 
     <receiver android:name="net.squanchy.notification.NotificationAlarmReceiver" />
 
