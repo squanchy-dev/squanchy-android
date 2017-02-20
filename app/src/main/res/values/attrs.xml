@@ -6,13 +6,24 @@
   <attr name="defaultMediumTypeface" format="string" />
   <attr name="defaultBoldTypeface" format="string" />
   <attr name="defaultLightTypeface" format="string" />
-  
+
+  <declare-styleable name="CardLayout">
+    <attr name="cardCornerRadius" format="dimension" />
+    <attr name="cardInsetHorizontal" format="dimension" />
+    <attr name="cardInsetTop" format="dimension" />
+    <attr name="cardInsetBottom" format="dimension" />
+  </declare-styleable>
+
   <attr name="cardViewDefaultStyle" format="reference" />
 
   <style name="Widget.Squanchy.CardLayout" parent="None">
     <item name="android:background">@drawable/card_background</item>
     <item name="android:foreground">@drawable/card_touch_feedback</item>
     <item name="android:elevation">@dimen/card_elevation</item>
+    <item name="cardCornerRadius">@dimen/card_corner_radius</item>
+    <item name="cardInsetHorizontal">@dimen/card_inset_horizontal</item>
+    <item name="cardInsetTop">@dimen/card_inset_top</item>
+    <item name="cardInsetBottom">@dimen/card_inset_bottom</item>
   </style>
 
 </resources>
