@@ -24,4 +24,6 @@
   <dimen name="toolbar_elevation">6dp</dimen>
   <dimen name="speaker_name_padding">16dp</dimen>
 
+  <dimen name="card_corner_radius">4dp</dimen>
+
 </resources>
