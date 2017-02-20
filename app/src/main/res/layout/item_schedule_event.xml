@@ -3,7 +3,10 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:padding="@dimen/card_padding"
+  android:paddingLeft="@dimen/card_padding_horizontal"
+  android:paddingTop="@dimen/card_padding_top"
+  android:paddingRight="@dimen/card_padding_horizontal"
+  android:paddingBottom="@dimen/card_padding_bottom"
   tools:layout_margin="16dp">
 
   <RelativeLayout
@@ -37,25 +40,29 @@
       android:layout_marginTop="@dimen/card_title_margin_top"
       tools:text="Designing for an Android future" />
 
-    <net.squanchy.support.widget.CircleImageView
-      android:id="@+id/speaker_photo"
-      style="@style/Schedule.Card.Speaker.Photo"
-      android:layout_width="@dimen/card_speaker_photo"
-      android:layout_height="@dimen/card_speaker_photo"
-      android:layout_below="@+id/title"
-      android:layout_marginTop="@dimen/card_speaker_margin_top"
-      android:layout_marginEnd="@dimen/card_speaker_margin_end"
-      tools:src="?colorAccent" />
-
-    <TextView
-      android:id="@+id/speaker_name"
-      style="@style/Schedule.Card.Speaker.Name"
+    <net.squanchy.schedule.view.SpeakerView
+      android:id="@+id/speaker_container"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_alignTop="@+id/speaker_photo"
-      android:layout_alignBottom="@+id/speaker_photo"
-      android:layout_toEndOf="@+id/speaker_photo"
-      tools:text="Qi Qu" />
+      android:layout_height="@dimen/card_speaker_container_height"
+      android:gravity="fill_horizontal|center_vertical"
+      android:layout_below="@+id/title">
+
+      <net.squanchy.support.widget.CircleImageView
+        android:id="@+id/speaker_photo"
+        style="@style/Schedule.Card.Speaker.Photo"
+        android:layout_width="@dimen/card_speaker_photo"
+        android:layout_height="@dimen/card_speaker_photo"
+        android:layout_marginEnd="@dimen/card_speaker_margin_end"
+        tools:src="?colorAccent" />
+
+      <TextView
+        android:id="@+id/speaker_name"
+        style="@style/Schedule.Card.Speaker.Name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Qi Qu" />
+
+    </net.squanchy.schedule.view.SpeakerView>
 
   </RelativeLayout>
 
