@@ -24,4 +24,16 @@
 
   <style name="Squanchy.Tabs.SpeakerList" parent="None" />
 
+  <style name="TextAppearance.Squanchy.Card.Timestamp" parent="None">
+    <item name="android:textColor">?colorPrimary</item>
+    <item name="android:textSize">@dimen/card_timestamp</item>
+    <item name="fontPath">?defaultBoldTypeface</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.Card.Title" parent="None">
+    <item name="android:textColor">?android:textColorPrimary</item>
+    <item name="android:textSize">@dimen/card_timestamp</item>
+    <item name="fontPath">?titleTypeface</item>
+  </style>
+
 </resources>

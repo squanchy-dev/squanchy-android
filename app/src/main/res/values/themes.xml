@@ -19,6 +19,7 @@
     <item name="defaultBoldTypeface">@string/default_typeface_bold</item>
     <item name="defaultLightTypeface">@string/default_typeface_light</item>
     <item name="titleTypeface">@string/title_typeface</item>
+    <item name="cardViewDefaultStyle">@style/Widget.Squanchy.CardLayout</item>
   </style>
 
   <style name="Theme.Squanchy.Schedule" parent="Theme.Squanchy" />

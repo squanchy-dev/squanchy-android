@@ -6,5 +6,12 @@
   <attr name="defaultMediumTypeface" format="string" />
   <attr name="defaultBoldTypeface" format="string" />
   <attr name="defaultLightTypeface" format="string" />
+  
+  <attr name="cardViewDefaultStyle" format="reference" />
+
+  <style name="Widget.Squanchy.CardLayout" parent="None">
+    <item name="android:background">@drawable/card_background</item>
+    <item name="android:foreground">@drawable/card_touch_feedback</item>
+  </style>
 
 </resources>
