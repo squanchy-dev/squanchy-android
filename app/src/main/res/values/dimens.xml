@@ -37,7 +37,7 @@
   <dimen name="card_timestamp">14sp</dimen>
   <dimen name="card_experience_icon">24dp</dimen>
   <dimen name="card_title">16sp</dimen>
-  <dimen name="card_title_margin_top">4dp</dimen>
+  <dimen name="card_title_margin_top">0dp</dimen>
   <dimen name="card_speaker_container_height">36dp</dimen>
   <dimen name="card_speaker">14sp</dimen>
   <dimen name="card_speaker_line_spacing_extra">4sp</dimen>
