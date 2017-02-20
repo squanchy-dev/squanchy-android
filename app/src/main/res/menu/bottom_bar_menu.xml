@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+  <item
+    android:id="@+id/action_schedule"
+    android:enabled="true"
+    android:icon="@drawable/ic_schedule_default"
+    android:title="@string/activity_schedule"
+    app:showAsAction="ifRoom" />
+  <item
+    android:id="@+id/action_favourite"
+    android:enabled="true"
+    android:icon="@drawable/ic_favourites_default"
+    android:title="@string/bottom_bar_favourite_label"
+    app:showAsAction="ifRoom" />
+  <item
+    android:id="@+id/action_tweet"
+    android:enabled="true"
+    android:icon="@drawable/ic_twitter_default"
+    android:title="@string/bottom_bar_twitter_label"
+    app:showAsAction="ifRoom" />
+  <item
+    android:id="@+id/action_venue"
+    android:enabled="true"
+    android:icon="@drawable/ic_venue_default"
+    android:title="@string/bottom_bar_venue_label"
+    app:showAsAction="ifRoom" />
+</menu>
