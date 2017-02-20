@@ -12,6 +12,7 @@
   <style name="Widget.Squanchy.CardLayout" parent="None">
     <item name="android:background">@drawable/card_background</item>
     <item name="android:foreground">@drawable/card_touch_feedback</item>
+    <item name="android:elevation">@dimen/card_elevation</item>
   </style>
 
 </resources>

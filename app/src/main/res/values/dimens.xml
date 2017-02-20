@@ -25,6 +25,9 @@
   <dimen name="speaker_name_padding">16dp</dimen>
 
   <dimen name="card_corner_radius">4dp</dimen>
+  <dimen name="card_horizontal_margin">16dp</dimen>
+  <dimen name="card_vertical_margin">16dp</dimen>
+  <dimen name="card_elevation">6dp</dimen>
   <dimen name="card_padding">16dp</dimen>
   <dimen name="card_timestamp">14sp</dimen>
   <dimen name="card_experience_icon">24dp</dimen>
