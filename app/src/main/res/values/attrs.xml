@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <attr name="titleTypeface" format="string" />
+  <attr name="defaultRegularTypeface" format="string" />
+  <attr name="defaultMediumTypeface" format="string" />
+  <attr name="defaultBoldTypeface" format="string" />
+  <attr name="defaultLightTypeface" format="string" />
+
+</resources>

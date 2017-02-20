@@ -9,13 +9,14 @@
     <item name="android:elevation">@dimen/toolbar_elevation</item>
   </style>
 
-  <style name="Squanchy.Toolbar" parent="Widget.AppCompat.Light.ActionBar" />
+  <style name="Squanchy.Toolbar" parent="Widget.AppCompat.Light.ActionBar">
+    <item name="android:titleTextStyle">@style/Squanchy.Toolbar.TextAppearance</item>
+    <item name="android:subtitleTextStyle">@style/Squanchy.Toolbar.TextAppearance</item>
+  </style>
 
-  <style name="Squanchy.Toolbar.SocialFeed" />
-
-  <style name="Squanchy.Toolbar.Schedule" />
-
-  <style name="Squanchy.Toolbar.SpeakerList" />
+  <style name="Squanchy.Toolbar.TextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
+    <item name="fontPath">?titleTypeface</item>
+  </style>
 
   <style name="Squanchy.Tabs" parent="Widget.Design.TabLayout" />
 

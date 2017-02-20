@@ -8,7 +8,8 @@ import com.google.auto.value.AutoValue;
 import java.util.List;
 
 import net.squanchy.R;
-import net.squanchy.speaker.Speaker;
+import net.squanchy.eventdetails.domain.view.ExperienceLevel;
+import net.squanchy.speaker.domain.view.Speaker;
 import net.squanchy.support.view.Visibility;
 
 @AutoValue
@@ -19,7 +20,7 @@ public abstract class Event {
             int dayId,
             String title,
             String place,
-            int experienceLevel,
+            ExperienceLevel experienceLevel,
             List<Speaker> speakers
     ) {
         return new AutoValue_Event.Builder()
@@ -31,7 +32,7 @@ public abstract class Event {
                 .speakers(speakers)
                 .speakersVisibility(speakers.isEmpty() ? View.GONE : View.VISIBLE)
                 .trackVisibility(View.GONE) // todo add track
-                .experienceLevelIcon(experienceLevelIconFor(experienceLevel))
+                .experienceLevel(experienceLevel)
                 .build();
     }
 
@@ -74,12 +75,11 @@ public abstract class Event {
     @Visibility
     public abstract int speakersVisibility();
 
-    @DrawableRes
-    public abstract int experienceLevelIcon();
+    public abstract ExperienceLevel experienceLevel();
 
     public abstract int day();
 
-    public String speakerNames() {
+    public String speakersNames() {
         StringBuilder speakersBuilder = new StringBuilder();
         for (Speaker speaker : speakers()) {
             if (speakersBuilder.length() > 0) {
@@ -111,7 +111,7 @@ public abstract class Event {
 
         public abstract Builder speakersVisibility(@Visibility int speakersVisibility);
 
-        public abstract Builder experienceLevelIcon(@DrawableRes int experienceLevelIcon);
+        public abstract Builder experienceLevel(ExperienceLevel experienceLevel);
 
         public abstract Event build();
     }

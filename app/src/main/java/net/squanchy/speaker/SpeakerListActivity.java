@@ -10,6 +10,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import net.squanchy.R;
+import net.squanchy.speaker.domain.view.Speaker;
 import net.squanchy.speaker.view.SpeakersView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;

@@ -108,6 +108,7 @@ dependencies {
     compile libraries.app.firebase
     compile libraries.app.firebaseDb
     compile libraries.app.firebaseMessaging
+    compile libraries.app.firebaseAuth
 
     compile libraries.app.rx
     compile libraries.app.rxAndroid
@@ -120,11 +121,15 @@ dependencies {
 
     compile libraries.app.viewPagerAdapter
 
+    compile libraries.app.calligraphy
+
     apt libraries.app.autoValue
     provided libraries.app.autoValue
 
     compile libraries.app.dagger
     apt libraries.app.daggerCompiler
+
+    compile libraries.app.optional
 
     retrolambdaConfig libraries.app.retrolambda
 }

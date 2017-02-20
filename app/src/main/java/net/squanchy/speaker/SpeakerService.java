@@ -4,7 +4,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import net.squanchy.service.firebase.FirebaseSquanchyRepository;
+import net.squanchy.service.firebase.FirebaseDbService;
+import net.squanchy.speaker.domain.view.Speaker;
 
 import io.reactivex.Observable;
 
@@ -12,15 +13,15 @@ import static net.squanchy.support.lang.Lists.map;
 
 class SpeakerService {
 
-    private final FirebaseSquanchyRepository repository;
+    private final FirebaseDbService dbService;
 
-    SpeakerService(FirebaseSquanchyRepository repository) {
-        this.repository = repository;
+    SpeakerService(FirebaseDbService dbService) {
+        this.dbService = dbService;
     }
 
     public Observable<List<Speaker>> speakers() {
 
-        return repository.speakers()
+        return dbService.speakers()
                 .map(firebaseSpeaker -> firebaseSpeaker.speakers)
                 .map(list -> map(list, Speaker::create))
                 .doOnNext(list -> Collections.sort(list, speakerNameComparator));

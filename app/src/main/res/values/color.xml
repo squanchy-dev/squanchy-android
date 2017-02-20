@@ -21,10 +21,6 @@
 
   <color name="item_selection">#4f3b9a</color>
 
-  <color name="accent">#6aa611</color>
-  <color name="primary">#06335b</color>
-  <color name="primary_dark">#06335b</color>
-
   <color name="event_primary">#06335b</color>
   <color name="event">#4077aa</color>
   <color name="event_date">#0b73d4</color>

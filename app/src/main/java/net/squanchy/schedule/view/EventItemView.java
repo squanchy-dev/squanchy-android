@@ -4,10 +4,10 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.squanchy.R;
+import net.squanchy.eventdetails.widget.ExperienceLevelIconView;
 import net.squanchy.schedule.domain.view.Event;
 
 public class EventItemView extends FrameLayout {
@@ -18,7 +18,7 @@ public class EventItemView extends FrameLayout {
     private View trackView;
     private TextView speakersView;
     private View speakersContainer;
-    private ImageView experienceIconView;
+    private ExperienceLevelIconView experienceLevelIconView;
 
     public EventItemView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -38,7 +38,7 @@ public class EventItemView extends FrameLayout {
         trackView = findViewById(R.id.txtTrack);
         speakersView = (TextView) findViewById(R.id.txtSpeakers);
         speakersContainer = findViewById(R.id.layout_speakers);
-        experienceIconView = (ImageView) findViewById(R.id.imgExperience);
+        experienceLevelIconView = (ExperienceLevelIconView) findViewById(R.id.experience_level_icon);
     }
 
     void updateWith(Event event) {
@@ -49,9 +49,9 @@ public class EventItemView extends FrameLayout {
 
         trackView.setVisibility(event.trackVisibility());
 
-        speakersView.setText(event.speakerNames());
+        speakersView.setText(event.speakersNames());
         speakersContainer.setVisibility(event.speakersVisibility());
 
-        experienceIconView.setImageResource(event.experienceLevelIcon());
+        experienceLevelIconView.setExperienceLevel(event.experienceLevel());
     }
 }

@@ -8,11 +8,12 @@ import android.widget.Button;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.squanchy.eventdetails.domain.view.ExperienceLevel;
 import net.squanchy.notification.NotificationCreator;
 import net.squanchy.notification.Notifier;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.service.firebase.model.FirebaseSpeaker;
-import net.squanchy.speaker.Speaker;
+import net.squanchy.speaker.domain.view.Speaker;
 
 @SuppressWarnings("checkstyle:magicnumber")
 public class DebugActivity extends Activity {
@@ -58,7 +59,7 @@ public class DebugActivity extends Activity {
                 1,
                 "A very interesting talk",
                 "That room over there",
-                3,
+                ExperienceLevel.ADVANCED,
                 createTalkSpeakers()
         );
     }

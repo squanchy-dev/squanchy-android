@@ -1,6 +1,7 @@
 package net.squanchy.eventdetails;
 
-import net.squanchy.service.firebase.FirebaseSquanchyRepository;
+import net.squanchy.service.firebase.FirebaseDbService;
+import net.squanchy.service.firebase.injection.DbServiceType;
 
 import dagger.Module;
 import dagger.Provides;
@@ -9,7 +10,7 @@ import dagger.Provides;
 class EventDetailsModule {
     
     @Provides
-    EventDetailsService scheduleService(FirebaseSquanchyRepository repository) {
-        return new EventDetailsService(repository);
+    EventDetailsService scheduleService(@DbServiceType(DbServiceType.Type.AUTHENTICATED) FirebaseDbService dbService) {
+        return new EventDetailsService(dbService);
     }
 }

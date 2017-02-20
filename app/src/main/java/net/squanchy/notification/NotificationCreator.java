@@ -129,7 +129,7 @@ public class NotificationCreator {
     }
 
     private String getDisplayedSpeakers(Event event) {
-        return context.getString(R.string.event_notification_starting_by, event.speakerNames()) + "\n";
+        return context.getString(R.string.event_notification_starting_by, event.speakersNames()) + "\n";
     }
 
     private NotificationCompat.InboxStyle createInboxStyleRichNotification(NotificationCompat.Builder notificationBuilder, List<Event> events) {

@@ -1,51 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <style name="Theme.Squanchy" parent="Theme.AppCompat.NoActionBar">
-    <item name="android:windowBackground">@color/white</item>
-    <item name="colorAccent">@color/grey_100</item>
-    <item name="colorControlNormal">@color/white_200</item>
-  </style>
-
-  <style name="Theme.Squanchy.Home" parent="Theme.Squanchy">
-    <item name="colorPrimaryDark">@color/primary_dark</item>
-    <item name="colorPrimary">@color/primary</item>
-  </style>
-
-  <style name="Theme.Squanchy.SocialFeed" parent="Theme.AppCompat.Light.NoActionBar">
-    <item name="colorControlNormal">@color/white_200</item>
-    <item name="colorPrimaryDark">@color/primary_dark</item>
-    <item name="colorPrimary">@color/primary</item>
-  </style>
-
-  <style name="Theme.Squanchy.Speaker" parent="Theme.Squanchy">
-    <item name="colorPrimaryDark">@color/speaker_primary</item>
-    <item name="colorPrimary">@color/speaker_primary</item>
-    <item name="colorControlNormal">@color/white</item>
-  </style>
-
-  <style name="Theme.Squanchy.Event" parent="Theme.Squanchy">
-    <item name="colorPrimaryDark">@color/event_primary</item>
-    <item name="colorPrimary">@color/event_primary</item>
-    <item name="colorControlNormal">@color/white</item>
-  </style>
-
-  <style name="Theme.Squanchy.About" parent="Theme.Squanchy">
-    <item name="colorPrimaryDark">@color/primary_dark</item>
-    <item name="colorPrimary">@color/primary</item>
-    <item name="colorControlNormal">@color/white</item>
-  </style>
-
-  <style name="Theme.SquanchyNew" parent="Theme.AppCompat.Light.NoActionBar">
+  <style name="Theme.Squanchy" parent="Theme.AppCompat.Light.NoActionBar">
     <item name="colorPrimary">@color/primary</item>
     <item name="colorPrimaryDark">@color/primary_dark</item>
     <item name="colorAccent">@color/accent</item>
+    <item name="colorControlNormal">@color/white_200</item>
+    <item name="android:statusBarColor">@color/status_bar</item>
+    <item name="android:textColorPrimary">@color/primary_text</item>
+    <item name="android:textColorPrimaryInverse">@color/text_inverse</item>
+    <item name="android:textColorSecondary">@color/secondary_text</item>
+    <item name="android:textColorTertiary">@color/tertiary_text</item>
+    <item name="android:textColorHint">@color/hint_text</item>
+    <item name="android:windowBackground">@color/white</item>
+    <item name="android:actionBarStyle">@style/Squanchy.Toolbar</item>
+    <item name="defaultRegularTypeface">@string/default_typeface_regular</item>
+    <item name="defaultMediumTypeface">@string/default_typeface_medium</item>
+    <item name="defaultBoldTypeface">@string/default_typeface_bold</item>
+    <item name="defaultLightTypeface">@string/default_typeface_light</item>
+    <item name="titleTypeface">@string/title_typeface</item>
   </style>
 
-  <style name="Theme.Squanchy.Schedule" parent="Theme.SquanchyNew" />
+  <style name="Theme.Squanchy.Schedule" parent="Theme.Squanchy" />
 
-  <style name="Theme.Squanchy.EventDetails" parent="Theme.SquanchyNew">
-    <item name="android:statusBarColor">#0000</item>
-  </style>
+  <style name="Theme.Squanchy.EventDetails" parent="Theme.Squanchy" />
+
+  <style name="Theme.Squanchy.SocialFeed" parent="Theme.Squanchy" />
 
 </resources>
