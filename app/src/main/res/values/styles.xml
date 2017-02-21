@@ -2,8 +2,6 @@
 
   <style name="None" />
 
-  <style name="Squanchy" />
-
   <style name="Squanchy.Appbar" parent="None">
     <item name="android:background">?attr/colorPrimary</item>
     <item name="android:elevation">@dimen/toolbar_elevation</item>
@@ -27,26 +25,13 @@
   </style>
 
   <style name="TextAppearance.Squanchy.Tab" parent="TextAppearance.AppCompat.Button">
-    <item name="android:textSize">@dimen/design_tab_text_size</item>
+    <item name="android:textSize">@dimen/tab_text</item>
     <item name="android:textColor">?android:textColorPrimaryInverse</item>
     <item name="textAllCaps">false</item>
     <item name="fontPath">?titleTypeface</item>
   </style>
 
   <style name="Squanchy.Tabs.SpeakerList" parent="None" />
-
-  <style name="TextAppearance.Squanchy.Card.Timestamp" parent="None">
-    <item name="android:textColor">?colorPrimary</item>
-    <item name="android:textSize">@dimen/card_timestamp</item>
-    <item name="fontPath">?defaultBoldTypeface</item>
-  </style>
-
-  <style name="TextAppearance.Squanchy.Card.Title" parent="None">
-    <item name="android:textColor">?android:textColorPrimary</item>
-    <item name="android:textSize">@dimen/card_timestamp</item>
-    <item name="fontPath">?titleTypeface</item>
-  </style>
-
   <style name="TextAppearance.Squanchy.Card.Speaker" parent="None">
     <item name="android:textColor">?android:textColorSecondary</item>
     <item name="android:textSize">@dimen/card_speaker</item>
@@ -58,8 +43,20 @@
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.Card.Timestamp</item>
   </style>
 
+  <style name="TextAppearance.Squanchy.Card.Timestamp" parent="None">
+    <item name="android:textColor">?colorPrimary</item>
+    <item name="android:textSize">@dimen/card_timestamp</item>
+    <item name="fontPath">?defaultBoldTypeface</item>
+  </style>
+
   <style name="Schedule.Card.Title" parent="None">
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.Card.Title</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.Card.Title" parent="None">
+    <item name="android:textColor">?android:textColorPrimary</item>
+    <item name="android:textSize">@dimen/card_title</item>
+    <item name="fontPath">?titleTypeface</item>
   </style>
 
   <style name="Schedule.Card.Speaker.Photo" parent="None" />
