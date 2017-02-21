@@ -33,4 +33,6 @@
 
   <color name="placeholder_text">#a3a3a3</color>
 
+  <color name="card_background">@color/white</color>
+
 </resources>

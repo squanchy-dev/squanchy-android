@@ -12,13 +12,14 @@
     <item name="android:textColorSecondary">@color/secondary_text</item>
     <item name="android:textColorTertiary">@color/tertiary_text</item>
     <item name="android:textColorHint">@color/hint_text</item>
-    <item name="android:windowBackground">@color/white</item>
+    <item name="android:windowBackground">@color/window_background</item>
     <item name="android:actionBarStyle">@style/Squanchy.Toolbar</item>
     <item name="defaultRegularTypeface">@string/default_typeface_regular</item>
     <item name="defaultMediumTypeface">@string/default_typeface_medium</item>
     <item name="defaultBoldTypeface">@string/default_typeface_bold</item>
     <item name="defaultLightTypeface">@string/default_typeface_light</item>
     <item name="titleTypeface">@string/title_typeface</item>
+    <item name="cardViewDefaultStyle">@style/Widget.Squanchy.CardLayout</item>
   </style>
 
   <style name="Theme.Squanchy.Schedule" parent="Theme.Squanchy" />

@@ -24,4 +24,25 @@
   <dimen name="toolbar_elevation">6dp</dimen>
   <dimen name="speaker_name_padding">16dp</dimen>
 
+  <dimen name="card_corner_radius">4dp</dimen>
+  <dimen name="card_inset_horizontal">4dp</dimen>
+  <dimen name="card_inset_top">4dp</dimen>
+  <dimen name="card_inset_bottom">4dp</dimen>
+  <dimen name="card_horizontal_margin">16dp</dimen>
+  <dimen name="card_vertical_margin">16dp</dimen>
+  <dimen name="card_elevation">6dp</dimen>
+  <dimen name="card_padding_horizontal">16dp</dimen>
+  <dimen name="card_padding_top">8dp</dimen>
+  <dimen name="card_padding_bottom">4dp</dimen>
+  <dimen name="card_timestamp">14sp</dimen>
+  <dimen name="card_experience_icon">24dp</dimen>
+  <dimen name="card_title">16sp</dimen>
+  <dimen name="card_title_margin_top">0dp</dimen>
+  <dimen name="card_speaker_container_height">36dp</dimen>
+  <dimen name="card_speaker">14sp</dimen>
+  <dimen name="card_speaker_line_spacing_extra">4sp</dimen>
+  <dimen name="card_speaker_photo">24dp</dimen>
+  <dimen name="card_speaker_margin_top">8dp</dimen>
+  <dimen name="card_speaker_margin_end">8dp</dimen>
+
 </resources>
