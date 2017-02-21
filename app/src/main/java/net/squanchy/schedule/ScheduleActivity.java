@@ -43,7 +43,7 @@ public class ScheduleActivity extends NavigationDrawerActivity implements Schedu
 
     private void setupToolbar(Toolbar toolbar) {
         setSupportActionBar(toolbar);
-        toolbar.setTitle(R.string.activity_schedule);
+        getSupportActionBar().setTitle(R.string.activity_schedule);
     }
 
     @Override
