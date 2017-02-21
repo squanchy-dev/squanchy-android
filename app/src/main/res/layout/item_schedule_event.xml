@@ -1,9 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <net.squanchy.schedule.view.EventItemView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
-  android:layout_height="wrap_content">
+  android:layout_height="wrap_content"
+  android:paddingLeft="@dimen/card_padding_horizontal"
+  android:paddingTop="@dimen/card_padding_top"
+  android:paddingRight="@dimen/card_padding_horizontal"
+  android:paddingBottom="@dimen/card_padding_bottom"
+  tools:layout_margin="16dp">
 
-  <!-- TODO replace with more efficient layout -->
-  <include layout="@layout/item_event" />
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+      android:id="@+id/timestamp"
+      style="@style/Schedule.Card.Timestamp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentStart="true"
+      android:layout_toStartOf="@+id/experience_level_icon"
+      android:layout_alignTop="@+id/experience_level_icon"
+      android:layout_alignBottom="@+id/experience_level_icon"
+      tools:text="12:00" />
+
+    <net.squanchy.eventdetails.widget.ExperienceLevelIconView
+      android:id="@+id/experience_level_icon"
+      android:layout_width="@dimen/card_experience_icon"
+      android:layout_height="@dimen/card_experience_icon"
+      android:layout_alignParentEnd="true"
+      android:layout_alignParentTop="true" />
+
+    <TextView
+      android:id="@+id/title"
+      style="@style/Schedule.Card.Title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/timestamp"
+      android:layout_marginTop="@dimen/card_title_margin_top"
+      tools:text="Designing for an Android future" />
+
+    <net.squanchy.schedule.view.SpeakerView
+      android:id="@+id/speaker_container"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/card_speaker_container_height"
+      android:gravity="fill_horizontal|center_vertical"
+      android:layout_below="@+id/title">
+
+      <net.squanchy.support.widget.CircleImageView
+        android:id="@+id/speaker_photo"
+        style="@style/Schedule.Card.Speaker.Photo"
+        android:layout_width="@dimen/card_speaker_photo"
+        android:layout_height="@dimen/card_speaker_photo"
+        android:layout_marginEnd="@dimen/card_speaker_margin_end"
+        tools:src="?colorAccent" />
+
+      <TextView
+        android:id="@+id/speaker_name"
+        style="@style/Schedule.Card.Speaker.Name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Qi Qu" />
+
+    </net.squanchy.schedule.view.SpeakerView>
+
+  </RelativeLayout>
 
 </net.squanchy.schedule.view.EventItemView>

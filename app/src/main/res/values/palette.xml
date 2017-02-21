@@ -17,6 +17,7 @@
   <color name="primary_azure">#1da1f2</color>
 
   <color name="status_bar">#11000000</color>
+  <color name="window_background">#f1f1f1</color>
 
   <color name="button_inverse">#fafdff</color>
   <color name="button_inverse_text_blue">#68929e</color>

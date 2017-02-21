@@ -2,26 +2,22 @@ package net.squanchy.schedule.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import net.squanchy.R;
 import net.squanchy.eventdetails.widget.ExperienceLevelIconView;
 import net.squanchy.schedule.domain.view.Event;
+import net.squanchy.support.widget.CardLayout;
 
-public class EventItemView extends FrameLayout {
+public class EventItemView extends CardLayout {
 
     private TextView titleView;
-    private TextView placeView;
-    private View placeContainer;
-    private View trackView;
-    private TextView speakersView;
-    private View speakersContainer;
+    private TextView timestampView;
     private ExperienceLevelIconView experienceLevelIconView;
+    private SpeakerView speakerView;
 
     public EventItemView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs, R.attr.cardViewDefaultStyle);
     }
 
     public EventItemView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -32,26 +28,18 @@ public class EventItemView extends FrameLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        titleView = (TextView) findViewById(R.id.txtTitle);
-        placeView = (TextView) findViewById(R.id.txtPlace);
-        placeContainer = findViewById(R.id.layout_place);
-        trackView = findViewById(R.id.txtTrack);
-        speakersView = (TextView) findViewById(R.id.txtSpeakers);
-        speakersContainer = findViewById(R.id.layout_speakers);
+        timestampView = (TextView) findViewById(R.id.timestamp);
+        titleView = (TextView) findViewById(R.id.title);
         experienceLevelIconView = (ExperienceLevelIconView) findViewById(R.id.experience_level_icon);
+        speakerView = (SpeakerView) findViewById(R.id.speaker_container);
     }
 
     void updateWith(Event event) {
+        timestampView.setText("12:00");         // TODO put start time 
         titleView.setText(event.title());
-
-        placeView.setText(event.place());
-        placeContainer.setVisibility(event.placeVisibility());
-
-        trackView.setVisibility(event.trackVisibility());
-
-        speakersView.setText(event.speakersNames());
-        speakersContainer.setVisibility(event.speakersVisibility());
-
         experienceLevelIconView.setExperienceLevel(event.experienceLevel());
+
+        speakerView.setVisibility(event.speakersVisibility());
+        speakerView.updateWith(event.speakersNames());
     }
 }
