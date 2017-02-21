@@ -36,18 +36,25 @@
       android:label="@string/activity_social_feed"
       android:screenOrientation="portrait" />
 
-    <activity android:name="net.squanchy.speaker.SpeakerListActivity"
-        android:label="@string/activity_speaker_list"/>
+    <activity
+      android:name="net.squanchy.speaker.SpeakerListActivity"
+      android:label="@string/activity_speaker_list" />
 
     <receiver android:name="net.squanchy.notification.NotificationAlarmReceiver" />
 
-    <service android:name="net.squanchy.push.PushMessagingService">
+    <!-- Firebase Cloud Messaging has no permissions ¯\_(ツ)_/¯ -->
+    <service
+      android:name="net.squanchy.push.PushMessagingService"
+      tools:ignore="ExportedService">
       <intent-filter>
         <action android:name="com.google.firebase.MESSAGING_EVENT" />
       </intent-filter>
     </service>
 
-    <service android:name="net.squanchy.push.PushInstanceIDService">
+    <!-- Firebase Cloud Messaging has no permissions ¯\_(ツ)_/¯ -->
+    <service
+      android:name="net.squanchy.push.PushInstanceIDService"
+      tools:ignore="ExportedService">
       <intent-filter>
         <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
       </intent-filter>
@@ -62,7 +69,7 @@
     <meta-data
       android:name="io.fabric.ApiKey"
       android:value="${fabricApiKey}" />
-    
+
   </application>
 
 </manifest>
