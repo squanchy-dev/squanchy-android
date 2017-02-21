@@ -51,6 +51,9 @@ public class CardLayout extends FrameLayout {
         if (!a.hasValue(R.styleable.CardLayout_cardInsetTop)) {
             throw new IllegalStateException("Missing the cardInsetTop attribute in the style");
         }
+        if (!a.hasValue(R.styleable.CardLayout_cardInsetBottom)) {
+            throw new IllegalStateException("Missing the cardInsetBottom attribute in the style");
+        }
         if (!a.hasValue(R.styleable.CardLayout_cardCornerRadius)) {
             throw new IllegalStateException("Missing the cardCornerRadius attribute in the style");
         }
