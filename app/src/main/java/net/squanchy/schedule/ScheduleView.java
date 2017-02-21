@@ -6,7 +6,9 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import net.squanchy.R;
 import net.squanchy.schedule.domain.view.Schedule;
@@ -16,6 +18,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
 public class ScheduleView extends CoordinatorLayout {
+
+    public static ScheduleView inflate(Context context, ViewGroup parent) {
+        return (ScheduleView) LayoutInflater.from(context).inflate(R.layout.schedule_view, parent, false);
+    }
 
     private ScheduleViewPagerAdapter viewPagerAdapter;
     private View progressBar;
