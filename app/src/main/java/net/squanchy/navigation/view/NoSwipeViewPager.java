@@ -1,4 +1,4 @@
-package net.squanchy.navigation;
+package net.squanchy.navigation.view;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;
