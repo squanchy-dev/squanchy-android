@@ -38,7 +38,6 @@
     android:id="@+id/place_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:drawableStart="@drawable/ic_place"
     android:padding="8dp"
     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
     tools:text="Big room, 1st floor" />
@@ -47,7 +46,6 @@
     android:id="@+id/speakers_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:drawableStart="@drawable/ic_speakers"
     android:padding="8dp"
     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
     tools:text="Otto Von Bismark, Ruby Rubacuori, Ivan The Terrible" />
