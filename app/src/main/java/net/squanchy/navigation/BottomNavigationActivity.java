@@ -23,6 +23,8 @@ public class BottomNavigationActivity extends TypefaceStyleableActivity {
         BottomNavigationPagerAdapter adapter = new BottomNavigationPagerAdapter(this);
         viewPager.setAdapter(adapter);
 
+        BottomNavigationHelper.disableShiftMode(bottomNavigationView);
+
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 item -> {
                     switch (item.getItemId()) {
