@@ -9,19 +9,12 @@ import dagger.Provides;
 @Module
 class ScheduleModule {
 
-    private final ScheduleActivity activity;
+    ScheduleModule() {
 
-    ScheduleModule(ScheduleActivity activity) {
-        this.activity = activity;
     }
 
     @Provides
     ScheduleService scheduleService(@DbServiceType(DbServiceType.Type.AUTHENTICATED) FirebaseDbService dbService) {
         return new ScheduleService(dbService);
-    }
-
-    @Provides
-    ScheduleNavigator scheduleNavigator() {
-        return new ScheduleNavigator(activity);
     }
 }

@@ -1,17 +1,19 @@
 package net.squanchy.schedule;
 
+import android.content.Context;
+
 import net.squanchy.injection.ApplicationInjector;
 
-final class ScheduleInjector {
+public final class ScheduleInjector {
 
     private ScheduleInjector() {
         // no instances
     }
 
-    public static ScheduleComponent obtain(ScheduleActivity activity) {
+    public static ScheduleComponent obtain(Context context) {
         return DaggerScheduleComponent.builder()
-                .applicationComponent(ApplicationInjector.obtain(activity))
-                .scheduleModule(new ScheduleModule(activity))
+                .applicationComponent(ApplicationInjector.obtain(context))
+                .scheduleModule(new ScheduleModule())
                 .build();
     }
 }

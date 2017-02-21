@@ -24,11 +24,11 @@ public class ScheduleViewPagerAdapter extends ViewPagerAdapter<SchedulePageView>
     @Nullable
     private OnEventClickedListener listener;
 
-    ScheduleViewPagerAdapter(Context context) {
+    public ScheduleViewPagerAdapter(Context context) {
         this.context = context;
     }
 
-    void updateWith(List<SchedulePage> pages, OnEventClickedListener listener) {
+    public void updateWith(List<SchedulePage> pages, OnEventClickedListener listener) {
         this.pages = pages;
         this.listener = listener;
         notifyDataSetChanged();

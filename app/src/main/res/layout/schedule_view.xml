@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<net.squanchy.schedule.view.ScheduleView xmlns:android="http://schemas.android.com/apk/res/android"
+<net.squanchy.schedule.ScheduleView xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/content_root"
@@ -40,4 +40,4 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center" />
 
-</net.squanchy.schedule.view.ScheduleView>
+</net.squanchy.schedule.ScheduleView>
