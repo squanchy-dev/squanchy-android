@@ -22,6 +22,7 @@
   <dimen name="navigation_drawer_width">288dp</dimen>
 
   <dimen name="toolbar_elevation">6dp</dimen>
+  <dimen name="tab_text">14sp</dimen>
   <dimen name="speaker_name_padding">16dp</dimen>
 
   <dimen name="card_corner_radius">4dp</dimen>

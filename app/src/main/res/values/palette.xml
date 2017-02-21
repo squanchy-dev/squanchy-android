@@ -32,6 +32,7 @@
   <color name="text_inverse_inactive">#99ffffff</color>
 
   <color name="shadows">#19000000</color>
+  <color name="white">#ffffff</color>
   <color name="white_87">#ddffffff</color>
 
 </resources>
