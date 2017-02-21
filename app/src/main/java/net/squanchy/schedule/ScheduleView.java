@@ -1,6 +1,7 @@
 package net.squanchy.schedule;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -16,6 +17,9 @@ import net.squanchy.schedule.view.ScheduleViewPagerAdapter;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyUtils;
+import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
 public class ScheduleView extends CoordinatorLayout {
 
@@ -45,6 +49,7 @@ public class ScheduleView extends CoordinatorLayout {
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabstrip);
         tabLayout.setupWithViewPager(viewPager);
+        hackToApplyTypefaces(tabLayout);
 
         viewPagerAdapter = new ScheduleViewPagerAdapter(getContext());
         viewPager.setAdapter(viewPagerAdapter);
@@ -68,6 +73,25 @@ public class ScheduleView extends CoordinatorLayout {
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         subscription.dispose();
+    }
+
+    private void hackToApplyTypefaces(TabLayout tabLayout) {
+        // Unfortunately doing this the sensible way (in ScheduleViewPagerAdapter.getPageTitle())
+        // results in a bunch of other views on screen to stop drawing their text, for reasons only
+        // known to the Gods of Kobol. We can't theme things in the TabLayout either, as the
+        // TextAppearance is applied _after_ inflating the tab views, which means Calligraphy can't
+        // intercept that either. Sad panda.
+        tabLayout.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
+            Typeface typeface = TypefaceUtils.load(getContext().getAssets(), "fonts/LeagueSpartan-Bold.otf");
+            int tabCount = tabLayout.getTabCount();
+            for (int i = 0; i < tabCount; i++) {
+                TabLayout.Tab tab = tabLayout.getTabAt(i);
+                if (tab == null) {
+                    continue;
+                }
+                tab.setText(CalligraphyUtils.applyTypefaceSpan(tab.getText(), typeface));
+            }
+        });
     }
 
     public void updateWith(Schedule schedule, ScheduleViewPagerAdapter.OnEventClickedListener listener) {
