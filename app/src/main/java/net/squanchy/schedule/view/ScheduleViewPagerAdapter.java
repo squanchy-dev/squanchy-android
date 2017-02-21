@@ -1,7 +1,6 @@
 package net.squanchy.schedule.view;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,21 +15,17 @@ import net.squanchy.R;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.SchedulePage;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyUtils;
-
 public class ScheduleViewPagerAdapter extends ViewPagerAdapter<SchedulePageView> {
 
     private final Context context;
-    private final Typeface tabTypeface;
 
     private List<SchedulePage> pages = Collections.emptyList();
 
     @Nullable
     private OnEventClickedListener listener;
 
-    ScheduleViewPagerAdapter(Context context, Typeface tabTypeface) {
+    ScheduleViewPagerAdapter(Context context) {
         this.context = context;
-        this.tabTypeface = tabTypeface;
     }
 
     void updateWith(List<SchedulePage> pages, OnEventClickedListener listener) {
@@ -58,7 +53,7 @@ public class ScheduleViewPagerAdapter extends ViewPagerAdapter<SchedulePageView>
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return CalligraphyUtils.applyTypefaceSpan(pages.get(position).title(), tabTypeface);
+        return pages.get(position).title();
     }
 
     @Override
