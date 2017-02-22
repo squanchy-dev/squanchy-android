@@ -102,6 +102,7 @@ dependencies {
     compile libraries.app.firebaseAuth
     compile libraries.app.firebaseDb
     compile libraries.app.firebaseMessaging
+    compile libraries.app.firebaseUiStorage
     compile libraries.app.glide
     compile libraries.app.glideOkHttp3
     compile libraries.app.jodaTimeAndroid
