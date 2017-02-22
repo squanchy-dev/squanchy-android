@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<net.squanchy.schedule.view.ScheduleView xmlns:android="http://schemas.android.com/apk/res/android"
+<net.squanchy.schedule.ScheduleView xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/content_root"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:fitsSystemWindows="true"
   tools:context="net.squanchy.schedule.ScheduleActivity">
 
   <android.support.design.widget.AppBarLayout
     style="@style/Squanchy.Appbar"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:fitsSystemWindows="false">
+    android:layout_height="wrap_content">
 
     <android.support.v7.widget.Toolbar
       android:id="@+id/toolbar"
@@ -25,7 +23,7 @@
       style="@style/Squanchy.Tabs.Schedule"
       android:layout_width="match_parent"
       android:layout_height="?attr/actionBarSize" />
-    
+
   </android.support.design.widget.AppBarLayout>
 
   <android.support.v4.view.ViewPager
@@ -40,4 +38,4 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center" />
 
-</net.squanchy.schedule.view.ScheduleView>
+</net.squanchy.schedule.ScheduleView>

@@ -22,4 +22,9 @@
     <item quantity="other">%d sessions are about to start.</item>
   </plurals>
 
+  <string name="bottom_bar_schedule_label">Schedule</string>
+  <string name="bottom_bar_favourite_label">Favourites</string>
+  <string name="bottom_bar_twitter_label">Tweets</string>
+  <string name="bottom_bar_venue_label">Venue Info</string>
+
 </resources>

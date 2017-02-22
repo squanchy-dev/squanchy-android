@@ -44,8 +44,8 @@
       android:id="@+id/speaker_container"
       android:layout_width="match_parent"
       android:layout_height="@dimen/card_speaker_container_height"
-      android:gravity="fill_horizontal|center_vertical"
-      android:layout_below="@+id/title">
+      android:layout_below="@+id/title"
+      android:gravity="fill_horizontal|center_vertical">
 
       <net.squanchy.support.widget.CircleImageView
         android:id="@+id/speaker_photo"
