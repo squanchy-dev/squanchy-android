@@ -1,6 +1,6 @@
 ext {
     supportLibVersion = '25.1.1'
-    playServicesVersion = '10.0.1'
+    playServicesVersion = '10.2.0'
     daggerVersion = '2.9'
 
     gradlePlugins = [
