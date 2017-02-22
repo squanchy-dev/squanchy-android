@@ -15,7 +15,9 @@
     android:supportsRtl="false"
     tools:ignore="GoogleAppIndexingWarning">
 
-    <activity android:name="net.squanchy.navigation.HomeActivity">
+    <activity
+      android:name="net.squanchy.navigation.HomeActivity"
+      android:theme="@style/Theme.Squanchy.Home">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
