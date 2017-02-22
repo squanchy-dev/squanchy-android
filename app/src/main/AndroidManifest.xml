@@ -15,6 +15,13 @@
     android:supportsRtl="false"
     tools:ignore="GoogleAppIndexingWarning">
 
+    <activity android:name="net.squanchy.navigation.BottomNavigationActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+
     <activity
       android:name="net.squanchy.eventdetails.EventDetailsActivity"
       android:theme="@style/Theme.Squanchy.EventDetails" />
@@ -25,15 +32,9 @@
       android:label="@string/activity_social_feed"
       android:screenOrientation="portrait" />
 
-    <activity android:name="net.squanchy.speaker.SpeakerListActivity"
-        android:label="@string/activity_speaker_list"/>
-
-    <activity android:name="net.squanchy.navigation.BottomNavigationActivity">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.LAUNCHER" />
-      </intent-filter>
-    </activity>
+    <activity
+      android:name="net.squanchy.speaker.SpeakerListActivity"
+      android:label="@string/activity_speaker_list" />
 
     <receiver android:name="net.squanchy.notification.NotificationAlarmReceiver" />
 

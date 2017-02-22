@@ -9,15 +9,16 @@ import net.squanchy.R;
 
 class BottomTabsPagesFactory {
 
-    static View inflate(Context context, ViewGroup parent, @Tab int position){
+    static View inflate(Context context, ViewGroup parent, @Tab int position) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        switch (position){
+        switch (position) {
             case BottomNavigationPagerAdapter.SCHEDULE_POSITION:
                 return inflater.inflate(R.layout.schedule_view, parent, false);
             case BottomNavigationPagerAdapter.FAVOURITES_POSITION:
             case BottomNavigationPagerAdapter.TWEETS_POSITION:
             case BottomNavigationPagerAdapter.VENUE_POSITION:
+            default:
+                throw new IllegalArgumentException("Unsupported tab type for position " + position);
         }
-        throw new IllegalArgumentException("Invalid position");
     }
 }

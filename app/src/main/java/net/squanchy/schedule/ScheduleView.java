@@ -1,4 +1,4 @@
-package net.squanchy.schedule.view;
+package net.squanchy.schedule;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -8,9 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.text.Spanned;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import net.squanchy.R;
 import net.squanchy.schedule.domain.view.Schedule;
@@ -18,7 +16,6 @@ import net.squanchy.schedule.view.ScheduleViewPagerAdapter;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-
 import uk.co.chrisjenx.calligraphy.CalligraphyTypefaceSpan;
 import uk.co.chrisjenx.calligraphy.CalligraphyUtils;
 import uk.co.chrisjenx.calligraphy.TypefaceUtils;

@@ -3,7 +3,6 @@ package net.squanchy.navigation;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.view.ViewPager;
 
 import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
