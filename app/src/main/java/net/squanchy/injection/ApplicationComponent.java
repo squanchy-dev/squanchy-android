@@ -20,7 +20,7 @@ public interface ApplicationComponent {
             // non-instantiable
         }
 
-        public static ApplicationComponent create(SquanchyApplication application) {
+        public static ApplicationComponent create() {
             return DaggerApplicationComponent.builder()
                     .firebaseModule(new FirebaseModule())
                     .build();
