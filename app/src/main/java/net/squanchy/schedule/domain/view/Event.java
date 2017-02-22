@@ -1,13 +1,11 @@
 package net.squanchy.schedule.domain.view;
 
-import android.support.annotation.DrawableRes;
 import android.view.View;
 
 import com.google.auto.value.AutoValue;
 
 import java.util.List;
 
-import net.squanchy.R;
 import net.squanchy.eventdetails.domain.view.ExperienceLevel;
 import net.squanchy.speaker.domain.view.Speaker;
 import net.squanchy.support.view.Visibility;
@@ -40,23 +38,6 @@ public abstract class Event {
     private static final int BEGINNER = 1;
     private static final int INTERMEDIATE = 2;
     private static final int ADVANCED = 3;
-
-    @DrawableRes
-    private static int experienceLevelIconFor(int level) {
-        switch (level) {
-            case BEGINNER:
-                return R.drawable.ic_experience_beginner;
-
-            case INTERMEDIATE:
-                return R.drawable.ic_experience_intermediate;
-
-            case ADVANCED:
-                return R.drawable.ic_experience_advanced;
-
-            default:
-                throw new IllegalArgumentException("Level " + level + " is invalid");
-        }
-    }
 
     public abstract long id();
 
