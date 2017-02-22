@@ -7,9 +7,7 @@ import dagger.Component;
 
 @ActivityLifecycle
 @Component(modules = {ScheduleModule.class}, dependencies = ApplicationComponent.class)
-interface ScheduleComponent {
+public interface ScheduleComponent {
 
     ScheduleService service();
-
-    ScheduleNavigator navigator();
 }

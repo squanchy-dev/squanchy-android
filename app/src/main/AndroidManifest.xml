@@ -15,11 +15,7 @@
     android:supportsRtl="false"
     tools:ignore="GoogleAppIndexingWarning">
 
-    <activity
-      android:name="net.squanchy.schedule.ScheduleActivity"
-      android:theme="@style/Theme.Squanchy.Schedule"
-      android:label="@string/app_name">
-
+    <activity android:name="net.squanchy.navigation.BottomNavigationActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
