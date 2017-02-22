@@ -9,15 +9,14 @@ import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.navigation.view.BottomNavigationPagerAdapter;
 import net.squanchy.navigation.view.NoSwipeViewPager;
 
-public class BottomNavigationActivity extends TypefaceStyleableActivity {
+public class HomeActivity extends TypefaceStyleableActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bottom_navigation);
+        setContentView(R.layout.activity_home);
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView)
-                findViewById(R.id.bottom_navigation);
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
 
         NoSwipeViewPager viewPager = (NoSwipeViewPager) findViewById(R.id.main_view_pager);
         BottomNavigationPagerAdapter adapter = new BottomNavigationPagerAdapter(this);
@@ -37,8 +36,11 @@ public class BottomNavigationActivity extends TypefaceStyleableActivity {
                             break;
                         case R.id.action_venue:
                             break;
+                        default:
+                            throw new IndexOutOfBoundsException("Unsupported navigation item ID: " + item.getItemId());
                     }
                     return true;
-                });
+                }
+        );
     }
 }
