@@ -5,6 +5,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Locale;
+
 import net.squanchy.service.firebase.model.FirebaseEvent;
 import net.squanchy.service.firebase.model.FirebaseInfoItems;
 import net.squanchy.service.firebase.model.FirebaseSchedule;
@@ -39,7 +41,8 @@ public final class UnauthenticatedFirebaseDbService implements FirebaseDbService
 
     @Override
     public Observable<FirebaseEvent> event(int dayId, int eventId) {
-        return observeChild(String.format("sessions/days/%1$d/events/%2$d", dayId, eventId), FirebaseEvent.class);
+        String path = String.format(Locale.US, "sessions/days/%1$d/events/%2$d", dayId, eventId);
+        return observeChild(path, FirebaseEvent.class);
     }
 
     private <T> Observable<T> observeChild(final String path, final Class<T> clazz) {
