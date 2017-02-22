@@ -16,7 +16,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
-    app:itemBackground="?colorPrimary"
+    android:background="?colorPrimary"
     app:itemIconTint="?colorControlNormal"
     app:itemTextColor="?colorControlNormal"
     app:menu="@menu/bottom_bar_menu" />
