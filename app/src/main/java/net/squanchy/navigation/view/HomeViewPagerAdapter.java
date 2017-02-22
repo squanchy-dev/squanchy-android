@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 
 import com.novoda.viewpageradapter.ViewPagerAdapter;
 
-public class BottomNavigationPagerAdapter extends ViewPagerAdapter<View> {
+public class HomeViewPagerAdapter extends ViewPagerAdapter<View> {
 
     public static final int SCHEDULE_POSITION = 0;
     public static final int FAVOURITES_POSITION = 1;
@@ -18,7 +18,7 @@ public class BottomNavigationPagerAdapter extends ViewPagerAdapter<View> {
 
     private final Context context;
 
-    public BottomNavigationPagerAdapter(Context context) {
+    public HomeViewPagerAdapter(Context context) {
         this.context = context;
     }
 

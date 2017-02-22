@@ -6,7 +6,7 @@ import android.support.design.widget.BottomNavigationView;
 
 import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
-import net.squanchy.navigation.view.BottomNavigationPagerAdapter;
+import net.squanchy.navigation.view.HomeViewPagerAdapter;
 import net.squanchy.navigation.view.NoSwipeViewPager;
 
 public class HomeActivity extends TypefaceStyleableActivity {
@@ -19,7 +19,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
 
         NoSwipeViewPager viewPager = (NoSwipeViewPager) findViewById(R.id.main_view_pager);
-        BottomNavigationPagerAdapter adapter = new BottomNavigationPagerAdapter(this);
+        HomeViewPagerAdapter adapter = new HomeViewPagerAdapter(this);
         viewPager.setAdapter(adapter);
 
         BottomNavigationHelper.disableShiftMode(bottomNavigationView);
@@ -28,7 +28,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
                 item -> {
                     switch (item.getItemId()) {
                         case R.id.action_schedule:
-                            viewPager.setCurrentItem(BottomNavigationPagerAdapter.SCHEDULE_POSITION);
+                            viewPager.setCurrentItem(HomeViewPagerAdapter.SCHEDULE_POSITION);
                             break;
                         case R.id.action_favourite:
                             break;
