@@ -21,7 +21,7 @@ import io.reactivex.schedulers.Schedulers;
 import static net.squanchy.support.lang.Lists.find;
 import static net.squanchy.support.lang.Lists.map;
 
-public class ScheduleService {
+class ScheduleService {
 
     private final FirebaseDbService dbService;
 

@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.navigation.view.BottomNavigationPagerAdapter;
+import net.squanchy.navigation.view.NoSwipeViewPager;
 
 public class BottomNavigationActivity extends TypefaceStyleableActivity {
 
@@ -19,7 +20,7 @@ public class BottomNavigationActivity extends TypefaceStyleableActivity {
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.main_view_pager);
+        NoSwipeViewPager viewPager = (NoSwipeViewPager) findViewById(R.id.main_view_pager);
         BottomNavigationPagerAdapter adapter = new BottomNavigationPagerAdapter(this);
         viewPager.setAdapter(adapter);
 
@@ -29,16 +30,13 @@ public class BottomNavigationActivity extends TypefaceStyleableActivity {
                 item -> {
                     switch (item.getItemId()) {
                         case R.id.action_schedule:
-
+                            viewPager.setCurrentItem(BottomNavigationPagerAdapter.SCHEDULE_POSITION);
                             break;
                         case R.id.action_favourite:
-
                             break;
                         case R.id.action_tweet:
-
                             break;
                         case R.id.action_venue:
-
                             break;
                     }
                     return true;

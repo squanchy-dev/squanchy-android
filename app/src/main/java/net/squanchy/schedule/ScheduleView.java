@@ -23,10 +23,6 @@ import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
 public class ScheduleView extends CoordinatorLayout {
 
-    public static ScheduleView inflate(Context context, ViewGroup parent) {
-        return (ScheduleView) LayoutInflater.from(context).inflate(R.layout.schedule_view, parent, false);
-    }
-
     private ScheduleViewPagerAdapter viewPagerAdapter;
     private View progressBar;
     private Disposable subscription;

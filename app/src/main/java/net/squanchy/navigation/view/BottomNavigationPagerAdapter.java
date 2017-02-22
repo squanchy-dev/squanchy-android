@@ -6,14 +6,16 @@ import android.view.ViewGroup;
 
 import com.novoda.viewpageradapter.ViewPagerAdapter;
 
-import net.squanchy.schedule.ScheduleView;
-
 public class BottomNavigationPagerAdapter extends ViewPagerAdapter<View> {
 
-    private static final int SCHEDULE_POSITION = 0;
-    private static final int FAVOURITES_POSITION = 1;
-    private static final int TWEETS_POSITION = 2;
-    private static final int VENUE_POSITION = 3;
+    public static final int SCHEDULE_POSITION = 0;
+    public static final int FAVOURITES_POSITION = 1;
+    public static final int TWEETS_POSITION = 2;
+    public static final int VENUE_POSITION = 3;
+
+    //TODO increment this value when a new view is added to the PagerAdapter
+    private static final int NUMBER_OF_PAGES = 1;
+
     private final Context context;
 
     public BottomNavigationPagerAdapter(Context context) {
@@ -21,11 +23,8 @@ public class BottomNavigationPagerAdapter extends ViewPagerAdapter<View> {
     }
 
     @Override
-    protected View createView(ViewGroup container, int position) {
-        if (position == SCHEDULE_POSITION) {
-            return ScheduleView.inflate(context, container);
-        }
-        return null;
+    protected View createView(ViewGroup container, @Tab int position) {
+        return BottomTabsPagesFactory.inflate(context, container, position);
     }
 
     @Override
@@ -35,6 +34,6 @@ public class BottomNavigationPagerAdapter extends ViewPagerAdapter<View> {
 
     @Override
     public int getCount() {
-        return 1;
+        return NUMBER_OF_PAGES;
     }
 }

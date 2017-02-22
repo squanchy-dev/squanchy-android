@@ -3,6 +3,7 @@ package net.squanchy.navigation.view;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 
 public class NoSwipeViewPager extends ViewPager {
@@ -19,5 +20,16 @@ public class NoSwipeViewPager extends ViewPager {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
         return false;
+    }
+
+    @Override
+    public boolean executeKeyEvent(KeyEvent e) {
+        return false;
+    }
+
+    @Override
+    public void setCurrentItem(@Tab int item) {
+        //we are reinforcing the fact that the selected item can only be a Tab
+        super.setCurrentItem(item);
     }
 }
