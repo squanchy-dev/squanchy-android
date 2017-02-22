@@ -29,7 +29,7 @@ public class NoSwipeViewPager extends ViewPager {
 
     @Override
     public void setCurrentItem(@Tab int item) {
-        //we are reinforcing the fact that the selected item can only be a Tab
+        // This override is to enforce the @Tab typedef on the parameter
         super.setCurrentItem(item);
     }
 }
