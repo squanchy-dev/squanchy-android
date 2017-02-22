@@ -14,7 +14,7 @@ import java.util.List;
 
 import net.squanchy.R;
 import net.squanchy.eventdetails.EventDetailsActivity;
-import net.squanchy.schedule.ScheduleActivity;
+import net.squanchy.navigation.HomeActivity;
 import net.squanchy.schedule.domain.view.Event;
 
 public class NotificationCreator {
@@ -111,7 +111,7 @@ public class NotificationCreator {
     }
 
     private TaskStackBuilder createBaseTaskStackBuilder() {
-        Intent baseIntent = new Intent(context, ScheduleActivity.class);
+        Intent baseIntent = new Intent(context, HomeActivity.class);
         baseIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         return TaskStackBuilder.create(context)
                 .addNextIntent(baseIntent);
