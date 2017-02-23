@@ -38,6 +38,8 @@
       android:name="net.squanchy.speaker.SpeakerListActivity"
       android:label="@string/activity_speaker_list" />
 
+    <activity android:name="net.squanchy.search.SearchActivity" />
+
     <receiver android:name="net.squanchy.notification.NotificationAlarmReceiver" />
 
     <!-- Firebase Cloud Messaging has no permissions ¯\_(ツ)_/¯ -->
