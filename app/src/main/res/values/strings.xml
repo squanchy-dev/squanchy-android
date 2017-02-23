@@ -16,5 +16,6 @@
   <string name="bottom_bar_favourite_label">Favourites</string>
   <string name="bottom_bar_twitter_label">Tweets</string>
   <string name="bottom_bar_venue_label">Venue Info</string>
+  <string name="search_label">Search</string>
 
 </resources>

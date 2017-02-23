@@ -68,4 +68,9 @@
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.Card.Speaker</item>
   </style>
 
+  <style name="Search.SearchView" parent="None">
+    <item name="android:searchHintIcon">@null</item>
+    <item name="android:elevation">@dimen/toolbar_elevation</item>
+  </style>
+
 </resources>

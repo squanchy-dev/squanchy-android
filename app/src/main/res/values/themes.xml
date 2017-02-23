@@ -30,4 +30,10 @@
 
   <style name="Theme.Squanchy.SocialFeed" parent="Theme.Squanchy" />
 
+  <style name="Theme.Squanchy.Search" parent="Theme.Squanchy">
+    <item name="colorControlNormal">?colorPrimary</item>
+    <item name="android:statusBarColor">@color/status_bar_primary</item>
+    <item name="android:searchViewStyle">@style/Search.SearchView</item>
+  </style>
+
 </resources>
