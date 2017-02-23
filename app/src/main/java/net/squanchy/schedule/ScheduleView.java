@@ -13,6 +13,7 @@ import android.view.View;
 import net.squanchy.R;
 import net.squanchy.schedule.domain.view.Schedule;
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter;
+import net.squanchy.search.OnSearchClickListener;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -26,6 +27,8 @@ public class ScheduleView extends CoordinatorLayout {
     private View progressBar;
     private Disposable subscription;
     private ScheduleService service;
+
+    private OnSearchClickListener listener;
 
     public ScheduleView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -52,8 +55,19 @@ public class ScheduleView extends CoordinatorLayout {
         ScheduleComponent component = ScheduleInjector.obtain(getContext());
         service = component.service();
 
+        setUpToolbar();
+    }
+
+    private void setUpToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.activity_schedule);
+        toolbar.inflateMenu(R.menu.search_icon_menu);
+        toolbar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.action_search) {
+                listener.onSearchClick();
+            }
+            return false;
+        });
     }
 
     @Override
@@ -101,5 +115,9 @@ public class ScheduleView extends CoordinatorLayout {
     public void updateWith(Schedule schedule, ScheduleViewPagerAdapter.OnEventClickedListener listener) {
         viewPagerAdapter.updateWith(schedule.pages(), listener);
         progressBar.setVisibility(GONE);
+    }
+
+    public void setOnSearchClickListener(OnSearchClickListener listener) {
+        this.listener = listener;
     }
 }
