@@ -1,16 +1,26 @@
 package net.squanchy.schedule.view;
 
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.util.Locale;
+
 import net.squanchy.R;
+import net.squanchy.imageloader.ImageLoader;
+import net.squanchy.imageloader.ImageLoaderInjector;
 
 public class SpeakerView extends LinearLayout {
 
+    private static final String SPEAKER_PHOTO_PATH_TEMPLATE = "speakers/%s";
+
+    private final ImageLoader imageLoader;
+    
     private ImageView speakerPhotoView;
     private TextView speakerNameView;
 
@@ -25,6 +35,7 @@ public class SpeakerView extends LinearLayout {
     public SpeakerView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
 
+        imageLoader = ImageLoaderInjector.obtain(context).imageLoader();
         super.setOrientation(HORIZONTAL);
     }
 
@@ -43,6 +54,8 @@ public class SpeakerView extends LinearLayout {
 
     public void updateWith(String speakersNames) {
         speakerNameView.setText(speakersNames);
-        speakerPhotoView.setImageDrawable(new ColorDrawable(0xFF67B6E2)); // TODO bind photo too
+        String path = String.format(Locale.US, SPEAKER_PHOTO_PATH_TEMPLATE, "squanchy.webp");   // TODO use actual speaker ID
+        StorageReference photoReference = FirebaseStorage.getInstance().getReference(path);
+        imageLoader.load(photoReference).into(speakerPhotoView);
     }
 }

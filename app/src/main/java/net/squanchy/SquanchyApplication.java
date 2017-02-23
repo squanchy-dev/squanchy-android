@@ -54,7 +54,7 @@ public class SquanchyApplication extends Application {
     @MainThread
     public ApplicationComponent applicationComponent() {
         if (applicationComponent == null) {
-            applicationComponent = ApplicationComponent.Factory.create(this);
+            applicationComponent = ApplicationComponent.Factory.create();
         }
 
         return applicationComponent;
