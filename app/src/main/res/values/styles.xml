@@ -75,4 +75,15 @@
     <item name="submitBackground">@android:color/transparent</item>
   </style>
 
+  <style name="Search.Appbar" parent="ThemeOverlay.AppCompat.Light">
+    <item name="android:elevation">@dimen/toolbar_elevation</item>
+    <item name="android:colorControlNormal">?colorAccent</item>
+    <item name="searchViewStyle">@style/Search.SearchView</item>
+  </style>
+
+  <style name="Search.Overlay" parent="ThemeOverlay.AppCompat.ActionBar">
+    <item name="android:colorControlNormal">?colorAccent</item>
+    <item name="android:tint">?colorAccent</item>
+  </style>
+
 </resources>
