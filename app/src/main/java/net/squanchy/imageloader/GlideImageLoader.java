@@ -13,9 +13,11 @@ final class GlideImageLoader implements ImageLoader {
     private static final String FIREBASE_STORAGE_URL_SCHEMA = "gs://";
 
     private final RequestManager requestManager;
+    private final FirebaseImageLoader firebaseImageLoader;
 
-    GlideImageLoader(RequestManager requestManager) {
+    GlideImageLoader(RequestManager requestManager, FirebaseImageLoader firebaseImageLoader) {
         this.requestManager = requestManager;
+        this.firebaseImageLoader = firebaseImageLoader;
     }
 
     @Override
@@ -28,7 +30,7 @@ final class GlideImageLoader implements ImageLoader {
 
     @Override
     public ImageRequest load(StorageReference storageReference) {
-        return new GlideFirebaseImageRequest(requestManager, storageReference);
+        return new GlideFirebaseImageRequest(requestManager, storageReference, firebaseImageLoader);
     }
 
     private static final class GlideUrlImageRequest extends GlideImageRequest<Uri> {
@@ -53,15 +55,17 @@ final class GlideImageLoader implements ImageLoader {
     private static final class GlideFirebaseImageRequest extends GlideImageRequest<StorageReference> {
 
         private final StorageReference storageReference;
+        private final FirebaseImageLoader firebaseLoader;
 
-        GlideFirebaseImageRequest(RequestManager requestManager, StorageReference storageReference) {
+        GlideFirebaseImageRequest(RequestManager requestManager, StorageReference storageReference, FirebaseImageLoader firebaseImageLoader) {
             super(requestManager);
             this.storageReference = storageReference;
+            this.firebaseLoader = firebaseImageLoader;
         }
 
         DrawableTypeRequest<StorageReference> startLoading() {
             return glide()
-                    .using(new FirebaseImageLoader())
+                    .using(firebaseLoader)
                     .load(storageReference);
         }
     }
