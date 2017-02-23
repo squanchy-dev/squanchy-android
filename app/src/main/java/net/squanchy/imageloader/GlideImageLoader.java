@@ -1,11 +1,9 @@
 package net.squanchy.imageloader;
 
-import android.content.Context;
 import android.net.Uri;
 import android.widget.ImageView;
 
 import com.bumptech.glide.DrawableTypeRequest;
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.storage.StorageReference;
@@ -14,10 +12,10 @@ final class GlideImageLoader implements ImageLoader {
 
     private static final String FIREBASE_STORAGE_URL_SCHEMA = "gs://";
 
-    private final Context context;
+    private final RequestManager requestManager;
 
-    GlideImageLoader(Context context) {
-        this.context = context;
+    GlideImageLoader(RequestManager requestManager) {
+        this.requestManager = requestManager;
     }
 
     @Override
@@ -25,20 +23,20 @@ final class GlideImageLoader implements ImageLoader {
         if (url.startsWith(FIREBASE_STORAGE_URL_SCHEMA)) {
             throw new IllegalArgumentException("To load images from Firebase Storage please obtain the StorageReference first and use that one.");
         }
-        return new GlideUrlImageRequest(context, url);
+        return new GlideUrlImageRequest(requestManager, url);
     }
 
     @Override
     public ImageRequest load(StorageReference storageReference) {
-        return new GlideFirebaseImageRequest(context, storageReference);
+        return new GlideFirebaseImageRequest(requestManager, storageReference);
     }
 
     private static final class GlideUrlImageRequest extends GlideImageRequest<Uri> {
 
         private final Uri uri;
 
-        GlideUrlImageRequest(Context context, String url) {
-            super(context);
+        GlideUrlImageRequest(RequestManager requestManager, String url) {
+            super(requestManager);
             this.uri = Uri.parse(url);
         }
 
@@ -56,8 +54,8 @@ final class GlideImageLoader implements ImageLoader {
 
         private final StorageReference storageReference;
 
-        GlideFirebaseImageRequest(Context context, StorageReference storageReference) {
-            super(context);
+        GlideFirebaseImageRequest(RequestManager requestManager, StorageReference storageReference) {
+            super(requestManager);
             this.storageReference = storageReference;
         }
 
@@ -70,10 +68,10 @@ final class GlideImageLoader implements ImageLoader {
 
     private abstract static class GlideImageRequest<T> implements ImageRequest<T> {
 
-        private final Context context;
+        private final RequestManager requestManager;
 
-        GlideImageRequest(Context context) {
-            this.context = context;
+        GlideImageRequest(RequestManager requestManager) {
+            this.requestManager = requestManager;
         }
 
         @Override
@@ -84,7 +82,7 @@ final class GlideImageLoader implements ImageLoader {
         abstract DrawableTypeRequest<T> startLoading();
 
         final RequestManager glide() {
-            return Glide.with(context);
+            return requestManager;
         }
     }
 }
