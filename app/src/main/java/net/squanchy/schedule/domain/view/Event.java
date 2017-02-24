@@ -4,6 +4,7 @@ import android.view.View;
 
 import com.google.auto.value.AutoValue;
 
+import java.util.Date;
 import java.util.List;
 
 import net.squanchy.eventdetails.domain.view.ExperienceLevel;
@@ -16,6 +17,8 @@ public abstract class Event {
     public static Event create(
             long eventId,
             int dayId,
+            Date start,
+            Date end,
             String title,
             String place,
             ExperienceLevel experienceLevel,
@@ -24,6 +27,8 @@ public abstract class Event {
         return new AutoValue_Event.Builder()
                 .id(eventId)
                 .day(dayId)
+                .start(start)
+                .end(end)
                 .title(title)
                 .place(place)
                 .placeVisibility(place.isEmpty() ? View.GONE : View.VISIBLE)
@@ -60,6 +65,10 @@ public abstract class Event {
 
     public abstract int day();
 
+    public abstract Date start();
+
+    public abstract Date end();
+
     public String speakersNames() {
         StringBuilder speakersBuilder = new StringBuilder();
         for (Speaker speaker : speakers()) {
@@ -79,6 +88,10 @@ public abstract class Event {
         public abstract Builder id(long id);
 
         public abstract Builder day(int day);
+
+        public abstract Builder start(Date start);
+
+        public abstract Builder end(Date end);
 
         public abstract Builder title(String title);
 

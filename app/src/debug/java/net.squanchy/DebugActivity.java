@@ -2,10 +2,12 @@ package net.squanchy;
 
 import android.app.Activity;
 import android.app.Notification;
+import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.widget.Button;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import net.squanchy.eventdetails.domain.view.ExperienceLevel;
@@ -54,9 +56,16 @@ public class DebugActivity extends Activity {
     }
 
     private Event createTestEvent(int id) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MINUTE, 5);
+        Date start = calendar.getTime();
+        calendar.add(Calendar.MINUTE, 45);
+        Date end = calendar.getTime();
         return Event.create(
                 id,
                 1,
+                start,
+                end,
                 "A very interesting talk",
                 "That room over there",
                 ExperienceLevel.ADVANCED,
