@@ -39,11 +39,6 @@ public abstract class Event {
                 .build();
     }
 
-    // TODO: move in its own enum
-    private static final int BEGINNER = 1;
-    private static final int INTERMEDIATE = 2;
-    private static final int ADVANCED = 3;
-
     public abstract long id();
 
     public abstract String title();
