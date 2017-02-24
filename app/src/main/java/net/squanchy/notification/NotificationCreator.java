@@ -49,6 +49,9 @@ public class NotificationCreator {
                 .setContentTitle(event.title())
                 .setContentText(event.place())
                 //.setColor(track.color().getIntValue()) TODO set color depending on the track
+                .setUsesChronometer(true)
+                .setWhen(event.start().getTime())
+                .setShowWhen(true)
                 .setGroup(GROUP_KEY_NOTIFY_SESSION);
 
         NotificationCompat.BigTextStyle richNotification = createBigTextRichNotification(notificationBuilder, event);
