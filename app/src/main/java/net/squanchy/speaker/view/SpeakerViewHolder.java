@@ -19,7 +19,7 @@ public class SpeakerViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         this.itemView = itemView;
         speakerImage = (ImageView) itemView.findViewById(R.id.speaker_image);
-        speakerName = (TextView) itemView.findViewById(R.id.speaker_name);
+        speakerName = (TextView) itemView.findViewById(R.id.speaker_names);
     }
 
     public void updateWith(Speaker speaker, @Nullable SpeakersView.OnSpeakerClickedListener listener) {

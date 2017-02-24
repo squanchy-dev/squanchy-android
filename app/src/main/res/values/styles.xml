@@ -61,7 +61,7 @@
 
   <style name="Schedule.Card.Speaker.Photo" parent="None" />
 
-  <style name="Schedule.Card.Speaker.Name" parent="None">
+  <style name="Schedule.Card.Speaker.Names" parent="None">
     <item name="android:gravity">start|center_vertical</item>
     <item name="android:lineSpacingExtra">@dimen/card_speaker_line_spacing_extra</item>
     <item name="android:lineSpacingMultiplier">1</item>

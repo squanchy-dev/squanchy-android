@@ -4,12 +4,20 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+
 import net.squanchy.R;
 import net.squanchy.eventdetails.widget.ExperienceLevelIconView;
 import net.squanchy.schedule.domain.view.Event;
+import net.squanchy.service.firebase.model.FirebaseSpeaker;
+import net.squanchy.speaker.domain.view.Speaker;
 import net.squanchy.support.widget.CardLayout;
 
 public class EventItemView extends CardLayout {
+
+    private static final String SPEAKER_PHOTO_PATH_TEMPLATE = "speakers/%s";
 
     private TextView titleView;
     private TextView timestampView;
@@ -40,6 +48,20 @@ public class EventItemView extends CardLayout {
         experienceLevelIconView.setExperienceLevel(event.experienceLevel());
 
         speakerView.setVisibility(event.speakersVisibility());
-        speakerView.updateWith(event.speakersNames());
+        speakerView.updateWith(createDummySpeakersList());                      // TODO use real data
+    }
+
+    private List<Speaker> createDummySpeakersList() {
+        FirebaseSpeaker firstSpeaker = new FirebaseSpeaker();
+        firstSpeaker.avatarImageURL = String.format(Locale.US, SPEAKER_PHOTO_PATH_TEMPLATE, "squanchy.webp");
+        firstSpeaker.speakerId = 0L;
+        firstSpeaker.firstName = "Dave";
+        firstSpeaker.lastName = "Clements";
+        FirebaseSpeaker secondSpeaker = new FirebaseSpeaker();
+        secondSpeaker.avatarImageURL = String.format(Locale.US, SPEAKER_PHOTO_PATH_TEMPLATE, "squanchy.webp");
+        secondSpeaker.speakerId = 0L;
+        secondSpeaker.firstName = "Qi";
+        secondSpeaker.lastName = "Qu";
+        return Arrays.asList(Speaker.create(firstSpeaker), Speaker.create(secondSpeaker));
     }
 }
