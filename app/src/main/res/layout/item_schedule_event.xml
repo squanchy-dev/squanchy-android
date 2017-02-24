@@ -4,9 +4,9 @@
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:paddingLeft="@dimen/card_padding_horizontal"
-  android:paddingTop="@dimen/card_padding_top"
+  android:paddingTop="@dimen/card_padding_vertical"
   android:paddingRight="@dimen/card_padding_horizontal"
-  android:paddingBottom="@dimen/card_padding_bottom"
+  android:paddingBottom="@dimen/card_padding_vertical"
   tools:layout_margin="16dp">
 
   <RelativeLayout
@@ -47,6 +47,7 @@
       style="@style/Schedule.Card.Title"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:layout_alignParentStart="true"
       android:layout_below="@+id/speaker_container"
       android:layout_marginTop="@dimen/card_title_margin_top"
       tools:text="Designing for an Android future" />
@@ -58,6 +59,7 @@
       android:layout_height="wrap_content"
       android:layout_alignParentStart="true"
       android:layout_below="@+id/title"
+      android:layout_marginTop="@dimen/card_timestamp_margin_top"
       tools:text="12:00" />
 
   </RelativeLayout>
