@@ -2,6 +2,7 @@ package net.squanchy;
 
 import android.app.Activity;
 import android.app.Notification;
+import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.widget.Button;
@@ -12,6 +13,7 @@ import java.util.List;
 
 import net.squanchy.eventdetails.domain.view.ExperienceLevel;
 import net.squanchy.notification.NotificationCreator;
+import net.squanchy.notification.NotificationService;
 import net.squanchy.notification.Notifier;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.service.firebase.model.FirebaseSpeaker;
@@ -32,6 +34,9 @@ public class DebugActivity extends Activity {
 
         Button buttonMultipleNotifications = (Button) findViewById(R.id.button_test_multiple_notifications);
         buttonMultipleNotifications.setOnClickListener(view -> testMultipleNotifications());
+
+        Button buttonService = (Button) findViewById(R.id.button_test_service);
+        buttonService.setOnClickListener(view -> testService());
 
         notificationCreator = new NotificationCreator(this);
     }
@@ -86,4 +91,8 @@ public class DebugActivity extends Activity {
         return speakers;
     }
 
+    private void testService() {
+        Intent serviceIntent = new Intent(this, NotificationService.class);
+        startService(serviceIntent);
+    }
 }
