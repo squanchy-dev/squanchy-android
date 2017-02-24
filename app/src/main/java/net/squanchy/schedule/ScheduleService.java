@@ -1,5 +1,6 @@
 package net.squanchy.schedule;
 
+import java.util.Date;
 import java.util.List;
 
 import net.squanchy.eventdetails.domain.view.ExperienceLevel;
@@ -64,6 +65,8 @@ class ScheduleService {
             return Event.create(
                     apiEvent.eventId,
                     dayId,      // TODO do this less crappily
+                    new Date(), // TODO: use real date
+                    new Date(), // TODO: use real date
                     apiEvent.name,
                     apiEvent.place,
                     ExperienceLevel.fromRawLevel(apiEvent.experienceLevel - 1), // TODO fix the data
