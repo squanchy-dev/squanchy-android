@@ -32,14 +32,18 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchV
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_menu, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
+        MenuItemCompat.setOnActionExpandListener(searchItem, this);
         searchItem.expandActionView();
+        setUpSearchView(searchItem);
+        loadSearchConfig();
+        return true;
+    }
+
+    private void setUpSearchView(MenuItem searchItem) {
         searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener(this);
         searchView.setQuery("", false);
         searchView.clearFocus();
-        MenuItemCompat.setOnActionExpandListener(searchItem, this);
-        loadSearchConfig();
-        return true;
     }
 
     private void loadSearchConfig() {
