@@ -29,26 +29,22 @@ public class NotificationService extends IntentService {
         Notifier notifier = Notifier.from(this);
 
         DateTime now = new DateTime();
-        DateTime notificationIntervalEnd2 = now.withPeriodAdded(NOTIFICATION_INTERVAL, 1);
+        DateTime notificationIntervalEnd = now.withPeriodAdded(NOTIFICATION_INTERVAL, 1);
 
         Observable<Event> favourites = Observable.empty(); // TODO load all events from somewhere
         Observable<Event> sortedFavourites = favourites.sorted(byStartDate());
 
         sortedFavourites
-                .filter(event -> startingIn(now, event, notificationIntervalEnd2))
+                .filter(event -> event.start().isAfterNow())
+                .filter(event -> event.start().isBefore(notificationIntervalEnd) || event.start().isEqual(notificationIntervalEnd))
                 .toList()
                 .map(notificationCreator::createFrom)
                 .subscribe(notifier::showNotifications);
 
         sortedFavourites
-                .filter(event -> event.start().isAfter(notificationIntervalEnd2))
+                .filter(event -> event.start().isAfter(notificationIntervalEnd))
                 .take(1)
                 .subscribe(this::scheduleNextAlarm);
-    }
-
-    private boolean startingIn(DateTime now, Event event, DateTime notificationIntervalEnd2) {
-        DateTime eventStart = event.start();
-        return eventStart.isAfterNow() && (eventStart.isBefore(notificationIntervalEnd2) || eventStart.isEqual(notificationIntervalEnd2));
     }
 
     private Comparator<Event> byStartDate() {
