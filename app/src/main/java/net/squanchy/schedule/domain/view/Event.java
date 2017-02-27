@@ -10,12 +10,16 @@ import net.squanchy.eventdetails.domain.view.ExperienceLevel;
 import net.squanchy.speaker.domain.view.Speaker;
 import net.squanchy.support.view.Visibility;
 
+import org.joda.time.DateTime;
+
 @AutoValue
 public abstract class Event {
 
     public static Event create(
             long eventId,
             int dayId,
+            DateTime start,
+            DateTime end,
             String title,
             String place,
             ExperienceLevel experienceLevel,
@@ -24,6 +28,8 @@ public abstract class Event {
         return new AutoValue_Event.Builder()
                 .id(eventId)
                 .day(dayId)
+                .start(start)
+                .end(end)
                 .title(title)
                 .place(place)
                 .placeVisibility(place.isEmpty() ? View.GONE : View.VISIBLE)
@@ -33,11 +39,6 @@ public abstract class Event {
                 .experienceLevel(experienceLevel)
                 .build();
     }
-
-    // TODO: move in its own enum
-    private static final int BEGINNER = 1;
-    private static final int INTERMEDIATE = 2;
-    private static final int ADVANCED = 3;
 
     public abstract long id();
 
@@ -60,6 +61,10 @@ public abstract class Event {
 
     public abstract int day();
 
+    public abstract DateTime start();
+
+    public abstract DateTime end();
+
     public String speakersNames() {
         StringBuilder speakersBuilder = new StringBuilder();
         for (Speaker speaker : speakers()) {
@@ -79,6 +84,10 @@ public abstract class Event {
         public abstract Builder id(long id);
 
         public abstract Builder day(int day);
+
+        public abstract Builder start(DateTime start);
+
+        public abstract Builder end(DateTime end);
 
         public abstract Builder title(String title);
 
