@@ -64,7 +64,7 @@
     </service>
 
     <service
-      android:name=".notification.NotificationService"
+      android:name="net.squanchy.notification.NotificationService"
       android:exported="false" />
 
     <meta-data
