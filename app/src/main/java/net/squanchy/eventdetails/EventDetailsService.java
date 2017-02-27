@@ -8,14 +8,13 @@ import net.squanchy.service.firebase.FirebaseDbService;
 import net.squanchy.service.firebase.model.FirebaseEvent;
 import net.squanchy.service.firebase.model.FirebaseSpeaker;
 import net.squanchy.service.firebase.model.FirebaseSpeakers;
-import net.squanchy.support.lang.Ids;
 import net.squanchy.support.lang.Lists;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.schedulers.Schedulers;
 
-import static net.squanchy.support.lang.Ids.safelyConvertId;
+import static net.squanchy.support.lang.Ids.safelyConvertIdToLong;
 import static net.squanchy.support.lang.Lists.find;
 import static net.squanchy.support.lang.Lists.map;
 
@@ -42,7 +41,7 @@ class EventDetailsService {
         return (apiEvent, apiSpeakers) -> {
             List<FirebaseSpeaker> speakers = speakersForEvent(apiEvent, apiSpeakers);
             return Event.create(
-                    safelyConvertId(apiEvent.id),
+                    safelyConvertIdToLong(apiEvent.id),
                     dayId,
                     apiEvent.name,
                     apiEvent.place_id,

@@ -3,24 +3,19 @@ package net.squanchy.speaker.domain.view;
 import com.google.auto.value.AutoValue;
 
 import net.squanchy.service.firebase.model.FirebaseSpeaker;
+import net.squanchy.support.lang.Ids;
 
 @AutoValue
 public abstract class Speaker {
 
     public static Speaker create(FirebaseSpeaker speaker) {
-        return new AutoValue_Speaker(speaker.speakerId, speaker.firstName,
-                speaker.lastName, speaker.avatarImageURL);
+        return new AutoValue_Speaker(Ids.safelyConvertIdToLong(speaker.id), speaker.name,speaker.photo_url);
     }
 
     public abstract long id();
 
-    public abstract String firstName();
-
-    public abstract String lastName();
+    public abstract String fullName();
 
     public abstract String avatarImageURL();
 
-    public String fullName() {
-        return firstName() + " " + lastName();
-    }
 }

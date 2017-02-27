@@ -17,7 +17,7 @@ import net.squanchy.support.lang.Ids;
 import net.squanchy.support.lang.Lists;
 
 import io.reactivex.Observable;
-import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Function3;
 import io.reactivex.schedulers.Schedulers;
 
 import static net.squanchy.support.lang.Ids.*;
@@ -40,32 +40,35 @@ class ScheduleService {
         return Observable.combineLatest(
                 sessionsObservable,
                 speakersObservable,
+                daysObservable,
                 combineIntoSchedule()
         ).subscribeOn(Schedulers.io());
     }
 
-    private BiFunction<FirebaseSchedule, FirebaseSpeakers, Schedule> combineIntoSchedule() {
-        return (apiSchedule, apiSpeakers) -> {
-            List<SchedulePage> pages = map(apiSchedule.sessions., toSchedulePage(apiSchedule, apiSpeakers));
+    private Function3<FirebaseSchedule, FirebaseSpeakers, FirebaseDays, Schedule> combineIntoSchedule() {
+        return (apiSchedule, apiSpeakers, apiDays) -> {
+            List<SchedulePage> pages = map(apiSchedule.sessions, toSchedulePage(apiSchedule, apiSpeakers, apiDays));
             return Schedule.create(pages);
         };
     }
 
-    private Lists.Function<FirebaseDay, SchedulePage> toSchedulePage(FirebaseSchedule apiSchedule, FirebaseSpeakers apiSpeakers) {
-        return apiDay -> {
-            int dayId = apiSchedule.sessions;
-            return SchedulePage.create(
-                    apiDay.date,
-                    map(apiDay.events, toEvent(apiSpeakers, dayId))
-            );
+    private Lists.Function<FirebaseEvent, SchedulePage> toSchedulePage(FirebaseSchedule apiSchedule, FirebaseSpeakers apiSpeakers, FirebaseDays apiDays) {
+        return firebaseEvent -> {
+            int dayId = Ids.safelyConvertIdToInt(firebaseEvent.day_id);
+            String date = findDate(apiDays, firebaseEvent.day_id);
+            return SchedulePage.create(date, map(apiSchedule.sessions,toEvent(apiSpeakers, dayId)));
         };
+    }
+
+    private String findDate(FirebaseDays apiDays, String day_id) {
+        return find(apiDays.days, firebaseDay -> firebaseDay.id.equals(day_id)).date;
     }
 
     private Lists.Function<FirebaseEvent, Event> toEvent(FirebaseSpeakers apiSpeakers, int dayId) {
         return apiEvent -> {
             List<FirebaseSpeaker> speakers = speakersForEvent(apiEvent, apiSpeakers);
             return Event.create(
-                    safelyConvertId(apiEvent.id),
+                    safelyConvertIdToLong(apiEvent.id),
                     dayId,      // TODO do this less crappily
                     apiEvent.name,
                     apiEvent.place_id,
