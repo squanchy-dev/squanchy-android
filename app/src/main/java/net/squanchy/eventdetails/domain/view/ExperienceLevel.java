@@ -1,6 +1,7 @@
 package net.squanchy.eventdetails.domain.view;
 
 import android.support.annotation.IntRange;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 
 import net.squanchy.R;
@@ -12,6 +13,10 @@ public enum ExperienceLevel {
 
     private final int rawLevel;
     private final int labelStringResId;
+
+    public static ExperienceLevel fromRawLevel(@Nullable String rawLevel) { //TODO fix this when we have proper data
+        return ExperienceLevel.values()[0];
+    }
 
     public static ExperienceLevel fromRawLevel(@IntRange(from = 0, to = 2) int rawLevel) {
         return ExperienceLevel.values()[rawLevel];

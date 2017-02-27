@@ -7,7 +7,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Locale;
 
+import net.squanchy.service.firebase.model.FirebaseDays;
 import net.squanchy.service.firebase.model.FirebaseEvent;
+import net.squanchy.service.firebase.model.FirebaseSchedule;
+import net.squanchy.service.firebase.model.FirebaseSpeakers;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -22,8 +25,8 @@ public final class UnauthenticatedFirebaseDbService implements FirebaseDbService
     }
 
     @Override
-    public Observable<FirebaseInfoItems> info() {
-        return observeChild("info", FirebaseInfoItems.class);
+    public Observable<FirebaseDays> days() {
+        return observeChild("days", FirebaseDays.class);
     }
 
     @Override

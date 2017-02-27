@@ -2,7 +2,10 @@ package net.squanchy.service.firebase;
 
 import java.util.concurrent.Callable;
 
+import net.squanchy.service.firebase.model.FirebaseDays;
 import net.squanchy.service.firebase.model.FirebaseEvent;
+import net.squanchy.service.firebase.model.FirebaseSchedule;
+import net.squanchy.service.firebase.model.FirebaseSpeakers;
 
 import io.reactivex.Observable;
 
@@ -17,8 +20,8 @@ public class AuthenticatedFirebaseDbService implements FirebaseDbService {
     }
 
     @Override
-    public Observable<FirebaseInfoItems> info() {
-        return signInAnd(dbService::info);
+    public Observable<FirebaseDays> days() {
+        return signInAnd(dbService::days);
     }
 
     @Override

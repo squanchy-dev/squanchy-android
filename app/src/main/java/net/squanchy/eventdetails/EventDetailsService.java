@@ -7,12 +7,15 @@ import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.service.firebase.FirebaseDbService;
 import net.squanchy.service.firebase.model.FirebaseEvent;
 import net.squanchy.service.firebase.model.FirebaseSpeaker;
+import net.squanchy.service.firebase.model.FirebaseSpeakers;
+import net.squanchy.support.lang.Ids;
 import net.squanchy.support.lang.Lists;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.schedulers.Schedulers;
 
+import static net.squanchy.support.lang.Ids.safelyConvertId;
 import static net.squanchy.support.lang.Lists.find;
 import static net.squanchy.support.lang.Lists.map;
 
@@ -39,25 +42,25 @@ class EventDetailsService {
         return (apiEvent, apiSpeakers) -> {
             List<FirebaseSpeaker> speakers = speakersForEvent(apiEvent, apiSpeakers);
             return Event.create(
-                    apiEvent.eventId,
+                    safelyConvertId(apiEvent.id),
                     dayId,
                     apiEvent.name,
-                    apiEvent.place,
-                    ExperienceLevel.fromRawLevel(apiEvent.experienceLevel - 1), // TODO fix the data
+                    apiEvent.place_id,
+                    ExperienceLevel.fromRawLevel(apiEvent.experience_level), // TODO Fix after deciding how to deal with this
                     map(speakers, toSpeakerName())
             );
         };
     }
 
     private List<FirebaseSpeaker> speakersForEvent(FirebaseEvent apiEvent, FirebaseSpeakers apiSpeakers) {
-        return map(apiEvent.speakers, speakerId -> findSpeaker(apiSpeakers, speakerId));
+        return map(apiEvent.speaker_ids, speakerId -> findSpeaker(apiSpeakers, speakerId));
     }
 
-    private FirebaseSpeaker findSpeaker(FirebaseSpeakers apiSpeakers, long speakerId) {
-        return find(apiSpeakers.speakers, apiSpeaker -> apiSpeaker.speakerId.equals(speakerId));
+    private FirebaseSpeaker findSpeaker(FirebaseSpeakers apiSpeakers, String speakerId) {
+        return find(apiSpeakers.speakers, apiSpeaker -> apiSpeaker.id.equals(speakerId));
     }
 
     private Lists.Function<FirebaseSpeaker, String> toSpeakerName() {
-        return apiSpeaker -> apiSpeaker != null ? apiSpeaker.firstName + " " + apiSpeaker.lastName : null;
+        return apiSpeaker -> apiSpeaker != null ? apiSpeaker.name : null;
     }
 }
