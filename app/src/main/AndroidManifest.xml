@@ -62,7 +62,9 @@
       </intent-filter>
     </service>
 
-    <service android:name=".notification.NotificationService" />
+    <service
+      android:name=".notification.NotificationService"
+      android:exported="false" />
 
     <meta-data
       android:name="com.google.android.gms.version"
