@@ -4,12 +4,13 @@ import android.view.View;
 
 import com.google.auto.value.AutoValue;
 
-import java.util.Date;
 import java.util.List;
 
 import net.squanchy.eventdetails.domain.view.ExperienceLevel;
 import net.squanchy.speaker.domain.view.Speaker;
 import net.squanchy.support.view.Visibility;
+
+import org.joda.time.DateTime;
 
 @AutoValue
 public abstract class Event {
@@ -17,8 +18,8 @@ public abstract class Event {
     public static Event create(
             long eventId,
             int dayId,
-            Date start,
-            Date end,
+            DateTime start,
+            DateTime end,
             String title,
             String place,
             ExperienceLevel experienceLevel,
@@ -60,9 +61,9 @@ public abstract class Event {
 
     public abstract int day();
 
-    public abstract Date start();
+    public abstract DateTime start();
 
-    public abstract Date end();
+    public abstract DateTime end();
 
     public String speakersNames() {
         StringBuilder speakersBuilder = new StringBuilder();
@@ -84,9 +85,9 @@ public abstract class Event {
 
         public abstract Builder day(int day);
 
-        public abstract Builder start(Date start);
+        public abstract Builder start(DateTime start);
 
-        public abstract Builder end(Date end);
+        public abstract Builder end(DateTime end);
 
         public abstract Builder title(String title);
 

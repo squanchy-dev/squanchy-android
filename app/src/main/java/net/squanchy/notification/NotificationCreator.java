@@ -50,7 +50,7 @@ public class NotificationCreator {
                 .setContentText(event.place())
                 //.setColor(track.color().getIntValue()) TODO set color depending on the track
                 .setUsesChronometer(true)
-                .setWhen(event.start().getTime())
+                .setWhen(event.start().getMillis())
                 .setShowWhen(true)
                 .setGroup(GROUP_KEY_NOTIFY_SESSION);
 

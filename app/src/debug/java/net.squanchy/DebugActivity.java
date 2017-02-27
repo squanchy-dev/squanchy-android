@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import net.squanchy.eventdetails.domain.view.ExperienceLevel;
@@ -18,6 +17,8 @@ import net.squanchy.notification.Notifier;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.service.firebase.model.FirebaseSpeaker;
 import net.squanchy.speaker.domain.view.Speaker;
+
+import org.joda.time.DateTime;
 
 @SuppressWarnings("checkstyle:magicnumber")
 public class DebugActivity extends Activity {
@@ -63,9 +64,9 @@ public class DebugActivity extends Activity {
     private Event createTestEvent(int id) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MINUTE, 5);
-        Date start = calendar.getTime();
+        DateTime start = new DateTime(calendar.getTime());
         calendar.add(Calendar.MINUTE, 45);
-        Date end = calendar.getTime();
+        DateTime end = new DateTime(calendar.getTime());
         return Event.create(
                 id,
                 1,

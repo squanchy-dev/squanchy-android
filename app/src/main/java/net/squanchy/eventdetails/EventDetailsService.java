@@ -1,6 +1,5 @@
 package net.squanchy.eventdetails;
 
-import java.util.Date;
 import java.util.List;
 
 import net.squanchy.eventdetails.domain.view.ExperienceLevel;
@@ -11,6 +10,8 @@ import net.squanchy.service.firebase.model.FirebaseSpeaker;
 import net.squanchy.service.firebase.model.FirebaseSpeakers;
 import net.squanchy.speaker.domain.view.Speaker;
 import net.squanchy.support.lang.Lists;
+
+import org.joda.time.DateTime;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.BiFunction;
@@ -44,8 +45,8 @@ class EventDetailsService {
             return Event.create(
                     apiEvent.eventId,
                     dayId,
-                    new Date(), // TODO: use real date
-                    new Date(), // TODO: use real date
+                    new DateTime(), // TODO: use real date
+                    new DateTime(), // TODO: use real date
                     apiEvent.name,
                     apiEvent.place,
                     ExperienceLevel.fromRawLevel(apiEvent.experienceLevel - 1), // TODO fix the data
