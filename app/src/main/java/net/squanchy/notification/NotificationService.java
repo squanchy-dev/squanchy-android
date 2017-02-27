@@ -18,18 +18,19 @@ import io.reactivex.Observable;
 public class NotificationService extends IntentService {
 
     private static final Minutes NOTIFICATION_INTERVAL = Minutes.minutes(10);
+    
+    private final NotificationCreator notificationCreator;
+    private final Notifier notifier;
 
     public NotificationService() {
         super(NotificationService.class.getSimpleName());
+        notificationCreator = new NotificationCreator(this);
+        notifier = Notifier.from(this);
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        NotificationCreator notificationCreator = new NotificationCreator(this);
-        Notifier notifier = Notifier.from(this);
-
-        DateTime now = new DateTime();
-        DateTime notificationIntervalEnd = now.withPeriodAdded(NOTIFICATION_INTERVAL, 1);
+        DateTime notificationIntervalEnd = new DateTime().withPeriodAdded(NOTIFICATION_INTERVAL, 1);
 
         Observable<Event> favourites = Observable.empty(); // TODO load all events from somewhere
         Observable<Event> sortedFavourites = favourites.sorted(byStartDate());
