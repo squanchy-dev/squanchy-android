@@ -3,7 +3,6 @@ package net.squanchy;
 import android.app.Activity;
 import android.app.Notification;
 import android.content.Intent;
-import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -62,11 +61,8 @@ public class DebugActivity extends Activity {
     }
 
     private Event createTestEvent(int id) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MINUTE, 5);
-        DateTime start = new DateTime(calendar.getTime());
-        calendar.add(Calendar.MINUTE, 45);
-        DateTime end = new DateTime(calendar.getTime());
+        DateTime start = new DateTime().plusMinutes(5);
+        DateTime end = new DateTime().plusMinutes(45);
         return Event.create(
                 id,
                 1,

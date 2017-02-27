@@ -11,14 +11,13 @@ import java.util.Comparator;
 import net.squanchy.schedule.domain.view.Event;
 
 import org.joda.time.DateTime;
-import org.joda.time.Minutes;
 
 import io.reactivex.Observable;
 
 public class NotificationService extends IntentService {
 
-    private static final Minutes NOTIFICATION_INTERVAL = Minutes.minutes(10);
-    
+    private static final int NOTIFICATION_INTERVAL_MINUTES = 10;
+
     private final NotificationCreator notificationCreator;
     private final Notifier notifier;
 
@@ -30,14 +29,14 @@ public class NotificationService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        DateTime notificationIntervalEnd = new DateTime().withPeriodAdded(NOTIFICATION_INTERVAL, 1);
+        DateTime notificationIntervalEnd = new DateTime().plusMinutes(NOTIFICATION_INTERVAL_MINUTES);
 
         Observable<Event> favourites = Observable.empty(); // TODO load all events from somewhere
         Observable<Event> sortedFavourites = favourites.sorted(byStartDate());
 
         sortedFavourites
                 .filter(event -> event.start().isAfterNow())
-                .filter(event -> event.start().isBefore(notificationIntervalEnd) || event.start().isEqual(notificationIntervalEnd))
+                .filter(event -> isBeforeOrEqualTo(event.start(), notificationIntervalEnd))
                 .toList()
                 .map(notificationCreator::createFrom)
                 .subscribe(notifier::showNotifications);
@@ -48,12 +47,16 @@ public class NotificationService extends IntentService {
                 .subscribe(this::scheduleNextAlarm);
     }
 
+    private boolean isBeforeOrEqualTo(DateTime start, DateTime notificationIntervalEnd) {
+        return start.isBefore(notificationIntervalEnd) || start.isEqual(notificationIntervalEnd);
+    }
+
     private Comparator<Event> byStartDate() {
         return (event1, event2) -> event1.start().compareTo(event2.start());
     }
 
     private void scheduleNextAlarm(Event event) {
-        DateTime serviceAlarm = event.start().withPeriodAdded(NOTIFICATION_INTERVAL, -1);
+        DateTime serviceAlarm = event.start().minusMinutes(NOTIFICATION_INTERVAL_MINUTES);
 
         Intent serviceIntent = new Intent(this, NotificationService.class);
         PendingIntent pendingIntent = PendingIntent.getService(this, 0, serviceIntent, PendingIntent.FLAG_CANCEL_CURRENT);
