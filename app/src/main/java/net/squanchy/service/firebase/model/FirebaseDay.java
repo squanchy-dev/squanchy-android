@@ -1,14 +1,16 @@
 package net.squanchy.service.firebase.model;
 
-import java.util.List;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 public class FirebaseDay {
 
+    @NonNull
+    public String id;
+
+    @NonNull
+    public int position;
+
+    @Nullable
     public String date;
-
-    public List<FirebaseEvent> programEvents;
-
-    public List<FirebaseEvent> bofsEvents;
-
-    public List<FirebaseEvent> events;
 }

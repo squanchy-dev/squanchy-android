@@ -1,28 +1,31 @@
 package net.squanchy.service.firebase.model;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 public class FirebaseSpeaker {
 
-    public Long speakerId;
+    @NonNull
+    public String id;
 
-    public String firstName;
+    @NonNull
+    public String name;
 
-    public String lastName;
+    @NonNull
+    public String bio;
 
-    public String avatarImageURL;
+    @Nullable
+    public String company_name;
 
-    public String organizationName;
+    @Nullable
+    public String company_url;
 
-    public String jobTitle;
+    @Nullable
+    public String personal_url;
 
-    public String characteristic;
+    @Nullable
+    public String twitter_username;
 
-    public String twitterName;
-
-    public String webSite;
-
-    public Long order;
-
-    public Boolean deleted;
-
-    public String email;
+    @Nullable
+    public String photo_url;
 }

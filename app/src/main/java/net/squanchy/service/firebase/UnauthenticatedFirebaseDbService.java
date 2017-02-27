@@ -8,9 +8,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Locale;
 
 import net.squanchy.service.firebase.model.FirebaseEvent;
-import net.squanchy.service.firebase.model.FirebaseInfoItems;
-import net.squanchy.service.firebase.model.FirebaseSchedule;
-import net.squanchy.service.firebase.model.FirebaseSpeakers;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;

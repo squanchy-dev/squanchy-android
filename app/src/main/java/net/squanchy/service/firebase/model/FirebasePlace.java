@@ -3,7 +3,7 @@ package net.squanchy.service.firebase.model;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-public class FirebaseTrack {
+public class FirebasePlace {
 
     @NonNull
     public String id;
@@ -12,11 +12,5 @@ public class FirebaseTrack {
     public String name;
 
     @Nullable
-    public String accent_color;
-
-    @Nullable
-    public String text_color;
-
-    @Nullable
-    public String icon_url;
+    public String floor;
 }
