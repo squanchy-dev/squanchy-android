@@ -9,7 +9,7 @@ import com.novoda.viewpageradapter.ViewPagerAdapter;
 public class HomeViewPagerAdapter extends ViewPagerAdapter<View> {
 
     public static final int SCHEDULE_POSITION = 0;
-    public static final int FAVOURITES_POSITION = 1;
+    public static final int FAVORITES_POSITION = 1;
     public static final int TWEETS_POSITION = 2;
     public static final int VENUE_POSITION = 3;
 

@@ -30,7 +30,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
                         case R.id.action_schedule:
                             viewPager.setCurrentItem(HomeViewPagerAdapter.SCHEDULE_POSITION);
                             break;
-                        case R.id.action_favourite:
+                        case R.id.action_favorite:
                             break;
                         case R.id.action_tweet:
                             break;

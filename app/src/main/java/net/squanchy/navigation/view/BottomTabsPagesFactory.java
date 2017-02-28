@@ -14,9 +14,12 @@ class BottomTabsPagesFactory {
         switch (position) {
             case HomeViewPagerAdapter.SCHEDULE_POSITION:
                 return inflater.inflate(R.layout.schedule_view, parent, false);
-            case HomeViewPagerAdapter.FAVOURITES_POSITION:
+            case HomeViewPagerAdapter.FAVORITES_POSITION:
+                return inflater.inflate(R.layout.favorites_view, parent, false);
             case HomeViewPagerAdapter.TWEETS_POSITION:
+                return inflater.inflate(R.layout.tweets_view, parent, false);
             case HomeViewPagerAdapter.VENUE_POSITION:
+                return inflater.inflate(R.layout.venue_view, parent, false);
             default:
                 throw new IllegalArgumentException("Unsupported tab type for position " + position);
         }
