@@ -15,19 +15,19 @@ import java.util.List;
 import net.squanchy.R;
 import net.squanchy.schedule.domain.view.Event;
 
-public class SchedulePageView extends RecyclerView {
+public class ScheduleDayPageView extends RecyclerView {
 
     private EventsAdapter adapter;
 
-    public SchedulePageView(Context context) {
+    public ScheduleDayPageView(Context context) {
         super(context);
     }
 
-    public SchedulePageView(Context context, @Nullable AttributeSet attrs) {
+    public ScheduleDayPageView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public SchedulePageView(Context context, @Nullable AttributeSet attrs, int defStyle) {
+    public ScheduleDayPageView(Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
