@@ -29,12 +29,6 @@
       android:theme="@style/Theme.Squanchy.EventDetails" />
 
     <activity
-      android:name="net.squanchy.social.SocialFeedActivity"
-      android:theme="@style/Theme.Squanchy.SocialFeed"
-      android:label="@string/activity_social_feed"
-      android:screenOrientation="portrait" />
-
-    <activity
       android:name="net.squanchy.speaker.SpeakerListActivity"
       android:label="@string/activity_speaker_list" />
 

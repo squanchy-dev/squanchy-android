@@ -1,14 +1,11 @@
-package net.squanchy.social;
+package net.squanchy.tweets;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import net.squanchy.R;
-import net.squanchy.analytics.Analytics;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterException;
@@ -17,38 +14,41 @@ import com.twitter.sdk.android.tweetui.SearchTimeline;
 import com.twitter.sdk.android.tweetui.TimelineResult;
 import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
 
+import net.squanchy.R;
+
 import timber.log.Timber;
 
-public class SocialFeedActivity extends AppCompatActivity {
-
-    private Analytics analytics;
+public class TweetsPageView extends LinearLayout {
 
     private ListView tweetsList;
     private TweetTimelineListAdapter tweetsAdapter;
     private SwipeRefreshLayout swipeLayout;
     private boolean refreshingData;
 
+    public TweetsPageView(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public TweetsPageView(Context context, AttributeSet attrs, int defStyleAttr) {
+        this(context, attrs, defStyleAttr, 0);
+    }
+
+    public TweetsPageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+
+        super.setOrientation(VERTICAL);
+    }
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void setOrientation(int orientation) {
+        throw new UnsupportedOperationException("TweetsPageView doesn't support changing orientation");
+    }
 
-        analytics = Analytics.from(this);
-
-        setContentView(R.layout.activity_social_feed);
-
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-
-        SearchTimeline timeline = new SearchTimeline.Builder()
-                .query(getString(R.string.social_query))
-                .build();
-
-        tweetsAdapter = new TweetTimelineListAdapter.Builder(this)
-                .setTimeline(timeline)
-                .build();
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
 
         tweetsList = (ListView) findViewById(R.id.list);
-        tweetsList.setAdapter(tweetsAdapter);
-
         swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_container);
 
         swipeLayout.setOnRefreshListener(() -> {
@@ -60,10 +60,26 @@ public class SocialFeedActivity extends AppCompatActivity {
         });
     }
 
+//    @Override                        TODO move to page selected in HomeActivity
+//    protected void onStart() {
+//        super.onStart();
+//        analytics.trackEvent("Social Feed screen", getString(R.string.action_open));
+//    }
+
     @Override
-    protected void onStart() {
-        super.onStart();
-        analytics.trackEvent("Social Feed screen", getString(R.string.action_open));
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+
+        Context context = getContext();
+        SearchTimeline timeline = new SearchTimeline.Builder()
+                .query(context.getString(R.string.social_query))
+                .build();
+
+        tweetsAdapter = new TweetTimelineListAdapter.Builder(context)
+                .setTimeline(timeline)
+                .build();
+
+        tweetsList.setAdapter(tweetsAdapter);
     }
 
     private void refreshTimeline() {
@@ -90,6 +106,5 @@ public class SocialFeedActivity extends AppCompatActivity {
             Timber.e(exception, "Error while refreshing the timeline.");
             // TODO show empty state
         }
-
     }
 }
