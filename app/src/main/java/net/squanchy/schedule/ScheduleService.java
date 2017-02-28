@@ -21,11 +21,9 @@ import net.squanchy.support.lang.Lists;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.BiFunction;
-import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Function3;
 import io.reactivex.schedulers.Schedulers;
-import timber.log.Timber;
 
 import static net.squanchy.support.lang.Ids.safelyConvertIdToInt;
 import static net.squanchy.support.lang.Ids.safelyConvertIdToLong;
@@ -45,12 +43,34 @@ class ScheduleService {
         Observable<FirebaseSpeakers> speakersObservable = dbService.speakers();
         final Observable<FirebaseDays> daysObservable = dbService.days();
 
-        Observable.combineLatest(sessionsObservable, speakersObservable, combineSessionsAndSpeakers())
-                .map(events -> Lists.reduce(new HashMap<>(), events, listToDaysHashMap()))
-                .subscribe(integerListHashMap -> Timber.d("%d", integerListHashMap.keySet().size()));
+        return Observable.combineLatest(sessionsObservable, speakersObservable, combineSessionsAndSpeakers())
+                .map(mapEventsToDays())
+                .withLatestFrom(daysObservable, combineDaysToGetASchedule())
+                .subscribeOn(Schedulers.io());
 
 
-        return olderFunction(sessionsObservable, speakersObservable, daysObservable);
+//        return olderFunction(sessionsObservable, speakersObservable, daysObservable);
+    }
+
+    @NonNull
+    private BiFunction<HashMap<Integer, List<Event>>, FirebaseDays, Schedule> combineDaysToGetASchedule() {
+        return new BiFunction<HashMap<Integer,List<Event>>, FirebaseDays, Schedule>() {
+            @Override
+            public Schedule apply(HashMap<Integer, List<Event>> map, FirebaseDays apiDays) throws Exception {
+                List<SchedulePage> pages = new ArrayList<>(map.size());
+                for (Integer key : map.keySet()) {
+                    String date = findDate(apiDays, key);
+                    pages.add(SchedulePage.create(date, map.get(key)));
+                }
+
+                return Schedule.create(pages);
+            }
+        };
+    }
+
+    @NonNull
+    private Function<List<Event>, HashMap<Integer, List<Event>>> mapEventsToDays() {
+        return events -> Lists.reduce(new HashMap<>(), events, listToDaysHashMap());
     }
 
     @NonNull
@@ -116,6 +136,10 @@ class ScheduleService {
 
     private String findDate(FirebaseDays apiDays, String day_id) {
         return find(apiDays.days, firebaseDay -> firebaseDay.id.equals(day_id)).date;
+    }
+
+    private String findDate(FirebaseDays apiDays, int dayId) {
+        return findDate(apiDays, "" + dayId);
     }
 
     private Lists.Function<FirebaseEvent, Event> toEvent(FirebaseSpeakers apiSpeakers, int dayId) {
