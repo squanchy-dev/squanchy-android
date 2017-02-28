@@ -41,7 +41,7 @@ class EventDetailsService {
         return (apiEvent, apiSpeakers) -> {
             List<FirebaseSpeaker> speakers = speakersForEvent(apiEvent, apiSpeakers);
             return Event.create(
-                    safelyConvertIdToLong(apiEvent.id),
+                    apiEvent.id,
                     dayId,
                     apiEvent.name,
                     apiEvent.place_id,
