@@ -81,7 +81,7 @@
     <item name="searchViewStyle">@style/Search.SearchView</item>
   </style>
 
-  <style name="Search.Overlay" parent="ThemeOverlay.AppCompat.ActionBar">
+  <style name="Search.Toolbar" parent="Squanchy.Appbar">
     <item name="android:colorControlNormal">?colorAccent</item>
     <item name="android:tint">?colorAccent</item>
   </style>

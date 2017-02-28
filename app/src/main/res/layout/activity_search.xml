@@ -4,26 +4,19 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
-  <android.support.design.widget.AppBarLayout
+  <android.support.v7.widget.Toolbar
+    android:id="@+id/search_toolbar"
+    android:theme="@style/Search.Toolbar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    style="@style/Squanchy.Appbar"
-    android:theme="@style/Search.Overlay">
+    android:layout_height="?attr/actionBarSize">
 
-    <android.support.v7.widget.Toolbar
-      android:id="@+id/search_toolbar"
+    <EditText
       android:layout_width="match_parent"
-      android:layout_height="?attr/actionBarSize">
+      android:layout_height="wrap_content"
+      android:hint="@string/search_label"
+      android:background="@null" />
 
-      <EditText
-        android:hint="@string/search_label"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@null"/>
-
-      </android.support.v7.widget.Toolbar>
-
-  </android.support.design.widget.AppBarLayout>
+  </android.support.v7.widget.Toolbar>
 
   <FrameLayout
     android:id="@+id/search_result_content"
