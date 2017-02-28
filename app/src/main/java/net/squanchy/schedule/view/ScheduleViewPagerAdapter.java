@@ -42,7 +42,7 @@ public class ScheduleViewPagerAdapter extends ViewPagerAdapter<SchedulePageView>
     @Override
     protected SchedulePageView createView(ViewGroup container, int position) {
         return (SchedulePageView) LayoutInflater.from(context)
-                .inflate(R.layout.page_schedule, container, false);
+                .inflate(R.layout.view_page_schedule_day, container, false);
     }
 
     @Override
