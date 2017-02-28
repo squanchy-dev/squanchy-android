@@ -5,8 +5,8 @@
   android:layout_height="match_parent"
   android:orientation="vertical">
 
-  <net.squanchy.navigation.view.NoSwipeViewPager
-    android:id="@+id/main_view_pager"
+  <FrameLayout
+    android:id="@+id/fragment_container"
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_weight="1"/>

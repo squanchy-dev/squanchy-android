@@ -3,15 +3,21 @@ package net.squanchy.navigation;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
 import net.squanchy.R;
+import net.squanchy.favorites.FavoritesFragment;
 import net.squanchy.fonts.TypefaceStyleableActivity;
-import net.squanchy.navigation.view.HomeViewPagerAdapter;
-import net.squanchy.navigation.view.NoSwipeViewPager;
+import net.squanchy.schedule.ScheduleFragment;
+import net.squanchy.tweets.TweetsFragment;
+import net.squanchy.venueinfo.VenueInfoFragment;
 
 public class HomeActivity extends TypefaceStyleableActivity {
 
-    private static final int KEEP_ALL_PAGES = 4;       // This is more than what we need but it's to have some leeway
+    private static final String CURRENT_SECTION = "current_section";
+    private BottomNavigationSection currentSection;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -19,28 +25,28 @@ public class HomeActivity extends TypefaceStyleableActivity {
         setContentView(R.layout.activity_home);
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        setupBottomNavigation(bottomNavigationView);
 
-        NoSwipeViewPager viewPager = (NoSwipeViewPager) findViewById(R.id.main_view_pager);
-        HomeViewPagerAdapter adapter = new HomeViewPagerAdapter(this);
-        viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(KEEP_ALL_PAGES);
+        selectPage(BottomNavigationSection.SCHEDULE);
+    }
 
+    private void setupBottomNavigation(BottomNavigationView bottomNavigationView) {
         BottomNavigationHelper.disableShiftMode(bottomNavigationView);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 item -> {
                     switch (item.getItemId()) {
                         case R.id.action_schedule:
-                            viewPager.setCurrentItem(HomeViewPagerAdapter.SCHEDULE_POSITION);
+                            selectPage(BottomNavigationSection.SCHEDULE);
                             break;
-                        case R.id.action_favorite:
-                            viewPager.setCurrentItem(HomeViewPagerAdapter.FAVORITES_POSITION);
+                        case R.id.action_favorites:
+                            selectPage(BottomNavigationSection.FAVORITES);
                             break;
-                        case R.id.action_tweet:
-                            viewPager.setCurrentItem(HomeViewPagerAdapter.TWEETS_POSITION);
+                        case R.id.action_tweets:
+                            selectPage(BottomNavigationSection.TWEETS);
                             break;
                         case R.id.action_venue:
-                            viewPager.setCurrentItem(HomeViewPagerAdapter.VENUE_POSITION);
+                            selectPage(BottomNavigationSection.VENUE_INFO);
                             break;
                         default:
                             throw new IndexOutOfBoundsException("Unsupported navigation item ID: " + item.getItemId());
@@ -48,5 +54,38 @@ public class HomeActivity extends TypefaceStyleableActivity {
                     return true;
                 }
         );
+    }
+
+    private void selectPage(BottomNavigationSection section) {
+        if (section == currentSection) {
+            return;
+        }
+
+        currentSection = section;
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        Fragment currentFragment = fragmentManager.findFragmentByTag(CURRENT_SECTION);
+        if (currentFragment != null) {
+            transaction.remove(currentFragment);
+        }
+        transaction.add(R.id.fragment_container, createFragmentFor(section), CURRENT_SECTION)
+                .commit();
+    }
+
+    private Fragment createFragmentFor(BottomNavigationSection section) {
+        switch (section) {
+            case SCHEDULE:
+                return new ScheduleFragment();
+            case FAVORITES:
+                return new FavoritesFragment();
+            case TWEETS:
+                return new TweetsFragment();
+            case VENUE_INFO:
+                return new VenueInfoFragment();
+            default:
+                throw new IllegalArgumentException("The section " + section + " is not supported");
+        }
     }
 }
