@@ -17,5 +17,6 @@
   <string name="bottom_bar_tweets_label">Tweets</string>
   <string name="bottom_bar_venue_label">Venue Info</string>
   <string name="search_label">Search</string>
+  <string name="voice_search">Voice search</string>
 
 </resources>
