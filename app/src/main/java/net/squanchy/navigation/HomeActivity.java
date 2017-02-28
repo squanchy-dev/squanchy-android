@@ -11,6 +11,8 @@ import net.squanchy.navigation.view.NoSwipeViewPager;
 
 public class HomeActivity extends TypefaceStyleableActivity {
 
+    private static final int KEEP_ALL_PAGES = 4;       // This is more than what we need but it's to have some leeway
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +23,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
         NoSwipeViewPager viewPager = (NoSwipeViewPager) findViewById(R.id.main_view_pager);
         HomeViewPagerAdapter adapter = new HomeViewPagerAdapter(this);
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(KEEP_ALL_PAGES);
 
         BottomNavigationHelper.disableShiftMode(bottomNavigationView);
 
