@@ -5,6 +5,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
@@ -20,6 +21,7 @@ import timber.log.Timber;
 
 public class TweetsPageView extends LinearLayout {
 
+    private TextView emptyView;
     private ListView tweetsList;
     private TweetTimelineListAdapter tweetsAdapter;
     private SwipeRefreshLayout swipeLayout;
@@ -48,6 +50,7 @@ public class TweetsPageView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
+        emptyView = (TextView) findViewById(R.id.empty_view);
         tweetsList = (ListView) findViewById(R.id.list);
         swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_container);
 
@@ -71,8 +74,9 @@ public class TweetsPageView extends LinearLayout {
         super.onAttachedToWindow();
 
         Context context = getContext();
+        String query = context.getString(R.string.social_query);
         SearchTimeline timeline = new SearchTimeline.Builder()
-                .query(context.getString(R.string.social_query))
+                .query(query)
                 .build();
 
         tweetsAdapter = new TweetTimelineListAdapter.Builder(context)
@@ -80,6 +84,7 @@ public class TweetsPageView extends LinearLayout {
                 .build();
 
         tweetsList.setAdapter(tweetsAdapter);
+        emptyView.setText(context.getString(R.string.no_tweets_for_query, query));
     }
 
     private void refreshTimeline() {
@@ -90,6 +95,15 @@ public class TweetsPageView extends LinearLayout {
 
     private void onRefreshFinished() {
         refreshingData = false;
+
+        if (tweetsAdapter.isEmpty()) {
+            emptyView.setVisibility(VISIBLE);
+            tweetsList.setVisibility(GONE);
+        } else {
+            emptyView.setVisibility(GONE);
+            tweetsList.setVisibility(VISIBLE);
+        }
+
         swipeLayout.setRefreshing(false);
     }
 
