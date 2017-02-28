@@ -6,15 +6,18 @@ import android.view.ViewGroup;
 
 import com.novoda.viewpageradapter.ViewPagerAdapter;
 
+import net.squanchy.schedule.SchedulePageView;
+import net.squanchy.search.OnSearchClickListener;
+
 public class HomeViewPagerAdapter extends ViewPagerAdapter<View> {
 
     public static final int SCHEDULE_POSITION = 0;
-    public static final int FAVOURITES_POSITION = 1;
+    public static final int FAVORITES_POSITION = 1;
     public static final int TWEETS_POSITION = 2;
     public static final int VENUE_POSITION = 3;
 
     // TODO increment this value when a new view is added to the PagerAdapter
-    private static final int NUMBER_OF_PAGES = 1;
+    private static final int NUMBER_OF_PAGES = 4;
 
     private final Context context;
 
@@ -24,7 +27,12 @@ public class HomeViewPagerAdapter extends ViewPagerAdapter<View> {
 
     @Override
     protected View createView(ViewGroup container, @Tab int position) {
-        return BottomTabsPagesFactory.inflate(context, container, position);
+        View view = BottomTabsPagesFactory.inflate(context, container, position);
+        if (position == 0){
+            ((SchedulePageView) view).setOnSearchClickListener((OnSearchClickListener) context);
+        }
+
+        return view;
     }
 
     @Override

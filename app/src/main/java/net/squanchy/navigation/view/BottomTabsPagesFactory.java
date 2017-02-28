@@ -6,8 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import net.squanchy.R;
-import net.squanchy.schedule.ScheduleView;
-import net.squanchy.search.OnSearchClickListener;
 
 class BottomTabsPagesFactory {
 
@@ -15,13 +13,13 @@ class BottomTabsPagesFactory {
         LayoutInflater inflater = LayoutInflater.from(context);
         switch (position) {
             case HomeViewPagerAdapter.SCHEDULE_POSITION:
-                //TODO do this better
-                ScheduleView view = (ScheduleView) inflater.inflate(R.layout.schedule_view, parent, false);
-                view.setOnSearchClickListener((OnSearchClickListener) context);
-                return view;
-            case HomeViewPagerAdapter.FAVOURITES_POSITION:
+                return inflater.inflate(R.layout.view_page_schedule, parent, false);
+            case HomeViewPagerAdapter.FAVORITES_POSITION:
+                return inflater.inflate(R.layout.view_page_favorites, parent, false);
             case HomeViewPagerAdapter.TWEETS_POSITION:
+                return inflater.inflate(R.layout.view_page_tweets, parent, false);
             case HomeViewPagerAdapter.VENUE_POSITION:
+                return inflater.inflate(R.layout.view_page_venue, parent, false);
             default:
                 throw new IllegalArgumentException("Unsupported tab type for position " + position);
         }

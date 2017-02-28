@@ -21,7 +21,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyTypefaceSpan;
 import uk.co.chrisjenx.calligraphy.CalligraphyUtils;
 import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
-public class ScheduleView extends CoordinatorLayout {
+public class SchedulePageView extends CoordinatorLayout {
 
     private ScheduleViewPagerAdapter viewPagerAdapter;
     private View progressBar;
@@ -30,11 +30,11 @@ public class ScheduleView extends CoordinatorLayout {
 
     private OnSearchClickListener listener;
 
-    public ScheduleView(Context context, AttributeSet attrs) {
+    public SchedulePageView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public ScheduleView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SchedulePageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
