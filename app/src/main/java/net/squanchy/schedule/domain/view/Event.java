@@ -13,7 +13,7 @@ import net.squanchy.support.view.Visibility;
 public abstract class Event {
 
     public static Event create(
-            long eventId,
+            String eventId,
             int dayId,
             String title,
             String place,
@@ -46,7 +46,7 @@ public abstract class Event {
         return speakersBuilder.toString();
     }
 
-    public abstract long id();
+    public abstract String id();
 
     public abstract String title();
 
@@ -70,7 +70,7 @@ public abstract class Event {
     @AutoValue.Builder
     public abstract static class Builder {
 
-        public abstract Builder id(long id);
+        public abstract Builder id(String id);
 
         public abstract Builder day(int day);
 
