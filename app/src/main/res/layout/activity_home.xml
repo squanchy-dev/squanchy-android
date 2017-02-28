@@ -17,8 +17,8 @@
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
     android:background="?colorPrimary"
-    app:itemIconTint="?colorControlNormal"
-    app:itemTextColor="?colorControlNormal"
+    app:itemIconTint="@color/bottom_navigation_item"
+    app:itemTextColor="@color/bottom_navigation_item"
     app:menu="@menu/bottom_bar_menu" />
 
 </LinearLayout>
