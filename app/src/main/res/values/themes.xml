@@ -31,7 +31,9 @@
   <style name="Theme.Squanchy.Favorites" parent="Theme.Squanchy" />
 
   <style name="Theme.Squanchy.Tweets" parent="Theme.Squanchy">
-    <item name="colorPrimary">@color/primary_purple</item>
+    <item name="colorPrimary">@color/primary_azure</item>
+    <item name="colorPrimaryDark">@color/primary_dark_azure</item>
+    <item name="android:statusBarColor">@color/status_bar_primary_azure</item>
   </style>
 
   <style name="Theme.Squanchy.VenueInfo" parent="Theme.Squanchy">

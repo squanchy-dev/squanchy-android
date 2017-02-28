@@ -1,11 +1,17 @@
 package net.squanchy.navigation;
 
+import android.animation.ValueAnimator;
+import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
+import android.support.annotation.StyleRes;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.view.ContextThemeWrapper;
+import android.view.Window;
 
 import net.squanchy.R;
 import net.squanchy.favorites.FavoritesFragment;
@@ -17,6 +23,7 @@ import net.squanchy.venueinfo.VenueInfoFragment;
 public class HomeActivity extends TypefaceStyleableActivity {
 
     private static final String TAG_CURRENT_SECTION = "current_section";
+    private static final int FRAGMENT_FADE_DURATION = 220;
 
     private BottomNavigationSection currentSection;
 
@@ -74,6 +81,8 @@ public class HomeActivity extends TypefaceStyleableActivity {
         transaction.add(R.id.fragment_container, createFragmentFor(section), TAG_CURRENT_SECTION)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .commit();
+
+        setStatusBarColorFromTheme(section.theme());
     }
 
     private Fragment createFragmentFor(BottomNavigationSection section) {
@@ -89,5 +98,26 @@ public class HomeActivity extends TypefaceStyleableActivity {
             default:
                 throw new IllegalArgumentException("The section " + section + " is not supported");
         }
+    }
+
+    private void setStatusBarColorFromTheme(@StyleRes int theme) {
+        ContextThemeWrapper wrappedContext = new ContextThemeWrapper(this, theme);
+        TypedArray a = wrappedContext.obtainStyledAttributes(new int[]{android.R.attr.statusBarColor});
+        try {
+            int statusBarColor = a.getColor(0, 0);
+            setStatusBarColor(statusBarColor);
+        } finally {
+            a.recycle();
+        }
+    }
+
+    private void setStatusBarColor(@ColorInt int color) {
+        Window window = getWindow();
+        int currentStatusBarColor = window.getStatusBarColor();
+
+        ValueAnimator animator = ValueAnimator.ofArgb(currentStatusBarColor, color)
+                .setDuration(FRAGMENT_FADE_DURATION / 2);
+        animator.addUpdateListener(animation -> window.setStatusBarColor((Integer) animation.getAnimatedValue()));
+        animator.start();
     }
 }
