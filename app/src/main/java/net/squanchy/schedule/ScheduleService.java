@@ -47,24 +47,18 @@ class ScheduleService {
                 .map(mapEventsToDays())
                 .withLatestFrom(daysObservable, combineDaysToGetASchedule())
                 .subscribeOn(Schedulers.io());
-
-
-//        return olderFunction(sessionsObservable, speakersObservable, daysObservable);
     }
 
     @NonNull
     private BiFunction<HashMap<Integer, List<Event>>, FirebaseDays, Schedule> combineDaysToGetASchedule() {
-        return new BiFunction<HashMap<Integer,List<Event>>, FirebaseDays, Schedule>() {
-            @Override
-            public Schedule apply(HashMap<Integer, List<Event>> map, FirebaseDays apiDays) throws Exception {
-                List<SchedulePage> pages = new ArrayList<>(map.size());
-                for (Integer key : map.keySet()) {
-                    String date = findDate(apiDays, key);
-                    pages.add(SchedulePage.create(date, map.get(key)));
-                }
-
-                return Schedule.create(pages);
+        return (map, apiDays) -> {
+            List<SchedulePage> pages = new ArrayList<>(map.size());
+            for (Integer key : map.keySet()) {
+                String date = findDate(apiDays, key);
+                pages.add(SchedulePage.create(date, map.get(key)));
             }
+
+            return Schedule.create(pages);
         };
     }
 
@@ -107,52 +101,12 @@ class ScheduleService {
         };
     }
 
-    private Observable<Schedule> olderFunction(Observable<FirebaseSchedule> sessionsObservable,
-                                               Observable<FirebaseSpeakers> speakersObservable,
-                                               Observable<FirebaseDays> daysObservable) {
-
-        return Observable.combineLatest(
-                sessionsObservable,
-                speakersObservable,
-                daysObservable,
-                combineIntoSchedule()
-        ).subscribeOn(Schedulers.io());
-    }
-
-    private Function3<FirebaseSchedule, FirebaseSpeakers, FirebaseDays, Schedule> combineIntoSchedule() {
-        return (apiSchedule, apiSpeakers, apiDays) -> {
-            List<SchedulePage> pages = map(apiSchedule.sessions, toSchedulePage(apiSchedule, apiSpeakers, apiDays));
-            return Schedule.create(pages);
-        };
-    }
-
-    private Lists.Function<FirebaseEvent, SchedulePage> toSchedulePage(FirebaseSchedule apiSchedule, FirebaseSpeakers apiSpeakers, FirebaseDays apiDays) {
-        return firebaseEvent -> {
-            int dayId = Ids.safelyConvertIdToInt(firebaseEvent.day_id);
-            String date = findDate(apiDays, firebaseEvent.day_id);
-            return SchedulePage.create(date, map(apiSchedule.sessions, toEvent(apiSpeakers, dayId)));
-        };
-    }
-
-    private String findDate(FirebaseDays apiDays, String day_id) {
-        return find(apiDays.days, firebaseDay -> firebaseDay.id.equals(day_id)).date;
-    }
-
     private String findDate(FirebaseDays apiDays, int dayId) {
         return findDate(apiDays, "" + dayId);
     }
 
-    private Lists.Function<FirebaseEvent, Event> toEvent(FirebaseSpeakers apiSpeakers, int dayId) {
-        return apiEvent -> {
-            List<FirebaseSpeaker> speakers = speakersForEvent(apiEvent, apiSpeakers);
-            return Event.create(
-                    safelyConvertIdToLong(apiEvent.id),
-                    dayId,      // TODO do this less crappily
-                    apiEvent.name,
-                    apiEvent.place_id,
-                    ExperienceLevel.fromRawLevel(apiEvent.experience_level), // TODO fix the data
-                    map(speakers, toSpeakerName()));
-        };
+    private String findDate(FirebaseDays apiDays, String day_id) {
+        return find(apiDays.days, firebaseDay -> firebaseDay.id.equals(day_id)).date;
     }
 
     private List<FirebaseSpeaker> speakersForEvent(FirebaseEvent apiEvent, FirebaseSpeakers apiSpeakers) {
