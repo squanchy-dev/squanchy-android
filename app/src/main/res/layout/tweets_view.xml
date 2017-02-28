@@ -3,5 +3,5 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:gravity="center"
-  android:text="@string/bottom_bar_favorites_label"
+  android:text="@string/bottom_bar_tweets_label"
   android:textAppearance="@style/TextAppearance.Squanchy.Card.Title" />

@@ -14,7 +14,7 @@ public class HomeViewPagerAdapter extends ViewPagerAdapter<View> {
     public static final int VENUE_POSITION = 3;
 
     // TODO increment this value when a new view is added to the PagerAdapter
-    private static final int NUMBER_OF_PAGES = 1;
+    private static final int NUMBER_OF_PAGES = 4;
 
     private final Context context;
 

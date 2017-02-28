@@ -31,10 +31,13 @@ public class HomeActivity extends TypefaceStyleableActivity {
                             viewPager.setCurrentItem(HomeViewPagerAdapter.SCHEDULE_POSITION);
                             break;
                         case R.id.action_favorite:
+                            viewPager.setCurrentItem(HomeViewPagerAdapter.FAVORITES_POSITION);
                             break;
                         case R.id.action_tweet:
+                            viewPager.setCurrentItem(HomeViewPagerAdapter.TWEETS_POSITION);
                             break;
                         case R.id.action_venue:
+                            viewPager.setCurrentItem(HomeViewPagerAdapter.VENUE_POSITION);
                             break;
                         default:
                             throw new IndexOutOfBoundsException("Unsupported navigation item ID: " + item.getItemId());
