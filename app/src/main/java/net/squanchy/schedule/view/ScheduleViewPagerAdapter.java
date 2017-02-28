@@ -15,7 +15,7 @@ import net.squanchy.R;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.SchedulePage;
 
-public class ScheduleViewPagerAdapter extends ViewPagerAdapter<SchedulePageView> {
+public class ScheduleViewPagerAdapter extends ViewPagerAdapter<ScheduleDayPageView> {
 
     private final Context context;
 
@@ -40,13 +40,13 @@ public class ScheduleViewPagerAdapter extends ViewPagerAdapter<SchedulePageView>
     }
 
     @Override
-    protected SchedulePageView createView(ViewGroup container, int position) {
-        return (SchedulePageView) LayoutInflater.from(context)
-                .inflate(R.layout.page_schedule, container, false);
+    protected ScheduleDayPageView createView(ViewGroup container, int position) {
+        return (ScheduleDayPageView) LayoutInflater.from(context)
+                .inflate(R.layout.view_page_schedule_day, container, false);
     }
 
     @Override
-    protected void bindView(SchedulePageView view, int position) {
+    protected void bindView(ScheduleDayPageView view, int position) {
         List<Event> events = pages.get(position).events();
         view.updateWith(events, listener);
     }

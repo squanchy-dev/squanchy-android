@@ -7,7 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 
 @IntDef(value = {
         HomeViewPagerAdapter.SCHEDULE_POSITION,
-        HomeViewPagerAdapter.FAVOURITES_POSITION,
+        HomeViewPagerAdapter.FAVORITES_POSITION,
         HomeViewPagerAdapter.TWEETS_POSITION,
         HomeViewPagerAdapter.VENUE_POSITION})
 @Retention(RetentionPolicy.SOURCE)

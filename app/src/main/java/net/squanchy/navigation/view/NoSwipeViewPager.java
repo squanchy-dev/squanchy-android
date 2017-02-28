@@ -30,6 +30,12 @@ public class NoSwipeViewPager extends ViewPager {
     @Override
     public void setCurrentItem(@Tab int item) {
         // This override is to enforce the @Tab typedef on the parameter
-        super.setCurrentItem(item);
+        setCurrentItem(item, false);
+    }
+
+    @Override
+    public void setCurrentItem(@Tab int item, boolean smoothScroll) {
+        // This override is to enforce the @Tab typedef on the parameter
+        super.setCurrentItem(item, smoothScroll);
     }
 }
