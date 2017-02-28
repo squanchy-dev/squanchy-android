@@ -1,9 +1,8 @@
 package net.squanchy.schedule;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
-import android.util.Pair;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.squanchy.eventdetails.domain.view.ExperienceLevel;
@@ -11,7 +10,6 @@ import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Schedule;
 import net.squanchy.schedule.domain.view.SchedulePage;
 import net.squanchy.service.firebase.FirebaseDbService;
-import net.squanchy.service.firebase.model.FirebaseDay;
 import net.squanchy.service.firebase.model.FirebaseDays;
 import net.squanchy.service.firebase.model.FirebaseEvent;
 import net.squanchy.service.firebase.model.FirebaseSchedule;
@@ -21,17 +19,14 @@ import net.squanchy.support.lang.Ids;
 import net.squanchy.support.lang.Lists;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.Single;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import io.reactivex.functions.Function3;
-import io.reactivex.observables.GroupedObservable;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
-import static net.squanchy.support.lang.Ids.*;
+import static net.squanchy.support.lang.Ids.safelyConvertIdToInt;
+import static net.squanchy.support.lang.Ids.safelyConvertIdToLong;
 import static net.squanchy.support.lang.Lists.find;
 import static net.squanchy.support.lang.Lists.map;
 
@@ -48,32 +43,11 @@ class ScheduleService {
         Observable<FirebaseSpeakers> speakersObservable = dbService.speakers();
         final Observable<FirebaseDays> daysObservable = dbService.days();
 
-        Observable<FirebaseEvent> singleSessionObservable = sessionsObservable.flatMap(s -> Observable.fromIterable(s.sessions));
-
-//        Observable.combineLatest(sessionsObservable.flatMap(s -> Observable.fromIterable(s.sessions)),
-//                speakersObservable, combineSessionsAndSpeakers())
-//                .subscribe();
-//                .groupBy(Event::day)
-//                .concatMap(new Function<GroupedObservable<Integer, Event>, Observable<Pair<Integer,Event>>>() {
-//                    @Override
-//                    public Observable<Pair<Integer,Event>> apply(GroupedObservable<Integer, Event> groupedObservable) throws Exception {
-//                        return Observable.just(new Pair<>(groupedObservable.getKey(), groupedObservable.blockingFirst()));
-//                    }
-//                })
-//                .toList()
-//                .subscribe(new Consumer<List<Pair<Integer, Event>>>() {
-//                    @Override
-//                    public void accept(List<Pair<Integer, Event>> pairs) throws Exception {
-//                        Timber.d("%d", pairs.size());
-//                    }
-//                });
-
-        //Looks like it works-ish
-        singleSessionObservable.withLatestFrom(speakersObservable, combineSessionsAndSpeakers())
-                .subscribe(new Consumer<Event>() {
+        Observable.combineLatest(sessionsObservable, speakersObservable, combineSessionsAndSpeakers())
+                .subscribe(new Consumer<List<Event>>() {
                     @Override
-                    public void accept(Event event) throws Exception {
-                        Timber.d(event.title());
+                    public void accept(List<Event> events) throws Exception {
+                        Timber.d("%d", events.size());
                     }
                 });
 
@@ -81,10 +55,14 @@ class ScheduleService {
     }
 
     @NonNull
-    private BiFunction<FirebaseEvent, FirebaseSpeakers, Event> combineSessionsAndSpeakers() {
-        return (apiEvent, apiSpeakers) -> {
-            Timber.d("%s - %d", apiEvent.name, apiSpeakers.speakers.size());
+    private BiFunction<FirebaseSchedule, FirebaseSpeakers, List<Event>> combineSessionsAndSpeakers() {
+        return (apiSchedule, apiSpeakers) -> Lists.map(apiSchedule.sessions, combineEventWith(apiSpeakers));
+    }
+
+    private Lists.Function<FirebaseEvent, Event> combineEventWith(FirebaseSpeakers apiSpeakers) {
+        return apiEvent -> {
             List<FirebaseSpeaker> speakers = speakersForEvent(apiEvent, apiSpeakers);
+
             return Event.create(
                     safelyConvertIdToLong(apiEvent.id),
                     safelyConvertIdToInt(apiEvent.day_id),
