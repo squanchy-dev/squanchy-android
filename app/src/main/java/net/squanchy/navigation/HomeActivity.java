@@ -16,7 +16,8 @@ import net.squanchy.venueinfo.VenueInfoFragment;
 
 public class HomeActivity extends TypefaceStyleableActivity {
 
-    private static final String CURRENT_SECTION = "current_section";
+    private static final String TAG_CURRENT_SECTION = "current_section";
+
     private BottomNavigationSection currentSection;
 
     @Override
@@ -66,11 +67,12 @@ public class HomeActivity extends TypefaceStyleableActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-        Fragment currentFragment = fragmentManager.findFragmentByTag(CURRENT_SECTION);
+        Fragment currentFragment = fragmentManager.findFragmentByTag(TAG_CURRENT_SECTION);
         if (currentFragment != null) {
             transaction.remove(currentFragment);
         }
-        transaction.add(R.id.fragment_container, createFragmentFor(section), CURRENT_SECTION)
+        transaction.add(R.id.fragment_container, createFragmentFor(section), TAG_CURRENT_SECTION)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .commit();
     }
 
