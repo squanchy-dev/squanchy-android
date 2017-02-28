@@ -28,7 +28,7 @@ public class HomeViewPagerAdapter extends ViewPagerAdapter<View> {
     @Override
     protected View createView(ViewGroup container, @Tab int position) {
         View view = BottomTabsPagesFactory.inflate(context, container, position);
-        if (position == 0){
+        if (position == 0) {
             ((SchedulePageView) view).setOnSearchClickListener((OnSearchClickListener) context);
         }
 

@@ -36,14 +36,7 @@
       android:name="net.squanchy.search.SearchActivity"
       android:theme="@style/Theme.Squanchy.Search"
       android:launchMode="singleTop"
-      android:parentActivityName=".navigation.HomeActivity">
-      <intent-filter>
-        <action android:name="android.intent.action.SEARCH" />
-      </intent-filter>
-      <meta-data
-        android:name="android.app.searchable"
-        android:resource="@xml/search_config" />
-    </activity>
+      android:parentActivityName=".navigation.HomeActivity" />
 
     <receiver android:name="net.squanchy.notification.NotificationAlarmReceiver" />
 
