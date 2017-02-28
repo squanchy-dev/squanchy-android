@@ -2,6 +2,7 @@ package net.squanchy.schedule;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.util.Pair;
 
 import java.util.List;
 
@@ -28,6 +29,7 @@ import io.reactivex.functions.Function;
 import io.reactivex.functions.Function3;
 import io.reactivex.observables.GroupedObservable;
 import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 import static net.squanchy.support.lang.Ids.*;
 import static net.squanchy.support.lang.Lists.find;
@@ -48,20 +50,32 @@ class ScheduleService {
 
         Observable<FirebaseEvent> singleSessionObservable = sessionsObservable.flatMap(s -> Observable.fromIterable(s.sessions));
 
-        Observable.combineLatest(singleSessionObservable, speakersObservable, combineSessionsAndSpeakers())
-                .groupBy(Event::day)
-                .flatMap(new Function<GroupedObservable<Integer, Event>, ObservableSource<List<Event>>>() {
+//        Observable.combineLatest(sessionsObservable.flatMap(s -> Observable.fromIterable(s.sessions)),
+//                speakersObservable, combineSessionsAndSpeakers())
+//                .subscribe();
+//                .groupBy(Event::day)
+//                .concatMap(new Function<GroupedObservable<Integer, Event>, Observable<Pair<Integer,Event>>>() {
+//                    @Override
+//                    public Observable<Pair<Integer,Event>> apply(GroupedObservable<Integer, Event> groupedObservable) throws Exception {
+//                        return Observable.just(new Pair<>(groupedObservable.getKey(), groupedObservable.blockingFirst()));
+//                    }
+//                })
+//                .toList()
+//                .subscribe(new Consumer<List<Pair<Integer, Event>>>() {
+//                    @Override
+//                    public void accept(List<Pair<Integer, Event>> pairs) throws Exception {
+//                        Timber.d("%d", pairs.size());
+//                    }
+//                });
+
+        //Looks like it works-ish
+        singleSessionObservable.withLatestFrom(speakersObservable, combineSessionsAndSpeakers())
+                .subscribe(new Consumer<Event>() {
                     @Override
-                    public ObservableSource<List<Event>> apply(GroupedObservable<Integer, Event> groupedObservable) throws Exception {
-                        return Observable.just(groupedObservable.toList().blockingGet());
+                    public void accept(Event event) throws Exception {
+                        Timber.d(event.title());
                     }
-                }).map(new Function<List<Event>, SchedulePage>() {
-            @Override
-            public SchedulePage apply(List<Event> events) throws Exception {
-                int day = events.get(0).day();
-                return SchedulePage.create("" + day, events);
-            }
-        });
+                });
 
         return olderFunction(sessionsObservable, speakersObservable, daysObservable);
     }
@@ -69,6 +83,7 @@ class ScheduleService {
     @NonNull
     private BiFunction<FirebaseEvent, FirebaseSpeakers, Event> combineSessionsAndSpeakers() {
         return (apiEvent, apiSpeakers) -> {
+            Timber.d("%s - %d", apiEvent.name, apiSpeakers.speakers.size());
             List<FirebaseSpeaker> speakers = speakersForEvent(apiEvent, apiSpeakers);
             return Event.create(
                     safelyConvertIdToLong(apiEvent.id),
