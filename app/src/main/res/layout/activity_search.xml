@@ -11,6 +11,8 @@
     android:layout_height="?attr/actionBarSize">
 
     <EditText
+      android:id="@+id/search_field"
+      android:maxLines="1"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:hint="@string/search_label"
