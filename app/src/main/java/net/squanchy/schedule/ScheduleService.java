@@ -3,6 +3,7 @@ package net.squanchy.schedule;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import net.squanchy.eventdetails.domain.view.ExperienceLevel;
@@ -21,6 +22,7 @@ import net.squanchy.support.lang.Lists;
 import io.reactivex.Observable;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.functions.Function3;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
@@ -44,14 +46,26 @@ class ScheduleService {
         final Observable<FirebaseDays> daysObservable = dbService.days();
 
         Observable.combineLatest(sessionsObservable, speakersObservable, combineSessionsAndSpeakers())
-                .subscribe(new Consumer<List<Event>>() {
-                    @Override
-                    public void accept(List<Event> events) throws Exception {
-                        Timber.d("%d", events.size());
-                    }
-                });
+                .map(events -> Lists.reduce(new HashMap<>(), events, listToDaysHashMap()))
+                .subscribe(integerListHashMap -> Timber.d("%d", integerListHashMap.keySet().size()));
+
 
         return olderFunction(sessionsObservable, speakersObservable, daysObservable);
+    }
+
+    @NonNull
+    private Lists.BiFunction<HashMap<Integer, List<Event>>, Event, HashMap<Integer, List<Event>>> listToDaysHashMap() {
+        return (map, event) -> {
+            List<Event> dayList = getOrCreateDayList(map, event);
+            dayList.add(event);
+            map.put(event.day(), dayList);
+            return map;
+        };
+    }
+
+    private List<Event> getOrCreateDayList(HashMap<Integer, List<Event>> map, Event event) {
+        map.putIfAbsent(event.day(), new ArrayList<>());
+        return map.get(event.day());
     }
 
     @NonNull
