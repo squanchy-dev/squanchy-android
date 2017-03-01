@@ -1,22 +1,17 @@
 package net.squanchy.service.firebase.model;
 
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.List;
 
 public class FirebaseEvent {
 
-    @NonNull
     public String id;
 
-    @NonNull
     public String name;
 
-    @NonNull
     public String type;
 
-    @NonNull
     public String short_description;
 
     @Nullable

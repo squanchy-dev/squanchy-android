@@ -5,10 +5,8 @@ import android.support.annotation.Nullable;
 
 public class FirebaseTrack {
 
-    @NonNull
     public String id;
 
-    @NonNull
     public String name;
 
     @Nullable
