@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.squanchy.R;
-import net.squanchy.speaker.domain.view.Speaker;
+import net.squanchy.search.speaker.view.Speaker;
 
 class SpeakerAdapter extends RecyclerView.Adapter<SpeakerViewHolder> {
 

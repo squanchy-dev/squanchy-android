@@ -12,7 +12,7 @@ import net.squanchy.R;
 import net.squanchy.eventdetails.widget.ExperienceLevelIconView;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.service.firebase.model.FirebaseSpeaker;
-import net.squanchy.speaker.domain.view.Speaker;
+import net.squanchy.search.speaker.view.Speaker;
 import net.squanchy.support.widget.CardLayout;
 
 public class EventItemView extends CardLayout {

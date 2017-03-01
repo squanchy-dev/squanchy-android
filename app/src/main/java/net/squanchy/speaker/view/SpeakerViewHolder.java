@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.squanchy.R;
-import net.squanchy.speaker.domain.view.Speaker;
+import net.squanchy.search.speaker.view.Speaker;
 
 public class SpeakerViewHolder extends RecyclerView.ViewHolder {
 

@@ -1,4 +1,4 @@
-package net.squanchy.speaker.domain.view;
+package net.squanchy.search.speaker.view;
 
 import com.google.auto.value.AutoValue;
 
