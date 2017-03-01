@@ -1,7 +1,5 @@
 package net.squanchy.service.firebase.model;
 
-import android.support.annotation.NonNull;
-
 public class FirebaseVenue {
 
     public String name;
