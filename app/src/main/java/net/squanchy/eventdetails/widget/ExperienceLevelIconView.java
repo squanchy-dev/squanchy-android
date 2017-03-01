@@ -27,6 +27,6 @@ public class ExperienceLevelIconView extends ImageView {
 
     public void setExperienceLevel(ExperienceLevel experienceLevel) {
         Drawable drawable = getDrawable();
-        drawable.setLevel(experienceLevel.rawLevel());
+        drawable.setLevel(experienceLevel.getImageLevel());
     }
 }

@@ -60,7 +60,7 @@ class ScheduleService {
                     safelyConvertIdToInt(apiEvent.day_id),
                     apiEvent.name,
                     apiEvent.place_id,
-                    apiEvent.experience_level,
+                    ExperienceLevel.valueOf(apiEvent.experience_level),
                     map(speakers, toSpeakerName()));
         };
     }
