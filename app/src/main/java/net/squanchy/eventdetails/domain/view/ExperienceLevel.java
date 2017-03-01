@@ -9,6 +9,19 @@ public enum ExperienceLevel {
     INTERMEDIATE("intermediate", R.string.experience_level_intermediate),
     ADVANCED("advanced", R.string.experience_level_advanced);
 
+    public static ExperienceLevel fromRawLevel(String rawLevel) {
+        switch (rawLevel.toLowerCase()) {
+            case "beginner":
+                return ExperienceLevel.BEGINNER;
+            case "intermediate":
+                return ExperienceLevel.INTERMEDIATE;
+            case "advanced":
+                return ExperienceLevel.ADVANCED;
+            default:
+                throw new IllegalArgumentException("Invalid raw level description: " + rawLevel);
+        }
+    }
+
     private final String rawLevel;
     private final int labelStringResId;
 

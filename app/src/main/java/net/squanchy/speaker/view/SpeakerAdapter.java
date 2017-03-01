@@ -27,7 +27,7 @@ class SpeakerAdapter extends RecyclerView.Adapter<SpeakerViewHolder> {
 
     @Override
     public long getItemId(int position) {
-        return speakers.get(position).id();
+        return speakers.get(position).numericId();
     }
 
     public List<Speaker> speakers() {

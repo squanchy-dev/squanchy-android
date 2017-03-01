@@ -14,7 +14,6 @@ import io.reactivex.Observable;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.schedulers.Schedulers;
 
-import static net.squanchy.support.lang.Ids.safelyConvertIdToLong;
 import static net.squanchy.support.lang.Lists.find;
 import static net.squanchy.support.lang.Lists.map;
 
