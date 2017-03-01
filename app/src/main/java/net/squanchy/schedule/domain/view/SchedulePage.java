@@ -11,7 +11,6 @@ import org.joda.time.format.DateTimeFormatter;
 @AutoValue
 public abstract class SchedulePage {
 
-    private static final DateTimeFormatter FORMATTER = DateTimeFormat.forPattern("d-MM-yyyy");
     private static final DateTimeFormatter FORMATTER_NEW_MODEL = DateTimeFormat.forPattern("yyyy-MM-dd");
     private static final String TITLE_FORMAT_TEMPLATE = "EEEE d";
 
