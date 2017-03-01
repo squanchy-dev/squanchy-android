@@ -22,7 +22,9 @@
     <item name="cardViewDefaultStyle">@style/Widget.Squanchy.CardLayout</item>
   </style>
 
-  <style name="Theme.Squanchy.Home" parent="Theme.Squanchy" />
+  <style name="Theme.Squanchy.Home" parent="Theme.Squanchy">
+    <item name="android:statusBarColor">@color/status_bar_primary</item>
+  </style>
 
   <style name="Theme.Squanchy.Schedule" parent="Theme.Squanchy">
     <item name="android:statusBarColor">@color/status_bar_primary</item>

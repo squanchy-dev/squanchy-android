@@ -2,7 +2,7 @@
 <net.squanchy.schedule.SchedulePageView xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/content_root"
+  android:id="@+id/schedule_content_root"
   android:theme="@style/Theme.Squanchy.Schedule"
   android:layout_width="match_parent"
   android:layout_height="match_parent"

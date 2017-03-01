@@ -6,10 +6,28 @@
   android:orientation="vertical">
 
   <FrameLayout
-    android:id="@+id/fragment_container"
+    android:id="@+id/page_container"
     android:layout_width="match_parent"
     android:layout_height="0dp"
-    android:layout_weight="1"/>
+    android:layout_weight="1">
+
+    <include
+      layout="@layout/view_page_schedule"
+      android:visibility="invisible" />
+
+    <include
+      layout="@layout/view_page_favorites"
+      android:visibility="invisible" />
+
+    <include
+      layout="@layout/view_page_tweets"
+      android:visibility="invisible" />
+
+    <include
+      layout="@layout/view_page_venue"
+      android:visibility="invisible" />
+
+  </FrameLayout>
 
   <android.support.design.widget.BottomNavigationView
     android:id="@+id/bottom_navigation"
