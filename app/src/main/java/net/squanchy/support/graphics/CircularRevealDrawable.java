@@ -17,13 +17,6 @@ public class CircularRevealDrawable extends ColorDrawable {
 
     private final Paint animationPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-    private final SimpleAnimationEndListener animationEndListener = new SimpleAnimationEndListener() {
-        @Override
-        public void onAnimationEnd(Animator animation) {
-            setColor(targetColor);
-        }
-    };
-    
     private final Interpolator interpolator = new FastOutLinearInInterpolator();
 
     private Animator radiusAnimator;
@@ -35,12 +28,15 @@ public class CircularRevealDrawable extends ColorDrawable {
 
     private boolean startAnimationOnNextDraw;
 
-    private int durationMillis;
+    private int revealDuration;
 
     private float hotspotX;
     private float hotspotY;
     private int width;
     private int height;
+
+    @ColorInt
+    private int pendingTargetColor;
 
     @ColorInt
     private int targetColor;
@@ -52,46 +48,48 @@ public class CircularRevealDrawable extends ColorDrawable {
     }
 
     public void animateToColor(@ColorInt int color, @IntRange(from = 0) int durationMillis) {
-        targetColor = color;
+        revealDuration = durationMillis;
+        pendingTargetColor = color;
         startAnimationOnNextDraw = true;
-        this.durationMillis = durationMillis;
-        invalidateSelf();
+        setColor(targetColor);
     }
 
     @Override
     public void draw(Canvas canvas) {
-        // 1. Let the "main" color be drawn
-        super.draw(canvas);
+        // 1. Draw the "current" color
+        canvas.drawColor(getColor());
 
         // 2. If we just got a reveal start request, go with it
         if (startAnimationOnNextDraw) {
-            initializeAnimation(canvas);
+            initializeAnimation(canvas, pendingTargetColor);
             radiusAnimator.start();
             startAnimationOnNextDraw = false;
         }
 
-        if (centerXProperty != null && centerYProperty != null && radiusProperty != null && paintProperty != null) {
+        // 3. This draws the reveal, if one is needed
+        if (radiusAnimator != null && radiusAnimator.isRunning()) {
             RenderThread.drawCircle(canvas, centerXProperty, centerYProperty, radiusProperty, paintProperty);
         }
     }
 
-    private void initializeAnimation(Canvas canvas) {
+    private void initializeAnimation(Canvas canvas, int pendingTargetColor) {
         float initialRadius = 0f;
         float targetRadius = calculateTargetRadius();
-        animationPaint.setColor(targetColor);
+        animationPaint.setColor(pendingTargetColor);
 
         centerXProperty = RenderThread.createCanvasProperty(canvas, hotspotX);
         centerYProperty = RenderThread.createCanvasProperty(canvas, hotspotY);
         radiusProperty = RenderThread.createCanvasProperty(canvas, initialRadius);
         paintProperty = RenderThread.createCanvasProperty(canvas, animationPaint);
 
-        if (radiusAnimator != null) {
+        if (radiusAnimator != null && radiusAnimator.isRunning()) {
             radiusAnimator.cancel();
+            setColor(targetColor);
         }
         radiusAnimator = RenderThread.createFloatAnimator(this, canvas, radiusProperty, targetRadius);
         radiusAnimator.setInterpolator(interpolator);
-        radiusAnimator.setDuration(durationMillis);
-        radiusAnimator.addListener(animationEndListener);
+        radiusAnimator.setDuration(revealDuration);
+        targetColor = pendingTargetColor;
     }
 
     private float calculateTargetRadius() {
@@ -112,23 +110,5 @@ public class CircularRevealDrawable extends ColorDrawable {
         super.onBoundsChange(bounds);
         width = bounds.width();
         height = bounds.height();
-    }
-
-    private abstract static class SimpleAnimationEndListener implements Animator.AnimatorListener {
-
-        @Override
-        public void onAnimationStart(Animator animation) {
-            // Don't care
-        }
-
-        @Override
-        public void onAnimationCancel(Animator animation) {
-            // Don't care
-        }
-
-        @Override
-        public void onAnimationRepeat(Animator animation) {
-            // Don't care
-        }
     }
 }
