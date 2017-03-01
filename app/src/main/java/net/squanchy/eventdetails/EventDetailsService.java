@@ -8,6 +8,7 @@ import net.squanchy.service.firebase.FirebaseDbService;
 import net.squanchy.service.firebase.model.FirebaseEvent;
 import net.squanchy.service.firebase.model.FirebaseSpeaker;
 import net.squanchy.service.firebase.model.FirebaseSpeakers;
+import net.squanchy.support.lang.Ids;
 import net.squanchy.support.lang.Lists;
 
 import io.reactivex.Observable;
