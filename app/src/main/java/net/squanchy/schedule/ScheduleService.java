@@ -94,7 +94,7 @@ class ScheduleService {
                     safelyConvertIdToInt(apiEvent.day_id),
                     apiEvent.name,
                     apiEvent.place_id,
-                    ExperienceLevel.fromRawLevel(apiEvent.experience_level), // TODO fix the data
+                    apiEvent.experience_level,
                     map(speakers, toSpeakerName()));
         };
     }

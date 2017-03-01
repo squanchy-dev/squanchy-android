@@ -28,7 +28,7 @@ class EventsAdapter extends RecyclerView.Adapter<EventViewHolder> {
 
     @Override
     public long getItemId(int position) {
-        return events.get(position).id();
+        return Long.parseLong(events.get(position).id());
     }
 
     void updateWith(List<Event> events, ScheduleViewPagerAdapter.OnEventClickedListener listener) {

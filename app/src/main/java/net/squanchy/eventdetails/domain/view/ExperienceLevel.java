@@ -14,14 +14,6 @@ public enum ExperienceLevel {
     private final int rawLevel;
     private final int labelStringResId;
 
-    public static ExperienceLevel fromRawLevel(@Nullable String rawLevel) { //TODO fix this when we have proper data
-        return ExperienceLevel.values()[0];
-    }
-
-    public static ExperienceLevel fromRawLevel(@IntRange(from = 0, to = 2) int rawLevel) {
-        return ExperienceLevel.values()[rawLevel];
-    }
-
     ExperienceLevel(int rawLevel, @StringRes int labelStringResId) {
         this.rawLevel = rawLevel;
         this.labelStringResId = labelStringResId;
@@ -35,5 +27,10 @@ public enum ExperienceLevel {
     @StringRes
     public int labelStringResId() {
         return labelStringResId;
+    }
+
+    @IntRange(from = 0, to = 2)
+    public static int getRawLevel(String level) {
+        return ExperienceLevel.valueOf(level).rawLevel();
     }
 }

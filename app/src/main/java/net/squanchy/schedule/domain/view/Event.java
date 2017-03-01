@@ -17,7 +17,7 @@ public abstract class Event {
             int dayId,
             String title,
             String place,
-            ExperienceLevel experienceLevel,
+            String experienceLevel,
             List<String> speakerNames
     ) {
         return new AutoValue_Event.Builder()
@@ -63,7 +63,7 @@ public abstract class Event {
     @Visibility
     public abstract int speakersVisibility();
 
-    public abstract ExperienceLevel experienceLevel();
+    public abstract String experienceLevel();
 
     public abstract int day();
 
@@ -86,7 +86,7 @@ public abstract class Event {
 
         public abstract Builder speakersVisibility(@Visibility int speakersVisibility);
 
-        public abstract Builder experienceLevel(ExperienceLevel experienceLevel);
+        public abstract Builder experienceLevel(String experienceLevel);
 
         public abstract Event build();
     }

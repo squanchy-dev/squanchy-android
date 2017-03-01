@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import net.squanchy.R;
 import net.squanchy.eventdetails.domain.view.ExperienceLevel;
 
-public class ExperienceLevelIconView extends ImageView {
+public class ExperienceLevelIconView extends android.support.v7.widget.AppCompatImageView {
 
     public ExperienceLevelIconView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -25,8 +25,8 @@ public class ExperienceLevelIconView extends ImageView {
         super.setImageResource(R.drawable.ic_experience);
     }
 
-    public void setExperienceLevel(ExperienceLevel experienceLevel) {
+    public void setExperienceLevel(String experienceLevel) {
         Drawable drawable = getDrawable();
-        drawable.setLevel(experienceLevel.rawLevel());
+        drawable.setLevel(ExperienceLevel.getRawLevel(experienceLevel));
     }
 }
