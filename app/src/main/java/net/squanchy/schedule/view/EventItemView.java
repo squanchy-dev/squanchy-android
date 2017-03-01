@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Locale;
 
 import net.squanchy.R;
+import net.squanchy.eventdetails.domain.view.ExperienceLevel;
 import net.squanchy.eventdetails.widget.ExperienceLevelIconView;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.service.firebase.model.FirebaseSpeaker;
@@ -45,7 +46,7 @@ public class EventItemView extends CardLayout {
     void updateWith(Event event) {
         timestampView.setText("12:00");         // TODO put start time 
         titleView.setText(event.title());
-        experienceLevelIconView.setExperienceLevel(event.experienceLevel());
+        experienceLevelIconView.setExperienceLevel(ExperienceLevel.BEGINNER);
 
         speakerView.setVisibility(event.speakersVisibility());
         speakerView.updateWith(createDummySpeakersList());                      // TODO use real data
