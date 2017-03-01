@@ -2,12 +2,10 @@ package net.squanchy.navigation;
 
 import android.animation.ValueAnimator;
 import android.content.res.Resources;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
 import android.support.transition.Fade;
 import android.support.transition.TransitionManager;
 import android.util.TypedValue;
@@ -20,6 +18,7 @@ import java.util.Map;
 
 import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
+import net.squanchy.support.widget.InterceptingBottomNavigationView;
 
 public class HomeActivity extends TypefaceStyleableActivity {
 
@@ -28,7 +27,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private int pageFadeDurationMillis;
 
     private BottomNavigationSection currentSection;
-    private BottomNavigationView bottomNavigationView;
+    private InterceptingBottomNavigationView bottomNavigationView;
     private ViewGroup pageContainer;
 
     @Override
@@ -36,12 +35,12 @@ public class HomeActivity extends TypefaceStyleableActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        pageFadeDurationMillis = getResources().getInteger(android.R.integer.config_mediumAnimTime);
+        pageFadeDurationMillis = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
         pageContainer = (ViewGroup) findViewById(R.id.page_container);
         collectPageViewsInto(pageViews);
 
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView = (InterceptingBottomNavigationView) findViewById(R.id.bottom_navigation);
         setupBottomNavigation(bottomNavigationView);
 
         selectPage(BottomNavigationSection.SCHEDULE);
@@ -54,9 +53,9 @@ public class HomeActivity extends TypefaceStyleableActivity {
         pageViews.put(BottomNavigationSection.VENUE_INFO, pageContainer.findViewById(R.id.venue_content_root));
     }
 
-    private void setupBottomNavigation(BottomNavigationView bottomNavigationView) {
+    private void setupBottomNavigation(InterceptingBottomNavigationView bottomNavigationView) {
         BottomNavigationHelper.disableShiftMode(bottomNavigationView);
-        bottomNavigationView.setBackground(bottomNavigationView.getBackground().mutate());
+        bottomNavigationView.setRevealDurationMillis(pageFadeDurationMillis);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 item -> {
@@ -96,7 +95,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
 
         Resources.Theme theme = getThemeFor(section);
         setStatusBarColor(getColorFromTheme(theme, android.R.attr.statusBarColor));
-        setBottomNavigationBarColor(getColorFromTheme(theme, android.support.design.R.attr.colorPrimary));
+        bottomNavigationView.setColorProvider(() -> getColorFromTheme(theme, android.support.design.R.attr.colorPrimary));
 
         currentSection = section;
     }
@@ -120,13 +119,6 @@ public class HomeActivity extends TypefaceStyleableActivity {
         int currentStatusBarColor = window.getStatusBarColor();
 
         animateColor(currentStatusBarColor, color, animation -> window.setStatusBarColor((int) animation.getAnimatedValue()));
-    }
-
-    private void setBottomNavigationBarColor(@ColorInt int color) {
-        ColorDrawable backgroundDrawable = (ColorDrawable) bottomNavigationView.getBackground();
-        int currentBackgroundColor = backgroundDrawable.getColor();
-
-        animateColor(currentBackgroundColor, color, animation -> backgroundDrawable.setColor((int) animation.getAnimatedValue()));
     }
 
     private void animateColor(@ColorInt int currentColor, @ColorInt int targetColor, ValueAnimator.AnimatorUpdateListener listener) {
