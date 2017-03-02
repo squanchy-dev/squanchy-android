@@ -3,18 +3,18 @@ package net.squanchy.navigation;
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
 import android.support.transition.Fade;
 import android.support.transition.TransitionManager;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+
+import com.hadisatrio.optional.Optional;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,15 +24,18 @@ import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.schedule.SchedulePageView;
 import net.squanchy.search.OnSearchClickListener;
 import net.squanchy.search.SearchActivity;
+import net.squanchy.support.widget.InterceptingBottomNavigationView;
 
 public class HomeActivity extends TypefaceStyleableActivity implements OnSearchClickListener {
+
+    private static final String STATE_KEY_SELECTED_PAGE_INDEX = "HomeActivity.selected_page_index";
 
     private final Map<BottomNavigationSection, View> pageViews = new HashMap<>(4);
 
     private int pageFadeDurationMillis;
 
     private BottomNavigationSection currentSection;
-    private BottomNavigationView bottomNavigationView;
+    private InterceptingBottomNavigationView bottomNavigationView;
     private ViewGroup pageContainer;
 
     @Override
@@ -40,14 +43,16 @@ public class HomeActivity extends TypefaceStyleableActivity implements OnSearchC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        pageFadeDurationMillis = getResources().getInteger(android.R.integer.config_mediumAnimTime);
+        pageFadeDurationMillis = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
         pageContainer = (ViewGroup) findViewById(R.id.page_container);
         collectPageViewsInto(pageViews);
 
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView = (InterceptingBottomNavigationView) findViewById(R.id.bottom_navigation);
         setupBottomNavigation(bottomNavigationView);
 
+        BottomNavigationSection selectedPage = getSelectedSectionOrDefault(Optional.ofNullable(savedInstanceState));
+        selectInitialPage(selectedPage);
         selectPage(BottomNavigationSection.SCHEDULE);
 
         SchedulePageView schedulePageView = (SchedulePageView) findViewById(R.id.schedule_content_root);
@@ -61,9 +66,9 @@ public class HomeActivity extends TypefaceStyleableActivity implements OnSearchC
         pageViews.put(BottomNavigationSection.VENUE_INFO, pageContainer.findViewById(R.id.venue_content_root));
     }
 
-    private void setupBottomNavigation(BottomNavigationView bottomNavigationView) {
+    private void setupBottomNavigation(InterceptingBottomNavigationView bottomNavigationView) {
         BottomNavigationHelper.disableShiftMode(bottomNavigationView);
-        bottomNavigationView.setBackground(bottomNavigationView.getBackground().mutate());
+        bottomNavigationView.setRevealDurationMillis(pageFadeDurationMillis);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 item -> {
@@ -94,16 +99,59 @@ public class HomeActivity extends TypefaceStyleableActivity implements OnSearchC
         }
 
         Fade transition = new Fade();
+        transition.setDuration(pageFadeDurationMillis);
         TransitionManager.beginDelayedTransition(pageContainer, transition);
 
+        swapPageTo(section);
+
+        Resources.Theme theme = getThemeFor(section);
+        animateStatusBarColorTo(getColorFromTheme(theme, android.R.attr.statusBarColor));
+        bottomNavigationView.setColorProvider(() -> getColorFromTheme(theme, android.support.design.R.attr.colorPrimary));
+
+        currentSection = section;
+    }
+
+    private void swapPageTo(BottomNavigationSection section) {
         if (currentSection != null) {
             pageViews.get(currentSection).setVisibility(View.INVISIBLE);
         }
         pageViews.get(section).setVisibility(View.VISIBLE);
+    }
+
+    @ColorInt
+    private int getColorFromTheme(Resources.Theme theme, @AttrRes int attributeId) {
+        TypedValue typedValue = new TypedValue();
+        theme.resolveAttribute(attributeId, typedValue, true);
+        return typedValue.data;
+    }
+
+    private void animateStatusBarColorTo(@ColorInt int color) {
+        Window window = getWindow();
+        int currentStatusBarColor = window.getStatusBarColor();
+
+        animateColor(currentStatusBarColor, color, animation -> window.setStatusBarColor((int) animation.getAnimatedValue()));
+    }
+
+    private void animateColor(@ColorInt int currentColor, @ColorInt int targetColor, ValueAnimator.AnimatorUpdateListener listener) {
+        ValueAnimator animator = ValueAnimator.ofArgb(currentColor, targetColor).setDuration(pageFadeDurationMillis);
+        animator.addUpdateListener(listener);
+        animator.start();
+    }
+
+    private BottomNavigationSection getSelectedSectionOrDefault(Optional<Bundle> savedInstanceState) {
+        int selectedPageIndex = savedInstanceState.or(new Bundle())
+                .getInt(STATE_KEY_SELECTED_PAGE_INDEX, BottomNavigationSection.SCHEDULE.ordinal());
+        return BottomNavigationSection.values()[selectedPageIndex];
+    }
+
+    private void selectInitialPage(BottomNavigationSection section) {
+        swapPageTo(section);
+        bottomNavigationView.cancelTransitions();
+        bottomNavigationView.selectItemAt(section.ordinal());
 
         Resources.Theme theme = getThemeFor(section);
-        setStatusBarColor(getColorFromTheme(theme, android.R.attr.statusBarColor));
-        setBottomNavigationBarColor(getColorFromTheme(theme, android.support.design.R.attr.colorPrimary));
+        bottomNavigationView.setBackgroundColor(getColorFromTheme(theme, android.support.design.R.attr.colorPrimary));
+        getWindow().setStatusBarColor(getColorFromTheme(theme, android.R.attr.statusBarColor));
 
         currentSection = section;
     }
@@ -115,31 +163,10 @@ public class HomeActivity extends TypefaceStyleableActivity implements OnSearchC
         return theme;
     }
 
-    @ColorInt
-    private int getColorFromTheme(Resources.Theme theme, @AttrRes int attributeId) {
-        TypedValue typedValue = new TypedValue();
-        theme.resolveAttribute(attributeId, typedValue, true);
-        return typedValue.data;
-    }
-
-    private void setStatusBarColor(@ColorInt int color) {
-        Window window = getWindow();
-        int currentStatusBarColor = window.getStatusBarColor();
-
-        animateColor(currentStatusBarColor, color, animation -> window.setStatusBarColor((int) animation.getAnimatedValue()));
-    }
-
-    private void setBottomNavigationBarColor(@ColorInt int color) {
-        ColorDrawable backgroundDrawable = (ColorDrawable) bottomNavigationView.getBackground();
-        int currentBackgroundColor = backgroundDrawable.getColor();
-
-        animateColor(currentBackgroundColor, color, animation -> backgroundDrawable.setColor((int) animation.getAnimatedValue()));
-    }
-
-    private void animateColor(@ColorInt int currentColor, @ColorInt int targetColor, ValueAnimator.AnimatorUpdateListener listener) {
-        ValueAnimator animator = ValueAnimator.ofArgb(currentColor, targetColor).setDuration(pageFadeDurationMillis);
-        animator.addUpdateListener(listener);
-        animator.start();
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(STATE_KEY_SELECTED_PAGE_INDEX, currentSection.ordinal());
+        super.onSaveInstanceState(outState);
     }
 
     @Override
