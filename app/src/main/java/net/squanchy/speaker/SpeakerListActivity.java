@@ -64,7 +64,7 @@ public class SpeakerListActivity extends AppCompatActivity implements SpeakersVi
     }
 
     @Override
-    public void onSpeakerClicked(long speakerId) {
-        Toast.makeText(this, "You've clicked speaker with id " + speakerId, Toast.LENGTH_SHORT).show();
+    public void onSpeakerClicked(Speaker speaker) {
+        Toast.makeText(this, "You've clicked speaker " + speaker.name(), Toast.LENGTH_SHORT).show();
     }
 }

@@ -43,7 +43,7 @@ public class SpeakersView extends RecyclerView {
 
     public interface OnSpeakerClickedListener {
 
-        void onSpeakerClicked(long speakerId);
+        void onSpeakerClicked(Speaker speaker);
     }
 
     private static class SpeakerDiffCallback extends DiffUtil.Callback {
