@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="?android:attr/listPreferredItemHeight"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
   android:background="?selectableItemBackground"
-  android:orientation="horizontal">
+  android:orientation="vertical"
+  android:padding="8dp"
+  tools:background="@color/accent">
 
-  <ImageView
+  <net.squanchy.support.widget.CircleImageView
     android:id="@+id/speaker_image"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:scaleType="centerCrop"
+    style="@style/Schedule.Card.Speaker.Photo"
+    android:layout_width="@dimen/card_speaker_photo_big"
+    android:layout_height="@dimen/card_speaker_photo_big"
+    android:layout_gravity="center_horizontal"
+    android:paddingBottom="4dp"
     tools:src="@mipmap/ic_launcher" />
 
   <TextView
     android:id="@+id/speaker_names"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:textColor="?android:textColorPrimary"
-    android:paddingEnd="@dimen/speaker_name_padding"
-    android:paddingStart="@dimen/speaker_name_padding"
     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
     tools:text="Speaker Name" />
 </LinearLayout>
