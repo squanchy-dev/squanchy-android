@@ -1,4 +1,4 @@
-package net.squanchy.speaker.view;
+package net.squanchy.search.view;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 
 import java.util.List;
 
-import net.squanchy.search.speaker.view.Speaker;
+import net.squanchy.search.model.Speaker;
 
 public class SpeakersView extends RecyclerView {
 

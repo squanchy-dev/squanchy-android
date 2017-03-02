@@ -20,7 +20,7 @@ import java.util.List;
 import net.squanchy.R;
 import net.squanchy.imageloader.ImageLoader;
 import net.squanchy.imageloader.ImageLoaderInjector;
-import net.squanchy.search.speaker.view.Speaker;
+import net.squanchy.search.model.Speaker;
 import net.squanchy.support.lang.Lists;
 
 public class SpeakerView extends LinearLayout {
