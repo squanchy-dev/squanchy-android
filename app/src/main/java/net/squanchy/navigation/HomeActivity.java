@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
+import com.hadisatrio.optional.Optional;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,13 +47,8 @@ public class HomeActivity extends TypefaceStyleableActivity {
         bottomNavigationView = (InterceptingBottomNavigationView) findViewById(R.id.bottom_navigation);
         setupBottomNavigation(bottomNavigationView);
 
-        BottomNavigationSection selectedPage = getSelectedSectionOrDefault(savedInstanceState);
-        selectPage(selectedPage);
-    }
-
-    private BottomNavigationSection getSelectedSectionOrDefault(Bundle savedInstanceState) {
-        int selectedPageIndex = savedInstanceState.getInt(STATE_KEY_SELECTED_PAGE_INDEX, BottomNavigationSection.SCHEDULE.ordinal());
-        return BottomNavigationSection.values()[selectedPageIndex];
+        BottomNavigationSection selectedPage = getSelectedSectionOrDefault(Optional.ofNullable(savedInstanceState));
+        selectInitialPage(selectedPage);
     }
 
     private void collectPageViewsInto(Map<BottomNavigationSection, View> pageViews) {
@@ -94,25 +91,23 @@ public class HomeActivity extends TypefaceStyleableActivity {
         }
 
         Fade transition = new Fade();
+        transition.setDuration(pageFadeDurationMillis);
         TransitionManager.beginDelayedTransition(pageContainer, transition);
 
-        if (currentSection != null) {
-            pageViews.get(currentSection).setVisibility(View.INVISIBLE);
-        }
-        pageViews.get(section).setVisibility(View.VISIBLE);
+        swapPageTo(section);
 
         Resources.Theme theme = getThemeFor(section);
-        setStatusBarColor(getColorFromTheme(theme, android.R.attr.statusBarColor));
+        animateStatusBarColorTo(getColorFromTheme(theme, android.R.attr.statusBarColor));
         bottomNavigationView.setColorProvider(() -> getColorFromTheme(theme, android.support.design.R.attr.colorPrimary));
 
         currentSection = section;
     }
 
-    private Resources.Theme getThemeFor(BottomNavigationSection section) {
-        Resources.Theme theme = getResources().newTheme();
-        theme.setTo(getTheme());
-        theme.applyStyle(section.theme(), true);
-        return theme;
+    private void swapPageTo(BottomNavigationSection section) {
+        if (currentSection != null) {
+            pageViews.get(currentSection).setVisibility(View.INVISIBLE);
+        }
+        pageViews.get(section).setVisibility(View.VISIBLE);
     }
 
     @ColorInt
@@ -122,7 +117,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
         return typedValue.data;
     }
 
-    private void setStatusBarColor(@ColorInt int color) {
+    private void animateStatusBarColorTo(@ColorInt int color) {
         Window window = getWindow();
         int currentStatusBarColor = window.getStatusBarColor();
 
@@ -133,6 +128,29 @@ public class HomeActivity extends TypefaceStyleableActivity {
         ValueAnimator animator = ValueAnimator.ofArgb(currentColor, targetColor).setDuration(pageFadeDurationMillis);
         animator.addUpdateListener(listener);
         animator.start();
+    }
+
+    private BottomNavigationSection getSelectedSectionOrDefault(Optional<Bundle> savedInstanceState) {
+        int selectedPageIndex = savedInstanceState.or(new Bundle())
+                .getInt(STATE_KEY_SELECTED_PAGE_INDEX, BottomNavigationSection.SCHEDULE.ordinal());
+        return BottomNavigationSection.values()[selectedPageIndex];
+    }
+
+    private void selectInitialPage(BottomNavigationSection section) {
+        swapPageTo(section);
+        bottomNavigationView.cancelTransitions();
+
+        Resources.Theme theme = getThemeFor(section);
+        bottomNavigationView.setBackgroundColor(getColorFromTheme(theme, android.support.design.R.attr.colorPrimary));
+
+        currentSection = section;
+    }
+
+    private Resources.Theme getThemeFor(BottomNavigationSection section) {
+        Resources.Theme theme = getResources().newTheme();
+        theme.setTo(getTheme());
+        theme.applyStyle(section.theme(), true);
+        return theme;
     }
 
     @Override

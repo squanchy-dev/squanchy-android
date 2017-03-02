@@ -32,19 +32,6 @@ public class InterceptingBottomNavigationView extends BottomNavigationView {
         revealDurationMillis = getResources().getInteger(android.R.integer.config_shortAnimTime);
     }
 
-    public void setRevealDurationMillis(@IntRange(from = 0) int revealDurationMillis) {
-        this.revealDurationMillis = revealDurationMillis;
-    }
-
-    @Override
-    public void setBackground(Drawable background) {
-        if (background instanceof ColorDrawable) {
-            super.setBackground(CircularRevealDrawable.from((ColorDrawable) background));
-        } else {
-            throw new IllegalArgumentException("Only ColorDrawables allowed");
-        }
-    }
-
     private boolean onItemSelected(MenuItem menuItem) {
         boolean itemSelected = true;
         if (listener != null) {
@@ -65,6 +52,36 @@ public class InterceptingBottomNavigationView extends BottomNavigationView {
                 lastUpEvent.getY() - getY()
         );
         revealDrawable.animateToColor(color, revealDurationMillis);
+    }
+
+    public void setRevealDurationMillis(@IntRange(from = 0) int revealDurationMillis) {
+        this.revealDurationMillis = revealDurationMillis;
+    }
+
+    @Override
+    public void setBackground(Drawable background) {
+        if (background instanceof ColorDrawable) {
+            Drawable currentBackground = getBackground();
+            int newColor = ((ColorDrawable) background).getColor();
+            updateBackgroundColor(currentBackground, newColor);
+        } else {
+            throw new IllegalArgumentException("Only ColorDrawables are supported");
+        }
+    }
+
+    private void updateBackgroundColor(Drawable drawable, int newColor) {
+        if (drawable instanceof CircularRevealDrawable) {
+            ((CircularRevealDrawable) drawable).setColor(newColor);
+        } else {
+            super.setBackground(CircularRevealDrawable.from(newColor));
+        }
+    }
+
+    public void cancelTransitions() {
+        Drawable background = getBackground();
+        if (background instanceof CircularRevealDrawable) {
+            ((CircularRevealDrawable) background).cancelTransitions();
+        }
     }
 
     @Override

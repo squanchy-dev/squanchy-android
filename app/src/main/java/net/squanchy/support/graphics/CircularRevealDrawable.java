@@ -41,9 +41,9 @@ public class CircularRevealDrawable extends ColorDrawable {
     @ColorInt
     private int targetColor;
 
-    public static CircularRevealDrawable from(ColorDrawable colorDrawable) {
+    public static CircularRevealDrawable from(int initialColor) {
         CircularRevealDrawable revealDrawable = new CircularRevealDrawable();
-        revealDrawable.setColor(colorDrawable.getColor());
+        revealDrawable.setColor(initialColor);
         return revealDrawable;
     }
 
@@ -82,10 +82,8 @@ public class CircularRevealDrawable extends ColorDrawable {
         radiusProperty = RenderThread.createCanvasProperty(canvas, initialRadius);
         paintProperty = RenderThread.createCanvasProperty(canvas, animationPaint);
 
-        if (radiusAnimator != null && radiusAnimator.isRunning()) {
-            radiusAnimator.cancel();
-            setColor(targetColor);
-        }
+        cancelTransitions();
+
         radiusAnimator = RenderThread.createFloatAnimator(this, canvas, radiusProperty, targetRadius);
         radiusAnimator.setInterpolator(interpolator);
         radiusAnimator.setDuration(revealDuration);
@@ -110,5 +108,14 @@ public class CircularRevealDrawable extends ColorDrawable {
         super.onBoundsChange(bounds);
         width = bounds.width();
         height = bounds.height();
+    }
+
+    public void cancelTransitions() {
+        if (radiusAnimator == null || !radiusAnimator.isRunning()) {
+            return;
+        }
+
+        radiusAnimator.cancel();
+        setColor(targetColor);
     }
 }
