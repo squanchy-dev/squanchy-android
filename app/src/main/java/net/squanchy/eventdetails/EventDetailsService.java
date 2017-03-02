@@ -45,7 +45,7 @@ class EventDetailsService {
                     dayId,
                     apiEvent.name,
                     apiEvent.place_id,
-                    ExperienceLevel.valueOf(apiEvent.experience_level),
+                    ExperienceLevel.fromRawLevel(apiEvent.experience_level),
                     map(speakers, toSpeakerName())
             );
         };
