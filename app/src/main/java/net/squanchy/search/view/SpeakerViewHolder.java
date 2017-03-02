@@ -26,9 +26,7 @@ class SpeakerViewHolder extends RecyclerView.ViewHolder {
         speakerName = (TextView) itemView.findViewById(R.id.speaker_names);
     }
 
-    public void updateWith(Speaker speaker,
-                           @Nullable ImageLoader imageLoader,
-                           @Nullable SpeakersView.OnSpeakerClickedListener listener) {
+    public void updateWith(Speaker speaker, ImageLoader imageLoader, @Nullable SpeakersView.OnSpeakerClickedListener listener) {
         speakerName.setText(speaker.fullName());
         loadSpeakerPhoto(speakerImage, speaker.avatarImageURL(), imageLoader);
         itemView.setOnClickListener(v -> {

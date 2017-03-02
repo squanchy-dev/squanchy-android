@@ -20,9 +20,8 @@ class SpeakerAdapter extends RecyclerView.Adapter<SpeakerViewHolder> {
     private List<Speaker> speakers = Collections.emptyList();
     @Nullable
     private SpeakersView.OnSpeakerClickedListener listener;
-    @Nullable
-    private ImageLoader imageLoader;
 
+    private final ImageLoader imageLoader;
     private final Context context;
 
     SpeakerAdapter(Context context) {
