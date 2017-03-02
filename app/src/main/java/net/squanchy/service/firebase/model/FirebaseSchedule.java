@@ -6,9 +6,9 @@ public class FirebaseSchedule {
 
     public FirebaseSchedule() {}
 
-    public FirebaseSchedule(List<FirebaseEvent> sessions) {
-        this.sessions = sessions;
+    public FirebaseSchedule(List<FirebaseEvent> events) {
+        this.events = events;
     }
 
-    public List<FirebaseEvent> sessions;
+    public List<FirebaseEvent> events;
 }

@@ -28,17 +28,17 @@ public final class UnauthenticatedFirebaseDbService implements FirebaseDbService
 
     @Override
     public Observable<FirebaseDays> days() {
-        return observeRoot().map(root -> new FirebaseDays(root.days));
+        return observeChild("newmodel2/days", FirebaseDays.class);
     }
 
     @Override
     public Observable<FirebaseSpeakers> speakers() {
-        return observeRoot().map(root -> new FirebaseSpeakers(root.speakers));
+        return observeChild("newmodel2/speakers", FirebaseSpeakers.class);
     }
 
     @Override
     public Observable<FirebaseSchedule> sessions() {
-        return observeRoot().map(root -> new FirebaseSchedule(root.events));
+        return observeChild("newmodel2/events", FirebaseSchedule.class);
     }
 
     @Override

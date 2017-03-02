@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import net.squanchy.eventdetails.domain.view.ExperienceLevel;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Schedule;
 import net.squanchy.schedule.domain.view.SchedulePage;
@@ -54,7 +53,7 @@ class ScheduleService {
 
     @NonNull
     private BiFunction<FirebaseSchedule, FirebaseSpeakers, List<Event>> combineSessionsAndSpeakers() {
-        return (apiSchedule, apiSpeakers) -> Lists.map(apiSchedule.sessions, combineEventWith(apiSpeakers));
+        return (apiSchedule, apiSpeakers) -> Lists.map(apiSchedule.events, combineEventWith(apiSpeakers));
     }
 
     private Func1<FirebaseEvent, Event> combineEventWith(FirebaseSpeakers apiSpeakers) {
