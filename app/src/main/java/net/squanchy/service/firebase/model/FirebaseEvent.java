@@ -14,9 +14,6 @@ public class FirebaseEvent {
 
     public String short_description;
 
-    @Nullable
-    public String description;
-
     public Long start_time;
 
     public Long end_time;
