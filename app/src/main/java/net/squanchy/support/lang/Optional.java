@@ -64,7 +64,7 @@ public final class Optional<T> {
         return isPresent() ? get() : null;
     }
 
-    public <V> Optional<V> map(final Function<T, V> func) {
+    public <V> Optional<V> map(final Func1<T, V> func) {
         return flatMap(element -> of(func.apply(element)));
     }
 
@@ -74,7 +74,7 @@ public final class Optional<T> {
         );
     }
 
-    public <V> Optional<V> flatMap(Function<T, Optional<V>> func) {
+    public <V> Optional<V> flatMap(Func1<T, Optional<V>> func) {
         return isPresent() ? func.apply(data) : Optional.absent();
     }
 

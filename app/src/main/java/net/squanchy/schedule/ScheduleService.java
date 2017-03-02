@@ -17,6 +17,8 @@ import net.squanchy.service.firebase.model.FirebaseSchedule;
 import net.squanchy.service.firebase.model.FirebaseSpeaker;
 import net.squanchy.service.firebase.model.FirebaseSpeakers;
 import net.squanchy.support.lang.Checksum;
+import net.squanchy.support.lang.Func1;
+import net.squanchy.support.lang.Func2;
 import net.squanchy.support.lang.Lists;
 
 import io.reactivex.Observable;
@@ -54,7 +56,7 @@ class ScheduleService {
         return (apiSchedule, apiSpeakers) -> Lists.map(apiSchedule.sessions, combineEventWith(apiSpeakers));
     }
 
-    private Lists.Function<FirebaseEvent, Event> combineEventWith(FirebaseSpeakers apiSpeakers) {
+    private Func1<FirebaseEvent, Event> combineEventWith(FirebaseSpeakers apiSpeakers) {
         return apiEvent -> {
             List<FirebaseSpeaker> speakers = speakersForEvent(apiEvent, apiSpeakers);
 
@@ -77,7 +79,7 @@ class ScheduleService {
         return find(apiSpeakers.speakers, apiSpeaker -> apiSpeaker.id.equals(speakerId));
     }
 
-    private Lists.Function<FirebaseSpeaker, String> toSpeakerName() {
+    private Func1<FirebaseSpeaker, String> toSpeakerName() {
         return apiSpeaker -> apiSpeaker != null ? apiSpeaker.name : null;
     }
 
@@ -87,7 +89,7 @@ class ScheduleService {
     }
 
     @NonNull
-    private Lists.BiFunction<HashMap<Integer, List<Event>>, Event, HashMap<Integer, List<Event>>> listToDaysHashMap() {
+    private Func2<HashMap<Integer, List<Event>>, Event, HashMap<Integer, List<Event>>> listToDaysHashMap() {
         return (map, event) -> {
             List<Event> dayList = getOrCreateDayList(map, event);
             dayList.add(event);

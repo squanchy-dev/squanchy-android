@@ -9,7 +9,7 @@ import net.squanchy.service.firebase.model.FirebaseEvent;
 import net.squanchy.service.firebase.model.FirebaseSpeaker;
 import net.squanchy.service.firebase.model.FirebaseSpeakers;
 import net.squanchy.support.lang.Checksum;
-import net.squanchy.support.lang.Lists;
+import net.squanchy.support.lang.Func1;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.BiFunction;
@@ -62,7 +62,7 @@ class EventDetailsService {
         return find(apiSpeakers.speakers, apiSpeaker -> apiSpeaker.id.equals(speakerId));
     }
 
-    private Lists.Function<FirebaseSpeaker, String> toSpeakerName() {
+    private Func1<FirebaseSpeaker, String> toSpeakerName() {
         return apiSpeaker -> apiSpeaker != null ? apiSpeaker.name : null;
     }
 }
