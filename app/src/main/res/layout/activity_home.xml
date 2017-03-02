@@ -5,11 +5,29 @@
   android:layout_height="match_parent"
   android:orientation="vertical">
 
-  <net.squanchy.navigation.view.NoSwipeViewPager
-    android:id="@+id/main_view_pager"
+  <FrameLayout
+    android:id="@+id/page_container"
     android:layout_width="match_parent"
     android:layout_height="0dp"
-    android:layout_weight="1"/>
+    android:layout_weight="1">
+
+    <include
+      layout="@layout/view_page_schedule"
+      android:visibility="invisible" />
+
+    <include
+      layout="@layout/view_page_favorites"
+      android:visibility="invisible" />
+
+    <include
+      layout="@layout/view_page_tweets"
+      android:visibility="invisible" />
+
+    <include
+      layout="@layout/view_page_venue"
+      android:visibility="invisible" />
+
+  </FrameLayout>
 
   <android.support.design.widget.BottomNavigationView
     android:id="@+id/bottom_navigation"
