@@ -11,6 +11,8 @@ import java.util.Collections;
 import java.util.List;
 
 import net.squanchy.R;
+import net.squanchy.imageloader.ImageLoader;
+import net.squanchy.imageloader.ImageLoaderInjector;
 import net.squanchy.search.model.Speaker;
 
 class SpeakerAdapter extends RecyclerView.Adapter<SpeakerViewHolder> {
@@ -18,11 +20,15 @@ class SpeakerAdapter extends RecyclerView.Adapter<SpeakerViewHolder> {
     private List<Speaker> speakers = Collections.emptyList();
     @Nullable
     private SpeakersView.OnSpeakerClickedListener listener;
+    @Nullable
+    private ImageLoader imageLoader;
+
     private final Context context;
 
     SpeakerAdapter(Context context) {
         this.context = context;
         setHasStableIds(true);
+        imageLoader = ImageLoaderInjector.obtain(context).imageLoader();
     }
 
     @Override
@@ -47,7 +53,7 @@ class SpeakerAdapter extends RecyclerView.Adapter<SpeakerViewHolder> {
 
     @Override
     public void onBindViewHolder(SpeakerViewHolder holder, int position) {
-        holder.updateWith(speakers.get(position), listener);
+        holder.updateWith(speakers.get(position), imageLoader, listener);
     }
 
     @Override
