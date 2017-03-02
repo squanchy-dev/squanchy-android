@@ -22,6 +22,8 @@ import net.squanchy.support.widget.InterceptingBottomNavigationView;
 
 public class HomeActivity extends TypefaceStyleableActivity {
 
+    private static final String STATE_KEY_SELECTED_PAGE_INDEX = "HomeActivity.selected_page_index";
+
     private final Map<BottomNavigationSection, View> pageViews = new HashMap<>(4);
 
     private int pageFadeDurationMillis;
@@ -43,7 +45,13 @@ public class HomeActivity extends TypefaceStyleableActivity {
         bottomNavigationView = (InterceptingBottomNavigationView) findViewById(R.id.bottom_navigation);
         setupBottomNavigation(bottomNavigationView);
 
-        selectPage(BottomNavigationSection.SCHEDULE);
+        BottomNavigationSection selectedPage = getSelectedSectionOrDefault(savedInstanceState);
+        selectPage(selectedPage);
+    }
+
+    private BottomNavigationSection getSelectedSectionOrDefault(Bundle savedInstanceState) {
+        int selectedPageIndex = savedInstanceState.getInt(STATE_KEY_SELECTED_PAGE_INDEX, BottomNavigationSection.SCHEDULE.ordinal());
+        return BottomNavigationSection.values()[selectedPageIndex];
     }
 
     private void collectPageViewsInto(Map<BottomNavigationSection, View> pageViews) {
@@ -125,5 +133,11 @@ public class HomeActivity extends TypefaceStyleableActivity {
         ValueAnimator animator = ValueAnimator.ofArgb(currentColor, targetColor).setDuration(pageFadeDurationMillis);
         animator.addUpdateListener(listener);
         animator.start();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(STATE_KEY_SELECTED_PAGE_INDEX, currentSection.ordinal());
+        super.onSaveInstanceState(outState);
     }
 }
