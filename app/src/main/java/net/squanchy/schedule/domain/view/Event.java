@@ -8,6 +8,7 @@ import java.util.List;
 
 import net.squanchy.eventdetails.domain.view.ExperienceLevel;
 import net.squanchy.support.lang.Ids;
+import net.squanchy.support.lang.Optional;
 import net.squanchy.support.view.Visibility;
 
 @AutoValue
@@ -19,7 +20,7 @@ public abstract class Event {
             int dayId,
             String title,
             String place,
-            ExperienceLevel experienceLevel,
+            Optional<ExperienceLevel> experienceLevel,
             List<String> speakerNames
     ) {
         return new AutoValue_Event.Builder()
@@ -27,9 +28,9 @@ public abstract class Event {
                 .numericId(numericEventId)
                 .day(dayId)
                 .title(title)
-                .place(place)
+                .place(Optional.fromNullable(place))
                 .placeVisibility(place.isEmpty() ? View.GONE : View.VISIBLE)
-                .speakersNames(speakersNamesStringFrom(speakerNames))
+                .speakersNames(Optional.fromNullable(speakersNamesStringFrom(speakerNames)))
                 .speakersVisibility(speakerNames.isEmpty() ? View.GONE : View.VISIBLE)
                 .trackVisibility(View.GONE) // todo add track
                 .experienceLevel(experienceLevel)
@@ -55,7 +56,7 @@ public abstract class Event {
 
     public abstract String title();
 
-    public abstract String place();
+    public abstract Optional<String> place();
 
     @Visibility
     public abstract int placeVisibility();
@@ -63,12 +64,12 @@ public abstract class Event {
     @Visibility
     public abstract int trackVisibility();
 
-    public abstract String speakersNames();
+    public abstract Optional<String> speakersNames();
 
     @Visibility
     public abstract int speakersVisibility();
 
-    public abstract ExperienceLevel experienceLevel();
+    public abstract Optional<ExperienceLevel> experienceLevel();
 
     public abstract int day();
 
@@ -83,17 +84,17 @@ public abstract class Event {
 
         public abstract Builder title(String title);
 
-        public abstract Builder place(String place);
+        public abstract Builder place(Optional<String> place);
 
         public abstract Builder placeVisibility(@Visibility int placeVisibility);
 
         public abstract Builder trackVisibility(@Visibility int trackVisibility);
 
-        public abstract Builder speakersNames(String speakersNames);
+        public abstract Builder speakersNames(Optional<String> speakersNames);
 
         public abstract Builder speakersVisibility(@Visibility int speakersVisibility);
 
-        public abstract Builder experienceLevel(ExperienceLevel experienceLevel);
+        public abstract Builder experienceLevel(Optional<ExperienceLevel> experienceLevel);
 
         public abstract Event build();
     }

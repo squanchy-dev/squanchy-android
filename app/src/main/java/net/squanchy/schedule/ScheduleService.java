@@ -20,6 +20,7 @@ import net.squanchy.support.lang.Checksum;
 import net.squanchy.support.lang.Func1;
 import net.squanchy.support.lang.Func2;
 import net.squanchy.support.lang.Lists;
+import net.squanchy.support.lang.OptionalEnums;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.BiFunction;
@@ -66,7 +67,7 @@ class ScheduleService {
                     safelyConvertIdToInt(apiEvent.day_id),
                     apiEvent.name,
                     apiEvent.place_id,
-                    ExperienceLevel.fromRawLevel(apiEvent.experience_level),
+                    OptionalEnums.from(apiEvent.experience_level),
                     map(speakers, toSpeakerName()));
         };
     }
