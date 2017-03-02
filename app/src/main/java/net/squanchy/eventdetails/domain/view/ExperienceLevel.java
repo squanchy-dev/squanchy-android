@@ -25,8 +25,7 @@ public enum ExperienceLevel {
     private final String rawLevel;
     private final int labelStringResId;
 
-    ExperienceLevel(String rawLevel,
-                    @StringRes int labelStringResId) {
+    ExperienceLevel(String rawLevel, @StringRes int labelStringResId) {
 
         this.rawLevel = rawLevel;
         this.labelStringResId = labelStringResId;
