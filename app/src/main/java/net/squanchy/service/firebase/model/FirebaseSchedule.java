@@ -9,5 +9,4 @@ public class FirebaseSchedule {
     }
 
     public List<FirebaseEvent> sessions;
-
 }
