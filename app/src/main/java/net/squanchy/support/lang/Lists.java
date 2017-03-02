@@ -37,14 +37,4 @@ public final class Lists {
 
         return initial;
     }
-
-    public interface Function<T, R> {
-
-        R apply(T t);
-    }
-
-    public interface BiFunction<T, U, R> {
-
-        R apply(T t, U u);
-    }
 }
