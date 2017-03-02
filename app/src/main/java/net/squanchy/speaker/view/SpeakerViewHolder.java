@@ -23,7 +23,7 @@ public class SpeakerViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void updateWith(Speaker speaker, @Nullable SpeakersView.OnSpeakerClickedListener listener) {
-        speakerName.setText(speaker.fullName());
+        speakerName.setText(speaker.name());
         speakerImage.setImageResource(R.mipmap.ic_launcher); //TODO load the picture from the url provided in the speaker object
         itemView.setOnClickListener(v -> {
             if (listener != null) {

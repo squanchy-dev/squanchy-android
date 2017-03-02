@@ -16,7 +16,7 @@ public abstract class Speaker {
 
     public abstract String id();
 
-    public abstract String fullName();
+    public abstract String name();
 
     public abstract String avatarImageURL();
 }

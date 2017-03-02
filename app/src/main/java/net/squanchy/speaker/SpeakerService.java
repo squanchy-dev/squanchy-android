@@ -28,5 +28,5 @@ class SpeakerService {
     }
 
     private static final Comparator<Speaker> speakerNameComparator =
-            (speaker1, speaker2) -> speaker1.fullName().compareToIgnoreCase(speaker2.fullName());
+            (speaker1, speaker2) -> speaker1.name().compareToIgnoreCase(speaker2.name());
 }
