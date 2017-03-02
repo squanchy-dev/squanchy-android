@@ -3,7 +3,7 @@ package net.squanchy.search.view;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
@@ -26,9 +26,8 @@ public class SpeakersView extends RecyclerView {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        setLayoutManager(layoutManager);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 4);
+        setLayoutManager(gridLayoutManager);
         adapter = new SpeakerAdapter(getContext());
         setAdapter(adapter);
         setClipToPadding(false);

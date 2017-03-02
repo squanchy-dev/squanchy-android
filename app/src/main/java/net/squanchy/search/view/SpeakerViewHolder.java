@@ -9,13 +9,13 @@ import android.widget.TextView;
 import net.squanchy.R;
 import net.squanchy.search.model.Speaker;
 
-public class SpeakerViewHolder extends RecyclerView.ViewHolder {
+class SpeakerViewHolder extends RecyclerView.ViewHolder {
 
     private final View itemView;
     private final ImageView speakerImage;
     private final TextView speakerName;
 
-    public SpeakerViewHolder(View itemView) {
+    SpeakerViewHolder(View itemView) {
         super(itemView);
         this.itemView = itemView;
         speakerImage = (ImageView) itemView.findViewById(R.id.speaker_image);
