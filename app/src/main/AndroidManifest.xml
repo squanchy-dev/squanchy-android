@@ -31,6 +31,7 @@
     <activity
       android:name="net.squanchy.search.SearchActivity"
       android:theme="@style/Theme.Squanchy.Search"
+      android:windowSoftInputMode="stateHidden"
       android:launchMode="singleTop"
       android:parentActivityName=".navigation.HomeActivity" />
 

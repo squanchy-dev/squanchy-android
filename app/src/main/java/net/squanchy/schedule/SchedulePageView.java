@@ -65,6 +65,7 @@ public class SchedulePageView extends CoordinatorLayout {
         toolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.action_search) {
                 listener.onSearchClick();
+                return true;
             }
             return false;
         });
