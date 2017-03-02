@@ -100,7 +100,6 @@ class ScheduleService {
             map.put(event.day(), currentList);
         }
 
-
         return currentList;
     }
 
