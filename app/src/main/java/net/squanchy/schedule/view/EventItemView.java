@@ -48,7 +48,9 @@ public class EventItemView extends CardLayout {
     void updateWith(Event event) {
         timestampView.setText("12:00");         // TODO put start time 
         titleView.setText(event.title());
-        experienceLevelIconView.setExperienceLevel(ExperienceLevel.BEGINNER);
+        if (event.experienceLevel().isPresent()) {
+            experienceLevelIconView.setExperienceLevel(event.experienceLevel().get());
+        }
 
         speakerView.setVisibility(event.speakersVisibility());
         speakerView.updateWith(createDummySpeakersList());                      // TODO use real data
