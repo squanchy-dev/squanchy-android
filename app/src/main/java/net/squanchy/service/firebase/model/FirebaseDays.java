@@ -4,6 +4,8 @@ import java.util.List;
 
 public class FirebaseDays {
 
+    public FirebaseDays() {}
+
     public FirebaseDays(List<FirebaseDay> days) {
         this.days = days;
     }

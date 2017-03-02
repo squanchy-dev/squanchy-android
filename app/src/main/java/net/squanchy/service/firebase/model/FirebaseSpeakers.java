@@ -4,6 +4,8 @@ import java.util.List;
 
 public class FirebaseSpeakers {
 
+    public FirebaseSpeakers() {}
+
     public FirebaseSpeakers(List<FirebaseSpeaker> speakers) {
         this.speakers = speakers;
     }
