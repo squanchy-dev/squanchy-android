@@ -21,6 +21,7 @@ import java.util.Map;
 
 import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
+import net.squanchy.schedule.SchedulePageView;
 import net.squanchy.search.OnSearchClickListener;
 import net.squanchy.search.SearchActivity;
 
@@ -48,6 +49,9 @@ public class HomeActivity extends TypefaceStyleableActivity implements OnSearchC
         setupBottomNavigation(bottomNavigationView);
 
         selectPage(BottomNavigationSection.SCHEDULE);
+
+        SchedulePageView schedulePageView = (SchedulePageView) findViewById(R.id.schedule_content_root);
+        schedulePageView.setOnSearchClickListener(this);
     }
 
     private void collectPageViewsInto(Map<BottomNavigationSection, View> pageViews) {
