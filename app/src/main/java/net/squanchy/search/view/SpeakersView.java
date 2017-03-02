@@ -15,6 +15,8 @@ public class SpeakersView extends RecyclerView {
 
     private SpeakerAdapter adapter;
 
+    private static final int COLUMN_NUMBER = 4;
+
     public SpeakersView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
@@ -26,7 +28,7 @@ public class SpeakersView extends RecyclerView {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 4);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), COLUMN_NUMBER);
         setLayoutManager(gridLayoutManager);
         adapter = new SpeakerAdapter(getContext());
         setAdapter(adapter);

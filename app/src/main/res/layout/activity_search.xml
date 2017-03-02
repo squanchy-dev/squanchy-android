@@ -27,22 +27,31 @@
     </android.support.v7.widget.Toolbar>
   </android.support.design.widget.AppBarLayout>
 
-  <LinearLayout
+  <android.support.v4.widget.NestedScrollView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <TextView
+    <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:text="@string/speaker_list_title" />
+      android:orientation="vertical">
 
-    <net.squanchy.search.view.SpeakersView
-      android:id="@+id/speakers_view"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content" />
+      <TextView
+        style="@style/Search.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="@string/speaker_list_title" />
 
-  </LinearLayout>
+      <net.squanchy.search.view.SpeakersView
+        android:id="@+id/speakers_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false" />
+
+    </LinearLayout>
+
+  </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

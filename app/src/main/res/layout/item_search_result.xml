@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
+  android:layout_width="@dimen/card_search_item_width"
+  android:layout_height="@dimen/card_search_item_height"
+  android:gravity="center"
   android:background="?selectableItemBackground"
   android:orientation="vertical"
-  android:padding="8dp"
-  tools:background="@color/accent">
+  android:padding="8dp">
 
   <net.squanchy.support.widget.CircleImageView
     android:id="@+id/speaker_image"
@@ -19,10 +19,9 @@
 
   <TextView
     android:id="@+id/speaker_names"
+    style="@style/Search.Caption"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:textColor="?android:textColorPrimary"
-    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+    android:gravity="center"
     tools:text="Speaker Name" />
 </LinearLayout>

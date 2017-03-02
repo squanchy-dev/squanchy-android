@@ -27,5 +27,8 @@
   <dimen name="card_speaker_photo">24dp</dimen>
   <dimen name="card_speaker_photo_big">48dp</dimen>
   <dimen name="card_speaker_margin_end">2dp</dimen>
+  <dimen name="search_title_margin">16dp</dimen>
+  <dimen name="card_search_item_width">90dp</dimen>
+  <dimen name="card_search_item_height">80dp</dimen>
 
 </resources>

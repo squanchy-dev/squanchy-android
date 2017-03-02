@@ -32,6 +32,7 @@
   </style>
 
   <style name="Squanchy.Tabs.SpeakerList" parent="None" />
+
   <style name="TextAppearance.Squanchy.Card.Speaker" parent="None">
     <item name="android:textColor">?android:textColorSecondary</item>
     <item name="android:textSize">@dimen/card_speaker</item>
@@ -82,6 +83,16 @@
   <style name="Search.Toolbar" parent="Squanchy.Toolbar">
     <item name="android:background">?attr/colorPrimary</item>
     <item name="android:colorControlNormal">?colorAccent</item>
+  </style>
+
+  <style name="Search.Title" parent="TextAppearance.AppCompat.Body1">
+    <item name="android:textColor">?android:colorAccent</item>
+    <item name="fontPath">?titleTypeface</item>
+  </style>
+
+  <style name="Search.Caption" parent="TextAppearance.AppCompat.Caption">
+    <item name="android:maxLines">2</item>
+    <item name="android:textColor">?android:textColorSecondary</item>
   </style>
 
 </resources>
