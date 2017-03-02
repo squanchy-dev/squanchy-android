@@ -16,6 +16,7 @@ import net.squanchy.service.firebase.model.FirebaseEvent;
 import net.squanchy.service.firebase.model.FirebaseSchedule;
 import net.squanchy.service.firebase.model.FirebaseSpeaker;
 import net.squanchy.service.firebase.model.FirebaseSpeakers;
+import net.squanchy.support.lang.Checksum;
 import net.squanchy.support.lang.Lists;
 
 import io.reactivex.Observable;
@@ -30,9 +31,11 @@ import static net.squanchy.support.lang.Lists.map;
 class ScheduleService {
 
     private final FirebaseDbService dbService;
+    private final Checksum checksum;
 
-    ScheduleService(FirebaseDbService dbService) {
+    ScheduleService(FirebaseDbService dbService, Checksum checksum) {
         this.dbService = dbService;
+        this.checksum = checksum;
     }
 
     public Observable<Schedule> schedule() {
@@ -57,6 +60,7 @@ class ScheduleService {
 
             return Event.create(
                     apiEvent.id,
+                    checksum.getChecksumOf(apiEvent.id),
                     safelyConvertIdToInt(apiEvent.day_id),
                     apiEvent.name,
                     apiEvent.place_id,

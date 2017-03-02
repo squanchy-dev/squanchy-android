@@ -8,8 +8,8 @@ import net.squanchy.support.lang.Ids;
 @AutoValue
 public abstract class Speaker {
 
-    public static Speaker create(FirebaseSpeaker speaker) {
-        return new AutoValue_Speaker(Ids.checksumOf(speaker.id), speaker.id, speaker.name, speaker.photo_url);
+    public static Speaker create(FirebaseSpeaker speaker, long numericSpeakerId) {
+        return new AutoValue_Speaker(numericSpeakerId, speaker.id, speaker.name, speaker.photo_url);
     }
 
     public abstract long numericId();

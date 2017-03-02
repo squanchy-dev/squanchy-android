@@ -15,6 +15,7 @@ public abstract class Event {
 
     public static Event create(
             String eventId,
+            long numericEventId,
             int dayId,
             String title,
             String place,
@@ -23,7 +24,7 @@ public abstract class Event {
     ) {
         return new AutoValue_Event.Builder()
                 .id(eventId)
-                .numericId(Ids.checksumOf(eventId))
+                .numericId(numericEventId)
                 .day(dayId)
                 .title(title)
                 .place(place)

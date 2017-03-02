@@ -14,6 +14,7 @@ import net.squanchy.eventdetails.widget.ExperienceLevelIconView;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.service.firebase.model.FirebaseSpeaker;
 import net.squanchy.speaker.domain.view.Speaker;
+import net.squanchy.support.lang.Checksum;
 import net.squanchy.support.widget.CardLayout;
 
 public class EventItemView extends CardLayout {
@@ -24,6 +25,7 @@ public class EventItemView extends CardLayout {
     private TextView timestampView;
     private ExperienceLevelIconView experienceLevelIconView;
     private SpeakerView speakerView;
+    private final Checksum checksum = new Checksum();
 
     public EventItemView(Context context, AttributeSet attrs) {
         this(context, attrs, R.attr.cardViewDefaultStyle);
@@ -61,6 +63,7 @@ public class EventItemView extends CardLayout {
         secondSpeaker.photo_url = String.format(Locale.US, SPEAKER_PHOTO_PATH_TEMPLATE, "squanchy.webp");
         secondSpeaker.id = "0";
         secondSpeaker.name = "Qi Qu";
-        return Arrays.asList(Speaker.create(firstSpeaker), Speaker.create(secondSpeaker));
+        return Arrays.asList(Speaker.create(firstSpeaker, checksum.getChecksumOf(firstSpeaker.id)),
+                Speaker.create(secondSpeaker, checksum.getChecksumOf(secondSpeaker.id)));
     }
 }
