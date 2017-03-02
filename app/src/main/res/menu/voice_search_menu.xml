@@ -5,7 +5,6 @@
   <item
     android:id="@+id/action_voice_search"
     android:title="@string/voice_search"
-    android:enabled="true"
     android:icon="@drawable/ic_microphone"
     app:showAsAction="always" />
 
