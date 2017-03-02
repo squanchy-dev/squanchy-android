@@ -143,6 +143,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
 
         Resources.Theme theme = getThemeFor(section);
         bottomNavigationView.setBackgroundColor(getColorFromTheme(theme, android.support.design.R.attr.colorPrimary));
+        getWindow().setStatusBarColor(getColorFromTheme(theme, android.R.attr.statusBarColor));
 
         currentSection = section;
     }
