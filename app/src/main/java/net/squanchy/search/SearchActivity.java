@@ -75,13 +75,13 @@ public class SearchActivity extends TypefaceStyleableActivity implements Speaker
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_voice_search) {
-            onSearchClicked();
+            onVoiceSearchClicked();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void onSearchClicked() {
+    private void onVoiceSearchClicked() {
         Intent voiceSearchIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         voiceSearchIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
         voiceSearchIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
