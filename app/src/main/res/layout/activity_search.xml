@@ -1,37 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <android.support.design.widget.AppBarLayout
+    style="@style/Search.Appbar"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
-    <android.support.design.widget.AppBarLayout
-        style="@style/Search.Appbar"
+    <android.support.v7.widget.Toolbar
+      android:id="@+id/search_toolbar"
+      android:theme="@style/Search.Toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize">
+
+      <EditText
+        android:id="@+id/search_field"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:hint="@string/search_label"
+        android:imeOptions="actionSearch"
+        android:maxLines="1" />
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/search_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:theme="@style/Search.Toolbar">
+    </android.support.v7.widget.Toolbar>
+  </android.support.design.widget.AppBarLayout>
 
-            <EditText
-                android:id="@+id/search_field"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:hint="@string/search_label"
-                android:imeOptions="actionSearch"
-                android:maxLines="1" />
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/speaker_list_title" />
 
-    <FrameLayout
-        android:id="@+id/search_result_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?selectableItemBackground"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    <net.squanchy.search.view.SpeakersView
+      android:id="@+id/speakers_view"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+
+  </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

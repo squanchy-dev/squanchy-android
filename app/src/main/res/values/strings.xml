@@ -18,5 +18,6 @@
   <string name="bottom_bar_venue_label">Venue Info</string>
   <string name="search_label">Search</string>
   <string name="voice_search">Voice search</string>
+  <string name="speaker_list_title">Droidcon speakers</string>
 
 </resources>
