@@ -60,6 +60,16 @@ public class InterceptingBottomNavigationView extends BottomNavigationView {
     }
 
     @Override
+    public void setBackgroundColor(@ColorInt int color) {
+        Drawable background = getBackground();
+        if (background instanceof CircularRevealDrawable) {
+            updateBackgroundColor(background, color);
+        } else {
+            setBackgroundColor(color);
+        }
+    }
+
+    @Override
     public void setBackground(Drawable background) {
         if (background instanceof ColorDrawable) {
             Drawable currentBackground = getBackground();
