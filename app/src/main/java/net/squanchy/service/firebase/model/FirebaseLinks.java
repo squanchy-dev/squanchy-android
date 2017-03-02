@@ -6,5 +6,4 @@ public class FirebaseLinks {
 
     @Nullable
     public String slides;
-
 }
