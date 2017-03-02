@@ -44,12 +44,13 @@ public class CircularRevealDrawable extends ColorDrawable {
     public static CircularRevealDrawable from(int initialColor) {
         CircularRevealDrawable revealDrawable = new CircularRevealDrawable();
         revealDrawable.setColor(initialColor);
+        revealDrawable.targetColor = initialColor;
         return revealDrawable;
     }
 
-    public void animateToColor(@ColorInt int color, @IntRange(from = 0) int durationMillis) {
+    public void animateToColor(@ColorInt int newColor, @IntRange(from = 0) int durationMillis) {
         revealDuration = durationMillis;
-        pendingTargetColor = color;
+        pendingTargetColor = newColor;
         startAnimationOnNextDraw = true;
         setColor(targetColor);
     }
@@ -108,6 +109,12 @@ public class CircularRevealDrawable extends ColorDrawable {
         super.onBoundsChange(bounds);
         width = bounds.width();
         height = bounds.height();
+    }
+
+    @Override
+    public void setColor(int color) {
+        targetColor = color;
+        super.setColor(color);
     }
 
     public void cancelTransitions() {
