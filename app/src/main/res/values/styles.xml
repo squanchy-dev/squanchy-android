@@ -85,7 +85,7 @@
     <item name="android:colorControlNormal">?colorAccent</item>
   </style>
 
-  <style name="Search.Title" parent="TextAppearance.AppCompat.Body1">
+  <style name="Search.Body1" parent="TextAppearance.AppCompat.Body1">
     <item name="android:textColor">?android:colorAccent</item>
     <item name="fontPath">?titleTypeface</item>
   </style>
