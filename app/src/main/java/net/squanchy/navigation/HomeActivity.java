@@ -139,6 +139,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private void selectInitialPage(BottomNavigationSection section) {
         swapPageTo(section);
         bottomNavigationView.cancelTransitions();
+        bottomNavigationView.selectItemAt(section.ordinal());
 
         Resources.Theme theme = getThemeFor(section);
         bottomNavigationView.setBackgroundColor(getColorFromTheme(theme, android.support.design.R.attr.colorPrimary));

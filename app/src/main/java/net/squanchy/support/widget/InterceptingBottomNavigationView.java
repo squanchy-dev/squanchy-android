@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.IntRange;
 import android.support.annotation.Nullable;
+import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.util.AttributeSet;
 import android.view.MenuItem;
@@ -99,6 +100,11 @@ public class InterceptingBottomNavigationView extends BottomNavigationView {
 
     public void setColorProvider(ColorProvider colorProvider) {
         this.colorProvider = colorProvider;
+    }
+
+    public void selectItemAt(@IntRange(from = 0) int position) {
+        getMenu().getItem(position).setChecked(true);
+        ((BottomNavigationMenuView) getChildAt(0)).updateMenuView();
     }
 
     public interface ColorProvider {
