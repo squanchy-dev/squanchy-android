@@ -9,17 +9,27 @@ import android.support.annotation.Nullable;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.util.AttributeSet;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.hadisatrio.optional.Optional;
 
 import net.squanchy.support.graphics.CircularRevealDrawable;
+import net.squanchy.support.view.Hotspot;
 
 public class InterceptingBottomNavigationView extends BottomNavigationView {
 
     private int revealDurationMillis;
 
-    private MotionEvent lastUpEvent;
+    private Optional<MotionEvent> lastUpEvent = Optional.absent();
+
+    @Nullable
     private OnNavigationItemSelectedListener listener;
+
+    @Nullable
     private ColorProvider colorProvider;
 
     public InterceptingBottomNavigationView(Context context, AttributeSet attrs) {
@@ -40,19 +50,49 @@ public class InterceptingBottomNavigationView extends BottomNavigationView {
         }
 
         if (itemSelected && colorProvider != null) {
-            startCircularRevealTo(colorProvider.getSelectedItemColor());
+            startCircularReveal(colorProvider.getSelectedItemColor(), menuItem);
         }
 
         return itemSelected;
     }
 
-    private void startCircularRevealTo(int color) {
+    private void startCircularReveal(@ColorInt int color, MenuItem menuItem) {
         CircularRevealDrawable revealDrawable = (CircularRevealDrawable) getBackground();
-        revealDrawable.setHotspot(
-                lastUpEvent.getX() - getX(),
-                lastUpEvent.getY() - getY()
-        );
+        setBackgroundHotspot(revealDrawable, menuItem);
         revealDrawable.animateToColor(color, revealDurationMillis);
+    }
+
+    private void setBackgroundHotspot(CircularRevealDrawable revealDrawable, MenuItem menuItem) {
+        lastUpEvent.ifPresentOrElse(
+                motionEvent -> applyHotspot(revealDrawable, Hotspot.from(motionEvent)),
+                () -> applyHotspot(revealDrawable, getHotspotFor(menuItem))
+        );
+    }
+
+    private void applyHotspot(CircularRevealDrawable revealDrawable, Hotspot hotspot) {
+        revealDrawable.setHotspot(hotspot.x(), hotspot.y());
+    }
+
+    private Hotspot getHotspotFor(MenuItem menuItem) {
+        int selectedPosition = positionFor(menuItem);
+        ViewGroup menuView = getBottomNavigationMenuView();
+        View selectedItemView = menuView.getChildAt(selectedPosition);
+
+        return Hotspot.fromCenterOf(selectedItemView)
+                .offsetToParent(menuView);
+    }
+
+    @IntRange(from = 0)
+    private int positionFor(MenuItem menuItem) {
+        Menu menu = getMenu();
+        int menuSize = menu.size();
+        for (int i = 0; i < menuSize; i++) {
+            int itemId = menu.getItem(i).getItemId();
+            if (itemId == menuItem.getItemId()) {
+                return i;
+            }
+        }
+        throw new IllegalArgumentException("Menu item " + menuItem + " not found in the bottom bar items");
     }
 
     public void setRevealDurationMillis(@IntRange(from = 0) int revealDurationMillis) {
@@ -103,18 +143,24 @@ public class InterceptingBottomNavigationView extends BottomNavigationView {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_UP) {
-            lastUpEvent = ev;
+            MotionEvent motionEvent = MotionEvent.obtainNoHistory(ev);
+            motionEvent.setLocation(ev.getX(), ev.getY());
+            lastUpEvent = Optional.of(motionEvent);
         }
         return super.onInterceptTouchEvent(ev);
     }
 
-    public void setColorProvider(ColorProvider colorProvider) {
+    public void setColorProvider(@Nullable ColorProvider colorProvider) {
         this.colorProvider = colorProvider;
     }
 
     public void selectItemAt(@IntRange(from = 0) int position) {
         getMenu().getItem(position).setChecked(true);
-        ((BottomNavigationMenuView) getChildAt(0)).updateMenuView();
+        getBottomNavigationMenuView().updateMenuView();
+    }
+
+    private BottomNavigationMenuView getBottomNavigationMenuView() {
+        return (BottomNavigationMenuView) getChildAt(0);
     }
 
     public interface ColorProvider {
