@@ -19,6 +19,9 @@ import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 public final class UnauthenticatedFirebaseDbService implements FirebaseDbService {
+    private static final String DAYS_NODE = "newmodel2/days";
+    private static final String SPEAKERS_NODE = "newmodel2/speakers";
+    private static final String EVENTS_NODE = "newmodel2/events";
 
     private final DatabaseReference database;
 
@@ -28,21 +31,21 @@ public final class UnauthenticatedFirebaseDbService implements FirebaseDbService
 
     @Override
     public Observable<FirebaseDays> days() {
-        return observeChild("newmodel2/days", FirebaseDays.class);
+        return observeChild(DAYS_NODE, FirebaseDays.class);
     }
 
     @Override
     public Observable<FirebaseSpeakers> speakers() {
-        return observeChild("newmodel2/speakers", FirebaseSpeakers.class);
+        return observeChild(SPEAKERS_NODE, FirebaseSpeakers.class);
     }
 
     @Override
     public Observable<FirebaseSchedule> sessions() {
-        return observeChild("newmodel2/events", FirebaseSchedule.class);
+        return observeChild(EVENTS_NODE, FirebaseSchedule.class);
     }
 
     @Override
-    public Observable<FirebaseEvent> event(int dayId, int eventId) {
+    public Observable<FirebaseEvent> event(int dayId, int eventId) { //TODO Fix the path when we decide how to deal with the detail
         String path = String.format(Locale.US, "newmodel/events/%2$d", dayId, eventId);
         return observeChild(path, FirebaseEvent.class);
     }
@@ -63,26 +66,6 @@ public final class UnauthenticatedFirebaseDbService implements FirebaseDbService
             };
 
             database.child(path).addValueEventListener(listener);
-            e.setCancellable(() -> database.removeEventListener(listener));
-        }).observeOn(Schedulers.io());
-    }
-
-    private Observable<FirebaseRoot> observeRoot() {
-        return Observable.create((ObservableEmitter<FirebaseRoot> e) -> {
-            ValueEventListener listener = new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    FirebaseRoot value = dataSnapshot.getValue(FirebaseRoot.class);
-                    e.onNext(value);
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    e.onError(databaseError.toException());
-                }
-            };
-
-            database.child("newmodel").addValueEventListener(listener);
             e.setCancellable(() -> database.removeEventListener(listener));
         }).observeOn(Schedulers.io());
     }
