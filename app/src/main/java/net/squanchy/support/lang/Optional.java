@@ -1,10 +1,5 @@
 package net.squanchy.support.lang;
 
-import android.support.annotation.Nullable;
-import android.text.TextUtils;
-
-import net.squanchy.eventdetails.domain.view.ExperienceLevel;
-
 public final class Optional<T> {
 
     @SuppressWarnings("unchecked")  // Type erasure has us covered here, we don't care
@@ -48,33 +43,6 @@ public final class Optional<T> {
             throw new IllegalStateException("You must check if data is present before using get()");
         }
         return data;
-    }
-
-    public T or(T elseCase) {
-        return isPresent() ? get() : elseCase;
-    }
-
-    public Optional<T> or(Optional<T> elseCase) {
-        return isPresent() ? this : elseCase;
-    }
-
-    public Optional<T> or(Func0<Optional<T>> elseFunc) {
-        return isPresent() ? this : elseFunc.apply();
-    }
-
-    @Nullable
-    public T orNull() {
-        return isPresent() ? get() : null;
-    }
-
-    public <V> Optional<V> map(final Func1<T, V> func) {
-        return flatMap(element -> of(func.apply(element)));
-    }
-
-    public Optional<T> filter(final Predicate<T> predicate) {
-        return flatMap(
-                element -> fromNullable(predicate.apply(element) ? element : null)
-        );
     }
 
     public <V> Optional<V> flatMap(Func1<T, Optional<V>> func) {
