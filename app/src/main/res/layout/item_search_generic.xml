@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<net.squanchy.search.SearchItemView xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
   style="@style/Search.GenericItem"
   android:layout_width="@dimen/card_search_item_width"
   android:layout_height="@dimen/card_search_item_height"
-  android:orientation="vertical"
   android:padding="@dimen/card_search_item_padding">
 
   <net.squanchy.support.widget.CircleImageView
@@ -23,4 +22,4 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     tools:text="Speaker Name" />
-</LinearLayout>
+</net.squanchy.search.SearchItemView>
