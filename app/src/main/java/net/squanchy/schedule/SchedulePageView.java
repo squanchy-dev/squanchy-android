@@ -2,6 +2,7 @@ package net.squanchy.schedule;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -28,6 +29,7 @@ public class SchedulePageView extends CoordinatorLayout {
     private Disposable subscription;
     private ScheduleService service;
 
+    @Nullable
     private OnSearchClickListener listener;
 
     public SchedulePageView(Context context, AttributeSet attrs) {
@@ -64,7 +66,9 @@ public class SchedulePageView extends CoordinatorLayout {
         toolbar.inflateMenu(R.menu.search_icon_menu);
         toolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.action_search) {
-                listener.onSearchClick();
+                if (listener != null) {
+                    listener.onSearchClick();
+                }
                 return true;
             }
             return false;
