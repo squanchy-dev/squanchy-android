@@ -1,6 +1,9 @@
 package net.squanchy.support.lang;
 
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
+
+import net.squanchy.eventdetails.domain.view.ExperienceLevel;
 
 public final class Optional<T> {
 

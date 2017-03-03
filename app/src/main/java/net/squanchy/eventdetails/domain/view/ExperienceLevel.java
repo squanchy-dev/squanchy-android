@@ -3,6 +3,7 @@ package net.squanchy.eventdetails.domain.view;
 import android.support.annotation.StringRes;
 
 import net.squanchy.R;
+import net.squanchy.support.lang.Optional;
 
 public enum ExperienceLevel {
     BEGINNER("beginner", R.string.experience_level_beginner),
@@ -38,5 +39,13 @@ public enum ExperienceLevel {
     @StringRes
     public int labelStringResId() {
         return labelStringResId;
+    }
+
+    public static Optional<ExperienceLevel> fromNullableRawLevel(String rawLevel) {
+        if (rawLevel == null) {
+            return Optional.absent();
+        } else {
+            return Optional.of(ExperienceLevel.fromRawLevel(rawLevel));
+        }
     }
 }

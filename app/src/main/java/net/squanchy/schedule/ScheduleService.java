@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import net.squanchy.eventdetails.domain.view.ExperienceLevel;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Schedule;
 import net.squanchy.schedule.domain.view.SchedulePage;
@@ -19,7 +20,7 @@ import net.squanchy.support.lang.Checksum;
 import net.squanchy.support.lang.Func1;
 import net.squanchy.support.lang.Func2;
 import net.squanchy.support.lang.Lists;
-import net.squanchy.support.lang.OptionalEnums;
+import net.squanchy.support.lang.Optional;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.BiFunction;
@@ -66,7 +67,7 @@ class ScheduleService {
                     safelyConvertIdToInt(apiEvent.day_id),
                     apiEvent.name,
                     apiEvent.place_id,
-                    OptionalEnums.from(apiEvent.experience_level),
+                    Optional.fromNullable(apiEvent.experience_level).flatMap(ExperienceLevel::fromNullableRawLevel),
                     map(speakers, toSpeakerName()));
         };
     }

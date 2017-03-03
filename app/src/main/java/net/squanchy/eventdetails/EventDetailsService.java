@@ -10,7 +10,7 @@ import net.squanchy.service.firebase.model.FirebaseSpeaker;
 import net.squanchy.service.firebase.model.FirebaseSpeakers;
 import net.squanchy.support.lang.Checksum;
 import net.squanchy.support.lang.Func1;
-import net.squanchy.support.lang.OptionalEnums;
+import net.squanchy.support.lang.Optional;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.BiFunction;
@@ -49,7 +49,7 @@ class EventDetailsService {
                     dayId,
                     apiEvent.name,
                     apiEvent.place_id,
-                    OptionalEnums.from(apiEvent.experience_level),
+                    Optional.fromNullable(apiEvent.experience_level).flatMap(ExperienceLevel::fromNullableRawLevel),
                     map(speakers, toSpeakerName())
             );
         };
