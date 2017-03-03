@@ -13,7 +13,7 @@ import java.util.List;
 import net.squanchy.R;
 import net.squanchy.imageloader.ImageLoader;
 import net.squanchy.imageloader.ImageLoaderInjector;
-import net.squanchy.search.model.Speaker;
+import net.squanchy.speaker.domain.view.Speaker;
 
 class SpeakerAdapter extends RecyclerView.Adapter<SpeakerViewHolder> {
 

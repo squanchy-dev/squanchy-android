@@ -11,7 +11,7 @@ import com.google.firebase.storage.StorageReference;
 
 import net.squanchy.R;
 import net.squanchy.imageloader.ImageLoader;
-import net.squanchy.search.model.Speaker;
+import net.squanchy.speaker.domain.view.Speaker;
 
 class SpeakerViewHolder extends RecyclerView.ViewHolder {
 

@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import net.squanchy.search.model.Speaker;
+import net.squanchy.speaker.domain.view.Speaker;
 import net.squanchy.service.firebase.FirebaseDbService;
 
 import io.reactivex.Observable;

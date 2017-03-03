@@ -15,7 +15,7 @@ import java.util.List;
 
 import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
-import net.squanchy.search.model.Speaker;
+import net.squanchy.speaker.domain.view.Speaker;
 import net.squanchy.search.view.SpeakersView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;

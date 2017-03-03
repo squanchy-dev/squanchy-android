@@ -5,7 +5,7 @@ import com.google.auto.value.AutoValue;
 import java.util.List;
 
 import net.squanchy.schedule.domain.view.Event;
-import net.squanchy.search.model.Speaker;
+import net.squanchy.speaker.domain.view.Speaker;
 
 @AutoValue
 public abstract class EventDetails {
