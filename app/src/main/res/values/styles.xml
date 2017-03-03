@@ -88,11 +88,16 @@
     <item name="android:textColor">?android:textColorSecondary</item>
   </style>
 
-  <style name="Search.EditText">
+  <style name="Search.EditText" parent="None">
     <item name="android:background">@null</item>
     <item name="android:hint">@string/search_label</item>
     <item name="android:imeOptions">actionSearch</item>
     <item name="android:maxLines">1</item>
+  </style>
+
+  <style name="Search.GenericItem" parent="None">
+    <item name="android:gravity">center</item>
+    <item name="android:background">?selectableItemBackground</item>
   </style>
 
 </resources>
