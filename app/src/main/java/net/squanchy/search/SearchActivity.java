@@ -98,6 +98,7 @@ public class SearchActivity extends TypefaceStyleableActivity implements Speaker
         if (requestCode == SPEECH_REQUEST_CODE && resultCode == RESULT_OK) {
             List<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             searchField.setText(results.get(0));
+            return;
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

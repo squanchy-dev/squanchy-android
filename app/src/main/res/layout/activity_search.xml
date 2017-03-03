@@ -38,7 +38,7 @@
       android:orientation="vertical">
 
       <TextView
-        style="@style/Search.Body1"
+        style="@style/Search.SectionHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
