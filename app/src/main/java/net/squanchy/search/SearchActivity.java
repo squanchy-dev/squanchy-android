@@ -78,6 +78,9 @@ public class SearchActivity extends TypefaceStyleableActivity implements Speaker
         if (item.getItemId() == R.id.action_voice_search) {
             onVoiceSearchClicked();
             return true;
+        } else if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

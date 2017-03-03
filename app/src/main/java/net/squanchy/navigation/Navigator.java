@@ -6,4 +6,6 @@ public interface Navigator {
 
     void toEventDetails(int dayId, int eventId);
 
+    void toSearch();
+
 }
