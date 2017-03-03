@@ -59,6 +59,12 @@ public class HomeActivity extends TypefaceStyleableActivity implements OnSearchC
         schedulePageView.setOnSearchClickListener(this);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        selectInitialPage(currentSection);
+    }
+
     private void collectPageViewsInto(Map<BottomNavigationSection, View> pageViews) {
         pageViews.put(BottomNavigationSection.SCHEDULE, pageContainer.findViewById(R.id.schedule_content_root));
         pageViews.put(BottomNavigationSection.FAVORITES, pageContainer.findViewById(R.id.favorites_content_root));
