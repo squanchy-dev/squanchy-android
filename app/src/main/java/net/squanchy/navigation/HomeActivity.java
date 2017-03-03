@@ -1,7 +1,6 @@
 package net.squanchy.navigation;
 
 import android.animation.ValueAnimator;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.AttrRes;
@@ -21,11 +20,9 @@ import java.util.Map;
 
 import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
-import net.squanchy.search.OnSearchClickListener;
-import net.squanchy.search.SearchActivity;
 import net.squanchy.support.widget.InterceptingBottomNavigationView;
 
-public class HomeActivity extends TypefaceStyleableActivity implements OnSearchClickListener {
+public class HomeActivity extends TypefaceStyleableActivity {
 
     private static final String STATE_KEY_SELECTED_PAGE_INDEX = "HomeActivity.selected_page_index";
 
@@ -169,10 +166,5 @@ public class HomeActivity extends TypefaceStyleableActivity implements OnSearchC
     protected void onSaveInstanceState(Bundle outState) {
         outState.putInt(STATE_KEY_SELECTED_PAGE_INDEX, currentSection.ordinal());
         super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onSearchClick() {
-        startActivity(new Intent(this, SearchActivity.class));
     }
 }
