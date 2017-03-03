@@ -22,15 +22,11 @@ import net.squanchy.support.view.Hotspot;
 
 public class InterceptingBottomNavigationView extends BottomNavigationView {
 
-    private int revealDurationMillis;
-
     private Optional<MotionEvent> lastUpEvent = Optional.absent();
+    private Optional<OnNavigationItemSelectedListener> listener = Optional.absent();
+    private Optional<ColorProvider> colorProvider = Optional.absent();
 
-    @Nullable
-    private OnNavigationItemSelectedListener listener;
-
-    @Nullable
-    private ColorProvider colorProvider;
+    private int revealDurationMillis;
 
     public InterceptingBottomNavigationView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -45,12 +41,12 @@ public class InterceptingBottomNavigationView extends BottomNavigationView {
 
     private boolean onItemSelected(MenuItem menuItem) {
         boolean itemSelected = true;
-        if (listener != null) {
-            itemSelected = listener.onNavigationItemSelected(menuItem);
+        if (listener.isPresent()) {
+            itemSelected = listener.get().onNavigationItemSelected(menuItem);
         }
 
-        if (itemSelected && colorProvider != null) {
-            startCircularReveal(colorProvider.getSelectedItemColor(), menuItem);
+        if (itemSelected && colorProvider.isPresent()) {
+            startCircularReveal(colorProvider.get().getSelectedItemColor(), menuItem);
         }
 
         return itemSelected;
@@ -137,7 +133,7 @@ public class InterceptingBottomNavigationView extends BottomNavigationView {
 
     @Override
     public void setOnNavigationItemSelectedListener(@Nullable OnNavigationItemSelectedListener listener) {
-        this.listener = listener;
+        this.listener = Optional.ofNullable(listener);
     }
 
     @Override
@@ -151,7 +147,7 @@ public class InterceptingBottomNavigationView extends BottomNavigationView {
     }
 
     public void setColorProvider(@Nullable ColorProvider colorProvider) {
-        this.colorProvider = colorProvider;
+        this.colorProvider = Optional.ofNullable(colorProvider);
     }
 
     public void selectItemAt(@IntRange(from = 0) int position) {
