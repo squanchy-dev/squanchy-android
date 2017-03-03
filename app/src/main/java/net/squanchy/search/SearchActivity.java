@@ -24,7 +24,8 @@ import timber.log.Timber;
 
 public class SearchActivity extends TypefaceStyleableActivity implements SpeakersView.OnSpeakerClickedListener {
 
-    private static final int SPEECH_REQUEST_CODE = 1223;
+    private static final int SPEECH_REQUEST_CODE = 100;
+
     private EditText searchField;
     private SearchService searchService;
     private SpeakersView speakersView;
@@ -36,13 +37,13 @@ public class SearchActivity extends TypefaceStyleableActivity implements Speaker
         setContentView(R.layout.activity_search);
         searchField = (EditText) findViewById(R.id.search_field);
         speakersView = (SpeakersView) findViewById(R.id.speakers_view);
-        setUpToolbar();
+        setupToolbar();
 
         SearchComponent component = SearchInjector.obtain(this);
         searchService = component.service();
     }
 
-    private void setUpToolbar() {
+    private void setupToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.search_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

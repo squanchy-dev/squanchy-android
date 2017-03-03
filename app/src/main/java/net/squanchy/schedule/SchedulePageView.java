@@ -57,10 +57,10 @@ public class SchedulePageView extends CoordinatorLayout {
         ScheduleComponent component = ScheduleInjector.obtain(getContext());
         service = component.service();
 
-        setUpToolbar();
+        setupToolbar();
     }
 
-    private void setUpToolbar() {
+    private void setupToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.activity_schedule);
         toolbar.inflateMenu(R.menu.search_icon_menu);
