@@ -46,7 +46,7 @@ class SpeakerAdapter extends RecyclerView.Adapter<SpeakerViewHolder> {
 
     @Override
     public SpeakerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_search_result, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_search_generic, parent, false);
         return new SpeakerViewHolder(view);
     }
 

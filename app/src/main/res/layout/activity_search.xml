@@ -17,12 +17,9 @@
 
       <EditText
         android:id="@+id/search_field"
+        style="@style/Search.EditText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        android:hint="@string/search_label"
-        android:imeOptions="actionSearch"
-        android:maxLines="1" />
+        android:layout_height="wrap_content" />
 
     </android.support.v7.widget.Toolbar>
   </android.support.design.widget.AppBarLayout>

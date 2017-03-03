@@ -6,7 +6,7 @@
   android:gravity="center"
   android:background="?selectableItemBackground"
   android:orientation="vertical"
-  android:padding="8dp">
+  android:padding="@dimen/card_search_item_padding">
 
   <net.squanchy.support.widget.CircleImageView
     android:id="@+id/speaker_image"
@@ -14,7 +14,7 @@
     android:layout_width="@dimen/card_speaker_photo_big"
     android:layout_height="@dimen/card_speaker_photo_big"
     android:layout_gravity="center_horizontal"
-    android:paddingBottom="4dp"
+    android:paddingBottom="@dimen/card_search_item_image_padding_bottom"
     tools:src="@mipmap/ic_launcher" />
 
   <TextView
