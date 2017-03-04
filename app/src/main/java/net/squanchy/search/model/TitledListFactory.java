@@ -8,7 +8,7 @@ import java.util.List;
 import net.squanchy.R;
 import net.squanchy.speaker.domain.view.Speaker;
 
-public class SearchListFactory {
+public class TitledListFactory {
 
     @StringRes
     private static final int SPEAKER_TITLE = R.string.speaker_list_title;

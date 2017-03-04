@@ -17,7 +17,7 @@ import net.squanchy.R;
 import net.squanchy.imageloader.ImageLoader;
 import net.squanchy.imageloader.ImageLoaderInjector;
 import net.squanchy.search.model.TitledList;
-import net.squanchy.search.model.SearchListFactory;
+import net.squanchy.search.model.TitledListFactory;
 import net.squanchy.speaker.domain.view.Speaker;
 
 class SpeakerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -32,7 +32,7 @@ class SpeakerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int SPEAKER_LIST_OFFSET = 1;
 
-    private final TitledList<Speaker> speakerList = SearchListFactory.buildSpeakerList(null);
+    private final TitledList<Speaker> speakerList = TitledListFactory.buildSpeakerList(null);
 
     @Nullable
     private SpeakersView.OnSpeakerClickedListener listener;
