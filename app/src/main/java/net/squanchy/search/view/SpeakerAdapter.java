@@ -11,12 +11,13 @@ import android.view.ViewGroup;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.util.Collections;
 import java.util.List;
 
 import net.squanchy.R;
 import net.squanchy.imageloader.ImageLoader;
 import net.squanchy.imageloader.ImageLoaderInjector;
+import net.squanchy.search.model.TitledList;
+import net.squanchy.search.model.SearchListFactory;
 import net.squanchy.speaker.domain.view.Speaker;
 
 class SpeakerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -29,7 +30,10 @@ class SpeakerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         int SPEAKER = 1;
     }
 
-    private List<Speaker> speakers = Collections.emptyList();
+    private static final int SPEAKER_LIST_OFFSET = 1;
+
+    private final TitledList<Speaker> speakerList = SearchListFactory.buildSpeakerList(null);
+
     @Nullable
     private SpeakersView.OnSpeakerClickedListener listener;
 
@@ -39,18 +43,8 @@ class SpeakerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     SpeakerAdapter(Context context) {
         this.context = context;
-        itemsAdapter = new ItemsAdapter(Collections.emptyList());
+        itemsAdapter = new ItemsAdapter();
         imageLoader = ImageLoaderInjector.obtain(context).imageLoader();
-    }
-
-    public List<Speaker> speakers() {
-        return speakers;
-    }
-
-    public void updateWith(List<Speaker> speakers, @Nullable SpeakersView.OnSpeakerClickedListener listener) {
-        itemsAdapter.setItems(speakers);
-        this.speakers = speakers;
-        this.listener = listener;
     }
 
     @Override
@@ -66,9 +60,10 @@ class SpeakerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (itemsAdapter.getViewTypeAt(position) == ViewTypeId.SPEAKER) {
-            ((SpeakerViewHolder) holder).updateWith(speakers.get(position - 1), imageLoader, listener);
+            int positionInList = position - SPEAKER_LIST_OFFSET;
+            ((SpeakerViewHolder) holder).updateWith(speakerList.get(positionInList), imageLoader, listener);
         } else {
-            ((HeaderViewHolder) holder).updateWith(R.string.speaker_list_title);
+            ((HeaderViewHolder) holder).updateWith(speakerList.getTitle());
         }
     }
 
@@ -85,5 +80,15 @@ class SpeakerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemCount() {
         return itemsAdapter.getTotalItemsCount();
+    }
+
+    public List<Speaker> speakers() {
+        return speakerList.getItems();
+    }
+
+    public void updateWith(List<Speaker> speakers, @Nullable SpeakersView.OnSpeakerClickedListener listener) {
+        speakerList.setItems(speakers);
+        itemsAdapter.addItems(speakerList);
+        this.listener = listener;
     }
 }
