@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<net.squanchy.search.SearchItemView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  style="@style/Search.GenericItem"
+  android:layout_width="@dimen/card_search_item_width"
+  android:layout_height="@dimen/card_search_item_height"
+  android:padding="@dimen/card_search_item_padding">
+
+  <net.squanchy.support.widget.CircleImageView
+    android:id="@+id/speaker_image"
+    style="@style/Schedule.Card.Speaker.Photo"
+    android:layout_width="@dimen/card_speaker_photo_big"
+    android:layout_height="@dimen/card_speaker_photo_big"
+    android:layout_gravity="center_horizontal"
+    android:paddingBottom="@dimen/card_search_item_image_padding_bottom"
+    tools:src="@mipmap/ic_launcher" />
+
+  <TextView
+    android:id="@+id/speaker_names"
+    style="@style/Search.Caption"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    tools:text="Speaker Name" />
+</net.squanchy.search.SearchItemView>

@@ -6,11 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import net.squanchy.R;
-import net.squanchy.schedule.domain.view.Event;
-
 import java.util.Collections;
 import java.util.List;
+
+import net.squanchy.R;
+import net.squanchy.schedule.domain.view.Event;
 
 class EventsAdapter extends RecyclerView.Adapter<EventViewHolder> {
 

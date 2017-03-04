@@ -32,6 +32,7 @@
   </style>
 
   <style name="Squanchy.Tabs.SpeakerList" parent="None" />
+
   <style name="TextAppearance.Squanchy.Card.Speaker" parent="None">
     <item name="android:textColor">?android:textColorSecondary</item>
     <item name="android:textSize">@dimen/card_speaker</item>
@@ -66,6 +67,37 @@
     <item name="android:lineSpacingExtra">@dimen/card_speaker_line_spacing_extra</item>
     <item name="android:lineSpacingMultiplier">1</item>
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.Card.Speaker</item>
+  </style>
+
+  <style name="Search.Appbar" parent="ThemeOverlay.AppCompat.Light">
+    <item name="android:elevation">@dimen/toolbar_elevation</item>
+  </style>
+
+  <style name="Search.Toolbar" parent="Squanchy.Toolbar">
+    <item name="android:background">?attr/colorPrimary</item>
+    <item name="android:colorControlNormal">?colorAccent</item>
+  </style>
+
+  <style name="Search.SectionHeader" parent="TextAppearance.AppCompat.Body1">
+    <item name="android:textColor">?android:colorAccent</item>
+    <item name="fontPath">?titleTypeface</item>
+  </style>
+
+  <style name="Search.Caption" parent="TextAppearance.AppCompat.Caption">
+    <item name="android:maxLines">2</item>
+    <item name="android:textColor">?android:textColorSecondary</item>
+  </style>
+
+  <style name="Search.EditText" parent="None">
+    <item name="android:background">@null</item>
+    <item name="android:hint">@string/search_label</item>
+    <item name="android:imeOptions">actionSearch</item>
+    <item name="android:maxLines">1</item>
+  </style>
+
+  <style name="Search.GenericItem" parent="None">
+    <item name="android:gravity">center</item>
+    <item name="android:background">?selectableItemBackground</item>
   </style>
 
 </resources>

@@ -49,6 +49,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
 
         BottomNavigationSection selectedPage = getSelectedSectionOrDefault(Optional.ofNullable(savedInstanceState));
         selectInitialPage(selectedPage);
+        selectPage(BottomNavigationSection.SCHEDULE);
     }
 
     @Override
