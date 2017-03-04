@@ -32,5 +32,6 @@
   <dimen name="card_search_item_height">80dp</dimen>
   <dimen name="card_search_item_padding">8dp</dimen>
   <dimen name="card_search_item_image_padding_bottom">4dp</dimen>
+  <dimen name="search_header_padding">16dp</dimen>
 
 </resources>

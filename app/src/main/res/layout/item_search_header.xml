@@ -3,5 +3,4 @@
   style="@style/Search.SectionHeader"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:padding="16dp"
-  android:text="@string/speaker_list_title" />
+  android:padding="@dimen/search_header_padding"/>
