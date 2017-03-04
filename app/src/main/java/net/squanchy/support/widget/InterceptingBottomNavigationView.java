@@ -15,9 +15,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.hadisatrio.optional.Optional;
-
 import net.squanchy.support.graphics.CircularRevealDrawable;
+import net.squanchy.support.lang.Optional;
 import net.squanchy.support.view.Hotspot;
 
 public class InterceptingBottomNavigationView extends BottomNavigationView {
@@ -59,10 +58,8 @@ public class InterceptingBottomNavigationView extends BottomNavigationView {
     }
 
     private void setBackgroundHotspot(CircularRevealDrawable revealDrawable, MenuItem menuItem) {
-        lastUpEvent.ifPresentOrElse(
-                motionEvent -> applyHotspot(revealDrawable, Hotspot.from(motionEvent)),
-                () -> applyHotspot(revealDrawable, getHotspotFor(menuItem))
-        );
+        lastUpEvent.subscribe(motionEvent -> applyHotspot(revealDrawable, Hotspot.from(motionEvent)),
+                () -> applyHotspot(revealDrawable, getHotspotFor(menuItem)));
     }
 
     private void applyHotspot(CircularRevealDrawable revealDrawable, Hotspot hotspot) {
@@ -133,7 +130,7 @@ public class InterceptingBottomNavigationView extends BottomNavigationView {
 
     @Override
     public void setOnNavigationItemSelectedListener(@Nullable OnNavigationItemSelectedListener listener) {
-        this.listener = Optional.ofNullable(listener);
+        this.listener = Optional.fromNullable(listener);
     }
 
     @Override
@@ -147,7 +144,7 @@ public class InterceptingBottomNavigationView extends BottomNavigationView {
     }
 
     public void setColorProvider(@Nullable ColorProvider colorProvider) {
-        this.colorProvider = Optional.ofNullable(colorProvider);
+        this.colorProvider = Optional.fromNullable(colorProvider);
     }
 
     public void selectItemAt(@IntRange(from = 0) int position) {

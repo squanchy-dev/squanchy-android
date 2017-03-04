@@ -49,6 +49,18 @@ public final class Optional<T> {
         return isPresent() ? func.apply(data) : Optional.absent();
     }
 
+    public void subscribe(Procedure1<T> onNext, Procedure0 onError) {
+        if (isPresent()) {
+            onNext.apply(data);
+        } else {
+            onError.apply();
+        }
+    }
+
+    public T or(T elseCase) {
+        return isPresent() ? get() : elseCase;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

@@ -2,7 +2,8 @@ package net.squanchy.service.firebase;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.hadisatrio.optional.Optional;
+
+import net.squanchy.support.lang.Optional;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
@@ -17,7 +18,7 @@ public class FirebaseAuthService {
 
     Observable<Optional<FirebaseUser>> currentUser() {
         return Observable.create(e -> {
-            FirebaseAuth.AuthStateListener listener = firebaseAuth -> e.onNext(Optional.ofNullable(firebaseAuth.getCurrentUser()));
+            FirebaseAuth.AuthStateListener listener = firebaseAuth -> e.onNext(Optional.fromNullable(firebaseAuth.getCurrentUser()));
 
             auth.addAuthStateListener(listener);
 
