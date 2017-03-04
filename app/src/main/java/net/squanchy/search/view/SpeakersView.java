@@ -36,6 +36,14 @@ public class SpeakersView extends RecyclerView {
     }
 
     public void updateWith(List<Speaker> newData, OnSpeakerClickedListener listener) {
+        if (getAdapter() == null) {
+            super.setAdapter(adapter);
+        }
+
+        GridLayoutManager layoutManager = (GridLayoutManager) getLayoutManager();
+        GridLayoutManager.SpanSizeLookup spanSizeLookup = adapter.createSpanSizeLookup(layoutManager.getSpanCount());
+        layoutManager.setSpanSizeLookup(spanSizeLookup);
+
         DiffUtil.Callback callback = new SpeakerDiffCallback(adapter.speakers(), newData);       // TODO move off of the UI thread
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(callback, true);
         adapter.updateWith(newData, listener);
