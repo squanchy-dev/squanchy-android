@@ -10,26 +10,26 @@ import static net.squanchy.search.view.SpeakerAdapter.ViewTypeId;
 
 class ItemsAdapter {
 
-    private final List<TitledList<Speaker>> items = new ArrayList<>();
+    private final List<TitledList<Speaker>> lists = new ArrayList<>();
 
     int getTotalItemsCount() {
         int size = 0;
-        for (TitledList list : items) {
-            size += list.getItems().size();
+        for (TitledList list : lists) {
+            size += list.size();
         }
         return size + getAdditionalItemsCount();
     }
 
     private int getAdditionalItemsCount() {
-        return items.size();
+        return lists.size();
     }
 
     boolean isEmpty() {
-        return items.isEmpty();
+        return lists.isEmpty();
     }
 
     void addItems(TitledList<Speaker> list) {
-        items.add(list);
+        lists.add(list);
     }
 
     int getViewTypeAt(int position) {

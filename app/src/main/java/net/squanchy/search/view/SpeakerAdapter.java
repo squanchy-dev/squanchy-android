@@ -63,7 +63,7 @@ class SpeakerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             int positionInList = position - SPEAKER_LIST_OFFSET;
             ((SpeakerViewHolder) holder).updateWith(speakerList.get(positionInList), imageLoader, listener);
         } else {
-            ((HeaderViewHolder) holder).updateWith(speakerList.getTitle());
+            ((HeaderViewHolder) holder).updateWith(speakerList.title());
         }
     }
 
@@ -83,7 +83,7 @@ class SpeakerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public List<Speaker> speakers() {
-        return speakerList.getItems();
+        return speakerList.items();
     }
 
     public void updateWith(List<Speaker> speakers, @Nullable SpeakersView.OnSpeakerClickedListener listener) {

@@ -24,12 +24,16 @@ public final class TitledList<T> {
     }
 
     @StringRes
-    public int getTitle() {
+    public int title() {
         return title;
     }
 
-    public List<T> getItems() {
+    public List<T> items() {
         return items;
+    }
+
+    public int size(){
+        return items.size();
     }
 
     public T get(int position) {
