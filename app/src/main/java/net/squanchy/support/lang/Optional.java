@@ -1,5 +1,7 @@
 package net.squanchy.support.lang;
 
+import android.support.annotation.Nullable;
+
 public final class Optional<T> {
 
     @SuppressWarnings("unchecked")  // Type erasure has us covered here, we don't care
@@ -45,20 +47,33 @@ public final class Optional<T> {
         return data;
     }
 
-    public <V> Optional<V> flatMap(Func1<T, Optional<V>> func) {
-        return isPresent() ? func.apply(data) : Optional.absent();
-    }
-
-    public void subscribe(Procedure1<T> onNext, Procedure0 onError) {
-        if (isPresent()) {
-            onNext.apply(data);
-        } else {
-            onError.apply();
-        }
-    }
-
     public T or(T elseCase) {
         return isPresent() ? get() : elseCase;
+    }
+
+    public Optional<T> or(Optional<T> elseCase) {
+        return isPresent() ? this : elseCase;
+    }
+
+    public Optional<T> or(Func0<Optional<T>> elseFunc) {
+        return isPresent() ? this : elseFunc.call();
+    }
+
+    @Nullable
+    public T orNull() {
+        return isPresent() ? get() : null;
+    }
+
+    public <V> Optional<V> map(final Func1<T, V> func) {
+        return flatMap(element -> of(func.call(element)));
+    }
+
+    public Optional<T> filter(final Predicate<T> predicate) {
+        return flatMap(element -> fromNullable(predicate.call(element) ? element : null));
+    }
+
+    public <V> Optional<V> flatMap(Func1<T, Optional<V>> func) {
+        return isPresent() ? func.call(data) : Optional.absent();
     }
 
     @Override

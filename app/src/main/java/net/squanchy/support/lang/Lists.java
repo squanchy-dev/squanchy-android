@@ -13,7 +13,7 @@ public final class Lists {
 
         List<R> result = new ArrayList<>(list.size());
         for (T t : list) {
-            result.add(function.apply(t));
+            result.add(function.call(t));
         }
 
         return result;
@@ -21,7 +21,7 @@ public final class Lists {
 
     public static <T> T find(List<T> list, Func1<T, Boolean> predicate) {
         for (T t : list) {
-            if (predicate.apply(t)) {
+            if (predicate.call(t)) {
                 return t;
             }
         }
@@ -31,10 +31,11 @@ public final class Lists {
     }
 
     public static <T, R> R reduce(R initial, List<T> list, Func2<R, T, R> reducer) {
+        R reducedValue = initial;
         for (T t : list) {
-            initial = reducer.apply(initial, t);
+            reducedValue = reducer.call(reducedValue, t);
         }
 
-        return initial;
+        return reducedValue;
     }
 }
