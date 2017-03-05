@@ -8,7 +8,7 @@ import com.google.auto.value.AutoValue;
 @AutoValue
 public abstract class Hotspot {
 
-    public static Hotspot from(MotionEvent motionEvent) {
+    public static Hotspot fromMotionEvent(MotionEvent motionEvent) {
         return new AutoValue_Hotspot(motionEvent.getX(), motionEvent.getY());
     }
 

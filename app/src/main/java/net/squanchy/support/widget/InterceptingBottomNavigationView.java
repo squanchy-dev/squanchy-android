@@ -58,11 +58,8 @@ public class InterceptingBottomNavigationView extends BottomNavigationView {
     }
 
     private void setBackgroundHotspot(CircularRevealDrawable revealDrawable, MenuItem menuItem) {
-        lastUpEvent.subscribe(motionEvent -> applyHotspot(revealDrawable, Hotspot.from(motionEvent)),
-                () -> applyHotspot(revealDrawable, getHotspotFor(menuItem)));
-    }
-
-    private void applyHotspot(CircularRevealDrawable revealDrawable, Hotspot hotspot) {
+        Hotspot hotspot = lastUpEvent.map(Hotspot::fromMotionEvent)
+                .or(getHotspotFor(menuItem));
         revealDrawable.setHotspot(hotspot.x(), hotspot.y());
     }
 
