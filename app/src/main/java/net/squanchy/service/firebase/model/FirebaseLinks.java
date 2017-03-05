@@ -2,12 +2,8 @@ package net.squanchy.service.firebase.model;
 
 import android.support.annotation.Nullable;
 
-public class FirebaseDay {
-
-    public String id;
-
-    public int position;
+public class FirebaseLinks {
 
     @Nullable
-    public String date;
+    public String slides;
 }

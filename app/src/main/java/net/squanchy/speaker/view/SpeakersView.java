@@ -43,7 +43,7 @@ public class SpeakersView extends RecyclerView {
 
     public interface OnSpeakerClickedListener {
 
-        void onSpeakerClicked(long speakerId);
+        void onSpeakerClicked(Speaker speaker);
     }
 
     private static class SpeakerDiffCallback extends DiffUtil.Callback {
@@ -70,7 +70,7 @@ public class SpeakersView extends RecyclerView {
         public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
             Speaker oldSpeaker = oldSpeakers.get(oldItemPosition);
             Speaker newSpeaker = newSpeakers.get(newItemPosition);
-            return oldSpeaker.id() == newSpeaker.id();
+            return oldSpeaker.numericId() == newSpeaker.numericId();
         }
 
         @Override

@@ -4,5 +4,11 @@ import java.util.List;
 
 public class FirebaseSchedule {
 
-    public List<FirebaseDay> days;
+    public FirebaseSchedule() {}
+
+    public FirebaseSchedule(List<FirebaseEvent> events) {
+        this.events = events;
+    }
+
+    public List<FirebaseEvent> events;
 }

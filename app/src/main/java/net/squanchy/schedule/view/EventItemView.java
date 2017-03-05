@@ -9,10 +9,12 @@ import java.util.List;
 import java.util.Locale;
 
 import net.squanchy.R;
+import net.squanchy.eventdetails.domain.view.ExperienceLevel;
 import net.squanchy.eventdetails.widget.ExperienceLevelIconView;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.service.firebase.model.FirebaseSpeaker;
 import net.squanchy.speaker.domain.view.Speaker;
+import net.squanchy.support.lang.Checksum;
 import net.squanchy.support.widget.CardLayout;
 
 public class EventItemView extends CardLayout {
@@ -23,6 +25,7 @@ public class EventItemView extends CardLayout {
     private TextView timestampView;
     private ExperienceLevelIconView experienceLevelIconView;
     private SpeakerView speakerView;
+    private final Checksum checksum = new Checksum();
 
     public EventItemView(Context context, AttributeSet attrs) {
         this(context, attrs, R.attr.cardViewDefaultStyle);
@@ -45,7 +48,9 @@ public class EventItemView extends CardLayout {
     void updateWith(Event event) {
         timestampView.setText("12:00");         // TODO put start time 
         titleView.setText(event.title());
-        experienceLevelIconView.setExperienceLevel(event.experienceLevel());
+        if (event.experienceLevel().isPresent()) {
+            experienceLevelIconView.setExperienceLevel(event.experienceLevel().get());
+        }
 
         speakerView.setVisibility(event.speakersVisibility());
         speakerView.updateWith(createDummySpeakersList());                      // TODO use real data
@@ -53,15 +58,14 @@ public class EventItemView extends CardLayout {
 
     private List<Speaker> createDummySpeakersList() {
         FirebaseSpeaker firstSpeaker = new FirebaseSpeaker();
-        firstSpeaker.avatarImageURL = String.format(Locale.US, SPEAKER_PHOTO_PATH_TEMPLATE, "squanchy.webp");
-        firstSpeaker.speakerId = 0L;
-        firstSpeaker.firstName = "Dave";
-        firstSpeaker.lastName = "Clements";
+        firstSpeaker.photo_url = String.format(Locale.US, SPEAKER_PHOTO_PATH_TEMPLATE, "squanchy.webp");
+        firstSpeaker.id = "0";
+        firstSpeaker.name = "Dave Clements";
         FirebaseSpeaker secondSpeaker = new FirebaseSpeaker();
-        secondSpeaker.avatarImageURL = String.format(Locale.US, SPEAKER_PHOTO_PATH_TEMPLATE, "squanchy.webp");
-        secondSpeaker.speakerId = 0L;
-        secondSpeaker.firstName = "Qi";
-        secondSpeaker.lastName = "Qu";
-        return Arrays.asList(Speaker.create(firstSpeaker), Speaker.create(secondSpeaker));
+        secondSpeaker.photo_url = String.format(Locale.US, SPEAKER_PHOTO_PATH_TEMPLATE, "squanchy.webp");
+        secondSpeaker.id = "0";
+        secondSpeaker.name = "Qi Qu";
+        return Arrays.asList(Speaker.create(firstSpeaker, checksum.getChecksumOf(firstSpeaker.id)),
+                Speaker.create(secondSpeaker, checksum.getChecksumOf(secondSpeaker.id)));
     }
 }
