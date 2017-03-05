@@ -31,10 +31,11 @@ public final class Lists {
     }
 
     public static <T, R> R reduce(R initial, List<T> list, Func2<R, T, R> reducer) {
+        R reducedValue = initial;
         for (T t : list) {
-            initial = reducer.apply(initial, t);
+            reducedValue = reducer.call(reducedValue, t);
         }
 
-        return initial;
+        return reducedValue;
     }
 }
