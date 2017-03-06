@@ -26,7 +26,7 @@
 
   <style name="TextAppearance.Squanchy.Tab" parent="TextAppearance.AppCompat.Button">
     <item name="android:textSize">@dimen/tab_text</item>
-    <item name="android:textColor">?android:textColorPrimaryInverse</item>
+    <item name="android:textColor">@color/text_inverse_inactive</item>
     <item name="textAllCaps">false</item>
     <item name="fontPath">?titleTypeface</item>
   </style>
