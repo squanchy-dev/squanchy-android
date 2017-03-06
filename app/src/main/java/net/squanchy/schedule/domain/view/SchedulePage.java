@@ -12,12 +12,12 @@ import org.joda.time.format.DateTimeFormatter;
 public abstract class SchedulePage {
 
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd");
-    private static final String TITLE_FORMAT_TEMPLATE = "EEEE d";
+    private static final String TITLE_FORMAT_TEMPLATE = "EEE d";
 
     public static SchedulePage create(String date, List<Event> events) {
         DateTime dateTime = DateTime.parse(date, DATE_FORMATTER);
         String title = dateTime.toString(TITLE_FORMAT_TEMPLATE);
-        return new AutoValue_SchedulePage(title, events);
+        return new AutoValue_SchedulePage(title.toUpperCase(), events);
     }
 
     public abstract String title();

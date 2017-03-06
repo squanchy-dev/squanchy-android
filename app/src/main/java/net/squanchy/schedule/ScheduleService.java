@@ -1,7 +1,5 @@
 package net.squanchy.schedule;
 
-import android.support.annotation.NonNull;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,7 +51,6 @@ class ScheduleService {
                 .subscribeOn(Schedulers.io());
     }
 
-    @NonNull
     private BiFunction<FirebaseSchedule, FirebaseSpeakers, List<Event>> combineSessionsAndSpeakers() {
         return (apiSchedule, apiSpeakers) -> Lists.map(apiSchedule.events, combineEventWith(apiSpeakers));
     }
@@ -87,12 +84,10 @@ class ScheduleService {
         return apiSpeaker -> apiSpeaker != null ? apiSpeaker.name : null;
     }
 
-    @NonNull
     private Function<List<Event>, HashMap<Integer, List<Event>>> mapEventsToDays() {
         return events -> Lists.reduce(new HashMap<>(), events, listToDaysHashMap());
     }
 
-    @NonNull
     private Func2<HashMap<Integer, List<Event>>, Event, HashMap<Integer, List<Event>>> listToDaysHashMap() {
         return (map, event) -> {
             List<Event> dayList = getOrCreateDayList(map, event);
@@ -113,7 +108,6 @@ class ScheduleService {
         return currentList;
     }
 
-    @NonNull
     private BiFunction<HashMap<Integer, List<Event>>, FirebaseDays, Schedule> combineSessionsById() {
         return (map, apiDays) -> {
             List<SchedulePage> pages = new ArrayList<>(map.size());
