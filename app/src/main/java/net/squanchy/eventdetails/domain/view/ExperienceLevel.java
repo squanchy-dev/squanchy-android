@@ -5,6 +5,8 @@ import android.support.annotation.StringRes;
 import net.squanchy.R;
 import net.squanchy.support.lang.Optional;
 
+import timber.log.Timber;
+
 public enum ExperienceLevel {
     BEGINNER("beginner", R.string.experience_level_beginner),
     INTERMEDIATE("intermediate", R.string.experience_level_intermediate),
@@ -29,7 +31,12 @@ public enum ExperienceLevel {
     }
 
     public static Optional<ExperienceLevel> fromNullableRawLevel(String rawLevel) {
-        return Optional.fromNullable(rawLevel).map(ExperienceLevel::fromRawLevel);
+        try {
+            return Optional.fromNullable(rawLevel).map(ExperienceLevel::fromRawLevel);
+        } catch (IllegalArgumentException e) {
+            Timber.d(e);
+            return Optional.absent();
+        }
     }
 
     public static ExperienceLevel fromRawLevel(String rawLevel) {
