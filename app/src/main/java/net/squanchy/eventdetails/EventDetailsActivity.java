@@ -15,15 +15,13 @@ import io.reactivex.disposables.Disposable;
 public class EventDetailsActivity extends AppCompatActivity {
 
     private static final String EXTRA_EVENT_ID = "event_id";
-    private static final String EXTRA_DAY_ID = "day_id";
 
     private EventDetailsService service;
     private Disposable subscription;
     private EventDetailsCoordinatorLayout coordinatorLayout;
 
-    public static Intent createIntent(Context context, String dayId, String eventId) {
+    public static Intent createIntent(Context context, String eventId) {
         Intent intent = new Intent(context, EventDetailsActivity.class);
-        intent.putExtra(EXTRA_DAY_ID, dayId);
         intent.putExtra(EXTRA_EVENT_ID, eventId);
         return intent;
     }
@@ -48,10 +46,9 @@ public class EventDetailsActivity extends AppCompatActivity {
         super.onStart();
 
         Intent intent = getIntent();
-        String dayId = intent.getStringExtra(EXTRA_DAY_ID);
         String eventId = intent.getStringExtra(EXTRA_EVENT_ID);
 
-        subscription = service.event(dayId, eventId)
+        subscription = service.event(eventId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(event -> coordinatorLayout.updateWith(event));
     }

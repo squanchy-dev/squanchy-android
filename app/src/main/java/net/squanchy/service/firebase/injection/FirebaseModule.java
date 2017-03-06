@@ -9,8 +9,6 @@ import net.squanchy.service.firebase.AuthenticatedFirebaseDbService;
 import net.squanchy.service.firebase.FirebaseAuthService;
 import net.squanchy.service.firebase.FirebaseDbService;
 import net.squanchy.service.firebase.UnauthenticatedFirebaseDbService;
-import net.squanchy.service.view.EventService;
-import net.squanchy.support.lang.Checksum;
 
 import dagger.Module;
 import dagger.Provides;
@@ -48,13 +46,5 @@ public class FirebaseModule {
     @DbServiceType(DbServiceType.Type.UNAUTHENTICATED)
     FirebaseDbService unauthenticatedDbService(DatabaseReference database) {
         return new UnauthenticatedFirebaseDbService(database);
-    }
-
-    @Provides
-    EventService eventService(
-            @DbServiceType(DbServiceType.Type.AUTHENTICATED) FirebaseDbService dbService,
-            Checksum checksum
-    ) {
-        return new EventService(dbService, checksum);
     }
 }

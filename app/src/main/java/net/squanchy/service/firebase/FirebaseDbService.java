@@ -15,5 +15,5 @@ public interface FirebaseDbService {
 
     Observable<FirebaseEvents> events();
 
-    Observable<FirebaseEvent> event(String dayId, String eventId);
+    Observable<FirebaseEvent> event(String eventId);
 }

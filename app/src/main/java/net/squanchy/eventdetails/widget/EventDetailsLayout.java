@@ -2,14 +2,17 @@ package net.squanchy.eventdetails.widget;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.squanchy.R;
-import net.squanchy.eventdetails.domain.view.ExperienceLevel;
 import net.squanchy.schedule.domain.view.Event;
+import net.squanchy.speaker.domain.view.Speaker;
+
+import static net.squanchy.support.lang.Lists.map;
 
 public class EventDetailsLayout extends LinearLayout {
 
@@ -63,9 +66,8 @@ public class EventDetailsLayout extends LinearLayout {
 
     private void updateSpeakerData(Event event) {
         speakersView.setVisibility(event.speakersVisibility());
-        if (event.speakersNames().isPresent()) {
-            speakersView.setText(event.speakersNames().get());
-        }
+        String speakersNames = TextUtils.join(", ", map(event.speakers(), Speaker::name));
+        speakersView.setText(speakersNames);
     }
 
     private void updateExperienceLevelData(Event event) {

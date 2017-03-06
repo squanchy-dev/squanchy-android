@@ -4,7 +4,7 @@ public interface Navigator {
 
     void up();
 
-    void toEventDetails(String dayId, String eventId);
+    void toEventDetails(String eventId);
 
     void toSearch();
 

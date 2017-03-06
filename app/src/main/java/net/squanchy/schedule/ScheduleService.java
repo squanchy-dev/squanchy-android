@@ -9,7 +9,7 @@ import net.squanchy.schedule.domain.view.Schedule;
 import net.squanchy.schedule.domain.view.SchedulePage;
 import net.squanchy.service.firebase.FirebaseDbService;
 import net.squanchy.service.firebase.model.FirebaseDays;
-import net.squanchy.service.view.EventService;
+import net.squanchy.service.repository.EventRepository;
 import net.squanchy.support.lang.Func2;
 import net.squanchy.support.lang.Lists;
 import net.squanchy.support.lang.Optional;
@@ -24,17 +24,17 @@ import static net.squanchy.support.lang.Lists.find;
 class ScheduleService {
 
     private final FirebaseDbService dbService;
-    private final EventService eventService;
+    private final EventRepository eventRepository;
 
-    ScheduleService(FirebaseDbService dbService, EventService eventService) {
+    ScheduleService(FirebaseDbService dbService, EventRepository eventRepository) {
         this.dbService = dbService;
-        this.eventService = eventService;
+        this.eventRepository = eventRepository;
     }
 
     public Observable<Schedule> schedule() {
         final Observable<FirebaseDays> daysObservable = dbService.days();
 
-        return eventService.events()
+        return eventRepository.events()
                 .map(mapEventsToDays())
                 .withLatestFrom(daysObservable, combineSessionsById())
                 .subscribeOn(Schedulers.io());

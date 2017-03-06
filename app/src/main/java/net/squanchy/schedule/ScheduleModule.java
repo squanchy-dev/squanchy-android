@@ -5,7 +5,7 @@ import android.content.Context;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.service.firebase.FirebaseDbService;
 import net.squanchy.service.firebase.injection.DbServiceType;
-import net.squanchy.service.view.EventService;
+import net.squanchy.service.repository.EventRepository;
 
 import dagger.Module;
 import dagger.Provides;
@@ -20,8 +20,8 @@ class ScheduleModule {
     }
 
     @Provides
-    ScheduleService scheduleService(@DbServiceType(DbServiceType.Type.AUTHENTICATED) FirebaseDbService dbService, EventService eventService) {
-        return new ScheduleService(dbService, eventService);
+    ScheduleService scheduleService(@DbServiceType(DbServiceType.Type.AUTHENTICATED) FirebaseDbService dbService, EventRepository eventRepository) {
+        return new ScheduleService(dbService, eventRepository);
     }
 
     @Provides
