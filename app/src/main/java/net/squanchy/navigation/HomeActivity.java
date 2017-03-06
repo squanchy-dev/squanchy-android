@@ -13,13 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
-import com.hadisatrio.optional.Optional;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
+import net.squanchy.support.lang.Optional;
 import net.squanchy.support.widget.InterceptingBottomNavigationView;
 
 public class HomeActivity extends TypefaceStyleableActivity {
@@ -47,7 +47,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
         bottomNavigationView = (InterceptingBottomNavigationView) findViewById(R.id.bottom_navigation);
         setupBottomNavigation(bottomNavigationView);
 
-        BottomNavigationSection selectedPage = getSelectedSectionOrDefault(Optional.ofNullable(savedInstanceState));
+        BottomNavigationSection selectedPage = getSelectedSectionOrDefault(Optional.fromNullable(savedInstanceState));
         selectInitialPage(selectedPage);
         selectPage(BottomNavigationSection.SCHEDULE);
     }

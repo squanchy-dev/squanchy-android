@@ -72,7 +72,7 @@ public class SpeakerView extends LinearLayout {
     }
 
     private String toCommaSeparatedNames(List<Speaker> speakers) {
-        StringBuilder builder = Lists.reduce(new StringBuilder(), speakers, (sb, speaker) -> sb.append(speaker.fullName()).append(", "));
+        StringBuilder builder = Lists.reduce(new StringBuilder(), speakers, (sb, speaker) -> sb.append(speaker.name()).append(", "));
         int stringLength = builder.length();
         return builder.delete(stringLength - 2, stringLength).toString();
     }
@@ -93,7 +93,9 @@ public class SpeakerView extends LinearLayout {
         for (Speaker speaker : speakers) {
             ImageView photoView = recycleOrInflatePhotoView(photoViews);
             speakerPhotoContainer.addView(photoView);
-            loadSpeakerPhoto(photoView, speaker.avatarImageURL(), imageLoader);
+            if (speaker.avatarImageURL().isPresent()) {
+                loadSpeakerPhoto(photoView, speaker.avatarImageURL().get(), imageLoader);
+            }
         }
     }
 

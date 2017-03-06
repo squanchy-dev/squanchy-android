@@ -6,22 +6,22 @@ import java.util.List;
 
 public final class Lists {
 
-    public static <T, R> List<R> map(List<T> list, Function<T, R> function) {
+    public static <T, R> List<R> map(List<T> list, Func1<T, R> function) {
         if (list == null || list.isEmpty()) {
             return Collections.emptyList();
         }
 
         List<R> result = new ArrayList<>(list.size());
         for (T t : list) {
-            result.add(function.apply(t));
+            result.add(function.call(t));
         }
 
         return result;
     }
 
-    public static <T> T find(List<T> list, Function<T, Boolean> predicate) {
+    public static <T> T find(List<T> list, Func1<T, Boolean> predicate) {
         for (T t : list) {
-            if (predicate.apply(t)) {
+            if (predicate.call(t)) {
                 return t;
             }
         }
@@ -30,21 +30,12 @@ public final class Lists {
         return null;
     }
 
-    public static <T, R> R reduce(R initial, List<T> list, BiFunction<R, T, R> reducer) {
+    public static <T, R> R reduce(R initial, List<T> list, Func2<R, T, R> reducer) {
+        R reducedValue = initial;
         for (T t : list) {
-            initial = reducer.apply(initial, t);
+            reducedValue = reducer.call(reducedValue, t);
         }
 
-        return initial;
-    }
-
-    public interface Function<T, R> {
-
-        R apply(T t);
-    }
-
-    public interface BiFunction<T, U, R> {
-
-        R apply(T t, U u);
+        return reducedValue;
     }
 }
