@@ -3,6 +3,7 @@ package net.squanchy.injection;
 import net.squanchy.service.firebase.FirebaseDbService;
 import net.squanchy.service.firebase.injection.DbServiceType;
 import net.squanchy.service.firebase.injection.FirebaseModule;
+import net.squanchy.service.view.EventService;
 import net.squanchy.support.injection.ChecksumModule;
 import net.squanchy.support.lang.Checksum;
 
@@ -16,6 +17,8 @@ public interface ApplicationComponent {
     FirebaseDbService firebaseDbService();
 
     Checksum checksum();
+
+    EventService eventService();
 
     class Factory {
 
