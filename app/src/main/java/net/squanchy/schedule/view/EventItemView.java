@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Locale;
 
 import net.squanchy.R;
-import net.squanchy.eventdetails.domain.view.ExperienceLevel;
 import net.squanchy.eventdetails.widget.ExperienceLevelIconView;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.service.firebase.model.FirebaseSpeaker;
@@ -50,6 +49,9 @@ public class EventItemView extends CardLayout {
         titleView.setText(event.title());
         if (event.experienceLevel().isPresent()) {
             experienceLevelIconView.setExperienceLevel(event.experienceLevel().get());
+            experienceLevelIconView.setVisibility(VISIBLE);
+        } else {
+            experienceLevelIconView.setVisibility(INVISIBLE);
         }
 
         speakerView.setVisibility(event.speakersVisibility());
