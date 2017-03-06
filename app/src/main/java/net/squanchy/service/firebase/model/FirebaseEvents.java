@@ -2,11 +2,11 @@ package net.squanchy.service.firebase.model;
 
 import java.util.List;
 
-public class FirebaseSchedule {
+public class FirebaseEvents {
 
-    public FirebaseSchedule() {}
+    public FirebaseEvents() {}
 
-    public FirebaseSchedule(List<FirebaseEvent> events) {
+    public FirebaseEvents(List<FirebaseEvent> events) {
         this.events = events;
     }
 

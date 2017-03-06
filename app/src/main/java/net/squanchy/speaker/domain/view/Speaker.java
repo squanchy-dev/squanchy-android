@@ -3,7 +3,6 @@ package net.squanchy.speaker.domain.view;
 import com.google.auto.value.AutoValue;
 
 import net.squanchy.service.firebase.model.FirebaseSpeaker;
-import net.squanchy.support.lang.Ids;
 import net.squanchy.support.lang.Optional;
 
 @AutoValue

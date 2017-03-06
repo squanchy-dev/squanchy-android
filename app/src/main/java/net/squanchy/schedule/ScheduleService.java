@@ -11,7 +11,7 @@ import net.squanchy.schedule.domain.view.SchedulePage;
 import net.squanchy.service.firebase.FirebaseDbService;
 import net.squanchy.service.firebase.model.FirebaseDays;
 import net.squanchy.service.firebase.model.FirebaseEvent;
-import net.squanchy.service.firebase.model.FirebaseSchedule;
+import net.squanchy.service.firebase.model.FirebaseEvents;
 import net.squanchy.service.firebase.model.FirebaseSpeaker;
 import net.squanchy.service.firebase.model.FirebaseSpeakers;
 import net.squanchy.support.lang.Checksum;
@@ -25,7 +25,6 @@ import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
-import static net.squanchy.support.lang.Ids.safelyConvertIdToInt;
 import static net.squanchy.support.lang.Lists.filter;
 import static net.squanchy.support.lang.Lists.find;
 import static net.squanchy.support.lang.Lists.map;
@@ -41,7 +40,7 @@ class ScheduleService {
     }
 
     public Observable<Schedule> schedule() {
-        Observable<FirebaseSchedule> sessionsObservable = dbService.sessions();
+        Observable<FirebaseEvents> sessionsObservable = dbService.events();
         Observable<FirebaseSpeakers> speakersObservable = dbService.speakers();
         final Observable<FirebaseDays> daysObservable = dbService.days();
 
@@ -51,7 +50,7 @@ class ScheduleService {
                 .subscribeOn(Schedulers.io());
     }
 
-    private BiFunction<FirebaseSchedule, FirebaseSpeakers, List<Event>> combineSessionsAndSpeakers() {
+    private BiFunction<FirebaseEvents, FirebaseSpeakers, List<Event>> combineSessionsAndSpeakers() {
         return (apiSchedule, apiSpeakers) -> Lists.map(apiSchedule.events, combineEventWith(apiSpeakers));
     }
 
@@ -62,7 +61,7 @@ class ScheduleService {
             return Event.create(
                     apiEvent.id,
                     checksum.getChecksumOf(apiEvent.id),
-                    safelyConvertIdToInt(apiEvent.day_id),
+                    apiEvent.day_id,
                     apiEvent.name,
                     apiEvent.place_id,
                     Optional.fromNullable(apiEvent.experience_level).flatMap(ExperienceLevel::fromNullableRawLevel),
@@ -84,34 +83,34 @@ class ScheduleService {
         return apiSpeaker -> apiSpeaker != null ? apiSpeaker.name : null;
     }
 
-    private Function<List<Event>, HashMap<Integer, List<Event>>> mapEventsToDays() {
+    private Function<List<Event>, HashMap<String, List<Event>>> mapEventsToDays() {
         return events -> Lists.reduce(new HashMap<>(), events, listToDaysHashMap());
     }
 
-    private Func2<HashMap<Integer, List<Event>>, Event, HashMap<Integer, List<Event>>> listToDaysHashMap() {
+    private Func2<HashMap<String, List<Event>>, Event, HashMap<String, List<Event>>> listToDaysHashMap() {
         return (map, event) -> {
             List<Event> dayList = getOrCreateDayList(map, event);
             dayList.add(event);
-            map.put(event.day(), dayList);
+            map.put(event.dayId(), dayList);
             return map;
         };
     }
 
-    private List<Event> getOrCreateDayList(HashMap<Integer, List<Event>> map, Event event) {
-        List<Event> currentList = map.get(event.day());
+    private List<Event> getOrCreateDayList(HashMap<String, List<Event>> map, Event event) {
+        List<Event> currentList = map.get(event.dayId());
 
         if (currentList == null) {
             currentList = new ArrayList<>();
-            map.put(event.day(), currentList);
+            map.put(event.dayId(), currentList);
         }
 
         return currentList;
     }
 
-    private BiFunction<HashMap<Integer, List<Event>>, FirebaseDays, Schedule> combineSessionsById() {
+    private BiFunction<HashMap<String, List<Event>>, FirebaseDays, Schedule> combineSessionsById() {
         return (map, apiDays) -> {
             List<SchedulePage> pages = new ArrayList<>(map.size());
-            for (Integer dayId : map.keySet()) {
+            for (String dayId : map.keySet()) {
                 Optional<String> date = findDate(apiDays, dayId);
                 if (date.isPresent()) {
                     pages.add(SchedulePage.create(date.get(), map.get(dayId)));
@@ -122,7 +121,7 @@ class ScheduleService {
         };
     }
 
-    private Optional<String> findDate(FirebaseDays apiDays, int dayId) {
+    private Optional<String> findDate(FirebaseDays apiDays, String dayId) {
         return find(apiDays.days, firebaseDay -> firebaseDay.id.equals(String.valueOf(dayId)))
                 .map(firebaseDay -> firebaseDay.date);
     }
