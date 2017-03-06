@@ -19,15 +19,29 @@ public final class Lists {
         return result;
     }
 
-    public static <T> T find(List<T> list, Func1<T, Boolean> predicate) {
+    public static <T> List<T> filter(List<T> list, Predicate<T> predicate) {
+        if (list == null || list.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        List<T> result = new ArrayList<>(list.size());
         for (T t : list) {
             if (predicate.call(t)) {
-                return t;
+                result.add(t);
             }
         }
 
-        // todo optional?
-        return null;
+        return result;
+    }
+
+    public static <T> Optional<T> find(List<T> list, Func1<T, Boolean> predicate) {
+        for (T t : list) {
+            if (predicate.call(t)) {
+                return Optional.of(t);
+            }
+        }
+
+        return Optional.absent();
     }
 
     public static <T, R> R reduce(R initial, List<T> list, Func2<R, T, R> reducer) {

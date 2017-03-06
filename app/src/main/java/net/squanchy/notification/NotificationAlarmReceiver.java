@@ -11,13 +11,13 @@ public class NotificationAlarmReceiver extends BroadcastReceiver {
         // TODO implement this with the new models (see SQ-55)
     }
 
-//    private void showNotification(Context context, Event event, List<Speaker> speakerList, long day) {
+//    private void showNotification(Context context, Event event, List<Speaker> speakerList, long dayId) {
 //        String title = event.getEventName();
 //        int icon = android.R.drawable.ic_dialog_info;
 //
 //        Intent intent = new Intent(context, EventDetailsActivity.class);
 //        intent.putExtra(EventDetailsActivity.EXTRA_EVENT_ID, id);
-//        intent.putExtra(EventDetailsActivity.EXTRA_DAY, day);
+//        intent.putExtra(EventDetailsActivity.EXTRA_DAY, dayId);
 //        PendingIntent contentIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 //
 //        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)

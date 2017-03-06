@@ -43,10 +43,13 @@ public class EventItemView extends CardLayout {
     }
 
     void updateWith(Event event) {
-        timestampView.setText("12:00");         // TODO put start time 
+        timestampView.setText("12:00");         // TODO put start time
         titleView.setText(event.title());
         if (event.experienceLevel().isPresent()) {
             experienceLevelIconView.setExperienceLevel(event.experienceLevel().get());
+            experienceLevelIconView.setVisibility(VISIBLE);
+        } else {
+            experienceLevelIconView.setVisibility(INVISIBLE);
         }
 
         speakerView.setVisibility(event.speakersVisibility());

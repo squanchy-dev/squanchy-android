@@ -16,6 +16,7 @@ import io.reactivex.Observable;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.schedulers.Schedulers;
 
+import static net.squanchy.support.lang.Lists.filter;
 import static net.squanchy.support.lang.Lists.find;
 import static net.squanchy.support.lang.Lists.map;
 
@@ -29,7 +30,7 @@ class EventDetailsService {
         this.checksum = checksum;
     }
 
-    public Observable<Event> event(int dayId, int eventId) {
+    public Observable<Event> event(String dayId, String eventId) {
         Observable<FirebaseEvent> eventObservable = dbService.event(dayId, eventId);
         Observable<FirebaseSpeakers> speakersObservable = dbService.speakers();
 
@@ -40,7 +41,7 @@ class EventDetailsService {
         ).subscribeOn(Schedulers.io());
     }
 
-    private BiFunction<FirebaseEvent, FirebaseSpeakers, Event> combineIntoEvent(int dayId) {
+    private BiFunction<FirebaseEvent, FirebaseSpeakers, Event> combineIntoEvent(String dayId) {
         return (apiEvent, apiSpeakers) -> {
             List<FirebaseSpeaker> speakers = speakersForEvent(apiEvent, apiSpeakers);
             return Event.create(
@@ -56,10 +57,12 @@ class EventDetailsService {
     }
 
     private List<FirebaseSpeaker> speakersForEvent(FirebaseEvent apiEvent, FirebaseSpeakers apiSpeakers) {
-        return map(apiEvent.speaker_ids, speakerId -> findSpeaker(apiSpeakers, speakerId));
+        List<Optional<FirebaseSpeaker>> speakers = map(apiEvent.speaker_ids, speakerId -> findSpeaker(apiSpeakers, speakerId));
+        List<Optional<FirebaseSpeaker>> presentSpeakers = filter(speakers, Optional::isPresent);
+        return map(presentSpeakers, Optional::get);
     }
 
-    private FirebaseSpeaker findSpeaker(FirebaseSpeakers apiSpeakers, String speakerId) {
+    private Optional<FirebaseSpeaker> findSpeaker(FirebaseSpeakers apiSpeakers, String speakerId) {
         return find(apiSpeakers.speakers, apiSpeaker -> apiSpeaker.id.equals(speakerId));
     }
 
