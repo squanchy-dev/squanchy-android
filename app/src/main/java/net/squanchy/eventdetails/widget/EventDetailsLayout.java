@@ -48,12 +48,30 @@ public class EventDetailsLayout extends LinearLayout {
 
     public void updateWith(Event event) {
         // TODO create proper EventDetails model that we can use here
-        placeView.setVisibility(event.placeVisibility());
-        placeView.setText(event.place());
-        speakersView.setVisibility(event.speakersVisibility());
-        speakersView.setText(event.speakersNames());
+        updatePlaceData(event);
+        updateSpeakerData(event);
         trackView.setVisibility(event.trackVisibility());
-        experienceLevelIconView.setExperienceLevel(ExperienceLevel.BEGINNER);
-        experienceLevelLabelView.setText(ExperienceLevel.BEGINNER.labelStringResId());
+        updateExperienceLevelData(event);
+    }
+
+    private void updatePlaceData(Event event) {
+        placeView.setVisibility(event.placeVisibility());
+        if (event.place().isPresent()) {
+            placeView.setText(event.place().get());
+        }
+    }
+
+    private void updateSpeakerData(Event event) {
+        speakersView.setVisibility(event.speakersVisibility());
+        if (event.speakersNames().isPresent()) {
+            speakersView.setText(event.speakersNames().get());
+        }
+    }
+
+    private void updateExperienceLevelData(Event event) {
+        if (event.experienceLevel().isPresent()) {
+            experienceLevelIconView.setExperienceLevel(event.experienceLevel().get());
+            experienceLevelLabelView.setText(event.experienceLevel().get().labelStringResId());
+        }
     }
 }

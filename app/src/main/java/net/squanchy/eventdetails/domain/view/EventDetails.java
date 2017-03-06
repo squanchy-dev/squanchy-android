@@ -21,7 +21,7 @@ public abstract class EventDetails {
                 .build();
     }
 
-    public abstract long id();
+    public abstract String id();
 
     public abstract Event event();
 
@@ -30,7 +30,7 @@ public abstract class EventDetails {
     @AutoValue.Builder
     public abstract static class Builder {
 
-        public abstract Builder id(long id);
+        public abstract Builder id(String id);
 
         public abstract Builder event(Event event);
 

@@ -2,6 +2,7 @@ package net.squanchy.eventdetails.widget;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.IntRange;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
@@ -27,6 +28,20 @@ public class ExperienceLevelIconView extends ImageView {
 
     public void setExperienceLevel(ExperienceLevel experienceLevel) {
         Drawable drawable = getDrawable();
-        drawable.setLevel(experienceLevel.rawLevel());
+        drawable.setLevel(getLevelOf(experienceLevel));
+    }
+
+    @IntRange(from = 0, to  = 2)
+    private int getLevelOf(ExperienceLevel experienceLevel) {
+        switch(experienceLevel) {
+            case BEGINNER:
+                return 0;
+            case INTERMEDIATE:
+                return 1;
+            case ADVANCED:
+                return 2;
+            default:
+                throw new IllegalArgumentException("Invalid experience level value: " + experienceLevel.rawLevel());
+        }
     }
 }

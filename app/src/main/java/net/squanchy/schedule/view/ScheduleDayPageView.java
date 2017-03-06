@@ -76,7 +76,7 @@ public class ScheduleDayPageView extends RecyclerView {
         public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
             Event oldEvent = oldEvents.get(oldItemPosition);
             Event newEvent = newEvents.get(newItemPosition);
-            return oldEvent.id() == newEvent.id();
+            return oldEvent.id().equals(newEvent.id());
         }
 
         @Override

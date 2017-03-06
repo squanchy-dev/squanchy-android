@@ -8,21 +8,26 @@ import net.squanchy.service.firebase.FirebaseDbService;
 import net.squanchy.service.firebase.model.FirebaseEvent;
 import net.squanchy.service.firebase.model.FirebaseSpeaker;
 import net.squanchy.service.firebase.model.FirebaseSpeakers;
-import net.squanchy.support.lang.Lists;
+import net.squanchy.support.lang.Checksum;
+import net.squanchy.support.lang.Func1;
+import net.squanchy.support.lang.Optional;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.schedulers.Schedulers;
 
+import static net.squanchy.support.lang.Lists.filter;
 import static net.squanchy.support.lang.Lists.find;
 import static net.squanchy.support.lang.Lists.map;
 
 class EventDetailsService {
 
     private final FirebaseDbService dbService;
+    private final Checksum checksum;
 
-    EventDetailsService(FirebaseDbService dbService) {
+    EventDetailsService(FirebaseDbService dbService, Checksum checksum) {
         this.dbService = dbService;
+        this.checksum = checksum;
     }
 
     public Observable<Event> event(int dayId, int eventId) {
@@ -40,25 +45,28 @@ class EventDetailsService {
         return (apiEvent, apiSpeakers) -> {
             List<FirebaseSpeaker> speakers = speakersForEvent(apiEvent, apiSpeakers);
             return Event.create(
-                    apiEvent.eventId,
+                    apiEvent.id,
+                    checksum.getChecksumOf(apiEvent.id),
                     dayId,
                     apiEvent.name,
-                    apiEvent.place,
-                    ExperienceLevel.fromRawLevel(apiEvent.experienceLevel - 1), // TODO fix the data
+                    apiEvent.place_id,
+                    Optional.fromNullable(apiEvent.experience_level).flatMap(ExperienceLevel::fromNullableRawLevel),
                     map(speakers, toSpeakerName())
             );
         };
     }
 
     private List<FirebaseSpeaker> speakersForEvent(FirebaseEvent apiEvent, FirebaseSpeakers apiSpeakers) {
-        return map(apiEvent.speakers, speakerId -> findSpeaker(apiSpeakers, speakerId));
+        List<Optional<FirebaseSpeaker>> speakers = map(apiEvent.speaker_ids, speakerId -> findSpeaker(apiSpeakers, speakerId));
+        List<Optional<FirebaseSpeaker>> presentSpeakers = filter(speakers, Optional::isPresent);
+        return map(presentSpeakers, Optional::get);
     }
 
-    private FirebaseSpeaker findSpeaker(FirebaseSpeakers apiSpeakers, long speakerId) {
-        return find(apiSpeakers.speakers, apiSpeaker -> apiSpeaker.speakerId.equals(speakerId));
+    private Optional<FirebaseSpeaker> findSpeaker(FirebaseSpeakers apiSpeakers, String speakerId) {
+        return find(apiSpeakers.speakers, apiSpeaker -> apiSpeaker.id.equals(speakerId));
     }
 
-    private Lists.Function<FirebaseSpeaker, String> toSpeakerName() {
-        return apiSpeaker -> apiSpeaker != null ? apiSpeaker.firstName + " " + apiSpeaker.lastName : null;
+    private Func1<FirebaseSpeaker, String> toSpeakerName() {
+        return apiSpeaker -> apiSpeaker != null ? apiSpeaker.name : null;
     }
 }
