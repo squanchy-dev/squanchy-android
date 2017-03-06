@@ -28,6 +28,7 @@ import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 import static net.squanchy.support.lang.Ids.safelyConvertIdToInt;
+import static net.squanchy.support.lang.Lists.filter;
 import static net.squanchy.support.lang.Lists.find;
 import static net.squanchy.support.lang.Lists.map;
 
@@ -73,10 +74,12 @@ class ScheduleService {
     }
 
     private List<FirebaseSpeaker> speakersForEvent(FirebaseEvent apiEvent, FirebaseSpeakers apiSpeakers) {
-        return map(apiEvent.speaker_ids, speakerId -> findSpeaker(apiSpeakers, speakerId));
+        List<Optional<FirebaseSpeaker>> speakers = map(apiEvent.speaker_ids, speakerId -> findSpeaker(apiSpeakers, speakerId));
+        List<Optional<FirebaseSpeaker>> presentSpeakers = filter(speakers, Optional::isPresent);
+        return map(presentSpeakers, Optional::get);
     }
 
-    private FirebaseSpeaker findSpeaker(FirebaseSpeakers apiSpeakers, String speakerId) {
+    private Optional<FirebaseSpeaker> findSpeaker(FirebaseSpeakers apiSpeakers, String speakerId) {
         return find(apiSpeakers.speakers, apiSpeaker -> apiSpeaker.id.equals(speakerId));
     }
 
@@ -115,15 +118,18 @@ class ScheduleService {
         return (map, apiDays) -> {
             List<SchedulePage> pages = new ArrayList<>(map.size());
             for (Integer dayId : map.keySet()) {
-                String date = findDate(apiDays, dayId);
-                pages.add(SchedulePage.create(date, map.get(dayId)));
+                Optional<String> date = findDate(apiDays, dayId);
+                if (date.isPresent()) {
+                    pages.add(SchedulePage.create(date.get(), map.get(dayId)));
+                }
             }
 
             return Schedule.create(pages);
         };
     }
 
-    private String findDate(FirebaseDays apiDays, int dayId) {
-        return find(apiDays.days, firebaseDay -> firebaseDay.id.equals(String.valueOf(dayId))).date;
+    private Optional<String> findDate(FirebaseDays apiDays, int dayId) {
+        return find(apiDays.days, firebaseDay -> firebaseDay.id.equals(String.valueOf(dayId)))
+                .map(firebaseDay -> firebaseDay.date);
     }
 }

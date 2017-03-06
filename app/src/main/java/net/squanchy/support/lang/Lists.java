@@ -34,15 +34,14 @@ public final class Lists {
         return result;
     }
 
-    public static <T> T find(List<T> list, Func1<T, Boolean> predicate) {
+    public static <T> Optional<T> find(List<T> list, Func1<T, Boolean> predicate) {
         for (T t : list) {
             if (predicate.call(t)) {
-                return t;
+                return Optional.of(t);
             }
         }
 
-        // todo optional?
-        return null;
+        return Optional.absent();
     }
 
     public static <T, R> R reduce(R initial, List<T> list, Func2<R, T, R> reducer) {

@@ -10,22 +10,9 @@ public enum ExperienceLevel {
     INTERMEDIATE("intermediate", R.string.experience_level_intermediate),
     ADVANCED("advanced", R.string.experience_level_advanced);
 
-    public static ExperienceLevel fromRawLevel(String rawLevel) {
-        switch (rawLevel.toLowerCase()) {
-            case "beginner":
-                return ExperienceLevel.BEGINNER;
-            case "intermediate":
-                return ExperienceLevel.INTERMEDIATE;
-            case "advanced":
-                return ExperienceLevel.ADVANCED;
-            default:
-                throw new IllegalArgumentException("Invalid raw level description: " + rawLevel);
-        }
-    }
-
     private final String rawLevel;
-    private final int labelStringResId;
 
+    private final int labelStringResId;
     ExperienceLevel(String rawLevel, @StringRes int labelStringResId) {
 
         this.rawLevel = rawLevel;
@@ -42,10 +29,19 @@ public enum ExperienceLevel {
     }
 
     public static Optional<ExperienceLevel> fromNullableRawLevel(String rawLevel) {
-        if (rawLevel == null) {
-            return Optional.absent();
-        } else {
-            return Optional.of(ExperienceLevel.fromRawLevel(rawLevel));
+        return Optional.fromNullable(rawLevel).map(ExperienceLevel::fromRawLevel);
+    }
+
+    public static ExperienceLevel fromRawLevel(String rawLevel) {
+        switch (rawLevel.toLowerCase()) {
+            case "beginner":
+                return ExperienceLevel.BEGINNER;
+            case "intermediate":
+                return ExperienceLevel.INTERMEDIATE;
+            case "advanced":
+                return ExperienceLevel.ADVANCED;
+            default:
+                throw new IllegalArgumentException("Invalid raw level description: " + rawLevel);
         }
     }
 }
