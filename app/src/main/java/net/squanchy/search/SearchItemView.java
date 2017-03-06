@@ -13,6 +13,7 @@ import net.squanchy.R;
 import net.squanchy.imageloader.ImageLoader;
 import net.squanchy.search.view.SpeakersView.OnSpeakerClickedListener;
 import net.squanchy.speaker.domain.view.Speaker;
+import net.squanchy.support.lang.Optional;
 
 public class SearchItemView extends LinearLayout {
 
@@ -46,9 +47,9 @@ public class SearchItemView extends LinearLayout {
     }
 
     public void updateWith(Speaker speaker, ImageLoader imageLoader, OnSpeakerClickedListener listener) {
-        name.setText(speaker.fullName());
+        name.setText(speaker.name());
         updateSpeakerPhotos(speaker, imageLoader);
-        setOnClickListener(v -> listener.onSpeakerClicked(speaker.id()));
+        setOnClickListener(v -> listener.onSpeakerClicked(speaker));
     }
 
     private void updateSpeakerPhotos(Speaker speaker, ImageLoader imageLoader) {
@@ -56,7 +57,10 @@ public class SearchItemView extends LinearLayout {
             throw new IllegalStateException("Unable to access the ImageLoader, it hasn't been initialized yet");
         }
 
-        loadPhoto(image, speaker.avatarImageURL(), imageLoader);
+        Optional<String> avatarImageURL = speaker.avatarImageURL();
+        if (avatarImageURL.isPresent()) {
+            loadPhoto(image, avatarImageURL.get(), imageLoader);
+        }
     }
 
     private void loadPhoto(ImageView photoView, String photoUrl, ImageLoader imageLoader) {
