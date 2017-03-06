@@ -21,7 +21,7 @@ public final class UnauthenticatedFirebaseDbService implements FirebaseDbService
     private static final String DAYS_NODE = "newmodel2/days";
     private static final String SPEAKERS_NODE = "newmodel2/speakers";
     private static final String EVENTS_NODE = "newmodel2/events";
-    private static final String EVENTS_BY_ID_NODE = "newmodel2/events/%2$s";
+    private static final String EVENTS_BY_ID_NODE = "newmodel2/events/%1$s";
 
     private final DatabaseReference database;
 
@@ -45,8 +45,8 @@ public final class UnauthenticatedFirebaseDbService implements FirebaseDbService
     }
 
     @Override
-    public Observable<FirebaseEvent> event(String dayId, String eventId) { //TODO Fix the path when we decide how to deal with the detail
-        String path = String.format(Locale.US, EVENTS_BY_ID_NODE, dayId, eventId);
+    public Observable<FirebaseEvent> event(String eventId) { //TODO Fix the path when we decide how to deal with the detail
+        String path = String.format(Locale.US, EVENTS_BY_ID_NODE, eventId);
         return observeChild(path, FirebaseEvent.class);
     }
 

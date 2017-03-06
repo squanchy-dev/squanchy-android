@@ -27,7 +27,7 @@
         tools:background="?colorAccent" />
 
       <TextView
-        android:id="@+id/speaker_names"
+        android:id="@+id/speaker_name"
         style="@style/Schedule.Card.Speaker.Names"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

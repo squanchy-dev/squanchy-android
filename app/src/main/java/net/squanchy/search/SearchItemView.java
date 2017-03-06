@@ -42,8 +42,8 @@ public class SearchItemView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        image = (ImageView) findViewById(R.id.speaker_image);
-        name = (TextView) findViewById(R.id.speaker_names);
+        image = (ImageView) findViewById(R.id.speaker_photo);
+        name = (TextView) findViewById(R.id.speaker_name);
     }
 
     public void updateWith(Speaker speaker, ImageLoader imageLoader, OnSpeakerClickedListener listener) {
@@ -57,12 +57,22 @@ public class SearchItemView extends LinearLayout {
             throw new IllegalStateException("Unable to access the ImageLoader, it hasn't been initialized yet");
         }
 
-        loadPhoto(image, speaker.avatarImageURL(), imageLoader);
+        Optional<String> avatarImageURL = speaker.avatarImageURL();
+        if (avatarImageURL.isPresent()) {
+            loadPhoto(image, avatarImageURL.get(), imageLoader);
+        }
     }
 
-    private void loadPhoto(ImageView photoView, Optional<String> photoUrl, ImageLoader imageLoader) {
-        //TODO load photoUrl here instead of the hardcoded resource
-        StorageReference photoReference = FirebaseStorage.getInstance().getReference("speakers/squanchy.webp");
-        imageLoader.load(photoReference).into(photoView);
+    private void loadPhoto(ImageView photoView, String photoUrl, ImageLoader imageLoader) {
+        if (isFirebaseStorageUrl(photoUrl)) {
+            StorageReference photoReference = FirebaseStorage.getInstance().getReference(photoUrl);
+            imageLoader.load(photoReference).into(photoView);
+        } else {
+            imageLoader.load(photoUrl).into(photoView);
+        }
+    }
+
+    private boolean isFirebaseStorageUrl(String url) {
+        return url.startsWith("gs://");            // TODO move elsewhere
     }
 }

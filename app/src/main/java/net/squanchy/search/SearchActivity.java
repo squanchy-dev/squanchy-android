@@ -108,7 +108,7 @@ public class SearchActivity extends TypefaceStyleableActivity implements Speaker
 
     @Override
     public void onSpeakerClicked(Speaker speaker) {
-        //TODO open the speaker detail view here
-        Toast.makeText(this, "Speaker clicked " + speaker.name(), Toast.LENGTH_SHORT).show();
+        // TODO open the speaker detail view here
+        Toast.makeText(this, "Speaker clicked " + speaker, Toast.LENGTH_SHORT).show();
     }
 }

@@ -96,7 +96,7 @@
   </style>
 
   <style name="Search.GenericItem" parent="None">
-    <item name="android:gravity">center</item>
+    <item name="android:gravity">center_horizontal|top</item>
     <item name="android:background">?selectableItemBackground</item>
   </style>
 

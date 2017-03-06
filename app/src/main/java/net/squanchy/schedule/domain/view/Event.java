@@ -7,6 +7,7 @@ import com.google.auto.value.AutoValue;
 import java.util.List;
 
 import net.squanchy.eventdetails.domain.view.ExperienceLevel;
+import net.squanchy.speaker.domain.view.Speaker;
 import net.squanchy.support.lang.Optional;
 import net.squanchy.support.view.Visibility;
 
@@ -20,7 +21,7 @@ public abstract class Event {
             String title,
             String place,
             Optional<ExperienceLevel> experienceLevel,
-            List<String> speakerNames
+            List<Speaker> speakers
     ) {
         return new AutoValue_Event.Builder()
                 .id(eventId)
@@ -29,24 +30,11 @@ public abstract class Event {
                 .title(title)
                 .place(Optional.fromNullable(place))
                 .placeVisibility(place.isEmpty() ? View.GONE : View.VISIBLE)
-                .speakersNames(Optional.fromNullable(speakersNamesStringFrom(speakerNames)))
-                .speakersVisibility(speakerNames.isEmpty() ? View.GONE : View.VISIBLE)
+                .speakers(speakers)
+                .speakersVisibility(speakers.isEmpty() ? View.GONE : View.VISIBLE)
                 .trackVisibility(View.GONE) // todo add track
                 .experienceLevel(experienceLevel)
                 .build();
-    }
-
-    private static String speakersNamesStringFrom(List<String> speakers) {
-        StringBuilder speakersBuilder = new StringBuilder();
-        for (String speaker : speakers) {
-            if (speakersBuilder.length() > 0) {
-                speakersBuilder.append(", ");
-            }
-
-            speakersBuilder.append(speaker);
-        }
-
-        return speakersBuilder.toString();
     }
 
     public abstract String id();
@@ -63,7 +51,7 @@ public abstract class Event {
     @Visibility
     public abstract int trackVisibility();
 
-    public abstract Optional<String> speakersNames();
+    public abstract List<Speaker> speakers();
 
     @Visibility
     public abstract int speakersVisibility();
@@ -89,7 +77,7 @@ public abstract class Event {
 
         public abstract Builder trackVisibility(@Visibility int trackVisibility);
 
-        public abstract Builder speakersNames(Optional<String> speakersNames);
+        public abstract Builder speakers(List<Speaker> speakers);
 
         public abstract Builder speakersVisibility(@Visibility int speakersVisibility);
 
