@@ -42,8 +42,8 @@ public class SearchItemView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        image = (ImageView) findViewById(R.id.speaker_image);
-        name = (TextView) findViewById(R.id.speaker_names);
+        image = (ImageView) findViewById(R.id.speaker_photo);
+        name = (TextView) findViewById(R.id.speaker_name);
     }
 
     public void updateWith(Speaker speaker, ImageLoader imageLoader, OnSpeakerClickedListener listener) {

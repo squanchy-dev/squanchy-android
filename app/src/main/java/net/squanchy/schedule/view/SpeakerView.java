@@ -64,7 +64,7 @@ public class SpeakerView extends LinearLayout {
         super.onFinishInflate();
 
         speakerPhotoContainer = (ViewGroup) findViewById(R.id.speaker_photos_container);
-        speakerNameView = (TextView) findViewById(R.id.speaker_names);
+        speakerNameView = (TextView) findViewById(R.id.speaker_name);
     }
 
     public void updateWith(List<Speaker> speakers) {
