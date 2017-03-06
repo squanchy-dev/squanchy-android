@@ -63,7 +63,7 @@ public class SearchItemView extends LinearLayout {
         }
     }
 
-    private void loadPhoto(ImageView photoView, String photoUrl, ImageLoader imageLoader) {
+    private void loadPhoto(ImageView photoView, Optional<String> photoUrl, ImageLoader imageLoader) {
         //TODO load photoUrl here instead of the hardcoded resource
         StorageReference photoReference = FirebaseStorage.getInstance().getReference("speakers/squanchy.webp");
         imageLoader.load(photoReference).into(photoView);
