@@ -9,19 +9,19 @@ import java.util.Locale;
 
 import net.squanchy.service.firebase.model.FirebaseDays;
 import net.squanchy.service.firebase.model.FirebaseEvent;
-import net.squanchy.service.firebase.model.FirebaseRoot;
-import net.squanchy.service.firebase.model.FirebaseSchedule;
+import net.squanchy.service.firebase.model.FirebaseEvents;
 import net.squanchy.service.firebase.model.FirebaseSpeakers;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 public final class UnauthenticatedFirebaseDbService implements FirebaseDbService {
+
     private static final String DAYS_NODE = "newmodel2/days";
     private static final String SPEAKERS_NODE = "newmodel2/speakers";
     private static final String EVENTS_NODE = "newmodel2/events";
+    private static final String EVENTS_BY_ID_NODE = "newmodel2/events/%2$s";
 
     private final DatabaseReference database;
 
@@ -40,13 +40,13 @@ public final class UnauthenticatedFirebaseDbService implements FirebaseDbService
     }
 
     @Override
-    public Observable<FirebaseSchedule> sessions() {
-        return observeChild(EVENTS_NODE, FirebaseSchedule.class);
+    public Observable<FirebaseEvents> events() {
+        return observeChild(EVENTS_NODE, FirebaseEvents.class);
     }
 
     @Override
-    public Observable<FirebaseEvent> event(int dayId, int eventId) { //TODO Fix the path when we decide how to deal with the detail
-        String path = String.format(Locale.US, "newmodel/events/%2$d", dayId, eventId);
+    public Observable<FirebaseEvent> event(String dayId, String eventId) { //TODO Fix the path when we decide how to deal with the detail
+        String path = String.format(Locale.US, EVENTS_BY_ID_NODE, dayId, eventId);
         return observeChild(path, FirebaseEvent.class);
     }
 

@@ -30,7 +30,7 @@ class EventDetailsService {
         this.checksum = checksum;
     }
 
-    public Observable<Event> event(int dayId, int eventId) {
+    public Observable<Event> event(String dayId, String eventId) {
         Observable<FirebaseEvent> eventObservable = dbService.event(dayId, eventId);
         Observable<FirebaseSpeakers> speakersObservable = dbService.speakers();
 
@@ -41,7 +41,7 @@ class EventDetailsService {
         ).subscribeOn(Schedulers.io());
     }
 
-    private BiFunction<FirebaseEvent, FirebaseSpeakers, Event> combineIntoEvent(int dayId) {
+    private BiFunction<FirebaseEvent, FirebaseSpeakers, Event> combineIntoEvent(String dayId) {
         return (apiEvent, apiSpeakers) -> {
             List<FirebaseSpeaker> speakers = speakersForEvent(apiEvent, apiSpeakers);
             return Event.create(
