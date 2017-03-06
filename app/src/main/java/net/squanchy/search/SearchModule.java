@@ -1,8 +1,7 @@
 package net.squanchy.search;
 
-import net.squanchy.service.firebase.FirebaseDbService;
-import net.squanchy.service.firebase.injection.DbServiceType;
-import net.squanchy.support.lang.Checksum;
+import net.squanchy.service.repository.EventRepository;
+import net.squanchy.service.repository.SpeakerRepository;
 
 import dagger.Module;
 import dagger.Provides;
@@ -11,7 +10,7 @@ import dagger.Provides;
 class SearchModule {
 
     @Provides
-    SearchService searchService(@DbServiceType(DbServiceType.Type.AUTHENTICATED) FirebaseDbService dbService, Checksum checksum) {
-        return new SearchService(dbService, checksum);
+    SearchService searchService(EventRepository eventRepository, SpeakerRepository speakerRepository) {
+        return new SearchService(eventRepository, speakerRepository);
     }
 }
