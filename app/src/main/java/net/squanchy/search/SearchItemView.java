@@ -13,6 +13,7 @@ import net.squanchy.R;
 import net.squanchy.imageloader.ImageLoader;
 import net.squanchy.search.view.SpeakersView.OnSpeakerClickedListener;
 import net.squanchy.speaker.domain.view.Speaker;
+import net.squanchy.support.lang.Optional;
 
 public class SearchItemView extends LinearLayout {
 
@@ -46,9 +47,9 @@ public class SearchItemView extends LinearLayout {
     }
 
     public void updateWith(Speaker speaker, ImageLoader imageLoader, OnSpeakerClickedListener listener) {
-        name.setText(speaker.fullName());
+        name.setText(speaker.name());
         updateSpeakerPhotos(speaker, imageLoader);
-        setOnClickListener(v -> listener.onSpeakerClicked(speaker.id()));
+        setOnClickListener(v -> listener.onSpeakerClicked(speaker));
     }
 
     private void updateSpeakerPhotos(Speaker speaker, ImageLoader imageLoader) {
@@ -59,7 +60,7 @@ public class SearchItemView extends LinearLayout {
         loadPhoto(image, speaker.avatarImageURL(), imageLoader);
     }
 
-    private void loadPhoto(ImageView photoView, String photoUrl, ImageLoader imageLoader) {
+    private void loadPhoto(ImageView photoView, Optional<String> photoUrl, ImageLoader imageLoader) {
         //TODO load photoUrl here instead of the hardcoded resource
         StorageReference photoReference = FirebaseStorage.getInstance().getReference("speakers/squanchy.webp");
         imageLoader.load(photoReference).into(photoView);
