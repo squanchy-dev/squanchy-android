@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<net.squanchy.schedule.view.OtherEventItemView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:paddingLeft="@dimen/card_padding_horizontal"
+  android:paddingTop="@dimen/card_padding_top"
+  android:paddingRight="@dimen/card_padding_horizontal"
+  android:paddingBottom="@dimen/card_padding_bottom"
+  tools:layout_margin="16dp">
+
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+      android:id="@+id/illustration"
+      android:layout_width="@dimen/card_other_illustration_width"
+      android:layout_height="@dimen/card_other_illustration_height"
+      android:layout_alignParentEnd="true"
+      android:layout_centerVertical="true"
+      android:scaleType="centerInside" />
+
+    <TextView
+      android:id="@+id/title"
+      style="@style/Schedule.Card.Title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentStart="true"
+      android:layout_toStartOf="@+id/illustration"
+      tools:text="Designing for an Android future" />
+
+    <TextView
+      android:id="@+id/timestamp"
+      style="@style/Schedule.Card.Timestamp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentStart="true"
+      android:layout_below="@+id/title"
+      android:layout_toStartOf="@+id/illustration"
+      android:layout_marginTop="@dimen/card_timestamp_margin_top"
+      tools:text="12:00" />
+
+  </RelativeLayout>
+
+</net.squanchy.schedule.view.OtherEventItemView>
