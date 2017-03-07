@@ -3,9 +3,8 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:paddingLeft="@dimen/card_padding_horizontal"
+  android:paddingStart="@dimen/card_padding_horizontal"
   android:paddingTop="@dimen/card_padding_top"
-  android:paddingRight="@dimen/card_padding_horizontal"
   android:paddingBottom="@dimen/card_padding_bottom"
   tools:layout_margin="16dp">
 
