@@ -4,9 +4,9 @@
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:paddingLeft="@dimen/card_padding_horizontal"
-  android:paddingTop="@dimen/card_padding_vertical"
+  android:paddingTop="@dimen/card_padding_top"
   android:paddingRight="@dimen/card_padding_horizontal"
-  android:paddingBottom="@dimen/card_padding_vertical"
+  android:paddingBottom="@dimen/card_padding_bottom"
   tools:layout_margin="16dp">
 
   <RelativeLayout
@@ -16,7 +16,8 @@
     <net.squanchy.schedule.view.SpeakerView
       android:id="@+id/speaker_container"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content">
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/card_title_margin_top">
 
       <LinearLayout
         android:id="@+id/speaker_photos_container"
@@ -49,7 +50,6 @@
       android:layout_height="wrap_content"
       android:layout_alignParentStart="true"
       android:layout_below="@+id/speaker_container"
-      android:layout_marginTop="@dimen/card_title_margin_top"
       tools:text="Designing for an Android future" />
 
     <TextView
