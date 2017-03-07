@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import net.squanchy.R;
+import net.squanchy.navigation.Navigator;
 import net.squanchy.schedule.domain.view.Schedule;
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter;
 
@@ -26,6 +27,7 @@ public class SchedulePageView extends CoordinatorLayout {
     private View progressBar;
     private Disposable subscription;
     private ScheduleService service;
+    private Navigator navigate;
 
     public SchedulePageView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -51,9 +53,22 @@ public class SchedulePageView extends CoordinatorLayout {
 
         ScheduleComponent component = ScheduleInjector.obtain(getContext());
         service = component.service();
+        navigate = component.navigator();
 
+        setupToolbar();
+    }
+
+    private void setupToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.activity_schedule);
+        toolbar.inflateMenu(R.menu.search_icon_menu);
+        toolbar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.action_search) {
+                navigate.toSearch();
+                return true;
+            }
+            return false;
+        });
     }
 
     @Override

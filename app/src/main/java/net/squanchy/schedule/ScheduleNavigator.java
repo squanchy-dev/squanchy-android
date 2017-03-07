@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import net.squanchy.eventdetails.EventDetailsActivity;
 import net.squanchy.navigation.Navigator;
+import net.squanchy.search.SearchActivity;
 
 class ScheduleNavigator implements Navigator {
 
@@ -20,8 +21,13 @@ class ScheduleNavigator implements Navigator {
     }
 
     @Override
-    public void toEventDetails(String dayId, String eventId) {
-        Intent intent = EventDetailsActivity.createIntent(context, dayId, eventId);
+    public void toEventDetails(String eventId) {
+        Intent intent = EventDetailsActivity.createIntent(context, eventId);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void toSearch() {
+        context.startActivity(new Intent(context, SearchActivity.class));
     }
 }

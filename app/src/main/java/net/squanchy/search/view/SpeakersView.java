@@ -1,9 +1,9 @@
-package net.squanchy.speaker.view;
+package net.squanchy.search.view;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
@@ -14,6 +14,8 @@ import net.squanchy.speaker.domain.view.Speaker;
 public class SpeakersView extends RecyclerView {
 
     private SpeakerAdapter adapter;
+
+    private static final int COLUMN_NUMBER = 4;
 
     public SpeakersView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
@@ -26,15 +28,22 @@ public class SpeakersView extends RecyclerView {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        setLayoutManager(layoutManager);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), COLUMN_NUMBER);
+        setLayoutManager(gridLayoutManager);
         adapter = new SpeakerAdapter(getContext());
         setAdapter(adapter);
         setClipToPadding(false);
     }
 
     public void updateWith(List<Speaker> newData, OnSpeakerClickedListener listener) {
+        if (getAdapter() == null) {
+            super.setAdapter(adapter);
+        }
+
+        GridLayoutManager layoutManager = (GridLayoutManager) getLayoutManager();
+        GridLayoutManager.SpanSizeLookup spanSizeLookup = adapter.createSpanSizeLookup(layoutManager.getSpanCount());
+        layoutManager.setSpanSizeLookup(spanSizeLookup);
+
         DiffUtil.Callback callback = new SpeakerDiffCallback(adapter.speakers(), newData);       // TODO move off of the UI thread
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(callback, true);
         adapter.updateWith(newData, listener);

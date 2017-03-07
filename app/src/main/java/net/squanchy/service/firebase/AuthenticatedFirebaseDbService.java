@@ -35,8 +35,8 @@ public class AuthenticatedFirebaseDbService implements FirebaseDbService {
     }
 
     @Override
-    public Observable<FirebaseEvent> event(String dayId, String eventId) {
-        return signInAnd(() -> dbService.event(dayId, eventId));
+    public Observable<FirebaseEvent> event(String eventId) {
+        return signInAnd(() -> dbService.event(eventId));
     }
 
     private <T> Observable<T> signInAnd(Callable<Observable<T>> andThen) {
