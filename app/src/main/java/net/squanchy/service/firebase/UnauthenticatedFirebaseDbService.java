@@ -5,8 +5,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Locale;
 
+import net.squanchy.service.firebase.model.FirebaseDay;
 import net.squanchy.service.firebase.model.FirebaseDays;
 import net.squanchy.service.firebase.model.FirebaseEvent;
 import net.squanchy.service.firebase.model.FirebaseEvents;
@@ -14,6 +17,7 @@ import net.squanchy.service.firebase.model.FirebaseSpeakers;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 public final class UnauthenticatedFirebaseDbService implements FirebaseDbService {
@@ -31,7 +35,16 @@ public final class UnauthenticatedFirebaseDbService implements FirebaseDbService
 
     @Override
     public Observable<FirebaseDays> days() {
-        return observeChild(DAYS_NODE, FirebaseDays.class);
+        return observeChild(DAYS_NODE, FirebaseDays.class)
+                .map(sortByPosition());
+    }
+
+    private Function<FirebaseDays, FirebaseDays> sortByPosition() {
+        return firebaseDays -> {
+            ArrayList<FirebaseDay> sortedFirebaseDays = new ArrayList<>(firebaseDays.days);
+            Collections.sort(sortedFirebaseDays, (firstDay, secondDay) -> Integer.compare(firstDay.position, secondDay.position));
+            return new FirebaseDays(sortedFirebaseDays);
+        };
     }
 
     @Override
