@@ -27,6 +27,7 @@ public abstract class Event {
             Optional<ExperienceLevel> experienceLevel,
             List<Speaker> speakers,
             Type type) {
+        Optional<String> placeOptional = Optional.fromNullable(place);        // TODO get Optional<Place> as type in here
         return new AutoValue_Event.Builder()
                 .id(eventId)
                 .numericId(numericEventId)
@@ -34,8 +35,8 @@ public abstract class Event {
                 .startTime(startTime)
                 .endTime(endTime)
                 .title(title)
-                .place(Optional.fromNullable(place))
-                .placeVisibility(place.isEmpty() ? View.GONE : View.VISIBLE)
+                .place(placeOptional)
+                .placeVisibility(placeOptional.map(placeValue -> View.VISIBLE).or(View.GONE))
                 .speakers(speakers)
                 .speakersVisibility(speakers.isEmpty() ? View.GONE : View.VISIBLE)
                 .trackVisibility(View.GONE) // todo add track
