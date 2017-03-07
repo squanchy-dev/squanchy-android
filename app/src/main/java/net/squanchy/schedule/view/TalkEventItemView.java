@@ -7,12 +7,11 @@ import android.widget.TextView;
 import net.squanchy.R;
 import net.squanchy.eventdetails.widget.ExperienceLevelIconView;
 import net.squanchy.schedule.domain.view.Event;
-import net.squanchy.support.widget.CardLayout;
 
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-public class TalkEventItemView extends CardLayout {
+public class TalkEventItemView extends EventItemView {
 
     private final DateTimeFormatter dateTimeFormatter;
 
@@ -40,7 +39,8 @@ public class TalkEventItemView extends CardLayout {
         speakerView = (SpeakerView) findViewById(R.id.speaker_container);
     }
 
-    void updateWith(Event event) {
+    @Override
+    public void updateWith(Event event) {
         ensureSupportedType(event.type());
 
         timestampView.setText(dateTimeFormatter.print(event.startTime()));
