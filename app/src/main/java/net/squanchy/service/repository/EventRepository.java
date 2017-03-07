@@ -55,7 +55,8 @@ public class EventRepository {
                 apiEvent.name,
                 apiEvent.place_id,
                 Optional.fromNullable(apiEvent.experience_level).flatMap(ExperienceLevel::fromNullableRawLevel),
-                speakersForEvent(apiEvent, speakers)
+                speakersForEvent(apiEvent, speakers),
+                Event.Type.fromRawType(apiEvent.type)
         );
     }
 
@@ -80,7 +81,8 @@ public class EventRepository {
                 apiEvent.name,
                 apiEvent.place_id,
                 Optional.fromNullable(apiEvent.experience_level).flatMap(ExperienceLevel::fromNullableRawLevel),
-                speakersForEvent(apiEvent, speakers)
+                speakersForEvent(apiEvent, speakers),
+                Event.Type.fromRawType(apiEvent.type)
         );
     }
 
