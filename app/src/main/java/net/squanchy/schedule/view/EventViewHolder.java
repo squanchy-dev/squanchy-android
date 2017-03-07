@@ -7,12 +7,12 @@ import net.squanchy.schedule.domain.view.Event;
 
 class EventViewHolder extends RecyclerView.ViewHolder {
 
-    EventViewHolder(EventItemView itemView) {
+    EventViewHolder(TalkEventItemView itemView) {
         super(itemView);
     }
 
     void updateWith(Event event, @Nullable ScheduleViewPagerAdapter.OnEventClickedListener listener) {
-        ((EventItemView) itemView).updateWith(event);
+        ((TalkEventItemView) itemView).updateWith(event);
         itemView.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onEventClicked(event);

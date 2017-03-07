@@ -12,7 +12,7 @@ import net.squanchy.support.widget.CardLayout;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-public class EventItemView extends CardLayout {
+public class TalkEventItemView extends CardLayout {
 
     private final DateTimeFormatter dateTimeFormatter;
 
@@ -21,11 +21,11 @@ public class EventItemView extends CardLayout {
     private ExperienceLevelIconView experienceLevelIconView;
     private SpeakerView speakerView;
 
-    public EventItemView(Context context, AttributeSet attrs) {
+    public TalkEventItemView(Context context, AttributeSet attrs) {
         this(context, attrs, R.attr.cardViewDefaultStyle);
     }
 
-    public EventItemView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TalkEventItemView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.dateTimeFormatter = DateTimeFormat.shortTime();
     }
@@ -41,6 +41,8 @@ public class EventItemView extends CardLayout {
     }
 
     void updateWith(Event event) {
+        ensureSupportedType(event.type());
+
         timestampView.setText(dateTimeFormatter.print(event.startTime()));
         titleView.setText(event.title());
 
@@ -53,5 +55,12 @@ public class EventItemView extends CardLayout {
 
         speakerView.setVisibility(event.speakersVisibility());
         speakerView.updateWith(event.speakers());
+    }
+
+    private void ensureSupportedType(Event.Type type) {
+        if (type == Event.Type.TALK || type == Event.Type.KEYNOTE) {
+            return;
+        }
+        throw new IllegalArgumentException("Event with type " + type.name() + " is not supported by this view");
     }
 }
