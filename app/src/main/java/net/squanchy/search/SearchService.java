@@ -1,5 +1,7 @@
 package net.squanchy.search;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.squanchy.schedule.domain.view.Event;
@@ -50,6 +52,15 @@ class SearchService {
     }
 
     public Observable<List<Speaker>> speakers() {
-        return speakerRepository.speakers();
+        return speakerRepository.speakers()
+                .map(sortedByName());
+    }
+
+    private Function<List<Speaker>, List<Speaker>> sortedByName() {
+        return speakers -> {
+            ArrayList<Speaker> sortedSpeakers = new ArrayList<>(speakers);
+            Collections.sort(sortedSpeakers, (speaker1, speaker2) -> speaker1.name().compareToIgnoreCase(speaker2.name()));
+            return sortedSpeakers;
+        };
     }
 }
