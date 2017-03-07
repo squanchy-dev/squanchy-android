@@ -30,7 +30,7 @@ class ScheduleModule {
     }
 
     @Provides
-    Navigator scheduleNavigator(Context context) {
-        return new ScheduleNavigator(context);
+    Navigator navigator(Context context) {
+        return new Navigator(context);
     }
 }

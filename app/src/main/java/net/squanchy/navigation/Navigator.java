@@ -1,11 +1,29 @@
 package net.squanchy.navigation;
 
-public interface Navigator {
+import android.content.Context;
+import android.content.Intent;
 
-    void up();
+import net.squanchy.eventdetails.EventDetailsActivity;
+import net.squanchy.search.SearchActivity;
 
-    void toEventDetails(String eventId);
+public class Navigator {
 
-    void toSearch();
+    private final Context context;
 
+    public Navigator(Context context) {
+        this.context = context;
+    }
+
+    public void up() {
+        // No-op (top level yo)
+    }
+
+    public void toEventDetails(String eventId) {
+        Intent intent = EventDetailsActivity.createIntent(context, eventId);
+        context.startActivity(intent);
+    }
+
+    public void toSearch() {
+        context.startActivity(new Intent(context, SearchActivity.class));
+    }
 }

@@ -14,8 +14,11 @@
   <dimen name="card_horizontal_margin">16dp</dimen>
   <dimen name="card_vertical_margin">16dp</dimen>
   <dimen name="card_elevation">6dp</dimen>
+  <dimen name="card_elevation_active">6dp</dimen>
+  <dimen name="card_pressed_z_translation">2dp</dimen>
   <dimen name="card_padding_horizontal">16dp</dimen>
-  <dimen name="card_padding_vertical">8dp</dimen>
+  <dimen name="card_padding_top">12dp</dimen>
+  <dimen name="card_padding_bottom">8dp</dimen>
   <dimen name="card_timestamp">14sp</dimen>
   <dimen name="card_timestamp_margin_top">4dp</dimen>
   <dimen name="card_experience_icon">24dp</dimen>
