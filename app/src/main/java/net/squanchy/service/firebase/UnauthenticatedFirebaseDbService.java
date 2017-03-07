@@ -21,7 +21,7 @@ public final class UnauthenticatedFirebaseDbService implements FirebaseDbService
     private static final String DAYS_NODE = "days";
     private static final String SPEAKERS_NODE = "speakers";
     private static final String EVENTS_NODE = "events";
-    private static final String EVENTS_BY_ID_NODE = "events/%1$s";
+    private static final String EVENTS_BY_ID_NODE = "events/events/%1$s";
 
     private final DatabaseReference database;
 
