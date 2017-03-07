@@ -14,6 +14,8 @@ import net.squanchy.support.lang.Func1;
 import net.squanchy.support.lang.Lists;
 import net.squanchy.support.lang.Optional;
 
+import org.joda.time.LocalDateTime;
+
 import io.reactivex.Observable;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.schedulers.Schedulers;
@@ -48,6 +50,8 @@ public class EventRepository {
                 apiEvent.id,
                 checksum.getChecksumOf(apiEvent.id),
                 apiEvent.day_id,
+                new LocalDateTime(apiEvent.start_time),
+                new LocalDateTime(apiEvent.end_time),
                 apiEvent.name,
                 apiEvent.place_id,
                 Optional.fromNullable(apiEvent.experience_level).flatMap(ExperienceLevel::fromNullableRawLevel),
@@ -71,6 +75,8 @@ public class EventRepository {
                 apiEvent.id,
                 checksum.getChecksumOf(apiEvent.id),
                 apiEvent.day_id,
+                new LocalDateTime(apiEvent.start_time),
+                new LocalDateTime(apiEvent.end_time),
                 apiEvent.name,
                 apiEvent.place_id,
                 Optional.fromNullable(apiEvent.experience_level).flatMap(ExperienceLevel::fromNullableRawLevel),

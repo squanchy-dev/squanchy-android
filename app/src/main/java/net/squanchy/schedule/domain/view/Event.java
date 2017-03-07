@@ -11,6 +11,8 @@ import net.squanchy.speaker.domain.view.Speaker;
 import net.squanchy.support.lang.Optional;
 import net.squanchy.support.view.Visibility;
 
+import org.joda.time.LocalDateTime;
+
 @AutoValue
 public abstract class Event {
 
@@ -18,6 +20,8 @@ public abstract class Event {
             String eventId,
             long numericEventId,
             String dayId,
+            LocalDateTime startTime,
+            LocalDateTime endTime,
             String title,
             String place,
             Optional<ExperienceLevel> experienceLevel,
@@ -27,6 +31,8 @@ public abstract class Event {
                 .id(eventId)
                 .numericId(numericEventId)
                 .dayId(dayId)
+                .startTime(startTime)
+                .endTime(endTime)
                 .title(title)
                 .place(Optional.fromNullable(place))
                 .placeVisibility(place.isEmpty() ? View.GONE : View.VISIBLE)
@@ -40,6 +46,10 @@ public abstract class Event {
     public abstract String id();
 
     public abstract long numericId();
+
+    public abstract LocalDateTime startTime();
+
+    public abstract LocalDateTime endTime();
 
     public abstract String title();
 
@@ -68,6 +78,10 @@ public abstract class Event {
         public abstract Builder numericId(long id);
 
         public abstract Builder dayId(String dayId);
+
+        public abstract Builder startTime(LocalDateTime startTime);
+
+        public abstract Builder endTime(LocalDateTime endTime);
 
         public abstract Builder title(String title);
 

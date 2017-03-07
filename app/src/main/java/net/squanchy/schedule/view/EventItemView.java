@@ -9,9 +9,12 @@ import net.squanchy.eventdetails.widget.ExperienceLevelIconView;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.support.widget.CardLayout;
 
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 public class EventItemView extends CardLayout {
 
-    private static final String SPEAKER_PHOTO_PATH_TEMPLATE = "speakers/%s";
+    private final DateTimeFormatter dateTimeFormatter;
 
     private TextView titleView;
     private TextView timestampView;
@@ -24,6 +27,7 @@ public class EventItemView extends CardLayout {
 
     public EventItemView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.dateTimeFormatter = DateTimeFormat.shortTime();
     }
 
     @Override
@@ -37,8 +41,9 @@ public class EventItemView extends CardLayout {
     }
 
     void updateWith(Event event) {
-        timestampView.setText("12:00");         // TODO put start time
+        timestampView.setText(dateTimeFormatter.print(event.startTime()));
         titleView.setText(event.title());
+
         if (event.experienceLevel().isPresent()) {
             experienceLevelIconView.setExperienceLevel(event.experienceLevel().get());
             experienceLevelIconView.setVisibility(VISIBLE);
