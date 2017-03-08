@@ -15,7 +15,11 @@ import net.squanchy.R;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.SchedulePage;
 
+import org.joda.time.LocalDateTime;
+
 public class ScheduleViewPagerAdapter extends ViewPagerAdapter<ScheduleDayPageView> {
+
+    private static final String TITLE_FORMAT_TEMPLATE = "EEE d";
 
     private final Context context;
 
@@ -53,7 +57,8 @@ public class ScheduleViewPagerAdapter extends ViewPagerAdapter<ScheduleDayPageVi
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return pages.get(position).title();
+        LocalDateTime date = pages.get(position).date();
+        return date.toString(TITLE_FORMAT_TEMPLATE);
     }
 
     @Override
