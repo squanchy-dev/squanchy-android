@@ -1,7 +1,5 @@
 package net.squanchy.service.repository;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import net.squanchy.service.firebase.FirebaseDbService;
@@ -25,11 +23,6 @@ public class SpeakerRepository {
     public Observable<List<Speaker>> speakers() {
         return dbService.speakers()
                 .map(firebaseSpeaker -> firebaseSpeaker.speakers)
-                .map(list -> map(list, firebaseSpeaker -> Speaker.create(firebaseSpeaker, checksum.getChecksumOf(firebaseSpeaker.id))))
-                .doOnNext(list -> Collections.sort(list, speakerNameComparator));
+                .map(speakers -> map(speakers, firebaseSpeaker -> Speaker.create(firebaseSpeaker, checksum.getChecksumOf(firebaseSpeaker.id))));
     }
-
-    private static final Comparator<Speaker> speakerNameComparator =
-            (speaker1, speaker2) -> speaker1.name().compareToIgnoreCase(speaker2.name());
-
 }
