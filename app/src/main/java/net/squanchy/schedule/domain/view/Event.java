@@ -36,7 +36,7 @@ public abstract class Event {
                 .endTime(endTime)
                 .title(title)
                 .place(placeOptional)
-                .placeVisibility(placeOptional.map(placeValue -> View.VISIBLE).or(View.GONE))
+                .placeVisibility(placeOptional.isPresent() ? View.VISIBLE : View.GONE)
                 .speakers(speakers)
                 .speakersVisibility(speakers.isEmpty() ? View.GONE : View.VISIBLE)
                 .trackVisibility(View.GONE) // todo add track
