@@ -122,6 +122,10 @@ dependencies {
     compile libraries.app.dagger
 
     retrolambdaConfig libraries.app.retrolambda
+    
+    testCompile libraries.test.jUnit4
+    testCompile libraries.test.jodaTime
+    testCompile libraries.test.fest
 }
 
 apply plugin: 'com.google.gms.google-services'
