@@ -20,14 +20,13 @@ import net.squanchy.search.SearchResults;
 
 class SpeakerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    @IntDef({ViewTypeId.HEADER, ViewTypeId.SPEAKER, ViewTypeId.TRACK, ViewTypeId.EVENT})
+    @IntDef({ViewTypeId.HEADER, ViewTypeId.SPEAKER, ViewTypeId.EVENT})
     @Retention(RetentionPolicy.SOURCE)
     @interface ViewTypeId {
 
         int HEADER = 0;
         int SPEAKER = 1;
-        int TRACK = 2;
-        int EVENT = 3;
+        int EVENT = 2;
     }
 
     private final ImageLoader imageLoader;
