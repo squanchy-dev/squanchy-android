@@ -24,18 +24,18 @@ class GridSpanSizeLookup extends GridLayoutManager.SpanSizeLookup {
             return SINGLE_COLUMN_SPAN_SIZE;
         }
 
-        if (position < 0 || position >= itemsAdapter.getTotalItemsCount()) {
+        if (position < 0 || position >= itemsAdapter.totalItemsCount()) {
             String message = String.format(Locale.UK, "Position %d is not valid, must be [0, totalItemsCount)", position);
             throw new IndexOutOfBoundsException(message);
         }
 
         @ViewTypeId
-        int itemViewType = itemsAdapter.getViewTypeAt(position);
+        int itemViewType = itemsAdapter.viewTypeAtAbsolutePosition(position);
         return getSizeFor(itemViewType);
     }
 
     private int getSizeFor(@ViewTypeId int viewTypeId) {
-        if (viewTypeId == ViewTypeId.HEADER) {
+        if (viewTypeId == ViewTypeId.HEADER || viewTypeId == ViewTypeId.EVENT) {
             return columnCount;
         } else {
             return SINGLE_COLUMN_SPAN_SIZE;

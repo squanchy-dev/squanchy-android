@@ -17,4 +17,8 @@ public abstract class SearchResults {
     public abstract List<Event> events();
 
     public abstract List<Speaker> speakers();
+
+    public boolean isEmpty() {
+        return events().isEmpty() && speakers().isEmpty();
+    }
 }

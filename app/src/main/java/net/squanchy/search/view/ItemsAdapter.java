@@ -1,41 +1,53 @@
 package net.squanchy.search.view;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.squanchy.search.model.TitledList;
+import net.squanchy.search.SearchResults;
 import net.squanchy.speaker.domain.view.Speaker;
 
 import static net.squanchy.search.view.SpeakerAdapter.ViewTypeId;
 
 class ItemsAdapter {
 
-    private final List<TitledList<Speaker>> lists = new ArrayList<>();
+    private final SearchResults searchResults;
 
-    int getTotalItemsCount() {
-        int size = 0;
-        for (TitledList list : lists) {
-            size += list.size();
-        }
-        return size + getAdditionalItemsCount();
+    ItemsAdapter(SearchResults searchResults) {
+        this.searchResults = searchResults;
     }
 
-    private int getAdditionalItemsCount() {
-        return lists.size();
+    int totalItemsCount() {
+        if (searchResults.isEmpty()) {
+            return 0;
+        }
+
+        int eventsCount = searchResults.events().size();
+        int eventsHeadersCount = headersCountForSectionItemsCount(eventsCount);
+
+        int speakersCount = searchResults.speakers().size();
+        int speakersHeadersCount = headersCountForSectionItemsCount(speakersCount);
+
+        return eventsHeadersCount + eventsCount + speakersHeadersCount + speakersCount;
+    }
+
+    private static int headersCountForSectionItemsCount(int itemsCount) {
+        return itemsCount > 0 ? 1 : 0;
     }
 
     boolean isEmpty() {
-        return lists.isEmpty();
+        return searchResults.isEmpty();
     }
 
-    void addItems(TitledList<Speaker> list) {
-        lists.add(list);
+    int viewTypeAtAbsolutePosition(int position) {
+        return ViewTypeId.SPEAKER; // TODO
     }
 
-    int getViewTypeAt(int position) {
-        if (position == 0) {
-            return ViewTypeId.HEADER;
-        }
-        return ViewTypeId.SPEAKER;
+    long itemIdAtAbsolutePosition(int position) {
+        return 0;                // TODO
+    }
+
+    Speaker speakerAtAbsolutePosition(int position) {
+        return null;             // TODO
+    }
+
+    int headerTextAtAbsolutePosition(int position) {
+        return 0;                // TODO
     }
 }

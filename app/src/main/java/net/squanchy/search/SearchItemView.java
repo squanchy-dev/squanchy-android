@@ -11,7 +11,7 @@ import com.google.firebase.storage.StorageReference;
 
 import net.squanchy.R;
 import net.squanchy.imageloader.ImageLoader;
-import net.squanchy.search.view.SpeakersView.OnSpeakerClickedListener;
+import net.squanchy.search.view.SearchRecyclerView.OnSearchResultClickListener;
 import net.squanchy.speaker.domain.view.Speaker;
 import net.squanchy.support.lang.Optional;
 
@@ -46,7 +46,7 @@ public class SearchItemView extends LinearLayout {
         name = (TextView) findViewById(R.id.speaker_name);
     }
 
-    public void updateWith(Speaker speaker, ImageLoader imageLoader, OnSpeakerClickedListener listener) {
+    public void updateWith(Speaker speaker, ImageLoader imageLoader, OnSearchResultClickListener listener) {
         name.setText(speaker.name());
         updateSpeakerPhotos(speaker, imageLoader);
         setOnClickListener(v -> listener.onSpeakerClicked(speaker));

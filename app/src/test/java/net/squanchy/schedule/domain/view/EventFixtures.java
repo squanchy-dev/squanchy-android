@@ -30,12 +30,12 @@ public final class EventFixtures {
         // Not instantiable
     }
 
-    public EventFixtures withEventId(String eventId) {
+    public EventFixtures withId(String eventId) {
         this.eventId = eventId;
         return this;
     }
 
-    public EventFixtures withNumericEventId(long numericEventId) {
+    public EventFixtures withNumericId(long numericEventId) {
         this.numericEventId = numericEventId;
         return this;
     }

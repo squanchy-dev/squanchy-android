@@ -11,66 +11,75 @@ import android.view.ViewGroup;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.util.List;
+import java.util.Collections;
 
 import net.squanchy.R;
 import net.squanchy.imageloader.ImageLoader;
 import net.squanchy.imageloader.ImageLoaderInjector;
-import net.squanchy.search.model.TitledList;
-import net.squanchy.search.model.TitledListFactory;
-import net.squanchy.speaker.domain.view.Speaker;
+import net.squanchy.search.SearchResults;
 
 class SpeakerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    @IntDef({ViewTypeId.HEADER, ViewTypeId.SPEAKER /* and more in the future */})
+    @IntDef({ViewTypeId.HEADER, ViewTypeId.SPEAKER, ViewTypeId.TRACK, ViewTypeId.EVENT})
     @Retention(RetentionPolicy.SOURCE)
     @interface ViewTypeId {
 
         int HEADER = 0;
         int SPEAKER = 1;
+        int TRACK = 2;
+        int EVENT = 3;
     }
 
-    private static final int SPEAKER_LIST_OFFSET = 1;
-
-    private final TitledList<Speaker> speakerList = TitledListFactory.buildSpeakerList(null);
-
-    @Nullable
-    private SpeakersView.OnSpeakerClickedListener listener;
-
-    private final ItemsAdapter itemsAdapter;
     private final ImageLoader imageLoader;
     private final Context context;
 
+    @Nullable
+    private SearchRecyclerView.OnSearchResultClickListener listener;
+
+    private SearchResults searchResults = SearchResults.create(Collections.emptyList(), Collections.emptyList());
+    private ItemsAdapter itemsAdapter = new ItemsAdapter(searchResults);
+
     SpeakerAdapter(Context context) {
         this.context = context;
-        itemsAdapter = new ItemsAdapter();
+
         imageLoader = ImageLoaderInjector.obtain(context).imageLoader();
+        setHasStableIds(true);
+    }
+
+    @Override
+    @ViewTypeId
+    public int getItemViewType(int position) {
+        return itemsAdapter.viewTypeAtAbsolutePosition(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return itemsAdapter.itemIdAtAbsolutePosition(position);
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, @ViewTypeId int viewType) {
         if (viewType == ViewTypeId.HEADER) {
             return new HeaderViewHolder(LayoutInflater.from(context).inflate(R.layout.item_search_header, parent, false));
-        } else {
-            View view = LayoutInflater.from(context).inflate(R.layout.item_search_generic, parent, false);
+        } else if (viewType == ViewTypeId.SPEAKER) {
+            View view = LayoutInflater.from(context).inflate(R.layout.item_search_result_small, parent, false);
             return new SpeakerViewHolder(view);
+        } else {
+            throw new IllegalArgumentException("Item type " + viewType + " not supported");
         }
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (itemsAdapter.getViewTypeAt(position) == ViewTypeId.SPEAKER) {
-            int positionInList = position - SPEAKER_LIST_OFFSET;
-            ((SpeakerViewHolder) holder).updateWith(speakerList.get(positionInList), imageLoader, listener);
-        } else {
-            ((HeaderViewHolder) holder).updateWith(speakerList.title());
-        }
-    }
+        int viewType = itemsAdapter.viewTypeAtAbsolutePosition(position);
 
-    @Override
-    @ViewTypeId
-    public int getItemViewType(int position) {
-        return itemsAdapter.getViewTypeAt(position);
+        if (viewType == ViewTypeId.SPEAKER) {
+            ((SpeakerViewHolder) holder).updateWith(itemsAdapter.speakerAtAbsolutePosition(position), imageLoader, listener);
+        } else if (viewType == ViewTypeId.HEADER) {
+            ((HeaderViewHolder) holder).updateWith(itemsAdapter.headerTextAtAbsolutePosition(position));
+        } else {
+            throw new IllegalArgumentException("Item type " + viewType + " not supported");
+        }
     }
 
     GridLayoutManager.SpanSizeLookup createSpanSizeLookup(int columnsCount) {
@@ -79,16 +88,14 @@ class SpeakerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return itemsAdapter.getTotalItemsCount();
+        return itemsAdapter.totalItemsCount();
     }
 
-    public List<Speaker> speakers() {
-        return speakerList.items();
-    }
-
-    public void updateWith(List<Speaker> speakers, @Nullable SpeakersView.OnSpeakerClickedListener listener) {
-        speakerList.setItems(speakers);
-        itemsAdapter.addItems(speakerList);
+    public void updateWith(SearchResults searchResults, @Nullable SearchRecyclerView.OnSearchResultClickListener listener) {
+        this.searchResults = searchResults;
+        this.itemsAdapter = new ItemsAdapter(searchResults);
         this.listener = listener;
+
+        notifyDataSetChanged();
     }
 }
