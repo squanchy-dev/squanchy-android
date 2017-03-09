@@ -26,28 +26,29 @@ class SearchService {
 
     public Observable<List<Event>> findEvents(String query) {
         return eventRepository.events()
-                .map(filterEventsBy(query));
+                .map(onlyEventsMatching(query));
     }
 
-    private Function<List<Event>, List<Event>> filterEventsBy(String query) {
-        return events -> filter(events, event -> titleContains(event, query) && eventIsTalkOrKeynote(event));
+    private Function<List<Event>, List<Event>> onlyEventsMatching(String query) {
+        return events -> filter(events, event -> matchesQuery(event, query) && eventIsSearchable(event));
     }
 
-    private boolean titleContains(Event event, String query) {
+    private boolean matchesQuery(Event event, String query) {
         return event.title().contains(query);
     }
 
-    private boolean eventIsTalkOrKeynote(Event event) {
-        // TODO check for type
-        return true;
+    private boolean eventIsSearchable(Event event) {
+        return event.type() != Event.Type.LUNCH
+                && event.type() != Event.Type.COFFEE_BREAK
+                && event.type() != Event.Type.REGISTRATION;
     }
 
     public Observable<List<Speaker>> findSpeakers(String query) {
         return speakerRepository.speakers()
-                .map(onlySpeakesWithNameContaining(query));
+                .map(onlySpeakersMatching(query));
     }
 
-    private Function<List<Speaker>, List<Speaker>> onlySpeakesWithNameContaining(String query) {
+    private Function<List<Speaker>, List<Speaker>> onlySpeakersMatching(String query) {
         return speakers -> filter(speakers, speaker -> speaker.name().contains(query));
     }
 
