@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.squanchy.schedule.domain.view.Event;
+import net.squanchy.search.engines.SearchEngines;
 import net.squanchy.service.repository.EventRepository;
 import net.squanchy.service.repository.SpeakerRepository;
 import net.squanchy.speaker.domain.view.Speaker;
@@ -18,10 +19,12 @@ class SearchService {
 
     private final EventRepository eventRepository;
     private final SpeakerRepository speakerRepository;
+    private final SearchEngines searchEngines;
 
-    SearchService(EventRepository eventRepository, SpeakerRepository speakerRepository) {
+    SearchService(EventRepository eventRepository, SpeakerRepository speakerRepository, SearchEngines searchEngines) {
         this.eventRepository = eventRepository;
         this.speakerRepository = speakerRepository;
+        this.searchEngines = searchEngines;
     }
 
     public Observable<List<Event>> findEvents(String query) {
@@ -30,17 +33,7 @@ class SearchService {
     }
 
     private Function<List<Event>, List<Event>> onlyEventsMatching(String query) {
-        return events -> filter(events, event -> matchesQuery(event, query) && eventIsSearchable(event));
-    }
-
-    private boolean matchesQuery(Event event, String query) {
-        return event.title().contains(query);
-    }
-
-    private boolean eventIsSearchable(Event event) {
-        return event.type() != Event.Type.LUNCH
-                && event.type() != Event.Type.COFFEE_BREAK
-                && event.type() != Event.Type.REGISTRATION;
+        return events -> filter(events, event -> searchEngines.forEvents().matches(event, query));
     }
 
     public Observable<List<Speaker>> findSpeakers(String query) {
@@ -49,7 +42,7 @@ class SearchService {
     }
 
     private Function<List<Speaker>, List<Speaker>> onlySpeakersMatching(String query) {
-        return speakers -> filter(speakers, speaker -> speaker.name().contains(query));
+        return speakers -> filter(speakers, speaker -> searchEngines.forSpeakers().matches(speaker, query));
     }
 
     public Observable<List<Speaker>> speakers() {

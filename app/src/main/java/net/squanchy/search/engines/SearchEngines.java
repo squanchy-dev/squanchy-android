@@ -1,16 +1,18 @@
 package net.squanchy.search.engines;
 
 import net.squanchy.schedule.domain.view.Event;
+import net.squanchy.speaker.domain.view.Speaker;
 
-public final class SearchEngines {
+public class SearchEngines {
 
-    private static final EventSearchEngine EVENT_SEARCH_ENGINE = new EventSearchEngine();
+    private static final SearchEngine<Event> EVENT_SEARCH_ENGINE = new EventSearchEngine();
+    private static final SearchEngine<Speaker> SPEAKER_SEARCH_ENGINE = new SpeakerSearchEngine();
 
-    private SearchEngines() {
-        // Not instantiable
+    public SearchEngine<Event> forEvents() {
+        return EVENT_SEARCH_ENGINE;
     }
 
-    public static SearchEngine<Event> forEvents() {
-        return EVENT_SEARCH_ENGINE;
+    public SearchEngine<Speaker> forSpeakers() {
+        return SPEAKER_SEARCH_ENGINE;
     }
 }
