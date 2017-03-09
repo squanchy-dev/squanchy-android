@@ -6,9 +6,9 @@ import java.util.regex.Pattern;
 
 final class StringNormalizer {
 
-    private static final String EMPTY_STRING = "";
     private static final String ACCENTS_PATTERN_STRING = "\\p{M}";
     private static final Pattern ACCENTS_PATTERN = Pattern.compile(ACCENTS_PATTERN_STRING);
+    private static final String EMPTY_STRING = "";
 
     static String normalize(String text) {
         String lowercasedText = lowercase(text);
@@ -16,7 +16,7 @@ final class StringNormalizer {
     }
 
     private static String lowercase(String text) {
-        return text.toLowerCase(Locale.getDefault());
+        return text.toLowerCase(Locale.ROOT);
     }
 
     private static String removeDiacritics(String text) {
