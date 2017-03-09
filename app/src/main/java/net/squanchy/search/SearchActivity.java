@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -19,6 +21,7 @@ import net.squanchy.speaker.domain.view.Speaker;
 import net.squanchy.search.view.SpeakersView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
 
@@ -26,16 +29,20 @@ public class SearchActivity extends TypefaceStyleableActivity implements Speaker
 
     private static final int SPEECH_REQUEST_CODE = 100;
 
+    private final CompositeDisposable subscriptions = new CompositeDisposable();
+
     private EditText searchField;
     private SearchService searchService;
     private SpeakersView speakersView;
-    private Disposable subscription;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
         searchField = (EditText) findViewById(R.id.search_field);
+        searchField.addTextChangedListener(new SearchTextWatcher());
+
         speakersView = (SpeakersView) findViewById(R.id.speakers_view);
         setupToolbar();
 
@@ -52,19 +59,18 @@ public class SearchActivity extends TypefaceStyleableActivity implements Speaker
     @Override
     protected void onStart() {
         super.onStart();
-        subscription = searchService.speakers()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onSuccess, Timber::e);
-    }
 
-    private void onSuccess(List<Speaker> speakers) {
-        speakersView.updateWith(speakers, this);
+        Disposable speakersSubscription = searchService.speakers()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(speakers -> speakersView.updateWith(speakers, this), Timber::e);
+
+        subscriptions.add(speakersSubscription);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        subscription.dispose();
+        subscriptions.dispose();
     }
 
     @Override
@@ -110,5 +116,23 @@ public class SearchActivity extends TypefaceStyleableActivity implements Speaker
     public void onSpeakerClicked(Speaker speaker) {
         // TODO open the speaker detail view here
         Toast.makeText(this, "Speaker clicked " + speaker, Toast.LENGTH_SHORT).show();
+    }
+
+    private static class SearchTextWatcher implements TextWatcher {
+
+        @Override
+        public void beforeTextChanged(CharSequence query, int start, int count, int after) {
+            // No-op
+        }
+
+        @Override
+        public void onTextChanged(CharSequence query, int start, int before, int count) {
+            // No-op
+        }
+
+        @Override
+        public void afterTextChanged(Editable query) {
+            // TODO react to text changes
+        }
     }
 }

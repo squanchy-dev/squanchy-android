@@ -27,7 +27,15 @@ class SearchService {
         this.searchEngines = searchEngines;
     }
 
-    public Observable<List<Event>> findEvents(String query) {
+    public Observable<SearchResults> find(String query) {
+        return Observable.zip(
+                findEvents(query),
+                findSpeakers(query),
+                SearchResults::create
+        );
+    }
+
+    private Observable<List<Event>> findEvents(String query) {
         return eventRepository.events()
                 .map(onlyEventsMatching(query));
     }
@@ -36,7 +44,7 @@ class SearchService {
         return events -> filter(events, event -> searchEngines.forEvents().matches(event, query));
     }
 
-    public Observable<List<Speaker>> findSpeakers(String query) {
+    private Observable<List<Speaker>> findSpeakers(String query) {
         return speakerRepository.speakers()
                 .map(onlySpeakersMatching(query));
     }
