@@ -69,12 +69,15 @@
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.Card.Speaker</item>
   </style>
 
-  <style name="Search.Appbar" parent="ThemeOverlay.AppCompat.Light">
+  <style name="Search.Appbar" parent="Widget.Design.AppBarLayout">
     <item name="android:elevation">@dimen/toolbar_elevation</item>
   </style>
 
   <style name="Search.Toolbar" parent="Squanchy.Toolbar">
     <item name="android:background">?attr/colorPrimary</item>
+  </style>
+
+  <style name="ThemeOverlay.Squanchy.Toolbar" parent="ThemeOverlay.AppCompat.Light">
     <item name="android:colorControlNormal">?colorAccent</item>
   </style>
 
