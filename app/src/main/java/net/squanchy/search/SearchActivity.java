@@ -41,7 +41,8 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
     private static final int DELAY_ENOUGH_FOR_FOCUS_TO_HAPPEN_MILLIS = 50;
 
     private final CompositeDisposable subscriptions = new CompositeDisposable();
-    private final PublishSubject<String> querySubject = PublishSubject.create();
+
+    private SearchTextWatcher searchTextWatcher;
 
     private EditText searchField;
     private SearchService searchService;
@@ -53,7 +54,6 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
         setContentView(R.layout.activity_search);
 
         searchField = (EditText) findViewById(R.id.search_field);
-        searchField.addTextChangedListener(new SearchTextWatcher(querySubject));
 
         searchRecyclerView = (SearchRecyclerView) findViewById(R.id.speakers_view);
         setupToolbar();
@@ -72,13 +72,17 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
     protected void onStart() {
         super.onStart();
 
+        PublishSubject<String> querySubject = PublishSubject.create();
+        searchTextWatcher = new SearchTextWatcher(querySubject);
+        searchField.addTextChangedListener(searchTextWatcher);
+
         Disposable speakersSubscription = searchService.speakers()
                 .map(speakers -> SearchResults.create(Collections.emptyList(), speakers))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(searchResults -> searchRecyclerView.updateWith(searchResults, this), Timber::e);
 
         Disposable searchSubscription = querySubject.debounce(QUERY_DEBOUNCE_TIMEOUT, TimeUnit.MILLISECONDS)
-                .flatMap(s -> searchService.find(s))
+                .flatMap(query -> searchService.find(query))
                 .doOnNext(searchResults -> speakersSubscription.dispose())
                 .toFlowable(BackpressureStrategy.LATEST)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -104,7 +108,12 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
     @Override
     protected void onStop() {
         super.onStop();
+
         subscriptions.dispose();
+
+        if (searchTextWatcher != null) {
+            searchField.removeTextChangedListener(searchTextWatcher);
+        }
     }
 
     @Override
@@ -167,6 +176,9 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
 
         @Override
         public void onTextChanged(CharSequence query, int start, int before, int count) {
+            if (query == null) {
+                return;
+            }
             querySubject.onNext(query.toString());
         }
 
