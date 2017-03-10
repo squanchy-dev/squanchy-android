@@ -15,7 +15,7 @@ public class SearchRecyclerView extends RecyclerView {
 
     private SpeakerAdapter adapter;
 
-    private static final int COLUMN_NUMBER = 4;
+    private static final int COLUMNS_COUNT = 4;
 
     public SearchRecyclerView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
@@ -30,7 +30,7 @@ public class SearchRecyclerView extends RecyclerView {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), COLUMN_NUMBER);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), COLUMNS_COUNT);
         setLayoutManager(gridLayoutManager);
         adapter = new SpeakerAdapter(getContext());
         setAdapter(adapter);
@@ -46,7 +46,7 @@ public class SearchRecyclerView extends RecyclerView {
         adapter.updateWith(SearchResults.create(Collections.emptyList(), newData.speakers()), listener);
         
         GridLayoutManager layoutManager = (GridLayoutManager) getLayoutManager();
-        GridLayoutManager.SpanSizeLookup spanSizeLookup = adapter.createSpanSizeLookup(COLUMN_NUMBER);
+        GridLayoutManager.SpanSizeLookup spanSizeLookup = adapter.createSpanSizeLookup(COLUMNS_COUNT);
         layoutManager.setSpanSizeLookup(spanSizeLookup);
 
     }
