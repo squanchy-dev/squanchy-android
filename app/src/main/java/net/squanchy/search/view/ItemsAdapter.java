@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Locale;
 
 import net.squanchy.search.SearchResults;
-import net.squanchy.search.view.SpeakerAdapter.ViewTypeId;
+import net.squanchy.search.view.SearchAdapter.ViewTypeId;
 import net.squanchy.speaker.domain.view.Speaker;
 
 class ItemsAdapter {

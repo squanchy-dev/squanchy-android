@@ -13,7 +13,7 @@ import net.squanchy.speaker.domain.view.Speaker;
 
 public class SearchRecyclerView extends RecyclerView {
 
-    private SpeakerAdapter adapter;
+    private SearchAdapter adapter;
 
     private static final int COLUMNS_COUNT = 4;
 
@@ -32,7 +32,7 @@ public class SearchRecyclerView extends RecyclerView {
         super.onFinishInflate();
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), COLUMNS_COUNT);
         setLayoutManager(gridLayoutManager);
-        adapter = new SpeakerAdapter(getContext());
+        adapter = new SearchAdapter(getContext());
         setAdapter(adapter);
         setClipToPadding(false);
     }

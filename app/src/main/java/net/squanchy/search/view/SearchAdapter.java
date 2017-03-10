@@ -18,7 +18,7 @@ import net.squanchy.imageloader.ImageLoader;
 import net.squanchy.imageloader.ImageLoaderInjector;
 import net.squanchy.search.SearchResults;
 
-class SpeakerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @IntDef({ViewTypeId.HEADER, ViewTypeId.SPEAKER, ViewTypeId.EVENT})
     @Retention(RetentionPolicy.SOURCE)
@@ -38,7 +38,7 @@ class SpeakerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private SearchResults searchResults = SearchResults.create(Collections.emptyList(), Collections.emptyList());
     private ItemsAdapter itemsAdapter = new ItemsAdapter(searchResults);
 
-    SpeakerAdapter(Context context) {
+    SearchAdapter(Context context) {
         this.context = context;
 
         imageLoader = ImageLoaderInjector.obtain(context).imageLoader();

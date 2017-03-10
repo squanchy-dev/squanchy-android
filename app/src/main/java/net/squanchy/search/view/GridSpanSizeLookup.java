@@ -2,7 +2,7 @@ package net.squanchy.search.view;
 
 import android.support.v7.widget.GridLayoutManager;
 
-import net.squanchy.search.view.SpeakerAdapter.ViewTypeId;
+import net.squanchy.search.view.SearchAdapter.ViewTypeId;
 
 class GridSpanSizeLookup extends GridLayoutManager.SpanSizeLookup {
 

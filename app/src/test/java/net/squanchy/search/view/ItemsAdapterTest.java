@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.search.SearchResults;
-import net.squanchy.search.view.SpeakerAdapter.ViewTypeId;
+import net.squanchy.search.view.SearchAdapter.ViewTypeId;
 import net.squanchy.speaker.domain.view.Speaker;
 
 import org.junit.Before;
