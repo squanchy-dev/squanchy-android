@@ -358,6 +358,101 @@ public class ItemsAdapterTest {
         }
     }
 
+    public static class HeaderTypeAtPosition extends BaseTest {
+
+        @Test
+        public void givenEmptySearchResults_whenGettingHeaderTypeAtAnyPosition_thenThrowsIndexOutOfBoundsException() {
+            givenEmptySearchResults();
+            thrown.expect(IndexOutOfBoundsException.class);
+
+            itemsAdapter.headerTypeAtAbsolutePosition(0);
+        }
+
+        @Test
+        public void givenAnySearchResults_whenGettingHeaderTypeAtNegativePosition_thenThrowsIndexOutOfBoundsException() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+            thrown.expect(IndexOutOfBoundsException.class);
+
+            itemsAdapter.headerTypeAtAbsolutePosition(-1);
+        }
+
+        @Test
+        public void givenAnySearchResults_whenGettingHeaderTypePositionEqualOrGreaterThanTotalItemsCount_thenThrowsIndexOutOfBoundsException() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+            thrown.expect(IndexOutOfBoundsException.class);
+
+            itemsAdapter.headerTypeAtAbsolutePosition(7);      // 7 = (1 header + 3 events + 1 header + 2 speakers + 1 off-by-one) - 1 [because zero-based]
+        }
+
+        @Test
+        public void givenSearchResultsWithOnlyEvents_whenGettingHeaderTypeAtEventsHeaderPosition_thenReturnsEventsHeader() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, NO_SPEAKERS);
+
+            HeaderType headerType = itemsAdapter.headerTypeAtAbsolutePosition(0);      // 0 = (1 header) - 1 [because zero-based]
+
+            assertThat(headerType).isEqualTo(HeaderType.EVENTS);
+        }
+
+        @Test
+        public void givenSearchResultsWithOnlyEvents_whenGettingHeaderTypeAtEventPosition_thenThrowsIndexOutOfBoundsException() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, NO_SPEAKERS);
+            thrown.expect(IndexOutOfBoundsException.class);
+
+            itemsAdapter.headerTypeAtAbsolutePosition(1);      // 1 = (1 header + 1 speaker) - 1 [because zero-based]
+        }
+
+        @Test
+        public void givenSearchResultsWithOnlySpeakers_whenGettingHeaderTypeAtSpeakerHeaderPosition_thenReturnsSpeakersHeader() {
+            givenSearchResultsWith(NO_EVENTS, ANY_TWO_SPEAKERS);
+
+            HeaderType headerType = itemsAdapter.headerTypeAtAbsolutePosition(0);      // 0 = (1 header) - 1 [because zero-based]
+
+            assertThat(headerType).isEqualTo(HeaderType.SPEAKERS);
+        }
+
+        @Test
+        public void givenSearchResultsWithOnlySpeakers_whenGettingHeaderTypeAtSpeakerPosition_thenThrowsIndexOutOfBoundsException() {
+            givenSearchResultsWith(NO_EVENTS, ANY_TWO_SPEAKERS);
+            thrown.expect(IndexOutOfBoundsException.class);
+
+            itemsAdapter.headerTypeAtAbsolutePosition(1);      // 1 = (1 header + 1 speaker) - 1 [because zero-based]
+        }
+
+        @Test
+        public void givenSearchResultsWithEventsAndSpeakers_whenGettingHeaderTypeAtEventsHeaderPosition_thenReturnsEventsHeader() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+
+            HeaderType headerType = itemsAdapter.headerTypeAtAbsolutePosition(0);      // 0 = (1 header) - 1 [because zero-based]
+
+            assertThat(headerType).isEqualTo(HeaderType.EVENTS);
+        }
+
+        @Test
+        public void givenSearchResultsWithEventsAndSpeakers_whenGettingHeaderTypeAtEventPosition_thenThrowsIndexOutOfBoundsException() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+            thrown.expect(IndexOutOfBoundsException.class);
+
+            itemsAdapter.headerTypeAtAbsolutePosition(1);      // 1 = (1 header + 1 event) - 1 [because zero-based]
+        }
+
+        @Test
+        public void givenSearchResultsWithEventsAndSpeakers_whenGettingHeaderTypeAtSpeakerHeaderPosition_thenReturnsSpeakersHeader() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+
+            HeaderType headerType = itemsAdapter.headerTypeAtAbsolutePosition(4);      // 4 = (1 header + 3 events + 1 header) - 1 [because zero-based]
+
+            assertThat(headerType).isEqualTo(HeaderType.SPEAKERS);
+        }
+
+        @Test
+        public void givenSearchResultsWithEventsAndSpeakers_whenGettingHeaderTypeAtSpeakerPosition_thenThrowsIndexOutOfBoundsException() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+            thrown.expect(IndexOutOfBoundsException.class);
+
+            itemsAdapter.headerTypeAtAbsolutePosition(5);      // 5 = (1 header + 3 events + 1 header + 1 speaker) - 1 [because zero-based]
+        }
+    }
+
     public abstract static class BaseTest {
 
         static final List<Event> NO_EVENTS = Collections.emptyList();

@@ -75,7 +75,7 @@ class SpeakerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (viewType == ViewTypeId.SPEAKER) {
             ((SpeakerViewHolder) holder).updateWith(itemsAdapter.speakerAtAbsolutePosition(position), imageLoader, listener);
         } else if (viewType == ViewTypeId.HEADER) {
-            ((HeaderViewHolder) holder).updateWith(itemsAdapter.headerTextAtAbsolutePosition(position));
+            ((HeaderViewHolder) holder).updateWith(itemsAdapter.headerTypeAtAbsolutePosition(position));
         } else {
             throw new IllegalArgumentException("Item type " + viewType + " not supported");
         }

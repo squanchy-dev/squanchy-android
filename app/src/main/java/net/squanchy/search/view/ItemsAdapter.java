@@ -96,8 +96,25 @@ class ItemsAdapter {
         }
     }
 
-    int headerTextAtAbsolutePosition(int position) {
-        return 0;                // TODO
+    HeaderType headerTypeAtAbsolutePosition(int position) {
+        ensurePositionExists(position);
+
+        int totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResults.events());
+        if (totalEventItemsCount > 0) {
+            if (position == 0) {
+                return HeaderType.EVENTS;
+            } else if (position < totalEventItemsCount) {
+                throw new IndexOutOfBoundsException("No header at position " + position + ", that is supposed to be an event");
+            }
+        }
+
+        int adjustedPosition = position - totalEventItemsCount;
+        // We checked position is in range so it MUST be a speaker
+        if (adjustedPosition == 0) {
+            return HeaderType.SPEAKERS;
+        } else {
+            throw new IndexOutOfBoundsException("No header at position " + position + ", that is supposed to be a speaker");
+        }
     }
 
     private void ensurePositionExists(int position) {
