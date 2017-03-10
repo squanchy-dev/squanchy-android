@@ -73,6 +73,7 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
 
         Disposable searchSubscription = querySubject.debounce(QUERY_DEBOUNCE_TIMEOUT, TimeUnit.MILLISECONDS)
                 .flatMap(s -> searchService.find(s))
+                .doOnNext(searchResults -> speakersSubscription.dispose())
                 .toFlowable(BackpressureStrategy.LATEST)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(searchResults -> searchRecyclerView.updateWith(searchResults, this), Timber::e);
