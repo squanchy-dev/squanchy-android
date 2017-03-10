@@ -45,7 +45,7 @@ class ItemsAdapter {
 
         if (adjustedPosition == 0) {
             return ViewTypeId.HEADER;
-        } else if (totalEventItemsCount > 0) {
+        } else if (position < totalEventItemsCount) {
             return ViewTypeId.EVENT;
         } else {
             return ViewTypeId.SPEAKER;

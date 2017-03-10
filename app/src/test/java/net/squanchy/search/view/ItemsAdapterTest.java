@@ -136,6 +136,42 @@ public class ItemsAdapterTest {
 
             assertThat(viewType).isEqualTo(ViewTypeId.SPEAKER);
         }
+
+        @Test
+        public void givenSearchResultsWithEventsAndSpeakers_whenGettingViewTypeAtEventsHeaderPosition_thenReturnsHeader() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+
+            int viewType = itemsAdapter.viewTypeAtAbsolutePosition(0);
+
+            assertThat(viewType).isEqualTo(ViewTypeId.HEADER);
+        }
+
+        @Test
+        public void givenSearchResultsWithEventsAndSpeakers_whenGettingViewTypeAtEventPosition_thenReturnsEvent() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+
+            int viewType = itemsAdapter.viewTypeAtAbsolutePosition(1);
+
+            assertThat(viewType).isEqualTo(ViewTypeId.EVENT);
+        }
+
+        @Test
+        public void givenSearchResultsWithEventsAndSpeakers_whenGettingViewTypeAtSpeakerHeaderPosition_thenReturnsHeader() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+
+            int viewType = itemsAdapter.viewTypeAtAbsolutePosition(4);
+
+            assertThat(viewType).isEqualTo(ViewTypeId.HEADER);
+        }
+
+        @Test
+        public void givenSearchResultsWithEventsAndSpeakers_whenGettingViewTypeAtSpeakerPosition_thenReturnsSpeaker() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+
+            int viewType = itemsAdapter.viewTypeAtAbsolutePosition(5);
+
+            assertThat(viewType).isEqualTo(ViewTypeId.SPEAKER);
+        }
     }
 
     public abstract static class BaseTest {
