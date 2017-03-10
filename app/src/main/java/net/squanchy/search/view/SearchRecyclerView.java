@@ -40,11 +40,12 @@ public class SearchRecyclerView extends RecyclerView {
             super.setAdapter(adapter);
         }
 
+        adapter.updateWith(newData, listener);
+        
         GridLayoutManager layoutManager = (GridLayoutManager) getLayoutManager();
-        GridLayoutManager.SpanSizeLookup spanSizeLookup = adapter.createSpanSizeLookup(layoutManager.getSpanCount());
+        GridLayoutManager.SpanSizeLookup spanSizeLookup = adapter.createSpanSizeLookup(COLUMN_NUMBER);
         layoutManager.setSpanSizeLookup(spanSizeLookup);
 
-        adapter.updateWith(newData, listener);
     }
 
     public interface OnSearchResultClickListener {
