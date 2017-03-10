@@ -12,7 +12,9 @@ import net.squanchy.speaker.domain.view.Speaker;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
 import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
@@ -22,149 +24,159 @@ import static net.squanchy.speaker.domain.view.SpeakerFixtures.aSpeaker;
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
+@RunWith(Enclosed.class)
 public class ItemsAdapterTest {
 
-    private static final List<Event> NO_EVENTS = Collections.emptyList();
-    private static final List<Speaker> NO_SPEAKERS = Collections.emptyList();
+    public static class TotalItemsCount extends BaseTest {
 
-    private static final List<Speaker> ANY_TWO_SPEAKERS = Arrays.asList(
-            aSpeaker().withId("banana").withNumericId(1).withName("Banana Joe").build(),
-            aSpeaker().withId("potato").withNumericId(2).withName("Detective Patatorfio").build()
-    );
-    private static final List<Event> ANY_THREE_EVENTS = Arrays.asList(
-            anEvent().withId("carrot").withNumericId(3).withTitle("Karotoff").build(),
-            anEvent().withId("johnnyfer").withNumericId(4).withTitle("Johnnyfer Jaypegg").build(),
-            anEvent().withId("bau").withNumericId(5).withTitle("Cane AAAAAAH").build()
-    );
+        @Test
+        public void givenEmptySearchResults_whenGettingTotalItemsCount_thenReturnsZero() {
+            givenEmptySearchResults();
 
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
+            int totalItemsCount = itemsAdapter.totalItemsCount();
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
+            assertThat(totalItemsCount).isZero();
+        }
 
-    @Mock
-    private SearchResults searchResults;
+        @Test
+        public void givenSearchResultsWithOnlyEvents_whenGettingTotalItemsCount_thenReturnsOneMoreThanTheNumberOfSpeakers() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, NO_SPEAKERS);
 
-    private ItemsAdapter itemsAdapter;
+            int totalItemsCount = itemsAdapter.totalItemsCount();
 
-    @Before
-    public void setUp() {
-        itemsAdapter = new ItemsAdapter(searchResults);
+            assertThat(totalItemsCount).isEqualTo(4);
+        }
+
+        @Test
+        public void givenSearchResultsWithOnlySpeakers_whenGettingTotalItemsCount_thenReturnsOneMoreThanTheNumberOfSpeakers() {
+            givenSearchResultsWith(NO_EVENTS, ANY_TWO_SPEAKERS);
+
+            int totalItemsCount = itemsAdapter.totalItemsCount();
+
+            assertThat(totalItemsCount).isEqualTo(3);
+        }
+
+        @Test
+        public void givenSearchResultsWithEventsAndSpeakers_whenGettingTotalItemsCount_thenReturnsTwoMoreThanTheNumberOfEventsAndSpeakers() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+
+            int totalItemsCount = itemsAdapter.totalItemsCount();
+
+            assertThat(totalItemsCount).isEqualTo(7);
+        }
+
+        @Test
+        public void givenSearchResultsWithEventsAndSpeakers_whenGettingViewTypeAt_thenReturns() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+
+            int totalItemsCount = itemsAdapter.totalItemsCount();
+
+            assertThat(totalItemsCount).isEqualTo(7);
+        }
     }
 
-    @Test
-    public void givenEmptySearchResults_whenGettingTotalItemsCount_thenReturnsZero() {
-        givenEmptySearchResults();
+    public static class ViewType extends BaseTest {
 
-        int totalItemsCount = itemsAdapter.totalItemsCount();
+        @Test
+        public void givenEmptySearchResults_whenGettingViewTypeAtAnyPosition_thenThrowsIndexOutOfBoundsException() {
+            givenEmptySearchResults();
+            thrown.expect(IndexOutOfBoundsException.class);
 
-        assertThat(totalItemsCount).isZero();
+            itemsAdapter.viewTypeAtAbsolutePosition(0);
+        }
+
+        @Test
+        public void givenAnySearchResults_whenGettingViewTypeAtNegativePosition_thenThrowsIndexOutOfBoundsException() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+            thrown.expect(IndexOutOfBoundsException.class);
+
+            itemsAdapter.viewTypeAtAbsolutePosition(-1);
+        }
+
+        @Test
+        public void givenAnySearchResults_whenGettingViewTypePositionEqualOrGreaterThanTotalItemsCount_thenThrowsIndexOutOfBoundsException() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+            thrown.expect(IndexOutOfBoundsException.class);
+
+            itemsAdapter.viewTypeAtAbsolutePosition(7);
+        }
+
+        @Test
+        public void givenSearchResultsWithOnlyEvents_whenGettingViewTypeAtEventsHeaderPosition_thenReturnsHeader() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, NO_SPEAKERS);
+
+            int viewType = itemsAdapter.viewTypeAtAbsolutePosition(0);
+
+            assertThat(viewType).isEqualTo(ViewTypeId.HEADER);
+        }
+
+        @Test
+        public void givenSearchResultsWithOnlyEvents_whenGettingViewTypeAtEventPosition_thenReturnsEvent() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, NO_SPEAKERS);
+
+            int viewType = itemsAdapter.viewTypeAtAbsolutePosition(1);
+
+            assertThat(viewType).isEqualTo(ViewTypeId.EVENT);
+        }
+
+        @Test
+        public void givenSearchResultsWithOnlySpeakers_whenGettingViewTypeAtSpeakerHeaderPosition_thenReturnsHeader() {
+            givenSearchResultsWith(NO_EVENTS, ANY_TWO_SPEAKERS);
+
+            int viewType = itemsAdapter.viewTypeAtAbsolutePosition(0);
+
+            assertThat(viewType).isEqualTo(ViewTypeId.HEADER);
+        }
+
+        @Test
+        public void givenSearchResultsWithOnlySpeakers_whenGettingViewTypeAtSpeakerPosition_thenReturnsSpeaker() {
+            givenSearchResultsWith(NO_EVENTS, ANY_TWO_SPEAKERS);
+
+            int viewType = itemsAdapter.viewTypeAtAbsolutePosition(1);
+
+            assertThat(viewType).isEqualTo(ViewTypeId.SPEAKER);
+        }
     }
 
-    @Test
-    public void givenSearchResultsWithOnlyEvents_whenGettingTotalItemsCount_thenReturnsOneMoreThanTheNumberOfSpeakers() {
-        givenSearchResultsWith(ANY_THREE_EVENTS, NO_SPEAKERS);
+    public abstract static class BaseTest {
 
-        int totalItemsCount = itemsAdapter.totalItemsCount();
+        static final List<Event> NO_EVENTS = Collections.emptyList();
+        static final List<Speaker> NO_SPEAKERS = Collections.emptyList();
 
-        assertThat(totalItemsCount).isEqualTo(4);
-    }
+        static final List<Speaker> ANY_TWO_SPEAKERS = Arrays.asList(
+                aSpeaker().withId("banana").withNumericId(1).withName("Banana Joe").build(),
+                aSpeaker().withId("potato").withNumericId(2).withName("Detective Patatorfio").build()
+        );
+        static final List<Event> ANY_THREE_EVENTS = Arrays.asList(
+                anEvent().withId("carrot").withNumericId(3).withTitle("Karotoff").build(),
+                anEvent().withId("johnnyfer").withNumericId(4).withTitle("Johnnyfer Jaypegg").build(),
+                anEvent().withId("bau").withNumericId(5).withTitle("Cane AAAAAAH").build()
+        );
 
-    @Test
-    public void givenSearchResultsWithOnlySpeakers_whenGettingTotalItemsCount_thenReturnsOneMoreThanTheNumberOfSpeakers() {
-        givenSearchResultsWith(NO_EVENTS, ANY_TWO_SPEAKERS);
+        @Rule
+        public MockitoRule mockitoRule = MockitoJUnit.rule();
 
-        int totalItemsCount = itemsAdapter.totalItemsCount();
+        @Rule
+        public ExpectedException thrown = ExpectedException.none();
 
-        assertThat(totalItemsCount).isEqualTo(3);
-    }
+        @Mock
+        SearchResults searchResults;
 
-    @Test
-    public void givenSearchResultsWithEventsAndSpeakers_whenGettingTotalItemsCount_thenReturnsTwoMoreThanTheNumberOfEventsAndSpeakers() {
-        givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+        ItemsAdapter itemsAdapter;
 
-        int totalItemsCount = itemsAdapter.totalItemsCount();
+        @Before
+        public void setUp() {
+            itemsAdapter = new ItemsAdapter(searchResults);
+        }
 
-        assertThat(totalItemsCount).isEqualTo(7);
-    }
+        void givenEmptySearchResults() {
+            givenSearchResultsWith(NO_EVENTS, NO_SPEAKERS);
+        }
 
-    @Test
-    public void givenEmptySearchResults_whenGettingViewTypeAtAnyPosition_thenThrowsIndexOutOfBoundsException() {
-        givenEmptySearchResults();
-        thrown.expect(IndexOutOfBoundsException.class);
-
-        itemsAdapter.viewTypeAtAbsolutePosition(0);
-    }
-
-    @Test
-    public void givenAnySearchResults_whenGettingViewTypeAtNegativePosition_thenThrowsIndexOutOfBoundsException() {
-        givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
-        thrown.expect(IndexOutOfBoundsException.class);
-
-        itemsAdapter.viewTypeAtAbsolutePosition(-1);
-    }
-
-    @Test
-    public void givenAnySearchResults_whenGettingViewTypePositionEqualOrGreaterThanTotalItemsCount_thenThrowsIndexOutOfBoundsException() {
-        givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
-        thrown.expect(IndexOutOfBoundsException.class);
-
-        itemsAdapter.viewTypeAtAbsolutePosition(7);
-    }
-
-    @Test
-    public void givenSearchResultsWithOnlyEvents_whenGettingViewTypeAtEventsHeaderPosition_thenReturnsHeader() {
-        givenSearchResultsWith(ANY_THREE_EVENTS, NO_SPEAKERS);
-
-        int viewType = itemsAdapter.viewTypeAtAbsolutePosition(0);
-
-        assertThat(viewType).isEqualTo(ViewTypeId.HEADER);
-    }
-
-    @Test
-    public void givenSearchResultsWithOnlyEvents_whenGettingViewTypeAtEventPosition_thenReturnsEvent() {
-        givenSearchResultsWith(ANY_THREE_EVENTS, NO_SPEAKERS);
-
-        int viewType = itemsAdapter.viewTypeAtAbsolutePosition(1);
-
-        assertThat(viewType).isEqualTo(ViewTypeId.EVENT);
-    }
-
-    @Test
-    public void givenSearchResultsWithOnlySpeakers_whenGettingViewTypeAtSpeakerHeaderPosition_thenReturnsHeader() {
-        givenSearchResultsWith(NO_EVENTS, ANY_TWO_SPEAKERS);
-
-        int viewType = itemsAdapter.viewTypeAtAbsolutePosition(0);
-
-        assertThat(viewType).isEqualTo(ViewTypeId.HEADER);
-    }
-
-    @Test
-    public void givenSearchResultsWithOnlySpeakers_whenGettingViewTypeAtSpeakerPosition_thenReturnsSpeaker() {
-        givenSearchResultsWith(NO_EVENTS, ANY_TWO_SPEAKERS);
-
-        int viewType = itemsAdapter.viewTypeAtAbsolutePosition(1);
-
-        assertThat(viewType).isEqualTo(ViewTypeId.SPEAKER);
-    }
-
-    @Test
-    public void givenSearchResultsWithEventsAndSpeakers_whenGettingViewTypeAt_thenReturns() {
-        givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
-
-        int totalItemsCount = itemsAdapter.totalItemsCount();
-
-        assertThat(totalItemsCount).isEqualTo(7);
-    }
-
-    private void givenEmptySearchResults() {
-        givenSearchResultsWith(NO_EVENTS, NO_SPEAKERS);
-    }
-
-    private void givenSearchResultsWith(List<Event> events, List<Speaker> speakers) {
-        given(searchResults.events()).willReturn(events);
-        given(searchResults.speakers()).willReturn(speakers);
-        given(searchResults.isEmpty()).willReturn(events.isEmpty() && speakers.isEmpty());
+        void givenSearchResultsWith(List<Event> events, List<Speaker> speakers) {
+            given(searchResults.events()).willReturn(events);
+            given(searchResults.speakers()).willReturn(speakers);
+            given(searchResults.isEmpty()).willReturn(events.isEmpty() && speakers.isEmpty());
+        }
     }
 }
