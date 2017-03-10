@@ -273,6 +273,91 @@ public class ItemsAdapterTest {
         }
     }
 
+    public static class SpeakerAtPosition extends BaseTest {
+
+        @Test
+        public void givenEmptySearchResults_whenGettingSpeakerAtAnyPosition_thenThrowsIndexOutOfBoundsException() {
+            givenEmptySearchResults();
+            thrown.expect(IndexOutOfBoundsException.class);
+
+            itemsAdapter.speakerAtAbsolutePosition(0);
+        }
+
+        @Test
+        public void givenAnySearchResults_whenGettingSpeakerAtNegativePosition_thenThrowsIndexOutOfBoundsException() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+            thrown.expect(IndexOutOfBoundsException.class);
+
+            itemsAdapter.speakerAtAbsolutePosition(-1);
+        }
+
+        @Test
+        public void givenAnySearchResults_whenGettingSpeakerPositionEqualOrGreaterThanTotalItemsCount_thenThrowsIndexOutOfBoundsException() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+            thrown.expect(IndexOutOfBoundsException.class);
+
+            itemsAdapter.speakerAtAbsolutePosition(7);      // 7 = (1 header + 3 events + 1 header + 2 speakers + 1 off-by-one) - 1 [because zero-based]
+        }
+
+        @Test
+        public void givenSearchResultsWithOnlyEvents_whenGettingSpeakerAtAnyPosition_thenThrowsIndexOutOfBoundsException() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, NO_SPEAKERS);
+            thrown.expect(IndexOutOfBoundsException.class);
+
+            itemsAdapter.speakerAtAbsolutePosition(0);
+        }
+
+        @Test
+        public void givenSearchResultsWithOnlySpeakers_whenGettingSpeakerAtSpeakerHeaderPosition_thenThrowsIndexOutOfBoundsException() {
+            givenSearchResultsWith(NO_EVENTS, ANY_TWO_SPEAKERS);
+            thrown.expect(IndexOutOfBoundsException.class);
+
+            itemsAdapter.speakerAtAbsolutePosition(0);      // 0 = (1 header) - 1 [because zero-based]
+        }
+
+        @Test
+        public void givenSearchResultsWithOnlySpeakers_whenGettingSpeakerAtSpeakerPosition_thenReturnsSpeaker() {
+            givenSearchResultsWith(NO_EVENTS, ANY_TWO_SPEAKERS);
+
+            Speaker speaker = itemsAdapter.speakerAtAbsolutePosition(1);      // 1 = (1 header + 1 speaker) - 1 [because zero-based]
+
+            assertThat(speaker).isEqualTo(ANY_TWO_SPEAKERS.get(0));
+        }
+
+        @Test
+        public void givenSearchResultsWithEventsAndSpeakers_whenGettingSpeakerAtEventsHeaderPosition_thenThrowsIndexOutOfBoundsException() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+            thrown.expect(IndexOutOfBoundsException.class);
+
+            itemsAdapter.speakerAtAbsolutePosition(0);      // 0 = (1 header) - 1 [because zero-based]
+        }
+
+        @Test
+        public void givenSearchResultsWithEventsAndSpeakers_whenGettingSpeakerAtEventPosition_thenThrowsIndexOutOfBoundsException() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+            thrown.expect(IndexOutOfBoundsException.class);
+
+            itemsAdapter.speakerAtAbsolutePosition(1);      // 1 = (1 header + 1 event) - 1 [because zero-based]
+        }
+
+        @Test
+        public void givenSearchResultsWithEventsAndSpeakers_whenGettingSpeakerAtSpeakerHeaderPosition_thenThrowsIndexOutOfBoundsException() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+            thrown.expect(IndexOutOfBoundsException.class);
+
+            itemsAdapter.speakerAtAbsolutePosition(4);      // 4 = (1 header + 3 events + 1 header) - 1 [because zero-based]
+        }
+
+        @Test
+        public void givenSearchResultsWithEventsAndSpeakers_whenGettingSpeakerAtSpeakerPosition_thenReturnsSpeaker() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+
+            Speaker speaker = itemsAdapter.speakerAtAbsolutePosition(5);     // 5 = (1 header + 3 events + 1 header + 1 speaker) - 1 [because zero-based]
+
+            assertThat(speaker).isEqualTo(ANY_TWO_SPEAKERS.get(0));
+        }
+    }
+
     public abstract static class BaseTest {
 
         static final List<Event> NO_EVENTS = Collections.emptyList();

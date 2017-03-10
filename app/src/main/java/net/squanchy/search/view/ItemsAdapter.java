@@ -80,7 +80,20 @@ class ItemsAdapter {
     }
 
     Speaker speakerAtAbsolutePosition(int position) {
-        return null;             // TODO
+        ensurePositionExists(position);
+
+        int totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResults.events());
+        if (totalEventItemsCount > 0 && position < totalEventItemsCount) {
+            throw new IndexOutOfBoundsException("No speaker at position " + position + ", that is supposed to be in the events sublist");
+        }
+
+        int adjustedPosition = position - totalEventItemsCount;
+        // We checked position is in range so it MUST be a speaker
+        if (adjustedPosition > 0) {
+            return searchResults.speakers().get(adjustedPosition - 1);
+        } else {
+            throw new IndexOutOfBoundsException("No speaker at position " + position + ", that is supposed to be the speakers header");
+        }
     }
 
     int headerTextAtAbsolutePosition(int position) {
