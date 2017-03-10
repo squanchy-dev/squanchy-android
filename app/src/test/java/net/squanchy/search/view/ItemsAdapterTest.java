@@ -206,7 +206,7 @@ public class ItemsAdapterTest {
 
             long itemId = itemsAdapter.itemIdAtAbsolutePosition(0);      // 0 = (1 header) - 1 [because zero-based]
 
-            assertThat(itemId).isEqualTo(100);
+            assertThat(itemId).isEqualTo(-100);
         }
 
         @Test
@@ -224,7 +224,7 @@ public class ItemsAdapterTest {
 
             long itemId = itemsAdapter.itemIdAtAbsolutePosition(0);      // 0 = (1 header) - 1 [because zero-based]
 
-            assertThat(itemId).isEqualTo(101);
+            assertThat(itemId).isEqualTo(-101);
         }
 
         @Test
@@ -242,7 +242,7 @@ public class ItemsAdapterTest {
 
             long itemId = itemsAdapter.itemIdAtAbsolutePosition(0);      // 0 = (1 header) - 1 [because zero-based]
 
-            assertThat(itemId).isEqualTo(100);
+            assertThat(itemId).isEqualTo(-100);
         }
 
         @Test
@@ -260,7 +260,7 @@ public class ItemsAdapterTest {
 
             long itemId = itemsAdapter.itemIdAtAbsolutePosition(4);      // 4 = (1 header + 3 events + 1 header) - 1 [because zero-based]
 
-            assertThat(itemId).isEqualTo(101);
+            assertThat(itemId).isEqualTo(-101);
         }
 
         @Test

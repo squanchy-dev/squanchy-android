@@ -12,8 +12,9 @@ class ItemsAdapter {
     // These values are "random", we count on them not clashing with the other
     // random values that are used for non-hardcoded numeric IDs (for events
     // and speakers). This is a reasonable assumption in the Long range.
-    private static final long ITEM_ID_EVENTS_HEADER = 100;
-    private static final long ITEM_ID_SPEAKERS_HEADER = 101;
+    // In addition, the CRC32 values we use as numeric IDs are always positive.
+    private static final long ITEM_ID_EVENTS_HEADER = -100;
+    private static final long ITEM_ID_SPEAKERS_HEADER = -101;
 
     private final SearchResults searchResults;
 
