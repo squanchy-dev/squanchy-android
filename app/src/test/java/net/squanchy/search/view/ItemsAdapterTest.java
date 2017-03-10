@@ -64,15 +64,6 @@ public class ItemsAdapterTest {
 
             assertThat(totalItemsCount).isEqualTo(7);      // 7 = 1 header + 3 events + 1 header + 2 speakers
         }
-
-        @Test
-        public void givenSearchResultsWithEventsAndSpeakers_whenGettingViewTypeAt_thenReturns() {
-            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
-
-            int totalItemsCount = itemsAdapter.totalItemsCount();
-
-            assertThat(totalItemsCount).isEqualTo(7);
-        }
     }
 
     public static class ViewType extends BaseTest {
