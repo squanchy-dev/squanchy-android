@@ -44,7 +44,7 @@ public class ItemsAdapterTest {
 
             int totalItemsCount = itemsAdapter.totalItemsCount();
 
-            assertThat(totalItemsCount).isEqualTo(4);
+            assertThat(totalItemsCount).isEqualTo(4);      // 4 = 1 header + 3 events
         }
 
         @Test
@@ -53,7 +53,7 @@ public class ItemsAdapterTest {
 
             int totalItemsCount = itemsAdapter.totalItemsCount();
 
-            assertThat(totalItemsCount).isEqualTo(3);
+            assertThat(totalItemsCount).isEqualTo(3);      // 3 = 1 header + 2 speakers
         }
 
         @Test
@@ -62,7 +62,7 @@ public class ItemsAdapterTest {
 
             int totalItemsCount = itemsAdapter.totalItemsCount();
 
-            assertThat(totalItemsCount).isEqualTo(7);
+            assertThat(totalItemsCount).isEqualTo(7);      // 7 = 1 header + 3 events + 1 header + 2 speakers
         }
 
         @Test
@@ -98,14 +98,14 @@ public class ItemsAdapterTest {
             givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
             thrown.expect(IndexOutOfBoundsException.class);
 
-            itemsAdapter.viewTypeAtAbsolutePosition(7);
+            itemsAdapter.viewTypeAtAbsolutePosition(7);      // 7 = (1 header + 3 events + 1 header + 2 speakers + 1 off-by-one) - 1 [because zero-based]
         }
 
         @Test
         public void givenSearchResultsWithOnlyEvents_whenGettingViewTypeAtEventsHeaderPosition_thenReturnsHeader() {
             givenSearchResultsWith(ANY_THREE_EVENTS, NO_SPEAKERS);
 
-            int viewType = itemsAdapter.viewTypeAtAbsolutePosition(0);
+            int viewType = itemsAdapter.viewTypeAtAbsolutePosition(0);      // 0 = (1 header) - 1 [because zero-based]
 
             assertThat(viewType).isEqualTo(ViewTypeId.HEADER);
         }
@@ -114,7 +114,7 @@ public class ItemsAdapterTest {
         public void givenSearchResultsWithOnlyEvents_whenGettingViewTypeAtEventPosition_thenReturnsEvent() {
             givenSearchResultsWith(ANY_THREE_EVENTS, NO_SPEAKERS);
 
-            int viewType = itemsAdapter.viewTypeAtAbsolutePosition(1);
+            int viewType = itemsAdapter.viewTypeAtAbsolutePosition(1);      // 1 = (1 header + 1 event) - 1 [because zero-based]
 
             assertThat(viewType).isEqualTo(ViewTypeId.EVENT);
         }
@@ -123,7 +123,7 @@ public class ItemsAdapterTest {
         public void givenSearchResultsWithOnlySpeakers_whenGettingViewTypeAtSpeakerHeaderPosition_thenReturnsHeader() {
             givenSearchResultsWith(NO_EVENTS, ANY_TWO_SPEAKERS);
 
-            int viewType = itemsAdapter.viewTypeAtAbsolutePosition(0);
+            int viewType = itemsAdapter.viewTypeAtAbsolutePosition(0);      // 0 = (1 header) - 1 [because zero-based]
 
             assertThat(viewType).isEqualTo(ViewTypeId.HEADER);
         }
@@ -132,7 +132,7 @@ public class ItemsAdapterTest {
         public void givenSearchResultsWithOnlySpeakers_whenGettingViewTypeAtSpeakerPosition_thenReturnsSpeaker() {
             givenSearchResultsWith(NO_EVENTS, ANY_TWO_SPEAKERS);
 
-            int viewType = itemsAdapter.viewTypeAtAbsolutePosition(1);
+            int viewType = itemsAdapter.viewTypeAtAbsolutePosition(1);      // 1 = (1 header + 1 speaker) - 1 [because zero-based]
 
             assertThat(viewType).isEqualTo(ViewTypeId.SPEAKER);
         }
@@ -141,7 +141,7 @@ public class ItemsAdapterTest {
         public void givenSearchResultsWithEventsAndSpeakers_whenGettingViewTypeAtEventsHeaderPosition_thenReturnsHeader() {
             givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
 
-            int viewType = itemsAdapter.viewTypeAtAbsolutePosition(0);
+            int viewType = itemsAdapter.viewTypeAtAbsolutePosition(0);      // 0 = (1 header) - 1 [because zero-based]
 
             assertThat(viewType).isEqualTo(ViewTypeId.HEADER);
         }
@@ -150,7 +150,7 @@ public class ItemsAdapterTest {
         public void givenSearchResultsWithEventsAndSpeakers_whenGettingViewTypeAtEventPosition_thenReturnsEvent() {
             givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
 
-            int viewType = itemsAdapter.viewTypeAtAbsolutePosition(1);
+            int viewType = itemsAdapter.viewTypeAtAbsolutePosition(1);      // 1 = (1 header + 1 event) - 1 [because zero-based]
 
             assertThat(viewType).isEqualTo(ViewTypeId.EVENT);
         }
@@ -159,7 +159,7 @@ public class ItemsAdapterTest {
         public void givenSearchResultsWithEventsAndSpeakers_whenGettingViewTypeAtSpeakerHeaderPosition_thenReturnsHeader() {
             givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
 
-            int viewType = itemsAdapter.viewTypeAtAbsolutePosition(4);
+            int viewType = itemsAdapter.viewTypeAtAbsolutePosition(4);      // 4 = (1 header + 3 events + 1 header) - 1 [because zero-based]
 
             assertThat(viewType).isEqualTo(ViewTypeId.HEADER);
         }
@@ -168,7 +168,7 @@ public class ItemsAdapterTest {
         public void givenSearchResultsWithEventsAndSpeakers_whenGettingViewTypeAtSpeakerPosition_thenReturnsSpeaker() {
             givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
 
-            int viewType = itemsAdapter.viewTypeAtAbsolutePosition(5);
+            int viewType = itemsAdapter.viewTypeAtAbsolutePosition(5);     // 5 = (1 header + 3 events + 1 header + 1 speaker) - 1 [because zero-based]
 
             assertThat(viewType).isEqualTo(ViewTypeId.SPEAKER);
         }
