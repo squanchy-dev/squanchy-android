@@ -11,7 +11,8 @@
 
     <android.support.v7.widget.Toolbar
       android:id="@+id/search_toolbar"
-      android:theme="@style/Search.Toolbar"
+      style="@style/Search.Toolbar"
+      android:theme="@style/ThemeOverlay.Squanchy.Toolbar"
       android:layout_width="match_parent"
       android:layout_height="?attr/actionBarSize">
 
@@ -22,9 +23,10 @@
         android:layout_height="wrap_content" />
 
     </android.support.v7.widget.Toolbar>
+
   </android.support.design.widget.AppBarLayout>
 
-  <net.squanchy.search.view.SpeakersView
+  <net.squanchy.search.view.SearchRecyclerView
     android:id="@+id/speakers_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

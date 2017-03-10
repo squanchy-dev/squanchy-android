@@ -1,42 +1,61 @@
 package net.squanchy.search;
 
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.ResultReceiver;
 import android.speech.RecognizerIntent;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
+import net.squanchy.search.view.SearchRecyclerView;
 import net.squanchy.speaker.domain.view.Speaker;
-import net.squanchy.search.view.SpeakersView;
 
+import io.reactivex.BackpressureStrategy;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.subjects.PublishSubject;
 import timber.log.Timber;
 
-public class SearchActivity extends TypefaceStyleableActivity implements SpeakersView.OnSpeakerClickedListener {
+public class SearchActivity extends TypefaceStyleableActivity implements SearchRecyclerView.OnSearchResultClickListener {
 
     private static final int SPEECH_REQUEST_CODE = 100;
+    private static final int QUERY_DEBOUNCE_TIMEOUT = 250;
+    private static final int DELAY_ENOUGH_FOR_FOCUS_TO_HAPPEN_MILLIS = 50;
+
+    private final CompositeDisposable subscriptions = new CompositeDisposable();
+
+    private SearchTextWatcher searchTextWatcher;
 
     private EditText searchField;
     private SearchService searchService;
-    private SpeakersView speakersView;
-    private Disposable subscription;
+    private SearchRecyclerView searchRecyclerView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
         searchField = (EditText) findViewById(R.id.search_field);
-        speakersView = (SpeakersView) findViewById(R.id.speakers_view);
+
+        searchRecyclerView = (SearchRecyclerView) findViewById(R.id.speakers_view);
         setupToolbar();
 
         SearchComponent component = SearchInjector.obtain(this);
@@ -52,19 +71,49 @@ public class SearchActivity extends TypefaceStyleableActivity implements Speaker
     @Override
     protected void onStart() {
         super.onStart();
-        subscription = searchService.speakers()
+
+        PublishSubject<String> querySubject = PublishSubject.create();
+        searchTextWatcher = new SearchTextWatcher(querySubject);
+        searchField.addTextChangedListener(searchTextWatcher);
+
+        Disposable speakersSubscription = searchService.speakers()
+                .map(speakers -> SearchResults.create(Collections.emptyList(), speakers))
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onSuccess, Timber::e);
+                .subscribe(searchResults -> searchRecyclerView.updateWith(searchResults, this), Timber::e);
+
+        Disposable searchSubscription = querySubject.debounce(QUERY_DEBOUNCE_TIMEOUT, TimeUnit.MILLISECONDS)
+                .flatMap(query -> searchService.find(query))
+                .doOnNext(searchResults -> speakersSubscription.dispose())
+                .toFlowable(BackpressureStrategy.LATEST)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(searchResults -> searchRecyclerView.updateWith(searchResults, this), Timber::e);
+
+        subscriptions.add(speakersSubscription);
+        subscriptions.add(searchSubscription);
+
+        searchField.requestFocus();
+        searchField.postDelayed(() -> requestShowKeyboard(searchField), DELAY_ENOUGH_FOR_FOCUS_TO_HAPPEN_MILLIS);
     }
 
-    private void onSuccess(List<Speaker> speakers) {
-        speakersView.updateWith(speakers, this);
+    private void requestShowKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(view, 0, new ResultReceiver(new Handler()) {
+            @Override
+            protected void onReceiveResult(int resultCode, Bundle resultData) {
+                super.onReceiveResult(resultCode, resultData);
+            }
+        });
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        subscription.dispose();
+
+        subscriptions.dispose();
+
+        if (searchTextWatcher != null) {
+            searchField.removeTextChangedListener(searchTextWatcher);
+        }
     }
 
     @Override
@@ -110,5 +159,32 @@ public class SearchActivity extends TypefaceStyleableActivity implements Speaker
     public void onSpeakerClicked(Speaker speaker) {
         // TODO open the speaker detail view here
         Toast.makeText(this, "Speaker clicked " + speaker, Toast.LENGTH_SHORT).show();
+    }
+
+    private static class SearchTextWatcher implements TextWatcher {
+
+        private final PublishSubject<String> querySubject;
+
+        SearchTextWatcher(PublishSubject<String> querySubject) {
+            this.querySubject = querySubject;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence query, int start, int count, int after) {
+            // No-op
+        }
+
+        @Override
+        public void onTextChanged(CharSequence query, int start, int before, int count) {
+            if (query == null) {
+                return;
+            }
+            querySubject.onNext(query.toString());
+        }
+
+        @Override
+        public void afterTextChanged(Editable query) {
+            // No-op
+        }
     }
 }

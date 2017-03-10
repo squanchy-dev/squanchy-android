@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.squanchy.schedule.domain.view.Event;
+import net.squanchy.search.engines.SearchEngines;
 import net.squanchy.service.repository.EventRepository;
 import net.squanchy.service.repository.SpeakerRepository;
 import net.squanchy.speaker.domain.view.Speaker;
@@ -18,37 +19,38 @@ class SearchService {
 
     private final EventRepository eventRepository;
     private final SpeakerRepository speakerRepository;
+    private final SearchEngines searchEngines;
 
-    SearchService(EventRepository eventRepository, SpeakerRepository speakerRepository) {
+    SearchService(EventRepository eventRepository, SpeakerRepository speakerRepository, SearchEngines searchEngines) {
         this.eventRepository = eventRepository;
         this.speakerRepository = speakerRepository;
+        this.searchEngines = searchEngines;
     }
 
-    public Observable<List<Event>> findEvents(String query) {
+    public Observable<SearchResults> find(String query) {
+        return Observable.combineLatest(
+                findEvents(query),
+                findSpeakers(query),
+                SearchResults::create
+        );
+    }
+
+    private Observable<List<Event>> findEvents(String query) {
         return eventRepository.events()
-                .map(filterEventsBy(query));
+                .map(onlyEventsMatching(query));
     }
 
-    private Function<List<Event>, List<Event>> filterEventsBy(String query) {
-        return events -> filter(events, event -> titleContains(event, query) && eventIsTalkOrKeynote(event));
+    private Function<List<Event>, List<Event>> onlyEventsMatching(String query) {
+        return events -> filter(events, event -> searchEngines.forEvents().matches(event, query));
     }
 
-    private boolean titleContains(Event event, String query) {
-        return event.title().contains(query);
-    }
-
-    private boolean eventIsTalkOrKeynote(Event event) {
-        // TODO check for type
-        return true;
-    }
-
-    public Observable<List<Speaker>> findSpeakers(String query) {
+    private Observable<List<Speaker>> findSpeakers(String query) {
         return speakerRepository.speakers()
-                .map(onlySpeakesWithNameContaining(query));
+                .map(onlySpeakersMatching(query));
     }
 
-    private Function<List<Speaker>, List<Speaker>> onlySpeakesWithNameContaining(String query) {
-        return speakers -> filter(speakers, speaker -> speaker.name().contains(query));
+    private Function<List<Speaker>, List<Speaker>> onlySpeakersMatching(String query) {
+        return speakers -> filter(speakers, speaker -> searchEngines.forSpeakers().matches(speaker, query));
     }
 
     public Observable<List<Speaker>> speakers() {
