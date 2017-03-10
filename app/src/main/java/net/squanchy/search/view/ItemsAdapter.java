@@ -119,8 +119,9 @@ class ItemsAdapter {
     }
 
     private void ensurePositionExists(int position) {
-        if (position < 0 || position >= totalItemsCount()) {
-            String message = String.format(Locale.ROOT, "Position %d is not valid, must be [0, totalItemsCount)", position);
+        int totalItemsCount = totalItemsCount();
+        if (position < 0 || position >= totalItemsCount) {
+            String message = String.format(Locale.ROOT, "Position %1$d is not valid, must be [0, %2$d)", position, totalItemsCount);
             throw new IndexOutOfBoundsException(message);
         }
     }
