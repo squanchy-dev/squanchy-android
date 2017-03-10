@@ -1,8 +1,11 @@
 package net.squanchy.search;
 
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.ResultReceiver;
 import android.speech.RecognizerIntent;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +13,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -33,6 +38,7 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
 
     private static final int SPEECH_REQUEST_CODE = 100;
     private static final int QUERY_DEBOUNCE_TIMEOUT = 250;
+    private static final int DELAY_ENOUGH_FOR_FOCUS_TO_HAPPEN_MILLIS = 50;
 
     private final CompositeDisposable subscriptions = new CompositeDisposable();
     private final PublishSubject<String> querySubject = PublishSubject.create();
@@ -80,6 +86,19 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
 
         subscriptions.add(speakersSubscription);
         subscriptions.add(searchSubscription);
+
+        searchField.requestFocus();
+        searchField.postDelayed(() -> requestShowKeyboard(searchField), DELAY_ENOUGH_FOR_FOCUS_TO_HAPPEN_MILLIS);
+    }
+
+    private void requestShowKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(view, 0, new ResultReceiver(new Handler()) {
+            @Override
+            protected void onReceiveResult(int resultCode, Bundle resultData) {
+                super.onReceiveResult(resultCode, resultData);
+            }
+        });
     }
 
     @Override
