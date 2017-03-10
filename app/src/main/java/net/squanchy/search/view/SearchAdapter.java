@@ -90,7 +90,7 @@ class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return itemsAdapter.totalItemsCount();
     }
 
-    public void updateWith(SearchResults searchResults, @Nullable SearchRecyclerView.OnSearchResultClickListener listener) {
+    public void updateWith(SearchResults searchResults, SearchRecyclerView.OnSearchResultClickListener listener) {
         this.searchResults = searchResults;
         this.itemsAdapter = new ItemsAdapter(searchResults);
         this.listener = listener;
