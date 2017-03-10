@@ -1,7 +1,6 @@
 package net.squanchy.injection;
 
 import net.squanchy.service.firebase.FirebaseDbService;
-import net.squanchy.service.firebase.injection.DbServiceType;
 import net.squanchy.service.firebase.injection.FirebaseModule;
 import net.squanchy.service.repository.EventRepository;
 import net.squanchy.service.repository.SpeakerRepository;
@@ -15,7 +14,6 @@ import dagger.Component;
 @Component(modules = {FirebaseModule.class, ChecksumModule.class, RepositoryModule.class})
 public interface ApplicationComponent {
 
-    @DbServiceType(DbServiceType.Type.AUTHENTICATED)
     FirebaseDbService firebaseDbService();
 
     Checksum checksum();

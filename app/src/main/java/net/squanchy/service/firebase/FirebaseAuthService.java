@@ -3,6 +3,7 @@ package net.squanchy.service.firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import net.squanchy.support.lang.Func1;
 import net.squanchy.support.lang.Optional;
 
 import io.reactivex.Completable;
@@ -14,6 +15,16 @@ public class FirebaseAuthService {
 
     public FirebaseAuthService(FirebaseAuth auth) {
         this.auth = auth;
+    }
+
+    <T> Observable<T> signInAnd(Func1<String, Observable<T>> andThen) {
+        return currentUser().flatMap(user -> {
+            if (user.isPresent()) {
+                return andThen.call(user.get().getUid());
+            }
+
+            return signInAnonymously().andThen(Observable.empty());
+        });
     }
 
     Observable<Optional<FirebaseUser>> currentUser() {

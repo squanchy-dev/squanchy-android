@@ -1,6 +1,11 @@
 package net.squanchy.service.firebase;
 
-import java.util.concurrent.Callable;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Locale;
 
 import net.squanchy.service.firebase.model.FirebaseDays;
 import net.squanchy.service.firebase.model.FirebaseEvent;
@@ -8,44 +13,62 @@ import net.squanchy.service.firebase.model.FirebaseEvents;
 import net.squanchy.service.firebase.model.FirebaseSpeakers;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.schedulers.Schedulers;
 
-public class AuthenticatedFirebaseDbService implements FirebaseDbService {
+public final class AuthenticatedFirebaseDbService implements FirebaseDbService {
 
-    private final FirebaseDbService dbService;
+    private static final String DAYS_NODE = "days";
+    private static final String SPEAKERS_NODE = "speakers";
+    private static final String EVENTS_NODE = "events";
+    private static final String EVENTS_BY_ID_NODE = "events/events/%1$s";
+
+    private final DatabaseReference database;
     private final FirebaseAuthService authService;
 
-    public AuthenticatedFirebaseDbService(FirebaseDbService dbService, FirebaseAuthService authService) {
-        this.dbService = dbService;
+    public AuthenticatedFirebaseDbService(DatabaseReference database, FirebaseAuthService authService) {
+        this.database = database;
         this.authService = authService;
     }
 
     @Override
     public Observable<FirebaseDays> days() {
-        return signInAnd(dbService::days);
+        return authService.signInAnd(userId -> observeChild(DAYS_NODE, FirebaseDays.class));
     }
 
     @Override
     public Observable<FirebaseSpeakers> speakers() {
-        return signInAnd(dbService::speakers);
+        return authService.signInAnd(userId -> observeChild(SPEAKERS_NODE, FirebaseSpeakers.class));
     }
 
     @Override
     public Observable<FirebaseEvents> events() {
-        return signInAnd(dbService::events);
+        return authService.signInAnd(userId -> observeChild(EVENTS_NODE, FirebaseEvents.class));
     }
 
     @Override
     public Observable<FirebaseEvent> event(String eventId) {
-        return signInAnd(() -> dbService.event(eventId));
+        String path = String.format(Locale.US, EVENTS_BY_ID_NODE, eventId);
+        return authService.signInAnd(userId -> observeChild(path, FirebaseEvent.class));
     }
 
-    private <T> Observable<T> signInAnd(Callable<Observable<T>> andThen) {
-        return authService.currentUser().flatMap(user -> {
-            if (user.isPresent()) {
-                return andThen.call();
-            }
+    private <T> Observable<T> observeChild(final String path, final Class<T> clazz) {
+        return Observable.create((ObservableEmitter<T> e) -> {
+            ValueEventListener listener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    T value = dataSnapshot.getValue(clazz);
+                    e.onNext(value);
+                }
 
-            return authService.signInAnonymously().andThen(Observable.empty());
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    e.onError(databaseError.toException());
+                }
+            };
+
+            database.child(path).addValueEventListener(listener);
+            e.setCancellable(() -> database.removeEventListener(listener));
+        }).observeOn(Schedulers.io());
     }
 }
