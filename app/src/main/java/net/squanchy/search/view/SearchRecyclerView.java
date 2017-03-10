@@ -6,6 +6,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
+import java.util.Collections;
+
 import net.squanchy.search.SearchResults;
 import net.squanchy.speaker.domain.view.Speaker;
 
@@ -40,7 +42,8 @@ public class SearchRecyclerView extends RecyclerView {
             super.setAdapter(adapter);
         }
 
-        adapter.updateWith(newData, listener);
+        // TODO undo this once we support the events too
+        adapter.updateWith(SearchResults.create(Collections.emptyList(), newData.speakers()), listener);
         
         GridLayoutManager layoutManager = (GridLayoutManager) getLayoutManager();
         GridLayoutManager.SpanSizeLookup spanSizeLookup = adapter.createSpanSizeLookup(COLUMN_NUMBER);

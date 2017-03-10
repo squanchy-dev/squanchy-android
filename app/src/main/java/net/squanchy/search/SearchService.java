@@ -28,7 +28,7 @@ class SearchService {
     }
 
     public Observable<SearchResults> find(String query) {
-        return Observable.zip(
+        return Observable.combineLatest(
                 findEvents(query),
                 findSpeakers(query),
                 SearchResults::create

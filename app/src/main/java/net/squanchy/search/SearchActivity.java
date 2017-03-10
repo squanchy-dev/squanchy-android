@@ -73,7 +73,8 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
 
         Disposable searchSubscription = querySubject.debounce(QUERY_DEBOUNCE_TIMEOUT, TimeUnit.MILLISECONDS)
                 .flatMap(s -> searchService.find(s))
-                .toFlowable(BackpressureStrategy.DROP)
+                .toFlowable(BackpressureStrategy.LATEST)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(searchResults -> searchRecyclerView.updateWith(searchResults, this), Timber::e);
 
         subscriptions.add(speakersSubscription);
@@ -146,12 +147,12 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
 
         @Override
         public void onTextChanged(CharSequence query, int start, int before, int count) {
-            // No-op
+            querySubject.onNext(query.toString());
         }
 
         @Override
         public void afterTextChanged(Editable query) {
-            querySubject.onNext(query.toString());
+            // No-op
         }
     }
 }
