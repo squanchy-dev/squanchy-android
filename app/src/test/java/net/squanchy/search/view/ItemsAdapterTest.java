@@ -39,7 +39,7 @@ public class ItemsAdapterTest {
         }
 
         @Test
-        public void givenSearchResultsWithOnlyEvents_whenGettingTotalItemsCount_thenReturnsOneMoreThanTheNumberOfSpeakers() {
+        public void givenSearchResultsWithOnlyEvents_whenGettingTotalItemsCount_thenReturnsTheNumberOfSpeakersPlusOne() {
             givenSearchResultsWith(ANY_THREE_EVENTS, NO_SPEAKERS);
 
             int totalItemsCount = itemsAdapter.totalItemsCount();
@@ -48,7 +48,7 @@ public class ItemsAdapterTest {
         }
 
         @Test
-        public void givenSearchResultsWithOnlySpeakers_whenGettingTotalItemsCount_thenReturnsOneMoreThanTheNumberOfSpeakers() {
+        public void givenSearchResultsWithOnlySpeakers_whenGettingTotalItemsCount_thenReturnsTheNumberOfSpeakersPlusOne() {
             givenSearchResultsWith(NO_EVENTS, ANY_TWO_SPEAKERS);
 
             int totalItemsCount = itemsAdapter.totalItemsCount();
@@ -57,7 +57,7 @@ public class ItemsAdapterTest {
         }
 
         @Test
-        public void givenSearchResultsWithEventsAndSpeakers_whenGettingTotalItemsCount_thenReturnsTwoMoreThanTheNumberOfEventsAndSpeakers() {
+        public void givenSearchResultsWithEventsAndSpeakers_whenGettingTotalItemsCount_thenReturnsTheNumberOfEventsAndSpeakersPlusTwo() {
             givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
 
             int totalItemsCount = itemsAdapter.totalItemsCount();
