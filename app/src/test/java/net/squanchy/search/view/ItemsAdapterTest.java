@@ -174,6 +174,105 @@ public class ItemsAdapterTest {
         }
     }
 
+    public static class ItemId extends BaseTest {
+
+        @Test
+        public void givenEmptySearchResults_whenGettingItemIdAtAnyPosition_thenThrowsIndexOutOfBoundsException() {
+            givenEmptySearchResults();
+            thrown.expect(IndexOutOfBoundsException.class);
+
+            itemsAdapter.itemIdAtAbsolutePosition(0);
+        }
+
+        @Test
+        public void givenAnySearchResults_whenGettingItemIdAtNegativePosition_thenThrowsIndexOutOfBoundsException() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+            thrown.expect(IndexOutOfBoundsException.class);
+
+            itemsAdapter.itemIdAtAbsolutePosition(-1);
+        }
+
+        @Test
+        public void givenAnySearchResults_whenGettingItemIdPositionEqualOrGreaterThanTotalItemsCount_thenThrowsIndexOutOfBoundsException() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+            thrown.expect(IndexOutOfBoundsException.class);
+
+            itemsAdapter.itemIdAtAbsolutePosition(7);      // 7 = (1 header + 3 events + 1 header + 2 speakers + 1 off-by-one) - 1 [because zero-based]
+        }
+
+        @Test
+        public void givenSearchResultsWithOnlyEvents_whenGettingItemIdAtEventsHeaderPosition_thenReturnsEventsHeaderId() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, NO_SPEAKERS);
+
+            long itemId = itemsAdapter.itemIdAtAbsolutePosition(0);      // 0 = (1 header) - 1 [because zero-based]
+
+            assertThat(itemId).isEqualTo(100);
+        }
+
+        @Test
+        public void givenSearchResultsWithOnlyEvents_whenGettingItemIdAtEventPosition_thenReturnsEventNumericId() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, NO_SPEAKERS);
+
+            long itemId = itemsAdapter.itemIdAtAbsolutePosition(1);      // 1 = (1 header + 1 event) - 1 [because zero-based]
+
+            assertThat(itemId).isEqualTo(ANY_THREE_EVENTS.get(0).numericId());
+        }
+
+        @Test
+        public void givenSearchResultsWithOnlySpeakers_whenGettingItemIdAtSpeakerHeaderPosition_thenReturnsSpeakerHeaderId() {
+            givenSearchResultsWith(NO_EVENTS, ANY_TWO_SPEAKERS);
+
+            long itemId = itemsAdapter.itemIdAtAbsolutePosition(0);      // 0 = (1 header) - 1 [because zero-based]
+
+            assertThat(itemId).isEqualTo(101);
+        }
+
+        @Test
+        public void givenSearchResultsWithOnlySpeakers_whenGettingItemIdAtSpeakerPosition_thenReturnsSpeakerNumericId() {
+            givenSearchResultsWith(NO_EVENTS, ANY_TWO_SPEAKERS);
+
+            long itemId = itemsAdapter.itemIdAtAbsolutePosition(1);      // 1 = (1 header + 1 speaker) - 1 [because zero-based]
+
+            assertThat(itemId).isEqualTo(ANY_TWO_SPEAKERS.get(0).numericId());
+        }
+
+        @Test
+        public void givenSearchResultsWithEventsAndSpeakers_whenGettingItemIdAtEventsHeaderPosition_thenReturnsEventHeaderId() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+
+            long itemId = itemsAdapter.itemIdAtAbsolutePosition(0);      // 0 = (1 header) - 1 [because zero-based]
+
+            assertThat(itemId).isEqualTo(100);
+        }
+
+        @Test
+        public void givenSearchResultsWithEventsAndSpeakers_whenGettingItemIdAtEventPosition_thenReturnsEventNumericId() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+
+            long itemId = itemsAdapter.itemIdAtAbsolutePosition(1);      // 1 = (1 header + 1 event) - 1 [because zero-based]
+
+            assertThat(itemId).isEqualTo(ANY_THREE_EVENTS.get(0).numericId());
+        }
+
+        @Test
+        public void givenSearchResultsWithEventsAndSpeakers_whenGettingItemIdAtSpeakerHeaderPosition_thenReturnsSpeakerHeaderId() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+
+            long itemId = itemsAdapter.itemIdAtAbsolutePosition(4);      // 4 = (1 header + 3 events + 1 header) - 1 [because zero-based]
+
+            assertThat(itemId).isEqualTo(101);
+        }
+
+        @Test
+        public void givenSearchResultsWithEventsAndSpeakers_whenGettingItemIdAtSpeakerPosition_thenReturnsSpeakerNumericId() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+
+            long itemId = itemsAdapter.itemIdAtAbsolutePosition(5);     // 5 = (1 header + 3 events + 1 header + 1 speaker) - 1 [because zero-based]
+
+            assertThat(itemId).isEqualTo(ANY_TWO_SPEAKERS.get(0).numericId());
+        }
+    }
+
     public abstract static class BaseTest {
 
         static final List<Event> NO_EVENTS = Collections.emptyList();

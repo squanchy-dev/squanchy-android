@@ -9,6 +9,12 @@ import net.squanchy.speaker.domain.view.Speaker;
 
 class ItemsAdapter {
 
+    // These values are "random", we count on them not clashing with the other
+    // random values that are used for non-hardcoded numeric IDs (for events
+    // and speakers). This is a reasonable assumption in the Long range.
+    private static final long ITEM_ID_EVENTS_HEADER = 100;
+    private static final long ITEM_ID_SPEAKERS_HEADER = 101;
+
     private final SearchResults searchResults;
 
     ItemsAdapter(SearchResults searchResults) {
@@ -52,13 +58,33 @@ class ItemsAdapter {
         }
     }
 
-    private int totalCountForSectionIncludingHeaders(List sectionItems) {
-        int eventsCount = sectionItems.size();
-        return eventsCount + headersCountForSectionItemsCount(eventsCount);
+    long itemIdAtAbsolutePosition(int position) {
+        ensurePositionExists(position);
+
+        int totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResults.events());
+        if (totalEventItemsCount > 0 && position < totalEventItemsCount) {
+            if (position == 0) {
+                return ITEM_ID_EVENTS_HEADER;
+            } else {
+                return searchResults.events().get(position - 1).numericId();
+            }
+        } else {
+            int adjustedPosition = position - totalEventItemsCount;
+            // We checked position is in range so it MUST be a speaker
+            if (adjustedPosition == 0) {
+                return ITEM_ID_SPEAKERS_HEADER;
+            } else {
+                return searchResults.speakers().get(adjustedPosition - 1).numericId();
+            }
+        }
     }
 
-    private static int headersCountForSectionItemsCount(int itemsCount) {
-        return itemsCount > 0 ? 1 : 0;
+    Speaker speakerAtAbsolutePosition(int position) {
+        return null;             // TODO
+    }
+
+    int headerTextAtAbsolutePosition(int position) {
+        return 0;                // TODO
     }
 
     private void ensurePositionExists(int position) {
@@ -68,15 +94,12 @@ class ItemsAdapter {
         }
     }
 
-    long itemIdAtAbsolutePosition(int position) {
-        return 0;                // TODO
+    private int totalCountForSectionIncludingHeaders(List sectionItems) {
+        int eventsCount = sectionItems.size();
+        return eventsCount + headersCountForSectionItemsCount(eventsCount);
     }
 
-    Speaker speakerAtAbsolutePosition(int position) {
-        return null;             // TODO
-    }
-
-    int headerTextAtAbsolutePosition(int position) {
-        return 0;                // TODO
+    private static int headersCountForSectionItemsCount(int itemsCount) {
+        return itemsCount > 0 ? 1 : 0;
     }
 }
