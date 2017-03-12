@@ -31,6 +31,7 @@ import io.reactivex.BackpressureStrategy;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.PublishSubject;
 import timber.log.Timber;
 
@@ -81,10 +82,11 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(searchResults -> searchRecyclerView.updateWith(searchResults, this), Timber::e);
 
-        Disposable searchSubscription = querySubject.debounce(QUERY_DEBOUNCE_TIMEOUT, TimeUnit.MILLISECONDS)
+        Disposable searchSubscription = querySubject.throttleLast(QUERY_DEBOUNCE_TIMEOUT, TimeUnit.MILLISECONDS)
                 .flatMap(query -> searchService.find(query))
                 .doOnNext(searchResults -> speakersSubscription.dispose())
                 .toFlowable(BackpressureStrategy.LATEST)
+                .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(searchResults -> searchRecyclerView.updateWith(searchResults, this), Timber::e);
 
