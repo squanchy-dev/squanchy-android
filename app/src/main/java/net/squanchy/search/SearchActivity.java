@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,6 +23,8 @@ import java.util.concurrent.TimeUnit;
 
 import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
+import net.squanchy.navigation.Navigator;
+import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.search.view.SearchRecyclerView;
 import net.squanchy.speaker.domain.view.Speaker;
 
@@ -43,6 +44,8 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
 
     private final CompositeDisposable subscriptions = new CompositeDisposable();
 
+    private Navigator navigator;
+
     private SearchTextWatcher searchTextWatcher;
 
     private EditText searchField;
@@ -61,6 +64,7 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
 
         SearchComponent component = SearchInjector.obtain(this);
         searchService = component.service();
+        navigator = component.navigator();
     }
 
     private void setupToolbar() {
@@ -159,8 +163,16 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
 
     @Override
     public void onSpeakerClicked(Speaker speaker) {
-        // TODO open the speaker detail view here
-        Toast.makeText(this, "Speaker clicked " + speaker, Toast.LENGTH_SHORT).show();
+        navigate().toSpeakerDetails(speaker.id());
+    }
+
+    @Override
+    public void onEventClicked(Event event) {
+        navigate().toEventDetails(event.id());
+    }
+
+    private Navigator navigate() {
+        return navigator;
     }
 
     private static class SearchTextWatcher implements TextWatcher {

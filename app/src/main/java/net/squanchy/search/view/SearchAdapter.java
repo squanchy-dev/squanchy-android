@@ -16,6 +16,8 @@ import java.util.Collections;
 import net.squanchy.R;
 import net.squanchy.imageloader.ImageLoader;
 import net.squanchy.imageloader.ImageLoaderInjector;
+import net.squanchy.schedule.view.EventItemView;
+import net.squanchy.schedule.view.EventViewHolder;
 import net.squanchy.search.SearchResults;
 
 class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -63,6 +65,9 @@ class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else if (viewType == ViewTypeId.SPEAKER) {
             View view = LayoutInflater.from(context).inflate(R.layout.item_search_result_small, parent, false);
             return new SpeakerViewHolder(view);
+        } else if (viewType == ViewTypeId.EVENT) {
+            View view = LayoutInflater.from(context).inflate(R.layout.item_schedule_event_talk, parent, false);
+            return new EventViewHolder((EventItemView) view);
         } else {
             throw new IllegalArgumentException("Item type " + viewType + " not supported");
         }
@@ -76,6 +81,8 @@ class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ((SpeakerViewHolder) holder).updateWith(itemsAdapter.speakerAtAbsolutePosition(position), imageLoader, listener);
         } else if (viewType == ViewTypeId.HEADER) {
             ((HeaderViewHolder) holder).updateWith(itemsAdapter.headerTypeAtAbsolutePosition(position));
+        } else if (viewType == ViewTypeId.EVENT) {
+            ((EventViewHolder) holder).updateWith(itemsAdapter.eventAtAbsolutePosition(position), listener);
         } else {
             throw new IllegalArgumentException("Item type " + viewType + " not supported");
         }

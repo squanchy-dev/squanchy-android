@@ -6,8 +6,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
-import java.util.Collections;
-
+import net.squanchy.schedule.view.ScheduleViewPagerAdapter;
 import net.squanchy.search.SearchResults;
 import net.squanchy.speaker.domain.view.Speaker;
 
@@ -37,21 +36,19 @@ public class SearchRecyclerView extends RecyclerView {
         setClipToPadding(false);
     }
 
-    public void updateWith(SearchResults newData, OnSearchResultClickListener listener) {
+    public void updateWith(SearchResults searchResults, OnSearchResultClickListener listener) {
         if (getAdapter() == null) {
             super.setAdapter(adapter);
         }
 
-        // TODO undo this once we support the events too
-        adapter.updateWith(SearchResults.create(Collections.emptyList(), newData.speakers()), listener);
-        
+        adapter.updateWith(searchResults, listener);
+
         GridLayoutManager layoutManager = (GridLayoutManager) getLayoutManager();
         GridLayoutManager.SpanSizeLookup spanSizeLookup = adapter.createSpanSizeLookup(COLUMNS_COUNT);
         layoutManager.setSpanSizeLookup(spanSizeLookup);
-
     }
 
-    public interface OnSearchResultClickListener {
+    public interface OnSearchResultClickListener extends ScheduleViewPagerAdapter.OnEventClickedListener {
 
         void onSpeakerClicked(Speaker speaker);
     }
