@@ -6,7 +6,7 @@ import net.squanchy.R;
 
 public enum HeaderType {
     SPEAKERS(R.string.speaker_list_title),
-    EVENTS(R.string.speaker_list_title),
+    EVENTS(R.string.talks_list_title),
     TRACKS(R.string.speaker_list_title);
 
     @StringRes
