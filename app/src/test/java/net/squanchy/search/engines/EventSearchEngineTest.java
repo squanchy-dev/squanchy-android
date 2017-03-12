@@ -13,6 +13,7 @@ public class EventSearchEngineTest {
 
     private static final Event MATCHING_EVENT = anEvent()
             .withTitle("Banane")
+            .withType(Event.Type.TALK)
             .build();
 
     private final EventSearchEngine searchEngine = new EventSearchEngine();
@@ -46,7 +47,7 @@ public class EventSearchEngineTest {
 
     @Test
     public void givenEventWithCoffeeBreakType_whenMatching_thenReturnsFalse() {
-        Event event = anEvent().withType(Event.Type.COFFEE_BREAK).build();
+        Event event = anEvent().withTitle("anything").withType(Event.Type.COFFEE_BREAK).build();
 
         boolean matches = searchEngine.matches(event, "anything");
 
@@ -55,7 +56,7 @@ public class EventSearchEngineTest {
 
     @Test
     public void givenEventWithLunchType_whenMatching_thenReturnsFalse() {
-        Event event = anEvent().withType(Event.Type.LUNCH).build();
+        Event event = anEvent().withTitle("anything").withType(Event.Type.LUNCH).build();
 
         boolean matches = searchEngine.matches(event, "anything");
 
@@ -64,7 +65,25 @@ public class EventSearchEngineTest {
 
     @Test
     public void givenEventWithRegistrationType_whenMatching_thenReturnsFalse() {
-        Event event = anEvent().withType(Event.Type.REGISTRATION).build();
+        Event event = anEvent().withTitle("anything").withType(Event.Type.REGISTRATION).build();
+
+        boolean matches = searchEngine.matches(event, "anything");
+
+        assertThat(matches).isFalse();
+    }
+
+    @Test
+    public void givenEventWithSocialType_whenMatching_thenReturnsFalse() {
+        Event event = anEvent().withTitle("anything").withType(Event.Type.SOCIAL).build();
+
+        boolean matches = searchEngine.matches(event, "anything");
+
+        assertThat(matches).isFalse();
+    }
+
+    @Test
+    public void givenEventWithOtherType_whenMatching_thenReturnsFalse() {
+        Event event = anEvent().withTitle("anything").withType(Event.Type.OTHER).build();
 
         boolean matches = searchEngine.matches(event, "anything");
 

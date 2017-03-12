@@ -18,9 +18,7 @@ class EventSearchEngine implements SearchEngine<Event> {
     }
 
     private boolean eventIsSearchable(Event event) {
-        return event.type() != Event.Type.LUNCH
-                && event.type() != Event.Type.COFFEE_BREAK
-                && event.type() != Event.Type.REGISTRATION;
+        return event.type() == Event.Type.TALK || event.type() == Event.Type.KEYNOTE;
     }
 
     private boolean matchesQuery(Event event, String query) {
