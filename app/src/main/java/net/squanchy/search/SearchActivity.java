@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.Collections;
 import java.util.List;
@@ -54,6 +55,8 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
     private SearchRecyclerView searchRecyclerView;
 
     private boolean hasQuery;
+    private View emptyView;
+    private TextView emptyViewMessage;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,6 +64,8 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
         setContentView(R.layout.activity_search);
 
         searchField = (EditText) findViewById(R.id.search_field);
+        emptyView = findViewById(R.id.empty_view);
+        emptyViewMessage = (TextView) findViewById(R.id.empty_view_message);
 
         searchRecyclerView = (SearchRecyclerView) findViewById(R.id.speakers_view);
         setupToolbar();
@@ -96,7 +101,7 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
                 .toFlowable(BackpressureStrategy.LATEST)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(searchResults -> searchRecyclerView.updateWith(searchResults, this), Timber::e);
+                .subscribe(this::onReceivedSearchResults, Timber::e);
 
         subscriptions.add(speakersSubscription);
         subscriptions.add(searchSubscription);
@@ -118,6 +123,29 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
     private void updateSearchActionIcon(String query) {
         hasQuery = !TextUtils.isEmpty(query);
         supportInvalidateOptionsMenu();
+    }
+
+    private void onReceivedSearchResults(SearchResults searchResults) {
+        if (searchResults.isEmpty()) {
+            searchRecyclerView.setVisibility(View.INVISIBLE);
+            emptyView.setVisibility(View.VISIBLE);
+
+            CharSequence query = searchField.getText();
+            updateEmptyStateMessageFor(query);
+        } else {
+            emptyView.setVisibility(View.INVISIBLE);
+            searchRecyclerView.setVisibility(View.VISIBLE);
+
+            searchRecyclerView.updateWith(searchResults, this);
+        }
+    }
+
+    private void updateEmptyStateMessageFor(CharSequence query) {
+        if (TextUtils.isEmpty(query)) {
+            emptyViewMessage.setText(R.string.start_typing_to_search);
+        } else {
+            emptyViewMessage.setText(R.string.no_results);
+        }
     }
 
     @Override
