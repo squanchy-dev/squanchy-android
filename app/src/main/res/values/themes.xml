@@ -45,8 +45,6 @@
   <style name="Theme.Squanchy.EventDetails" parent="Theme.Squanchy" />
 
   <style name="Theme.Squanchy.Search" parent="Theme.Squanchy">
-    <item name="colorPrimary">@color/window_background</item>
-    <item name="colorAccent">@color/primary</item>
     <item name="android:statusBarColor">@color/status_bar_primary</item>
   </style>
 

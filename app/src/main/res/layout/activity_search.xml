@@ -12,7 +12,7 @@
     <android.support.v7.widget.Toolbar
       android:id="@+id/search_toolbar"
       style="@style/Search.Toolbar"
-      android:theme="@style/ThemeOverlay.Squanchy.Toolbar"
+      android:theme="@style/ThemeOverlay.Squanchy.Toolbar.Search"
       android:layout_width="match_parent"
       android:layout_height="?attr/actionBarSize">
 
