@@ -110,8 +110,9 @@
   </style>
 
   <style name="Search.EmptyMessage" parent="TextAppearance.AppCompat.Body1">
-    <item name="android:textColor">?android:textColorSecondary</item>
     <item name="android:text">@string/start_typing_to_search</item>
+    <item name="android:textColor">?android:textColorSecondary</item>
+    <item name="android:textSize">@dimen/search_empty_state_text</item>
     <item name="fontPath">?defaultLightTypeface</item>
   </style>
 
