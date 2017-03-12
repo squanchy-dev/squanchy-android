@@ -10,6 +10,7 @@ import android.speech.RecognizerIntent;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -52,6 +53,8 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
     private SearchService searchService;
     private SearchRecyclerView searchRecyclerView;
 
+    private boolean hasQuery;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +90,7 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
                 .subscribe(searchResults -> searchRecyclerView.updateWith(searchResults, this), Timber::e);
 
         Disposable searchSubscription = querySubject.throttleLast(QUERY_DEBOUNCE_TIMEOUT, TimeUnit.MILLISECONDS)
+                .doOnNext(this::updateSearchActionIcon)
                 .flatMap(query -> searchService.find(query))
                 .doOnNext(searchResults -> speakersSubscription.dispose())
                 .toFlowable(BackpressureStrategy.LATEST)
@@ -111,6 +115,11 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
         });
     }
 
+    private void updateSearchActionIcon(String query) {
+        hasQuery = !TextUtils.isEmpty(query);
+        supportInvalidateOptionsMenu();
+    }
+
     @Override
     protected void onStop() {
         super.onStop();
@@ -124,14 +133,26 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.voice_search_menu, menu);
+        getMenuInflater().inflate(R.menu.search_menu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem voiceSearchItem = menu.findItem(R.id.action_voice_search);
+        voiceSearchItem.setVisible(!hasQuery);
+        MenuItem clearQueryItem = menu.findItem(R.id.action_clear_query);
+        clearQueryItem.setVisible(hasQuery);
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_voice_search) {
             onVoiceSearchClicked();
+            return true;
+        } else if (item.getItemId() == R.id.action_clear_query) {
+            clearSearchQuery();
             return true;
         } else if (item.getItemId() == android.R.id.home) {
             finish();
@@ -149,6 +170,10 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
         } catch (ActivityNotFoundException e) {
             Timber.e(e);
         }
+    }
+
+    private void clearSearchQuery() {
+        searchField.setText("");
     }
 
     @Override
