@@ -349,6 +349,99 @@ public class ItemsAdapterTest {
         }
     }
 
+    public static class EventAtPosition extends BaseTest {
+
+        @Test
+        public void givenEmptySearchResults_whenGettingEventAtAnyPosition_thenThrowsIndexOutOfBoundsException() {
+            givenEmptySearchResults();
+            thrown.expect(IndexOutOfBoundsException.class);
+
+            itemsAdapter.eventAtAbsolutePosition(0);
+        }
+
+        @Test
+        public void givenAnySearchResults_whenGettingEventAtNegativePosition_thenThrowsIndexOutOfBoundsException() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+            thrown.expect(IndexOutOfBoundsException.class);
+
+            itemsAdapter.eventAtAbsolutePosition(-1);
+        }
+
+        @Test
+        public void givenAnySearchResults_whenGettingEventPositionEqualOrGreaterThanTotalItemsCount_thenThrowsIndexOutOfBoundsException() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+            thrown.expect(IndexOutOfBoundsException.class);
+
+            itemsAdapter.eventAtAbsolutePosition(7);      // 7 = (1 header + 3 events + 1 header + 2 speakers + 1 off-by-one) - 1 [because zero-based]
+        }
+
+        @Test
+        public void givenSearchResultsWithOnlyEvents_whenGettingEventAtEventsHeaderPosition_thenThrowsIndexOutOfBoundsException() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, NO_SPEAKERS);
+            thrown.expect(IndexOutOfBoundsException.class);
+
+            itemsAdapter.eventAtAbsolutePosition(0);      // 0 = (1 header) - 1 [because zero-based]
+        }
+
+        @Test
+        public void givenSearchResultsWithOnlyEvents_whenGettingEventAtEventPosition_thenReturnsEvent() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, NO_SPEAKERS);
+
+            Event event = itemsAdapter.eventAtAbsolutePosition(1);      // 1 = (1 header + 1 speaker) - 1 [because zero-based]
+
+            assertThat(event).isEqualTo(ANY_THREE_EVENTS.get(0));
+        }
+
+        @Test
+        public void givenSearchResultsWithOnlyEvents_whenGettingEventAtSpeakersHeaderPosition_thenThrowsIndexOutOfBoundsException() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, NO_SPEAKERS);
+            thrown.expect(IndexOutOfBoundsException.class);
+
+            itemsAdapter.eventAtAbsolutePosition(4);      // 4 = (1 header + 3 speaker + 1 header) - 1 [because zero-based]
+        }
+
+        @Test
+        public void givenSearchResultsWithOnlySpeakers_whenGettingEventAtAnyPosition_thenThrowsIndexOutOfBoundsException() {
+            givenSearchResultsWith(NO_EVENTS, ANY_TWO_SPEAKERS);
+            thrown.expect(IndexOutOfBoundsException.class);
+
+            itemsAdapter.eventAtAbsolutePosition(0);
+        }
+
+        @Test
+        public void givenSearchResultsWithEventsAndSpeakers_whenGettingEventAtEventsHeaderPosition_thenThrowsIndexOutOfBoundsException() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+            thrown.expect(IndexOutOfBoundsException.class);
+
+            itemsAdapter.eventAtAbsolutePosition(0);      // 0 = (1 header) - 1 [because zero-based]
+        }
+
+        @Test
+        public void givenSearchResultsWithEventsAndSpeakers_whenGettingEventAtEventPosition_thenReturnsEvent() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+
+            Event event = itemsAdapter.eventAtAbsolutePosition(1);// 1 = (1 header + 1 event) - 1 [because zero-based]
+
+            assertThat(event).isEqualTo(ANY_THREE_EVENTS.get(0));
+        }
+
+        @Test
+        public void givenSearchResultsWithEventsAndSpeakers_whenGettingEventAtSpeakerHeaderPosition_thenThrowsIndexOutOfBoundsException() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+            thrown.expect(IndexOutOfBoundsException.class);
+
+            itemsAdapter.eventAtAbsolutePosition(4);      // 4 = (1 header + 3 events + 1 header) - 1 [because zero-based]
+        }
+
+        @Test
+        public void givenSearchResultsWithEventsAndSpeakers_whenGettingEventAtSpeakerPosition_thenThrowsIndexOutOfBoundsException() {
+            givenSearchResultsWith(ANY_THREE_EVENTS, ANY_TWO_SPEAKERS);
+            thrown.expect(IndexOutOfBoundsException.class);
+
+            itemsAdapter.eventAtAbsolutePosition(5);     // 5 = (1 header + 3 events + 1 header + 1 speaker) - 1 [because zero-based]
+        }
+    }
+
     public static class HeaderTypeAtPosition extends BaseTest {
 
         @Test

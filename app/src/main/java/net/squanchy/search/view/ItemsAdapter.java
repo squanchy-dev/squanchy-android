@@ -3,6 +3,7 @@ package net.squanchy.search.view;
 import java.util.List;
 import java.util.Locale;
 
+import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.search.SearchResults;
 import net.squanchy.search.view.SearchAdapter.ViewTypeId;
 import net.squanchy.speaker.domain.view.Speaker;
@@ -95,6 +96,19 @@ class ItemsAdapter {
         } else {
             throw new IndexOutOfBoundsException("No speaker at position " + position + ", that is supposed to be the speakers header");
         }
+    }
+
+    Event eventAtAbsolutePosition(int position) {
+        ensurePositionExists(position);
+
+        int totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResults.events());
+        if (position == 0) {
+            throw new IndexOutOfBoundsException("No event at position " + position + ", that is supposed to be the events header");
+        } else if (position - 1 >= totalEventItemsCount) {
+            throw new IndexOutOfBoundsException("No event at position " + position + ", that is supposed to be in the speakers sublist");
+        }
+
+        return searchResults.events().get(position - 1);
     }
 
     HeaderType headerTypeAtAbsolutePosition(int position) {
