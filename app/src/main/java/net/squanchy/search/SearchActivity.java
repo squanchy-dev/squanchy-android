@@ -43,6 +43,7 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
     private static final int SPEECH_REQUEST_CODE = 100;
     private static final int QUERY_DEBOUNCE_TIMEOUT = 250;
     private static final int DELAY_ENOUGH_FOR_FOCUS_TO_HAPPEN_MILLIS = 50;
+    private static final int MIN_QUERY_LENGTH = 2;
 
     private final CompositeDisposable subscriptions = new CompositeDisposable();
 
@@ -141,7 +142,7 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
     }
 
     private void updateEmptyStateMessageFor(CharSequence query) {
-        if (TextUtils.isEmpty(query)) {
+        if (query == null || query.length() < MIN_QUERY_LENGTH) {
             emptyViewMessage.setText(R.string.start_typing_to_search);
         } else {
             emptyViewMessage.setText(R.string.no_results);
