@@ -17,6 +17,10 @@
   <string name="bottom_bar_venue_label">Venue Info</string>
   <string name="search_label">Search</string>
   <string name="voice_search">Voice search</string>
-  <string name="speaker_list_title">Droidcon speakers</string>
+  <string name="clear_query">Clear query</string>
+  <string name="no_results">No results for this query</string>
+  <string name="start_typing_to_search">Start typing to search</string>
+  <string name="speaker_list_title">Speakers</string>
+  <string name="talks_list_title">Talks</string>
 
 </resources>

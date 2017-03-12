@@ -23,6 +23,11 @@ public class SpeakerRepository {
     public Observable<List<Speaker>> speakers() {
         return dbService.speakers()
                 .map(firebaseSpeaker -> firebaseSpeaker.speakers)
-                .map(speakers -> map(speakers, firebaseSpeaker -> Speaker.create(firebaseSpeaker, checksum.getChecksumOf(firebaseSpeaker.id))));
+                .map(speakers -> map(speakers, firebaseSpeaker -> Speaker.create(
+                        firebaseSpeaker.id,
+                        checksum.getChecksumOf(firebaseSpeaker.id),
+                        firebaseSpeaker.name,
+                        firebaseSpeaker.photo_url
+                )));
     }
 }

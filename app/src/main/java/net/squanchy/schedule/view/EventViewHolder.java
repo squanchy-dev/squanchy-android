@@ -5,13 +5,13 @@ import android.support.v7.widget.RecyclerView;
 
 import net.squanchy.schedule.domain.view.Event;
 
-class EventViewHolder extends RecyclerView.ViewHolder {
+public class EventViewHolder extends RecyclerView.ViewHolder {
 
-    EventViewHolder(EventItemView itemView) {
+    public EventViewHolder(EventItemView itemView) {
         super(itemView);
     }
 
-    void updateWith(Event event, @Nullable ScheduleViewPagerAdapter.OnEventClickedListener listener) {
+    public void updateWith(Event event, @Nullable ScheduleViewPagerAdapter.OnEventClickedListener listener) {
         ((EventItemView) itemView).updateWith(event);
         itemView.setOnClickListener(v -> {
             if (listener != null) {

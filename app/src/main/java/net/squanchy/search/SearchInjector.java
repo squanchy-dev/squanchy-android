@@ -11,7 +11,7 @@ final class SearchInjector {
     public static SearchComponent obtain(SearchActivity activity) {
         return DaggerSearchComponent.builder()
                 .applicationComponent(ApplicationInjector.obtain(activity))
-                .searchModule(new SearchModule())
+                .searchModule(new SearchModule(activity))
                 .build();
     }
 }

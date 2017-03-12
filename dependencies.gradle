@@ -10,7 +10,7 @@ ext {
     ]
 
     libraries = [
-            app: [
+            app : [
                     autoValue        : 'com.google.auto.value:auto-value:1.3',
                     calligraphy      : 'uk.co.chrisjenx:calligraphy:2.2.0',
                     crashlytics      : 'com.crashlytics.sdk.android:crashlytics:2.6.6',
@@ -23,7 +23,7 @@ ext {
                     firebaseUiStorage: "com.firebaseui:firebase-ui-storage:1.2.0",
                     glide            : 'com.github.bumptech.glide:glide:3.7.0',
                     glideOkHttp3     : 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar',
-                    jodaTimeAndroid  : 'net.danlew:android.joda:2.9.5.1',
+                    jodaTimeAndroid  : 'net.danlew:android.joda:2.9.7',
                     playAnalytics    : "com.google.android.gms:play-services-analytics:${playServicesVersion}",
                     retrolambda      : 'net.orfjackal.retrolambda:retrolambda:2.5.0',
                     rx               : 'io.reactivex.rxjava2:rxjava:2.0.5',
@@ -33,6 +33,13 @@ ext {
                     timber           : 'com.jakewharton.timber:timber:4.5.1',
                     tweetUi          : 'com.twitter.sdk.android:tweet-ui:2.2.0',
                     viewPagerAdapter : 'com.novoda:view-pager-adapter:0.9.1'
+            ],
+
+            test: [
+                    fest    : 'org.easytesting:fest-assert-core:2.0M10',
+                    jodaTime: 'joda-time:joda-time:2.9.7',
+                    jUnit4  : 'junit:junit:4.12',
+                    mockito : 'org.mockito:mockito-core:2.7.15'
             ]
     ]
 }
