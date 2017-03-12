@@ -81,8 +81,13 @@
     <item name="android:colorControlNormal">?colorAccent</item>
   </style>
 
+  <style name="ThemeOverlay.Squanchy.Toolbar.Search" parent="ThemeOverlay.Squanchy.Toolbar">
+    <item name="colorPrimary">@color/window_background</item>
+    <item name="colorAccent">@color/primary</item>
+  </style>
+
   <style name="Search.SectionHeader" parent="TextAppearance.AppCompat.Body1">
-    <item name="android:textColor">?android:colorAccent</item>
+    <item name="android:textColor">?android:colorPrimary</item>
     <item name="fontPath">?titleTypeface</item>
   </style>
 
@@ -95,6 +100,7 @@
     <item name="android:background">@null</item>
     <item name="android:hint">@string/search_label</item>
     <item name="android:imeOptions">actionSearch</item>
+    <item name="android:inputType">text</item>
     <item name="android:maxLines">1</item>
   </style>
 

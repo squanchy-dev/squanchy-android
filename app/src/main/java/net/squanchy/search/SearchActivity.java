@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,6 +23,8 @@ import java.util.concurrent.TimeUnit;
 
 import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
+import net.squanchy.navigation.Navigator;
+import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.search.view.SearchRecyclerView;
 import net.squanchy.speaker.domain.view.Speaker;
 
@@ -31,6 +32,7 @@ import io.reactivex.BackpressureStrategy;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.PublishSubject;
 import timber.log.Timber;
 
@@ -41,6 +43,8 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
     private static final int DELAY_ENOUGH_FOR_FOCUS_TO_HAPPEN_MILLIS = 50;
 
     private final CompositeDisposable subscriptions = new CompositeDisposable();
+
+    private Navigator navigator;
 
     private SearchTextWatcher searchTextWatcher;
 
@@ -60,6 +64,7 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
 
         SearchComponent component = SearchInjector.obtain(this);
         searchService = component.service();
+        navigator = component.navigator();
     }
 
     private void setupToolbar() {
@@ -81,10 +86,11 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(searchResults -> searchRecyclerView.updateWith(searchResults, this), Timber::e);
 
-        Disposable searchSubscription = querySubject.debounce(QUERY_DEBOUNCE_TIMEOUT, TimeUnit.MILLISECONDS)
+        Disposable searchSubscription = querySubject.throttleLast(QUERY_DEBOUNCE_TIMEOUT, TimeUnit.MILLISECONDS)
                 .flatMap(query -> searchService.find(query))
                 .doOnNext(searchResults -> speakersSubscription.dispose())
                 .toFlowable(BackpressureStrategy.LATEST)
+                .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(searchResults -> searchRecyclerView.updateWith(searchResults, this), Timber::e);
 
@@ -157,8 +163,16 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
 
     @Override
     public void onSpeakerClicked(Speaker speaker) {
-        // TODO open the speaker detail view here
-        Toast.makeText(this, "Speaker clicked " + speaker, Toast.LENGTH_SHORT).show();
+        navigate().toSpeakerDetails(speaker.id());
+    }
+
+    @Override
+    public void onEventClicked(Event event) {
+        navigate().toEventDetails(event.id());
+    }
+
+    private Navigator navigate() {
+        return navigator;
     }
 
     private static class SearchTextWatcher implements TextWatcher {
