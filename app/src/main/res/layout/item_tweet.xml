@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <net.squanchy.tweets.view.TweetItemView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
-  android:layout_height="wrap_content">
+  android:layout_height="wrap_content"
+  android:paddingLeft="@dimen/card_padding_horizontal"
+  android:paddingTop="@dimen/card_padding_top"
+  android:paddingRight="@dimen/card_padding_horizontal"
+  android:paddingBottom="@dimen/card_padding_bottom"
+  tools:layout_margin="16dp">
 
   <LinearLayout
     android:layout_width="match_parent"
@@ -10,13 +16,17 @@
 
     <TextView
       android:id="@+id/tweet_text"
+      style="@style/Tweet.Card.Title"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content" />
+      android:layout_height="wrap_content"
+      tools:text="Ecco il mio tweet" />
 
     <TextView
       android:id="@+id/tweet_timestamp"
+      style="@style/Tweet.Card.Timestamp"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content" />
+      android:layout_height="wrap_content"
+      tools:text="Pubblicato ieri sera" />
 
   </LinearLayout>
 </net.squanchy.tweets.view.TweetItemView>

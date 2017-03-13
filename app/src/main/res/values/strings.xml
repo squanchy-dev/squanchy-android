@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <string name="activity_social_feed">Social Feed</string>
+  <string name="activity_social_feed">#Droidconit</string>
   <string name="activity_schedule">Schedule</string>
+
 
   <string name="experience_level_beginner">beginner</string>
   <string name="experience_level_intermediate">intermediate</string>
