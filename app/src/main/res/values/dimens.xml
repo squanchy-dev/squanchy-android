@@ -39,4 +39,12 @@
   <dimen name="search_header_padding">16dp</dimen>
   <dimen name="search_empty_state_text">16sp</dimen>
 
+  <dimen name="event_details_fab_margin">16dp</dimen>
+  <dimen name="event_details_speaker_photo">40dp</dimen>
+  <dimen name="event_details_speaker_photo_margin_end">6dp</dimen>
+  <dimen name="event_details_header_padding_start">72dp</dimen>
+  <dimen name="event_details_header_padding_end">24dp</dimen>
+  <dimen name="event_details_header_padding_bottom">16dp</dimen>
+  <dimen name="event_details_speaker_margin_bottom">8dp</dimen>
+
 </resources>

@@ -7,6 +7,7 @@ import android.widget.TextView;
 import net.squanchy.R;
 import net.squanchy.eventdetails.widget.ExperienceLevelIconView;
 import net.squanchy.schedule.domain.view.Event;
+import net.squanchy.support.widget.SpeakerView;
 
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;

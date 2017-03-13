@@ -13,7 +13,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <net.squanchy.schedule.view.SpeakerView
+    <net.squanchy.schedule.view.ScheduleSpeakerView
       android:id="@+id/speaker_container"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         tools:text="Qi Qu" />
 
-    </net.squanchy.schedule.view.SpeakerView>
+    </net.squanchy.schedule.view.ScheduleSpeakerView>
 
     <net.squanchy.eventdetails.widget.ExperienceLevelIconView
       android:id="@+id/experience_level_icon"
