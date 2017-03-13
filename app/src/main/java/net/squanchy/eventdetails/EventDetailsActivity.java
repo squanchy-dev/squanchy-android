@@ -3,16 +3,16 @@ package net.squanchy.eventdetails;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import net.squanchy.R;
 import net.squanchy.eventdetails.widget.EventDetailsCoordinatorLayout;
+import net.squanchy.fonts.TypefaceStyleableActivity;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
-public class EventDetailsActivity extends AppCompatActivity {
+public class EventDetailsActivity extends TypefaceStyleableActivity {
 
     private static final String EXTRA_EVENT_ID = "event_id";
 
@@ -32,13 +32,19 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_event_details);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setupToolbar();
 
         EventDetailsComponent component = EventDetailsInjector.obtain(this);
         service = component.service();
 
         coordinatorLayout = (EventDetailsCoordinatorLayout) findViewById(R.id.event_details_root);
+    }
+
+    private void setupToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
