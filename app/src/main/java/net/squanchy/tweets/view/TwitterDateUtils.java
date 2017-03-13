@@ -32,16 +32,6 @@ class TwitterDateUtils {
     }
 
     /**
-     * @return the given timestamp with a prepended "•"
-     */
-    public static String dotPrefix(String timestamp) {
-        if (timestamp.charAt(0) == '•') {
-            return timestamp;
-        }
-        return "• " + timestamp;
-    }
-
-    /**
      * This method is not thread safe. It has been modified from the original to not rely on global
      * time state. If a timestamp is in the future we return it as an absolute date string. Within
      * the same second we return 0s

@@ -24,5 +24,6 @@
   <string name="talks_list_title">Talks</string>
 
   <string name="droidcon_hashtag" translatable="false">Droidconit</string>
+  <string name="tweet_date_not_available">Unknown date</string>
 
 </resources>

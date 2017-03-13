@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.twitter.sdk.android.core.models.Tweet;
 
 import net.squanchy.R;
+import net.squanchy.support.lang.Optional;
 import net.squanchy.support.widget.CardLayout;
 
 public class TweetItemView extends CardLayout {
@@ -32,20 +33,22 @@ public class TweetItemView extends CardLayout {
 
     public void updateWith(Tweet tweet) {
         tweetText.setText(tweet.text);
-        tweetTimestamp.setText(getTimestampFrom(tweet));
+        tweetTimestamp.setText(getTimestampFrom(tweet)
+                .or(getContext().getString(R.string.tweet_date_not_available)));
     }
 
-    private String getTimestampFrom(Tweet displayTweet) {
+    private Optional<String> getTimestampFrom(Tweet displayTweet) {
         final String formattedTimestamp;
-        if (displayTweet != null && displayTweet.createdAt != null && TwitterDateUtils.isValidTimestamp(displayTweet.createdAt)) {
-            final Long createdAtTimestamp = TwitterDateUtils.apiTimeToLong(displayTweet.createdAt);
-            final String timestamp = TwitterDateUtils.getRelativeTimeString(getResources(),
+        final String date = displayTweet.createdAt;
+
+        if (date != null && TwitterDateUtils.isValidTimestamp(date)) {
+            final Long createdAtTimestamp = TwitterDateUtils.apiTimeToLong(date);
+            formattedTimestamp = TwitterDateUtils.getRelativeTimeString(getResources(),
                     System.currentTimeMillis(), createdAtTimestamp);
-            formattedTimestamp = TwitterDateUtils.dotPrefix(timestamp);
         } else {
-            formattedTimestamp = "";
+            formattedTimestamp = null;
         }
 
-        return formattedTimestamp;
+        return Optional.fromNullable(formattedTimestamp);
     }
 }
