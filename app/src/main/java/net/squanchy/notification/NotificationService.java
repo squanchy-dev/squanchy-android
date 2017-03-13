@@ -10,7 +10,7 @@ import java.util.Comparator;
 
 import net.squanchy.schedule.domain.view.Event;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 import io.reactivex.Observable;
 
@@ -18,49 +18,55 @@ public class NotificationService extends IntentService {
 
     private static final int NOTIFICATION_INTERVAL_MINUTES = 10;
 
-    private final NotificationCreator notificationCreator;
-    private final Notifier notifier;
+    private NotificationCreator notificationCreator;
+    private Notifier notifier;
 
     public NotificationService() {
         super(NotificationService.class.getSimpleName());
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
         notificationCreator = new NotificationCreator(this);
         notifier = Notifier.from(this);
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        DateTime notificationIntervalEnd = new DateTime().plusMinutes(NOTIFICATION_INTERVAL_MINUTES);
+        LocalDateTime notificationIntervalEnd = new LocalDateTime().plusMinutes(NOTIFICATION_INTERVAL_MINUTES);
 
         Observable<Event> favourites = Observable.empty(); // TODO load all events from somewhere
         Observable<Event> sortedFavourites = favourites.sorted(byStartDate());
 
+        LocalDateTime now = new LocalDateTime();
         sortedFavourites
-                .filter(event -> event.start().isAfterNow())
-                .filter(event -> isBeforeOrEqualTo(event.start(), notificationIntervalEnd))
+                .filter(event -> event.startTime().isAfter(now))
+                .filter(event -> isBeforeOrEqualTo(event.startTime(), notificationIntervalEnd))
                 .toList()
                 .map(notificationCreator::createFrom)
                 .subscribe(notifier::showNotifications);
 
         sortedFavourites
-                .filter(event -> event.start().isAfter(notificationIntervalEnd))
+                .filter(event -> event.startTime().isAfter(notificationIntervalEnd))
                 .take(1)
                 .subscribe(this::scheduleNextAlarm);
     }
 
-    private boolean isBeforeOrEqualTo(DateTime start, DateTime notificationIntervalEnd) {
+    private boolean isBeforeOrEqualTo(LocalDateTime start, LocalDateTime notificationIntervalEnd) {
         return start.isBefore(notificationIntervalEnd) || start.isEqual(notificationIntervalEnd);
     }
 
     private Comparator<Event> byStartDate() {
-        return (event1, event2) -> event1.start().compareTo(event2.start());
+        return (event1, event2) -> event1.startTime().compareTo(event2.startTime());
     }
 
     private void scheduleNextAlarm(Event event) {
-        DateTime serviceAlarm = event.start().minusMinutes(NOTIFICATION_INTERVAL_MINUTES);
+        LocalDateTime serviceAlarm = event.startTime().minusMinutes(NOTIFICATION_INTERVAL_MINUTES);
 
         Intent serviceIntent = new Intent(this, NotificationService.class);
         PendingIntent pendingIntent = PendingIntent.getService(this, 0, serviceIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, serviceAlarm.getMillis(), pendingIntent);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, serviceAlarm.toDateTime().getMillis(), pendingIntent);
     }
 }

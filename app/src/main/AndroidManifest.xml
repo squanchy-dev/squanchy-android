@@ -29,14 +29,10 @@
       android:theme="@style/Theme.Squanchy.EventDetails" />
 
     <activity
-      android:name="net.squanchy.social.SocialFeedActivity"
-      android:theme="@style/Theme.Squanchy.SocialFeed"
-      android:label="@string/activity_social_feed"
-      android:screenOrientation="portrait" />
-
-    <activity
-      android:name="net.squanchy.speaker.SpeakerListActivity"
-      android:label="@string/activity_speaker_list" />
+      android:name="net.squanchy.search.SearchActivity"
+      android:theme="@style/Theme.Squanchy.Search"
+      android:windowSoftInputMode="stateHidden"
+      android:launchMode="singleTop" />
 
     <receiver android:name="net.squanchy.notification.NotificationAlarmReceiver"
       android:directBootAware="true">

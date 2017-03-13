@@ -2,6 +2,7 @@ package net.squanchy.schedule.view;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +22,8 @@ import net.squanchy.R;
 import net.squanchy.imageloader.ImageLoader;
 import net.squanchy.imageloader.ImageLoaderInjector;
 import net.squanchy.speaker.domain.view.Speaker;
-import net.squanchy.support.lang.Lists;
+
+import static net.squanchy.support.lang.Lists.map;
 
 public class SpeakerView extends LinearLayout {
 
@@ -62,19 +64,16 @@ public class SpeakerView extends LinearLayout {
         super.onFinishInflate();
 
         speakerPhotoContainer = (ViewGroup) findViewById(R.id.speaker_photos_container);
-        speakerNameView = (TextView) findViewById(R.id.speaker_names);
+        speakerNameView = (TextView) findViewById(R.id.speaker_name);
     }
 
     public void updateWith(List<Speaker> speakers) {
         speakerNameView.setText(toCommaSeparatedNames(speakers));
-
         updateSpeakerPhotos(speakers);
     }
 
     private String toCommaSeparatedNames(List<Speaker> speakers) {
-        StringBuilder builder = Lists.reduce(new StringBuilder(), speakers, (sb, speaker) -> sb.append(speaker.fullName()).append(", "));
-        int stringLength = builder.length();
-        return builder.delete(stringLength - 2, stringLength).toString();
+        return TextUtils.join(", ", map(speakers, Speaker::name));
     }
 
     private void updateSpeakerPhotos(List<Speaker> speakers) {
@@ -93,7 +92,9 @@ public class SpeakerView extends LinearLayout {
         for (Speaker speaker : speakers) {
             ImageView photoView = recycleOrInflatePhotoView(photoViews);
             speakerPhotoContainer.addView(photoView);
-            loadSpeakerPhoto(photoView, speaker.avatarImageURL(), imageLoader);
+            if (speaker.avatarImageURL().isPresent()) {
+                loadSpeakerPhoto(photoView, speaker.avatarImageURL().get(), imageLoader);
+            }
         }
     }
 
@@ -110,8 +111,16 @@ public class SpeakerView extends LinearLayout {
     }
 
     private void loadSpeakerPhoto(ImageView photoView, String photoUrl, ImageLoader imageLoader) {
-        StorageReference photoReference = FirebaseStorage.getInstance().getReference(photoUrl);
-        imageLoader.load(photoReference).into(photoView);
+        if (isFirebaseStorageUrl(photoUrl)) {
+            StorageReference photoReference = FirebaseStorage.getInstance().getReference(photoUrl);
+            imageLoader.load(photoReference).into(photoView);
+        } else {
+            imageLoader.load(photoUrl).into(photoView);
+        }
+    }
+
+    private boolean isFirebaseStorageUrl(String url) {
+        return url.startsWith("gs://");            // TODO move elsewhere
     }
 
     private List<ImageView> getAllImageViewsContainedIn(ViewGroup container) {

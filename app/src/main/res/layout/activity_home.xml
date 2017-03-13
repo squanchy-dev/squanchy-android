@@ -5,20 +5,39 @@
   android:layout_height="match_parent"
   android:orientation="vertical">
 
-  <net.squanchy.navigation.view.NoSwipeViewPager
-    android:id="@+id/main_view_pager"
+  <FrameLayout
+    android:id="@+id/page_container"
     android:layout_width="match_parent"
     android:layout_height="0dp"
-    android:layout_weight="1"/>
+    android:layout_weight="1">
 
-  <android.support.design.widget.BottomNavigationView
+    <include
+      layout="@layout/view_page_schedule"
+      android:visibility="invisible" />
+
+    <include
+      layout="@layout/view_page_favorites"
+      android:visibility="invisible" />
+
+    <include
+      layout="@layout/view_page_tweets"
+      android:visibility="invisible" />
+
+    <include
+      layout="@layout/view_page_venue"
+      android:visibility="invisible" />
+
+  </FrameLayout>
+
+  <net.squanchy.support.widget.InterceptingBottomNavigationView
     android:id="@+id/bottom_navigation"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
     android:background="?colorPrimary"
-    app:itemIconTint="?colorControlNormal"
-    app:itemTextColor="?colorControlNormal"
+    android:descendantFocusability="beforeDescendants"
+    app:itemIconTint="@color/bottom_navigation_item"
+    app:itemTextColor="@color/bottom_navigation_item"
     app:menu="@menu/bottom_bar_menu" />
 
 </LinearLayout>

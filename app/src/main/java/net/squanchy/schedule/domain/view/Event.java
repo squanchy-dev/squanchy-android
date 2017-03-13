@@ -8,43 +8,54 @@ import java.util.List;
 
 import net.squanchy.eventdetails.domain.view.ExperienceLevel;
 import net.squanchy.speaker.domain.view.Speaker;
+import net.squanchy.support.lang.Optional;
 import net.squanchy.support.view.Visibility;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 @AutoValue
 public abstract class Event {
 
     public static Event create(
-            long eventId,
-            int dayId,
-            DateTime start,
-            DateTime end,
+            String eventId,
+            long numericEventId,
+            String dayId,
+            LocalDateTime startTime,
+            LocalDateTime endTime,
             String title,
             String place,
-            ExperienceLevel experienceLevel,
-            List<Speaker> speakers
-    ) {
+            Optional<ExperienceLevel> experienceLevel,
+            List<Speaker> speakers,
+            Type type) {
+        Optional<String> placeOptional = Optional.fromNullable(place);        // TODO get Optional<Place> as type in here
         return new AutoValue_Event.Builder()
                 .id(eventId)
-                .day(dayId)
-                .start(start)
-                .end(end)
+                .numericId(numericEventId)
+                .dayId(dayId)
+                .startTime(startTime)
+                .endTime(endTime)
                 .title(title)
-                .place(place)
-                .placeVisibility(place.isEmpty() ? View.GONE : View.VISIBLE)
+                .place(placeOptional)
+                .placeVisibility(placeOptional.isPresent() ? View.VISIBLE : View.GONE)
                 .speakers(speakers)
                 .speakersVisibility(speakers.isEmpty() ? View.GONE : View.VISIBLE)
                 .trackVisibility(View.GONE) // todo add track
                 .experienceLevel(experienceLevel)
+                .type(type)
                 .build();
     }
 
-    public abstract long id();
+    public abstract String id();
+
+    public abstract long numericId();
+
+    public abstract LocalDateTime startTime();
+
+    public abstract LocalDateTime endTime();
 
     public abstract String title();
 
-    public abstract String place();
+    public abstract Optional<String> place();
 
     @Visibility
     public abstract int placeVisibility();
@@ -57,13 +68,11 @@ public abstract class Event {
     @Visibility
     public abstract int speakersVisibility();
 
-    public abstract ExperienceLevel experienceLevel();
+    public abstract Optional<ExperienceLevel> experienceLevel();
 
-    public abstract int day();
+    public abstract String dayId();
 
-    public abstract DateTime start();
-
-    public abstract DateTime end();
+    public abstract Type type();
 
     public String speakersNames() {
         StringBuilder speakersBuilder = new StringBuilder();
@@ -72,7 +81,7 @@ public abstract class Event {
                 speakersBuilder.append(", ");
             }
 
-            speakersBuilder.append(speaker.fullName());
+            speakersBuilder.append(speaker.name());
         }
 
         return speakersBuilder.toString();
@@ -81,17 +90,19 @@ public abstract class Event {
     @AutoValue.Builder
     public abstract static class Builder {
 
-        public abstract Builder id(long id);
+        public abstract Builder id(String id);
 
-        public abstract Builder day(int day);
+        public abstract Builder numericId(long id);
 
-        public abstract Builder start(DateTime start);
+        public abstract Builder dayId(String dayId);
 
-        public abstract Builder end(DateTime end);
+        public abstract Builder startTime(LocalDateTime startTime);
+
+        public abstract Builder endTime(LocalDateTime endTime);
 
         public abstract Builder title(String title);
 
-        public abstract Builder place(String place);
+        public abstract Builder place(Optional<String> place);
 
         public abstract Builder placeVisibility(@Visibility int placeVisibility);
 
@@ -101,8 +112,35 @@ public abstract class Event {
 
         public abstract Builder speakersVisibility(@Visibility int speakersVisibility);
 
-        public abstract Builder experienceLevel(ExperienceLevel experienceLevel);
+        public abstract Builder experienceLevel(Optional<ExperienceLevel> experienceLevel);
+
+        public abstract Builder type(Type type);
 
         public abstract Event build();
+    }
+
+    public enum Type {
+        REGISTRATION("registration"),
+        TALK("talk"),
+        KEYNOTE("keynote"),
+        COFFEE_BREAK("coffee_break"),
+        LUNCH("lunch"),
+        SOCIAL("social"),
+        OTHER("other");
+
+        private final String rawType;
+
+        Type(String rawType) {
+            this.rawType = rawType;
+        }
+
+        public static Type fromRawType(String rawType) {
+            for (Type type : values()) {
+                if (type.rawType.equalsIgnoreCase(rawType)) {
+                    return type;
+                }
+            }
+            throw new IllegalArgumentException("Unsupported raw event type: " + rawType);
+        }
     }
 }

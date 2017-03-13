@@ -16,8 +16,9 @@ import net.squanchy.notification.Notifier;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.service.firebase.model.FirebaseSpeaker;
 import net.squanchy.speaker.domain.view.Speaker;
+import net.squanchy.support.lang.Optional;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 @SuppressWarnings("checkstyle:magicnumber")
 public class DebugActivity extends Activity {
@@ -61,30 +62,30 @@ public class DebugActivity extends Activity {
     }
 
     private Event createTestEvent(int id) {
-        DateTime start = new DateTime().plusMinutes(5);
-        DateTime end = new DateTime().plusMinutes(45);
+        LocalDateTime start = new LocalDateTime().plusMinutes(5);
+        LocalDateTime end = new LocalDateTime().plusMinutes(45);
         return Event.create(
+                String.valueOf(id),
                 id,
-                1,
+                "1",
                 start,
                 end,
                 "A very interesting talk",
                 "That room over there",
-                ExperienceLevel.ADVANCED,
-                createTalkSpeakers()
+                Optional.of(ExperienceLevel.ADVANCED),
+                createTalkSpeakers(),
+                Event.Type.TALK
         );
     }
 
     private List<Speaker> createTalkSpeakers() {
         List<Speaker> speakers = new ArrayList<>(2);
         FirebaseSpeaker firebaseSpeaker = new FirebaseSpeaker();
-        firebaseSpeaker.speakerId = 101L;
-        firebaseSpeaker.firstName = "Ajeje";
-        firebaseSpeaker.lastName = "Brazorf";
-        firebaseSpeaker.jobTitle = "Uber-Experienced Pusher of PHP";
-        firebaseSpeaker.avatarImageURL = "https://yt3.ggpht.com/-d35Rq8vqvmE/AAAAAAAAAAI/AAAAAAAAAAA/zy1VyiRTNec/s900-c-k-no-mo-rj-c0xffffff/photo.jpg";
+        firebaseSpeaker.id = "1";
+        firebaseSpeaker.name = "Ajeje Brazorf";
+        firebaseSpeaker.photo_url = "https://yt3.ggpht.com/-d35Rq8vqvmE/AAAAAAAAAAI/AAAAAAAAAAA/zy1VyiRTNec/s900-c-k-no-mo-rj-c0xffffff/photo.jpg";
 
-        speakers.add(Speaker.create(firebaseSpeaker));
+        speakers.add(Speaker.create(firebaseSpeaker, 101L));
         return speakers;
     }
 

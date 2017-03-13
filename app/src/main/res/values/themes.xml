@@ -26,8 +26,28 @@
     <item name="android:statusBarColor">@color/status_bar_primary</item>
   </style>
 
+  <style name="Theme.Squanchy.Schedule" parent="Theme.Squanchy">
+    <item name="android:statusBarColor">@color/status_bar_primary</item>
+  </style>
+
+  <style name="Theme.Squanchy.Favorites" parent="Theme.Squanchy" />
+
+  <style name="Theme.Squanchy.Tweets" parent="Theme.Squanchy">
+    <item name="colorPrimary">@color/primary_azure</item>
+    <item name="colorPrimaryDark">@color/primary_dark_azure</item>
+    <item name="android:statusBarColor">@color/status_bar_primary_azure</item>
+  </style>
+
+  <style name="Theme.Squanchy.VenueInfo" parent="Theme.Squanchy">
+    <item name="colorPrimary">@color/primary_blue</item>
+  </style>
+
   <style name="Theme.Squanchy.EventDetails" parent="Theme.Squanchy" />
 
-  <style name="Theme.Squanchy.SocialFeed" parent="Theme.Squanchy" />
+  <style name="Theme.Squanchy.Search" parent="Theme.Squanchy">
+    <item name="colorPrimary">@color/window_background</item>
+    <item name="colorAccent">@color/primary</item>
+    <item name="android:statusBarColor">@color/status_bar_primary</item>
+  </style>
 
 </resources>

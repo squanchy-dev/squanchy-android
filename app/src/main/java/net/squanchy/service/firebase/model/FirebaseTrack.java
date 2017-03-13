@@ -1,12 +1,19 @@
 package net.squanchy.service.firebase.model;
 
+import android.support.annotation.Nullable;
+
 public class FirebaseTrack {
 
-    public Long trackId;
+    public String id;
 
-    public String trackName;
+    public String name;
 
-    public Long order;
+    @Nullable
+    public String accent_color;
 
-    public Boolean deleted;
+    @Nullable
+    public String text_color;
+
+    @Nullable
+    public String icon_url;
 }

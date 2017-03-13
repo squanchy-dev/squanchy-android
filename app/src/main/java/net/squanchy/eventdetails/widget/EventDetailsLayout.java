@@ -2,14 +2,17 @@ package net.squanchy.eventdetails.widget;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.squanchy.R;
-import net.squanchy.eventdetails.domain.view.ExperienceLevel;
 import net.squanchy.schedule.domain.view.Event;
+import net.squanchy.speaker.domain.view.Speaker;
+
+import static net.squanchy.support.lang.Lists.map;
 
 public class EventDetailsLayout extends LinearLayout {
 
@@ -48,12 +51,29 @@ public class EventDetailsLayout extends LinearLayout {
 
     public void updateWith(Event event) {
         // TODO create proper EventDetails model that we can use here
-        placeView.setVisibility(event.placeVisibility());
-        placeView.setText(event.place());
-        speakersView.setVisibility(event.speakersVisibility());
-        speakersView.setText(event.speakersNames());
+        updatePlaceData(event);
+        updateSpeakerData(event);
         trackView.setVisibility(event.trackVisibility());
-        experienceLevelIconView.setExperienceLevel(ExperienceLevel.BEGINNER);
-        experienceLevelLabelView.setText(ExperienceLevel.BEGINNER.labelStringResId());
+        updateExperienceLevelData(event);
+    }
+
+    private void updatePlaceData(Event event) {
+        placeView.setVisibility(event.placeVisibility());
+        if (event.place().isPresent()) {
+            placeView.setText(event.place().get());
+        }
+    }
+
+    private void updateSpeakerData(Event event) {
+        speakersView.setVisibility(event.speakersVisibility());
+        String speakersNames = TextUtils.join(", ", map(event.speakers(), Speaker::name));
+        speakersView.setText(speakersNames);
+    }
+
+    private void updateExperienceLevelData(Event event) {
+        if (event.experienceLevel().isPresent()) {
+            experienceLevelIconView.setExperienceLevel(event.experienceLevel().get());
+            experienceLevelLabelView.setText(event.experienceLevel().get().labelStringResId());
+        }
     }
 }

@@ -3,7 +3,6 @@
 
   <string name="activity_social_feed">Social Feed</string>
   <string name="activity_schedule">Schedule</string>
-  <string name="activity_speaker_list">Speakers</string>
 
   <string name="experience_level_beginner">beginner</string>
   <string name="experience_level_intermediate">intermediate</string>
@@ -23,8 +22,11 @@
   </plurals>
 
   <string name="bottom_bar_schedule_label">Schedule</string>
-  <string name="bottom_bar_favourite_label">Favourites</string>
-  <string name="bottom_bar_twitter_label">Tweets</string>
+  <string name="bottom_bar_favorites_label">Favorites</string>
+  <string name="bottom_bar_tweets_label">Tweets</string>
   <string name="bottom_bar_venue_label">Venue Info</string>
+  <string name="search_label">Search</string>
+  <string name="voice_search">Voice search</string>
+  <string name="speaker_list_title">Droidcon speakers</string>
 
 </resources>

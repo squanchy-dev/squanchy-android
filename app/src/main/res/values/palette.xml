@@ -15,9 +15,11 @@
   <color name="primary_dark_purple">#8051ae</color>
 
   <color name="primary_azure">#1da1f2</color>
+  <color name="primary_dark_azure">#177fbf</color>
 
   <color name="status_bar">#11000000</color>
-  <color name="status_bar_primary">#BC594E</color>
+  <color name="status_bar_primary">#bc594e</color>
+  <color name="status_bar_primary_azure">#2181bf</color>
   <color name="window_background">#f1f1f1</color>
 
   <color name="button_inverse">#fafdff</color>
@@ -34,6 +36,6 @@
 
   <color name="shadows">#19000000</color>
   <color name="white">#ffffff</color>
-  <color name="white_87">#ddffffff</color>
+  <color name="white_60">#99ffffff</color>
 
 </resources>

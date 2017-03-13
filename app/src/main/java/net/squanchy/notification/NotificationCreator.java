@@ -43,14 +43,15 @@ public class NotificationCreator {
     }
 
     private Notification createFrom(Event event) {
+        long millis = event.startTime().toDateTime().getMillis();
         NotificationCompat.Builder notificationBuilder = createDefaultBuilder(1);
         notificationBuilder
-                .setContentIntent(createPendingIntentForSingleEvent(event.day(), event.id()))
+                .setContentIntent(createPendingIntentForSingleEvent(event.id()))
                 .setContentTitle(event.title())
-                .setContentText(event.place())
+                .setContentText(event.place().or(""))
                 //.setColor(track.color().getIntValue()) TODO set color depending on the track
                 .setUsesChronometer(true)
-                .setWhen(event.start().getMillis())
+                .setWhen(event.startTime().toDateTime().getMillis())
                 .setShowWhen(true)
                 .setGroup(GROUP_KEY_NOTIFY_SESSION);
 
@@ -100,9 +101,9 @@ public class NotificationCreator {
                 .extend(extender);
     }
 
-    private PendingIntent createPendingIntentForSingleEvent(int day, long eventId) {
+    private PendingIntent createPendingIntentForSingleEvent(String eventId) {
         TaskStackBuilder taskBuilder = createBaseTaskStackBuilder();
-        Intent eventDetailIntent = EventDetailsActivity.createIntent(context, day, eventId);
+        Intent eventDetailIntent = EventDetailsActivity.createIntent(context, eventId);
         taskBuilder.addNextIntent(eventDetailIntent);
 
         return taskBuilder.getPendingIntent(0, PendingIntent.FLAG_CANCEL_CURRENT);

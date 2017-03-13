@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/favorites_content_root"
+  android:theme="@style/Theme.Squanchy.Favorites"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:gravity="center"
+  android:text="@string/bottom_bar_favorites_label"
+  android:textAppearance="@style/TextAppearance.Squanchy.Card.Title" />

@@ -1,34 +1,37 @@
 package net.squanchy.service.firebase.model;
 
+import android.support.annotation.Nullable;
+
 import java.util.List;
 
 public class FirebaseEvent {
 
-    public Long eventId;
-
-    public String from;
-
-    public String to;
-
-    public Long type;
+    public String id;
 
     public String name;
 
-    public List<Long> speakers;
+    public String type;
 
-    public Long track;
+    public String short_description;
 
-    public Integer experienceLevel;
+    public Long start_time;
 
-    public String place;
+    public Long end_time;
 
-    public String text;
+    public String day_id;
 
-    public String link;
+    @Nullable
+    public String track_id;
 
-    public Long order;
+    @Nullable
+    public String experience_level;
 
-    public Boolean deleted;
+    @Nullable
+    public String place_id;
 
-    public String version;
+    @Nullable
+    public List<String> speaker_ids;
+
+    @Nullable
+    public FirebaseLinks links;
 }

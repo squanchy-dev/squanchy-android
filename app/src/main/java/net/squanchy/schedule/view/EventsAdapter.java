@@ -1,18 +1,28 @@
 package net.squanchy.schedule.view;
 
 import android.content.Context;
+import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import net.squanchy.R;
-import net.squanchy.schedule.domain.view.Event;
-
 import java.util.Collections;
 import java.util.List;
 
+import net.squanchy.R;
+import net.squanchy.schedule.domain.view.Event;
+
 class EventsAdapter extends RecyclerView.Adapter<EventViewHolder> {
+
+    private LayoutInflater layoutInflater;
+
+    @IntDef(value = {ItemViewType.TYPE_TALK, ItemViewType.TYPE_OTHER})
+    @interface ItemViewType {
+
+        int TYPE_TALK = 0;
+        int TYPE_OTHER = 1;
+    }
 
     private final Context context;
 
@@ -24,11 +34,12 @@ class EventsAdapter extends RecyclerView.Adapter<EventViewHolder> {
     EventsAdapter(Context context) {
         this.context = context;
         setHasStableIds(true);
+        layoutInflater = LayoutInflater.from(context);
     }
 
     @Override
     public long getItemId(int position) {
-        return events.get(position).id();
+        return events.get(position).numericId();
     }
 
     void updateWith(List<Event> events, ScheduleViewPagerAdapter.OnEventClickedListener listener) {
@@ -37,9 +48,34 @@ class EventsAdapter extends RecyclerView.Adapter<EventViewHolder> {
     }
 
     @Override
-    public EventViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        EventItemView itemView = (EventItemView) LayoutInflater.from(context)
-                .inflate(R.layout.item_schedule_event, parent, false);
+    @ItemViewType
+    public int getItemViewType(int position) {
+        Event.Type itemType = events.get(position).type();
+        switch (itemType) {
+            case KEYNOTE:
+            case TALK:
+                return ItemViewType.TYPE_TALK;
+            case COFFEE_BREAK:
+            case LUNCH:
+            case OTHER:
+            case REGISTRATION:
+            case SOCIAL:
+                return ItemViewType.TYPE_OTHER;
+            default:
+                throw new IllegalArgumentException("Item of type " + itemType + " is not supported");
+        }
+    }
+
+    @Override
+    public EventViewHolder onCreateViewHolder(ViewGroup parent, @ItemViewType int viewType) {
+        EventItemView itemView;
+        if (viewType == ItemViewType.TYPE_TALK) {
+            itemView = (EventItemView) layoutInflater.inflate(R.layout.item_schedule_event_talk, parent, false);
+        } else if (viewType == ItemViewType.TYPE_OTHER) {
+            itemView = (EventItemView) layoutInflater.inflate(R.layout.item_schedule_event_other, parent, false);
+        } else {
+            throw new IllegalArgumentException("View type not supported: " + viewType);
+        }
         return new EventViewHolder(itemView);
     }
 

@@ -14,8 +14,11 @@
   <dimen name="card_horizontal_margin">16dp</dimen>
   <dimen name="card_vertical_margin">16dp</dimen>
   <dimen name="card_elevation">6dp</dimen>
+  <dimen name="card_elevation_active">6dp</dimen>
+  <dimen name="card_pressed_z_translation">2dp</dimen>
   <dimen name="card_padding_horizontal">16dp</dimen>
-  <dimen name="card_padding_vertical">8dp</dimen>
+  <dimen name="card_padding_top">12dp</dimen>
+  <dimen name="card_padding_bottom">8dp</dimen>
   <dimen name="card_timestamp">14sp</dimen>
   <dimen name="card_timestamp_margin_top">4dp</dimen>
   <dimen name="card_experience_icon">24dp</dimen>
@@ -25,6 +28,14 @@
   <dimen name="card_speaker">14sp</dimen>
   <dimen name="card_speaker_line_spacing_extra">4sp</dimen>
   <dimen name="card_speaker_photo">24dp</dimen>
+  <dimen name="card_speaker_photo_big">48dp</dimen>
   <dimen name="card_speaker_margin_end">2dp</dimen>
+  <dimen name="card_other_illustration_width">132dp</dimen>
+  <dimen name="card_other_illustration_height">62dp</dimen>
+
+  <dimen name="search_title_margin">16dp</dimen>
+  <dimen name="card_search_item_padding">8dp</dimen>
+  <dimen name="card_search_item_photo_margin_bottom">4dp</dimen>
+  <dimen name="search_header_padding">16dp</dimen>
 
 </resources>

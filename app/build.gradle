@@ -109,7 +109,6 @@ dependencies {
     compile libraries.app.glide
     compile libraries.app.glideOkHttp3
     compile libraries.app.jodaTimeAndroid
-    compile libraries.app.optional
     compile libraries.app.playAnalytics
     compile libraries.app.rx
     compile libraries.app.rxAndroid

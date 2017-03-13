@@ -7,9 +7,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Locale;
 
+import net.squanchy.service.firebase.model.FirebaseDays;
 import net.squanchy.service.firebase.model.FirebaseEvent;
-import net.squanchy.service.firebase.model.FirebaseInfoItems;
-import net.squanchy.service.firebase.model.FirebaseSchedule;
+import net.squanchy.service.firebase.model.FirebaseEvents;
 import net.squanchy.service.firebase.model.FirebaseSpeakers;
 
 import io.reactivex.Observable;
@@ -18,6 +18,11 @@ import io.reactivex.schedulers.Schedulers;
 
 public final class UnauthenticatedFirebaseDbService implements FirebaseDbService {
 
+    private static final String DAYS_NODE = "days";
+    private static final String SPEAKERS_NODE = "speakers";
+    private static final String EVENTS_NODE = "events";
+    private static final String EVENTS_BY_ID_NODE = "events/events/%1$s";
+
     private final DatabaseReference database;
 
     public UnauthenticatedFirebaseDbService(DatabaseReference database) {
@@ -25,23 +30,23 @@ public final class UnauthenticatedFirebaseDbService implements FirebaseDbService
     }
 
     @Override
-    public Observable<FirebaseInfoItems> info() {
-        return observeChild("info", FirebaseInfoItems.class);
+    public Observable<FirebaseDays> days() {
+        return observeChild(DAYS_NODE, FirebaseDays.class);
     }
 
     @Override
     public Observable<FirebaseSpeakers> speakers() {
-        return observeChild("speakers", FirebaseSpeakers.class);
+        return observeChild(SPEAKERS_NODE, FirebaseSpeakers.class);
     }
 
     @Override
-    public Observable<FirebaseSchedule> sessions() {
-        return observeChild("sessions", FirebaseSchedule.class);
+    public Observable<FirebaseEvents> events() {
+        return observeChild(EVENTS_NODE, FirebaseEvents.class);
     }
 
     @Override
-    public Observable<FirebaseEvent> event(int dayId, int eventId) {
-        String path = String.format(Locale.US, "sessions/days/%1$d/events/%2$d", dayId, eventId);
+    public Observable<FirebaseEvent> event(String eventId) {
+        String path = String.format(Locale.US, EVENTS_BY_ID_NODE, eventId);
         return observeChild(path, FirebaseEvent.class);
     }
 

@@ -10,17 +10,17 @@
     app:showAsAction="ifRoom" />
 
   <item
-    android:id="@+id/action_favourite"
+    android:id="@+id/action_favorites"
     android:enabled="true"
-    android:icon="@drawable/ic_favourites_default"
-    android:title="@string/bottom_bar_favourite_label"
+    android:icon="@drawable/ic_favorites_default"
+    android:title="@string/bottom_bar_favorites_label"
     app:showAsAction="ifRoom" />
 
   <item
-    android:id="@+id/action_tweet"
+    android:id="@+id/action_tweets"
     android:enabled="true"
     android:icon="@drawable/ic_twitter_default"
-    android:title="@string/bottom_bar_twitter_label"
+    android:title="@string/bottom_bar_tweets_label"
     app:showAsAction="ifRoom" />
 
   <item

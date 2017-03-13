@@ -13,7 +13,7 @@ public final class ScheduleInjector {
     public static ScheduleComponent obtain(Context context) {
         return DaggerScheduleComponent.builder()
                 .applicationComponent(ApplicationInjector.obtain(context))
-                .scheduleModule(new ScheduleModule())
+                .scheduleModule(new ScheduleModule(context))
                 .build();
     }
 }
