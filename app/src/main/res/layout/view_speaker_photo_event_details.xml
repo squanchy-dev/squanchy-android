@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<net.squanchy.support.widget.CircleImageView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/speaker_photo"
+  style="@style/EventDetails.Header.Speaker.Photo"
+  android:layout_width="@dimen/event_details_speaker_photo"
+  android:layout_height="@dimen/event_details_speaker_photo"
+  android:layout_marginEnd="@dimen/event_details_speaker_photo_margin_end"
+  tools:src="?colorAccent" />

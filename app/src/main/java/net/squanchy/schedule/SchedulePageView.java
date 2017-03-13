@@ -61,7 +61,7 @@ public class SchedulePageView extends CoordinatorLayout {
     private void setupToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.activity_schedule);
-        toolbar.inflateMenu(R.menu.search_icon_menu);
+        toolbar.inflateMenu(R.menu.search_icon);
         toolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.action_search) {
                 navigate.toSearch();

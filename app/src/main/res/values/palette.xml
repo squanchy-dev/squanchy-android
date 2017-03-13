@@ -2,9 +2,8 @@
 
 <resources>
 
-  <color name="primary">#ec6e61</color>
-  <color name="primary_dark">#d76255</color>
-  <color name="primary_dark_text">#c25246</color>
+  <color name="primary">#e65b77</color>
+  <color name="primary_dark">#bf4c63</color>
   <color name="accent">#67b6e2</color>
 
   <color name="primary_blue">#80c7db</color>
@@ -18,7 +17,7 @@
   <color name="primary_dark_azure">#177fbf</color>
 
   <color name="status_bar">#11000000</color>
-  <color name="status_bar_primary">#bc594e</color>
+  <color name="status_bar_primary">#9f324b</color>
   <color name="status_bar_primary_azure">#2181bf</color>
   <color name="window_background">#f1f1f1</color>
 
