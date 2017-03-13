@@ -1,4 +1,4 @@
-package net.squanchy.tweets;
+package net.squanchy.tweets.view;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +11,7 @@ import com.twitter.sdk.android.tweetui.Timeline;
 import com.twitter.sdk.android.tweetui.internal.TimelineDelegate;
 
 import net.squanchy.R;
+import net.squanchy.tweets.TweetsPageView;
 
 public class TweetsAdapter extends RecyclerView.Adapter<TweetViewHolder> {
 
@@ -42,7 +43,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetViewHolder> {
         return delegate.getCount() == 0;
     }
 
-    void refresh(TweetsPageView.TimelineLoadingCallback timelineLoadingCallback) {
+    public void refresh(TweetsPageView.TimelineLoadingCallback timelineLoadingCallback) {
         delegate.refresh(timelineLoadingCallback);
     }
 }

@@ -11,6 +11,7 @@ import net.squanchy.R;
 import net.squanchy.support.lang.Optional;
 import net.squanchy.support.widget.CardLayout;
 import net.squanchy.tweets.util.TweetFormatter;
+import net.squanchy.tweets.util.TwitterDateUtils;
 
 public class TweetItemView extends CardLayout {
 

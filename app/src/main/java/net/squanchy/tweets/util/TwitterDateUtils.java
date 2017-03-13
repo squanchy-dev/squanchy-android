@@ -1,4 +1,4 @@
-package net.squanchy.tweets.view;
+package net.squanchy.tweets.util;
 
 import android.content.res.Resources;
 import android.text.format.DateUtils;
@@ -9,16 +9,20 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-class TwitterDateUtils {
+public class TwitterDateUtils {
+
     // Sat Mar 14 02:34:20 +0000 2009
     private static final SimpleDateFormat DATE_TIME_RFC822 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.ENGLISH);
     private static final SimpleDateFormat RELATIVE_DATE_FORMAT = new SimpleDateFormat("MM/dd/yy", Locale.ENGLISH);
     private static final long INVALID_DATE = -1;
 
-    private TwitterDateUtils() {}
+    private TwitterDateUtils() {
+    }
 
-    static long apiTimeToLong(String apiTime) {
-        if (apiTime == null) return INVALID_DATE;
+    public static long apiTimeToLong(String apiTime) {
+        if (apiTime == null) {
+            return INVALID_DATE;
+        }
 
         try {
             return DATE_TIME_RFC822.parse(apiTime).getTime();
@@ -27,7 +31,7 @@ class TwitterDateUtils {
         }
     }
 
-    static boolean isValidTimestamp(String timestamp) {
+    public static boolean isValidTimestamp(String timestamp) {
         return apiTimeToLong(timestamp) != INVALID_DATE;
     }
 
@@ -36,12 +40,12 @@ class TwitterDateUtils {
      * time state. If a timestamp is in the future we return it as an absolute date string. Within
      * the same second we return 0s
      *
-     * @param res resource
+     * @param res               resource
      * @param currentTimeMillis timestamp for offset
-     * @param timestamp timestamp
+     * @param timestamp         timestamp
      * @return the relative time string
      */
-    static String getRelativeTimeString(Resources res, long currentTimeMillis, long timestamp) {
+    public static String getRelativeTimeString(Resources res, long currentTimeMillis, long timestamp) {
         final long diff = currentTimeMillis - timestamp;
         if (diff >= 0) {
             if (diff < DateUtils.MINUTE_IN_MILLIS) { // Less than a minute ago

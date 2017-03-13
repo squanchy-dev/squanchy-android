@@ -15,6 +15,7 @@ import com.twitter.sdk.android.tweetui.SearchTimeline;
 import com.twitter.sdk.android.tweetui.TimelineResult;
 
 import net.squanchy.R;
+import net.squanchy.tweets.view.TweetsAdapter;
 
 import timber.log.Timber;
 
@@ -69,19 +70,21 @@ public class TweetsPageView extends LinearLayout {
     }
 
     private void initList() {
+
+        Context context = getContext();
+        String query = context.getString(R.string.droidcon_hashtag);
+
         if (!isInEditMode()) {
-            Context context = getContext();
-            String query = context.getString(R.string.droidcon_hashtag);
             SearchTimeline timeline = new SearchTimeline.Builder()
                     .query(query)
                     .build();
 
             tweetsAdapter = new TweetsAdapter(timeline, context);
             tweetsList.setAdapter(tweetsAdapter);
-
-            emptyView.setText(context.getString(R.string.no_tweets_for_query, query));
-            refreshTimeline();
         }
+
+        emptyView.setText(context.getString(R.string.no_tweets_for_query, query));
+        refreshTimeline();
     }
 
     private void refreshTimeline() {
@@ -105,7 +108,7 @@ public class TweetsPageView extends LinearLayout {
         tweetsAdapter.notifyDataSetChanged();
     }
 
-    class TimelineLoadingCallback extends Callback<TimelineResult<Tweet>> {
+    public class TimelineLoadingCallback extends Callback<TimelineResult<Tweet>> {
 
         @Override
         public void success(Result<TimelineResult<Tweet>> result) {
@@ -116,7 +119,6 @@ public class TweetsPageView extends LinearLayout {
         public void failure(TwitterException exception) {
             onRefreshFinished();
             Timber.e(exception, "Error while refreshing the timeline.");
-            // TODO show empty state
         }
     }
 }
