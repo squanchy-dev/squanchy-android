@@ -2,6 +2,8 @@ package net.squanchy.tweets;
 
 import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -22,8 +24,8 @@ import timber.log.Timber;
 public class TweetsPageView extends LinearLayout {
 
     private TextView emptyView;
-    private ListView tweetsList;
-    private TweetTimelineListAdapter tweetsAdapter;
+    private RecyclerView tweetsList;
+    private TweetsAdapter tweetsAdapter;
     private SwipeRefreshLayout swipeLayout;
     private boolean refreshingData;
 
@@ -51,7 +53,7 @@ public class TweetsPageView extends LinearLayout {
         super.onFinishInflate();
 
         emptyView = (TextView) findViewById(R.id.empty_view);
-        tweetsList = (ListView) findViewById(R.id.list);
+        tweetsList = (RecyclerView) findViewById(R.id.tweet_feed);
         swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_container);
 
         swipeLayout.setOnRefreshListener(() -> {
@@ -72,19 +74,26 @@ public class TweetsPageView extends LinearLayout {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
+        initList();
+    }
 
-        Context context = getContext();
-        String query = context.getString(R.string.social_query);
-        SearchTimeline timeline = new SearchTimeline.Builder()
-                .query(query)
-                .build();
+    private void initList(){
+        if (!isInEditMode()){
+            Context context = getContext();
+            String query = "Droidconit";
+            SearchTimeline timeline = new SearchTimeline.Builder()
+                        .query(query)
+                        .build();
 
-        tweetsAdapter = new TweetTimelineListAdapter.Builder(context)
-                .setTimeline(timeline)
-                .build();
 
-        tweetsList.setAdapter(tweetsAdapter);
-        emptyView.setText(context.getString(R.string.no_tweets_for_query, query));
+            tweetsList.setLayoutManager(new LinearLayoutManager(context));
+
+            tweetsAdapter = new TweetsAdapter(timeline, context);
+
+            tweetsList.setAdapter(tweetsAdapter);
+            emptyView.setText(context.getString(R.string.no_tweets_for_query, query));
+            refreshTimeline();
+        }
     }
 
     private void refreshTimeline() {
@@ -105,9 +114,10 @@ public class TweetsPageView extends LinearLayout {
         }
 
         swipeLayout.setRefreshing(false);
+        tweetsAdapter.notifyDataSetChanged();
     }
 
-    private class TimelineLoadingCallback extends Callback<TimelineResult<Tweet>> {
+    class TimelineLoadingCallback extends Callback<TimelineResult<Tweet>> {
 
         @Override
         public void success(Result<TimelineResult<Tweet>> result) {
