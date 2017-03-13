@@ -1,6 +1,7 @@
 package net.squanchy.tweets.view;
 
 import android.content.Context;
+import android.text.method.LinkMovementMethod;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
@@ -9,6 +10,7 @@ import com.twitter.sdk.android.core.models.Tweet;
 import net.squanchy.R;
 import net.squanchy.support.lang.Optional;
 import net.squanchy.support.widget.CardLayout;
+import net.squanchy.tweets.util.TweetFormatter;
 
 public class TweetItemView extends CardLayout {
 
@@ -29,21 +31,22 @@ public class TweetItemView extends CardLayout {
 
         tweetText = (TextView) findViewById(R.id.tweet_text);
         tweetTimestamp = (TextView) findViewById(R.id.tweet_timestamp);
+
+        tweetText.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     public void updateWith(Tweet tweet) {
-        tweetText.setText(tweet.text);
+        tweetText.setText(TweetFormatter.format(tweet));
         tweetTimestamp.setText(getTimestampFrom(tweet));
     }
 
-    private String getTimestampFrom(Tweet displayTweet){
-        return getOptionalTimestamp(displayTweet)
+    private String getTimestampFrom(Tweet tweet) {
+        return getOptionalTimestamp(tweet.createdAt)
                 .or(getContext().getString(R.string.tweet_date_not_available));
     }
 
-    private Optional<String> getOptionalTimestamp(Tweet displayTweet) {
+    private Optional<String> getOptionalTimestamp(String date) {
         final String formattedTimestamp;
-        final String date = displayTweet.createdAt;
 
         if (date != null && TwitterDateUtils.isValidTimestamp(date)) {
             final Long createdAtTimestamp = TwitterDateUtils.apiTimeToLong(date);

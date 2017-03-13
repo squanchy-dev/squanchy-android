@@ -19,6 +19,7 @@
       style="@style/Tweet.Card.Title"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:bufferType="spannable"
       tools:text="Ecco il mio tweet" />
 
     <TextView
