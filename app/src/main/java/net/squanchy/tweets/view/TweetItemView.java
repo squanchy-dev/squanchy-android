@@ -33,11 +33,15 @@ public class TweetItemView extends CardLayout {
 
     public void updateWith(Tweet tweet) {
         tweetText.setText(tweet.text);
-        tweetTimestamp.setText(getTimestampFrom(tweet)
-                .or(getContext().getString(R.string.tweet_date_not_available)));
+        tweetTimestamp.setText(getTimestampFrom(tweet));
     }
 
-    private Optional<String> getTimestampFrom(Tweet displayTweet) {
+    private String getTimestampFrom(Tweet displayTweet){
+        return getOptionalTimestamp(displayTweet)
+                .or(getContext().getString(R.string.tweet_date_not_available));
+    }
+
+    private Optional<String> getOptionalTimestamp(Tweet displayTweet) {
         final String formattedTimestamp;
         final String date = displayTweet.createdAt;
 
