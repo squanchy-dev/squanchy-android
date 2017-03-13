@@ -30,13 +30,14 @@
         android:id="@+id/speaker_photos_container"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/event_details_speaker_photo"
+        android:layout_marginBottom="@dimen/event_details_speaker_margin_bottom"
         android:orientation="horizontal"
         tools:layout_width="@dimen/event_details_speaker_photo"
         tools:background="?colorAccent" />
 
       <TextView
         android:id="@+id/speaker_name"
-        style="@style/Schedule.Card.Speaker.Names"
+        style="@style/EventDetails.Header.Speaker.Names"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Qi Qu" />
@@ -45,14 +46,12 @@
 
     <TextView
       android:id="@+id/title"
+      style="@style/EventDetails.Header.Title"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginStart="@dimen/event_details_header_padding_start"
       android:layout_marginEnd="@dimen/event_details_header_padding_end"
-      android:layout_marginBottom="@dimen/event_details_header_padding_bottom"
-      android:textAppearance="@style/Squanchy.Toolbar.TextAppearance"
-      android:textColor="?android:textColorPrimary"
-      app:fontPath="?titleTypeface" />
+      android:layout_marginBottom="@dimen/event_details_header_padding_bottom" />
 
   </net.squanchy.eventdetails.widget.EventDetailsHeaderLayout>
 

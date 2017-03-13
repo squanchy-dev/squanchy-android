@@ -4,15 +4,15 @@
   style="@style/Search.GenericItem"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:padding="@dimen/card_search_item_padding">
+  android:padding="@dimen/search_card_item_padding">
 
   <net.squanchy.support.widget.CircleImageView
     android:id="@+id/speaker_photo"
     style="@style/Schedule.Card.Speaker.Photo"
-    android:layout_width="@dimen/card_speaker_photo_big"
-    android:layout_height="@dimen/card_speaker_photo_big"
+    android:layout_width="@dimen/search_photo"
+    android:layout_height="@dimen/search_photo"
     android:layout_gravity="center_horizontal"
-    android:layout_marginBottom="@dimen/card_search_item_photo_margin_bottom"
+    android:layout_marginBottom="@dimen/search_card_item_photo_margin_bottom"
     tools:src="@mipmap/ic_launcher" />
 
   <TextView

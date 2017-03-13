@@ -28,23 +28,27 @@
   <dimen name="card_speaker">14sp</dimen>
   <dimen name="card_speaker_line_spacing_extra">4sp</dimen>
   <dimen name="card_speaker_photo">24dp</dimen>
-  <dimen name="card_speaker_photo_big">48dp</dimen>
   <dimen name="card_speaker_margin_end">2dp</dimen>
   <dimen name="card_other_illustration_width">132dp</dimen>
   <dimen name="card_other_illustration_height">62dp</dimen>
 
   <dimen name="search_title_margin">16dp</dimen>
-  <dimen name="card_search_item_padding">8dp</dimen>
-  <dimen name="card_search_item_photo_margin_bottom">4dp</dimen>
+  <dimen name="search_card_item_padding">8dp</dimen>
+  <dimen name="search_card_item_photo_margin_bottom">4dp</dimen>
   <dimen name="search_header_padding">16dp</dimen>
   <dimen name="search_empty_state_text">16sp</dimen>
+  <dimen name="search_photo">48dp</dimen>
 
-  <dimen name="event_details_fab_margin">16dp</dimen>
-  <dimen name="event_details_speaker_photo">40dp</dimen>
-  <dimen name="event_details_speaker_photo_margin_end">6dp</dimen>
   <dimen name="event_details_header_padding_start">72dp</dimen>
   <dimen name="event_details_header_padding_end">24dp</dimen>
   <dimen name="event_details_header_padding_bottom">16dp</dimen>
+  <dimen name="event_details_speaker_photo">40dp</dimen>
+  <dimen name="event_details_speaker_photo_margin_end">6dp</dimen>
+  <dimen name="event_details_speaker_photo_margin_bottom">8dp</dimen>
+  <dimen name="event_details_speaker">14sp</dimen>
+  <dimen name="event_details_speaker_line_spacing_extra">10sp</dimen>
   <dimen name="event_details_speaker_margin_bottom">8dp</dimen>
+  <dimen name="event_details_title">24sp</dimen>
+  <dimen name="event_details_fab_margin">16dp</dimen>
 
 </resources>
