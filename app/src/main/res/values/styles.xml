@@ -141,4 +141,9 @@
 
   <style name="EventDetails.Header.Speaker.Photo" parent="None" />
 
+  <style name="EventDetails.Fab" parent="None">
+    <item name="backgroundTint">?colorPrimary</item>
+    <item name="android:clickable">true</item>
+    <item name="android:src">@drawable/ic_favorite_empty</item>
+  </style>
 </resources>
