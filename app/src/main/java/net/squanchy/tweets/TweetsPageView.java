@@ -2,11 +2,9 @@ package net.squanchy.tweets;
 
 import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.twitter.sdk.android.core.Callback;
@@ -15,7 +13,6 @@ import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.models.Tweet;
 import com.twitter.sdk.android.tweetui.SearchTimeline;
 import com.twitter.sdk.android.tweetui.TimelineResult;
-import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
 
 import net.squanchy.R;
 
@@ -65,32 +62,23 @@ public class TweetsPageView extends LinearLayout {
         });
     }
 
-//    @Override                        TODO move to page selected in HomeActivity
-//    protected void onStart() {
-//        super.onStart();
-//        analytics.trackEvent("Social Feed screen", getString(R.string.action_open));
-//    }
-
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         initList();
     }
 
-    private void initList(){
-        if (!isInEditMode()){
+    private void initList() {
+        if (!isInEditMode()) {
             Context context = getContext();
-            String query = "Droidconit";
+            String query = context.getString(R.string.droidcon_hashtag);
             SearchTimeline timeline = new SearchTimeline.Builder()
-                        .query(query)
-                        .build();
-
-
-            tweetsList.setLayoutManager(new LinearLayoutManager(context));
+                    .query(query)
+                    .build();
 
             tweetsAdapter = new TweetsAdapter(timeline, context);
-
             tweetsList.setAdapter(tweetsAdapter);
+
             emptyView.setText(context.getString(R.string.no_tweets_for_query, query));
             refreshTimeline();
         }

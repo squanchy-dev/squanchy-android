@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.support.annotation.Px;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -23,6 +24,9 @@ public class TweetFeedView extends RecyclerView {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        setLayoutManager(layoutManager);
 
         int horizontalSpacing = getResources().getDimensionPixelSize(R.dimen.card_horizontal_margin);
         int verticalSpacing = getResources().getDimensionPixelSize(R.dimen.card_vertical_margin);

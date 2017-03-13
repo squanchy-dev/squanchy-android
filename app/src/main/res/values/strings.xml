@@ -4,7 +4,6 @@
   <string name="activity_social_feed">#Droidconit</string>
   <string name="activity_schedule">Schedule</string>
 
-
   <string name="experience_level_beginner">beginner</string>
   <string name="experience_level_intermediate">intermediate</string>
   <string name="experience_level_advanced">advanced</string>
@@ -23,5 +22,7 @@
   <string name="start_typing_to_search">Start typing to search</string>
   <string name="speaker_list_title">Speakers</string>
   <string name="talks_list_title">Talks</string>
+
+  <string name="droidcon_hashtag" translatable="false">Droidconit</string>
 
 </resources>
