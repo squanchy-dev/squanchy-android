@@ -39,9 +39,10 @@ public abstract class Event {
                 .placeVisibility(placeOptional.isPresent() ? View.VISIBLE : View.GONE)
                 .speakers(speakers)
                 .speakersVisibility(speakers.isEmpty() ? View.GONE : View.VISIBLE)
-                .trackVisibility(View.GONE) // todo add track
+                .trackVisibility(View.GONE)     // TODO add track
                 .experienceLevel(experienceLevel)
                 .type(type)
+                .favorited(false)   // TODO get from service
                 .build();
     }
 
@@ -74,6 +75,8 @@ public abstract class Event {
 
     public abstract Type type();
 
+    public abstract boolean favorited();
+
     @AutoValue.Builder
     public abstract static class Builder {
 
@@ -102,6 +105,8 @@ public abstract class Event {
         public abstract Builder experienceLevel(Optional<ExperienceLevel> experienceLevel);
 
         public abstract Builder type(Type type);
+
+        public abstract Builder favorited(boolean favorited);
 
         public abstract Event build();
     }
