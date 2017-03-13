@@ -34,5 +34,11 @@ public class EventDetailsCoordinatorLayout extends CoordinatorLayout {
     public void updateWith(Event event) {
         headerLayout.updateWith(event);
         detailsLayout.updateWith(event);
+
+        floatingActionButton.setImageResource(
+                event.favorited() ?
+                        R.drawable.ic_favorite_filled :
+                        R.drawable.ic_favorite_empty
+        );
     }
 }
