@@ -1,15 +1,19 @@
 package net.squanchy.tweets.util;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.text.format.DateUtils;
 
-import com.twitter.sdk.android.tweetui.R;
+import com.twitter.sdk.android.core.models.Tweet;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import net.squanchy.R;
+import net.squanchy.support.lang.Optional;
 
 public class TwitterDateUtils {
 
@@ -21,7 +25,26 @@ public class TwitterDateUtils {
     private TwitterDateUtils() {
     }
 
-    public static long apiTimeToLong(String apiTime) {
+    public static String getTimestampFrom(Tweet tweet, Context context) {
+        return getOptionalTimestamp(tweet.createdAt, context)
+                .or(context.getString(R.string.tweet_date_not_available));
+    }
+
+    private static Optional<String> getOptionalTimestamp(String date, Context context) {
+        final String formattedTimestamp;
+
+        if (date != null && TwitterDateUtils.isValidTimestamp(date)) {
+            final Long createdAtTimestamp = TwitterDateUtils.apiTimeToLong(date);
+            formattedTimestamp = TwitterDateUtils.getRelativeTimeString(context.getResources(),
+                    System.currentTimeMillis(), createdAtTimestamp);
+        } else {
+            formattedTimestamp = null;
+        }
+
+        return Optional.fromNullable(formattedTimestamp);
+    }
+
+    private static long apiTimeToLong(String apiTime) {
         if (apiTime == null) {
             return INVALID_DATE;
         }
@@ -33,7 +56,7 @@ public class TwitterDateUtils {
         }
     }
 
-    public static boolean isValidTimestamp(String timestamp) {
+    private static boolean isValidTimestamp(String timestamp) {
         return apiTimeToLong(timestamp) != INVALID_DATE;
     }
 
@@ -47,7 +70,7 @@ public class TwitterDateUtils {
      * @param timestamp         timestamp
      * @return the relative time string
      */
-    public static String getRelativeTimeString(Resources res, long currentTimeMillis, long timestamp) {
+    private static String getRelativeTimeString(Resources res, long currentTimeMillis, long timestamp) {
         final long diff = currentTimeMillis - timestamp;
         if (diff >= 0) {
             if (diff < DateUtils.MINUTE_IN_MILLIS) { // Less than a minute ago
@@ -80,4 +103,3 @@ public class TwitterDateUtils {
         return RELATIVE_DATE_FORMAT.format(new Date(timestamp));
     }
 }
-
