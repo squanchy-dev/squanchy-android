@@ -13,14 +13,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
-
 import java.util.HashMap;
 import java.util.Map;
 
 import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
+import net.squanchy.proximity.ProximityService;
+import net.squanchy.proximity.near.NearProximityServiceInjector;
 import net.squanchy.support.lang.Optional;
 import net.squanchy.support.widget.InterceptingBottomNavigationView;
+
+import io.reactivex.disposables.Disposable;
 
 public class HomeActivity extends TypefaceStyleableActivity {
 
@@ -33,6 +36,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private BottomNavigationSection currentSection;
     private InterceptingBottomNavigationView bottomNavigationView;
     private ViewGroup pageContainer;
+    private ProximityService proximityService;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,7 +60,11 @@ public class HomeActivity extends TypefaceStyleableActivity {
     protected void onStart() {
         super.onStart();
         selectInitialPage(currentSection);
+        proximityService = NearProximityServiceInjector.obtain(this).service();
+        proximityService.provider().startRadar();
     }
+
+
 
     private void collectPageViewsInto(Map<BottomNavigationSection, View> pageViews) {
         pageViews.put(BottomNavigationSection.SCHEDULE, pageContainer.findViewById(R.id.schedule_content_root));

@@ -9,9 +9,12 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spanned;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.Toast;
 
 import net.squanchy.R;
 import net.squanchy.navigation.Navigator;
+import net.squanchy.proximity.ProximityEvent;
+import net.squanchy.proximity.ProximityService;
 import net.squanchy.schedule.domain.view.Schedule;
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter;
 
@@ -26,8 +29,10 @@ public class SchedulePageView extends CoordinatorLayout {
     private ScheduleViewPagerAdapter viewPagerAdapter;
     private View progressBar;
     private Disposable subscription;
+    private Disposable proxSubscription;
     private ScheduleService service;
     private Navigator navigate;
+    private ProximityService proximityService;
 
     public SchedulePageView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -54,6 +59,7 @@ public class SchedulePageView extends CoordinatorLayout {
         ScheduleComponent component = ScheduleInjector.obtain(getContext());
         service = component.service();
         navigate = component.navigator();
+        proximityService = component.proxService();
 
         setupToolbar();
     }
@@ -77,12 +83,21 @@ public class SchedulePageView extends CoordinatorLayout {
         subscription = service.schedule()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(schedule -> updateWith(schedule, event -> navigate.toEventDetails(event.id())));
+
+        proxSubscription = proximityService.observeProximityEvents()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::handleProximityEvent);
+    }
+
+    private void handleProximityEvent(ProximityEvent proximityEvent) {
+        // TODO do something with the event, like showing feedback or opening an event detail
     }
 
     @Override
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         subscription.dispose();
+        proxSubscription.dispose();
     }
 
     private void hackToApplyTypefaces(TabLayout tabLayout) {
