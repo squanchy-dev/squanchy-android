@@ -1,5 +1,6 @@
 package net.squanchy.service.repository;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -68,7 +69,7 @@ public class EventRepository {
     }
 
     private BiFunction<FirebaseEvents, List<Speaker>, List<Event>> combineSessionsAndSpeakers() {
-        return (apiSchedule, speakers) -> Lists.map(apiSchedule.events, combineEventWith(speakers));
+        return (apiSchedule, speakers) -> Lists.map(new ArrayList<>(apiSchedule.events.values()), combineEventWith(speakers));
     }
 
     private Func1<FirebaseEvent, Event> combineEventWith(List<Speaker> speakers) {
