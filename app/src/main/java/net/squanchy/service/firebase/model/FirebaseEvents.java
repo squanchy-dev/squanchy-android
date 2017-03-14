@@ -1,14 +1,15 @@
 package net.squanchy.service.firebase.model;
 
-import java.util.List;
+import java.util.Map;
 
 public class FirebaseEvents {
 
-    public FirebaseEvents() {}
+    public FirebaseEvents() {
+    }
 
-    public FirebaseEvents(List<FirebaseEvent> events) {
+    public FirebaseEvents(Map<String, FirebaseEvent> events) {
         this.events = events;
     }
 
-    public List<FirebaseEvent> events;
+    public Map<String, FirebaseEvent> events;
 }
