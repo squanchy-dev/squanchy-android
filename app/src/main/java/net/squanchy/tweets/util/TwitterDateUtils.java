@@ -3,6 +3,8 @@ package net.squanchy.tweets.util;
 import android.content.res.Resources;
 import android.text.format.DateUtils;
 
+import com.twitter.sdk.android.tweetui.R;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -66,18 +68,15 @@ public class TwitterDateUtils {
 
                 if (now.get(Calendar.YEAR) == c.get(Calendar.YEAR)) {
                     // Same year
-                    RELATIVE_DATE_FORMAT.applyPattern(
-                            res.getString(com.twitter.sdk.android.tweetui.R.string.tw__relative_date_format_short));
+                    RELATIVE_DATE_FORMAT.applyPattern(res.getString(R.string.tw__relative_date_format_short));
                 } else {
                     // Outside of our year
-                    RELATIVE_DATE_FORMAT.applyPattern(
-                            res.getString(com.twitter.sdk.android.tweetui.R.string.tw__relative_date_format_long));
+                    RELATIVE_DATE_FORMAT.applyPattern(res.getString(R.string.tw__relative_date_format_long));
                 }
                 return RELATIVE_DATE_FORMAT.format(d);
             }
         }
-        RELATIVE_DATE_FORMAT.applyPattern(res.getString(
-                com.twitter.sdk.android.tweetui.R.string.tw__relative_date_format_long));
+        RELATIVE_DATE_FORMAT.applyPattern(res.getString(R.string.tw__relative_date_format_long));
         return RELATIVE_DATE_FORMAT.format(new Date(timestamp));
     }
 }

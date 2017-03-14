@@ -1,6 +1,7 @@
 package net.squanchy.tweets.util;
 
 import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.URLSpan;
 
@@ -12,7 +13,7 @@ import java.util.List;
 public class TweetFormatter {
 
     public static Spannable format(Tweet tweet) {
-        Spannable spannable = new SpannableStringBuilder(tweet.text);
+        Spannable spannable = new SpannableString(tweet.text);
         addUrlSpan(spannable, tweet.entities.urls);
         return spannable;
     }
