@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<net.squanchy.tweets.view.TweetItemView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:paddingLeft="@dimen/card_padding_horizontal"
+  android:paddingTop="@dimen/card_padding_top"
+  android:paddingRight="@dimen/card_padding_horizontal"
+  android:paddingBottom="@dimen/card_padding_bottom"
+  tools:layout_margin="16dp">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+      android:id="@+id/tweet_text"
+      style="@style/Tweet.Card.Title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:bufferType="spannable"
+      tools:text="This is a tweet I wrote to show how it looks" />
+
+    <TextView
+      android:id="@+id/tweet_timestamp"
+      style="@style/Tweet.Card.Timestamp"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      tools:text="Posted last night" />
+
+  </LinearLayout>
+</net.squanchy.tweets.view.TweetItemView>
