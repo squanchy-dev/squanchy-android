@@ -35,7 +35,6 @@ public class SquanchyApplication extends Application {
         setupFabric();
 
         Analytics analytics = Analytics.from(this);
-        analytics.enableActivityLifecycleLogging();
         analytics.enableExceptionLogging();
 
         if (BuildConfig.DEBUG) {
