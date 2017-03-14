@@ -15,14 +15,14 @@ import java.util.Locale;
 import net.squanchy.R;
 import net.squanchy.support.lang.Optional;
 
-public class TwitterDateUtils {
+public class TwitterDateFormatter {
 
     // Sat Mar 14 02:34:20 +0000 2009
     private static final SimpleDateFormat DATE_TIME_RFC822 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.ENGLISH);
     private static final SimpleDateFormat RELATIVE_DATE_FORMAT = new SimpleDateFormat("MM/dd/yy", Locale.ENGLISH);
     private static final long INVALID_DATE = -1;
 
-    private TwitterDateUtils() {
+    private TwitterDateFormatter() {
     }
 
     public static String getTimestampFrom(Tweet tweet, Context context) {
@@ -31,17 +31,17 @@ public class TwitterDateUtils {
     }
 
     private static Optional<String> getOptionalTimestamp(String date, Context context) {
-        final String formattedTimestamp;
 
-        if (date != null && TwitterDateUtils.isValidTimestamp(date)) {
-            final Long createdAtTimestamp = TwitterDateUtils.apiTimeToLong(date);
-            formattedTimestamp = TwitterDateUtils.getRelativeTimeString(context.getResources(),
-                    System.currentTimeMillis(), createdAtTimestamp);
-        } else {
-            formattedTimestamp = null;
+        if (date != null && TwitterDateFormatter.isValidTimestamp(date)) {
+            return Optional.absent();
         }
+        final Long createdAtTimestamp = TwitterDateFormatter.apiTimeToLong(date);
+        String formattedTimestamp = TwitterDateFormatter.getRelativeTimeString(
+                context.getResources(),
+                System.currentTimeMillis(),
+                createdAtTimestamp);
 
-        return Optional.fromNullable(formattedTimestamp);
+        return Optional.of(formattedTimestamp);
     }
 
     private static long apiTimeToLong(String apiTime) {

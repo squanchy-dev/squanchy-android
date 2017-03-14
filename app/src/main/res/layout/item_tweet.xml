@@ -20,14 +20,14 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:bufferType="spannable"
-      tools:text="Ecco il mio tweet" />
+      tools:text="This is a tweet I wrote to show how it looks" />
 
     <TextView
       android:id="@+id/tweet_timestamp"
       style="@style/Tweet.Card.Timestamp"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      tools:text="Pubblicato ieri sera" />
+      tools:text="Posted last night" />
 
   </LinearLayout>
 </net.squanchy.tweets.view.TweetItemView>

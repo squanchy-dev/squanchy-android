@@ -72,7 +72,7 @@ public class TweetsPageView extends LinearLayout {
     private void initList() {
 
         Context context = getContext();
-        String query = context.getString(R.string.droidcon_hashtag);
+        String query = context.getString(R.string.social_query);
 
         if (!isInEditMode()) {
             SearchTimeline timeline = new SearchTimeline.Builder()

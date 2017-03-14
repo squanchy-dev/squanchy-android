@@ -10,7 +10,7 @@ import com.twitter.sdk.android.core.models.Tweet;
 import net.squanchy.R;
 import net.squanchy.support.widget.CardLayout;
 import net.squanchy.tweets.util.TweetFormatter;
-import net.squanchy.tweets.util.TwitterDateUtils;
+import net.squanchy.tweets.util.TwitterDateFormatter;
 
 public class TweetItemView extends CardLayout {
 
@@ -37,6 +37,6 @@ public class TweetItemView extends CardLayout {
 
     public void updateWith(Tweet tweet) {
         tweetText.setText(TweetFormatter.format(tweet));
-        tweetTimestamp.setText(TwitterDateUtils.getTimestampFrom(tweet, getContext()));
+        tweetTimestamp.setText(TwitterDateFormatter.getTimestampFrom(tweet, getContext()));
     }
 }
