@@ -17,6 +17,7 @@ import net.squanchy.support.lang.Func1;
 import net.squanchy.support.lang.Optional;
 
 import io.reactivex.Completable;
+import io.reactivex.Emitter;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.schedulers.Schedulers;
@@ -59,26 +60,6 @@ public final class AuthenticatedFirebaseDbService implements FirebaseDbService {
         return authService.signInAnd(userId -> observeChild(path, FirebaseEvent.class));
     }
 
-    private <T> Observable<T> observeChild(final String path, final Class<T> clazz) {
-        return Observable.create((ObservableEmitter<T> e) -> {
-            ValueEventListener listener = new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    T value = dataSnapshot.getValue(clazz);
-                    e.onNext(value);
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    e.onError(databaseError.toException());
-                }
-            };
-
-            database.child(path).addValueEventListener(listener);
-            e.setCancellable(() -> database.removeEventListener(listener));
-        }).observeOn(Schedulers.io());
-    }
-
     @Override
     public Observable<FirebaseFavorites> favorites() {
         return authService.signInAnd(userId -> {
@@ -88,13 +69,21 @@ public final class AuthenticatedFirebaseDbService implements FirebaseDbService {
         });
     }
 
+    private <T> Observable<T> observeChild(final String path, final Class<T> clazz) {
+        return observeChildAndEmit(path, clazz, Emitter::onNext);
+    }
+
     private <T> Observable<Optional<T>> observeOptionalChild(final String path, final Class<T> clazz) {
-        return Observable.create((ObservableEmitter<Optional<T>> e) -> {
+        return observeChildAndEmit(path, clazz, (emitter, value) -> emitter.onNext(Optional.fromNullable(value)));
+    }
+
+    private <T, V> Observable<T> observeChildAndEmit(String path, final Class<V> clazz, NextEmitter<T, V> nextEmitter) {
+        return Observable.create((ObservableEmitter<T> e) -> {
             ValueEventListener listener = new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    T value = dataSnapshot.getValue(clazz);
-                    e.onNext(Optional.fromNullable(value));
+                    V value = dataSnapshot.getValue(clazz);
+                    nextEmitter.emit(e, value);
                 }
 
                 @Override
@@ -126,5 +115,9 @@ public final class AuthenticatedFirebaseDbService implements FirebaseDbService {
                             .addOnSuccessListener(result -> emitter.onComplete())
                             .addOnFailureListener(emitter::onError);
                 }));
+    }
+
+    private interface NextEmitter<T, V> {
+        void emit(ObservableEmitter<T> emitter, V value);
     }
 }
