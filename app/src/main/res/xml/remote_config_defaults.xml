@@ -2,6 +2,6 @@
 <defaultsMap>
   <entry>
     <key>geofence_enabled</key>
-    <value>true</value>
+    <value>false</value>
   </entry>
 </defaultsMap>
