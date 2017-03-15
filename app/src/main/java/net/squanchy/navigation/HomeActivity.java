@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -172,6 +171,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
 
     private void trackPageSelection(BottomNavigationSection section) {
         analytics.trackItemSelected(ContentType.NAVIGATION_ITEM, section.name());
+        analytics.trackPageView(this, section.name());
     }
 
     @Override
