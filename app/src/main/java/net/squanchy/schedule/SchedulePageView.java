@@ -3,6 +3,7 @@ package net.squanchy.schedule;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
@@ -120,7 +121,10 @@ public class SchedulePageView extends CoordinatorLayout {
         // TextAppearance is applied _after_ inflating the tab views, which means Calligraphy can't
         // intercept that either. Sad panda.
         tabLayout.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
-            Typeface typeface = TypefaceUtils.load(getContext().getAssets(), "fonts/LeagueSpartan-Bold.otf");
+            Context context = tabLayout.getContext();
+            String fontPath = getFontPathFor(context);
+
+            Typeface typeface = TypefaceUtils.load(context.getAssets(), fontPath);
             int tabCount = tabLayout.getTabCount();
             for (int i = 0; i < tabCount; i++) {
                 TabLayout.Tab tab = tabLayout.getTabAt(i);
@@ -130,6 +134,15 @@ public class SchedulePageView extends CoordinatorLayout {
                 tab.setText(CalligraphyUtils.applyTypefaceSpan(tab.getText(), typeface));
             }
         });
+    }
+
+    private String getFontPathFor(Context context) {
+        TypedArray a = context.obtainStyledAttributes(R.style.TextAppearance_Squanchy_Tab, new int[]{R.attr.fontPath});
+        try {
+            return a.getString(0);
+        } finally {
+            a.recycle();
+        }
     }
 
     private boolean hasSpan(CharSequence text) {
