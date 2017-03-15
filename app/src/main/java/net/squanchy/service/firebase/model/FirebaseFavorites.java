@@ -5,6 +5,10 @@ import java.util.Map;
 
 public class FirebaseFavorites {
 
+    public static FirebaseFavorites empty() {
+        return new FirebaseFavorites(Collections.emptyMap());
+    }
+
     public FirebaseFavorites() {
     }
 
@@ -14,7 +18,7 @@ public class FirebaseFavorites {
 
     public Map<String, Boolean> favorites;
 
-    public static FirebaseFavorites empty() {
-        return new FirebaseFavorites(Collections.emptyMap());
+    public boolean hasFavorite(String eventId) {
+        return favorites.containsKey(eventId);
     }
 }

@@ -19,7 +19,6 @@ import net.squanchy.support.lang.Optional;
 import org.joda.time.LocalDateTime;
 
 import io.reactivex.Observable;
-import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function3;
 import io.reactivex.schedulers.Schedulers;
 
@@ -62,22 +61,23 @@ public class EventRepository {
                 Optional.fromNullable(apiEvent.experience_level).flatMap(ExperienceLevel::fromNullableRawLevel),
                 speakersForEvent(apiEvent, speakers),
                 Event.Type.fromRawType(apiEvent.type),
-                favorites.favorites.containsKey(apiEvent.id)
+                favorites.hasFavorite(apiEvent.id)
         );
     }
 
     public Observable<List<Event>> events() {
         Observable<FirebaseEvents> sessionsObservable = dbService.events();
         Observable<List<Speaker>> speakersObservable = speakerRepository.speakers();
+        Observable<FirebaseFavorites> favoritesObservable = dbService.favorites();
 
-        return Observable.combineLatest(sessionsObservable, speakersObservable, combineSessionsAndSpeakers());
+        return Observable.combineLatest(sessionsObservable, speakersObservable, favoritesObservable, combineSessionsAndSpeakers());
     }
 
-    private BiFunction<FirebaseEvents, List<Speaker>, List<Event>> combineSessionsAndSpeakers() {
-        return (apiSchedule, speakers) -> Lists.map(new ArrayList<>(apiSchedule.events.values()), combineEventWith(speakers));
+    private Function3<FirebaseEvents, List<Speaker>, FirebaseFavorites, List<Event>> combineSessionsAndSpeakers() {
+        return (apiSchedule, speakers, favorites) -> Lists.map(new ArrayList<>(apiSchedule.events.values()), combineEventWith(speakers, favorites));
     }
 
-    private Func1<FirebaseEvent, Event> combineEventWith(List<Speaker> speakers) {
+    private Func1<FirebaseEvent, Event> combineEventWith(List<Speaker> speakers, FirebaseFavorites favorites) {
         return apiEvent -> Event.create(
                 apiEvent.id,
                 checksum.getChecksumOf(apiEvent.id),
@@ -89,7 +89,7 @@ public class EventRepository {
                 Optional.fromNullable(apiEvent.experience_level).flatMap(ExperienceLevel::fromNullableRawLevel),
                 speakersForEvent(apiEvent, speakers),
                 Event.Type.fromRawType(apiEvent.type),
-                false // todo get from server
+                favorites.hasFavorite(apiEvent.id)
         );
     }
 
