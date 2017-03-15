@@ -1,19 +1,19 @@
-package net.squanchy.search;
+package net.squanchy.navigation;
+
+import android.app.Activity;
 
 import net.squanchy.injection.ActivityContextModule;
 import net.squanchy.injection.ApplicationInjector;
-import net.squanchy.navigation.NavigationModule;
 
-final class SearchInjector {
+final class HomeInjector {
 
-    private SearchInjector() {
+    private HomeInjector() {
         // no instances
     }
 
-    public static SearchComponent obtain(SearchActivity activity) {
-        return DaggerSearchComponent.builder()
+    public static HomeComponent obtain(Activity activity) {
+        return DaggerHomeComponent.builder()
                 .applicationComponent(ApplicationInjector.obtain(activity))
-                .searchModule(new SearchModule())
                 .activityContextModule(new ActivityContextModule(activity))
                 .navigationModule(new NavigationModule())
                 .build();

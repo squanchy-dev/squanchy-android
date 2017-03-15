@@ -97,7 +97,7 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
 
         Disposable searchSubscription = querySubject.throttleLast(QUERY_DEBOUNCE_TIMEOUT, TimeUnit.MILLISECONDS)
                 .doOnNext(this::updateSearchActionIcon)
-                .flatMap(query -> searchService.find(query))
+                .flatMap(searchService::find)
                 .doOnNext(searchResults -> speakersSubscription.dispose())
                 .toFlowable(BackpressureStrategy.LATEST)
                 .subscribeOn(Schedulers.computation())
