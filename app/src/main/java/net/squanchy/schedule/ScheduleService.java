@@ -63,7 +63,7 @@ class ScheduleService {
             List<SchedulePage> sortedPages = new ArrayList<>(pages.size());
 
             for (SchedulePage page : pages) {
-                sortedPages.add(SchedulePage.create(page.date(), sortByStartDate(page)));
+                sortedPages.add(SchedulePage.create(page.dayId(), page.date(), sortByStartDate(page)));
             }
 
             return Schedule.create(sortedPages);
@@ -107,7 +107,7 @@ class ScheduleService {
                 Optional<String> rawDate = findDate(apiDays, dayId);
                 if (rawDate.isPresent()) {
                     LocalDateTime date = LocalDateTime.parse(rawDate.get(), DATE_FORMATTER);
-                    pages.add(SchedulePage.create(date, map.get(dayId)));
+                    pages.add(SchedulePage.create(dayId, date, map.get(dayId)));
                 }
             }
 
