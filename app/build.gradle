@@ -105,6 +105,7 @@ dependencies {
     compile libraries.app.crashlytics
     compile libraries.app.firebase
     compile libraries.app.firebaseAuth
+    compile libraries.app.firebaseConfig
     compile libraries.app.firebaseDb
     compile libraries.app.firebaseMessaging
     compile libraries.app.firebaseUiStorage
