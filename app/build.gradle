@@ -65,7 +65,6 @@ android {
         resValueProperty 'api_value_twitter_api_key', (buildProperties.secrets['twitterApiKey'] | buildProperties.env['TWITTER_API_KEY'])
         resValueProperty 'api_value_twitter_secret', (buildProperties.secrets['twitterSecret'] | buildProperties.env['TWITTER_SECRET'])
         resValueProperty 'api_value_google_maps_api_key', (buildProperties.secrets['googleMapsApiKey'] | buildProperties.env['GOOGLE_MAPS_API_KEY'])
-        resValueProperty 'api_value_base_url', (buildProperties.secrets['baseUrl'] | buildProperties.env['BASE_URL'])
         resValueProperty 'social_query', (buildProperties.application['socialQuery'] | "#AndroidDev")
     }
 
