@@ -33,14 +33,14 @@ public class Analytics {
 
     public void trackPageView(Activity activity, String screenName, @Nullable String screenClassOverride) {
         trackPageViewOnFirebaseAnalytics(activity, screenName, screenClassOverride);
-        trackPageViewOnCrashlytics(activity, screenName, screenClassOverride);
+        trackPageViewOnCrashlytics(screenName);
     }
 
     private void trackPageViewOnFirebaseAnalytics(Activity activity, String screenName, String screenClassOverride) {
         firebaseAnalytics.setCurrentScreen(activity, screenName, screenClassOverride);
     }
 
-    private void trackPageViewOnCrashlytics(Activity activity, String screenName, String screenClassOverride) {
+    private void trackPageViewOnCrashlytics(String screenName) {
         ContentViewEvent viewEvent = new ContentViewEvent();
         viewEvent.putContentName(screenName);
         crashlytics.answers.logContentView(viewEvent);
