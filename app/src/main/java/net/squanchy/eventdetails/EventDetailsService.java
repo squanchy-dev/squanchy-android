@@ -16,4 +16,12 @@ class EventDetailsService {
     public Observable<Event> event(String eventId) {
         return eventRepository.event(eventId);
     }
+
+    void favorite(String eventId) {
+        eventRepository.favorite(eventId);
+    }
+
+    void removeFavorite(String eventId) {
+        eventRepository.removeFavorite(eventId);
+    }
 }

@@ -62,7 +62,13 @@ public class EventDetailsActivity extends TypefaceStyleableActivity {
 
         subscription = service.event(eventId)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(event -> coordinatorLayout.updateWith(event));
+                .subscribe(event -> coordinatorLayout.updateWith(event, () -> {
+                    if (event.favorited()) {
+                        service.removeFavorite(event.id());
+                    } else {
+                        service.favorite(event.id());
+                    }
+                }));
     }
 
     @Override
