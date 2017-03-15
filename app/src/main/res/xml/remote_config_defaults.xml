@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <defaultsMap>
   <entry>
-    <key>geofence_enabled</key>
+    <key>proximity_enabled</key>
     <value>false</value>
   </entry>
 </defaultsMap>

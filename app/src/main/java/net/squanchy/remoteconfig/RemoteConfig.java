@@ -7,13 +7,14 @@ import java.util.concurrent.TimeUnit;
 import net.squanchy.support.lang.Func0;
 
 import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 
 public class RemoteConfig {
 
     private static final long EXPIRY_IMMEDIATELY = TimeUnit.HOURS.toSeconds(0);
     private static final long EXPIRY_ONE_HOUR = TimeUnit.HOURS.toSeconds(1);
 
-    private static final String KEY_GEOFENCE_ENABLED = "geofence_enabled";
+    private static final String KEY_PROXIMITY_ENABLED = "proximity_enabled";
 
     private final FirebaseRemoteConfig remoteConfig;
     private final boolean debugMode;
@@ -24,13 +25,17 @@ public class RemoteConfig {
     }
 
     public Single<Boolean> proximityServicesEnabled() {
-        return getBooleanConfigValue(() -> remoteConfig.getBoolean(KEY_GEOFENCE_ENABLED));
+        return getBooleanConfigValue(() -> remoteConfig.getBoolean(KEY_PROXIMITY_ENABLED))
+                .subscribeOn(Schedulers.io());
     }
 
     private <T> Single<T> getBooleanConfigValue(Func0<T> action) {
         return Single.create(emitter ->
                 remoteConfig.fetch(cacheExpiryInSeconds())
-                        .addOnCompleteListener(task -> emitter.onSuccess(action.call()))
+                        .addOnCompleteListener(task -> {
+                            remoteConfig.activateFetched();
+                            emitter.onSuccess(action.call());
+                        })
         );
     }
 

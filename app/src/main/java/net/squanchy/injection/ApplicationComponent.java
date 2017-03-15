@@ -4,6 +4,8 @@ import android.app.Application;
 
 import net.squanchy.analytics.Analytics;
 import net.squanchy.analytics.AnalyticsModule;
+import net.squanchy.remoteconfig.RemoteConfig;
+import net.squanchy.remoteconfig.RemoteConfigModule;
 import net.squanchy.service.firebase.FirebaseDbService;
 import net.squanchy.service.firebase.injection.DbServiceType;
 import net.squanchy.service.firebase.injection.FirebaseModule;
@@ -16,7 +18,7 @@ import net.squanchy.support.lang.Checksum;
 import dagger.Component;
 
 @ApplicationLifecycle
-@Component(modules = {FirebaseModule.class, ChecksumModule.class, RepositoryModule.class, AnalyticsModule.class})
+@Component(modules = {FirebaseModule.class, ChecksumModule.class, RepositoryModule.class, AnalyticsModule.class, RemoteConfigModule.class})
 public interface ApplicationComponent {
 
     @DbServiceType(DbServiceType.Type.AUTHENTICATED)
@@ -30,6 +32,8 @@ public interface ApplicationComponent {
 
     Analytics analytics();
 
+    RemoteConfig remoteConfig();
+
     class Factory {
 
         private Factory() {
@@ -42,6 +46,7 @@ public interface ApplicationComponent {
                     .repositoryModule(new RepositoryModule())
                     .checksumModule(new ChecksumModule())
                     .analyticsModule(new AnalyticsModule(application))
+                    .remoteConfigModule(new RemoteConfigModule())
                     .build();
         }
     }
