@@ -1,7 +1,6 @@
 package net.squanchy.analytics;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -17,12 +16,7 @@ public class Analytics {
     private final FirebaseAnalytics firebaseAnalytics;
     private final Crashlytics crashlytics;
 
-    public static Analytics from(Context context) {
-        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(context);
-        return new Analytics(firebaseAnalytics, Crashlytics.getInstance());
-    }
-
-    private Analytics(FirebaseAnalytics firebaseAnalytics, Crashlytics crashlytics) {
+    Analytics(FirebaseAnalytics firebaseAnalytics, Crashlytics crashlytics) {
         this.firebaseAnalytics = firebaseAnalytics;
         this.crashlytics = crashlytics;
     }

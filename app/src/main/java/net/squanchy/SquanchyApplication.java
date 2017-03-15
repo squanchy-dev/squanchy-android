@@ -35,7 +35,7 @@ public class SquanchyApplication extends Application {
     private void setupTracking() {
         setupFabric();
 
-        Analytics analytics = Analytics.from(this);
+        Analytics analytics = applicationComponent().analytics();
         analytics.enableExceptionLogging();
 
         if (BuildConfig.DEBUG) {
@@ -60,7 +60,7 @@ public class SquanchyApplication extends Application {
     @MainThread
     public ApplicationComponent applicationComponent() {
         if (applicationComponent == null) {
-            applicationComponent = ApplicationComponent.Factory.create();
+            applicationComponent = ApplicationComponent.Factory.create(this);
         }
 
         return applicationComponent;
