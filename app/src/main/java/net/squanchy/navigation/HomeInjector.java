@@ -1,14 +1,11 @@
-package net.squanchy.home;
+package net.squanchy.navigation;
 
 import android.app.Activity;
 
 import net.squanchy.analytics.AnalyticsModule;
 import net.squanchy.injection.ActivityContextModule;
-import net.squanchy.navigation.DaggerHomeComponent;
-import net.squanchy.navigation.HomeComponent;
-import net.squanchy.navigation.NavigationModule;
 
-public final class HomeInjector {
+final class HomeInjector {
 
     private HomeInjector() {
         // no instances
