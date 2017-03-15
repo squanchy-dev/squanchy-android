@@ -2,22 +2,13 @@ package net.squanchy.navigation;
 
 import android.content.Context;
 
+import net.squanchy.injection.ActivityContextModule;
+
 import dagger.Module;
 import dagger.Provides;
 
-@Module
+@Module(includes = {ActivityContextModule.class})
 public class NavigationModule {
-
-    private final Context context;
-
-    public NavigationModule(Context context) {
-        this.context = context;
-    }
-
-    @Provides
-    Context context() {
-        return context;
-    }
 
     @Provides
     Navigator navigator(Context context) {
