@@ -84,6 +84,12 @@ android {
         }
     }
 
+    buildTypes {
+        debug {
+            ext.enableCrashlytics = false
+        }
+    }
+
     lintOptions {
         lintConfig file("$rootProject.projectDir/team-props/lint.xml")
         abortOnError false
