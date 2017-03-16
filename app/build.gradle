@@ -66,6 +66,7 @@ android {
         resValueProperty 'api_value_twitter_secret', (buildProperties.secrets['twitterSecret'] | buildProperties.env['TWITTER_SECRET'])
         resValueProperty 'api_value_google_maps_api_key', (buildProperties.secrets['googleMapsApiKey'] | buildProperties.env['GOOGLE_MAPS_API_KEY'])
         resValueProperty 'social_query', (buildProperties.application['socialQuery'] | "#AndroidDev")
+        resValueProperty 'nearit_api_key', (buildProperties.secrets['nearITApiKey'] | buildProperties.env['NEARIT_API_KEY'])
     }
 
     if (System.getenv('CI') == null) {
@@ -119,6 +120,7 @@ dependencies {
     compile libraries.app.timber
     compile libraries.app.tweetUi
     compile libraries.app.viewPagerAdapter
+    compile libraries.app.nearit
 
     apt libraries.app.autoValue
     provided libraries.app.autoValue

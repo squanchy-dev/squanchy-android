@@ -6,6 +6,7 @@
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.WAKE_LOCK" />
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
   <application
     android:name="net.squanchy.SquanchyApplication"
@@ -55,6 +56,15 @@
         <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
       </intent-filter>
     </service>
+
+    <receiver
+      android:name="it.near.sdk.Recipes.Background.NearItBroadcastReceiver"
+      android:exported="false">
+      <intent-filter>
+        <action android:name="it.near.sdk.permission.GEO_MESSAGE" />
+        <category android:name="android.intent.category.DEFAULT" />
+      </intent-filter>
+    </receiver>
 
     <meta-data
       android:name="com.google.android.gms.version"
