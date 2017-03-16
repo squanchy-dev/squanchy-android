@@ -13,12 +13,15 @@ public class ProximityService {
         this.proximityProvider = provider;
     }
 
-    public Observable<ProximityEvent> observeProximityEvents(){
+    public Observable<ProximityEvent> observeProximityEvents() {
         return proximityProvider.observeProximityEvents();
     }
 
-    public void startRadar(){
+    public void startRadar() {
         proximityProvider.startRadar();
     }
 
+    public void stopRadar() {
+        proximityProvider.stopRadar();
+    }
 }

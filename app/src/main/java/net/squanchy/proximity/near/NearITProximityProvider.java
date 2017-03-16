@@ -31,6 +31,11 @@ public class NearITProximityProvider implements ProximityProvider {
     }
 
     @Override
+    public void stopRadar() {
+        nearItManager.stopRadar();
+    }
+
+    @Override
     public Observable<ProximityEvent> observeProximityEvents() {
         return Observable.create((ObservableEmitter<ProximityEvent> e) -> {
             ProximityListener listener = (parcelable, recipe) -> {

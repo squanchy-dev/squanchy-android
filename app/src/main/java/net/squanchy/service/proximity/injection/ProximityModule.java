@@ -31,7 +31,7 @@ public class ProximityModule {
     }
 
     @Provides
-    ProximityService proximityService(ProximityProvider proximityProvider){
+    ProximityService proximityService(ProximityProvider proximityProvider) {
         return new ProximityService(proximityProvider);
     }
 }

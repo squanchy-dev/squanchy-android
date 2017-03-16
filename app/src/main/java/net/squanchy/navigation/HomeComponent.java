@@ -13,5 +13,4 @@ import dagger.Component;
 public interface HomeComponent {
 
     ProximityService service();
-
 }
