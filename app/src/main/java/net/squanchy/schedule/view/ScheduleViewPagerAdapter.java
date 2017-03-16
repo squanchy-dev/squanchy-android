@@ -61,6 +61,10 @@ public class ScheduleViewPagerAdapter extends ViewPagerAdapter<ScheduleDayPageVi
         return date.toString(TITLE_FORMAT_TEMPLATE);
     }
 
+    public String getPageDayId(int position) {
+        return pages.get(position).dayId();
+    }
+
     @Override
     public boolean isViewFromObject(View view, Object object) {
         return view == object;

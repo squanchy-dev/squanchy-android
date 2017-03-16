@@ -13,14 +13,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
-
 import java.util.HashMap;
 import java.util.Map;
 
 import net.squanchy.R;
+import net.squanchy.analytics.Analytics;
+import net.squanchy.analytics.ContentType;
 import net.squanchy.fonts.TypefaceStyleableActivity;
+import net.squanchy.remoteconfig.RemoteConfig;
 import net.squanchy.support.lang.Optional;
 import net.squanchy.support.widget.InterceptingBottomNavigationView;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import timber.log.Timber;
 
 public class HomeActivity extends TypefaceStyleableActivity {
 
@@ -33,6 +38,8 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private BottomNavigationSection currentSection;
     private InterceptingBottomNavigationView bottomNavigationView;
     private ViewGroup pageContainer;
+    private Analytics analytics;
+    private RemoteConfig remoteConfig;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,13 +56,21 @@ public class HomeActivity extends TypefaceStyleableActivity {
 
         BottomNavigationSection selectedPage = getSelectedSectionOrDefault(Optional.fromNullable(savedInstanceState));
         selectInitialPage(selectedPage);
-        selectPage(BottomNavigationSection.SCHEDULE);
+
+        HomeComponent homeComponent = HomeInjector.obtain(this);
+        analytics = homeComponent.analytics();
+        remoteConfig = homeComponent.remoteConfig();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         selectInitialPage(currentSection);
+
+        // TODO do something useful with this once we can
+        remoteConfig.proximityServicesEnabled()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(enabled -> Timber.i("Proximity services enabled: %s", enabled));
     }
 
     private void collectPageViewsInto(Map<BottomNavigationSection, View> pageViews) {
@@ -92,6 +107,24 @@ public class HomeActivity extends TypefaceStyleableActivity {
         );
     }
 
+    private BottomNavigationSection getSelectedSectionOrDefault(Optional<Bundle> savedInstanceState) {
+        int selectedPageIndex = savedInstanceState.or(new Bundle())
+                .getInt(STATE_KEY_SELECTED_PAGE_INDEX, BottomNavigationSection.SCHEDULE.ordinal());
+        return BottomNavigationSection.values()[selectedPageIndex];
+    }
+
+    private void selectInitialPage(BottomNavigationSection section) {
+        swapPageTo(section);
+        bottomNavigationView.cancelTransitions();
+        bottomNavigationView.selectItemAt(section.ordinal());
+
+        Resources.Theme theme = getThemeFor(section);
+        bottomNavigationView.setBackgroundColor(getColorFromTheme(theme, android.support.design.R.attr.colorPrimary));
+        getWindow().setStatusBarColor(getColorFromTheme(theme, android.R.attr.statusBarColor));
+
+        currentSection = section;
+    }
+
     private void selectPage(BottomNavigationSection section) {
         if (section == currentSection) {
             return;
@@ -108,6 +141,8 @@ public class HomeActivity extends TypefaceStyleableActivity {
         bottomNavigationView.setColorProvider(() -> getColorFromTheme(theme, android.support.design.R.attr.colorPrimary));
 
         currentSection = section;
+
+        trackPageSelection(section);
     }
 
     private void swapPageTo(BottomNavigationSection section) {
@@ -115,6 +150,13 @@ public class HomeActivity extends TypefaceStyleableActivity {
             pageViews.get(currentSection).setVisibility(View.INVISIBLE);
         }
         pageViews.get(section).setVisibility(View.VISIBLE);
+    }
+
+    private Resources.Theme getThemeFor(BottomNavigationSection section) {
+        Resources.Theme theme = getResources().newTheme();
+        theme.setTo(getTheme());
+        theme.applyStyle(section.theme(), true);
+        return theme;
     }
 
     @ColorInt
@@ -137,29 +179,9 @@ public class HomeActivity extends TypefaceStyleableActivity {
         animator.start();
     }
 
-    private BottomNavigationSection getSelectedSectionOrDefault(Optional<Bundle> savedInstanceState) {
-        int selectedPageIndex = savedInstanceState.or(new Bundle())
-                .getInt(STATE_KEY_SELECTED_PAGE_INDEX, BottomNavigationSection.SCHEDULE.ordinal());
-        return BottomNavigationSection.values()[selectedPageIndex];
-    }
-
-    private void selectInitialPage(BottomNavigationSection section) {
-        swapPageTo(section);
-        bottomNavigationView.cancelTransitions();
-        bottomNavigationView.selectItemAt(section.ordinal());
-
-        Resources.Theme theme = getThemeFor(section);
-        bottomNavigationView.setBackgroundColor(getColorFromTheme(theme, android.support.design.R.attr.colorPrimary));
-        getWindow().setStatusBarColor(getColorFromTheme(theme, android.R.attr.statusBarColor));
-
-        currentSection = section;
-    }
-
-    private Resources.Theme getThemeFor(BottomNavigationSection section) {
-        Resources.Theme theme = getResources().newTheme();
-        theme.setTo(getTheme());
-        theme.applyStyle(section.theme(), true);
-        return theme;
+    private void trackPageSelection(BottomNavigationSection section) {
+        analytics.trackItemSelected(ContentType.NAVIGATION_ITEM, section.name());
+        analytics.trackPageView(this, section.name());
     }
 
     @Override
