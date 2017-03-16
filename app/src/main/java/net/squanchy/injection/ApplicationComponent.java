@@ -13,7 +13,6 @@ import net.squanchy.service.repository.EventRepository;
 import net.squanchy.service.repository.SpeakerRepository;
 import net.squanchy.service.repository.injection.RepositoryModule;
 import net.squanchy.support.injection.ChecksumModule;
-import net.squanchy.support.lang.Checksum;
 
 import dagger.Component;
 
@@ -24,8 +23,6 @@ public interface ApplicationComponent {
     FirebaseDbService firebaseDbService();
 
     FirebaseAuthService firebaseAuthService();
-
-    Checksum checksum();
 
     EventRepository eventRepository();
 
