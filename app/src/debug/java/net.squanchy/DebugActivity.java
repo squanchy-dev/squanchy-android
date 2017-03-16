@@ -14,7 +14,6 @@ import net.squanchy.notification.NotificationCreator;
 import net.squanchy.notification.NotificationService;
 import net.squanchy.notification.Notifier;
 import net.squanchy.schedule.domain.view.Event;
-import net.squanchy.service.firebase.model.FirebaseSpeaker;
 import net.squanchy.speaker.domain.view.Speaker;
 import net.squanchy.support.lang.Optional;
 
@@ -74,18 +73,20 @@ public class DebugActivity extends Activity {
                 "That room over there",
                 Optional.of(ExperienceLevel.ADVANCED),
                 createTalkSpeakers(),
-                Event.Type.TALK
+                Event.Type.TALK,
+                true
         );
     }
 
     private List<Speaker> createTalkSpeakers() {
         List<Speaker> speakers = new ArrayList<>(2);
-        FirebaseSpeaker firebaseSpeaker = new FirebaseSpeaker();
-        firebaseSpeaker.id = "1";
-        firebaseSpeaker.name = "Ajeje Brazorf";
-        firebaseSpeaker.photo_url = "https://yt3.ggpht.com/-d35Rq8vqvmE/AAAAAAAAAAI/AAAAAAAAAAA/zy1VyiRTNec/s900-c-k-no-mo-rj-c0xffffff/photo.jpg";
-
-        speakers.add(Speaker.create(firebaseSpeaker, 101L));
+        speakers.add(Speaker.create(
+                "1",
+                101L,
+                "Ajeje Brazorf",
+                "https://yt3.ggpht.com/-d35Rq8vqvmE/AAAAAAAAAAI/AAAAAAAAAAA/zy1VyiRTNec/s900-c-k-no-mo-rj-c0xffffff/photo.jpg"
+                )
+        );
         return speakers;
     }
 
