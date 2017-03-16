@@ -69,12 +69,17 @@ public class HomeActivity extends TypefaceStyleableActivity {
         super.onStart();
         selectInitialPage(currentSection);
         proximityService = HomeInjector.obtain(this).service();
-        proximityService.startRadar();
 
         // TODO do something useful with this once we can
         remoteConfig.proximityServicesEnabled()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(enabled -> Timber.i("Proximity services enabled: %s", enabled));
+                .subscribe(enabled -> {
+                    if (enabled) {
+                        proximityService.startRadar();
+                    } else {
+                        proximityService.stopRadar();
+                    }
+                });
     }
 
     private void collectPageViewsInto(Map<BottomNavigationSection, View> pageViews) {
