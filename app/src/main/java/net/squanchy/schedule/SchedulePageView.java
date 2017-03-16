@@ -94,8 +94,8 @@ public class SchedulePageView extends CoordinatorLayout {
                 case R.id.action_settings:
                     navigate.toSettings();
                     return true;
-              default:
-                  return false;
+                default:
+                    return false;
             }
         });
     }
