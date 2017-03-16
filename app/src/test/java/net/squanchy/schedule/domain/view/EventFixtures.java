@@ -91,7 +91,8 @@ public final class EventFixtures {
                 place,
                 experienceLevel,
                 speakers,
-                type
+                type,
+                false
         );
     }
 }
