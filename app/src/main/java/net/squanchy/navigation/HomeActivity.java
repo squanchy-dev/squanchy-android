@@ -20,6 +20,7 @@ import net.squanchy.R;
 import net.squanchy.analytics.Analytics;
 import net.squanchy.analytics.ContentType;
 import net.squanchy.fonts.TypefaceStyleableActivity;
+import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.remoteconfig.RemoteConfig;
 import net.squanchy.support.lang.Optional;
 import net.squanchy.support.widget.InterceptingBottomNavigationView;
@@ -38,6 +39,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private BottomNavigationSection currentSection;
     private InterceptingBottomNavigationView bottomNavigationView;
     private ViewGroup pageContainer;
+    private ProximityService proximityService;
     private Analytics analytics;
     private RemoteConfig remoteConfig;
 
@@ -66,11 +68,18 @@ public class HomeActivity extends TypefaceStyleableActivity {
     protected void onStart() {
         super.onStart();
         selectInitialPage(currentSection);
+        proximityService = HomeInjector.obtain(this).service();
 
         // TODO do something useful with this once we can
         remoteConfig.proximityServicesEnabled()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(enabled -> Timber.i("Proximity services enabled: %s", enabled));
+                .subscribe(enabled -> {
+                    if (enabled) {
+                        proximityService.startRadar();
+                    } else {
+                        proximityService.stopRadar();
+                    }
+                });
     }
 
     private void collectPageViewsInto(Map<BottomNavigationSection, View> pageViews) {
