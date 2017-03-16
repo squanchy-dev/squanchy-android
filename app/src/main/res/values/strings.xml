@@ -39,4 +39,9 @@
   <string name="tweet_date_today">Today</string>
   <string name="tweet_date_yesterday">Yesterday</string>
 
+  <string name="settings_notifications_category">Notifications</string>
+  <string name="settings_notifications_about_to_start_title">Event about to start notification</string>
+  <string name="settings_notifications_about_to_start_summary_on">Show notifications for favourite events starting soon</string>
+  <string name="settings_notifications_about_to_start_summary_off">Do not show notifications for favourite events starting soon</string>
+
 </resources>

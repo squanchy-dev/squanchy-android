@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <PreferenceCategory android:title="@string/settings_notifications_category">
+
+    <SwitchPreference
+      android:defaultValue="true"
+      android:key="@string/about_to_start_notification_preference_key"
+      android:title="@string/settings_notifications_about_to_start_title"
+      android:summaryOn="@string/settings_notifications_about_to_start_summary_on"
+      android:summaryOff="@string/settings_notifications_about_to_start_summary_off" />
+
+  </PreferenceCategory>
+
+</PreferenceScreen>
