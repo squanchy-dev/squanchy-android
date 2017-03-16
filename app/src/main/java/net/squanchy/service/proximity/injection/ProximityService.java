@@ -5,10 +5,6 @@ import net.squanchy.proximity.ProximityProvider;
 
 import io.reactivex.Observable;
 
-/**
- * Created by cattaneostefano on 16/03/2017.
- */
-
 public class ProximityService {
 
     private final ProximityProvider proximityProvider;
