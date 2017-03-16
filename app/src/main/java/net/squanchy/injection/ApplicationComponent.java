@@ -6,13 +6,13 @@ import net.squanchy.analytics.Analytics;
 import net.squanchy.analytics.AnalyticsModule;
 import net.squanchy.remoteconfig.RemoteConfig;
 import net.squanchy.remoteconfig.RemoteConfigModule;
+import net.squanchy.service.firebase.FirebaseAuthService;
 import net.squanchy.service.firebase.FirebaseDbService;
 import net.squanchy.service.firebase.injection.FirebaseModule;
 import net.squanchy.service.repository.EventRepository;
 import net.squanchy.service.repository.SpeakerRepository;
 import net.squanchy.service.repository.injection.RepositoryModule;
 import net.squanchy.support.injection.ChecksumModule;
-import net.squanchy.support.lang.Checksum;
 
 import dagger.Component;
 
@@ -22,7 +22,7 @@ public interface ApplicationComponent {
 
     FirebaseDbService firebaseDbService();
 
-    Checksum checksum();
+    FirebaseAuthService firebaseAuthService();
 
     EventRepository eventRepository();
 

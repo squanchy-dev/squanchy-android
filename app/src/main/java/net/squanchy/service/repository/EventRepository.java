@@ -18,6 +18,7 @@ import net.squanchy.support.lang.Optional;
 
 import org.joda.time.LocalDateTime;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.functions.Function3;
 import io.reactivex.schedulers.Schedulers;
@@ -36,10 +37,10 @@ public class EventRepository {
         this.speakerRepository = speakerRepository;
     }
 
-    public Observable<Event> event(String eventId) {
+    public Observable<Event> event(String eventId, String userId) {
         Observable<FirebaseEvent> eventObservable = dbService.event(eventId);
         Observable<List<Speaker>> speakersObservable = speakerRepository.speakers();
-        Observable<FirebaseFavorites> favoritesObservable = dbService.favorites();
+        Observable<FirebaseFavorites> favoritesObservable = dbService.favorites(userId);
 
         return Observable.combineLatest(
                 eventObservable,
@@ -65,10 +66,10 @@ public class EventRepository {
         );
     }
 
-    public Observable<List<Event>> events() {
+    public Observable<List<Event>> events(String userId) {
         Observable<FirebaseEvents> sessionsObservable = dbService.events();
         Observable<List<Speaker>> speakersObservable = speakerRepository.speakers();
-        Observable<FirebaseFavorites> favoritesObservable = dbService.favorites();
+        Observable<FirebaseFavorites> favoritesObservable = dbService.favorites(userId);
 
         return Observable.combineLatest(sessionsObservable, speakersObservable, favoritesObservable, combineSessionsAndSpeakers());
     }
@@ -101,13 +102,11 @@ public class EventRepository {
         return filter(speakers, speaker -> apiEvent.speaker_ids.contains(speaker.id()));
     }
 
-    public void favorite(String eventId) {
-        dbService.favorite(eventId)
-                .subscribe();
+    public Completable addFavorite(String eventId, String userId) {
+        return dbService.addFavorite(eventId, userId);
     }
 
-    public void removeFavorite(String eventId) {
-        dbService.removeFavorite(eventId)
-                .subscribe();
+    public Completable removeFavorite(String eventId, String userId) {
+        return dbService.removeFavorite(eventId, userId);
     }
 }

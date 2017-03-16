@@ -17,17 +17,27 @@ public class FirebaseAuthService {
         this.auth = auth;
     }
 
-    <T> Observable<T> signInAnd(Func1<String, Observable<T>> andThen) {
+    public <T> Observable<T> signInThenObservableFrom(Func1<String, Observable<T>> observableProvider) {
         return currentUser().flatMap(user -> {
             if (user.isPresent()) {
-                return andThen.call(user.get().getUid());
+                return observableProvider.call(user.get().getUid());
             }
 
             return signInAnonymously().andThen(Observable.empty());
         });
     }
 
-    Observable<Optional<FirebaseUser>> currentUser() {
+    public Completable signInThenCompletableFrom(Func1<String, Completable> completableProvider) {
+        return currentUser().flatMapCompletable(user -> {
+            if (user.isPresent()) {
+                return completableProvider.call(user.get().getUid());
+            }
+
+            return signInAnonymously().andThen(Completable.never());
+        });
+    }
+
+    private Observable<Optional<FirebaseUser>> currentUser() {
         return Observable.create(e -> {
             FirebaseAuth.AuthStateListener listener = firebaseAuth -> e.onNext(Optional.fromNullable(firebaseAuth.getCurrentUser()));
 
@@ -37,11 +47,9 @@ public class FirebaseAuthService {
         });
     }
 
-    Completable signInAnonymously() {
-        return Completable.create(e -> {
-            auth.signInAnonymously()
-                    .addOnSuccessListener(result -> e.onComplete())
-                    .addOnFailureListener(e::onError);
-        });
+    private Completable signInAnonymously() {
+        return Completable.create(e -> auth.signInAnonymously()
+                .addOnSuccessListener(result -> e.onComplete())
+                .addOnFailureListener(e::onError));
     }
 }

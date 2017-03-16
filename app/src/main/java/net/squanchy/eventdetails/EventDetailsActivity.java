@@ -13,14 +13,14 @@ import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.navigation.Navigator;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class EventDetailsActivity extends TypefaceStyleableActivity {
 
     private static final String EXTRA_EVENT_ID = "event_id";
 
     private EventDetailsService service;
-    private Disposable subscription;
+    private CompositeDisposable subscriptions;
     private EventDetailsCoordinatorLayout coordinatorLayout;
 
     private Navigator navigator;
@@ -44,6 +44,7 @@ public class EventDetailsActivity extends TypefaceStyleableActivity {
         navigator = component.navigator();
 
         coordinatorLayout = (EventDetailsCoordinatorLayout) findViewById(R.id.event_details_root);
+        subscriptions = new CompositeDisposable();
     }
 
     private void setupToolbar() {
@@ -60,15 +61,15 @@ public class EventDetailsActivity extends TypefaceStyleableActivity {
         Intent intent = getIntent();
         String eventId = intent.getStringExtra(EXTRA_EVENT_ID);
 
-        subscription = service.event(eventId)
+        subscriptions.add(service.event(eventId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(event -> coordinatorLayout.updateWith(event, () -> {
                     if (event.favorited()) {
-                        service.removeFavorite(event.id());
+                        subscriptions.add(service.removeFavorite(event.id()).subscribe());
                     } else {
-                        service.favorite(event.id());
+                        subscriptions.add(service.favorite(event.id()).subscribe());
                     }
-                }));
+                })));
     }
 
     @Override
@@ -97,6 +98,6 @@ public class EventDetailsActivity extends TypefaceStyleableActivity {
     protected void onStop() {
         super.onStop();
 
-        subscription.dispose();
+        subscriptions.clear();
     }
 }
