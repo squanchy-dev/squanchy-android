@@ -36,6 +36,10 @@
       android:windowSoftInputMode="adjustResize"
       android:launchMode="singleTop" />
 
+    <activity
+      android:name="net.squanchy.settings.SettingsActivity"
+      android:theme="@style/Theme.Squanchy.Settings" />
+
     <receiver android:name="net.squanchy.notification.NotificationAlarmReceiver"
       android:directBootAware="true">
       <intent-filter>
