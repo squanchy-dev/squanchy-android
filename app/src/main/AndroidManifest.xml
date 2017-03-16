@@ -36,7 +36,13 @@
       android:windowSoftInputMode="adjustResize"
       android:launchMode="singleTop" />
 
-    <receiver android:name="net.squanchy.notification.NotificationAlarmReceiver"
+    <activity
+      android:name="net.squanchy.settings.SettingsActivity"
+      android:theme="@style/Theme.Squanchy.Settings"
+      android:label="@string/settings_label" />
+
+    <receiver
+      android:name="net.squanchy.notification.NotificationAlarmReceiver"
       android:directBootAware="true">
       <intent-filter>
         <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />

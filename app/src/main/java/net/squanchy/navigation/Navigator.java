@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import net.squanchy.eventdetails.EventDetailsActivity;
 import net.squanchy.search.SearchActivity;
+import net.squanchy.settings.SettingsActivity;
 
 public class Navigator {
 
@@ -32,5 +33,9 @@ public class Navigator {
 
     public void toSearch() {
         context.startActivity(new Intent(context, SearchActivity.class));
+    }
+
+    public void toSettings() {
+        context.startActivity(new Intent(context, SettingsActivity.class));
     }
 }
