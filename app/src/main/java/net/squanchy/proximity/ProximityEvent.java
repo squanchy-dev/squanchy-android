@@ -1,19 +1,13 @@
 package net.squanchy.proximity;
 
-public class ProximityEvent {
-    private String action;
-    private String subject;
+import com.google.auto.value.AutoValue;
 
-    public ProximityEvent(String action, String subject) {
-        this.action = action;
-        this.subject = subject;
-    }
+@AutoValue
+public abstract class ProximityEvent {
 
-    public String getAction() {
-        return action;
-    }
+    public static ProximityEvent create(String action, String subject) {return new AutoValue_ProximityEvent(action, subject);}
 
-    public String getSubject() {
-        return subject;
-    }
+    public abstract String action();
+
+    public abstract String subject();
 }
