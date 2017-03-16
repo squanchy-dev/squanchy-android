@@ -2,8 +2,6 @@ package net.squanchy.service.proximity.injection;
 
 import android.content.Context;
 
-import javax.inject.Singleton;
-
 import net.squanchy.R;
 import net.squanchy.injection.ApplicationLifecycle;
 import net.squanchy.proximity.ProximityProvider;

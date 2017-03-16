@@ -6,6 +6,7 @@ import java.util.List;
 
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.search.engines.SearchEngines;
+import net.squanchy.service.firebase.FirebaseAuthService;
 import net.squanchy.service.repository.EventRepository;
 import net.squanchy.service.repository.SpeakerRepository;
 import net.squanchy.speaker.domain.view.Speaker;
@@ -20,23 +21,30 @@ class SearchService {
     private final EventRepository eventRepository;
     private final SpeakerRepository speakerRepository;
     private final SearchEngines searchEngines;
+    private final FirebaseAuthService authService;
 
-    SearchService(EventRepository eventRepository, SpeakerRepository speakerRepository, SearchEngines searchEngines) {
+    SearchService(
+            EventRepository eventRepository,
+            SpeakerRepository speakerRepository,
+            SearchEngines searchEngines,
+            FirebaseAuthService authService
+    ) {
         this.eventRepository = eventRepository;
         this.speakerRepository = speakerRepository;
         this.searchEngines = searchEngines;
+        this.authService = authService;
     }
 
-    public Observable<SearchResults> find(String query) {
-        return Observable.combineLatest(
-                findEvents(query),
+    Observable<SearchResults> find(String query) {
+        return authService.signInThenObservableFrom(userId -> Observable.combineLatest(
+                findEvents(query, userId),
                 findSpeakers(query),
                 SearchResults::create
-        );
+        ));
     }
 
-    private Observable<List<Event>> findEvents(String query) {
-        return eventRepository.events()
+    private Observable<List<Event>> findEvents(String query, String userId) {
+        return eventRepository.events(userId)
                 .map(onlyEventsMatching(query));
     }
 

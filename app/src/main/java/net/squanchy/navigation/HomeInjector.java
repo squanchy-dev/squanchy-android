@@ -1,18 +1,18 @@
 package net.squanchy.navigation;
 
-import android.content.Context;
+import android.app.Activity;
 
 import net.squanchy.injection.ApplicationInjector;
-import net.squanchy.service.proximity.injection.ProximityModule;
 
-public final class HomeInjector {
+final class HomeInjector {
 
     private HomeInjector() {
+        // no instances
     }
 
-    public static HomeComponent obtain(Context context) {
+    public static HomeComponent obtain(Activity activity) {
         return DaggerHomeComponent.builder()
-                .applicationComponent(ApplicationInjector.obtain(context))
+                .applicationComponent(ApplicationInjector.obtain(activity))
                 .build();
     }
 }

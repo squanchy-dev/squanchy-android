@@ -4,6 +4,7 @@ import android.app.Application;
 import android.support.annotation.MainThread;
 
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.firebase.database.FirebaseDatabase;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterCore;
@@ -34,8 +35,7 @@ public class SquanchyApplication extends Application {
     private void setupTracking() {
         setupFabric();
 
-        Analytics analytics = Analytics.from(this);
-        analytics.enableActivityLifecycleLogging();
+        Analytics analytics = applicationComponent().analytics();
         analytics.enableExceptionLogging();
 
         if (BuildConfig.DEBUG) {
@@ -48,7 +48,13 @@ public class SquanchyApplication extends Application {
                 getString(R.string.api_value_twitter_api_key),
                 getString(R.string.api_value_twitter_secret)
         );
-        Fabric.with(this, new Crashlytics(), new TwitterCore(authConfig), new TweetUi());
+        CrashlyticsCore crashlyticsCore = new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build();
+        Fabric.with(
+                this,
+                new Crashlytics.Builder().core(crashlyticsCore).build(),
+                new TwitterCore(authConfig),
+                new TweetUi()
+        );
     }
 
     @MainThread
