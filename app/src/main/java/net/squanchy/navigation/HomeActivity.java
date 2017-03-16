@@ -18,12 +18,9 @@ import java.util.Map;
 
 import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
-import net.squanchy.proximity.ProximityService;
-import net.squanchy.proximity.near.NearProximityServiceInjector;
+import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.support.lang.Optional;
 import net.squanchy.support.widget.InterceptingBottomNavigationView;
-
-import io.reactivex.disposables.Disposable;
 
 public class HomeActivity extends TypefaceStyleableActivity {
 
@@ -60,8 +57,8 @@ public class HomeActivity extends TypefaceStyleableActivity {
     protected void onStart() {
         super.onStart();
         selectInitialPage(currentSection);
-        proximityService = NearProximityServiceInjector.obtain(this).service();
-        proximityService.provider().startRadar();
+        proximityService = HomeInjector.obtain(this).service();
+        proximityService.startRadar();
     }
 
 

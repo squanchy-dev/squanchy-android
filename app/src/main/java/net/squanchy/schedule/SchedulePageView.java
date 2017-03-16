@@ -14,11 +14,12 @@ import android.widget.Toast;
 import net.squanchy.R;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.proximity.ProximityEvent;
-import net.squanchy.proximity.ProximityService;
 import net.squanchy.schedule.domain.view.Schedule;
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter;
+import net.squanchy.service.proximity.injection.ProximityService;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import uk.co.chrisjenx.calligraphy.CalligraphyTypefaceSpan;
 import uk.co.chrisjenx.calligraphy.CalligraphyUtils;
@@ -28,8 +29,7 @@ public class SchedulePageView extends CoordinatorLayout {
 
     private ScheduleViewPagerAdapter viewPagerAdapter;
     private View progressBar;
-    private Disposable subscription;
-    private Disposable proxSubscription;
+    private CompositeDisposable subscriptions;
     private ScheduleService service;
     private Navigator navigate;
     private ProximityService proximityService;
@@ -80,13 +80,16 @@ public class SchedulePageView extends CoordinatorLayout {
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
-        subscription = service.schedule()
+        subscriptions = new CompositeDisposable();
+        subscriptions.add(
+                service.schedule()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(schedule -> updateWith(schedule, event -> navigate.toEventDetails(event.id())));
+                .subscribe(schedule -> updateWith(schedule, event -> navigate.toEventDetails(event.id()))));
 
-        proxSubscription = proximityService.observeProximityEvents()
+        subscriptions.add(
+                proximityService.observeProximityEvents()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::handleProximityEvent);
+                .subscribe(this::handleProximityEvent));
     }
 
     private void handleProximityEvent(ProximityEvent proximityEvent) {
@@ -96,8 +99,7 @@ public class SchedulePageView extends CoordinatorLayout {
     @Override
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        subscription.dispose();
-        proxSubscription.dispose();
+        subscriptions.clear();
     }
 
     private void hackToApplyTypefaces(TabLayout tabLayout) {

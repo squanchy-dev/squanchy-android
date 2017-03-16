@@ -5,13 +5,12 @@ import android.content.Context;
 import net.squanchy.injection.ActivityLifecycle;
 import net.squanchy.injection.ApplicationComponent;
 import net.squanchy.navigation.Navigator;
-import net.squanchy.proximity.ProximityService;
-import net.squanchy.proximity.near.NearITModule;
+import net.squanchy.service.proximity.injection.ProximityService;
 
 import dagger.Component;
 
 @ActivityLifecycle
-@Component(modules = {ScheduleModule.class, NearITModule.class}, dependencies = ApplicationComponent.class)
+@Component(modules = {ScheduleModule.class}, dependencies = ApplicationComponent.class)
 public interface ScheduleComponent {
 
     ScheduleService service();

@@ -7,6 +7,7 @@ import net.squanchy.service.firebase.FirebaseDbService;
 import net.squanchy.service.firebase.injection.DbServiceType;
 import net.squanchy.service.firebase.injection.FirebaseModule;
 import net.squanchy.service.proximity.injection.ProximityModule;
+import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.service.repository.EventRepository;
 import net.squanchy.service.repository.SpeakerRepository;
 import net.squanchy.service.repository.injection.RepositoryModule;
@@ -28,7 +29,7 @@ public interface ApplicationComponent {
 
     SpeakerRepository speakerRepository();
 
-    ProximityProvider proximityProvider();
+    ProximityService service();
 
     class Factory {
 

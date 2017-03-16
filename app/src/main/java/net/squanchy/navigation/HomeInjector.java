@@ -1,19 +1,17 @@
-package net.squanchy.proximity.near;
+package net.squanchy.navigation;
 
 import android.content.Context;
 
 import net.squanchy.injection.ApplicationInjector;
-import net.squanchy.navigation.DaggerHomeComponent;
-import net.squanchy.navigation.HomeComponent;
+import net.squanchy.service.proximity.injection.ProximityModule;
 
-public final class NearProximityServiceInjector {
+public final class HomeInjector {
 
-    private NearProximityServiceInjector() {
+    private HomeInjector() {
     }
 
     public static HomeComponent obtain(Context context) {
         return DaggerHomeComponent.builder()
-                .nearITModule(new NearITModule())
                 .applicationComponent(ApplicationInjector.obtain(context))
                 .build();
     }
