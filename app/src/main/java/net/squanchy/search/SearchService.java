@@ -36,7 +36,7 @@ class SearchService {
     }
 
     Observable<SearchResults> find(String query) {
-        return authService.signInAndObserve(userId -> Observable.combineLatest(
+        return authService.signInThenObservableFrom(userId -> Observable.combineLatest(
                 findEvents(query, userId),
                 findSpeakers(query),
                 SearchResults::create

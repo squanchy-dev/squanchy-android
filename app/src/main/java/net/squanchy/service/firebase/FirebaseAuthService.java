@@ -17,20 +17,20 @@ public class FirebaseAuthService {
         this.auth = auth;
     }
 
-    public <T> Observable<T> signInAndObserve(Func1<String, Observable<T>> andThen) {
+    public <T> Observable<T> signInThenObservableFrom(Func1<String, Observable<T>> observableProvider) {
         return currentUser().flatMap(user -> {
             if (user.isPresent()) {
-                return andThen.call(user.get().getUid());
+                return observableProvider.call(user.get().getUid());
             }
 
             return signInAnonymously().andThen(Observable.empty());
         });
     }
 
-    public Completable signInAndComplete(Func1<String, Completable> andThen) {
+    public Completable signInThenCompletableFrom(Func1<String, Completable> completableProvider) {
         return currentUser().flatMapCompletable(user -> {
             if (user.isPresent()) {
-                return andThen.call(user.get().getUid());
+                return completableProvider.call(user.get().getUid());
             }
 
             return signInAnonymously().andThen(Completable.never());
