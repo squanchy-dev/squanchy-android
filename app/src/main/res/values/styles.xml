@@ -69,17 +69,25 @@
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.Card.Speaker</item>
   </style>
 
-  <style name="Search.Appbar" parent="ThemeOverlay.AppCompat.Light">
+  <style name="Search.Appbar" parent="Widget.Design.AppBarLayout">
     <item name="android:elevation">@dimen/toolbar_elevation</item>
   </style>
 
   <style name="Search.Toolbar" parent="Squanchy.Toolbar">
     <item name="android:background">?attr/colorPrimary</item>
+  </style>
+
+  <style name="ThemeOverlay.Squanchy.Toolbar" parent="ThemeOverlay.AppCompat.Light">
     <item name="android:colorControlNormal">?colorAccent</item>
   </style>
 
+  <style name="ThemeOverlay.Squanchy.Toolbar.Search" parent="ThemeOverlay.Squanchy.Toolbar">
+    <item name="colorPrimary">@color/window_background</item>
+    <item name="colorAccent">@color/primary</item>
+  </style>
+
   <style name="Search.SectionHeader" parent="TextAppearance.AppCompat.Body1">
-    <item name="android:textColor">?android:colorAccent</item>
+    <item name="android:textColor">?android:colorPrimary</item>
     <item name="fontPath">?titleTypeface</item>
   </style>
 
@@ -92,12 +100,68 @@
     <item name="android:background">@null</item>
     <item name="android:hint">@string/search_label</item>
     <item name="android:imeOptions">actionSearch</item>
+    <item name="android:inputType">text</item>
     <item name="android:maxLines">1</item>
   </style>
 
   <style name="Search.GenericItem" parent="None">
     <item name="android:gravity">center_horizontal|top</item>
     <item name="android:background">?selectableItemBackground</item>
+  </style>
+
+  <style name="Search.EmptyMessage" parent="TextAppearance.AppCompat.Body1">
+    <item name="android:text">@string/start_typing_to_search</item>
+    <item name="android:textColor">?android:textColorSecondary</item>
+    <item name="android:textSize">@dimen/search_empty_state_text</item>
+    <item name="fontPath">?defaultLightTypeface</item>
+  </style>
+
+  <style name="EventDetails.Header.Speaker.Names" parent="None">
+    <item name="android:gravity">start|center_vertical</item>
+    <item name="android:lineSpacingExtra">@dimen/event_details_speaker_line_spacing_extra</item>
+    <item name="android:lineSpacingMultiplier">1</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.EventDetails.Header.Speaker</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.EventDetails.Header.Speaker" parent="None">
+    <item name="android:textColor">?android:textColorPrimary</item>
+    <item name="android:textSize">@dimen/event_details_speaker</item>
+    <item name="fontPath">?titleTypeface</item>
+  </style>
+
+  <style name="EventDetails.Header.Title" parent="None">
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.EventDetails.Header.Title</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.EventDetails.Header.Title" parent="None">
+    <item name="android:textColor">?android:textColorPrimary</item>
+    <item name="android:textSize">@dimen/event_details_title</item>
+    <item name="fontPath">?titleTypeface</item>
+  </style>
+
+  <style name="EventDetails.Header.Speaker.Photo" parent="None" />
+
+  <style name="EventDetails.Fab" parent="None">
+    <item name="backgroundTint">?colorPrimary</item>
+    <item name="android:clickable">true</item>
+    <item name="android:src">@drawable/ic_favorite_empty</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.Tweet.Timestamp" parent="None">
+    <item name="android:textColor">?android:textColorSecondary</item>
+    <item name="android:textSize">@dimen/card_twitter</item>
+    <item name="fontPath">?defaultMediumTypeface</item>
+  </style>
+
+  <style name="Tweet.Card.Title" parent="None">
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.Card.Title</item>
+  </style>
+
+  <style name="Tweet.Card.Timestamp" parent="None">
+    <item name="android:gravity">center</item>
+    <item name="android:lineSpacingExtra">@dimen/card_twitter_line_spacing_extra</item>
+    <item name="android:lineSpacingMultiplier">1</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.Tweet.Timestamp</item>
   </style>
 
 </resources>

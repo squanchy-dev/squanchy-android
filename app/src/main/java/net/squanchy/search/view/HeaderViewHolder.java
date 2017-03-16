@@ -1,6 +1,5 @@
 package net.squanchy.search.view;
 
-import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -11,7 +10,7 @@ class HeaderViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
     }
 
-    void updateWith(@StringRes int titleRes) {
-        ((TextView) itemView).setText(titleRes);
+    void updateWith(HeaderType headerType) {
+        ((TextView) itemView).setText(headerType.headerTextResourceId());
     }
 }

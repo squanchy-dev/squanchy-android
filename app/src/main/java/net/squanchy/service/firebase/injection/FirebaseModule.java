@@ -5,10 +5,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import net.squanchy.injection.ApplicationLifecycle;
-import net.squanchy.service.firebase.AuthenticatedFirebaseDbService;
 import net.squanchy.service.firebase.FirebaseAuthService;
 import net.squanchy.service.firebase.FirebaseDbService;
-import net.squanchy.service.firebase.UnauthenticatedFirebaseDbService;
 
 import dagger.Module;
 import dagger.Provides;
@@ -26,6 +24,7 @@ public class FirebaseModule {
         return FirebaseAuth.getInstance();
     }
 
+    @ApplicationLifecycle
     @Provides
     FirebaseAuthService firebaseAuthService(FirebaseAuth firebaseAuth) {
         return new FirebaseAuthService(firebaseAuth);
@@ -33,18 +32,7 @@ public class FirebaseModule {
 
     @ApplicationLifecycle
     @Provides
-    @DbServiceType(DbServiceType.Type.AUTHENTICATED)
-    FirebaseDbService authenticatedDbService(
-            @DbServiceType(DbServiceType.Type.UNAUTHENTICATED) FirebaseDbService dbService,
-            FirebaseAuthService authService
-    ) {
-        return new AuthenticatedFirebaseDbService(dbService, authService);
-    }
-
-    @ApplicationLifecycle
-    @Provides
-    @DbServiceType(DbServiceType.Type.UNAUTHENTICATED)
-    FirebaseDbService unauthenticatedDbService(DatabaseReference database) {
-        return new UnauthenticatedFirebaseDbService(database);
+    FirebaseDbService firebaseDbService(DatabaseReference database) {
+        return new FirebaseDbService(database);
     }
 }

@@ -14,7 +14,7 @@ class SpeakerViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
     }
 
-    public void updateWith(Speaker speaker, ImageLoader imageLoader, @Nullable SpeakersView.OnSpeakerClickedListener listener) {
+    public void updateWith(Speaker speaker, ImageLoader imageLoader, @Nullable SearchRecyclerView.OnSearchResultClickListener listener) {
         ((SearchItemView) itemView).updateWith(speaker, imageLoader, listener);
     }
 }

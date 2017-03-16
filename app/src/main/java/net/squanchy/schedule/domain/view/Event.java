@@ -26,7 +26,9 @@ public abstract class Event {
             String place,
             Optional<ExperienceLevel> experienceLevel,
             List<Speaker> speakers,
-            Type type) {
+            Type type,
+            boolean favorited
+    ) {
         Optional<String> placeOptional = Optional.fromNullable(place);        // TODO get Optional<Place> as type in here
         return new AutoValue_Event.Builder()
                 .id(eventId)
@@ -39,9 +41,10 @@ public abstract class Event {
                 .placeVisibility(placeOptional.isPresent() ? View.VISIBLE : View.GONE)
                 .speakers(speakers)
                 .speakersVisibility(speakers.isEmpty() ? View.GONE : View.VISIBLE)
-                .trackVisibility(View.GONE) // todo add track
+                .trackVisibility(View.GONE)     // TODO add track
                 .experienceLevel(experienceLevel)
                 .type(type)
+                .favorited(favorited)
                 .build();
     }
 
@@ -73,6 +76,8 @@ public abstract class Event {
     public abstract String dayId();
 
     public abstract Type type();
+
+    public abstract boolean favorited();
 
     public String speakersNames() {
         StringBuilder speakersBuilder = new StringBuilder();
@@ -115,6 +120,8 @@ public abstract class Event {
         public abstract Builder experienceLevel(Optional<ExperienceLevel> experienceLevel);
 
         public abstract Builder type(Type type);
+
+        public abstract Builder favorited(boolean favorited);
 
         public abstract Event build();
     }

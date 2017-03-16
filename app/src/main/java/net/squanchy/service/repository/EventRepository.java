@@ -1,5 +1,6 @@
 package net.squanchy.service.repository;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.service.firebase.FirebaseDbService;
 import net.squanchy.service.firebase.model.FirebaseEvent;
 import net.squanchy.service.firebase.model.FirebaseEvents;
+import net.squanchy.service.firebase.model.FirebaseFavorites;
 import net.squanchy.speaker.domain.view.Speaker;
 import net.squanchy.support.lang.Checksum;
 import net.squanchy.support.lang.Func1;
@@ -16,8 +18,9 @@ import net.squanchy.support.lang.Optional;
 
 import org.joda.time.LocalDateTime;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
-import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Function3;
 import io.reactivex.schedulers.Schedulers;
 
 import static net.squanchy.support.lang.Lists.filter;
@@ -34,19 +37,21 @@ public class EventRepository {
         this.speakerRepository = speakerRepository;
     }
 
-    public Observable<Event> event(String eventId) {
+    public Observable<Event> event(String eventId, String userId) {
         Observable<FirebaseEvent> eventObservable = dbService.event(eventId);
         Observable<List<Speaker>> speakersObservable = speakerRepository.speakers();
+        Observable<FirebaseFavorites> favoritesObservable = dbService.favorites(userId);
 
         return Observable.combineLatest(
                 eventObservable,
                 speakersObservable,
+                favoritesObservable,
                 combineIntoEvent()
         ).subscribeOn(Schedulers.io());
     }
 
-    private BiFunction<FirebaseEvent, List<Speaker>, Event> combineIntoEvent() {
-        return (apiEvent, speakers) -> Event.create(
+    private Function3<FirebaseEvent, List<Speaker>, FirebaseFavorites, Event> combineIntoEvent() {
+        return (apiEvent, speakers, favorites) -> Event.create(
                 apiEvent.id,
                 checksum.getChecksumOf(apiEvent.id),
                 apiEvent.day_id,
@@ -56,22 +61,24 @@ public class EventRepository {
                 apiEvent.place_id,
                 Optional.fromNullable(apiEvent.experience_level).flatMap(ExperienceLevel::fromNullableRawLevel),
                 speakersForEvent(apiEvent, speakers),
-                Event.Type.fromRawType(apiEvent.type)
+                Event.Type.fromRawType(apiEvent.type),
+                favorites.hasFavorite(apiEvent.id)
         );
     }
 
-    public Observable<List<Event>> events() {
+    public Observable<List<Event>> events(String userId) {
         Observable<FirebaseEvents> sessionsObservable = dbService.events();
         Observable<List<Speaker>> speakersObservable = speakerRepository.speakers();
+        Observable<FirebaseFavorites> favoritesObservable = dbService.favorites(userId);
 
-        return Observable.combineLatest(sessionsObservable, speakersObservable, combineSessionsAndSpeakers());
+        return Observable.combineLatest(sessionsObservable, speakersObservable, favoritesObservable, combineSessionsAndSpeakers());
     }
 
-    private BiFunction<FirebaseEvents, List<Speaker>, List<Event>> combineSessionsAndSpeakers() {
-        return (apiSchedule, speakers) -> Lists.map(apiSchedule.events, combineEventWith(speakers));
+    private Function3<FirebaseEvents, List<Speaker>, FirebaseFavorites, List<Event>> combineSessionsAndSpeakers() {
+        return (apiSchedule, speakers, favorites) -> Lists.map(new ArrayList<>(apiSchedule.events.values()), combineEventWith(speakers, favorites));
     }
 
-    private Func1<FirebaseEvent, Event> combineEventWith(List<Speaker> speakers) {
+    private Func1<FirebaseEvent, Event> combineEventWith(List<Speaker> speakers, FirebaseFavorites favorites) {
         return apiEvent -> Event.create(
                 apiEvent.id,
                 checksum.getChecksumOf(apiEvent.id),
@@ -82,7 +89,8 @@ public class EventRepository {
                 apiEvent.place_id,
                 Optional.fromNullable(apiEvent.experience_level).flatMap(ExperienceLevel::fromNullableRawLevel),
                 speakersForEvent(apiEvent, speakers),
-                Event.Type.fromRawType(apiEvent.type)
+                Event.Type.fromRawType(apiEvent.type),
+                favorites.hasFavorite(apiEvent.id)
         );
     }
 
@@ -92,5 +100,13 @@ public class EventRepository {
         }
 
         return filter(speakers, speaker -> apiEvent.speaker_ids.contains(speaker.id()));
+    }
+
+    public Completable addFavorite(String eventId, String userId) {
+        return dbService.addFavorite(eventId, userId);
+    }
+
+    public Completable removeFavorite(String eventId, String userId) {
+        return dbService.removeFavorite(eventId, userId);
     }
 }

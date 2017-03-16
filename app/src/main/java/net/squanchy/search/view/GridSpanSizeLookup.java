@@ -2,9 +2,7 @@ package net.squanchy.search.view;
 
 import android.support.v7.widget.GridLayoutManager;
 
-import java.util.Locale;
-
-import net.squanchy.search.view.SpeakerAdapter.ViewTypeId;
+import net.squanchy.search.view.SearchAdapter.ViewTypeId;
 
 class GridSpanSizeLookup extends GridLayoutManager.SpanSizeLookup {
 
@@ -16,6 +14,8 @@ class GridSpanSizeLookup extends GridLayoutManager.SpanSizeLookup {
     GridSpanSizeLookup(ItemsAdapter adapter, int columnCount) {
         this.itemsAdapter = adapter;
         this.columnCount = columnCount;
+
+        super.setSpanIndexCacheEnabled(true);
     }
 
     @Override
@@ -24,18 +24,11 @@ class GridSpanSizeLookup extends GridLayoutManager.SpanSizeLookup {
             return SINGLE_COLUMN_SPAN_SIZE;
         }
 
-        if (position < 0 || position >= itemsAdapter.getTotalItemsCount()) {
-            String message = String.format(Locale.UK, "Position %d is not valid, must be [0, totalItemsCount)", position);
-            throw new IndexOutOfBoundsException(message);
-        }
-
-        @ViewTypeId
-        int itemViewType = itemsAdapter.getViewTypeAt(position);
-        return getSizeFor(itemViewType);
+        return getSpanSizeFor(itemsAdapter.viewTypeAtAbsolutePosition(position));
     }
 
-    private int getSizeFor(@ViewTypeId int viewTypeId) {
-        if (viewTypeId == ViewTypeId.HEADER) {
+    private int getSpanSizeFor(@ViewTypeId int viewTypeId) {
+        if (viewTypeId == ViewTypeId.HEADER || viewTypeId == ViewTypeId.EVENT) {
             return columnCount;
         } else {
             return SINGLE_COLUMN_SPAN_SIZE;

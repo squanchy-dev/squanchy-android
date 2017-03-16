@@ -1,6 +1,9 @@
 package net.squanchy.schedule;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
+import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
@@ -11,7 +14,10 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import net.squanchy.R;
+import net.squanchy.analytics.Analytics;
+import net.squanchy.analytics.ContentType;
 import net.squanchy.navigation.Navigator;
+import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Schedule;
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter;
 
@@ -28,6 +34,7 @@ public class SchedulePageView extends CoordinatorLayout {
     private Disposable subscription;
     private ScheduleService service;
     private Navigator navigate;
+    private Analytics analytics;
 
     public SchedulePageView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -41,6 +48,12 @@ public class SchedulePageView extends CoordinatorLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
+        Activity activity = unwrapToActivityContext(getContext());
+        ScheduleComponent component = ScheduleInjector.obtain(activity);
+        service = component.service();
+        navigate = component.navigator();
+        analytics = component.analytics();
+
         progressBar = findViewById(R.id.progressbar);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -48,20 +61,31 @@ public class SchedulePageView extends CoordinatorLayout {
         tabLayout.setupWithViewPager(viewPager);
         hackToApplyTypefaces(tabLayout);
 
-        viewPagerAdapter = new ScheduleViewPagerAdapter(getContext());
+        viewPagerAdapter = new ScheduleViewPagerAdapter(activity);
         viewPager.setAdapter(viewPagerAdapter);
 
-        ScheduleComponent component = ScheduleInjector.obtain(getContext());
-        service = component.service();
-        navigate = component.navigator();
+        tabLayout.addOnTabSelectedListener(new TrackingOnTabSelectedListener(analytics, viewPagerAdapter));
 
         setupToolbar();
+    }
+
+    private static Activity unwrapToActivityContext(Context context) {
+        if (context == null) {
+            throw new NullPointerException("Context cannot be null");
+        } else if (context instanceof Activity) {
+            return (Activity) context;
+        } else if (context instanceof ContextWrapper) {
+            ContextWrapper contextWrapper = (ContextWrapper) context;
+            return unwrapToActivityContext(contextWrapper.getBaseContext());
+        } else {
+            throw new IllegalStateException("Context type not supported: " + context.getClass().getCanonicalName());
+        }
     }
 
     private void setupToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.activity_schedule);
-        toolbar.inflateMenu(R.menu.search_icon_menu);
+        toolbar.inflateMenu(R.menu.search_icon);
         toolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.action_search) {
                 navigate.toSearch();
@@ -76,7 +100,12 @@ public class SchedulePageView extends CoordinatorLayout {
         super.onAttachedToWindow();
         subscription = service.schedule()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(schedule -> updateWith(schedule, event -> navigate.toEventDetails(event.id())));
+                .subscribe(schedule -> updateWith(schedule, this::onEventClicked));
+    }
+
+    private void onEventClicked(Event event) {
+        analytics.trackItemSelected(ContentType.SCHEDULE_ITEM, event.id());
+        navigate.toEventDetails(event.id());
     }
 
     @Override
@@ -92,7 +121,10 @@ public class SchedulePageView extends CoordinatorLayout {
         // TextAppearance is applied _after_ inflating the tab views, which means Calligraphy can't
         // intercept that either. Sad panda.
         tabLayout.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
-            Typeface typeface = TypefaceUtils.load(getContext().getAssets(), "fonts/LeagueSpartan-Bold.otf");
+            Context context = tabLayout.getContext();
+            String fontPath = getFontPathFor(context);
+
+            Typeface typeface = TypefaceUtils.load(context.getAssets(), fontPath);
             int tabCount = tabLayout.getTabCount();
             for (int i = 0; i < tabCount; i++) {
                 TabLayout.Tab tab = tabLayout.getTabAt(i);
@@ -102,6 +134,15 @@ public class SchedulePageView extends CoordinatorLayout {
                 tab.setText(CalligraphyUtils.applyTypefaceSpan(tab.getText(), typeface));
             }
         });
+    }
+
+    private String getFontPathFor(Context context) {
+        TypedArray a = context.obtainStyledAttributes(R.style.TextAppearance_Squanchy_Tab, new int[]{R.attr.fontPath});
+        try {
+            return a.getString(0);
+        } finally {
+            a.recycle();
+        }
     }
 
     private boolean hasSpan(CharSequence text) {
@@ -116,5 +157,31 @@ public class SchedulePageView extends CoordinatorLayout {
     public void updateWith(Schedule schedule, ScheduleViewPagerAdapter.OnEventClickedListener listener) {
         viewPagerAdapter.updateWith(schedule.pages(), listener);
         progressBar.setVisibility(GONE);
+    }
+
+    private static class TrackingOnTabSelectedListener implements TabLayout.OnTabSelectedListener {
+
+        private final Analytics analytics;
+        private final ScheduleViewPagerAdapter viewPagerAdapter;
+
+        private TrackingOnTabSelectedListener(Analytics analytics, ScheduleViewPagerAdapter viewPagerAdapter) {
+            this.analytics = analytics;
+            this.viewPagerAdapter = viewPagerAdapter;
+        }
+
+        @Override
+        public void onTabSelected(TabLayout.Tab tab) {
+            analytics.trackItemSelected(ContentType.SCHEDULE_DAY, viewPagerAdapter.getPageDayId(tab.getPosition()));
+        }
+
+        @Override
+        public void onTabUnselected(TabLayout.Tab tab) {
+            // No-op
+        }
+
+        @Override
+        public void onTabReselected(TabLayout.Tab tab) {
+            // No-op
+        }
     }
 }

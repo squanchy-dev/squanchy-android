@@ -1,4 +1,4 @@
-package net.squanchy.schedule.view;
+package net.squanchy.support.widget;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -25,15 +25,15 @@ import net.squanchy.speaker.domain.view.Speaker;
 
 import static net.squanchy.support.lang.Lists.map;
 
-public class SpeakerView extends LinearLayout {
-
-    private final LayoutInflater layoutInflater;
+public abstract class SpeakerView extends LinearLayout {
 
     @Nullable
     private ImageLoader imageLoader;
 
     private ViewGroup speakerPhotoContainer;
     private TextView speakerNameView;
+
+    protected final LayoutInflater layoutInflater;
 
     public SpeakerView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -100,15 +100,13 @@ public class SpeakerView extends LinearLayout {
 
     private ImageView recycleOrInflatePhotoView(List<ImageView> photoViews) {
         if (photoViews.isEmpty()) {
-            return inflatePhotoView();
+            return inflatePhotoView(speakerPhotoContainer);
         } else {
             return photoViews.remove(0);
         }
     }
 
-    private ImageView inflatePhotoView() {
-        return (ImageView) layoutInflater.inflate(R.layout.view_speaker_photo_small, speakerPhotoContainer, false);
-    }
+    protected abstract ImageView inflatePhotoView(ViewGroup speakerPhotoContainer);
 
     private void loadSpeakerPhoto(ImageView photoView, String photoUrl, ImageLoader imageLoader) {
         if (isFirebaseStorageUrl(photoUrl)) {

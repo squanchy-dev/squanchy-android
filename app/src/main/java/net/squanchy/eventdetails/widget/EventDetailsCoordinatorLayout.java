@@ -31,8 +31,18 @@ public class EventDetailsCoordinatorLayout extends CoordinatorLayout {
         detailsLayout = (EventDetailsLayout) findViewById(R.id.event_details);
     }
 
-    public void updateWith(Event event) {
+    public void updateWith(Event event, OnFavoriteClickListener listener) {
         headerLayout.updateWith(event);
         detailsLayout.updateWith(event);
+        floatingActionButton.setImageResource(
+                event.favorited() ?
+                        R.drawable.ic_favorite_filled :
+                        R.drawable.ic_favorite_empty
+        );
+        floatingActionButton.setOnClickListener(v -> listener.onFavoriteClick());
+    }
+
+    public interface OnFavoriteClickListener {
+        void onFavoriteClick();
     }
 }
