@@ -32,41 +32,38 @@ public final class AuthenticatedFirebaseDbService implements FirebaseDbService {
     private static final String FAVORITES_BY_ID_NODE = "user/%1$s/favorites/%2$s";
 
     private final DatabaseReference database;
-    private final FirebaseAuthService authService;
 
-    public AuthenticatedFirebaseDbService(DatabaseReference database, FirebaseAuthService authService) {
+    public AuthenticatedFirebaseDbService(DatabaseReference database) {
         this.database = database;
-        this.authService = authService;
     }
 
     @Override
     public Observable<FirebaseDays> days() {
-        return authService.signInAnd(userId -> observeChild(DAYS_NODE, FirebaseDays.class));
+        return observeChild(DAYS_NODE, FirebaseDays.class);
     }
 
     @Override
     public Observable<FirebaseSpeakers> speakers() {
-        return authService.signInAnd(userId -> observeChild(SPEAKERS_NODE, FirebaseSpeakers.class));
+        return observeChild(SPEAKERS_NODE, FirebaseSpeakers.class);
     }
 
     @Override
     public Observable<FirebaseEvents> events() {
-        return authService.signInAnd(userId -> observeChild(EVENTS_NODE, FirebaseEvents.class));
+        return observeChild(EVENTS_NODE, FirebaseEvents.class);
     }
 
     @Override
     public Observable<FirebaseEvent> event(String eventId) {
         String path = String.format(Locale.US, EVENTS_BY_ID_NODE, eventId);
-        return authService.signInAnd(userId -> observeChild(path, FirebaseEvent.class));
+        return observeChild(path, FirebaseEvent.class);
     }
 
     @Override
-    public Observable<FirebaseFavorites> favorites() {
-        return authService.signInAnd(userId -> {
-            String path = String.format(Locale.US, FAVORITES_NODE, userId);
-            return observeOptionalChild(path, FirebaseFavorites.class)
-                    .map(optionalFavorites -> optionalFavorites.or(FirebaseFavorites.empty()));
-        });
+    public Observable<FirebaseFavorites> favorites(String userId) {
+        String path = String.format(Locale.US, FAVORITES_NODE, userId);
+
+        return observeOptionalChild(path, FirebaseFavorites.class)
+                .map(optionalFavorites -> optionalFavorites.or(FirebaseFavorites.empty()));
     }
 
     private <T> Observable<T> observeChild(final String path, final Class<T> clazz) {
@@ -98,26 +95,26 @@ public final class AuthenticatedFirebaseDbService implements FirebaseDbService {
     }
 
     @Override
-    public Completable favorite(String eventId) {
-        return updateFavorite(eventId, reference -> reference.setValue(true));
+    public Completable addFavorite(String eventId, String userId) {
+        return updateFavorite(eventId, reference -> reference.setValue(true), userId);
     }
 
     @Override
-    public Completable removeFavorite(String eventId) {
-        return updateFavorite(eventId, DatabaseReference::removeValue);
+    public Completable removeFavorite(String eventId, String userId) {
+        return updateFavorite(eventId, DatabaseReference::removeValue, userId);
     }
 
-    private Completable updateFavorite(String eventId, Func1<DatabaseReference, Task<Void>> action) {
-        return authService.signInAnd(Observable::just)
-                .flatMapCompletable(userId -> Completable.create(emitter -> {
-                    String node = String.format(Locale.US, FAVORITES_BY_ID_NODE, userId, eventId);
-                    action.call(database.child(node))
-                            .addOnSuccessListener(result -> emitter.onComplete())
-                            .addOnFailureListener(emitter::onError);
-                }));
+    private Completable updateFavorite(String eventId, Func1<DatabaseReference, Task<Void>> action, String userId) {
+        return Completable.create(emitter -> {
+            String node = String.format(Locale.US, FAVORITES_BY_ID_NODE, userId, eventId);
+            action.call(database.child(node))
+                    .addOnSuccessListener(result -> emitter.onComplete())
+                    .addOnFailureListener(emitter::onError);
+        });
     }
 
     private interface NextEmitter<T, V> {
+
         void emit(ObservableEmitter<T> emitter, V value);
     }
 }

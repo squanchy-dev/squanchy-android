@@ -19,9 +19,9 @@ public interface FirebaseDbService {
 
     Observable<FirebaseEvent> event(String eventId);
 
-    Observable<FirebaseFavorites> favorites();
+    Observable<FirebaseFavorites> favorites(String userId);
 
-    Completable favorite(String eventId);
+    Completable addFavorite(String eventId, String userId);
 
-    Completable removeFavorite(String eventId);
+    Completable removeFavorite(String eventId, String userId);
 }

@@ -8,6 +8,7 @@ import java.util.List;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Schedule;
 import net.squanchy.schedule.domain.view.SchedulePage;
+import net.squanchy.service.firebase.FirebaseAuthService;
 import net.squanchy.service.firebase.FirebaseDbService;
 import net.squanchy.service.firebase.model.FirebaseDays;
 import net.squanchy.service.repository.EventRepository;
@@ -31,22 +32,26 @@ class ScheduleService {
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd");
 
     private final FirebaseDbService dbService;
+    private final FirebaseAuthService authService;
     private final EventRepository eventRepository;
 
-    ScheduleService(FirebaseDbService dbService, EventRepository eventRepository) {
+    ScheduleService(FirebaseDbService dbService, FirebaseAuthService authService, EventRepository eventRepository) {
         this.dbService = dbService;
+        this.authService = authService;
         this.eventRepository = eventRepository;
     }
 
     public Observable<Schedule> schedule() {
-        final Observable<FirebaseDays> daysObservable = dbService.days();
+        return authService.signInAndObserve(userId -> {
+            final Observable<FirebaseDays> daysObservable = dbService.days();
 
-        return eventRepository.events()
-                .map(groupEventsByDay())
-                .withLatestFrom(daysObservable, combineSessionsById())
-                .map(sortPagesByDate())
-                .map(sortEventsByStartDate())
-                .subscribeOn(Schedulers.io());
+            return eventRepository.events(userId)
+                    .map(groupEventsByDay())
+                    .withLatestFrom(daysObservable, combineSessionsById())
+                    .map(sortPagesByDate())
+                    .map(sortEventsByStartDate())
+                    .subscribeOn(Schedulers.io());
+        });
     }
 
     private Function<Schedule, Schedule> sortPagesByDate() {

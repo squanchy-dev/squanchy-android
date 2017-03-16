@@ -25,6 +25,7 @@ public class FirebaseModule {
         return FirebaseAuth.getInstance();
     }
 
+    @ApplicationLifecycle
     @Provides
     FirebaseAuthService firebaseAuthService(FirebaseAuth firebaseAuth) {
         return new FirebaseAuthService(firebaseAuth);
@@ -32,10 +33,7 @@ public class FirebaseModule {
 
     @ApplicationLifecycle
     @Provides
-    FirebaseDbService firebaseDbService(
-            DatabaseReference database,
-            FirebaseAuthService authService
-    ) {
-        return new AuthenticatedFirebaseDbService(database, authService);
+    FirebaseDbService firebaseDbService(DatabaseReference database) {
+        return new AuthenticatedFirebaseDbService(database);
     }
 }
