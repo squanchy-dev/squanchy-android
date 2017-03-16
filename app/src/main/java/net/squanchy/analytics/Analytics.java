@@ -36,7 +36,9 @@ public class Analytics {
 
     private void trackPageViewOnCrashlytics(String screenName) {
         ContentViewEvent viewEvent = new ContentViewEvent();
-        viewEvent.putContentName(screenName);
+        viewEvent.putContentName(screenName.toLowerCase());
+        viewEvent.putContentId(screenName);
+        viewEvent.putContentType("screen");
         crashlytics.answers.logContentView(viewEvent);
     }
 

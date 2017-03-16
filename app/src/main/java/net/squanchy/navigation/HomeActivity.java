@@ -20,8 +20,12 @@ import net.squanchy.R;
 import net.squanchy.analytics.Analytics;
 import net.squanchy.analytics.ContentType;
 import net.squanchy.fonts.TypefaceStyleableActivity;
+import net.squanchy.remoteconfig.RemoteConfig;
 import net.squanchy.support.lang.Optional;
 import net.squanchy.support.widget.InterceptingBottomNavigationView;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import timber.log.Timber;
 
 public class HomeActivity extends TypefaceStyleableActivity {
 
@@ -35,6 +39,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private InterceptingBottomNavigationView bottomNavigationView;
     private ViewGroup pageContainer;
     private Analytics analytics;
+    private RemoteConfig remoteConfig;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,12 +59,18 @@ public class HomeActivity extends TypefaceStyleableActivity {
 
         HomeComponent homeComponent = HomeInjector.obtain(this);
         analytics = homeComponent.analytics();
+        remoteConfig = homeComponent.remoteConfig();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         selectInitialPage(currentSection);
+
+        // TODO do something useful with this once we can
+        remoteConfig.proximityServicesEnabled()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(enabled -> Timber.i("Proximity services enabled: %s", enabled));
     }
 
     private void collectPageViewsInto(Map<BottomNavigationSection, View> pageViews) {
