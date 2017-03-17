@@ -20,12 +20,14 @@ import net.squanchy.R;
 import net.squanchy.analytics.Analytics;
 import net.squanchy.analytics.ContentType;
 import net.squanchy.fonts.TypefaceStyleableActivity;
+import net.squanchy.proximity.ProximityEvent;
 import net.squanchy.remoteconfig.RemoteConfig;
 import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.support.lang.Optional;
 import net.squanchy.support.widget.InterceptingBottomNavigationView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class HomeActivity extends TypefaceStyleableActivity {
 
@@ -42,6 +44,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private ProximityService proximityService;
     private Analytics analytics;
     private RemoteConfig remoteConfig;
+    private CompositeDisposable subscriptions;
 
     private boolean proximityServiceRadarStarted = PROXIMITY_SERVICE_RADAR_NOT_STARTED;
 
@@ -64,6 +67,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
         HomeComponent homeComponent = HomeInjector.obtain(this);
         analytics = homeComponent.analytics();
         remoteConfig = homeComponent.remoteConfig();
+        subscriptions = new CompositeDisposable();
     }
 
     @Override
@@ -80,7 +84,16 @@ public class HomeActivity extends TypefaceStyleableActivity {
                         proximityServiceRadarStarted = true;
                         proximityService.startRadar();
                     }
+
+                    subscriptions.add(
+                            proximityService.observeProximityEvents()
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(this::handleProximityEvent));
                 });
+    }
+
+    private void handleProximityEvent(ProximityEvent proximityEvent) {
+        // TODO do something with the event, like showing feedback or opening an event detail
     }
 
     private void collectPageViewsInto(Map<BottomNavigationSection, View> pageViews) {
@@ -207,5 +220,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
         if (proximityServiceRadarStarted) {
             proximityService.stopRadar();
         }
+
+        subscriptions.clear();
     }
 }

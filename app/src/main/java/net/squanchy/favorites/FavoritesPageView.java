@@ -13,22 +13,19 @@ import net.squanchy.analytics.Analytics;
 import net.squanchy.analytics.ContentType;
 import net.squanchy.favorites.domain.view.Favorites;
 import net.squanchy.navigation.Navigator;
-import net.squanchy.proximity.ProximityEvent;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.view.ScheduleDayPageView;
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter;
-import net.squanchy.service.proximity.injection.ProximityService;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 public class FavoritesPageView extends CoordinatorLayout {
 
     private View progressBar;
-    private CompositeDisposable subscriptions;
+    private Disposable subscription;
     private FavoritesService service;
     private Navigator navigate;
-    private ProximityService proximityService;
     private Analytics analytics;
     private ScheduleDayPageView favoritesListView;
 
@@ -49,7 +46,6 @@ public class FavoritesPageView extends CoordinatorLayout {
         service = component.service();
         navigate = component.navigator();
         analytics = component.analytics();
-        proximityService = component.proxService();
 
         progressBar = findViewById(R.id.progressbar);
 
@@ -87,16 +83,9 @@ public class FavoritesPageView extends CoordinatorLayout {
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
-        subscriptions = new CompositeDisposable();
-        subscriptions.add(
-                service.favorites()
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(favorites -> updateWith(favorites, this::onEventClicked)));
-
-        subscriptions.add(
-                proximityService.observeProximityEvents()
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(this::handleProximityEvent));
+        subscription = service.favorites()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(favorites -> updateWith(favorites, this::onEventClicked));
     }
 
     private void onEventClicked(Event event) {
@@ -104,14 +93,10 @@ public class FavoritesPageView extends CoordinatorLayout {
         navigate.toEventDetails(event.id());
     }
 
-    private void handleProximityEvent(ProximityEvent proximityEvent) {
-        // TODO do something with the event, like showing feedback or opening an event detail
-    }
-
     @Override
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        subscriptions.dispose();
+        subscription.dispose();
     }
 
     public void updateWith(Favorites favorites, ScheduleViewPagerAdapter.OnEventClickedListener listener) {
