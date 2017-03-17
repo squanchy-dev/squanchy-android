@@ -11,10 +11,11 @@ import android.view.View;
 import net.squanchy.R;
 import net.squanchy.analytics.Analytics;
 import net.squanchy.analytics.ContentType;
-import net.squanchy.favorites.domain.view.Favorites;
 import net.squanchy.favorites.view.FavoritesListView;
 import net.squanchy.navigation.Navigator;
+import net.squanchy.schedule.ScheduleService;
 import net.squanchy.schedule.domain.view.Event;
+import net.squanchy.schedule.domain.view.Schedule;
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -24,7 +25,7 @@ public class FavoritesPageView extends CoordinatorLayout {
 
     private View progressBar;
     private Disposable subscription;
-    private FavoritesService service;
+    private ScheduleService service;
     private Navigator navigate;
     private Analytics analytics;
     private FavoritesListView favoritesListView;
@@ -83,9 +84,9 @@ public class FavoritesPageView extends CoordinatorLayout {
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
-        subscription = service.favorites()
+        subscription = service.schedule(true)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(favorites -> updateWith(favorites, this::onEventClicked));
+                .subscribe(schedule -> updateWith(schedule, this::onEventClicked));
     }
 
     private void onEventClicked(Event event) {
@@ -99,8 +100,8 @@ public class FavoritesPageView extends CoordinatorLayout {
         subscription.dispose();
     }
 
-    public void updateWith(Favorites favorites, ScheduleViewPagerAdapter.OnEventClickedListener listener) {
-        favoritesListView.updateWith(favorites.events(), listener);
+    public void updateWith(Schedule schedule, ScheduleViewPagerAdapter.OnEventClickedListener listener) {
+        favoritesListView.updateWith(schedule, listener);
         progressBar.setVisibility(GONE);
     }
 }

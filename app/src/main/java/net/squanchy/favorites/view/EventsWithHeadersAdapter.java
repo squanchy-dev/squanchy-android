@@ -12,22 +12,27 @@ import java.util.List;
 
 import net.squanchy.R;
 import net.squanchy.schedule.domain.view.Event;
+import net.squanchy.schedule.domain.view.Schedule;
+import net.squanchy.schedule.domain.view.SchedulePage;
 import net.squanchy.schedule.view.EventItemView;
 import net.squanchy.schedule.view.EventViewHolder;
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter;
+import net.squanchy.search.view.HeaderType;
+import net.squanchy.search.view.HeaderViewHolder;
+import net.squanchy.support.lang.Lists;
 
-class EventsWithHeadersAdapter extends RecyclerView.Adapter<EventViewHolder> {
+class EventsWithHeadersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final LayoutInflater layoutInflater;
 
-    @IntDef(value = {ItemViewType.TYPE_TALK, ItemViewType.TYPE_OTHER})
+    @IntDef(value = {ItemViewType.TYPE_TALK, ItemViewType.TYPE_HEADER})
     @interface ItemViewType {
 
         int TYPE_TALK = 0;
-        int TYPE_OTHER = 1;
+        int TYPE_HEADER = 1;
     }
 
-    private List<Event> events = Collections.emptyList();
+    private Schedule schedule = Schedule.create(Collections.emptyList());
 
     @Nullable
     private ScheduleViewPagerAdapter.OnEventClickedListener listener;
@@ -39,57 +44,91 @@ class EventsWithHeadersAdapter extends RecyclerView.Adapter<EventViewHolder> {
 
     @Override
     public long getItemId(int position) {
-        return events.get(position).numericId();
+        return findFor(
+                0,
+                position,
+                schedule.pages(),
+                schedulePage -> (long) -schedulePage.dayId().hashCode(),
+                (schedulePage, positionInPage) -> schedulePage.events().get(positionInPage).numericId()
+        );
     }
 
-    void updateWith(List<Event> events, ScheduleViewPagerAdapter.OnEventClickedListener listener) {
-        this.events = events;
+    void updateWith(Schedule schedule, ScheduleViewPagerAdapter.OnEventClickedListener listener) {
+        this.schedule = schedule;
         this.listener = listener;
+        notifyDataSetChanged();
     }
 
     @Override
     @ItemViewType
     public int getItemViewType(int position) {
-        Event.Type itemType = events.get(position).type();
-        switch (itemType) {
-            case KEYNOTE:
-            case TALK:
-                return ItemViewType.TYPE_TALK;
-            case COFFEE_BREAK:
-            case LUNCH:
-            case OTHER:
-            case REGISTRATION:
-            case SOCIAL:
-                return ItemViewType.TYPE_OTHER;
-            default:
-                throw new IllegalArgumentException("Item of type " + itemType + " is not supported");
-        }
+        return findFor(
+                0,
+                position,
+                schedule.pages(),
+                schedulePage -> ItemViewType.TYPE_HEADER,
+                (schedulePage, positionInPage) -> ItemViewType.TYPE_TALK
+        );
     }
 
     @Override
-    public EventViewHolder onCreateViewHolder(ViewGroup parent, @ItemViewType int viewType) {
-        EventItemView itemView;
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, @ItemViewType int viewType) {
         if (viewType == ItemViewType.TYPE_TALK) {
-            itemView = (EventItemView) layoutInflater.inflate(R.layout.item_schedule_event_talk, parent, false);
-        } else if (viewType == ItemViewType.TYPE_OTHER) {
-            itemView = (EventItemView) layoutInflater.inflate(R.layout.item_schedule_event_other, parent, false);
+            EventItemView itemView = (EventItemView) layoutInflater.inflate(R.layout.item_schedule_event_talk, parent, false);
+            return new EventViewHolder(itemView);
+        } else if (viewType == ItemViewType.TYPE_HEADER) {
+            return new HeaderViewHolder(layoutInflater.inflate(R.layout.item_search_header, parent, false));
         } else {
             throw new IllegalArgumentException("View type not supported: " + viewType);
         }
-        return new EventViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(EventViewHolder holder, int position) {
-        holder.updateWith(events.get(position), listener);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof EventViewHolder) {
+            Event event = findFor(0, position, schedule.pages(), schedulePage -> {
+                throw new IndexOutOfBoundsException();
+            }, (schedulePage, positionInPage) -> schedulePage.events().get(positionInPage));
+
+            ((EventViewHolder) holder).updateWith(event, listener);
+        } else if (holder instanceof HeaderViewHolder) {
+            ((HeaderViewHolder) holder).updateWith(HeaderType.SPEAKERS);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return events.size();
+        return Lists.reduce(0, schedule.pages(), (count, page) -> count + page.events().size() + 1);
     }
 
-    public List<Event> events() {
-        return events;
+    private <T> T findFor(int pagePosition, int position, List<SchedulePage> pages, Header<T> header, Row<T> row) {
+        if (pagePosition >= pages.size()) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        SchedulePage schedulePage = pages.get(pagePosition);
+
+        if (position == 0) {
+            return header.get(schedulePage);
+        }
+
+        int adjustedPosition = position - 1;
+
+        int size = schedulePage.events().size();
+        if (adjustedPosition < size) {
+            return row.get(schedulePage, adjustedPosition);
+        }
+
+        return findFor(pagePosition + 1, adjustedPosition - size, pages, header, row);
+    }
+
+    interface Header<T> {
+
+        T get(SchedulePage schedulePage);
+    }
+
+    interface Row<T> {
+
+        T get(SchedulePage schedulePage, int positionInPage);
     }
 }

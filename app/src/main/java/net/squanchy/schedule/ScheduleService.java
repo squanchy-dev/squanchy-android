@@ -25,9 +25,10 @@ import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
+import static net.squanchy.support.lang.Lists.filter;
 import static net.squanchy.support.lang.Lists.find;
 
-class ScheduleService {
+public class ScheduleService {
 
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd");
 
@@ -35,17 +36,19 @@ class ScheduleService {
     private final FirebaseAuthService authService;
     private final EventRepository eventRepository;
 
-    ScheduleService(FirebaseDbService dbService, FirebaseAuthService authService, EventRepository eventRepository) {
+    public ScheduleService(FirebaseDbService dbService, FirebaseAuthService authService, EventRepository eventRepository) {
         this.dbService = dbService;
         this.authService = authService;
         this.eventRepository = eventRepository;
     }
 
-    public Observable<Schedule> schedule() {
+    public Observable<Schedule> schedule(boolean onlyFavorites) {
         return authService.ifUserSignedInThenObservableFrom(userId -> {
             Observable<FirebaseDays> daysObservable = dbService.days();
 
+            // todo check empty pages are filtered
             return eventRepository.events(userId)
+                    .map(events -> onlyFavorites ? filter(events, Event::favorited) : events)
                     .map(groupEventsByDay())
                     .withLatestFrom(daysObservable, combineEventsById())
                     .map(sortPagesByDate())
