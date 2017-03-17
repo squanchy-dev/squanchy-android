@@ -12,8 +12,6 @@ public class FirebaseEvent {
 
     public String type;
 
-    public String short_description;
-
     public Long start_time;
 
     public Long end_time;

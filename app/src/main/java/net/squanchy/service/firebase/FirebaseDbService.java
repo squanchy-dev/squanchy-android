@@ -24,6 +24,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public final class FirebaseDbService {
 
+    private static final String NODE_PATH_TEMPLATE = "data/%s";
     private static final String DAYS_NODE = "days";
     private static final String SPEAKERS_NODE = "speakers";
     private static final String EVENTS_NODE = "events";
@@ -84,7 +85,8 @@ public final class FirebaseDbService {
                 }
             };
 
-            database.child(path).addValueEventListener(listener);
+            String absoluteNodePath = String.format(Locale.US, NODE_PATH_TEMPLATE, path);
+            database.child(absoluteNodePath).addValueEventListener(listener);
             e.setCancellable(() -> database.removeEventListener(listener));
         }).observeOn(Schedulers.io());
     }
