@@ -89,7 +89,7 @@ public class FavoritesPageView extends CoordinatorLayout {
     }
 
     private void onEventClicked(Event event) {
-        analytics.trackItemSelected(ContentType.SCHEDULE_ITEM, event.id());
+        analytics.trackItemSelected(ContentType.FAVORITES_ITEM, event.id());
         navigate.toEventDetails(event.id());
     }
 
