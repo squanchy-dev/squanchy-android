@@ -77,7 +77,7 @@ class ScheduleService {
 
     private List<Event> sortByStartDate(SchedulePage schedulePage) {
         ArrayList<Event> sortedEvents = new ArrayList<>(schedulePage.events());
-        Collections.sort(sortedEvents, (firstEvent, secondEvent) -> firstEvent.startTime().compareTo(secondEvent.endTime()));
+        Collections.sort(sortedEvents, (firstEvent, secondEvent) -> firstEvent.startTime().compareTo(secondEvent.startTime()));
         return sortedEvents;
     }
 
