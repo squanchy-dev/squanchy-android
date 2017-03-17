@@ -37,7 +37,7 @@ public class FirebaseAuthService {
         });
     }
 
-    private Observable<Optional<FirebaseUser>> currentUser() {
+    public Observable<Optional<FirebaseUser>> currentUser() {
         return Observable.create(e -> {
             FirebaseAuth.AuthStateListener listener = firebaseAuth -> e.onNext(Optional.fromNullable(firebaseAuth.getCurrentUser()));
 

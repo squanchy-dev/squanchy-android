@@ -22,7 +22,6 @@ import net.squanchy.analytics.ContentType;
 import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.proximity.ProximityEvent;
 import net.squanchy.remoteconfig.RemoteConfig;
-import net.squanchy.service.firebase.FirebaseAuthService;
 import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.support.lang.Optional;
 import net.squanchy.support.widget.InterceptingBottomNavigationView;
@@ -45,7 +44,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private ProximityService proximityService;
     private Analytics analytics;
     private RemoteConfig remoteConfig;
-    private FirebaseAuthService authService;
+    private HomeService homeService;
     private CompositeDisposable subscriptions;
 
     private boolean proximityServiceRadarStarted = PROXIMITY_SERVICE_RADAR_NOT_STARTED;
@@ -69,8 +68,8 @@ public class HomeActivity extends TypefaceStyleableActivity {
         HomeComponent homeComponent = HomeInjector.obtain(this);
         analytics = homeComponent.analytics();
         remoteConfig = homeComponent.remoteConfig();
-        authService = homeComponent.authService();
-        proximityService = homeComponent.service();
+        homeService = homeComponent.homeService();
+        proximityService = homeComponent.proximityService();
         subscriptions = new CompositeDisposable();
     }
 
@@ -94,7 +93,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
                                     .subscribe(this::handleProximityEvent));
                 });
 
-        subscriptions.add(authService.signInAnonymously().subscribe());
+        subscriptions.add(homeService.signInAnonymouslyIfNecessary().subscribe());
     }
 
     private void handleProximityEvent(ProximityEvent proximityEvent) {

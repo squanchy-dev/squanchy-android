@@ -4,20 +4,19 @@ import net.squanchy.analytics.Analytics;
 import net.squanchy.injection.ActivityLifecycle;
 import net.squanchy.injection.ApplicationComponent;
 import net.squanchy.remoteconfig.RemoteConfig;
-import net.squanchy.service.firebase.FirebaseAuthService;
 import net.squanchy.service.proximity.injection.ProximityService;
 
 import dagger.Component;
 
 @ActivityLifecycle
-@Component(dependencies = ApplicationComponent.class)
+@Component(modules = {HomeModule.class}, dependencies = ApplicationComponent.class)
 interface HomeComponent {
 
     Analytics analytics();
 
     RemoteConfig remoteConfig();
 
-    ProximityService service();
+    ProximityService proximityService();
 
-    FirebaseAuthService authService();
+    HomeService homeService();
 }
