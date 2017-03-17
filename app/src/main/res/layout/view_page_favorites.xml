@@ -19,12 +19,6 @@
       android:layout_width="match_parent"
       android:layout_height="?attr/actionBarSize" />
 
-    <android.support.design.widget.TabLayout
-      android:id="@+id/tabstrip"
-      style="@style/Squanchy.Tabs.Schedule"
-      android:layout_width="match_parent"
-      android:layout_height="?attr/actionBarSize" />
-
   </android.support.design.widget.AppBarLayout>
 
   <net.squanchy.favorites.view.FavoritesListView
