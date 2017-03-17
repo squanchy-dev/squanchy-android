@@ -44,6 +44,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private ProximityService proximityService;
     private Analytics analytics;
     private RemoteConfig remoteConfig;
+    private HomeService homeService;
     private CompositeDisposable subscriptions;
 
     private boolean proximityServiceRadarStarted = PROXIMITY_SERVICE_RADAR_NOT_STARTED;
@@ -67,6 +68,8 @@ public class HomeActivity extends TypefaceStyleableActivity {
         HomeComponent homeComponent = HomeInjector.obtain(this);
         analytics = homeComponent.analytics();
         remoteConfig = homeComponent.remoteConfig();
+        homeService = homeComponent.homeService();
+        proximityService = homeComponent.proximityService();
         subscriptions = new CompositeDisposable();
     }
 
@@ -74,7 +77,6 @@ public class HomeActivity extends TypefaceStyleableActivity {
     protected void onStart() {
         super.onStart();
         selectInitialPage(currentSection);
-        proximityService = HomeInjector.obtain(this).service();
 
         // TODO do something useful with this once we can
         remoteConfig.proximityServicesEnabled()
@@ -90,6 +92,8 @@ public class HomeActivity extends TypefaceStyleableActivity {
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(this::handleProximityEvent));
                 });
+
+        subscriptions.add(homeService.signInAnonymouslyIfNecessary().subscribe());
     }
 
     private void handleProximityEvent(ProximityEvent proximityEvent) {

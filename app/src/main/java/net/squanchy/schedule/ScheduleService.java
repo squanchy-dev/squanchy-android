@@ -42,7 +42,7 @@ class ScheduleService {
     }
 
     public Observable<Schedule> schedule() {
-        return authService.signInThenObservableFrom(userId -> {
+        return authService.ifUserSignedInThenObservableFrom(userId -> {
             Observable<FirebaseDays> daysObservable = dbService.days();
 
             return eventRepository.events(userId)
