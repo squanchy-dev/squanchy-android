@@ -4,6 +4,7 @@ import net.squanchy.analytics.Analytics;
 import net.squanchy.injection.ActivityLifecycle;
 import net.squanchy.injection.ApplicationComponent;
 import net.squanchy.remoteconfig.RemoteConfig;
+import net.squanchy.service.firebase.FirebaseAuthService;
 import net.squanchy.service.proximity.injection.ProximityService;
 
 import dagger.Component;
@@ -17,4 +18,6 @@ interface HomeComponent {
     RemoteConfig remoteConfig();
 
     ProximityService service();
+
+    FirebaseAuthService authService();
 }

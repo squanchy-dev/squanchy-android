@@ -23,7 +23,7 @@ public class FirebaseAuthService {
                 return observableProvider.call(user.get().getUid());
             }
 
-            return signInAnonymously().andThen(Observable.empty());
+            return Observable.empty();
         });
     }
 
@@ -33,7 +33,7 @@ public class FirebaseAuthService {
                 return completableProvider.call(user.get().getUid());
             }
 
-            return signInAnonymously().andThen(Completable.never());
+            return Completable.never();
         });
     }
 
@@ -47,7 +47,7 @@ public class FirebaseAuthService {
         });
     }
 
-    private Completable signInAnonymously() {
+    public Completable signInAnonymously() {
         return Completable.create(e -> auth.signInAnonymously()
                 .addOnSuccessListener(result -> e.onComplete())
                 .addOnFailureListener(e::onError));
