@@ -12,9 +12,9 @@ import net.squanchy.R;
 import net.squanchy.analytics.Analytics;
 import net.squanchy.analytics.ContentType;
 import net.squanchy.favorites.domain.view.Favorites;
+import net.squanchy.favorites.view.FavoritesListView;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.schedule.domain.view.Event;
-import net.squanchy.schedule.view.ScheduleDayPageView;
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -27,7 +27,7 @@ public class FavoritesPageView extends CoordinatorLayout {
     private FavoritesService service;
     private Navigator navigate;
     private Analytics analytics;
-    private ScheduleDayPageView favoritesListView;
+    private FavoritesListView favoritesListView;
 
     public FavoritesPageView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -49,7 +49,7 @@ public class FavoritesPageView extends CoordinatorLayout {
 
         progressBar = findViewById(R.id.progressbar);
 
-        favoritesListView = (ScheduleDayPageView) findViewById(R.id.favorites_list);
+        favoritesListView = (FavoritesListView) findViewById(R.id.favorites_list);
 
         setupToolbar();
     }

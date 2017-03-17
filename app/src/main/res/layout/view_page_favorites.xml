@@ -27,7 +27,7 @@
 
   </android.support.design.widget.AppBarLayout>
 
-  <net.squanchy.schedule.view.ScheduleDayPageView
+  <net.squanchy.favorites.view.FavoritesListView
     android:id="@+id/favorites_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
