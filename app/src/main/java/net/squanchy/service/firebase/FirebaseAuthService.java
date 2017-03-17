@@ -18,23 +18,19 @@ public class FirebaseAuthService {
     }
 
     public <T> Observable<T> signInThenObservableFrom(Func1<String, Observable<T>> observableProvider) {
-        return currentUser().flatMap(user -> {
-            if (user.isPresent()) {
-                return observableProvider.call(user.get().getUid());
-            }
-
-            return Observable.empty();
-        });
+        return whenUserSignedIn()
+                .flatMap(user -> observableProvider.call(user.getUid()));
     }
 
     public Completable signInThenCompletableFrom(Func1<String, Completable> completableProvider) {
-        return currentUser().flatMapCompletable(user -> {
-            if (user.isPresent()) {
-                return completableProvider.call(user.get().getUid());
-            }
+        return whenUserSignedIn()
+                .flatMapCompletable(user -> completableProvider.call(user.getUid()));
+    }
 
-            return Completable.never();
-        });
+    private Observable<FirebaseUser> whenUserSignedIn() {
+        return currentUser()
+                .filter(Optional::isPresent)
+                .map(Optional::get);
     }
 
     public Observable<Optional<FirebaseUser>> currentUser() {
