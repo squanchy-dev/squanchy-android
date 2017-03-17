@@ -20,17 +20,17 @@ import net.squanchy.R;
 import net.squanchy.analytics.Analytics;
 import net.squanchy.analytics.ContentType;
 import net.squanchy.fonts.TypefaceStyleableActivity;
-import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.remoteconfig.RemoteConfig;
+import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.support.lang.Optional;
 import net.squanchy.support.widget.InterceptingBottomNavigationView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import timber.log.Timber;
 
 public class HomeActivity extends TypefaceStyleableActivity {
 
     private static final String STATE_KEY_SELECTED_PAGE_INDEX = "HomeActivity.selected_page_index";
+    private static final boolean PROXIMITY_SERVICE_RADAR_NOT_STARTED = false;
 
     private final Map<BottomNavigationSection, View> pageViews = new HashMap<>(4);
 
@@ -42,6 +42,8 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private ProximityService proximityService;
     private Analytics analytics;
     private RemoteConfig remoteConfig;
+
+    private boolean proximityServiceRadarStarted = PROXIMITY_SERVICE_RADAR_NOT_STARTED;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,9 +77,8 @@ public class HomeActivity extends TypefaceStyleableActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(enabled -> {
                     if (enabled) {
+                        proximityServiceRadarStarted = true;
                         proximityService.startRadar();
-                    } else {
-                        proximityService.stopRadar();
                     }
                 });
     }
@@ -197,5 +198,14 @@ public class HomeActivity extends TypefaceStyleableActivity {
     protected void onSaveInstanceState(Bundle outState) {
         outState.putInt(STATE_KEY_SELECTED_PAGE_INDEX, currentSection.ordinal());
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (proximityServiceRadarStarted) {
+            proximityService.stopRadar();
+        }
     }
 }
