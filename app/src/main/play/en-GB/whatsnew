@@ -1,4 +1,5 @@
-Version 0.2.0 alpha
+Version 0.2.1 alpha
 
-* Data is from Droidcon 2017 but it's not complete (converter is WIP still)
-* What's new: some work in event details; favourites are now a thing
+* Critical bugfix in the schedule sorting algorithm 🐛
+* Data schema updated to reflect what's on Firebase now
+* What's new: some preparatory work on the proximity-based services
