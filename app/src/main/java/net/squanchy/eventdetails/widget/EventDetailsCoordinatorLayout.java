@@ -8,6 +8,8 @@ import android.util.AttributeSet;
 import net.squanchy.R;
 import net.squanchy.schedule.domain.view.Event;
 
+import net.squanchy.schedule.domain.view.Event.Type;
+
 public class EventDetailsCoordinatorLayout extends CoordinatorLayout {
 
     private FloatingActionButton floatingActionButton;
@@ -34,12 +36,23 @@ public class EventDetailsCoordinatorLayout extends CoordinatorLayout {
     public void updateWith(Event event, OnFavoriteClickListener listener) {
         headerLayout.updateWith(event);
         detailsLayout.updateWith(event);
-        floatingActionButton.setImageResource(
-                event.favorited() ?
-                        R.drawable.ic_favorite_filled :
-                        R.drawable.ic_favorite_empty
-        );
-        floatingActionButton.setOnClickListener(v -> listener.onFavoriteClick());
+
+        if (canBeFavorited(event)) {
+            floatingActionButton.setImageResource(
+                    event.favorited() ?
+                            R.drawable.ic_favorite_filled :
+                            R.drawable.ic_favorite_empty
+            );
+            floatingActionButton.setOnClickListener(v -> listener.onFavoriteClick());
+            floatingActionButton.setVisibility(VISIBLE);
+        } else {
+            floatingActionButton.setVisibility(GONE);
+        }
+    }
+
+    private boolean canBeFavorited(Event event) {
+        Event.Type type = event.type();
+        return type == Type.TALK || type == Type.KEYNOTE;
     }
 
     public interface OnFavoriteClickListener {

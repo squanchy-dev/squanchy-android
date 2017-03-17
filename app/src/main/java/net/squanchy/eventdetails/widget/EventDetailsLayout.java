@@ -50,7 +50,6 @@ public class EventDetailsLayout extends LinearLayout {
     }
 
     public void updateWith(Event event) {
-        // TODO create proper EventDetails model that we can use here
         updatePlaceData(event);
         updateSpeakerData(event);
         trackView.setVisibility(event.trackVisibility());
