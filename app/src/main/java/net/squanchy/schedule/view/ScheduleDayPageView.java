@@ -45,7 +45,7 @@ public class ScheduleDayPageView extends RecyclerView {
         addItemDecoration(new CardSpacingItemDecorator(horizontalSpacing, verticalSpacing));
     }
 
-    void updateWith(List<Event> newData, ScheduleViewPagerAdapter.OnEventClickedListener listener) {
+    public void updateWith(List<Event> newData, ScheduleViewPagerAdapter.OnEventClickedListener listener) {
         DiffUtil.Callback callback = new EventsDiffCallback(adapter.events(), newData);
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(callback, true);    // TODO move off the UI thread
         adapter.updateWith(newData, listener);

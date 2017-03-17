@@ -1,4 +1,4 @@
-package net.squanchy.schedule;
+package net.squanchy.favorites;
 
 import android.content.Context;
 
@@ -12,10 +12,10 @@ import net.squanchy.service.proximity.injection.ProximityService;
 import dagger.Component;
 
 @ActivityLifecycle
-@Component(modules = {ScheduleModule.class, NavigationModule.class}, dependencies = ApplicationComponent.class)
-public interface ScheduleComponent {
+@Component(modules = {FavoritesModule.class, NavigationModule.class}, dependencies = ApplicationComponent.class)
+interface FavoritesComponent {
 
-    ScheduleService service();
+    FavoritesService service();
 
     Context context();
 
