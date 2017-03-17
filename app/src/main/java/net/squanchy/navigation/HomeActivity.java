@@ -219,6 +219,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
 
         if (proximityServiceRadarStarted) {
             proximityService.stopRadar();
+            proximityServiceRadarStarted = PROXIMITY_SERVICE_RADAR_NOT_STARTED;
         }
 
         subscriptions.clear();
