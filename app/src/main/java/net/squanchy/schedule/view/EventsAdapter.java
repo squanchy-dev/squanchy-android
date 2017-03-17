@@ -15,7 +15,7 @@ import net.squanchy.schedule.domain.view.Event;
 
 class EventsAdapter extends RecyclerView.Adapter<EventViewHolder> {
 
-    private LayoutInflater layoutInflater;
+    private final LayoutInflater layoutInflater;
 
     @IntDef(value = {ItemViewType.TYPE_TALK, ItemViewType.TYPE_OTHER})
     @interface ItemViewType {
@@ -24,15 +24,12 @@ class EventsAdapter extends RecyclerView.Adapter<EventViewHolder> {
         int TYPE_OTHER = 1;
     }
 
-    private final Context context;
-
     private List<Event> events = Collections.emptyList();
 
     @Nullable
     private ScheduleViewPagerAdapter.OnEventClickedListener listener;
 
     EventsAdapter(Context context) {
-        this.context = context;
         setHasStableIds(true);
         layoutInflater = LayoutInflater.from(context);
     }

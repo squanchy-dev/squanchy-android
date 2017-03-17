@@ -30,7 +30,7 @@
 
   <style name="Theme.Squanchy.Schedule" parent="Theme.Squanchy.PrimaryStatusBar" />
 
-  <style name="Theme.Squanchy.Favorites" parent="Theme.Squanchy" />
+  <style name="Theme.Squanchy.Favorites" parent="Theme.Squanchy.PrimaryStatusBar" />
 
   <style name="Theme.Squanchy.Tweets" parent="Theme.Squanchy">
     <item name="colorPrimary">@color/primary_azure</item>

@@ -1,4 +1,4 @@
-package net.squanchy.schedule;
+package net.squanchy.favorites;
 
 import android.content.Context;
 
@@ -11,10 +11,10 @@ import net.squanchy.navigation.Navigator;
 import dagger.Component;
 
 @ActivityLifecycle
-@Component(modules = {ScheduleModule.class, NavigationModule.class}, dependencies = ApplicationComponent.class)
-interface ScheduleComponent {
+@Component(modules = {FavoritesModule.class, NavigationModule.class}, dependencies = ApplicationComponent.class)
+interface FavoritesComponent {
 
-    ScheduleService service();
+    FavoritesService service();
 
     Context context();
 
