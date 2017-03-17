@@ -18,14 +18,14 @@ class EventDetailsService {
     }
 
     public Observable<Event> event(String eventId) {
-        return authService.signInThenObservableFrom(userId -> eventRepository.event(eventId, userId));
+        return authService.ifUserSignedInThenObservableFrom(userId -> eventRepository.event(eventId, userId));
     }
 
     Completable favorite(String eventId) {
-        return authService.signInThenCompletableFrom(userId -> eventRepository.addFavorite(eventId, userId));
+        return authService.ifUserSignedInThenCompletableFrom(userId -> eventRepository.addFavorite(eventId, userId));
     }
 
     Completable removeFavorite(String eventId) {
-        return authService.signInThenCompletableFrom(userId -> eventRepository.removeFavorite(eventId, userId));
+        return authService.ifUserSignedInThenCompletableFrom(userId -> eventRepository.removeFavorite(eventId, userId));
     }
 }

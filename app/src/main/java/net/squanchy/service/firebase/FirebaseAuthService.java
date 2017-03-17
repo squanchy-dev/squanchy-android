@@ -17,17 +17,17 @@ public class FirebaseAuthService {
         this.auth = auth;
     }
 
-    public <T> Observable<T> signInThenObservableFrom(Func1<String, Observable<T>> observableProvider) {
-        return whenUserSignedIn()
+    public <T> Observable<T> ifUserSignedInThenObservableFrom(Func1<String, Observable<T>> observableProvider) {
+        return ifUserSignedIn()
                 .flatMap(user -> observableProvider.call(user.getUid()));
     }
 
-    public Completable signInThenCompletableFrom(Func1<String, Completable> completableProvider) {
-        return whenUserSignedIn()
+    public Completable ifUserSignedInThenCompletableFrom(Func1<String, Completable> completableProvider) {
+        return ifUserSignedIn()
                 .flatMapCompletable(user -> completableProvider.call(user.getUid()));
     }
 
-    private Observable<FirebaseUser> whenUserSignedIn() {
+    private Observable<FirebaseUser> ifUserSignedIn() {
         return currentUser()
                 .filter(Optional::isPresent)
                 .map(Optional::get);
