@@ -15,7 +15,7 @@ import net.squanchy.schedule.view.ScheduleViewPagerAdapter;
 
 public class FavoritesListView extends RecyclerView {
 
-    private EventsWithHeadersAdapter adapter;
+    private FavoritesAdapter adapter;
 
     public FavoritesListView(Context context) {
         super(context);
@@ -35,7 +35,7 @@ public class FavoritesListView extends RecyclerView {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         setLayoutManager(layoutManager);
-        adapter = new EventsWithHeadersAdapter(getContext());
+        adapter = new FavoritesAdapter(getContext());
         setAdapter(adapter);
 
         int horizontalSpacing = getResources().getDimensionPixelSize(R.dimen.card_horizontal_margin);

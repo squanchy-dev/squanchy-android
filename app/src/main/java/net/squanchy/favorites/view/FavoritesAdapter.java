@@ -21,7 +21,7 @@ import net.squanchy.search.view.HeaderType;
 import net.squanchy.search.view.HeaderViewHolder;
 import net.squanchy.support.lang.Lists;
 
-class EventsWithHeadersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final LayoutInflater layoutInflater;
 
@@ -37,7 +37,7 @@ class EventsWithHeadersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Nullable
     private ScheduleViewPagerAdapter.OnEventClickedListener listener;
 
-    EventsWithHeadersAdapter(Context context) {
+    FavoritesAdapter(Context context) {
         setHasStableIds(true);
         layoutInflater = LayoutInflater.from(context);
     }

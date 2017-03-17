@@ -46,7 +46,6 @@ public class ScheduleService {
         return authService.ifUserSignedInThenObservableFrom(userId -> {
             Observable<FirebaseDays> daysObservable = dbService.days();
 
-            // todo check empty pages are filtered
             return eventRepository.events(userId)
                     .map(events -> onlyFavorites ? filter(events, Event::favorited) : events)
                     .map(groupEventsByDay())
