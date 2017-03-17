@@ -9,6 +9,8 @@ import android.widget.ImageView;
 
 public class CircleImageView extends ImageView {
 
+    private static final CircularOutlineProvider CIRCULAR_OUTLINE_PROVIDER = new CircularOutlineProvider();
+
     public CircleImageView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
@@ -20,7 +22,7 @@ public class CircleImageView extends ImageView {
     public CircleImageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
 
-        super.setOutlineProvider(new CircularOutlineProvider());
+        super.setOutlineProvider(CIRCULAR_OUTLINE_PROVIDER);
         super.setClipToOutline(true);
     }
 
@@ -32,6 +34,11 @@ public class CircleImageView extends ImageView {
     @Override
     public final void setClipToOutline(boolean clipToOutline) {
         throw new UnsupportedOperationException("Cannot set clipping to outline on a CircleImageView");
+    }
+
+    @Override
+    public ViewOutlineProvider getOutlineProvider() {
+        return CIRCULAR_OUTLINE_PROVIDER;
     }
 
     @Override
