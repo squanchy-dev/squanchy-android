@@ -70,6 +70,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
         analytics = homeComponent.analytics();
         remoteConfig = homeComponent.remoteConfig();
         authService = homeComponent.authService();
+        proximityService = homeComponent.service();
         subscriptions = new CompositeDisposable();
     }
 
@@ -77,7 +78,6 @@ public class HomeActivity extends TypefaceStyleableActivity {
     protected void onStart() {
         super.onStart();
         selectInitialPage(currentSection);
-        proximityService = HomeInjector.obtain(this).service();
 
         // TODO do something useful with this once we can
         remoteConfig.proximityServicesEnabled()
