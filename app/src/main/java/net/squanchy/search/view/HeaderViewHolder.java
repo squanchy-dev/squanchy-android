@@ -13,4 +13,8 @@ public class HeaderViewHolder extends RecyclerView.ViewHolder {
     public void updateWith(HeaderType headerType) {
         ((TextView) itemView).setText(headerType.headerTextResourceId());
     }
+
+    public void updateWith(CharSequence label) {
+        ((TextView) itemView).setText(label);
+    }
 }

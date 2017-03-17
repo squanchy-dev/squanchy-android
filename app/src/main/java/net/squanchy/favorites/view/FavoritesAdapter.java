@@ -17,9 +17,10 @@ import net.squanchy.schedule.domain.view.SchedulePage;
 import net.squanchy.schedule.view.EventItemView;
 import net.squanchy.schedule.view.EventViewHolder;
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter;
-import net.squanchy.search.view.HeaderType;
 import net.squanchy.search.view.HeaderViewHolder;
 import net.squanchy.support.lang.Lists;
+
+import org.joda.time.LocalDateTime;
 
 class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -86,14 +87,33 @@ class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof EventViewHolder) {
-            Event event = findFor(0, position, schedule.pages(), schedulePage -> {
-                throw new IndexOutOfBoundsException();
-            }, (schedulePage, positionInPage) -> schedulePage.events().get(positionInPage));
+            Event event = findFor(
+                    0,
+                    position,
+                    schedule.pages(),
+                    schedulePage -> {
+                        throw new IndexOutOfBoundsException();
+                    },
+                    (schedulePage, positionInPage) -> schedulePage.events().get(positionInPage)
+            );
 
             ((EventViewHolder) holder).updateWith(event, listener);
         } else if (holder instanceof HeaderViewHolder) {
-            ((HeaderViewHolder) holder).updateWith(HeaderType.SPEAKERS);
+            LocalDateTime date = findFor(
+                    0,
+                    position,
+                    schedule.pages(),
+                    SchedulePage::date,
+                    (schedulePage, positionInPage) -> {
+                        throw new IndexOutOfBoundsException();
+                    }
+            );
+            ((HeaderViewHolder) holder).updateWith(formatHeader(date));
         }
+    }
+
+    private CharSequence formatHeader(LocalDateTime date) {
+        return date.toString("EEEE d");
     }
 
     @Override
