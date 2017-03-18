@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import net.squanchy.R;
 import net.squanchy.eventdetails.widget.EventDetailsCoordinatorLayout;
@@ -20,7 +19,7 @@ import io.reactivex.disposables.CompositeDisposable;
 
 public class EventDetailsActivity extends TypefaceStyleableActivity {
 
-    private static final String EXTRA_EVENT_ID = "event_id";
+    private static final String EXTRA_EVENT_ID = EventDetailsActivity.class.getCanonicalName() + ".event_id";
 
     private EventDetailsService service;
     private CompositeDisposable subscriptions;
@@ -73,7 +72,7 @@ public class EventDetailsActivity extends TypefaceStyleableActivity {
         return new EventDetailsCoordinatorLayout.OnEventDetailsClickListener() {
             @Override
             public void onSpeakerClicked(Speaker speaker) {
-                Toast.makeText(EventDetailsActivity.this, "Speaker clicked: " + speaker, Toast.LENGTH_LONG).show();
+                navigate().toSpeakerDetails(speaker.id());
             }
 
             @Override
