@@ -211,4 +211,26 @@
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.Tweet.Timestamp</item>
   </style>
 
+  <style name="SpeakerDetails.Header.Speaker.Photo" parent="None" />
+
+  <style name="SpeakerDetails.Header.Speaker.Name" parent="None">
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.SpeakerDetails.Header.Speaker.Name</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.SpeakerDetails.Header.Speaker.Name" parent="None">
+    <item name="android:textColor">?android:textColorPrimaryInverse</item>
+    <item name="android:textSize">@dimen/speaker_details_speaker_name</item>
+    <item name="fontPath">?titleTypeface</item>
+  </style>
+
+  <style name="SpeakerDetails.Header.Speaker.Company" parent="None">
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.SpeakerDetails.Header.Speaker.Company</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.SpeakerDetails.Header.Speaker.Company" parent="None">
+    <item name="android:textColor">?android:textColorPrimaryInverse</item>
+    <item name="android:textSize">@dimen/speaker_details_speaker_company</item>
+    <item name="fontPath">?defaultBoldTypeface</item>
+  </style>
+
 </resources>
