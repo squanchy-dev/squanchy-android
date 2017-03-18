@@ -52,5 +52,14 @@
   <dimen name="event_details_speaker_margin_bottom">8dp</dimen>
   <dimen name="event_details_title">24sp</dimen>
   <dimen name="event_details_fab_margin">16dp</dimen>
+  <dimen name="event_details_body_label_width">72dp</dimen>
+  <dimen name="event_details_body_label_content_padding">16dp</dimen>
+  <dimen name="event_details_body_label_padding_start">@dimen/event_details_body_label_content_padding</dimen>
+  <dimen name="event_details_body_value_margin_end">@dimen/event_details_body_label_content_padding</dimen>
+  <dimen name="event_details_body_value_margin_start">@dimen/event_details_body_label_content_padding</dimen>
+  <dimen name="event_details_body_value_margin_bottom">72dp</dimen>
+  <dimen name="event_details_body_label_text">14sp</dimen>
+  <dimen name="event_details_body_value_line_spacing_extra">4sp</dimen>
+  <dimen name="event_details_body_value_text">14sp</dimen>
 
 </resources>

@@ -15,24 +15,16 @@
     android:minHeight="56dp">
 
     <TextView
-      android:layout_width="72dp"
-      android:layout_height="wrap_content"
-      android:paddingStart="16dp"
-      android:textColor="?colorPrimary"
-      android:textSize="14sp"
-      android:text="When"
-      app:fontPath="?titleTypeface" />
+      style="@style/EventDetails.Body.Label.When"
+      android:layout_width="@dimen/event_details_body_label_width"
+      android:layout_height="wrap_content" />
 
     <TextView
       android:id="@+id/when_text"
+      style="@style/EventDetails.Body.Value"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginEnd="16dp"
-      android:lineSpacingExtra="4sp"
-      android:lineSpacingMultiplier="1"
-      android:textColor="?android:textColorPrimary"
-      android:textSize="14sp"
-      app:fontPath="?defaultMediumTypeface"
+      android:layout_marginEnd="@dimen/event_details_body_value_margin_end"
       tools:text="Tuesday, 6 February at 14:00" />
 
   </LinearLayout>
@@ -46,52 +38,33 @@
     android:minHeight="56dp">
 
     <TextView
-      android:layout_width="72dp"
-      android:layout_height="wrap_content"
-      android:paddingStart="16dp"
-      android:textColor="?colorPrimary"
-      android:textSize="14sp"
-      android:text="Where"
-      app:fontPath="?titleTypeface" />
+      style="@style/EventDetails.Body.Label.Where"
+      android:layout_width="@dimen/event_details_body_label_width"
+      android:layout_height="wrap_content" />
 
     <TextView
       android:id="@+id/where_text"
+      style="@style/EventDetails.Body.Value"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginEnd="16dp"
-      android:lineSpacingExtra="4sp"
-      android:lineSpacingMultiplier="1"
-      android:textColor="?android:textColorPrimary"
-      android:textSize="14sp"
-      app:fontPath="?defaultMediumTypeface"
+      android:layout_marginEnd="@dimen/event_details_body_value_margin_end"
       tools:text="Beyond the wall" />
 
   </LinearLayout>
 
   <TextView
     android:id="@+id/description_header"
-    android:layout_width="72dp"
-    android:layout_height="wrap_content"
-    android:gravity="start|center_vertical"
-    android:minHeight="56dp"
-    android:paddingStart="16dp"
-    android:textColor="?colorPrimary"
-    android:textSize="14sp"
-    android:text="About"
-    app:fontPath="?titleTypeface" />
+    android:layout_width="@dimen/event_details_body_label_width"
+    android:layout_height="wrap_content" />
 
   <TextView
     android:id="@+id/description_text"
+    style="@style/EventDetails.Body.Value"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp"
-    android:layout_marginBottom="72dp"
-    android:lineSpacingExtra="4sp"
-    android:lineSpacingMultiplier="1"
-    android:textColor="?android:textColorPrimary"
-    android:textSize="14sp"
-    app:fontPath="?defaultMediumTypeface"
+    android:layout_marginStart="@dimen/event_details_body_value_margin_start"
+    android:layout_marginEnd="@dimen/event_details_body_value_margin_end"
+    android:layout_marginBottom="@dimen/event_details_body_value_margin_bottom"
     tools:text="Now this is the story all about how\nMy life got flipped, turned upside down" />
 
 </merge>
