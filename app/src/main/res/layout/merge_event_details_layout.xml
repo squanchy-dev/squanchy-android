@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   tools:layout_width="match_parent"
   tools:layout_height="match_parent"
@@ -8,11 +7,9 @@
   tools:orientation="vertical">
 
   <LinearLayout
+    style="@style/EventDetails.Body.RowContainer"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="fill_horizontal|center_vertical"
-    android:orientation="horizontal"
-    android:minHeight="56dp">
+    android:layout_height="wrap_content">
 
     <TextView
       style="@style/EventDetails.Body.Label.When"
@@ -31,11 +28,9 @@
 
   <LinearLayout
     android:id="@+id/where_container"
+    style="@style/EventDetails.Body.RowContainer"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="fill_horizontal|center_vertical"
-    android:orientation="horizontal"
-    android:minHeight="56dp">
+    android:layout_height="wrap_content">
 
     <TextView
       style="@style/EventDetails.Body.Label.Where"
@@ -54,6 +49,7 @@
 
   <TextView
     android:id="@+id/description_header"
+    style="@style/EventDetails.Body.Label.About"
     android:layout_width="@dimen/event_details_body_label_width"
     android:layout_height="wrap_content" />
 

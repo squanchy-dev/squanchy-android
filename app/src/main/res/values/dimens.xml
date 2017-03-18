@@ -52,6 +52,7 @@
   <dimen name="event_details_speaker_margin_bottom">8dp</dimen>
   <dimen name="event_details_title">24sp</dimen>
   <dimen name="event_details_fab_margin">16dp</dimen>
+  <dimen name="event_details_body_row_height">56dp</dimen>
   <dimen name="event_details_body_label_width">72dp</dimen>
   <dimen name="event_details_body_label_content_padding">16dp</dimen>
   <dimen name="event_details_body_label_padding_start">@dimen/event_details_body_label_content_padding</dimen>
