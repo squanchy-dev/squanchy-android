@@ -1,16 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:orientation="vertical">
 
-  <android.support.v7.widget.Toolbar
+  <net.squanchy.speaker.widget.SpeakerDetailsLayout
+    android:id="@+id/speaker_details_header"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     android:layout_width="match_parent"
-    android:layout_height="?actionBarSize"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+    android:layout_height="wrap_content">
 
-  </android.support.v7.widget.Toolbar>
+    <android.support.v7.widget.Toolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <net.squanchy.speaker.widget.SpeakerHeaderView
+      android:id="@+id/speaker_container"
+      android:layout_width="wrap_content"
+      android:layout_height="@dimen/speaker_details_speaker_height"
+      android:layout_marginStart="@dimen/speaker_details_speaker_margin_start"
+      android:layout_marginBottom="@dimen/speaker_details_speaker_margin_bottom">
+
+      <net.squanchy.support.widget.CircleImageView
+        android:id="@+id/speaker_photo"
+        style="@style/SpeakerDetails.Header.Speaker.Photo"
+        android:layout_width="@dimen/speaker_details_speaker_photo"
+        android:layout_height="@dimen/speaker_details_speaker_photo"
+        android:layout_gravity="start|center_vertical"
+        android:layout_marginEnd="@dimen/speaker_details_speaker_photo_margin_end"
+        tools:src="?colorAccent" />
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="fill_horizontal|center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+          android:id="@+id/speaker_name"
+          style="@style/SpeakerDetails.Header.Speaker.Name"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          tools:text="Qi Qu" />
+
+        <TextView
+          android:id="@+id/speaker_company"
+          style="@style/SpeakerDetails.Header.Speaker.Company"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          tools:text="Novoda" />
+
+      </LinearLayout>
+
+    </net.squanchy.speaker.widget.SpeakerHeaderView>
+
+  </net.squanchy.speaker.widget.SpeakerDetailsLayout>
 
 </LinearLayout>

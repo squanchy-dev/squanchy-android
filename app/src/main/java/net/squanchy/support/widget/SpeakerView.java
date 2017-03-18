@@ -92,9 +92,9 @@ public abstract class SpeakerView extends LinearLayout {
         for (Speaker speaker : speakers) {
             ImageView photoView = recycleOrInflatePhotoView(photoViews);
             speakerPhotoContainer.addView(photoView);
-            if (speaker.avatarImageURL().isPresent()) {
+            if (speaker.photoUrl().isPresent()) {
                 photoView.setOnClickListener(v -> listener.onSpeakerClicked(speaker));
-                loadSpeakerPhoto(photoView, speaker.avatarImageURL().get(), imageLoader);
+                loadSpeakerPhoto(photoView, speaker.photoUrl().get(), imageLoader);
             }
         }
     }

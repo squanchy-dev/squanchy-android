@@ -218,7 +218,7 @@
   </style>
 
   <style name="TextAppearance.Squanchy.SpeakerDetails.Header.Speaker.Name" parent="None">
-    <item name="android:textColor">?android:textColorPrimaryInverse</item>
+    <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">@dimen/speaker_details_speaker_name</item>
     <item name="fontPath">?titleTypeface</item>
   </style>
@@ -228,7 +228,7 @@
   </style>
 
   <style name="TextAppearance.Squanchy.SpeakerDetails.Header.Speaker.Company" parent="None">
-    <item name="android:textColor">?android:textColorPrimaryInverse</item>
+    <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">@dimen/speaker_details_speaker_company</item>
     <item name="fontPath">?defaultBoldTypeface</item>
   </style>
