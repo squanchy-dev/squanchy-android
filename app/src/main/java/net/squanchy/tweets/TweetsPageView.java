@@ -76,6 +76,7 @@ public class TweetsPageView extends LinearLayout {
 
         if (!isInEditMode()) {
             SearchTimeline timeline = new SearchTimeline.Builder()
+                    .resultType(SearchTimeline.ResultType.RECENT)
                     .query(query)
                     .build();
 
