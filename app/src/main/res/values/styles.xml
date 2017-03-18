@@ -78,7 +78,7 @@
   </style>
 
   <style name="ThemeOverlay.Squanchy.Toolbar" parent="ThemeOverlay.AppCompat.Light">
-    <item name="android:colorControlNormal">?colorAccent</item>
+    <item name="colorControlNormal">?colorAccent</item>
   </style>
 
   <style name="ThemeOverlay.Squanchy.Toolbar.Search" parent="ThemeOverlay.Squanchy.Toolbar">
@@ -141,11 +141,13 @@
 
   <style name="EventDetails.Header.Speaker.Photo" parent="None">
     <item name="android:clickable">true</item>
+    <item name="android:foreground">@drawable/white_circle_bound_touch_feedback</item>
   </style>
 
   <style name="EventDetails.Fab" parent="None">
     <item name="backgroundTint">?colorPrimary</item>
     <item name="android:clickable">true</item>
+    <item name="android:foreground">@drawable/white_circle_bound_touch_feedback</item>
     <item name="android:src">@drawable/ic_favorite_empty</item>
   </style>
 

@@ -27,4 +27,10 @@
     <item name="cardInsetBottom">@dimen/card_inset_bottom</item>
   </style>
 
+  <declare-styleable name="CircleImageView">
+    <attr name="android:foreground" />
+    <attr name="android:foregroundInsidePadding" />
+    <attr name="android:foregroundGravity" />
+  </declare-styleable>
+
 </resources>
