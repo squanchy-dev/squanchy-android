@@ -62,7 +62,8 @@ public class EventRepository {
                 Optional.fromNullable(apiEvent.experience_level).flatMap(ExperienceLevel::fromNullableRawLevel),
                 speakersForEvent(apiEvent, speakers),
                 Event.Type.fromRawType(apiEvent.type),
-                favorites.hasFavorite(apiEvent.id)
+                favorites.hasFavorite(apiEvent.id),
+                apiEvent.description
         );
     }
 
@@ -90,7 +91,8 @@ public class EventRepository {
                 Optional.fromNullable(apiEvent.experience_level).flatMap(ExperienceLevel::fromNullableRawLevel),
                 speakersForEvent(apiEvent, speakers),
                 Event.Type.fromRawType(apiEvent.type),
-                favorites.hasFavorite(apiEvent.id)
+                favorites.hasFavorite(apiEvent.id),
+                apiEvent.description
         );
     }
 

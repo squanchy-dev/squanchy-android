@@ -27,7 +27,8 @@ public abstract class Event {
             Optional<ExperienceLevel> experienceLevel,
             List<Speaker> speakers,
             Type type,
-            boolean favorited
+            boolean favorited,
+            String description
     ) {
         Optional<String> placeOptional = Optional.fromNullable(place);        // TODO get Optional<Place> as type in here
         return new AutoValue_Event.Builder()
@@ -45,6 +46,7 @@ public abstract class Event {
                 .experienceLevel(experienceLevel)
                 .type(type)
                 .favorited(favorited)
+                .description(description)
                 .build();
     }
 
@@ -79,6 +81,8 @@ public abstract class Event {
 
     public abstract boolean favorited();
 
+    public abstract String description();
+
     @AutoValue.Builder
     public abstract static class Builder {
 
@@ -109,6 +113,8 @@ public abstract class Event {
         public abstract Builder type(Type type);
 
         public abstract Builder favorited(boolean favorited);
+
+        public abstract Builder description(String description);
 
         public abstract Event build();
     }

@@ -21,6 +21,7 @@ public final class EventFixtures {
     private Optional<ExperienceLevel> experienceLevel = Optional.absent();
     private List<Speaker> speakers = Collections.emptyList();
     private Event.Type type = Event.Type.OTHER;
+    private String description = "Now this is the story all about how\\nMy life got flipped, turned upside down";
 
     public static EventFixtures anEvent() {
         return new EventFixtures();
@@ -80,6 +81,11 @@ public final class EventFixtures {
         return this;
     }
 
+    public EventFixtures withDescription(String description) {
+        this.description = description;
+        return this;
+    }
+
     public Event build() {
         return Event.create(
                 eventId,
@@ -92,7 +98,8 @@ public final class EventFixtures {
                 experienceLevel,
                 speakers,
                 type,
-                false
+                false,
+                description
         );
     }
 }
