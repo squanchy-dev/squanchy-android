@@ -2,18 +2,25 @@ package net.squanchy.eventdetails.widget;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Build;
+import android.support.annotation.AttrRes;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.text.Html;
+import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.squanchy.R;
 import net.squanchy.schedule.domain.view.Event;
+import net.squanchy.schedule.domain.view.Place;
 
 public class EventDetailsLayout extends LinearLayout {
 
@@ -61,10 +68,38 @@ public class EventDetailsLayout extends LinearLayout {
     private void updateWhere(Event event) {
         if (event.place().isPresent()) {
             whereContainer.setVisibility(VISIBLE);
-            whereTextView.setText(event.place().get().name());
+            whereTextView.setText(placeTextFrom(event.place().get()));
         } else {
             whereContainer.setVisibility(GONE);
         }
+    }
+
+    private CharSequence placeTextFrom(Place place) {
+        SpannableStringBuilder builder = new SpannableStringBuilder(place.name());
+        if (place.floor().isPresent()) {
+            String floorLabel = place.floor().get();
+            builder.append("   ")
+                    .append(floorLabel)
+                    .setSpan(
+                            createColorSpan(whereTextView, android.R.attr.textColorSecondary),
+                            builder.length() - floorLabel.length(),
+                            builder.length(),
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    );
+        }
+        return builder;
+    }
+
+    private ForegroundColorSpan createColorSpan(View targetView, @AttrRes int attributeResId) {
+        int color = getColorFromTheme(targetView.getContext().getTheme(), attributeResId);
+        return new ForegroundColorSpan(color);
+    }
+
+    @ColorInt
+    private int getColorFromTheme(Resources.Theme theme, @AttrRes int attributeId) {
+        TypedValue typedValue = new TypedValue();
+        theme.resolveAttribute(attributeId, typedValue, true);
+        return typedValue.data;
     }
 
     private void updateDescription(String description) {

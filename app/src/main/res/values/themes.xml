@@ -42,7 +42,9 @@
     <item name="colorPrimary">@color/primary_blue</item>
   </style>
 
-  <style name="Theme.Squanchy.EventDetails" parent="Theme.Squanchy.PrimaryStatusBar" />
+  <style name="Theme.Squanchy.EventDetails" parent="Theme.Squanchy.PrimaryStatusBar">
+    <item name="android:textColorSecondary">@color/secondary_text_54</item>
+  </style>
 
   <style name="Theme.Squanchy.Search" parent="Theme.Squanchy.PrimaryStatusBar" />
 
