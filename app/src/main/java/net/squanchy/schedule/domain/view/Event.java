@@ -25,7 +25,7 @@ public abstract class Event {
             List<Speaker> speakers,
             Type type,
             boolean favorited,
-            String description,
+            Optional<String> description,
             Optional<Track> track) {
         return new AutoValue_Event.Builder()
                 .id(eventId)
@@ -68,7 +68,7 @@ public abstract class Event {
 
     public abstract boolean favorited();
 
-    public abstract String description();
+    public abstract Optional<String> description();
 
     @AutoValue.Builder
     public abstract static class Builder {
@@ -97,7 +97,7 @@ public abstract class Event {
 
         public abstract Builder favorited(boolean favorited);
 
-        public abstract Builder description(String description);
+        public abstract Builder description(Optional<String> description);
 
         public abstract Event build();
     }

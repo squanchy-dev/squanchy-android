@@ -92,7 +92,7 @@ public class EventRepository {
                 speakersByIds(speakers, apiEvent.speaker_ids),
                 Event.Type.fromRawType(apiEvent.type),
                 favorites.hasFavorite(apiEvent.id),
-                apiEvent.description,
+                Optional.fromNullable(apiEvent.description),
                 trackById(tracks, apiEvent.track_id)
         );
     }
@@ -145,7 +145,7 @@ public class EventRepository {
                 speakersByIds(speakers, apiEvent.speaker_ids),
                 Event.Type.fromRawType(apiEvent.type),
                 favorites.hasFavorite(apiEvent.id),
-                apiEvent.description,
+                Optional.fromNullable(apiEvent.description),
                 trackById(tracks, apiEvent.track_id));
     }
 

@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
-import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -21,6 +20,7 @@ import android.widget.TextView;
 import net.squanchy.R;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Place;
+import net.squanchy.support.lang.Optional;
 
 public class EventDetailsLayout extends LinearLayout {
 
@@ -102,10 +102,10 @@ public class EventDetailsLayout extends LinearLayout {
         return typedValue.data;
     }
 
-    private void updateDescription(String description) {
-        if (TextUtils.isGraphic(description)) {
+    private void updateDescription(Optional<String> description) {
+        if (description.isPresent()) {
             descriptionHeader.setVisibility(VISIBLE);
-            descriptionTextView.setText(parseHtml(description));
+            descriptionTextView.setText(parseHtml(description.get()));
         } else {
             descriptionHeader.setVisibility(GONE);
             descriptionTextView.setVisibility(GONE);
