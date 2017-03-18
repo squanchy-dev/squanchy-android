@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   tools:layout_width="match_parent"
   tools:layout_height="match_parent"
@@ -9,45 +10,86 @@
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
-
-    <net.squanchy.eventdetails.widget.ExperienceLevelIconView
-      android:id="@+id/experience_level_icon"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content" />
+    android:gravity="fill_horizontal|center_vertical"
+    android:orientation="horizontal"
+    android:minHeight="56dp">
 
     <TextView
-      android:id="@+id/experience_level_label"
+      android:layout_width="72dp"
+      android:layout_height="wrap_content"
+      android:paddingStart="16dp"
+      android:textColor="?colorPrimary"
+      android:textSize="14sp"
+      android:text="When"
+      app:fontPath="?titleTypeface" />
+
+    <TextView
+      android:id="@+id/when_text"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:padding="8dp"
-      android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-      tools:text="Android" />
+      android:layout_marginEnd="16dp"
+      android:lineSpacingExtra="4sp"
+      android:lineSpacingMultiplier="1"
+      android:textColor="?android:textColorPrimary"
+      android:textSize="14sp"
+      app:fontPath="?defaultMediumTypeface"
+      tools:text="Tuesday, 6 February at 14:00" />
+
+  </LinearLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="fill_horizontal|center_vertical"
+    android:orientation="horizontal"
+    android:minHeight="56dp">
+
+    <TextView
+      android:layout_width="72dp"
+      android:layout_height="wrap_content"
+      android:paddingStart="16dp"
+      android:textColor="?colorPrimary"
+      android:textSize="14sp"
+      android:text="Where"
+      app:fontPath="?titleTypeface" />
+
+    <TextView
+      android:id="@+id/where_text"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="16dp"
+      android:lineSpacingExtra="4sp"
+      android:lineSpacingMultiplier="1"
+      android:textColor="?android:textColorPrimary"
+      android:textSize="14sp"
+      app:fontPath="?defaultMediumTypeface"
+      tools:text="Beyond the wall" />
 
   </LinearLayout>
 
   <TextView
-    android:id="@+id/track_view"
-    android:layout_width="match_parent"
+    android:layout_width="72dp"
     android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-    tools:text="Android" />
+    android:gravity="start|center_vertical"
+    android:minHeight="56dp"
+    android:paddingStart="16dp"
+    android:textColor="?colorPrimary"
+    android:textSize="14sp"
+    android:text="About"
+    app:fontPath="?titleTypeface" />
 
   <TextView
-    android:id="@+id/place_view"
+    android:id="@+id/description_text"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-    tools:text="Big room, 1st floor" />
-
-  <TextView
-    android:id="@+id/speakers_view"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-    tools:text="Otto Von Bismark, Ruby Rubacuori, Ivan The Terrible" />
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="72dp"
+    android:lineSpacingExtra="4sp"
+    android:lineSpacingMultiplier="1"
+    android:textColor="?android:textColorPrimary"
+    android:textSize="14sp"
+    app:fontPath="?defaultMediumTypeface"
+    tools:text="Now this is the story all about how\nMy life got flipped, turned upside down" />
 
 </merge>
