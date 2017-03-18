@@ -9,6 +9,9 @@ import net.squanchy.support.lang.Optional;
 
 import org.joda.time.LocalDateTime;
 
+import static net.squanchy.schedule.domain.view.PlaceFixtures.aPlace;
+import static net.squanchy.schedule.domain.view.TrackFixtures.aTrack;
+
 public final class EventFixtures {
 
     private String eventId = "banana";
@@ -17,11 +20,12 @@ public final class EventFixtures {
     private LocalDateTime startTime = new LocalDateTime(123456);
     private LocalDateTime endTime = new LocalDateTime(123666);
     private String title = "Hello \uD83C\uDF4C";    // Yes, that's a banana emoji. You never know
-    private String place = null;        // TODO this should be Optional<Place>
+    private Optional<Place> place = Optional.of(aPlace().build());
     private Optional<ExperienceLevel> experienceLevel = Optional.absent();
     private List<Speaker> speakers = Collections.emptyList();
     private Event.Type type = Event.Type.OTHER;
     private String description = "Now this is the story all about how\\nMy life got flipped, turned upside down";
+    private Optional<Track> track = Optional.of(aTrack().build());
 
     public static EventFixtures anEvent() {
         return new EventFixtures();
@@ -61,7 +65,7 @@ public final class EventFixtures {
         return this;
     }
 
-    public EventFixtures withPlace(String place) {
+    public EventFixtures withPlace(Optional<Place> place) {
         this.place = place;
         return this;
     }
@@ -86,6 +90,11 @@ public final class EventFixtures {
         return this;
     }
 
+    public EventFixtures withTrack(Optional<Track> track) {
+        this.track = track;
+        return this;
+    }
+
     public Event build() {
         return Event.create(
                 eventId,
@@ -99,7 +108,8 @@ public final class EventFixtures {
                 speakers,
                 type,
                 false,
-                description
+                description,
+                track
         );
     }
 }
