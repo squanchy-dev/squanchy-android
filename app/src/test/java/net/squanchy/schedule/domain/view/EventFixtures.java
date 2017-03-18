@@ -24,7 +24,7 @@ public final class EventFixtures {
     private Optional<ExperienceLevel> experienceLevel = Optional.absent();
     private List<Speaker> speakers = Collections.emptyList();
     private Event.Type type = Event.Type.OTHER;
-    private Optional<String> description = Optional.of("Now this is the story all about how\\nMy life got flipped, turned upside down");
+    private Optional<String> description = Optional.of("Now this is the story all about how\nMy life got flipped, turned upside down");
     private Optional<Track> track = Optional.of(aTrack().build());
 
     public static EventFixtures anEvent() {
