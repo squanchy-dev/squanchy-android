@@ -25,9 +25,10 @@ import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
+import static net.squanchy.support.lang.Lists.filter;
 import static net.squanchy.support.lang.Lists.find;
 
-class ScheduleService {
+public class ScheduleService {
 
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd");
 
@@ -35,23 +36,68 @@ class ScheduleService {
     private final FirebaseAuthService authService;
     private final EventRepository eventRepository;
 
-    ScheduleService(FirebaseDbService dbService, FirebaseAuthService authService, EventRepository eventRepository) {
+    public ScheduleService(FirebaseDbService dbService, FirebaseAuthService authService, EventRepository eventRepository) {
         this.dbService = dbService;
         this.authService = authService;
         this.eventRepository = eventRepository;
     }
 
-    public Observable<Schedule> schedule() {
-        return authService.signInThenObservableFrom(userId -> {
+    public Observable<Schedule> schedule(boolean onlyFavorites) {
+        return authService.ifUserSignedInThenObservableFrom(userId -> {
             Observable<FirebaseDays> daysObservable = dbService.days();
 
             return eventRepository.events(userId)
+                    .map(events -> onlyFavorites ? filter(events, Event::favorited) : events)
                     .map(groupEventsByDay())
-                    .withLatestFrom(daysObservable, combineSessionsById())
+                    .withLatestFrom(daysObservable, combineEventsById())
                     .map(sortPagesByDate())
                     .map(sortEventsByStartDate())
                     .subscribeOn(Schedulers.io());
         });
+    }
+
+    private Function<List<Event>, HashMap<String, List<Event>>> groupEventsByDay() {
+        return events -> Lists.reduce(new HashMap<>(), events, listToDaysHashMap());
+    }
+
+    private Func2<HashMap<String, List<Event>>, Event, HashMap<String, List<Event>>> listToDaysHashMap() {
+        return (map, event) -> {
+            List<Event> dayList = getOrCreateDayList(map, event);
+            dayList.add(event);
+            map.put(event.dayId(), dayList);
+            return map;
+        };
+    }
+
+    private List<Event> getOrCreateDayList(HashMap<String, List<Event>> map, Event event) {
+        List<Event> currentList = map.get(event.dayId());
+
+        if (currentList == null) {
+            currentList = new ArrayList<>();
+            map.put(event.dayId(), currentList);
+        }
+
+        return currentList;
+    }
+
+    private BiFunction<HashMap<String, List<Event>>, FirebaseDays, Schedule> combineEventsById() {
+        return (map, apiDays) -> {
+            List<SchedulePage> pages = new ArrayList<>(map.size());
+            for (String dayId : map.keySet()) {
+                Optional<String> rawDate = findDate(apiDays, dayId);
+                if (rawDate.isPresent()) {
+                    LocalDateTime date = LocalDateTime.parse(rawDate.get(), DATE_FORMATTER);
+                    pages.add(SchedulePage.create(dayId, date, map.get(dayId)));
+                }
+            }
+
+            return Schedule.create(pages);
+        };
+    }
+
+    private Optional<String> findDate(FirebaseDays apiDays, String dayId) {
+        return find(apiDays.days, firebaseDay -> firebaseDay.id.equals(String.valueOf(dayId)))
+                .map(firebaseDay -> firebaseDay.date);
     }
 
     private Function<Schedule, Schedule> sortPagesByDate() {
@@ -79,49 +125,5 @@ class ScheduleService {
         ArrayList<Event> sortedEvents = new ArrayList<>(schedulePage.events());
         Collections.sort(sortedEvents, (firstEvent, secondEvent) -> firstEvent.startTime().compareTo(secondEvent.startTime()));
         return sortedEvents;
-    }
-
-    private Function<List<Event>, HashMap<String, List<Event>>> groupEventsByDay() {
-        return events -> Lists.reduce(new HashMap<>(), events, listToDaysHashMap());
-    }
-
-    private Func2<HashMap<String, List<Event>>, Event, HashMap<String, List<Event>>> listToDaysHashMap() {
-        return (map, event) -> {
-            List<Event> dayList = getOrCreateDayList(map, event);
-            dayList.add(event);
-            map.put(event.dayId(), dayList);
-            return map;
-        };
-    }
-
-    private List<Event> getOrCreateDayList(HashMap<String, List<Event>> map, Event event) {
-        List<Event> currentList = map.get(event.dayId());
-
-        if (currentList == null) {
-            currentList = new ArrayList<>();
-            map.put(event.dayId(), currentList);
-        }
-
-        return currentList;
-    }
-
-    private BiFunction<HashMap<String, List<Event>>, FirebaseDays, Schedule> combineSessionsById() {
-        return (map, apiDays) -> {
-            List<SchedulePage> pages = new ArrayList<>(map.size());
-            for (String dayId : map.keySet()) {
-                Optional<String> rawDate = findDate(apiDays, dayId);
-                if (rawDate.isPresent()) {
-                    LocalDateTime date = LocalDateTime.parse(rawDate.get(), DATE_FORMATTER);
-                    pages.add(SchedulePage.create(dayId, date, map.get(dayId)));
-                }
-            }
-
-            return Schedule.create(pages);
-        };
-    }
-
-    private Optional<String> findDate(FirebaseDays apiDays, String dayId) {
-        return find(apiDays.days, firebaseDay -> firebaseDay.id.equals(String.valueOf(dayId)))
-                .map(firebaseDay -> firebaseDay.date);
     }
 }

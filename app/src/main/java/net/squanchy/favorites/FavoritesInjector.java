@@ -1,19 +1,20 @@
-package net.squanchy.schedule;
+package net.squanchy.favorites;
 
 import android.app.Activity;
 
 import net.squanchy.injection.ActivityContextModule;
 import net.squanchy.injection.ApplicationInjector;
 import net.squanchy.navigation.NavigationModule;
+import net.squanchy.schedule.ScheduleModule;
 
-final class ScheduleInjector {
+final class FavoritesInjector {
 
-    private ScheduleInjector() {
+    private FavoritesInjector() {
         // no instances
     }
 
-    public static ScheduleComponent obtain(Activity activity) {
-        return DaggerScheduleComponent.builder()
+    public static FavoritesComponent obtain(Activity activity) {
+        return DaggerFavoritesComponent.builder()
                 .applicationComponent(ApplicationInjector.obtain(activity))
                 .scheduleModule(new ScheduleModule())
                 .navigationModule(new NavigationModule())

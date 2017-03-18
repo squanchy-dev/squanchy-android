@@ -1,21 +1,19 @@
-package net.squanchy.schedule;
+package net.squanchy.favorites;
 
 import net.squanchy.service.firebase.FirebaseAuthService;
-import net.squanchy.service.firebase.FirebaseDbService;
 import net.squanchy.service.repository.EventRepository;
 
 import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class ScheduleModule {
+class FavoritesModule {
 
     @Provides
-    ScheduleService scheduleService(
-            FirebaseDbService dbService,
+    FavoritesService favoritesService(
             FirebaseAuthService authService,
             EventRepository eventRepository
     ) {
-        return new ScheduleService(dbService, authService, eventRepository);
+        return new FavoritesService(authService, eventRepository);
     }
 }

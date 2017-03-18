@@ -4,13 +4,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-class HeaderViewHolder extends RecyclerView.ViewHolder {
+public class HeaderViewHolder extends RecyclerView.ViewHolder {
 
-    HeaderViewHolder(View itemView) {
+    public HeaderViewHolder(View itemView) {
         super(itemView);
     }
 
-    void updateWith(HeaderType headerType) {
+    public void updateWith(HeaderType headerType) {
         ((TextView) itemView).setText(headerType.headerTextResourceId());
+    }
+
+    public void updateWith(CharSequence label) {
+        ((TextView) itemView).setText(label);
     }
 }

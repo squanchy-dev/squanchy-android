@@ -20,17 +20,19 @@ import net.squanchy.R;
 import net.squanchy.analytics.Analytics;
 import net.squanchy.analytics.ContentType;
 import net.squanchy.fonts.TypefaceStyleableActivity;
-import net.squanchy.service.proximity.injection.ProximityService;
+import net.squanchy.proximity.ProximityEvent;
 import net.squanchy.remoteconfig.RemoteConfig;
+import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.support.lang.Optional;
 import net.squanchy.support.widget.InterceptingBottomNavigationView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import timber.log.Timber;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class HomeActivity extends TypefaceStyleableActivity {
 
     private static final String STATE_KEY_SELECTED_PAGE_INDEX = "HomeActivity.selected_page_index";
+    private static final boolean PROXIMITY_SERVICE_RADAR_NOT_STARTED = false;
 
     private final Map<BottomNavigationSection, View> pageViews = new HashMap<>(4);
 
@@ -42,6 +44,10 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private ProximityService proximityService;
     private Analytics analytics;
     private RemoteConfig remoteConfig;
+    private HomeService homeService;
+    private CompositeDisposable subscriptions;
+
+    private boolean proximityServiceRadarStarted = PROXIMITY_SERVICE_RADAR_NOT_STARTED;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,24 +68,36 @@ public class HomeActivity extends TypefaceStyleableActivity {
         HomeComponent homeComponent = HomeInjector.obtain(this);
         analytics = homeComponent.analytics();
         remoteConfig = homeComponent.remoteConfig();
+        homeService = homeComponent.homeService();
+        proximityService = homeComponent.proximityService();
+        subscriptions = new CompositeDisposable();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         selectInitialPage(currentSection);
-        proximityService = HomeInjector.obtain(this).service();
 
         // TODO do something useful with this once we can
         remoteConfig.proximityServicesEnabled()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(enabled -> {
                     if (enabled) {
+                        proximityServiceRadarStarted = true;
                         proximityService.startRadar();
-                    } else {
-                        proximityService.stopRadar();
                     }
+
+                    subscriptions.add(
+                            proximityService.observeProximityEvents()
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(this::handleProximityEvent));
                 });
+
+        subscriptions.add(homeService.signInAnonymouslyIfNecessary().subscribe());
+    }
+
+    private void handleProximityEvent(ProximityEvent proximityEvent) {
+        // TODO do something with the event, like showing feedback or opening an event detail
     }
 
     private void collectPageViewsInto(Map<BottomNavigationSection, View> pageViews) {
@@ -197,5 +215,17 @@ public class HomeActivity extends TypefaceStyleableActivity {
     protected void onSaveInstanceState(Bundle outState) {
         outState.putInt(STATE_KEY_SELECTED_PAGE_INDEX, currentSection.ordinal());
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (proximityServiceRadarStarted) {
+            proximityService.stopRadar();
+            proximityServiceRadarStarted = PROXIMITY_SERVICE_RADAR_NOT_STARTED;
+        }
+
+        subscriptions.clear();
     }
 }

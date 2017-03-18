@@ -2,5 +2,6 @@
 <resources>
 
   <string name="bottom_bar_favorites_label">Favourites</string>
+  <string name="activity_favorites">Favourites</string>
 
 </resources>
