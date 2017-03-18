@@ -54,7 +54,7 @@ public class TalkEventItemView extends EventItemView {
             experienceLevelIconView.setVisibility(INVISIBLE);
         }
 
-        speakerView.setVisibility(event.speakersVisibility());
+        speakerView.setVisibility(event.speakers().isEmpty() ? GONE : VISIBLE);
         speakerView.updateWith(event.speakers(), speaker -> { });
     }
 

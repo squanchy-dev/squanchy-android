@@ -28,7 +28,7 @@ public class EventDetailsHeaderLayout extends android.support.design.widget.AppB
     void updateWith(Event event, SpeakerView.OnSpeakerClickListener listener) {
         titleView.setText(event.title());
 
-        speakerView.setVisibility(event.speakersVisibility());
+        speakerView.setVisibility(event.speakers().isEmpty() ? GONE : VISIBLE);
         speakerView.updateWith(event.speakers(), listener);
     }
 }

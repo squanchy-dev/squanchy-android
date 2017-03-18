@@ -16,6 +16,7 @@ public class EventDetailsLayout extends LinearLayout {
     private static final String WHEN_DATE_TIME_FORMAT = "EEEE, d MMMM 'at' HH:mm";
 
     private TextView whenTextView;
+    private View whereContainer;
     private TextView whereTextView;
     private TextView descriptionTextView;
 
@@ -41,6 +42,7 @@ public class EventDetailsLayout extends LinearLayout {
 
         whenTextView = (TextView) findViewById(R.id.when_text);
         whereTextView = (TextView) findViewById(R.id.where_text);
+        whereContainer = findViewById(R.id.where_container);
         descriptionTextView = (TextView) findViewById(R.id.description_text);
     }
 
@@ -51,7 +53,12 @@ public class EventDetailsLayout extends LinearLayout {
     }
 
     private void updateWhere(Event event) {
-        whereTextView.setText(event.place().orNull());
+        if (event.place().isPresent()) {
+            whereContainer.setVisibility(VISIBLE);
+            whereTextView.setText(event.place().get().name());
+        } else {
+            whereContainer.setVisibility(GONE);
+        }
     }
 
     private void updateDescription(String description) {
