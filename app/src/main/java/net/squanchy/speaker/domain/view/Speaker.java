@@ -7,8 +7,26 @@ import net.squanchy.support.lang.Optional;
 @AutoValue
 public abstract class Speaker {
 
-    public static Speaker create(String speakerId, long numericSpeakerId, String name, String photoUrl) {
-        return new AutoValue_Speaker(numericSpeakerId, speakerId, name, Optional.fromNullable(photoUrl));
+    public static Speaker create(
+            String speakerId,
+            long numericSpeakerId,
+            String name,
+            Optional<String> companyName,
+            Optional<String> companyUrl,
+            Optional<String> personalUrl,
+            Optional<String> photoUrl,
+            Optional<String> twitterUsername
+    ) {
+        return new AutoValue_Speaker.Builder()
+                .numericId(numericSpeakerId)
+                .id(speakerId)
+                .name(name)
+                .companyName(companyName)
+                .companyUrl(companyUrl)
+                .personalUrl(personalUrl)
+                .photoUrl(photoUrl)
+                .twitterUsername(twitterUsername)
+                .build();
     }
 
     public abstract long numericId();
@@ -17,5 +35,35 @@ public abstract class Speaker {
 
     public abstract String name();
 
-    public abstract Optional<String> avatarImageURL();
+    public abstract Optional<String> companyName();
+
+    public abstract Optional<String> companyUrl();
+
+    public abstract Optional<String> personalUrl();
+
+    public abstract Optional<String> photoUrl();
+
+    public abstract Optional<String> twitterUsername();
+
+    @AutoValue.Builder
+    public abstract static class Builder {
+
+        public abstract Builder numericId(long numericId);
+
+        public abstract Builder id(String id);
+
+        public abstract Builder name(String name);
+
+        public abstract Builder companyName(Optional<String> companyName);
+
+        public abstract Builder companyUrl(Optional<String> companyUrl);
+
+        public abstract Builder personalUrl(Optional<String> personalUrl);
+
+        public abstract Builder photoUrl(Optional<String> photoUrl);
+
+        public abstract Builder twitterUsername(Optional<String> twitterUsername);
+
+        public abstract Speaker build();
+    }
 }
