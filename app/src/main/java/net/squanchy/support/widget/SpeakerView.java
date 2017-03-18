@@ -93,7 +93,7 @@ public abstract class SpeakerView extends LinearLayout {
             ImageView photoView = recycleOrInflatePhotoView(photoViews);
             speakerPhotoContainer.addView(photoView);
             if (speaker.avatarImageURL().isPresent()) {
-                photoView.setOnClickListener(v -> listener.onSpeakerClicked(speaker));                 // TODO set ripple foreground
+                photoView.setOnClickListener(v -> listener.onSpeakerClicked(speaker));
                 loadSpeakerPhoto(photoView, speaker.avatarImageURL().get(), imageLoader);
             }
         }

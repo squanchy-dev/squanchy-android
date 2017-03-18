@@ -102,26 +102,27 @@ public class CircleImageView extends ImageView implements ViewWithForeground {
 
     @Override
     public void setForegroundGravity(int foregroundGravity) {
-        int adjustedGravity = foregroundGravity;
-
-        if (this.foregroundGravity != adjustedGravity) {
-            if ((adjustedGravity & Gravity.RELATIVE_HORIZONTAL_GRAVITY_MASK) == 0) {
-                adjustedGravity |= Gravity.START;
-            }
-
-            if ((adjustedGravity & Gravity.VERTICAL_GRAVITY_MASK) == 0) {
-                adjustedGravity |= Gravity.TOP;
-            }
-
-            this.foregroundGravity = adjustedGravity;
-
-            if (this.foregroundGravity == Gravity.FILL && foregroundDrawable != null) {
-                Rect padding = new Rect();
-                foregroundDrawable.getPadding(padding);
-            }
-
-            requestLayout();
+        if (this.foregroundGravity == foregroundGravity) {
+            return;
         }
+
+        int adjustedGravity = foregroundGravity;
+        if ((adjustedGravity & Gravity.RELATIVE_HORIZONTAL_GRAVITY_MASK) == 0) {
+            adjustedGravity |= Gravity.START;
+        }
+
+        if ((adjustedGravity & Gravity.VERTICAL_GRAVITY_MASK) == 0) {
+            adjustedGravity |= Gravity.TOP;
+        }
+
+        this.foregroundGravity = adjustedGravity;
+
+        if (this.foregroundGravity == Gravity.FILL && foregroundDrawable != null) {
+            Rect padding = new Rect();
+            foregroundDrawable.getPadding(padding);
+        }
+
+        requestLayout();
     }
 
     @Override
@@ -155,30 +156,27 @@ public class CircleImageView extends ImageView implements ViewWithForeground {
      */
     @Override
     public void setForeground(Drawable drawable) {
-        if (foregroundDrawable != drawable) {
-            if (foregroundDrawable != null) {
-                foregroundDrawable.setCallback(null);
-                unscheduleDrawable(foregroundDrawable);
-            }
-
-            foregroundDrawable = drawable;
-
-            if (drawable != null) {
-                setWillNotDraw(false);
-                drawable.setCallback(this);
-                if (drawable.isStateful()) {
-                    drawable.setState(getDrawableState());
-                }
-                if (foregroundGravity == Gravity.FILL) {
-                    Rect padding = new Rect();
-                    drawable.getPadding(padding);
-                }
-            } else {
-                setWillNotDraw(true);
-            }
-            requestLayout();
-            invalidate();
+        if (foregroundDrawable == drawable) {
+            return;
         }
+
+        if (foregroundDrawable != null) {
+            foregroundDrawable.setCallback(null);
+            unscheduleDrawable(foregroundDrawable);
+        }
+
+        foregroundDrawable = drawable;
+
+        drawable.setCallback(this);
+        if (drawable.isStateful()) {
+            drawable.setState(getDrawableState());
+        }
+        if (foregroundGravity == Gravity.FILL) {
+            Rect padding = new Rect();
+            drawable.getPadding(padding);
+        }
+        requestLayout();
+        invalidate();
     }
 
     /**
@@ -202,30 +200,45 @@ public class CircleImageView extends ImageView implements ViewWithForeground {
     public void draw(Canvas canvas) {
         super.draw(canvas);
 
-        if (foregroundDrawable != null) {
-            final Drawable foreground = foregroundDrawable;
-
-            if (foregroundBoundsChanged) {
-                foregroundBoundsChanged = false;
-                final Rect selfBounds = bounds;
-
-                final int w = getRight() - getLeft();
-                final int h = getBottom() - getTop();
-
-                if (foregroundInPadding) {
-                    selfBounds.set(0, 0, w, h);
-                } else {
-                    selfBounds.set(getPaddingLeft(), getPaddingTop(),
-                            w - getPaddingRight(), h - getPaddingBottom());
-                }
-
-                Gravity.apply(foregroundGravity, foreground.getIntrinsicWidth(),
-                        foreground.getIntrinsicHeight(), selfBounds, overlayBounds);
-                foreground.setBounds(overlayBounds);
-            }
-
-            foreground.draw(canvas);
+        if (foregroundDrawable == null) {
+            return;
         }
+
+        Drawable foreground = foregroundDrawable;
+
+        if (foregroundBoundsChanged) {
+            foregroundBoundsChanged = false;
+            applyGravityTo(foreground);
+        }
+
+        foreground.draw(canvas);
+    }
+
+    private void applyGravityTo(Drawable foreground) {
+        Rect selfBounds = bounds;
+
+        int w = getRight() - getLeft();
+        int h = getBottom() - getTop();
+
+        if (foregroundInPadding) {
+            selfBounds.set(0, 0, w, h);
+        } else {
+            selfBounds.set(
+                    getPaddingLeft(),
+                    getPaddingTop(),
+                    w - getPaddingRight(),
+                    h - getPaddingBottom()
+            );
+        }
+
+        Gravity.apply(
+                foregroundGravity,
+                foreground.getIntrinsicWidth(),
+                foreground.getIntrinsicHeight(),
+                selfBounds,
+                overlayBounds
+        );
+        foreground.setBounds(overlayBounds);
     }
 
     @Override
@@ -241,11 +254,7 @@ public class CircleImageView extends ImageView implements ViewWithForeground {
 
         @Override
         public void getOutline(View view, Outline outline) {
-            int width = view.getWidth();
-            width = width > 0 ? width : view.getMeasuredWidth();
-            int height = view.getHeight();
-            height = height > 0 ? height : view.getMeasuredHeight();
-            outline.setOval(0, 0, width, height);
+            outline.setOval(0, 0, view.getWidth(), view.getHeight());
         }
     }
 }
