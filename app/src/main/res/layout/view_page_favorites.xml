@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <net.squanchy.favorites.FavoritesPageView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/favorites_content_root"
   android:theme="@style/Theme.Squanchy.Favorites"
@@ -18,18 +19,13 @@
       android:layout_width="match_parent"
       android:layout_height="?attr/actionBarSize" />
 
-    <android.support.design.widget.TabLayout
-      android:id="@+id/tabstrip"
-      style="@style/Squanchy.Tabs.Schedule"
-      android:layout_width="match_parent"
-      android:layout_height="?attr/actionBarSize" />
-
   </android.support.design.widget.AppBarLayout>
 
-  <net.squanchy.schedule.view.ScheduleDayPageView
+  <net.squanchy.favorites.view.FavoritesListView
     android:id="@+id/favorites_list"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
   <ProgressBar
     android:id="@+id/progressbar"

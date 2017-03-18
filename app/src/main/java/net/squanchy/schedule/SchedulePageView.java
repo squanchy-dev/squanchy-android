@@ -98,7 +98,7 @@ public class SchedulePageView extends CoordinatorLayout {
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
-        subscription = service.schedule()
+        subscription = service.schedule(false)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(schedule -> updateWith(schedule, this::onEventClicked));
     }
