@@ -24,7 +24,9 @@
       android:layout_height="wrap_content"
       android:layout_marginStart="@dimen/event_details_header_padding_start"
       android:layout_marginEnd="@dimen/event_details_header_padding_end"
-      android:layout_marginBottom="@dimen/event_details_speaker_margin_bottom">
+      android:layout_marginBottom="@dimen/event_details_speaker_margin_bottom"
+      android:visibility="gone"
+      tools:visibility="visible">
 
       <LinearLayout
         android:id="@+id/speaker_photos_container"
@@ -73,6 +75,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/event_details_fab_margin"
-    android:layout_gravity="end|bottom" />
+    android:layout_gravity="end|bottom"
+    android:visibility="gone"
+    tools:visibility="visible" />
 
 </net.squanchy.eventdetails.widget.EventDetailsCoordinatorLayout>

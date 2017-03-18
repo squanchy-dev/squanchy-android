@@ -3,7 +3,7 @@
   <style name="None" />
 
   <style name="Squanchy.Appbar" parent="None">
-    <item name="android:background">?attr/colorPrimary</item>
+    <item name="android:background">?colorPrimary</item>
     <item name="android:elevation">@dimen/toolbar_elevation</item>
   </style>
 
@@ -74,11 +74,11 @@
   </style>
 
   <style name="Search.Toolbar" parent="Squanchy.Toolbar">
-    <item name="android:background">?attr/colorPrimary</item>
+    <item name="android:background">?colorPrimary</item>
   </style>
 
   <style name="ThemeOverlay.Squanchy.Toolbar" parent="ThemeOverlay.AppCompat.Light">
-    <item name="android:colorControlNormal">?colorAccent</item>
+    <item name="colorControlNormal">?colorAccent</item>
   </style>
 
   <style name="ThemeOverlay.Squanchy.Toolbar.Search" parent="ThemeOverlay.Squanchy.Toolbar">
@@ -139,11 +139,58 @@
     <item name="fontPath">?titleTypeface</item>
   </style>
 
-  <style name="EventDetails.Header.Speaker.Photo" parent="None" />
+  <style name="EventDetails.Header.Speaker.Photo" parent="None">
+    <item name="android:clickable">true</item>
+    <item name="android:foreground">@drawable/white_circle_bound_touch_feedback</item>
+  </style>
+
+  <style name="EventDetails.Body.RowContainer" parent="None">
+    <item name="android:gravity">fill_horizontal|center_vertical</item>
+    <item name="android:orientation">horizontal</item>
+    <item name="android:minHeight">@dimen/event_details_body_row_height</item>
+  </style>
+
+  <style name="EventDetails.Body.Label" parent="None">
+    <item name="android:paddingStart">@dimen/event_details_body_label_padding_start</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.EventDetails.Body.Label</item>
+  </style>
+
+  <style name="EventDetails.Body.Label.When" parent="EventDetails.Body.Label">
+    <item name="android:text">@string/event_details_body_label_when_text</item>
+  </style>
+
+  <style name="EventDetails.Body.Label.Where" parent="EventDetails.Body.Label">
+    <item name="android:text">@string/event_details_body_label_where_text</item>
+  </style>
+
+  <style name="EventDetails.Body.Label.About" parent="EventDetails.Body.Label">
+    <item name="android:gravity">start|center_vertical</item>
+    <item name="android:minHeight">@dimen/event_details_body_row_height</item>
+    <item name="android:text">@string/event_details_body_label_about_text</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.EventDetails.Body.Label" parent="None">
+    <item name="android:textColor">?colorPrimary</item>
+    <item name="android:textSize">@dimen/event_details_body_label_text</item>
+    <item name="fontPath">?titleTypeface</item>
+  </style>
+
+  <style name="EventDetails.Body.Value" parent="None">
+    <item name="android:lineSpacingExtra">@dimen/event_details_speaker_line_spacing_extra</item>
+    <item name="android:lineSpacingMultiplier">1</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.EventDetails.Body.Value</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.EventDetails.Body.Value" parent="None">
+    <item name="android:textColor">?android:textColorPrimary</item>
+    <item name="android:textSize">@dimen/event_details_body_value_text</item>
+    <item name="fontPath">?defaultMediumTypeface</item>
+  </style>
 
   <style name="EventDetails.Fab" parent="None">
     <item name="backgroundTint">?colorPrimary</item>
     <item name="android:clickable">true</item>
+    <item name="android:foreground">@drawable/white_circle_bound_touch_feedback</item>
     <item name="android:src">@drawable/ic_favorite_empty</item>
   </style>
 
