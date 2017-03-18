@@ -139,7 +139,9 @@
     <item name="fontPath">?titleTypeface</item>
   </style>
 
-  <style name="EventDetails.Header.Speaker.Photo" parent="None" />
+  <style name="EventDetails.Header.Speaker.Photo" parent="None">
+    <item name="android:clickable">true</item>
+  </style>
 
   <style name="EventDetails.Fab" parent="None">
     <item name="backgroundTint">?colorPrimary</item>

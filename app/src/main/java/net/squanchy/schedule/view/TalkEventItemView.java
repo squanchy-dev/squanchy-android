@@ -55,7 +55,7 @@ public class TalkEventItemView extends EventItemView {
         }
 
         speakerView.setVisibility(event.speakersVisibility());
-        speakerView.updateWith(event.speakers());
+        speakerView.updateWith(event.speakers(), speaker -> { });
     }
 
     private void ensureSupportedType(Event.Type type) {

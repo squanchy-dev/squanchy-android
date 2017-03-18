@@ -14,6 +14,7 @@ import net.squanchy.schedule.domain.view.Event;
 public class EventDetailsLayout extends LinearLayout {
 
     private static final String WHEN_DATE_TIME_FORMAT = "EEEE, d MMMM 'at' HH:mm";
+
     private TextView whenTextView;
     private TextView whereTextView;
     private TextView descriptionTextView;

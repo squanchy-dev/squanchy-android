@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import net.squanchy.R;
 import net.squanchy.eventdetails.widget.EventDetailsCoordinatorLayout;
 import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.navigation.Navigator;
+import net.squanchy.schedule.domain.view.Event;
+import net.squanchy.speaker.domain.view.Speaker;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -63,13 +66,25 @@ public class EventDetailsActivity extends TypefaceStyleableActivity {
 
         subscriptions.add(service.event(eventId)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(event -> coordinatorLayout.updateWith(event, () -> {
-                    if (event.favorited()) {
-                        subscriptions.add(service.removeFavorite(event.id()).subscribe());
-                    } else {
-                        subscriptions.add(service.favorite(event.id()).subscribe());
-                    }
-                })));
+                .subscribe(event -> coordinatorLayout.updateWith(event, onEventDetailsClickListener(event))));
+    }
+
+    private EventDetailsCoordinatorLayout.OnEventDetailsClickListener onEventDetailsClickListener(Event event) {
+        return new EventDetailsCoordinatorLayout.OnEventDetailsClickListener() {
+            @Override
+            public void onSpeakerClicked(Speaker speaker) {
+                Toast.makeText(EventDetailsActivity.this, "Speaker clicked: " + speaker, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFavoriteClick() {
+                if (event.favorited()) {
+                    subscriptions.add(service.removeFavorite(event.id()).subscribe());
+                } else {
+                    subscriptions.add(service.favorite(event.id()).subscribe());
+                }
+            }
+        };
     }
 
     @Override
