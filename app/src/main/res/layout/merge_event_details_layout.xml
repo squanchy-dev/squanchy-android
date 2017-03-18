@@ -69,6 +69,7 @@
   </LinearLayout>
 
   <TextView
+    android:id="@+id/description_header"
     android:layout_width="72dp"
     android:layout_height="wrap_content"
     android:gravity="start|center_vertical"

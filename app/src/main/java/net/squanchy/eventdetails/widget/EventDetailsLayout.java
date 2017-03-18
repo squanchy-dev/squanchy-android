@@ -1,8 +1,12 @@
 package net.squanchy.eventdetails.widget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.text.Html;
+import android.text.Spanned;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -18,6 +22,7 @@ public class EventDetailsLayout extends LinearLayout {
     private TextView whenTextView;
     private View whereContainer;
     private TextView whereTextView;
+    private View descriptionHeader;
     private TextView descriptionTextView;
 
     public EventDetailsLayout(Context context, @Nullable AttributeSet attrs) {
@@ -43,6 +48,7 @@ public class EventDetailsLayout extends LinearLayout {
         whenTextView = (TextView) findViewById(R.id.when_text);
         whereTextView = (TextView) findViewById(R.id.where_text);
         whereContainer = findViewById(R.id.where_container);
+        descriptionHeader = findViewById(R.id.description_header);
         descriptionTextView = (TextView) findViewById(R.id.description_text);
     }
 
@@ -62,7 +68,23 @@ public class EventDetailsLayout extends LinearLayout {
     }
 
     private void updateDescription(String description) {
-        // TODO use Dante for this
-        descriptionTextView.setText(Html.fromHtml(description));
+        if (TextUtils.isGraphic(description)) {
+            descriptionHeader.setVisibility(VISIBLE);
+            descriptionTextView.setText(parseHtml(description));
+        } else {
+            descriptionHeader.setVisibility(GONE);
+            descriptionTextView.setVisibility(GONE);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.N)
+    @SuppressWarnings("deprecation")        // The older fromHtml() is only called pre-24
+    private Spanned parseHtml(String description) {
+        // TODO handle this properly
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY);
+        } else {
+            return Html.fromHtml(description);
+        }
     }
 }
