@@ -16,6 +16,7 @@ import net.squanchy.R;
 import net.squanchy.eventdetails.EventDetailsActivity;
 import net.squanchy.navigation.HomeActivity;
 import net.squanchy.schedule.domain.view.Event;
+import net.squanchy.schedule.domain.view.Place;
 
 public class NotificationCreator {
 
@@ -110,11 +111,7 @@ public class NotificationCreator {
     }
 
     private String getPlaceName(Event event) {
-        if (event.place().isPresent()) {
-            return event.place().get().name();
-        } else {
-            return EMPTY_PLACE_NAME;
-        }
+        return event.place().map(Place::name).or(EMPTY_PLACE_NAME);
     }
 
     private PendingIntent createPendingIntentForMultipleEvents() {
