@@ -61,9 +61,11 @@ public class SpeakerHeaderView extends LinearLayout {
 
         Optional<String> companyName = speaker.companyName();
         if (companyName.isPresent()) {
+            // TODO support navigating to company website
             companyView.setText(companyName.get());
             companyView.setVisibility(VISIBLE);
-            // TODO support navigating to company website
+        } else {
+            companyView.setVisibility(GONE);
         }
     }
 
