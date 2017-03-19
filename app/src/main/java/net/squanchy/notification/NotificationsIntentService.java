@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import net.squanchy.R;
 import net.squanchy.schedule.domain.view.Event;
@@ -15,6 +14,7 @@ import net.squanchy.schedule.domain.view.Event;
 import org.joda.time.LocalDateTime;
 
 import io.reactivex.Observable;
+import timber.log.Timber;
 
 public class NotificationsIntentService extends IntentService {
 
@@ -73,7 +73,8 @@ public class NotificationsIntentService extends IntentService {
 
     private void scheduleNextAlarm(Event event) {
         LocalDateTime serviceAlarm = event.startTime().minusMinutes(NOTIFICATION_INTERVAL_MINUTES);
-        Log.d("xxx", "Next alarm for " + serviceAlarm.toString());
+        Timber.d("Next alarm scheduled for " + serviceAlarm.toString());
+
         Intent serviceIntent = new Intent(this, NotificationsIntentService.class);
         PendingIntent pendingIntent = PendingIntent.getService(this, 0, serviceIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
