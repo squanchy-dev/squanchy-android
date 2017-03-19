@@ -100,11 +100,17 @@ public final class FirebaseDbService {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     V value = dataSnapshot.getValue(clazz);
+                    if (e.isDisposed()) {
+                        return;
+                    }
                     e.onNext(valueMapper.call(value));
                 }
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
+                    if (e.isDisposed()) {
+                        return;
+                    }
                     e.onError(databaseError.toException());
                 }
             };
