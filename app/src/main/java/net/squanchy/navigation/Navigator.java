@@ -41,7 +41,7 @@ public class Navigator {
     }
 
     private boolean canResolve(Intent intent) {
-        return context.getPackageManager()
+        return !context.getPackageManager()
                 .queryIntentActivities(intent, 0)
                 .isEmpty();
     }
