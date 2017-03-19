@@ -30,7 +30,7 @@
   <style name="Theme.Squanchy.Dialog" parent="Theme.Squanchy">
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item>
-    <item name="android:windowElevation">@dimen/abc_floating_window_z</item>  <!-- TODO ingest this -->
+    <item name="android:windowElevation">@dimen/floating_window_z</item>
     <item name="android:windowCloseOnTouchOutside">true</item>
     <item name="android:windowBackground">@drawable/dialog_background</item>
     <item name="android:colorBackground">?attr/colorBackgroundFloating</item>

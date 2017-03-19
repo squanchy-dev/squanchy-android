@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <dimen name="navigation_drawer_width">288dp</dimen>
+  <dimen name="floating_window_z">16dp</dimen>
 
   <dimen name="toolbar_elevation">6dp</dimen>
   <dimen name="tab_text">14sp</dimen>
