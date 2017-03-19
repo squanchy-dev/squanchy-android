@@ -11,6 +11,7 @@ public abstract class Speaker {
             String speakerId,
             long numericSpeakerId,
             String name,
+            String bio,
             Optional<String> companyName,
             Optional<String> companyUrl,
             Optional<String> personalUrl,
@@ -21,6 +22,7 @@ public abstract class Speaker {
                 .numericId(numericSpeakerId)
                 .id(speakerId)
                 .name(name)
+                .bio(bio)
                 .companyName(companyName)
                 .companyUrl(companyUrl)
                 .personalUrl(personalUrl)
@@ -34,6 +36,8 @@ public abstract class Speaker {
     public abstract String id();
 
     public abstract String name();
+
+    public abstract String bio();
 
     public abstract Optional<String> companyName();
 
@@ -53,6 +57,8 @@ public abstract class Speaker {
         public abstract Builder id(String id);
 
         public abstract Builder name(String name);
+
+        public abstract Builder bio(String bio);
 
         public abstract Builder companyName(Optional<String> companyName);
 
