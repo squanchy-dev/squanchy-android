@@ -13,7 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import net.squanchy.R;
@@ -35,6 +37,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private static final boolean PROXIMITY_SERVICE_RADAR_NOT_STARTED = false;
 
     private final Map<BottomNavigationSection, View> pageViews = new HashMap<>(4);
+    private final List<LifecycleView> lifecycleViews = new ArrayList<>(2);
 
     private int pageFadeDurationMillis;
 
@@ -58,6 +61,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
 
         pageContainer = (ViewGroup) findViewById(R.id.page_container);
         collectPageViewsInto(pageViews);
+        collectLifecycleViewsViewsInto(lifecycleViews);
 
         bottomNavigationView = (InterceptingBottomNavigationView) findViewById(R.id.bottom_navigation);
         setupBottomNavigation(bottomNavigationView);
@@ -94,6 +98,10 @@ public class HomeActivity extends TypefaceStyleableActivity {
                 });
 
         subscriptions.add(homeService.signInAnonymouslyIfNecessary().subscribe());
+
+        for (LifecycleView lifecycleView : lifecycleViews) {
+            lifecycleView.onStart();
+        }
     }
 
     private void handleProximityEvent(ProximityEvent proximityEvent) {
@@ -105,6 +113,11 @@ public class HomeActivity extends TypefaceStyleableActivity {
         pageViews.put(BottomNavigationSection.FAVORITES, pageContainer.findViewById(R.id.favorites_content_root));
         pageViews.put(BottomNavigationSection.TWEETS, pageContainer.findViewById(R.id.tweets_content_root));
         pageViews.put(BottomNavigationSection.VENUE_INFO, pageContainer.findViewById(R.id.venue_content_root));
+    }
+
+    private void collectLifecycleViewsViewsInto(List<LifecycleView> lifecycleViews) {
+        lifecycleViews.add((LifecycleView) pageContainer.findViewById(R.id.schedule_content_root));
+        lifecycleViews.add((LifecycleView) pageContainer.findViewById(R.id.favorites_content_root));
     }
 
     private void setupBottomNavigation(InterceptingBottomNavigationView bottomNavigationView) {
@@ -227,5 +240,9 @@ public class HomeActivity extends TypefaceStyleableActivity {
         }
 
         subscriptions.clear();
+
+        for (LifecycleView lifecycleView : lifecycleViews) {
+            lifecycleView.onStop();
+        }
     }
 }
