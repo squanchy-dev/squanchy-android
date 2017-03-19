@@ -36,6 +36,10 @@
       android:theme="@style/Theme.Squanchy.SpeakerDetails" />
 
     <activity
+      android:name="net.squanchy.signin.SignInActivity"
+      android:theme="@style/Theme.Squanchy.SignIn" />
+
+    <activity
       android:name="net.squanchy.search.SearchActivity"
       android:theme="@style/Theme.Squanchy.Search"
       android:windowSoftInputMode="adjustResize"

@@ -70,6 +70,8 @@
     <item name="android:statusBarColor">@color/status_bar_primary_azure</item>
   </style>
 
+  <style name="Theme.Squanchy.SignIn" parent="Theme.Squanchy.PrimaryStatusBar" />
+
   <style name="Theme.Squanchy.Search" parent="Theme.Squanchy.PrimaryStatusBar" />
 
 </resources>
