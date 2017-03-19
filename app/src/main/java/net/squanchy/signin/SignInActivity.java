@@ -14,14 +14,14 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
-import net.squanchy.injection.ApplicationInjector;
-import net.squanchy.service.firebase.FirebaseAuthService;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class SignInActivity extends TypefaceStyleableActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private static final int RC_SIGN_IN = 9001;
 
-    private FirebaseAuthService authService;
+    private SignInService service;
 
     private GoogleApiClient googleApiClient;
 
@@ -44,7 +44,8 @@ public class SignInActivity extends TypefaceStyleableActivity implements GoogleA
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
-        authService = ApplicationInjector.obtain(this).firebaseAuthService();
+        SignInComponent component = SignInInjector.obtain(this);
+        service = component.service();
     }
 
     @Override
@@ -68,7 +69,8 @@ public class SignInActivity extends TypefaceStyleableActivity implements GoogleA
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
         showProgressDialog();
 
-        authService.signInWithGoogle(account)
+        service.signInWithGoogle(account)
+                .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::finish);
     }
 
