@@ -1,19 +1,3 @@
-/**
- * Copyright 2016 Google Inc. All Rights Reserved.
- * <p>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package net.squanchy.signin;
 
 import android.content.Intent;
@@ -35,12 +19,11 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
+import net.squanchy.injection.ApplicationInjector;
+import net.squanchy.service.firebase.FirebaseAuthService;
 
 import timber.log.Timber;
 
-/**
- * Demonstrate Firebase Authentication using a Google ID Token.
- */
 public class SignInActivity extends TypefaceStyleableActivity implements
         GoogleApiClient.OnConnectionFailedListener,
         View.OnClickListener {
@@ -48,6 +31,7 @@ public class SignInActivity extends TypefaceStyleableActivity implements
     private static final int RC_SIGN_IN = 9001;
 
     private FirebaseAuth auth;
+    private FirebaseAuthService authService;
 
     private GoogleApiClient googleApiClient;
 
@@ -71,6 +55,8 @@ public class SignInActivity extends TypefaceStyleableActivity implements
                 .build();
 
         auth = FirebaseAuth.getInstance();
+
+        authService = ApplicationInjector.obtain(this).firebaseAuthService();
     }
 
     @Override
@@ -95,7 +81,25 @@ public class SignInActivity extends TypefaceStyleableActivity implements
         Timber.d("firebaseAuthWithGoogle:" + acct.getId());
         showProgressDialog();
 
-        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        authService.currentUser()
+                .firstOrError()
+                .subscribe(user -> {
+                    AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+
+                    if (user.isPresent()) {
+                        linkGoogleAccountTo(user.get(), credential);
+                    } else {
+                        signInWithGoogle(credential);
+                    }
+                    hideProgressDialog();
+                });
+    }
+
+    private void linkGoogleAccountTo(FirebaseUser firebaseUser, AuthCredential credential) {
+        firebaseUser.linkWithCredential(credential); // TODO user might be already linked, do migration in case
+    }
+
+    private void signInWithGoogle(AuthCredential credential) {
         auth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     Timber.d("signInWithCredential:onComplete:" + task.isSuccessful());
@@ -105,10 +109,9 @@ public class SignInActivity extends TypefaceStyleableActivity implements
                     // signed in user can be handled in the listener.
                     if (!task.isSuccessful()) {
                         Timber.w("signInWithCredential", task.getException());
-                        Toast.makeText(SignInActivity.this, "Authentication failed.",
+                        Toast.makeText(this, "Authentication failed.",
                                 Toast.LENGTH_SHORT).show();
                     }
-                    hideProgressDialog();
                 });
     }
 
@@ -123,24 +126,6 @@ public class SignInActivity extends TypefaceStyleableActivity implements
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
-
-    private void signOut() {
-        // Firebase sign out
-        auth.signOut();
-
-        // Google sign out
-        Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(
-                status -> updateUI(null));
-    }
-
-    private void revokeAccess() {
-        // Firebase sign out
-        auth.signOut();
-
-        // Google revoke access
-        Auth.GoogleSignInApi.revokeAccess(googleApiClient).setResultCallback(
-                status -> updateUI(null));
     }
 
     private void updateUI(FirebaseUser user) {
