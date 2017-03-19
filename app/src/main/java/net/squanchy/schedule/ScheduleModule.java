@@ -8,7 +8,7 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-class ScheduleModule {
+public class ScheduleModule {
 
     @Provides
     ScheduleService scheduleService(

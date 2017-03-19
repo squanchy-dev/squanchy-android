@@ -40,6 +40,10 @@
   <string name="tweet_date_today">Today</string>
   <string name="tweet_date_yesterday">Yesterday</string>
 
+  <string name="event_details_body_label_when_text">When</string>
+  <string name="event_details_body_label_where_text">Where</string>
+  <string name="event_details_body_label_about_text">About</string>
+
   <string name="settings_label">Settings</string>
   <string name="settings_notifications_category">Notifications</string>
   <string name="settings_notifications_about_to_start_title">Upcoming events notification</string>

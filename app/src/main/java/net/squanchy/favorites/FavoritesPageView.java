@@ -11,26 +11,24 @@ import android.view.View;
 import net.squanchy.R;
 import net.squanchy.analytics.Analytics;
 import net.squanchy.analytics.ContentType;
-import net.squanchy.favorites.domain.view.Favorites;
+import net.squanchy.favorites.view.FavoritesListView;
 import net.squanchy.navigation.Navigator;
-import net.squanchy.proximity.ProximityEvent;
+import net.squanchy.schedule.ScheduleService;
 import net.squanchy.schedule.domain.view.Event;
-import net.squanchy.schedule.view.ScheduleDayPageView;
+import net.squanchy.schedule.domain.view.Schedule;
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter;
-import net.squanchy.service.proximity.injection.ProximityService;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 public class FavoritesPageView extends CoordinatorLayout {
 
     private View progressBar;
-    private CompositeDisposable subscriptions;
-    private FavoritesService service;
+    private Disposable subscription;
+    private ScheduleService service;
     private Navigator navigate;
-    private ProximityService proximityService;
     private Analytics analytics;
-    private ScheduleDayPageView favoritesListView;
+    private FavoritesListView favoritesListView;
 
     public FavoritesPageView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -49,11 +47,10 @@ public class FavoritesPageView extends CoordinatorLayout {
         service = component.service();
         navigate = component.navigator();
         analytics = component.analytics();
-        proximityService = component.proxService();
 
         progressBar = findViewById(R.id.progressbar);
 
-        favoritesListView = (ScheduleDayPageView) findViewById(R.id.favorites_list);
+        favoritesListView = (FavoritesListView) findViewById(R.id.favorites_list);
 
         setupToolbar();
     }
@@ -87,35 +84,24 @@ public class FavoritesPageView extends CoordinatorLayout {
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
-        subscriptions = new CompositeDisposable();
-        subscriptions.add(
-                service.favorites()
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(favorites -> updateWith(favorites, this::onEventClicked)));
-
-        subscriptions.add(
-                proximityService.observeProximityEvents()
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(this::handleProximityEvent));
+        subscription = service.schedule(true)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(schedule -> updateWith(schedule, this::onEventClicked));
     }
 
     private void onEventClicked(Event event) {
-        analytics.trackItemSelected(ContentType.SCHEDULE_ITEM, event.id());
+        analytics.trackItemSelected(ContentType.FAVORITES_ITEM, event.id());
         navigate.toEventDetails(event.id());
-    }
-
-    private void handleProximityEvent(ProximityEvent proximityEvent) {
-        // TODO do something with the event, like showing feedback or opening an event detail
     }
 
     @Override
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        subscriptions.dispose();
+        subscription.dispose();
     }
 
-    public void updateWith(Favorites favorites, ScheduleViewPagerAdapter.OnEventClickedListener listener) {
-        favoritesListView.updateWith(favorites.events(), listener);
+    public void updateWith(Schedule schedule, ScheduleViewPagerAdapter.OnEventClickedListener listener) {
+        favoritesListView.updateWith(schedule, listener);
         progressBar.setVisibility(GONE);
     }
 }

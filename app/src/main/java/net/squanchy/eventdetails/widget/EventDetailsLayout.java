@@ -1,26 +1,36 @@
 package net.squanchy.eventdetails.widget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.Resources;
+import android.os.Build;
+import android.support.annotation.AttrRes;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
+import android.text.Html;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.squanchy.R;
 import net.squanchy.schedule.domain.view.Event;
-import net.squanchy.speaker.domain.view.Speaker;
-
-import static net.squanchy.support.lang.Lists.map;
+import net.squanchy.schedule.domain.view.Place;
+import net.squanchy.support.lang.Optional;
 
 public class EventDetailsLayout extends LinearLayout {
 
-    private TextView placeView;
-    private TextView speakersView;
-    private TextView trackView;
-    private ExperienceLevelIconView experienceLevelIconView;
-    private TextView experienceLevelLabelView;
+    private static final String WHEN_DATE_TIME_FORMAT = "EEEE, d MMMM 'at' HH:mm";
+
+    private TextView whenTextView;
+    private View whereContainer;
+    private TextView whereTextView;
+    private View descriptionHeader;
+    private TextView descriptionTextView;
 
     public EventDetailsLayout(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
@@ -42,38 +52,74 @@ public class EventDetailsLayout extends LinearLayout {
 
         View.inflate(getContext(), R.layout.merge_event_details_layout, this);
 
-        placeView = (TextView) findViewById(R.id.place_view);
-        speakersView = (TextView) findViewById(R.id.speakers_view);
-        trackView = (TextView) findViewById(R.id.track_view);
-        experienceLevelIconView = (ExperienceLevelIconView) findViewById(R.id.experience_level_icon);
-        experienceLevelLabelView = (TextView) findViewById(R.id.experience_level_label);
+        whenTextView = (TextView) findViewById(R.id.when_text);
+        whereTextView = (TextView) findViewById(R.id.where_text);
+        whereContainer = findViewById(R.id.where_container);
+        descriptionHeader = findViewById(R.id.description_header);
+        descriptionTextView = (TextView) findViewById(R.id.description_text);
     }
 
     public void updateWith(Event event) {
-        // TODO create proper EventDetails model that we can use here
-        updatePlaceData(event);
-        updateSpeakerData(event);
-        trackView.setVisibility(event.trackVisibility());
-        updateExperienceLevelData(event);
+        whenTextView.setText(event.startTime().toString(WHEN_DATE_TIME_FORMAT));
+        updateWhere(event);
+        updateDescription(event.description());
     }
 
-    private void updatePlaceData(Event event) {
-        placeView.setVisibility(event.placeVisibility());
+    private void updateWhere(Event event) {
         if (event.place().isPresent()) {
-            placeView.setText(event.place().get());
+            whereContainer.setVisibility(VISIBLE);
+            whereTextView.setText(placeTextFrom(event.place().get()));
+        } else {
+            whereContainer.setVisibility(GONE);
         }
     }
 
-    private void updateSpeakerData(Event event) {
-        speakersView.setVisibility(event.speakersVisibility());
-        String speakersNames = TextUtils.join(", ", map(event.speakers(), Speaker::name));
-        speakersView.setText(speakersNames);
+    private CharSequence placeTextFrom(Place place) {
+        SpannableStringBuilder builder = new SpannableStringBuilder(place.name());
+        if (place.floor().isPresent()) {
+            String floorLabel = place.floor().get();
+            builder.append("   ")
+                    .append(floorLabel)
+                    .setSpan(
+                            createColorSpan(whereTextView, android.R.attr.textColorSecondary),
+                            builder.length() - floorLabel.length(),
+                            builder.length(),
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    );
+        }
+        return builder;
     }
 
-    private void updateExperienceLevelData(Event event) {
-        if (event.experienceLevel().isPresent()) {
-            experienceLevelIconView.setExperienceLevel(event.experienceLevel().get());
-            experienceLevelLabelView.setText(event.experienceLevel().get().labelStringResId());
+    private ForegroundColorSpan createColorSpan(View targetView, @AttrRes int attributeResId) {
+        int color = getColorFromTheme(targetView.getContext().getTheme(), attributeResId);
+        return new ForegroundColorSpan(color);
+    }
+
+    @ColorInt
+    private int getColorFromTheme(Resources.Theme theme, @AttrRes int attributeId) {
+        TypedValue typedValue = new TypedValue();
+        theme.resolveAttribute(attributeId, typedValue, true);
+        return typedValue.data;
+    }
+
+    private void updateDescription(Optional<String> description) {
+        if (description.isPresent()) {
+            descriptionHeader.setVisibility(VISIBLE);
+            descriptionTextView.setText(parseHtml(description.get()));
+        } else {
+            descriptionHeader.setVisibility(GONE);
+            descriptionTextView.setVisibility(GONE);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.N)
+    @SuppressWarnings("deprecation")        // The older fromHtml() is only called pre-24
+    private Spanned parseHtml(String description) {
+        // TODO handle this properly
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY);
+        } else {
+            return Html.fromHtml(description);
         }
     }
 }

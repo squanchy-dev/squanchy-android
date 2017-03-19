@@ -17,27 +17,23 @@ public class FirebaseAuthService {
         this.auth = auth;
     }
 
-    public <T> Observable<T> signInThenObservableFrom(Func1<String, Observable<T>> observableProvider) {
-        return currentUser().flatMap(user -> {
-            if (user.isPresent()) {
-                return observableProvider.call(user.get().getUid());
-            }
-
-            return signInAnonymously().andThen(Observable.empty());
-        });
+    public <T> Observable<T> ifUserSignedInThenObservableFrom(Func1<String, Observable<T>> observableProvider) {
+        return ifUserSignedIn()
+                .flatMap(user -> observableProvider.call(user.getUid()));
     }
 
-    public Completable signInThenCompletableFrom(Func1<String, Completable> completableProvider) {
-        return currentUser().flatMapCompletable(user -> {
-            if (user.isPresent()) {
-                return completableProvider.call(user.get().getUid());
-            }
-
-            return signInAnonymously().andThen(Completable.never());
-        });
+    public Completable ifUserSignedInThenCompletableFrom(Func1<String, Completable> completableProvider) {
+        return ifUserSignedIn()
+                .flatMapCompletable(user -> completableProvider.call(user.getUid()));
     }
 
-    private Observable<Optional<FirebaseUser>> currentUser() {
+    private Observable<FirebaseUser> ifUserSignedIn() {
+        return currentUser()
+                .filter(Optional::isPresent)
+                .map(Optional::get);
+    }
+
+    public Observable<Optional<FirebaseUser>> currentUser() {
         return Observable.create(e -> {
             FirebaseAuth.AuthStateListener listener = firebaseAuth -> e.onNext(Optional.fromNullable(firebaseAuth.getCurrentUser()));
 
@@ -47,7 +43,7 @@ public class FirebaseAuthService {
         });
     }
 
-    private Completable signInAnonymously() {
+    public Completable signInAnonymously() {
         return Completable.create(e -> auth.signInAnonymously()
                 .addOnSuccessListener(result -> e.onComplete())
                 .addOnFailureListener(e::onError));

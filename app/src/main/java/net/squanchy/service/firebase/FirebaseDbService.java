@@ -12,7 +12,11 @@ import net.squanchy.service.firebase.model.FirebaseDays;
 import net.squanchy.service.firebase.model.FirebaseEvent;
 import net.squanchy.service.firebase.model.FirebaseEvents;
 import net.squanchy.service.firebase.model.FirebaseFavorites;
+import net.squanchy.service.firebase.model.FirebasePlace;
+import net.squanchy.service.firebase.model.FirebasePlaces;
 import net.squanchy.service.firebase.model.FirebaseSpeakers;
+import net.squanchy.service.firebase.model.FirebaseTrack;
+import net.squanchy.service.firebase.model.FirebaseTracks;
 import net.squanchy.support.lang.Func1;
 import net.squanchy.support.lang.Optional;
 
@@ -24,11 +28,14 @@ import io.reactivex.schedulers.Schedulers;
 
 public final class FirebaseDbService {
 
-    private static final String NODE_PATH_TEMPLATE = "data/%s";
-    private static final String DAYS_NODE = "days";
-    private static final String SPEAKERS_NODE = "speakers";
-    private static final String EVENTS_NODE = "events";
-    private static final String EVENTS_BY_ID_NODE = "events/events/%1$s";
+    private static final String DAYS_NODE = "data/days";
+    private static final String SPEAKERS_NODE = "data/speakers";
+    private static final String EVENTS_NODE = "data/events";
+    private static final String EVENTS_BY_ID_NODE = "data/events/events/%1$s";
+    private static final String PLACES_NODE = "data/places";
+    private static final String PLACES_BY_ID_NODE = "data/places/%1$s";
+    private static final String TRACKS_NODE = "data/tracks";
+    private static final String TRACKS_BY_ID_NODE = "data/tracks/%1$s";
     private static final String FAVORITES_NODE = "user/%1$s/";
     private static final String FAVORITES_BY_ID_NODE = "user/%1$s/favorites/%2$s";
 
@@ -53,6 +60,24 @@ public final class FirebaseDbService {
     public Observable<FirebaseEvent> event(String eventId) {
         String path = String.format(Locale.US, EVENTS_BY_ID_NODE, eventId);
         return observeChild(path, FirebaseEvent.class);
+    }
+
+    public Observable<FirebasePlaces> places() {
+        return observeChild(PLACES_NODE, FirebasePlaces.class);
+    }
+
+    public Observable<FirebasePlace> place(String placeId) {
+        String path = String.format(PLACES_BY_ID_NODE, placeId);
+        return observeChild(path, FirebasePlace.class);
+    }
+
+    public Observable<FirebaseTracks> tracks() {
+        return observeChild(TRACKS_NODE, FirebaseTracks.class);
+    }
+
+    public Observable<FirebaseTrack> track(String trackId) {
+        String path = String.format(TRACKS_BY_ID_NODE, trackId);
+        return observeChild(path, FirebaseTrack.class);
     }
 
     public Observable<FirebaseFavorites> favorites(String userId) {
@@ -85,8 +110,7 @@ public final class FirebaseDbService {
                 }
             };
 
-            String absoluteNodePath = String.format(Locale.US, NODE_PATH_TEMPLATE, path);
-            database.child(absoluteNodePath).addValueEventListener(listener);
+            database.child(path).addValueEventListener(listener);
             e.setCancellable(() -> database.removeEventListener(listener));
         }).observeOn(Schedulers.io());
     }
@@ -101,8 +125,8 @@ public final class FirebaseDbService {
 
     private Completable updateFavorite(String eventId, Func1<DatabaseReference, Task<Void>> action, String userId) {
         return Completable.create(emitter -> {
-            String node = String.format(Locale.US, FAVORITES_BY_ID_NODE, userId, eventId);
-            action.call(database.child(node))
+            String path = String.format(Locale.US, FAVORITES_BY_ID_NODE, userId, eventId);
+            action.call(database.child(path))
                     .addOnSuccessListener(result -> emitter.onComplete())
                     .addOnFailureListener(emitter::onError);
         });

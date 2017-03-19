@@ -6,7 +6,7 @@ import net.squanchy.injection.ActivityContextModule;
 import net.squanchy.injection.ApplicationInjector;
 import net.squanchy.navigation.NavigationModule;
 
-public final class ScheduleInjector {
+final class ScheduleInjector {
 
     private ScheduleInjector() {
         // no instances

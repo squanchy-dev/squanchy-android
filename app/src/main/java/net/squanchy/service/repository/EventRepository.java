@@ -6,10 +6,14 @@ import java.util.List;
 
 import net.squanchy.eventdetails.domain.view.ExperienceLevel;
 import net.squanchy.schedule.domain.view.Event;
+import net.squanchy.schedule.domain.view.Place;
+import net.squanchy.schedule.domain.view.Track;
 import net.squanchy.service.firebase.FirebaseDbService;
 import net.squanchy.service.firebase.model.FirebaseEvent;
 import net.squanchy.service.firebase.model.FirebaseEvents;
 import net.squanchy.service.firebase.model.FirebaseFavorites;
+import net.squanchy.service.firebase.model.FirebasePlaces;
+import net.squanchy.service.firebase.model.FirebaseTracks;
 import net.squanchy.speaker.domain.view.Speaker;
 import net.squanchy.support.lang.Checksum;
 import net.squanchy.support.lang.Func1;
@@ -20,7 +24,8 @@ import org.joda.time.LocalDateTime;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
-import io.reactivex.functions.Function3;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Function5;
 import io.reactivex.schedulers.Schedulers;
 
 import static net.squanchy.support.lang.Lists.filter;
@@ -41,44 +46,93 @@ public class EventRepository {
         Observable<FirebaseEvent> eventObservable = dbService.event(eventId);
         Observable<List<Speaker>> speakersObservable = speakerRepository.speakers();
         Observable<FirebaseFavorites> favoritesObservable = dbService.favorites(userId);
+        Observable<List<Place>> placesObservable = dbService.places().map(toPlaces());                 // TODO access them by ID directly?
+        Observable<List<Track>> tracksObservable = dbService.tracks().map(toTracks());                 // TODO extract repositories?
 
         return Observable.combineLatest(
                 eventObservable,
                 speakersObservable,
                 favoritesObservable,
+                placesObservable,
+                tracksObservable,
                 combineIntoEvent()
         ).subscribeOn(Schedulers.io());
     }
 
-    private Function3<FirebaseEvent, List<Speaker>, FirebaseFavorites, Event> combineIntoEvent() {
-        return (apiEvent, speakers, favorites) -> Event.create(
+    private Function<FirebasePlaces, List<Place>> toPlaces() {
+        return firebasePlaces -> Lists.map(
+                firebasePlaces.places,
+                firebasePlace -> Place.create(firebasePlace.id, firebasePlace.name, Optional.fromNullable(firebasePlace.floor))
+        );
+    }
+
+    private Function<FirebaseTracks, List<Track>> toTracks() {
+        return firebaseTracks -> Lists.map(
+                firebaseTracks.tracks,
+                firebaseTrack -> Track.create(
+                        firebaseTrack.id,
+                        firebaseTrack.name,
+                        Optional.fromNullable(firebaseTrack.accent_color),
+                        Optional.fromNullable(firebaseTrack.text_color),
+                        Optional.fromNullable(firebaseTrack.icon_url)
+                )
+        );
+    }
+
+    private Function5<FirebaseEvent, List<Speaker>, FirebaseFavorites, List<Place>, List<Track>, Event> combineIntoEvent() {
+        return (apiEvent, speakers, favorites, places, tracks) -> Event.create(
                 apiEvent.id,
                 checksum.getChecksumOf(apiEvent.id),
                 apiEvent.day_id,
                 new LocalDateTime(apiEvent.start_time),
                 new LocalDateTime(apiEvent.end_time),
                 apiEvent.name,
-                apiEvent.place_id,
+                placeById(places, apiEvent.place_id),
                 Optional.fromNullable(apiEvent.experience_level).flatMap(ExperienceLevel::fromNullableRawLevel),
-                speakersForEvent(apiEvent, speakers),
+                speakersByIds(speakers, apiEvent.speaker_ids),
                 Event.Type.fromRawType(apiEvent.type),
-                favorites.hasFavorite(apiEvent.id)
+                favorites.hasFavorite(apiEvent.id),
+                Optional.fromNullable(apiEvent.description),
+                trackById(tracks, apiEvent.track_id)
         );
+    }
+
+    private Optional<Place> placeById(List<Place> places, String placeId) {
+        return Lists.find(places, place -> place.id().equals(placeId));
+    }
+
+    private Optional<Track> trackById(List<Track> tracks, String trackId) {
+        return Lists.find(tracks, track -> track.id().equals(trackId));
     }
 
     public Observable<List<Event>> events(String userId) {
         Observable<FirebaseEvents> sessionsObservable = dbService.events();
         Observable<List<Speaker>> speakersObservable = speakerRepository.speakers();
         Observable<FirebaseFavorites> favoritesObservable = dbService.favorites(userId);
+        Observable<List<Place>> placesObservable = dbService.places().map(toPlaces());                 // TODO access them by ID directly?
+        Observable<List<Track>> tracksObservable = dbService.tracks().map(toTracks());                 // TODO extract repositories?
 
-        return Observable.combineLatest(sessionsObservable, speakersObservable, favoritesObservable, combineSessionsAndSpeakers());
+        return Observable.combineLatest(
+                sessionsObservable,
+                speakersObservable,
+                favoritesObservable,
+                placesObservable,
+                tracksObservable,
+                combineIntoEvents()
+        );
     }
 
-    private Function3<FirebaseEvents, List<Speaker>, FirebaseFavorites, List<Event>> combineSessionsAndSpeakers() {
-        return (apiSchedule, speakers, favorites) -> Lists.map(new ArrayList<>(apiSchedule.events.values()), combineEventWith(speakers, favorites));
+    private Function5<FirebaseEvents, List<Speaker>, FirebaseFavorites, List<Place>, List<Track>, List<Event>> combineIntoEvents() {
+        return (firebaseEvents, speakers, favorites, places, tracks) ->
+                Lists.map(new ArrayList<>(firebaseEvents.events.values()), combineEventWith(speakers, favorites, places, tracks));
     }
 
-    private Func1<FirebaseEvent, Event> combineEventWith(List<Speaker> speakers, FirebaseFavorites favorites) {
+    private Func1<FirebaseEvent, Event> combineEventWith(
+            List<Speaker> speakers,
+            FirebaseFavorites favorites,
+            List<Place> places,
+            List<Track> tracks
+    ) {
         return apiEvent -> Event.create(
                 apiEvent.id,
                 checksum.getChecksumOf(apiEvent.id),
@@ -86,20 +140,21 @@ public class EventRepository {
                 new LocalDateTime(apiEvent.start_time),
                 new LocalDateTime(apiEvent.end_time),
                 apiEvent.name,
-                apiEvent.place_id,
+                placeById(places, apiEvent.place_id),
                 Optional.fromNullable(apiEvent.experience_level).flatMap(ExperienceLevel::fromNullableRawLevel),
-                speakersForEvent(apiEvent, speakers),
+                speakersByIds(speakers, apiEvent.speaker_ids),
                 Event.Type.fromRawType(apiEvent.type),
-                favorites.hasFavorite(apiEvent.id)
-        );
+                favorites.hasFavorite(apiEvent.id),
+                Optional.fromNullable(apiEvent.description),
+                trackById(tracks, apiEvent.track_id));
     }
 
-    private List<Speaker> speakersForEvent(FirebaseEvent apiEvent, List<Speaker> speakers) {
-        if (apiEvent.speaker_ids == null || apiEvent.speaker_ids.isEmpty()) {
+    private List<Speaker> speakersByIds(List<Speaker> speakers, List<String> speaker_ids) {
+        if (speaker_ids == null || speaker_ids.isEmpty()) {
             return Collections.emptyList();
         }
 
-        return filter(speakers, speaker -> apiEvent.speaker_ids.contains(speaker.id()));
+        return filter(speakers, speaker -> speaker_ids.contains(speaker.id()));
     }
 
     public Completable addFavorite(String eventId, String userId) {

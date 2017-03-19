@@ -67,16 +67,16 @@ public abstract class SpeakerView extends LinearLayout {
         speakerNameView = (TextView) findViewById(R.id.speaker_name);
     }
 
-    public void updateWith(List<Speaker> speakers) {
+    public void updateWith(List<Speaker> speakers, OnSpeakerClickListener listener) {
         speakerNameView.setText(toCommaSeparatedNames(speakers));
-        updateSpeakerPhotos(speakers);
+        updateSpeakerPhotos(speakers, listener);
     }
 
     private String toCommaSeparatedNames(List<Speaker> speakers) {
         return TextUtils.join(", ", map(speakers, Speaker::name));
     }
 
-    private void updateSpeakerPhotos(List<Speaker> speakers) {
+    private void updateSpeakerPhotos(List<Speaker> speakers, OnSpeakerClickListener listener) {
         if (imageLoader == null) {
             throw new IllegalStateException("Unable to access the ImageLoader, it hasn't been initialized yet");
         }
@@ -93,6 +93,7 @@ public abstract class SpeakerView extends LinearLayout {
             ImageView photoView = recycleOrInflatePhotoView(photoViews);
             speakerPhotoContainer.addView(photoView);
             if (speaker.avatarImageURL().isPresent()) {
+                photoView.setOnClickListener(v -> listener.onSpeakerClicked(speaker));
                 loadSpeakerPhoto(photoView, speaker.avatarImageURL().get(), imageLoader);
             }
         }
@@ -129,5 +130,10 @@ public abstract class SpeakerView extends LinearLayout {
             children.add((ImageView) child);
         }
         return children;
+    }
+
+    public interface OnSpeakerClickListener {
+
+        void onSpeakerClicked(Speaker speaker);
     }
 }

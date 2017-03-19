@@ -36,10 +36,6 @@ public final class Optional<T> {
         return data != null;
     }
 
-    public boolean isAbsent() {
-        return !isPresent();
-    }
-
     public T get() {
         if (!isPresent()) {
             throw new IllegalStateException("You must check if data is present before using get()");
@@ -97,6 +93,6 @@ public final class Optional<T> {
 
     @Override
     public String toString() {
-        return String.format("Optional<%s>", isAbsent() ? "Absent" : data.toString());
+        return String.format("Optional<%s>", isPresent() ? data.toString() : "Absent");
     }
 }

@@ -18,6 +18,8 @@ public class FirebaseEvent {
 
     public String day_id;
 
+    public String description;
+
     @Nullable
     public String track_id;
 

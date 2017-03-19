@@ -7,21 +7,20 @@ import net.squanchy.injection.ActivityLifecycle;
 import net.squanchy.injection.ApplicationComponent;
 import net.squanchy.navigation.NavigationModule;
 import net.squanchy.navigation.Navigator;
-import net.squanchy.service.proximity.injection.ProximityService;
+import net.squanchy.schedule.ScheduleModule;
+import net.squanchy.schedule.ScheduleService;
 
 import dagger.Component;
 
 @ActivityLifecycle
-@Component(modules = {FavoritesModule.class, NavigationModule.class}, dependencies = ApplicationComponent.class)
+@Component(modules = {ScheduleModule.class, NavigationModule.class}, dependencies = ApplicationComponent.class)
 interface FavoritesComponent {
 
-    FavoritesService service();
+    ScheduleService service();
 
     Context context();
 
     Navigator navigator();
-
-    ProximityService proxService();
 
     Analytics analytics();
 }
