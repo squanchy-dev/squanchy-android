@@ -1,6 +1,7 @@
 package net.squanchy.eventdetails.widget;
 
 import android.content.Context;
+import android.support.design.widget.AppBarLayout;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
@@ -8,7 +9,7 @@ import net.squanchy.R;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.support.widget.SpeakerView;
 
-public class EventDetailsHeaderLayout extends android.support.design.widget.AppBarLayout {
+public class EventDetailsHeaderLayout extends AppBarLayout {
 
     private TextView titleView;
     private SpeakerView speakerView;

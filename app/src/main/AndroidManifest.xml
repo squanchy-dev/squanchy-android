@@ -32,6 +32,10 @@
       android:theme="@style/Theme.Squanchy.EventDetails" />
 
     <activity
+      android:name="net.squanchy.speaker.SpeakerDetailsActivity"
+      android:theme="@style/Theme.Squanchy.SpeakerDetails" />
+
+    <activity
       android:name="net.squanchy.search.SearchActivity"
       android:theme="@style/Theme.Squanchy.Search"
       android:windowSoftInputMode="adjustResize"
@@ -57,9 +61,11 @@
       </intent-filter>
     </service>
 
+    <!-- Unfortunately the NearIt SDK uses uppercase packages ¯\_(ツ)_/¯ -->
     <receiver
       android:name="it.near.sdk.Recipes.Background.NearItBroadcastReceiver"
-      android:exported="false">
+      android:exported="false"
+      tools:ignore="InnerclassSeparator">
       <intent-filter>
         <action android:name="it.near.sdk.permission.GEO_MESSAGE" />
         <category android:name="android.intent.category.DEFAULT" />

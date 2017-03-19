@@ -10,7 +10,7 @@ import dagger.Provides;
 class EventDetailsModule {
     
     @Provides
-    EventDetailsService scheduleService(EventRepository eventRepository, FirebaseAuthService authService) {
+    EventDetailsService eventDetailsService(EventRepository eventRepository, FirebaseAuthService authService) {
         return new EventDetailsService(eventRepository, authService);
     }
 }
