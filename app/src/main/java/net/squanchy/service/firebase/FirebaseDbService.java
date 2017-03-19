@@ -110,8 +110,9 @@ public final class FirebaseDbService {
                 }
             };
 
-            database.child(path).addValueEventListener(listener);
-            e.setCancellable(() -> database.removeEventListener(listener));
+            DatabaseReference childReference = database.child(path);
+            childReference.addValueEventListener(listener);
+            e.setCancellable(() -> childReference.removeEventListener(listener));
         }).observeOn(Schedulers.io());
     }
 
