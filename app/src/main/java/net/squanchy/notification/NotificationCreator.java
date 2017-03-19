@@ -24,6 +24,7 @@ public class NotificationCreator {
     // pulsate every 1 second, indicating a relatively high degree of urgency
     private static final int NOTIFICATION_LED_ON_MS = 100;
     private static final int NOTIFICATION_LED_OFF_MS = 1000;
+    private static final String EMPTY_PLACE_NAME = "";
 
     private final Context context;
 
@@ -43,12 +44,11 @@ public class NotificationCreator {
     }
 
     private Notification createFrom(Event event) {
-        long millis = event.startTime().toDateTime().getMillis();
         NotificationCompat.Builder notificationBuilder = createDefaultBuilder(1);
         notificationBuilder
                 .setContentIntent(createPendingIntentForSingleEvent(event.id()))
                 .setContentTitle(event.title())
-                .setContentText(event.place().or(""))
+                .setContentText(getPlaceName(event))
                 //.setColor(track.color().getIntValue()) TODO set color depending on the track
                 .setUsesChronometer(true)
                 .setWhen(event.startTime().toDateTime().getMillis())
@@ -107,6 +107,14 @@ public class NotificationCreator {
         taskBuilder.addNextIntent(eventDetailIntent);
 
         return taskBuilder.getPendingIntent(0, PendingIntent.FLAG_CANCEL_CURRENT);
+    }
+
+    private String getPlaceName(Event event) {
+        if (event.place().isPresent()) {
+            return event.place().get().name();
+        } else {
+            return EMPTY_PLACE_NAME;
+        }
     }
 
     private PendingIntent createPendingIntentForMultipleEvents() {
