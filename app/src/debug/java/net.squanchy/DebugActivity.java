@@ -11,9 +11,10 @@ import java.util.List;
 
 import net.squanchy.eventdetails.domain.view.ExperienceLevel;
 import net.squanchy.notification.NotificationCreator;
-import net.squanchy.notification.NotificationService;
+import net.squanchy.notification.NotificationsIntentService;
 import net.squanchy.notification.Notifier;
 import net.squanchy.schedule.domain.view.Event;
+import net.squanchy.schedule.domain.view.Place;
 import net.squanchy.speaker.domain.view.Speaker;
 import net.squanchy.support.lang.Optional;
 
@@ -70,12 +71,19 @@ public class DebugActivity extends Activity {
                 start,
                 end,
                 "A very interesting talk",
-                "That room over there",
+                createPlace(),
                 Optional.of(ExperienceLevel.ADVANCED),
                 createTalkSpeakers(),
                 Event.Type.TALK,
-                true
+                true,
+                Optional.absent(),
+                Optional.absent()
         );
+    }
+
+    private Optional<Place> createPlace() {
+        Place place = Place.create("1", "That room over there", Optional.absent());
+        return Optional.of(place);
     }
 
     private List<Speaker> createTalkSpeakers() {
@@ -91,7 +99,7 @@ public class DebugActivity extends Activity {
     }
 
     private void testService() {
-        Intent serviceIntent = new Intent(this, NotificationService.class);
+        Intent serviceIntent = new Intent(this, NotificationsIntentService.class);
         startService(serviceIntent);
     }
 }
