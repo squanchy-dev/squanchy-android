@@ -37,7 +37,7 @@ public class SpeakerDetailsActivity extends TypefaceStyleableActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_speaker_details);
-        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         SpeakerDetailsComponent component = SpeakerDetailsInjector.obtain(this);
         service = component.service();
@@ -46,7 +46,7 @@ public class SpeakerDetailsActivity extends TypefaceStyleableActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setupToolbar(toolbar);
 
-        headerLayout = (SpeakerDetailsLayout) findViewById(R.id.speaker_details_header);
+        headerLayout = (SpeakerDetailsLayout) findViewById(R.id.speaker_details_root);
 
         subscriptions = new CompositeDisposable();
     }

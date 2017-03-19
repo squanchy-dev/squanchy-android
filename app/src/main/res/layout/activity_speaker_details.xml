@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<net.squanchy.speaker.widget.SpeakerDetailsLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/speaker_details_root"
   android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical">
+  android:layout_height="wrap_content">
 
-  <net.squanchy.speaker.widget.SpeakerDetailsLayout
-    android:id="@+id/speaker_details_header"
+  <android.support.design.widget.AppBarLayout
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -19,7 +18,7 @@
       app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <net.squanchy.speaker.widget.SpeakerHeaderView
-      android:id="@+id/speaker_container"
+      android:id="@+id/speaker_details_header"
       android:layout_width="wrap_content"
       android:layout_height="@dimen/speaker_details_speaker_height"
       android:layout_marginStart="@dimen/speaker_details_speaker_margin_start"
@@ -58,6 +57,17 @@
 
     </net.squanchy.speaker.widget.SpeakerHeaderView>
 
-  </net.squanchy.speaker.widget.SpeakerDetailsLayout>
+  </android.support.design.widget.AppBarLayout>
 
-</LinearLayout>
+  <android.support.v4.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+      android:id="@+id/speaker_bio"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+
+  </android.support.v4.widget.NestedScrollView>
+
+</net.squanchy.speaker.widget.SpeakerDetailsLayout>
