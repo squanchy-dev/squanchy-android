@@ -30,7 +30,7 @@
   <style name="Theme.Squanchy.Dialog" parent="Theme.Squanchy">
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item>
-    <item name="android:windowElevation">@dimen/abc_floating_window_z</item>
+    <item name="android:windowElevation">@dimen/abc_floating_window_z</item>  <!-- TODO ingest this -->
     <item name="android:windowCloseOnTouchOutside">true</item>
     <item name="android:windowBackground">@drawable/dialog_background</item>
     <item name="android:colorBackground">?attr/colorBackgroundFloating</item>
@@ -66,7 +66,9 @@
     <item name="android:textColorSecondary">@color/secondary_text_54</item>
   </style>
 
-  <style name="Theme.Squanchy.SpeakerDetails" parent="Theme.Squanchy.Dialog" />
+  <style name="Theme.Squanchy.SpeakerDetails" parent="Theme.Squanchy.Dialog">
+    <item name="android:statusBarColor">@color/status_bar_primary_azure</item>
+  </style>
 
   <style name="Theme.Squanchy.Search" parent="Theme.Squanchy.PrimaryStatusBar" />
 
