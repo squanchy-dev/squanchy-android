@@ -3,22 +3,29 @@ package net.squanchy.speaker.widget;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
-import android.support.design.widget.AppBarLayout;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.AttributeSet;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.squanchy.R;
 import net.squanchy.speaker.domain.view.Speaker;
 
-public class SpeakerDetailsLayout extends AppBarLayout {
+public class SpeakerDetailsLayout extends LinearLayout {
 
     private SpeakerHeaderView headerView;
     private TextView bioView;
 
     public SpeakerDetailsLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        super.setOrientation(VERTICAL);
+    }
+
+    @Override
+    public void setOrientation(int orientation) {
+        throw new UnsupportedOperationException("Changing orientation is not supported for SpeakerDetailsLayout");
     }
 
     @Override

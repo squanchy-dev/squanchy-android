@@ -60,13 +60,19 @@
   </android.support.design.widget.AppBarLayout>
 
   <android.support.v4.widget.NestedScrollView
+    style="@style/SpeakerDetails.Bio"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
       android:id="@+id/speaker_bio"
+      style="@style/SpeakerDetails.Bio.Text"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content" />
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/speaker_details_bio_padding"
+      android:layout_marginTop="@dimen/speaker_details_bio_padding"
+      android:layout_marginEnd="@dimen/speaker_details_bio_padding"
+      tools:text="Now this is a story all about how\nMy life got flipped-turned upside down\nAnd I'd like to take a minute\nJust sit right there\nI'll tell you how I became the prince of a town called Bel-Air" />
 
   </android.support.v4.widget.NestedScrollView>
 

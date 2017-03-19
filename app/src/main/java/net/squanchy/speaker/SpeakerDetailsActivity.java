@@ -24,7 +24,7 @@ public class SpeakerDetailsActivity extends TypefaceStyleableActivity {
     private SpeakerDetailsService service;
     private Navigator navigator;
 
-    private SpeakerDetailsLayout headerLayout;
+    private SpeakerDetailsLayout speakerDetailsLayout;
 
     public static Intent createIntent(Context context, String speakerId) {
         Intent intent = new Intent(context, SpeakerDetailsActivity.class);
@@ -37,7 +37,7 @@ public class SpeakerDetailsActivity extends TypefaceStyleableActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_speaker_details);
-        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
         SpeakerDetailsComponent component = SpeakerDetailsInjector.obtain(this);
         service = component.service();
@@ -46,7 +46,7 @@ public class SpeakerDetailsActivity extends TypefaceStyleableActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setupToolbar(toolbar);
 
-        headerLayout = (SpeakerDetailsLayout) findViewById(R.id.speaker_details_root);
+        speakerDetailsLayout = (SpeakerDetailsLayout) findViewById(R.id.speaker_details_root);
 
         subscriptions = new CompositeDisposable();
     }
@@ -67,7 +67,7 @@ public class SpeakerDetailsActivity extends TypefaceStyleableActivity {
 
         subscriptions.add(service.speaker(speakerId)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(speaker -> headerLayout.updateWith(speaker)));
+                .subscribe(speaker -> speakerDetailsLayout.updateWith(speaker)));
     }
 
     @Override
