@@ -12,13 +12,8 @@ public final class Notifier {
 
     private final NotificationManagerCompat notificationManagerCompat;
 
-    private Notifier(NotificationManagerCompat notificationManagerCompat) {
+    public Notifier(NotificationManagerCompat notificationManagerCompat) {
         this.notificationManagerCompat = notificationManagerCompat;
-    }
-
-    public static Notifier from(Context context) {
-        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
-        return new Notifier(notificationManagerCompat);
     }
 
     public void showNotifications(List<Notification> notifications) {
