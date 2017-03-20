@@ -39,5 +39,9 @@ public abstract class ScrollListener extends RecyclerView.OnScrollListener {
         }
     }
 
+    public void reset(){
+        previousTotalItemCount = 0;
+    }
+
     protected abstract void loadMore();
 }

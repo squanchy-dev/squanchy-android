@@ -8,19 +8,19 @@ import android.view.ViewGroup;
 
 import com.twitter.sdk.android.core.models.Tweet;
 import com.twitter.sdk.android.tweetui.Timeline;
-import com.twitter.sdk.android.tweetui.internal.TimelineDelegate;
 
 import net.squanchy.R;
 import net.squanchy.tweets.TweetsPageView;
+import net.squanchy.tweets.service.TwitterService;
 
 public class TweetsAdapter extends RecyclerView.Adapter<TweetViewHolder> {
 
     private final Context context;
-    private final TimelineDelegate<Tweet> delegate;
+    private final TwitterService<Tweet> repository;
 
     public TweetsAdapter(Timeline<Tweet> timeline, Context context) {
         this.context = context;
-        this.delegate = new TimelineDelegate<>(timeline);
+        this.repository = new TwitterService<>(timeline);
     }
 
     @Override
@@ -31,19 +31,23 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetViewHolder> {
 
     @Override
     public void onBindViewHolder(TweetViewHolder holder, int position) {
-        holder.updateWith(delegate.getItem(position));
+        holder.updateWith(repository.itemAt(position));
     }
 
     @Override
     public int getItemCount() {
-        return delegate.getCount();
+        return repository.size();
     }
 
     public boolean isEmpty() {
-        return delegate.getCount() == 0;
+        return repository.size() == 0;
     }
 
     public void refresh(TweetsPageView.TimelineLoadingCallback timelineLoadingCallback) {
-        delegate.refresh(timelineLoadingCallback);
+        repository.refresh(timelineLoadingCallback);
+    }
+
+    public void previous(TweetsPageView.TimelineLoadingCallback timelineLoadingCallback) {
+        repository.previous(timelineLoadingCallback);
     }
 }

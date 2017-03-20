@@ -2,6 +2,7 @@ package net.squanchy.tweets;
 
 import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.twitter.sdk.android.tweetui.TimelineResult;
 
 import net.squanchy.R;
 import net.squanchy.support.view.Visibility;
+import net.squanchy.tweets.view.ScrollListener;
 import net.squanchy.tweets.view.TweetsAdapter;
 
 import timber.log.Timber;
@@ -27,6 +29,7 @@ public class TweetsPageView extends LinearLayout {
     private RecyclerView tweetsList;
     private TweetsAdapter tweetsAdapter;
     private SwipeRefreshLayout swipeLayout;
+    private ScrollListener scrollListener;
     private boolean refreshingData;
 
     public TweetsPageView(Context context, AttributeSet attrs) {
@@ -87,6 +90,7 @@ public class TweetsPageView extends LinearLayout {
         if (!isInEditMode()) {
             SearchTimeline timeline = new SearchTimeline.Builder()
                     .resultType(SearchTimeline.ResultType.RECENT)
+                    .maxItemsPerRequest(10)
                     .query(query)
                     .build();
 
@@ -95,11 +99,23 @@ public class TweetsPageView extends LinearLayout {
         }
 
         emptyView.setText(context.getString(R.string.no_tweets_for_query, query));
+
+        LinearLayoutManager layoutManager = (LinearLayoutManager) tweetsList.getLayoutManager();
+
+        scrollListener = new ScrollListener(layoutManager) {
+            @Override
+            protected void loadMore() {
+                tweetsAdapter.previous(new TimelineLoadingCallback());
+            }
+        };
+
+        tweetsList.addOnScrollListener(scrollListener);
     }
 
     private void refreshTimeline() {
         swipeLayout.setRefreshing(true);
         refreshingData = true;
+        scrollListener.reset();
         tweetsAdapter.refresh(new TimelineLoadingCallback());
     }
 
