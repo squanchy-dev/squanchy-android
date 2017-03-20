@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
@@ -26,6 +27,7 @@ public class NotificationCreator {
     private static final int NOTIFICATION_LED_ON_MS = 100;
     private static final int NOTIFICATION_LED_OFF_MS = 1000;
     private static final String EMPTY_PLACE_NAME = "";
+    private static final String ARGB_TRANSPARENT = "#00000000";
 
     private final Context context;
 
@@ -50,7 +52,7 @@ public class NotificationCreator {
                 .setContentIntent(createPendingIntentForSingleEvent(event.id()))
                 .setContentTitle(event.title())
                 .setContentText(getPlaceName(event))
-                //.setColor(track.color().getIntValue()) TODO set color depending on the track
+                .setColor(getTrackColor(event))
                 .setUsesChronometer(true)
                 .setWhen(event.startTime().toDateTime().getMillis())
                 .setShowWhen(true)
@@ -112,6 +114,13 @@ public class NotificationCreator {
 
     private String getPlaceName(Event event) {
         return event.place().map(Place::name).or(EMPTY_PLACE_NAME);
+    }
+
+    private int getTrackColor(Event event) {
+        return event
+                .track()
+                .map(track -> Color.parseColor(track.accentColor().or(ARGB_TRANSPARENT)))
+                .or(Color.TRANSPARENT);
     }
 
     private PendingIntent createPendingIntentForMultipleEvents() {
