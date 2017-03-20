@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import java.util.List;
+
 import net.squanchy.R;
 import net.squanchy.schedule.domain.view.Event;
 
@@ -15,6 +17,8 @@ import org.joda.time.LocalDateTime;
 
 import io.reactivex.Observable;
 import timber.log.Timber;
+
+import static net.squanchy.support.lang.Lists.filter;
 
 public class NotificationsIntentService extends IntentService {
 
@@ -44,21 +48,19 @@ public class NotificationsIntentService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         LocalDateTime notificationIntervalEnd = new LocalDateTime().plusMinutes(NOTIFICATION_INTERVAL_MINUTES);
 
-        Observable<Event> sortedFavourites = service.sortedFavourites();
+        Observable<List<Event>> sortedFavourites = service.sortedFavourites();
 
         LocalDateTime now = new LocalDateTime();
         if (shouldShowNotifications()) {
             sortedFavourites
-                    .filter(event -> event.startTime().isAfter(now))
-                    .filter(event -> isBeforeOrEqualTo(event.startTime(), notificationIntervalEnd))
-                    .toList()
+                    .map(events -> filter(events, event -> event.startTime().isAfter(now)))
+                    .map(events -> filter(events, event -> isBeforeOrEqualTo(event.startTime(), notificationIntervalEnd)))
                     .map(notificationCreator::createFrom)
                     .subscribe(notifier::showNotifications);
         }
 
         sortedFavourites
-                .filter(event -> event.startTime().isAfter(notificationIntervalEnd))
-                .take(1)
+                .map(events -> filter(events, event -> event.startTime().isAfter(notificationIntervalEnd)))
                 .subscribe(this::scheduleNextAlarm);
     }
 
@@ -71,8 +73,13 @@ public class NotificationsIntentService extends IntentService {
         return start.isBefore(notificationIntervalEnd) || start.isEqual(notificationIntervalEnd);
     }
 
-    private void scheduleNextAlarm(Event event) {
-        LocalDateTime serviceAlarm = event.startTime().minusMinutes(NOTIFICATION_INTERVAL_MINUTES);
+    private void scheduleNextAlarm(List<Event> events) {
+        if (events.isEmpty()) {
+            Timber.d("no events");
+            return;
+        }
+        Event firstEvent = events.get(0);
+        LocalDateTime serviceAlarm = firstEvent.startTime().minusMinutes(NOTIFICATION_INTERVAL_MINUTES);
         Timber.d("Next alarm scheduled for " + serviceAlarm.toString());
 
         Intent serviceIntent = new Intent(this, NotificationsIntentService.class);

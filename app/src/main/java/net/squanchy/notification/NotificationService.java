@@ -2,6 +2,7 @@ package net.squanchy.notification;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.service.firebase.FirebaseAuthService;
@@ -22,14 +23,13 @@ class NotificationService {
         this.eventRepository = eventRepository;
     }
 
-    public Observable<Event> sortedFavourites() {
+    Observable<List<Event>> sortedFavourites() {
         return authService.ifUserSignedInThenObservableFrom(userId -> eventRepository.events(userId)
                 .map(events -> filter(events, Event::favorited))
                 .map(events -> {
                     Collections.sort(events, byStartDate());
                     return events;
                 })
-                .flatMap(Observable::fromIterable)
                 .subscribeOn(Schedulers.io()));
     }
 
