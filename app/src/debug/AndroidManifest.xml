@@ -6,13 +6,18 @@
 
     <activity
       android:name="net.squanchy.DebugActivity"
-      android:label="@string/debug_activity_title">
+      android:theme="@style/Theme.Squanchy.PrimaryStatusBar"
+      android:label="@string/debug_activity_title" />
+
+    <activity-alias
+      android:name="net.squanchy.ZZZZDebugActivity"
+      android:targetActivity="net.squanchy.DebugActivity">
 
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
-    </activity>
+    </activity-alias>
 
   </application>
 
