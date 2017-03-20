@@ -5,7 +5,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,7 +16,6 @@ import com.twitter.sdk.android.tweetui.SearchTimeline;
 import com.twitter.sdk.android.tweetui.TimelineResult;
 
 import net.squanchy.R;
-import net.squanchy.support.view.Visibility;
 import net.squanchy.tweets.view.ScrollListener;
 import net.squanchy.tweets.view.TweetsAdapter;
 
@@ -69,14 +67,6 @@ public class TweetsPageView extends LinearLayout {
     }
 
     @Override
-    public void setVisibility(@Visibility int visibility) {
-        if (visibility == View.VISIBLE) {
-            refreshTimeline();
-        }
-        super.setVisibility(visibility);
-    }
-
-    @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         initList();
@@ -110,6 +100,8 @@ public class TweetsPageView extends LinearLayout {
         };
 
         tweetsList.addOnScrollListener(scrollListener);
+
+        refreshTimeline();
     }
 
     private void refreshTimeline() {
