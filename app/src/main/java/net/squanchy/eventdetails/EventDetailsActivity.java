@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import net.squanchy.R;
 import net.squanchy.eventdetails.EventDetailsService.FavoriteResult;
@@ -81,6 +82,7 @@ public class EventDetailsActivity extends TypefaceStyleableActivity {
 
                 subscriptions.add(service.toggleFavorite(event).subscribe(result -> {
                     if (result == FavoriteResult.MUST_AUTHENTICATE) {
+                        Toast.makeText(EventDetailsActivity.this, "You need to sign in for this", Toast.LENGTH_SHORT).show();
                         navigate().toSignIn(); // TODO UI stuff
                     }
                 }));

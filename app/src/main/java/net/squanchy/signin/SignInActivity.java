@@ -78,6 +78,7 @@ public class SignInActivity extends TypefaceStyleableActivity {
 
     private void showProgressDialog() {
         // TODO implement UI
+        Toast.makeText(this, "Logging you in...", Toast.LENGTH_SHORT).show();
     }
 
     private void hideProgressDialog() {
