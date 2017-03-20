@@ -33,7 +33,7 @@ ext {
                     timber           : 'com.jakewharton.timber:timber:4.5.1',
                     tweetUi          : 'com.twitter.sdk.android:tweet-ui:2.2.0',
                     viewPagerAdapter : 'com.novoda:view-pager-adapter:0.9.1',
-                    nearit           : 'it.near.sdk.core:nearitsdk:2.1.2'
+                    nearit           : 'it.near.sdk.core:nearitsdk:2.1.4'
             ],
 
             test: [
