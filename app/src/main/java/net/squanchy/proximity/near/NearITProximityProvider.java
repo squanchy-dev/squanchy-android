@@ -1,9 +1,5 @@
 package net.squanchy.proximity.near;
 
-import android.content.Context;
-import android.util.Log;
-
-import net.squanchy.R;
 import net.squanchy.proximity.ProximityEvent;
 import net.squanchy.proximity.ProximityProvider;
 
@@ -43,8 +39,9 @@ public class NearITProximityProvider implements ProximityProvider {
                     CustomJSON customJSON = (CustomJSON) parcelable;
                     String action = (String) customJSON.getContent().get(PROXIMITY_ACTION);
                     String subject = (String) customJSON.getContent().get(SUBJECT_ID);
-                    if (action != null && subject != null)
+                    if (action != null && subject != null) {
                         e.onNext(ProximityEvent.create(action, subject));
+                    }
                 }
             };
             nearItManager.addProximityListener(listener);
