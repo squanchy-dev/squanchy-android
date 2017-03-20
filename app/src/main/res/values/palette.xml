@@ -27,6 +27,7 @@
 
   <color name="primary_text">#4e4e4e</color>
   <color name="secondary_text">#6b6b6b</color>
+  <color name="secondary_text_54">#8a6b6b6b</color>
   <color name="tertiary_text">#4d4d4d</color>
   <color name="hint_text">#bfbfbf</color>
 

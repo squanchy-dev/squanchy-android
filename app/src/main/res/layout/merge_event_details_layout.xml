@@ -7,47 +7,60 @@
   tools:orientation="vertical">
 
   <LinearLayout
+    style="@style/EventDetails.Body.RowContainer"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:layout_height="wrap_content">
 
-    <net.squanchy.eventdetails.widget.ExperienceLevelIconView
-      android:id="@+id/experience_level_icon"
-      android:layout_width="wrap_content"
+    <TextView
+      style="@style/EventDetails.Body.Label.When"
+      android:layout_width="@dimen/event_details_body_label_width"
       android:layout_height="wrap_content" />
 
     <TextView
-      android:id="@+id/experience_level_label"
+      android:id="@+id/when_text"
+      style="@style/EventDetails.Body.Value"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:padding="8dp"
-      android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-      tools:text="Android" />
+      android:layout_marginEnd="@dimen/event_details_body_value_margin_end"
+      tools:text="Tuesday, 6 February at 14:00" />
+
+  </LinearLayout>
+
+  <LinearLayout
+    android:id="@+id/where_container"
+    style="@style/EventDetails.Body.RowContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+      style="@style/EventDetails.Body.Label.Where"
+      android:layout_width="@dimen/event_details_body_label_width"
+      android:layout_height="wrap_content" />
+
+    <TextView
+      android:id="@+id/where_text"
+      style="@style/EventDetails.Body.Value"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="@dimen/event_details_body_value_margin_end"
+      tools:text="Beyond the wall" />
 
   </LinearLayout>
 
   <TextView
-    android:id="@+id/track_view"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-    tools:text="Android" />
+    android:id="@+id/description_header"
+    style="@style/EventDetails.Body.Label.About"
+    android:layout_width="@dimen/event_details_body_label_width"
+    android:layout_height="wrap_content" />
 
   <TextView
-    android:id="@+id/place_view"
+    android:id="@+id/description_text"
+    style="@style/EventDetails.Body.Value"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-    tools:text="Big room, 1st floor" />
-
-  <TextView
-    android:id="@+id/speakers_view"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-    tools:text="Otto Von Bismark, Ruby Rubacuori, Ivan The Terrible" />
+    android:layout_marginStart="@dimen/event_details_body_value_margin_start"
+    android:layout_marginEnd="@dimen/event_details_body_value_margin_end"
+    android:layout_marginBottom="@dimen/event_details_body_value_margin_bottom"
+    tools:text="Now this is the story all about how\nMy life got flipped, turned upside down" />
 
 </merge>

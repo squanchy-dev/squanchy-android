@@ -1,5 +1,4 @@
-Version 0.2.1 alpha
+Version 0.3.0 alpha
 
-* Critical bugfix in the schedule sorting algorithm 🐛
-* Data schema updated to reflect what's on Firebase now
-* What's new: some preparatory work on the proximity-based services
+* Won't crash anymore (data schema changed on the backend)
+* What's new: favourites screen, completed event details screen

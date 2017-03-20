@@ -57,7 +57,7 @@ public class SearchItemView extends LinearLayout {
             throw new IllegalStateException("Unable to access the ImageLoader, it hasn't been initialized yet");
         }
 
-        Optional<String> avatarImageURL = speaker.avatarImageURL();
+        Optional<String> avatarImageURL = speaker.photoUrl();
         if (avatarImageURL.isPresent()) {
             loadPhoto(image, avatarImageURL.get(), imageLoader);
         }

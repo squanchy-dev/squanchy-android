@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <dimen name="navigation_drawer_width">288dp</dimen>
+  <dimen name="floating_window_z">16dp</dimen>
 
   <dimen name="toolbar_elevation">6dp</dimen>
   <dimen name="tab_text">14sp</dimen>
@@ -52,5 +52,25 @@
   <dimen name="event_details_speaker_margin_bottom">8dp</dimen>
   <dimen name="event_details_title">24sp</dimen>
   <dimen name="event_details_fab_margin">16dp</dimen>
+  <dimen name="event_details_body_row_height">56dp</dimen>
+  <dimen name="event_details_body_label_width">72dp</dimen>
+  <dimen name="event_details_body_label_content_padding">16dp</dimen>
+  <dimen name="event_details_body_label_padding_start">@dimen/event_details_body_label_content_padding</dimen>
+  <dimen name="event_details_body_value_margin_end">@dimen/event_details_body_label_content_padding</dimen>
+  <dimen name="event_details_body_value_margin_start">@dimen/event_details_body_label_content_padding</dimen>
+  <dimen name="event_details_body_value_margin_bottom">72dp</dimen>
+  <dimen name="event_details_body_label_text">14sp</dimen>
+  <dimen name="event_details_body_value_line_spacing_extra">4sp</dimen>
+  <dimen name="event_details_body_value_text">14sp</dimen>
+  <dimen name="speaker_details_speaker_height">56dp</dimen>
+  <dimen name="speaker_details_speaker_photo">40dp</dimen>
+  <dimen name="speaker_details_speaker_photo_margin_end">8dp</dimen>
+  <dimen name="speaker_details_speaker_name">16sp</dimen>
+  <dimen name="speaker_details_speaker_company">14sp</dimen>
+  <dimen name="speaker_details_speaker_margin_start">32dp</dimen>
+  <dimen name="speaker_details_speaker_margin_bottom">8dp</dimen>
+  <dimen name="speaker_details_bio">14sp</dimen>
+  <dimen name="speaker_details_bio_padding">32dp</dimen>
+  <dimen name="speaker_details_bio_line_spacing_extra">4sp</dimen>
 
 </resources>

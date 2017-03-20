@@ -12,13 +12,23 @@
 
   <string name="no_tweets_for_query">No Tweets for %s… yet</string>
 
+  <string name="event_notification_starting_by">By %s</string>
+  <string name="event_notification_starting_in">In %s</string>
+  <string name="event_notification_count_starting">%s sessions are starting</string>
+  <string name="room_event_notification"
+    translatable="false">%s: %s</string>
+  <plurals name="event_notification_ticker">
+    <item quantity="one">1 session is about to start.</item>
+    <item quantity="other">%d sessions are about to start.</item>
+  </plurals>
+
   <string name="bottom_bar_schedule_label">Schedule</string>
   <string name="bottom_bar_favorites_label">Favorites</string>
   <string name="bottom_bar_tweets_label">Tweets</string>
   <string name="bottom_bar_venue_label">Venue Info</string>
-  <string name="search_label">Search</string>
-  <string name="voice_search">Voice search</string>
-  <string name="clear_query">Clear query</string>
+  <string name="menu_search">Search</string>
+  <string name="menu_voice_search">Voice search</string>
+  <string name="menu_clear_query">Clear query</string>
   <string name="no_results">No results for this query</string>
   <string name="start_typing_to_search">Start typing to search</string>
   <string name="speaker_list_title">Speakers</string>
@@ -29,5 +39,18 @@
   <string name="tweet_date_normal_format">Posted on %1$s at %2$s</string>
   <string name="tweet_date_today">Today</string>
   <string name="tweet_date_yesterday">Yesterday</string>
+
+  <string name="event_details_body_label_when_text">When</string>
+  <string name="event_details_body_label_where_text">Where</string>
+  <string name="event_details_body_label_about_text">About</string>
+
+  <string name="menu_speaker_twitter">Twitter profile</string>
+  <string name="menu_speaker_website">Personal page</string>
+
+  <string name="settings_label">Settings</string>
+  <string name="settings_notifications_category">Notifications</string>
+  <string name="settings_notifications_about_to_start_title">Upcoming events notification</string>
+  <string name="settings_notifications_about_to_start_summary_on">Show notifications for favourite events starting soon</string>
+  <string name="settings_notifications_about_to_start_summary_off">Do not show notifications for favourite events starting soon</string>
 
 </resources>

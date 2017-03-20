@@ -32,12 +32,27 @@
       android:theme="@style/Theme.Squanchy.EventDetails" />
 
     <activity
+      android:name="net.squanchy.speaker.SpeakerDetailsActivity"
+      android:theme="@style/Theme.Squanchy.SpeakerDetails" />
+
+    <activity
       android:name="net.squanchy.search.SearchActivity"
       android:theme="@style/Theme.Squanchy.Search"
       android:windowSoftInputMode="adjustResize"
       android:launchMode="singleTop" />
 
-    <receiver android:name="net.squanchy.notification.NotificationAlarmReceiver" />
+    <activity
+      android:name="net.squanchy.settings.SettingsActivity"
+      android:theme="@style/Theme.Squanchy.Settings"
+      android:label="@string/settings_label" />
+
+    <receiver
+      android:name="net.squanchy.notification.NotificationAlarmReceiver"
+      android:directBootAware="true">
+      <intent-filter>
+        <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+      </intent-filter>
+    </receiver>
 
     <!-- Firebase Cloud Messaging has no permissions ¯\_(ツ)_/¯ -->
     <service
@@ -57,8 +72,12 @@
       </intent-filter>
     </service>
 
+    <service
+      android:name="net.squanchy.notification.NotificationsIntentService"
+      android:exported="false" />
+
     <receiver
-      android:name="it.near.sdk.Recipes.Background.NearItBroadcastReceiver"
+      android:name="it.near.sdk.recipes.background.NearItBroadcastReceiver"
       android:exported="false">
       <intent-filter>
         <action android:name="it.near.sdk.permission.GEO_MESSAGE" />
