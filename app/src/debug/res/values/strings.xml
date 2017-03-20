@@ -1,0 +1,8 @@
+<resources>
+
+  <string name="debug_activity_title">Squanchy Debug</string>
+  <string name="debug_activity_button_single_notification">Test single notification</string>
+  <string name="debug_activity_button_multiple_notifications">Test multiple notifications</string>
+  <string name="debug_activity_button_service">Test service</string>
+
+</resources>

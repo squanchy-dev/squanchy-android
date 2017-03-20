@@ -5,6 +5,7 @@ import net.squanchy.service.firebase.FirebaseAuthService;
 import net.squanchy.service.repository.EventRepository;
 
 import io.reactivex.Completable;
+
 import io.reactivex.Observable;
 
 class EventDetailsService {
