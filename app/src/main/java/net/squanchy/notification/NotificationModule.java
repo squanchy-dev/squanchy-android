@@ -1,6 +1,7 @@
 package net.squanchy.notification;
 
 import android.content.Context;
+import android.support.v4.app.NotificationManagerCompat;
 
 import net.squanchy.injection.ServiceContextModule;
 import net.squanchy.service.firebase.FirebaseAuthService;
@@ -26,7 +27,12 @@ class NotificationModule {
     }
 
     @Provides
-    Notifier notifier(Context context) {
-        return Notifier.from(context);
+    NotificationManagerCompat notificationManagerCompat(Context context) {
+        return NotificationManagerCompat.from(context);
+    }
+
+    @Provides
+    Notifier notifier(NotificationManagerCompat notificationManagerCompat) {
+        return new Notifier(notificationManagerCompat);
     }
 }

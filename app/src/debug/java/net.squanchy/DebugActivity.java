@@ -5,6 +5,7 @@ import android.app.Notification;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.NotificationManagerCompat;
 import android.widget.Button;
 
 import java.util.ArrayList;
@@ -60,7 +61,8 @@ public class DebugActivity extends Activity {
         }
         List<Notification> notifications = notificationCreator.createFrom(events);
 
-        Notifier notifier = Notifier.from(this);
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+        Notifier notifier = new Notifier(notificationManagerCompat);
         notifier.showNotifications(notifications);
     }
 
