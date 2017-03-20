@@ -69,7 +69,7 @@
     </service>
 
     <service
-      android:name="net.squanchy.notification.NotificationService"
+      android:name="net.squanchy.notification.NotificationsIntentService"
       android:exported="false" />
 
     <receiver
