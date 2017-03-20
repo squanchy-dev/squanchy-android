@@ -10,9 +10,9 @@ import net.squanchy.proximity.ProximityProvider;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.schedulers.Schedulers;
-import it.near.sdk.Geopolis.Beacons.Ranging.ProximityListener;
 import it.near.sdk.NearItManager;
-import it.near.sdk.Reactions.CustomJSON.CustomJSON;
+import it.near.sdk.geopolis.beacons.ranging.ProximityListener;
+import it.near.sdk.reactions.customjson.CustomJSON;
 
 public class NearITProximityProvider implements ProximityProvider {
 

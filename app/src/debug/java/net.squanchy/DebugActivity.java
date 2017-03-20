@@ -98,7 +98,12 @@ public class DebugActivity extends Activity {
                 "1",
                 101L,
                 "Ajeje Brazorf",
-                "https://yt3.ggpht.com/-d35Rq8vqvmE/AAAAAAAAAAI/AAAAAAAAAAA/zy1VyiRTNec/s900-c-k-no-mo-rj-c0xffffff/photo.jpg"
+                "An Android dev",
+                Optional.absent(),
+                Optional.absent(),
+                Optional.absent(),
+                Optional.of("https://yt3.ggpht.com/-d35Rq8vqvmE/AAAAAAAAAAI/AAAAAAAAAAA/zy1VyiRTNec/s900-c-k-no-mo-rj-c0xffffff/photo.jpg"),
+                Optional.absent()
                 )
         );
         return speakers;

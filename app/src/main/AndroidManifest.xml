@@ -32,6 +32,10 @@
       android:theme="@style/Theme.Squanchy.EventDetails" />
 
     <activity
+      android:name="net.squanchy.speaker.SpeakerDetailsActivity"
+      android:theme="@style/Theme.Squanchy.SpeakerDetails" />
+
+    <activity
       android:name="net.squanchy.search.SearchActivity"
       android:theme="@style/Theme.Squanchy.Search"
       android:windowSoftInputMode="adjustResize"
@@ -73,7 +77,7 @@
       android:exported="false" />
 
     <receiver
-      android:name="it.near.sdk.Recipes.Background.NearItBroadcastReceiver"
+      android:name="it.near.sdk.recipes.background.NearItBroadcastReceiver"
       android:exported="false">
       <intent-filter>
         <action android:name="it.near.sdk.permission.GEO_MESSAGE" />

@@ -98,7 +98,7 @@
 
   <style name="Search.EditText" parent="None">
     <item name="android:background">@null</item>
-    <item name="android:hint">@string/search_label</item>
+    <item name="android:hint">@string/menu_search</item>
     <item name="android:imeOptions">actionSearch</item>
     <item name="android:inputType">text</item>
     <item name="android:maxLines">1</item>
@@ -209,6 +209,47 @@
     <item name="android:lineSpacingExtra">@dimen/card_twitter_line_spacing_extra</item>
     <item name="android:lineSpacingMultiplier">1</item>
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.Tweet.Timestamp</item>
+  </style>
+
+  <style name="SpeakerDetails.Header.Speaker.Photo" parent="None" />
+
+  <style name="SpeakerDetails.Header.Speaker.Name" parent="None">
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.SpeakerDetails.Header.Speaker.Name</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.SpeakerDetails.Header.Speaker.Name" parent="None">
+    <item name="android:textColor">?android:textColorPrimary</item>
+    <item name="android:textSize">@dimen/speaker_details_speaker_name</item>
+    <item name="fontPath">?titleTypeface</item>
+  </style>
+
+  <style name="SpeakerDetails.Header.Speaker.Company" parent="None">
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.SpeakerDetails.Header.Speaker.Company</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.SpeakerDetails.Header.Speaker.Company" parent="None">
+    <item name="android:textColor">?android:textColorPrimary</item>
+    <item name="android:textSize">@dimen/speaker_details_speaker_company</item>
+    <item name="fontPath">?defaultBoldTypeface</item>
+  </style>
+
+  <style name="SpeakerDetails.Bio" parent="None">
+    <item name="android:requiresFadingEdge">vertical</item>
+    <item name="android:fadingEdgeLength">64dp</item>
+    <item name="android:colorBackgroundCacheHint">@color/white</item>
+  </style>
+
+  <style name="SpeakerDetails.Bio.Text" parent="None">
+    <item name="android:lineSpacingExtra">@dimen/speaker_details_bio_line_spacing_extra</item>
+    <item name="android:lineSpacingMultiplier">1</item>
+    <item name="android:paddingBottom">@dimen/speaker_details_bio_padding</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.SpeakerDetails.Bio</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.SpeakerDetails.Bio" parent="None">
+    <item name="android:textColor">?android:textColorSecondary</item>
+    <item name="android:textSize">@dimen/speaker_details_bio</item>
+    <item name="fontPath">?defaultMediumTypeface</item>
   </style>
 
 </resources>

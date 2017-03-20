@@ -26,9 +26,9 @@
   <string name="bottom_bar_favorites_label">Favorites</string>
   <string name="bottom_bar_tweets_label">Tweets</string>
   <string name="bottom_bar_venue_label">Venue Info</string>
-  <string name="search_label">Search</string>
-  <string name="voice_search">Voice search</string>
-  <string name="clear_query">Clear query</string>
+  <string name="menu_search">Search</string>
+  <string name="menu_voice_search">Voice search</string>
+  <string name="menu_clear_query">Clear query</string>
   <string name="no_results">No results for this query</string>
   <string name="start_typing_to_search">Start typing to search</string>
   <string name="speaker_list_title">Speakers</string>
@@ -43,6 +43,9 @@
   <string name="event_details_body_label_when_text">When</string>
   <string name="event_details_body_label_where_text">Where</string>
   <string name="event_details_body_label_about_text">About</string>
+
+  <string name="menu_speaker_twitter">Twitter profile</string>
+  <string name="menu_speaker_website">Personal page</string>
 
   <string name="settings_label">Settings</string>
   <string name="settings_notifications_category">Notifications</string>
