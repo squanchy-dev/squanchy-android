@@ -7,7 +7,8 @@
     <activity
       android:name="net.squanchy.DebugActivity"
       android:theme="@style/Theme.Squanchy.PrimaryStatusBar"
-      android:label="@string/debug_activity_title" />
+      android:label="@string/debug_activity_title"
+      android:taskAffinity="net.squanchy.debug" />
 
     <activity-alias
       android:name="net.squanchy.ZZZZDebugActivity"
