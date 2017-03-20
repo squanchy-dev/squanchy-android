@@ -61,7 +61,6 @@
       </intent-filter>
     </service>
 
-    <!-- Unfortunately the NearIt SDK uses uppercase packages ¯\_(ツ)_/¯ -->
     <receiver
       android:name="it.near.sdk.recipes.background.NearItBroadcastReceiver"
       android:exported="false">
