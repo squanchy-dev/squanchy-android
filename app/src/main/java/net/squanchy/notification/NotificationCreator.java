@@ -129,8 +129,9 @@ public class NotificationCreator {
     private NotificationCompat.BigTextStyle createBigTextRichNotification(NotificationCompat.Builder notificationBuilder, Event event) {
         StringBuilder bigTextBuilder = new StringBuilder()
                 .append(getDisplayedSpeakers(event));
-        if (event.place() != null) {
-            bigTextBuilder.append(context.getString(R.string.event_notification_starting_in, event.place()));
+        String placeName = getPlaceName(event);
+        if (!placeName.isEmpty()) {
+            bigTextBuilder.append(context.getString(R.string.event_notification_starting_in, placeName));
         }
         return new NotificationCompat.BigTextStyle(notificationBuilder)
                 .setBigContentTitle(event.title())
