@@ -1,8 +1,9 @@
 package net.squanchy.notification;
 
-import android.content.Context;
+import android.app.Service;
 
 import net.squanchy.injection.ApplicationInjector;
+import net.squanchy.injection.ServiceContextModule;
 
 final class NotificationInjector {
 
@@ -10,9 +11,10 @@ final class NotificationInjector {
         // no instances
     }
 
-    public static NotificationComponent obtain(Context context) {
+    public static NotificationComponent obtain(Service service) {
         return DaggerNotificationComponent.builder()
-                .applicationComponent(ApplicationInjector.obtain(context))
+                .applicationComponent(ApplicationInjector.obtain(service))
+                .serviceContextModule( new ServiceContextModule(service))
                 .build();
     }
 }

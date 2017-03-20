@@ -35,8 +35,8 @@ public class NotificationsIntentService extends IntentService {
         super.onCreate();
         NotificationComponent component = NotificationInjector.obtain(this);
         service = component.service();
-        notificationCreator = new NotificationCreator(this);
-        notifier = Notifier.from(this);
+        notificationCreator = component.notificationCreator();
+        notifier = component.notifier();
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
     }
 

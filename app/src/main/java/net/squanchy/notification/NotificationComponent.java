@@ -1,5 +1,7 @@
 package net.squanchy.notification;
 
+import android.content.Context;
+
 import net.squanchy.injection.ActivityLifecycle;
 import net.squanchy.injection.ApplicationComponent;
 
@@ -11,4 +13,9 @@ interface NotificationComponent {
 
     NotificationService service();
 
+    NotificationCreator notificationCreator();
+
+    Notifier notifier();
+
+    Context context();
 }
