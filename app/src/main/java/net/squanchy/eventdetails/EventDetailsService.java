@@ -8,6 +8,7 @@ import net.squanchy.service.repository.EventRepository;
 import net.squanchy.support.lang.Optional;
 
 import io.reactivex.Completable;
+
 import io.reactivex.Observable;
 import io.reactivex.Single;
 

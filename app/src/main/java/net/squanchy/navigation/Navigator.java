@@ -7,6 +7,7 @@ import android.net.Uri;
 import net.squanchy.eventdetails.EventDetailsActivity;
 import net.squanchy.search.SearchActivity;
 import net.squanchy.signin.SignInActivity;
+import net.squanchy.settings.SettingsActivity;
 import net.squanchy.speaker.SpeakerDetailsActivity;
 
 public class Navigator {
@@ -34,6 +35,10 @@ public class Navigator {
 
     public void toSearch() {
         context.startActivity(new Intent(context, SearchActivity.class));
+    }
+
+    public void toSettings() {
+        context.startActivity(new Intent(context, SettingsActivity.class));
     }
 
     public void toTwitterProfile(String username) {

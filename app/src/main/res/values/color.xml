@@ -3,4 +3,6 @@
 
   <color name="card_background">@color/white</color>
 
+  <color name="notification_led_color">@color/accent</color>
+
 </resources>

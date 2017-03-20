@@ -70,6 +70,19 @@ public abstract class Event {
 
     public abstract Optional<String> description();
 
+    public String speakersNames() {
+        StringBuilder speakersBuilder = new StringBuilder();
+        for (Speaker speaker : speakers()) {
+            if (speakersBuilder.length() > 0) {
+                speakersBuilder.append(", ");
+            }
+
+            speakersBuilder.append(speaker.name());
+        }
+
+        return speakersBuilder.toString();
+    }
+
     @AutoValue.Builder
     public abstract static class Builder {
 
