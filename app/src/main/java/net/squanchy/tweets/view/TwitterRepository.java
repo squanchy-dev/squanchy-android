@@ -11,11 +11,11 @@ import net.squanchy.tweets.service.TwitterService;
 
 class TwitterRepository {
 
-    private final TwitterService<Tweet> twitterService;
+    private final TwitterService twitterService;
     private boolean hasMoreItems = true;
 
     TwitterRepository(Timeline<Tweet> timeline) {
-        this.twitterService = new TwitterService<>(timeline);
+        this.twitterService = new TwitterService(timeline);
     }
 
     Tweet itemAt(int position) {
