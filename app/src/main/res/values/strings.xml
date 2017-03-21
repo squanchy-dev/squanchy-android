@@ -58,4 +58,6 @@
   <string name="settings_debug_category">Debug</string>
   <string name="settings_open_debug_title">Open debug screen</string>
 
+  <string name="venue_info_label">Information</string>
+
 </resources>

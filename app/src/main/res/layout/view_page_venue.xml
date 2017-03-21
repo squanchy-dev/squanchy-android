@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<net.squanchy.venue.VenueInfoPageView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/venue_content_root"
-  android:theme="@style/Theme.Squanchy.VenueInfo"
+  android:theme="@style/Theme.Squanchy.Tweets"
   android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:gravity="center"
-  android:text="@string/bottom_bar_venue_label"
-  android:textAppearance="@style/TextAppearance.Squanchy.Card.Title" />
+  android:layout_height="match_parent">
+
+  <android.support.design.widget.AppBarLayout
+    style="@style/Squanchy.Appbar"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.Toolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      app:title="@string/venue_info_label" />
+
+  </android.support.design.widget.AppBarLayout>
+
+
+</net.squanchy.venue.VenueInfoPageView>
