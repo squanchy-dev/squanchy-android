@@ -2,5 +2,8 @@
 <resources>
 
   <string name="about_to_start_notification_preference_key">about_to_start_notification__preference_key</string>
+  <string name="buid_version_preference_key">build_version_preference_key</string>
+  <string name="debug_category_preference_key">debug_category_preference_key</string>
+  <string name="open_debug_preference_key">open_debug_preference_key</string>
 
 </resources>
