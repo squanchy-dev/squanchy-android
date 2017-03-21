@@ -54,7 +54,6 @@ public class NotificationCreator {
                 .setContentTitle(event.title())
                 .setContentText(getPlaceName(event))
                 .setColor(getTrackColor(event))
-                .setUsesChronometer(true)
                 .setWhen(event.startTime().toDateTime().getMillis())
                 .setShowWhen(true)
                 .setGroup(GROUP_KEY_NOTIFY_SESSION);
