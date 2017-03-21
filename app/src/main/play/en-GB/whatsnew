@@ -1,4 +1,6 @@
-Version 0.3.0 alpha
+Version 0.4.0 alpha
 
-* Won't crash anymore (data schema changed on the backend)
-* What's new: favourites screen, completed event details screen
+* Bug fixes and performance improvements 😆
+* Update NearIT SDK
+* Sign-in with Google (required for favourites at the moment)
+* What's new: speaker details, settings, notifications, update NearIT SDK
