@@ -12,8 +12,6 @@ import com.twitter.sdk.android.tweetui.Timeline;
 import net.squanchy.R;
 import net.squanchy.tweets.TweetsPageView;
 
-import timber.log.Timber;
-
 public class TweetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final Context context;
@@ -30,7 +28,6 @@ public class TweetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             View view = LayoutInflater.from(context).inflate(R.layout.item_tweet, parent, false);
             return new TweetViewHolder(view);
         } else if (viewType == TweetViewTypeId.LOADING) {
-            Timber.d("Creating loading view");
             View view = LayoutInflater.from(context).inflate(R.layout.item_tweet_loading, parent, false);
             return new LoadingViewHolder(view);
         } else {
@@ -46,8 +43,14 @@ public class TweetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (repository.getItemViewType(position) == TweetViewTypeId.TWEET) {
+        int viewType = repository.getItemViewType(position);
+
+        if (viewType == TweetViewTypeId.TWEET) {
             ((TweetViewHolder) holder).updateWith(repository.itemAt(position));
+        } else if (viewType == TweetViewTypeId.LOADING) {
+            /* do nothing */
+        } else {
+            throw new IllegalArgumentException("Item type " + viewType + " not supported");
         }
     }
 
