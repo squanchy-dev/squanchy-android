@@ -6,13 +6,22 @@ import android.content.ContextWrapper;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import net.squanchy.R;
+import net.squanchy.navigation.LifecycleView;
 import net.squanchy.navigation.Navigator;
+import net.squanchy.venue.domain.view.Venue;
 
-public class VenueInfoPageView extends LinearLayout {
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
+public class VenueInfoPageView extends LinearLayout implements LifecycleView {
+
+    private Disposable subscription;
     private Navigator navigate;
+    private VenueInfoService service;
+    private TextView nameText;
 
     public VenueInfoPageView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -33,6 +42,9 @@ public class VenueInfoPageView extends LinearLayout {
         Activity activity = unwrapToActivityContext(getContext());
         VenueInfoComponent component = VenueInfoInjector.obtain(activity);
         navigate = component.navigator();
+        service = component.service();
+
+        nameText = (TextView) findViewById(R.id.venue_name);
 
         setupToolbar();
     }
@@ -66,5 +78,21 @@ public class VenueInfoPageView extends LinearLayout {
                     return false;
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        subscription = service.venue()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::updateWith);
+    }
+
+    private void updateWith(Venue venue) {
+        nameText.setText(venue.name());
+    }
+
+    @Override
+    public void onStop() {
+        subscription.dispose();
     }
 }

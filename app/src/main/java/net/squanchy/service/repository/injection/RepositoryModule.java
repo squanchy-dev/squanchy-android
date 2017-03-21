@@ -3,6 +3,7 @@ package net.squanchy.service.repository.injection;
 import net.squanchy.service.firebase.FirebaseDbService;
 import net.squanchy.service.repository.EventRepository;
 import net.squanchy.service.repository.SpeakerRepository;
+import net.squanchy.service.repository.VenueRepository;
 import net.squanchy.support.lang.Checksum;
 
 import dagger.Module;
@@ -26,5 +27,12 @@ public class RepositoryModule {
             Checksum checksum
     ) {
         return new SpeakerRepository(dbService, checksum);
+    }
+
+    @Provides
+    VenueRepository venueRepositoryrRepository(
+            FirebaseDbService dbService
+    ) {
+        return new VenueRepository(dbService);
     }
 }

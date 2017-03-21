@@ -10,9 +10,12 @@ import net.squanchy.navigation.Navigator;
 import dagger.Component;
 
 @ActivityLifecycle
-@Component(modules = {NavigationModule.class}, dependencies = ApplicationComponent.class)
+@Component(modules = {VenueInfoModule.class, NavigationModule.class}, dependencies = ApplicationComponent.class)
 interface VenueInfoComponent {
+
     Context context();
 
     Navigator navigator();
+
+    VenueInfoService service();
 }

@@ -16,6 +16,7 @@ final class VenueInfoInjector {
         return DaggerVenueInfoComponent.builder()
                 .applicationComponent(ApplicationInjector.obtain(activity))
                 .navigationModule(new NavigationModule())
+                .venueInfoModule(new VenueInfoModule())
                 .activityContextModule(new ActivityContextModule(activity))
                 .build();
     }

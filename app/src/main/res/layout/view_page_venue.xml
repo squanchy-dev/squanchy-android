@@ -21,4 +21,9 @@
   </android.support.design.widget.AppBarLayout>
 
 
+  <TextView
+    android:id="@+id/venue_name"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent" />
+
 </net.squanchy.venue.VenueInfoPageView>
