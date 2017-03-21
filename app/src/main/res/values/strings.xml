@@ -52,5 +52,8 @@
   <string name="settings_notifications_about_to_start_title">Upcoming events notification</string>
   <string name="settings_notifications_about_to_start_summary_on">Show notifications for favourite events starting soon</string>
   <string name="settings_notifications_about_to_start_summary_off">Do not show notifications for favourite events starting soon</string>
+  <string name="settings_about_category">About</string>
+  <string name="settings_about_build_version_title">Build version</string>
+  <string name="version_x">Version: %1$s</string>
 
 </resources>

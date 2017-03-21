@@ -12,4 +12,12 @@
 
   </PreferenceCategory>
 
+  <PreferenceCategory android:title="@string/settings_about_category">
+
+    <Preference
+      android:key="@string/buid_version_preference_key"
+      android:title="@string/settings_about_build_version_title" />
+
+  </PreferenceCategory>
+
 </PreferenceScreen>
