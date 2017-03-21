@@ -11,27 +11,50 @@ import com.twitter.sdk.android.tweetui.Timeline;
 
 import net.squanchy.R;
 import net.squanchy.tweets.TweetsPageView;
-import net.squanchy.tweets.service.TwitterService;
 
-public class TweetsAdapter extends RecyclerView.Adapter<TweetViewHolder> {
+import timber.log.Timber;
+
+public class TweetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final Context context;
-    private final TwitterService<Tweet> repository;
+    private final TwitterRepository repository;
 
     public TweetsAdapter(Timeline<Tweet> timeline, Context context) {
         this.context = context;
-        this.repository = new TwitterService<>(timeline);
+        this.repository = new TwitterRepository(timeline);
     }
 
     @Override
-    public TweetViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_tweet, parent, false);
-        return new TweetViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, @TweetViewTypeId int viewType) {
+        if (viewType == TweetViewTypeId.TWEET) {
+            View view = LayoutInflater.from(context).inflate(R.layout.item_tweet, parent, false);
+            return new TweetViewHolder(view);
+        } else if (viewType == TweetViewTypeId.LOADING) {
+            View view = LayoutInflater.from(context).inflate(R.layout.item_tweet_loading, parent, false);
+            return new LoadingViewHolder(view);
+        } else {
+            throw new IllegalArgumentException("Item type " + viewType + " not supported");
+        }
     }
 
     @Override
-    public void onBindViewHolder(TweetViewHolder holder, int position) {
-        holder.updateWith(repository.itemAt(position));
+    @TweetViewTypeId
+    public int getItemViewType(int position) {
+        return repository.getItemViewType(position);
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        int viewType = repository.getItemViewType(position);
+
+        if (viewType == TweetViewTypeId.TWEET) {
+            ((TweetViewHolder) holder).updateWith(repository.itemAt(position));
+        } else if (viewType == TweetViewTypeId.LOADING) {
+            Timber.d("Showing loading element");
+        } else {
+            throw new IllegalArgumentException("Item type " + viewType + " not supported");
+        }
+
     }
 
     @Override
@@ -40,7 +63,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetViewHolder> {
     }
 
     public boolean isEmpty() {
-        return repository.size() == 0;
+        return repository.isEmpty();
     }
 
     public void refresh(TweetsPageView.TimelineLoadingCallback timelineLoadingCallback) {
