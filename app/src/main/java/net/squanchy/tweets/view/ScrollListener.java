@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 public abstract class ScrollListener extends RecyclerView.OnScrollListener {
 
     private static final int THRESHOLD = 2;
+
     private int previousTotalItemCount = 0;
     private boolean loading = true;
 
