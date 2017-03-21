@@ -11,7 +11,7 @@ public abstract class ScrollListener extends RecyclerView.OnScrollListener {
 
     private final LinearLayoutManager layoutManager;
 
-    public ScrollListener(LinearLayoutManager layoutManager) {
+    protected ScrollListener(LinearLayoutManager layoutManager) {
         this.layoutManager = layoutManager;
     }
 
@@ -34,12 +34,12 @@ public abstract class ScrollListener extends RecyclerView.OnScrollListener {
         }
 
         if (!loading && (lastVisibleItemPosition + THRESHOLD) > totalItemCount) {
-            loadMore();
             loading = true;
+            loadMore();
         }
     }
 
-    public void reset(){
+    public void reset() {
         previousTotalItemCount = 0;
     }
 

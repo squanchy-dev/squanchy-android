@@ -10,12 +10,12 @@ import com.twitter.sdk.android.tweetui.TimelineResult;
 import net.squanchy.tweets.service.TwitterService;
 
 class TwitterRepository {
+
     private final TwitterService<Tweet> twitterService;
-    private boolean refreshing;
+    private boolean hasMoreItems = true;
 
     TwitterRepository(Timeline<Tweet> timeline) {
         this.twitterService = new TwitterService<>(timeline);
-        refreshing = false;
     }
 
     Tweet itemAt(int position) {
@@ -26,7 +26,7 @@ class TwitterRepository {
      * We add 1 to the number of tweets if the tweets are being loaded, 0 otherwise
      */
     int size() {
-        return twitterService.size() + ((refreshing) ? 1 : 0);
+        return twitterService.size() + (hasMoreItems ? 1 : 0);
     }
 
     boolean isEmpty() {
@@ -38,7 +38,6 @@ class TwitterRepository {
     }
 
     void previous(Callback<TimelineResult<Tweet>> callback) {
-        refreshing = true;
         twitterService.previous(new CallbackDecorator(callback));
     }
 
@@ -48,10 +47,11 @@ class TwitterRepository {
     }
 
     private boolean isLoadingItem(int position) {
-        return refreshing && position == twitterService.size() - 1;
+        return position == size() - 1 && hasMoreItems;
     }
 
-    private class CallbackDecorator extends Callback<TimelineResult<Tweet>>{
+    private class CallbackDecorator extends Callback<TimelineResult<Tweet>> {
+
         private final Callback<TimelineResult<Tweet>> decorated;
 
         private CallbackDecorator(Callback<TimelineResult<Tweet>> decorated) {
@@ -60,14 +60,15 @@ class TwitterRepository {
 
         @Override
         public void success(Result<TimelineResult<Tweet>> result) {
+            if (result.data.items.isEmpty()) {
+                hasMoreItems = false;
+            }
             decorated.success(result);
-            refreshing = false;
         }
 
         @Override
         public void failure(TwitterException exception) {
             decorated.failure(exception);
-            refreshing = false;
         }
     }
 }

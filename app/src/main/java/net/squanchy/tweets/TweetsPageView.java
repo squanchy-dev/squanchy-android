@@ -95,6 +95,7 @@ public class TweetsPageView extends LinearLayout {
         scrollListener = new ScrollListener(layoutManager) {
             @Override
             protected void loadMore() {
+                Timber.d("Firing request for more tweets");
                 tweetsAdapter.previous(new TimelineLoadingCallback());
             }
         };

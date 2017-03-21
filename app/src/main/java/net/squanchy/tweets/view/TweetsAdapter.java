@@ -30,6 +30,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             View view = LayoutInflater.from(context).inflate(R.layout.item_tweet, parent, false);
             return new TweetViewHolder(view);
         } else if (viewType == TweetViewTypeId.LOADING) {
+            Timber.d("Creating loading view");
             View view = LayoutInflater.from(context).inflate(R.layout.item_tweet_loading, parent, false);
             return new LoadingViewHolder(view);
         } else {
@@ -45,16 +46,9 @@ public class TweetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        int viewType = repository.getItemViewType(position);
-
-        if (viewType == TweetViewTypeId.TWEET) {
+        if (repository.getItemViewType(position) == TweetViewTypeId.TWEET) {
             ((TweetViewHolder) holder).updateWith(repository.itemAt(position));
-        } else if (viewType == TweetViewTypeId.LOADING) {
-            Timber.d("Showing loading element");
-        } else {
-            throw new IllegalArgumentException("Item type " + viewType + " not supported");
         }
-
     }
 
     @Override
