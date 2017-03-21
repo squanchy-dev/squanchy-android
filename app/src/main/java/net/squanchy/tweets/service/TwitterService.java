@@ -15,6 +15,7 @@ import net.squanchy.tweets.view.TimelineStateHolder;
 public class TwitterService<T extends Identifiable> {
 
     private static final long CAPACITY = 200L;
+
     private final Timeline<T> timeline;
     private final TimelineStateHolder timelineStateHolder;
     private final List<T> itemList;
