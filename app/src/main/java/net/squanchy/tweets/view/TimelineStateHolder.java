@@ -53,4 +53,3 @@ public class TimelineStateHolder {
         requestInFlight.set(false);
     }
 }
-
