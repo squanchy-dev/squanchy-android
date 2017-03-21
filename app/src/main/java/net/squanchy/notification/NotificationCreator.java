@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
+import android.support.v4.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,7 +95,7 @@ public class NotificationCreator {
                 )
                 .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
                 .setLights(
-                        resources.getColor(R.color.notification_led_color, context.getTheme()),
+                        ContextCompat.getColor(context, R.color.notification_led_color),
                         NOTIFICATION_LED_ON_MS,
                         NOTIFICATION_LED_OFF_MS
                 )
