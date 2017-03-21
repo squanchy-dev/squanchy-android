@@ -47,7 +47,6 @@ public class Navigator {
             context.startActivity(intent);
         } else {
             toExternalUrl("https://twitter.com/" + username);
-            context.startActivity(intent);
         }
     }
 
