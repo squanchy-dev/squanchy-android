@@ -6,10 +6,11 @@ import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.models.Identifiable;
 import com.twitter.sdk.android.tweetui.Timeline;
 import com.twitter.sdk.android.tweetui.TimelineResult;
-import com.twitter.sdk.android.tweetui.internal.TimelineStateHolder;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import net.squanchy.tweets.view.TimelineStateHolder;
 
 public class TwitterService<T extends Identifiable> {
 
