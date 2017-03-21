@@ -16,6 +16,7 @@ import android.view.View;
 import net.squanchy.R;
 import net.squanchy.analytics.Analytics;
 import net.squanchy.analytics.ContentType;
+import net.squanchy.navigation.LifecycleView;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Schedule;
@@ -23,11 +24,12 @@ import net.squanchy.schedule.view.ScheduleViewPagerAdapter;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import timber.log.Timber;
 import uk.co.chrisjenx.calligraphy.CalligraphyTypefaceSpan;
 import uk.co.chrisjenx.calligraphy.CalligraphyUtils;
 import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
-public class SchedulePageView extends CoordinatorLayout {
+public class SchedulePageView extends CoordinatorLayout implements LifecycleView {
 
     private ScheduleViewPagerAdapter viewPagerAdapter;
     private View progressBar;
@@ -101,11 +103,10 @@ public class SchedulePageView extends CoordinatorLayout {
     }
 
     @Override
-    public void onAttachedToWindow() {
-        super.onAttachedToWindow();
+    public void onStart() {
         subscription = service.schedule(false)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(schedule -> updateWith(schedule, this::onEventClicked));
+                .subscribe(schedule -> updateWith(schedule, this::onEventClicked), Timber::e);
     }
 
     private void onEventClicked(Event event) {
@@ -114,8 +115,7 @@ public class SchedulePageView extends CoordinatorLayout {
     }
 
     @Override
-    public void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
+    public void onStop() {
         subscription.dispose();
     }
 

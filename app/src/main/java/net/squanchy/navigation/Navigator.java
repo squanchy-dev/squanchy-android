@@ -6,6 +6,7 @@ import android.net.Uri;
 
 import net.squanchy.eventdetails.EventDetailsActivity;
 import net.squanchy.search.SearchActivity;
+import net.squanchy.signin.SignInActivity;
 import net.squanchy.settings.SettingsActivity;
 import net.squanchy.speaker.SpeakerDetailsActivity;
 
@@ -19,6 +20,11 @@ public class Navigator {
 
     public void toEventDetails(String eventId) {
         Intent intent = EventDetailsActivity.createIntent(context, eventId);
+        context.startActivity(intent);
+    }
+
+    public void toSignIn() {
+        Intent intent = new Intent(context, SignInActivity.class);
         context.startActivity(intent);
     }
 

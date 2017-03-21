@@ -21,7 +21,6 @@ import net.squanchy.support.lang.Func1;
 import net.squanchy.support.lang.Optional;
 
 import io.reactivex.Completable;
-import io.reactivex.Emitter;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.schedulers.Schedulers;
@@ -88,30 +87,37 @@ public final class FirebaseDbService {
     }
 
     private <T> Observable<T> observeChild(final String path, final Class<T> clazz) {
-        return observeChildAndEmit(path, clazz, Emitter::onNext);
+        return observeChildAndEmit(path, clazz, value -> value);
     }
 
     private <T> Observable<Optional<T>> observeOptionalChild(final String path, final Class<T> clazz) {
-        return observeChildAndEmit(path, clazz, (emitter, value) -> emitter.onNext(Optional.fromNullable(value)));
+        return observeChildAndEmit(path, clazz, Optional::fromNullable);
     }
 
-    private <T, V> Observable<T> observeChildAndEmit(String path, final Class<V> clazz, NextEmitter<T, V> nextEmitter) {
+    private <T, V> Observable<T> observeChildAndEmit(String path, final Class<V> clazz, Func1<V, T> valueMapper) {
         return Observable.create((ObservableEmitter<T> e) -> {
             ValueEventListener listener = new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     V value = dataSnapshot.getValue(clazz);
-                    nextEmitter.emit(e, value);
+                    if (e.isDisposed()) {
+                        return;
+                    }
+                    e.onNext(valueMapper.call(value));
                 }
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
+                    if (e.isDisposed()) {
+                        return;
+                    }
                     e.onError(databaseError.toException());
                 }
             };
 
-            database.child(path).addValueEventListener(listener);
-            e.setCancellable(() -> database.removeEventListener(listener));
+            DatabaseReference childReference = database.child(path);
+            childReference.addValueEventListener(listener);
+            e.setCancellable(() -> childReference.removeEventListener(listener));
         }).observeOn(Schedulers.io());
     }
 
@@ -130,10 +136,5 @@ public final class FirebaseDbService {
                     .addOnSuccessListener(result -> emitter.onComplete())
                     .addOnFailureListener(emitter::onError);
         });
-    }
-
-    private interface NextEmitter<T, V> {
-
-        void emit(ObservableEmitter<T> emitter, V value);
     }
 }

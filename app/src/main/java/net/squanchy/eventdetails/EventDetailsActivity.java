@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import net.squanchy.R;
+import net.squanchy.eventdetails.EventDetailsService.FavoriteResult;
 import net.squanchy.eventdetails.widget.EventDetailsCoordinatorLayout;
 import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.navigation.Navigator;
@@ -77,11 +79,13 @@ public class EventDetailsActivity extends TypefaceStyleableActivity {
 
             @Override
             public void onFavoriteClick() {
-                if (event.favorited()) {
-                    subscriptions.add(service.removeFavorite(event.id()).subscribe());
-                } else {
-                    subscriptions.add(service.favorite(event.id()).subscribe());
-                }
+
+                subscriptions.add(service.toggleFavorite(event).subscribe(result -> {
+                    if (result == FavoriteResult.MUST_AUTHENTICATE) {
+                        Toast.makeText(EventDetailsActivity.this, "You need to sign in for this", Toast.LENGTH_SHORT).show();
+                        navigate().toSignIn(); // TODO UI stuff
+                    }
+                }));
             }
         };
     }
