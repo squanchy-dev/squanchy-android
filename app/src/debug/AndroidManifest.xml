@@ -6,7 +6,9 @@
 
     <activity
       android:name="net.squanchy.DebugActivity"
-      android:label="@string/debug_activity_title">
+      android:theme="@style/Theme.Squanchy.PrimaryStatusBar"
+      android:label="@string/debug_activity_title"
+      android:taskAffinity="net.squanchy.debug">
 
       <intent-filter>
         <action android:name="net.squanchy.DebugActivity" />

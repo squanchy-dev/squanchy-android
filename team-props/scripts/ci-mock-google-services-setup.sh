@@ -4,8 +4,10 @@
 
 echo '{
   "project_info": {
-    "project_number": "0",
-    "project_id": "mock-project-id"
+    "project_number": "1234567894652",
+    "firebase_url": "https://squanchy-mock.firebaseio.com",
+    "project_id": "squanchy-mock",
+    "storage_bucket": "squanchy-mock.appspot.com"
   },
   "client": [
     {
@@ -15,6 +17,32 @@ echo '{
           "package_name": "net.squanchy.example"
         }
       },
+      "oauth_client": [
+        {
+          "client_id": "XXXXXXXXXXXX-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "net.squanchy.example",
+            "certificate_hash": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+          }
+        },
+        {
+          "client_id": "XXXXXXXXXXXX-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "net.squanchy.example",
+            "certificate_hash": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+          }
+        },
+        {
+          "client_id": "XXXXXXXXXXXX-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "XXXXXXXXXXXX-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
@@ -26,6 +54,13 @@ echo '{
           "analytics_property": {
             "tracking_id": "UA-123456-78"
           }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
         }
       }
     }

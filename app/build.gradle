@@ -115,6 +115,7 @@ dependencies {
     compile libraries.app.firebaseUiStorage
     compile libraries.app.glide
     compile libraries.app.glideOkHttp3
+    compile libraries.app.googleSignIn
     compile libraries.app.jodaTimeAndroid
     compile libraries.app.rx
     compile libraries.app.rxAndroid
