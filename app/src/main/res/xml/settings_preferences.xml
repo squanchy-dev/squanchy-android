@@ -20,4 +20,15 @@
 
   </PreferenceCategory>
 
+  <PreferenceCategory android:title="@string/settings_debug_category"
+    android:key="@string/debug_category_preference_key">
+
+    <Preference
+      android:key="@string/open_debug_preference_key"
+      android:title="@string/settings_open_debug_title">
+      <intent android:action="net.squanchy.DebugActivity" />
+    </Preference>
+
+  </PreferenceCategory>
+
 </PreferenceScreen>

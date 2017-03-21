@@ -15,6 +15,10 @@ public class SettingsFragment extends PreferenceFragment {
 
         addPreferencesFromResource(R.xml.settings_preferences);
         displayBuildVersion();
+
+        if (!BuildConfig.DEBUG) {
+            removeDebugCategory();
+        }
     }
 
     private void displayBuildVersion() {
@@ -22,5 +26,11 @@ public class SettingsFragment extends PreferenceFragment {
         Preference buildVersionPreference = findPreference(buildVersionKey);
         String buildVersion = String.format(getString(R.string.version_x), BuildConfig.VERSION_NAME);
         buildVersionPreference.setSummary(buildVersion);
+    }
+
+    private void removeDebugCategory() {
+        String debugCategoryKey = getString(R.string.debug_category_preference_key);
+        Preference debugCategory = findPreference(debugCategoryKey);
+        getPreferenceScreen().removePreference(debugCategory);
     }
 }

@@ -55,5 +55,7 @@
   <string name="settings_about_category">About</string>
   <string name="settings_about_build_version_title">Build version</string>
   <string name="version_x">Version: %1$s</string>
+  <string name="settings_debug_category">Debug</string>
+  <string name="settings_open_debug_title">Open debug screen</string>
 
 </resources>

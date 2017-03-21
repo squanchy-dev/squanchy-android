@@ -9,8 +9,8 @@
       android:label="@string/debug_activity_title">
 
       <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.LAUNCHER" />
+        <action android:name="net.squanchy.DebugActivity" />
+        <category android:name="android.intent.category.DEFAULT" />
       </intent-filter>
     </activity>
 
