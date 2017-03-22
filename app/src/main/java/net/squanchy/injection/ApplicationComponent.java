@@ -13,6 +13,7 @@ import net.squanchy.service.proximity.injection.ProximityModule;
 import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.service.repository.EventRepository;
 import net.squanchy.service.repository.SpeakerRepository;
+import net.squanchy.service.repository.VenueRepository;
 import net.squanchy.service.repository.injection.RepositoryModule;
 import net.squanchy.support.injection.ChecksumModule;
 
@@ -29,6 +30,8 @@ public interface ApplicationComponent {
     EventRepository eventRepository();
 
     SpeakerRepository speakerRepository();
+
+    VenueRepository venueRepository();
 
     Analytics analytics();
 

@@ -19,6 +19,7 @@
   <color name="status_bar">#11000000</color>
   <color name="status_bar_primary">#9f324b</color>
   <color name="status_bar_primary_azure">#2181bf</color>
+  <color name="status_bar_primary_blue">#43899c</color>
   <color name="window_background">#f1f1f1</color>
 
   <color name="button_inverse">#fafdff</color>

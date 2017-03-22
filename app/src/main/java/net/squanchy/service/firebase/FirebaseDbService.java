@@ -17,6 +17,7 @@ import net.squanchy.service.firebase.model.FirebasePlaces;
 import net.squanchy.service.firebase.model.FirebaseSpeakers;
 import net.squanchy.service.firebase.model.FirebaseTrack;
 import net.squanchy.service.firebase.model.FirebaseTracks;
+import net.squanchy.service.firebase.model.FirebaseVenue;
 import net.squanchy.support.lang.Func1;
 import net.squanchy.support.lang.Optional;
 
@@ -34,6 +35,7 @@ public final class FirebaseDbService {
     private static final String PLACES_NODE = "data/places";
     private static final String PLACES_BY_ID_NODE = "data/places/%1$s";
     private static final String TRACKS_NODE = "data/tracks";
+    private static final String VENUE_INFO_NODE = "data/venue";
     private static final String TRACKS_BY_ID_NODE = "data/tracks/%1$s";
     private static final String FAVORITES_NODE = "user/%1$s/";
     private static final String FAVORITES_BY_ID_NODE = "user/%1$s/favorites/%2$s";
@@ -84,6 +86,10 @@ public final class FirebaseDbService {
 
         return observeOptionalChild(path, FirebaseFavorites.class)
                 .map(optionalFavorites -> optionalFavorites.or(FirebaseFavorites.empty()));
+    }
+
+    public Observable<FirebaseVenue> venueInfo() {
+        return observeChild(VENUE_INFO_NODE, FirebaseVenue.class);
     }
 
     private <T> Observable<T> observeChild(final String path, final Class<T> clazz) {

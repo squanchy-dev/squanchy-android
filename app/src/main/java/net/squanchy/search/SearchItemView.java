@@ -6,9 +6,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
 import net.squanchy.R;
 import net.squanchy.imageloader.ImageLoader;
 import net.squanchy.search.view.SearchRecyclerView.OnSearchResultClickListener;
@@ -59,20 +56,7 @@ public class SearchItemView extends LinearLayout {
 
         Optional<String> avatarImageURL = speaker.photoUrl();
         if (avatarImageURL.isPresent()) {
-            loadPhoto(image, avatarImageURL.get(), imageLoader);
+            imageLoader.load(avatarImageURL.get()).into(image);
         }
-    }
-
-    private void loadPhoto(ImageView photoView, String photoUrl, ImageLoader imageLoader) {
-        if (isFirebaseStorageUrl(photoUrl)) {
-            StorageReference photoReference = FirebaseStorage.getInstance().getReference(photoUrl);
-            imageLoader.load(photoReference).into(photoView);
-        } else {
-            imageLoader.load(photoUrl).into(photoView);
-        }
-    }
-
-    private boolean isFirebaseStorageUrl(String url) {
-        return url.startsWith("gs://");            // TODO move elsewhere
     }
 }
