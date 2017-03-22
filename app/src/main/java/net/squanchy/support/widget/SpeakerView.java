@@ -11,9 +11,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -110,16 +107,7 @@ public abstract class SpeakerView extends LinearLayout {
     protected abstract ImageView inflatePhotoView(ViewGroup speakerPhotoContainer);
 
     private void loadSpeakerPhoto(ImageView photoView, String photoUrl, ImageLoader imageLoader) {
-        if (isFirebaseStorageUrl(photoUrl)) {
-            StorageReference photoReference = FirebaseStorage.getInstance().getReference(photoUrl);
-            imageLoader.load(photoReference).into(photoView);
-        } else {
-            imageLoader.load(photoUrl).into(photoView);
-        }
-    }
-
-    private boolean isFirebaseStorageUrl(String url) {
-        return url.startsWith("gs://");            // TODO move elsewhere
+        imageLoader.load(photoUrl).into(photoView);
     }
 
     private List<ImageView> getAllImageViewsContainedIn(ViewGroup container) {
