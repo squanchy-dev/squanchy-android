@@ -116,16 +116,8 @@ public class VenueInfoPageView extends LinearLayout implements LifecycleView {
     }
 
     private void loadMap(ImageView photoView, String photoUrl, ImageLoader imageLoader) {
-        if (isFirebaseStorageUrl(photoUrl)) {
-            StorageReference photoReference = FirebaseStorage.getInstance().getReferenceFromUrl(photoUrl);
-            imageLoader.load(photoReference).into(photoView);
-        } else {
             imageLoader.load(photoUrl).into(photoView);
         }
-    }
-
-    private boolean isFirebaseStorageUrl(String url) {
-        return url.startsWith("gs://");            // TODO move elsewhere
     }
 
     @Override
