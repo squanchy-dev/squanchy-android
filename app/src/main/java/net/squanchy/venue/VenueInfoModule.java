@@ -9,9 +9,7 @@ import dagger.Provides;
 class VenueInfoModule {
 
     @Provides
-    VenueInfoService favoritesService(
-            VenueRepository venueRepository
-    ) {
+    VenueInfoService favoritesService(VenueRepository venueRepository) {
         return new VenueInfoService(venueRepository);
     }
 }

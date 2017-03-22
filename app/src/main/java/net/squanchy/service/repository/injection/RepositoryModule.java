@@ -30,9 +30,7 @@ public class RepositoryModule {
     }
 
     @Provides
-    VenueRepository venueRepositoryrRepository(
-            FirebaseDbService dbService
-    ) {
+    VenueRepository venueRepositoryrRepository(FirebaseDbService dbService) {
         return new VenueRepository(dbService);
     }
 }
