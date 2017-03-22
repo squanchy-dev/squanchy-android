@@ -9,9 +9,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
 import net.squanchy.R;
 import net.squanchy.imageloader.ImageLoader;
 import net.squanchy.imageloader.ImageLoaderInjector;
@@ -116,8 +113,7 @@ public class VenueInfoPageView extends LinearLayout implements LifecycleView {
     }
 
     private void loadMap(ImageView photoView, String photoUrl, ImageLoader imageLoader) {
-            imageLoader.load(photoUrl).into(photoView);
-        }
+        imageLoader.load(photoUrl).into(photoView);
     }
 
     @Override
