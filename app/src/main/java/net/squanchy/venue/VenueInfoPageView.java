@@ -2,7 +2,6 @@ package net.squanchy.venue;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.widget.ImageView;
@@ -18,6 +17,8 @@ import net.squanchy.venue.domain.view.Venue;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+
+import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 
 public class VenueInfoPageView extends LinearLayout implements LifecycleView {
 
@@ -65,19 +66,6 @@ public class VenueInfoPageView extends LinearLayout implements LifecycleView {
         mapView = (ImageView) findViewById(R.id.venue_map);
 
         setupToolbar();
-    }
-
-    private static Activity unwrapToActivityContext(Context context) {
-        if (context == null) {
-            throw new NullPointerException("Context cannot be null");
-        } else if (context instanceof Activity) {
-            return (Activity) context;
-        } else if (context instanceof ContextWrapper) {
-            ContextWrapper contextWrapper = (ContextWrapper) context;
-            return unwrapToActivityContext(contextWrapper.getBaseContext());
-        } else {
-            throw new IllegalStateException("Context type not supported: " + context.getClass().getCanonicalName());
-        }
     }
 
     private void setupToolbar() {
