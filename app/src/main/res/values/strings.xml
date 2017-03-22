@@ -59,5 +59,7 @@
   <string name="settings_open_debug_title">Open debug screen</string>
 
   <string name="venue_info_label">Information</string>
+  <string name="venue_about_label">About the venue</string>
+  <string name="venue_location_label">Location</string>
 
 </resources>
