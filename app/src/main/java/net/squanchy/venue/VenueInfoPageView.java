@@ -112,8 +112,8 @@ public class VenueInfoPageView extends LinearLayout implements LifecycleView {
         loadMap(mapView, venue.mapUrl(), imageLoader);
     }
 
-    private void loadMap(ImageView photoView, String photoUrl, ImageLoader imageLoader) {
-        imageLoader.load(photoUrl).into(photoView);
+    private void loadMap(ImageView imageView, String mapUrl, ImageLoader imageLoader) {
+        imageLoader.load(mapUrl).into(imageView);
     }
 
     @Override
