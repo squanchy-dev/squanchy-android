@@ -1,9 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<net.squanchy.venue.VenueInfoPageView xmlns:android="http://schemas.android.com/apk/res/android"
   android:id="@+id/venue_content_root"
   android:theme="@style/Theme.Squanchy.VenueInfo"
   android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:gravity="center"
-  android:text="@string/bottom_bar_venue_label"
-  android:textAppearance="@style/TextAppearance.Squanchy.Card.Title" />
+  android:layout_height="match_parent">
+
+  <android.support.design.widget.AppBarLayout
+    style="@style/Squanchy.Appbar"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.Toolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize" />
+
+  </android.support.design.widget.AppBarLayout>
+
+  <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <include layout="@layout/merge_venue_info_layout" />
+
+    </LinearLayout>
+
+  </ScrollView>
+
+</net.squanchy.venue.VenueInfoPageView>

@@ -43,7 +43,7 @@ public class TweetsPageView extends LinearLayout {
 
     @Override
     public void setOrientation(int orientation) {
-        throw new UnsupportedOperationException("TweetsPageView doesn't support changing orientation");
+        throw new UnsupportedOperationException(TweetsPageView.class.getSimpleName() + " doesn't support changing orientation");
     }
 
     @Override
