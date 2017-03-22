@@ -110,10 +110,17 @@ public class VenueInfoPageView extends LinearLayout implements LifecycleView {
         addressText.setText(venue.address());
         descriptionText.setText(venue.description());
         loadMap(mapView, venue.mapUrl(), imageLoader);
+        updateMapClickListenerWith(venue);
     }
 
     private void loadMap(ImageView imageView, String mapUrl, ImageLoader imageLoader) {
         imageLoader.load(mapUrl).into(imageView);
+    }
+
+    private void updateMapClickListenerWith(Venue venue) {
+        mapView.setOnClickListener(v -> {
+            navigate.toMapsFor(venue);
+        });
     }
 
     @Override
