@@ -5,10 +5,16 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import net.squanchy.R;
+import net.squanchy.imageloader.ImageLoader;
+import net.squanchy.imageloader.ImageLoaderInjector;
 import net.squanchy.navigation.LifecycleView;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.venue.domain.view.Venue;
@@ -22,6 +28,8 @@ public class VenueInfoPageView extends LinearLayout implements LifecycleView {
     private Navigator navigate;
     private VenueInfoService service;
     private TextView nameText;
+    private ImageView mapView;
+    private ImageLoader imageLoader;
 
     public VenueInfoPageView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -50,8 +58,10 @@ public class VenueInfoPageView extends LinearLayout implements LifecycleView {
         VenueInfoComponent component = VenueInfoInjector.obtain(activity);
         navigate = component.navigator();
         service = component.service();
+        imageLoader = ImageLoaderInjector.obtain(getContext()).imageLoader();
 
         nameText = (TextView) findViewById(R.id.venue_name);
+        mapView = (ImageView) findViewById(R.id.venue_map);
 
         setupToolbar();
     }
@@ -96,6 +106,20 @@ public class VenueInfoPageView extends LinearLayout implements LifecycleView {
 
     private void updateWith(Venue venue) {
         nameText.setText(venue.name());
+        loadMap(mapView, venue.mapUrl(), imageLoader);
+    }
+
+    private void loadMap(ImageView photoView, String photoUrl, ImageLoader imageLoader) {
+        if (isFirebaseStorageUrl(photoUrl)) {
+            StorageReference photoReference = FirebaseStorage.getInstance().getReferenceFromUrl(photoUrl);
+            imageLoader.load(photoReference).into(photoView);
+        } else {
+            imageLoader.load(photoUrl).into(photoView);
+        }
+    }
+
+    private boolean isFirebaseStorageUrl(String url) {
+        return url.startsWith("gs://");            // TODO move elsewhere
     }
 
     @Override

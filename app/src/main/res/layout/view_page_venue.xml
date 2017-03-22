@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <net.squanchy.venue.VenueInfoPageView xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/venue_content_root"
   android:theme="@style/Theme.Squanchy.Tweets"
   android:layout_width="match_parent"
@@ -16,14 +14,19 @@
     <android.support.v7.widget.Toolbar
       android:id="@+id/toolbar"
       android:layout_width="match_parent"
-      android:layout_height="?attr/actionBarSize"/>
+      android:layout_height="?attr/actionBarSize" />
 
   </android.support.design.widget.AppBarLayout>
-
 
   <TextView
     android:id="@+id/venue_name"
     android:layout_width="wrap_content"
     android:layout_height="match_parent" />
+
+  <ImageView
+    android:id="@+id/venue_map"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:importantForAccessibility="no" />
 
 </net.squanchy.venue.VenueInfoPageView>

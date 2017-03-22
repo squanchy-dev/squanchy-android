@@ -11,4 +11,6 @@ public class FirebaseVenue {
     public double lon;
 
     public String description;
+
+    public String map_url;
 }

@@ -20,7 +20,8 @@ public class VenueRepository {
                         firebaseVenue.address,
                         firebaseVenue.lat,
                         firebaseVenue.lon,
-                        firebaseVenue.description
+                        firebaseVenue.description,
+                        firebaseVenue.map_url
                 ));
     }
 }
