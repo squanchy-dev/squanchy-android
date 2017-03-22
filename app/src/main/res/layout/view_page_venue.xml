@@ -18,41 +18,19 @@
 
   </android.support.design.widget.AppBarLayout>
 
-  <TextView
-    android:layout_marginTop="@dimen/venue_info_padding_top"
-    android:id="@+id/venue_name"
-    style="@style/VenueInfo.Name.Text"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
-
-  <TextView
-    android:id="@+id/venue_address"
-    style="@style/VenueInfo.Address.Text"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
-
-  <TextView
-    style="@style/VenueInfo.Label"
+  <ScrollView
     android:layout_width="match_parent"
-    android:layout_height="@dimen/venue_info_label_height"
-    android:text="@string/venue_about_label" />
+    android:layout_height="match_parent">
 
-  <TextView
-    android:id="@+id/venue_description"
-    style="@style/VenueInfo.Description.Text"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
 
-  <TextView
-    style="@style/VenueInfo.Label"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/venue_info_label_height"
-    android:text="@string/venue_location_label" />
+      <include layout="@layout/merge_venue_info_layout" />
 
-  <ImageView
-    android:id="@+id/venue_map"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:importantForAccessibility="no" />
+    </LinearLayout>
+
+  </ScrollView>
 
 </net.squanchy.venue.VenueInfoPageView>
