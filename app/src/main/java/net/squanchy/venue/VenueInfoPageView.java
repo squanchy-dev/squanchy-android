@@ -33,6 +33,13 @@ public class VenueInfoPageView extends LinearLayout implements LifecycleView {
 
     public VenueInfoPageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+
+        super.setOrientation(VERTICAL);
+    }
+
+    @Override
+    public void setOrientation(int orientation) {
+        throw new UnsupportedOperationException("TweetsPageView doesn't support changing orientation");
     }
 
     @Override
