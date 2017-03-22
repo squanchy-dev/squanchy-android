@@ -41,6 +41,8 @@
     android:id="@+id/venue_map"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:contentDescription="@string/venue_map_content_description"/>
+    android:foreground="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:contentDescription="@string/venue_map_content_description" />
 
 </merge>
