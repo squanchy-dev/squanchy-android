@@ -28,6 +28,8 @@ public class VenueInfoPageView extends LinearLayout implements LifecycleView {
     private Navigator navigate;
     private VenueInfoService service;
     private TextView nameText;
+    private TextView addressText;
+    private TextView descriptionText;
     private ImageView mapView;
     private ImageLoader imageLoader;
 
@@ -61,6 +63,8 @@ public class VenueInfoPageView extends LinearLayout implements LifecycleView {
         imageLoader = ImageLoaderInjector.obtain(getContext()).imageLoader();
 
         nameText = (TextView) findViewById(R.id.venue_name);
+        addressText = (TextView) findViewById(R.id.venue_address);
+        descriptionText = (TextView) findViewById(R.id.venue_description);
         mapView = (ImageView) findViewById(R.id.venue_map);
 
         setupToolbar();
@@ -106,6 +110,8 @@ public class VenueInfoPageView extends LinearLayout implements LifecycleView {
 
     private void updateWith(Venue venue) {
         nameText.setText(venue.name());
+        addressText.setText(venue.address());
+        descriptionText.setText(venue.description());
         loadMap(mapView, venue.mapUrl(), imageLoader);
     }
 

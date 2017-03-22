@@ -21,7 +21,20 @@
   <TextView
     android:id="@+id/venue_name"
     android:layout_width="wrap_content"
-    android:layout_height="match_parent" />
+    android:layout_height="wrap_content"
+    android:textColor="@color/primary_dark" />
+
+  <TextView
+    android:id="@+id/venue_address"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/primary_dark" />
+
+  <TextView
+    android:id="@+id/venue_description"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/primary_dark" />
 
   <ImageView
     android:id="@+id/venue_map"
