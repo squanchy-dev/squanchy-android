@@ -60,6 +60,8 @@
 
   <style name="Theme.Squanchy.VenueInfo" parent="Theme.Squanchy">
     <item name="colorPrimary">@color/primary_blue</item>
+    <item name="colorPrimaryDark">@color/primary_dark_blue</item>
+    <item name="android:statusBarColor">@color/status_bar_primary_blue</item>
   </style>
 
   <style name="Theme.Squanchy.EventDetails" parent="Theme.Squanchy.PrimaryStatusBar">

@@ -118,6 +118,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private void collectLifecycleViewsViewsInto(List<LifecycleView> lifecycleViews) {
         lifecycleViews.add((LifecycleView) pageContainer.findViewById(R.id.schedule_content_root));
         lifecycleViews.add((LifecycleView) pageContainer.findViewById(R.id.favorites_content_root));
+        lifecycleViews.add((LifecycleView) pageContainer.findViewById(R.id.venue_content_root));
     }
 
     private void setupBottomNavigation(InterceptingBottomNavigationView bottomNavigationView) {
