@@ -8,6 +8,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Locale;
 
+import net.squanchy.service.firebase.model.FirebaseAchievements;
 import net.squanchy.service.firebase.model.FirebaseDays;
 import net.squanchy.service.firebase.model.FirebaseEvent;
 import net.squanchy.service.firebase.model.FirebaseEvents;
@@ -39,6 +40,8 @@ public final class FirebaseDbService {
     private static final String TRACKS_BY_ID_NODE = "data/tracks/%1$s";
     private static final String FAVORITES_NODE = "user/%1$s/";
     private static final String FAVORITES_BY_ID_NODE = "user/%1$s/favorites/%2$s";
+    private static final String ACHIEVEMENS_NODE = "user/%1$s";
+    private static final String ACHIEVEMENS_BY_ID_NODE = "user/%1$s/achievements/%2$s";
 
     private final DatabaseReference database;
 
@@ -86,6 +89,13 @@ public final class FirebaseDbService {
 
         return observeOptionalChild(path, FirebaseFavorites.class)
                 .map(optionalFavorites -> optionalFavorites.or(FirebaseFavorites.empty()));
+    }
+
+    public Observable<FirebaseAchievements> achievements(String userId) {
+        String path = String.format(Locale.US, ACHIEVEMENS_NODE, userId);
+
+        return observeOptionalChild(path, FirebaseAchievements.class)
+                .map(optionalAchievements -> optionalAchievements.or(FirebaseAchievements.empty()));
     }
 
     public Observable<FirebaseVenue> venueInfo() {
@@ -138,6 +148,19 @@ public final class FirebaseDbService {
     private Completable updateFavorite(String eventId, Func1<DatabaseReference, Task<Void>> action, String userId) {
         return Completable.create(emitter -> {
             String path = String.format(Locale.US, FAVORITES_BY_ID_NODE, userId, eventId);
+            action.call(database.child(path))
+                    .addOnSuccessListener(result -> emitter.onComplete())
+                    .addOnFailureListener(emitter::onError);
+        });
+    }
+
+    public Completable addAchievement(String achievementId, String userId, Long timestamp) {
+        return updateAchievement(userId, achievementId, reference -> reference.setValue(timestamp));
+    }
+
+    public Completable updateAchievement(String userId, String achievementId, Func1<DatabaseReference, Task<Void>> action){
+        return Completable.create(emitter -> {
+            String path = String.format(Locale.US, ACHIEVEMENS_BY_ID_NODE, userId, achievementId);
             action.call(database.child(path))
                     .addOnSuccessListener(result -> emitter.onComplete())
                     .addOnFailureListener(emitter::onError);
