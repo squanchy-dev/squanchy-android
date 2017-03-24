@@ -1,4 +1,4 @@
-package net.squanchy.navigation;
+package net.squanchy.home;
 
 import net.squanchy.analytics.Analytics;
 import net.squanchy.injection.ActivityLifecycle;

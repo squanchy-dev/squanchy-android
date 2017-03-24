@@ -11,7 +11,7 @@ import android.widget.TextView;
 import net.squanchy.R;
 import net.squanchy.imageloader.ImageLoader;
 import net.squanchy.imageloader.ImageLoaderInjector;
-import net.squanchy.navigation.LifecycleView;
+import net.squanchy.home.LifecycleView;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.venue.domain.view.Venue;
 

@@ -11,7 +11,7 @@ import dagger.Provides;
 public class NavigationModule {
 
     @Provides
-    Navigator navigator(Context context) {
+    public Navigator navigator(Context context) {
         return new Navigator(context);
     }
 }
