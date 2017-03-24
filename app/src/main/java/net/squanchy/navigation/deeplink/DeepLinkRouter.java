@@ -1,5 +1,7 @@
 package net.squanchy.navigation.deeplink;
 
+import android.content.Intent;
+
 import java.net.URI;
 import java.util.regex.Pattern;
 
@@ -41,5 +43,12 @@ public class DeepLinkRouter {
         } catch (IllegalArgumentException | NullPointerException e) {
             throw RoutingException.malformedUrl(url, e);
         }
+    }
+
+    public boolean hasDeepLink(Intent intent) {
+        boolean hasViewAction = Intent.ACTION_VIEW.equals(intent.getAction());
+        boolean hasLauncherCategory = intent.hasCategory(Intent.CATEGORY_LAUNCHER);
+        boolean hasData = intent.getData() != null;
+        return hasViewAction && !hasLauncherCategory && hasData;
     }
 }
