@@ -95,9 +95,8 @@ public class HomeActivity extends TypefaceStyleableActivity {
         bottomNavigationView = (InterceptingBottomNavigationView) findViewById(R.id.bottom_navigation);
         setupBottomNavigation(bottomNavigationView);
 
-        HomeActivityIntentParser intentParser = new HomeActivityIntentParser(Optional.fromNullable(savedInstanceState), getIntent());
-        BottomNavigationSection selectedPage = intentParser.getInitialSelectedPage();
-        selectInitialPage(selectedPage);
+        Intent intent = getIntent();
+        selectPageFrom(intent, Optional.fromNullable(savedInstanceState));
 
         HomeComponent homeComponent = HomeInjector.obtain(this);
         analytics = homeComponent.analytics();
@@ -105,6 +104,19 @@ public class HomeActivity extends TypefaceStyleableActivity {
         homeService = homeComponent.homeService();
         proximityService = homeComponent.proximityService();
         subscriptions = new CompositeDisposable();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        selectPageFrom(intent, Optional.absent());
+    }
+
+    private void selectPageFrom(Intent intent, Optional<Bundle> savedState) {
+        HomeActivityIntentParser intentParser = new HomeActivityIntentParser(savedState, intent);
+        BottomNavigationSection selectedPage = intentParser.getInitialSelectedPage();
+        selectInitialPage(selectedPage);
     }
 
     @Override

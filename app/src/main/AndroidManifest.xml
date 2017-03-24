@@ -37,7 +37,8 @@
 
     <activity
       android:name="net.squanchy.home.HomeActivity"
-      android:theme="@style/Theme.Squanchy.Home" />
+      android:theme="@style/Theme.Squanchy.Home"
+      android:launchMode="singleTask" />
 
     <activity
       android:name="net.squanchy.eventdetails.EventDetailsActivity"
