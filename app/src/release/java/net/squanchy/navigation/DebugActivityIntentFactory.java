@@ -3,8 +3,6 @@ package net.squanchy.navigation;
 import android.content.Context;
 import android.content.Intent;
 
-import net.squanchy.DebugActivity;
-
 class DebugActivityIntentFactory {
 
     Intent createDebugActivityIntent(Context context) {
