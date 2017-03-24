@@ -3,17 +3,15 @@ package net.squanchy.navigation.deeplink;
 import java.net.URI;
 import java.util.regex.Pattern;
 
-import net.squanchy.navigation.Navigator;
-
 public class DeepLinkRouter {
 
     private static final Pattern PATTERN_VALID_SCHEME = Pattern.compile("[^\\w]");
 
     private final String scheme;
     private final NavigationStrategyFactory navigationStrategyFactory;
-    private final Navigator navigator;
+    private final DeepLinkNavigator navigator;
 
-    DeepLinkRouter(String scheme, NavigationStrategyFactory navigationStrategyFactory, Navigator navigator) {
+    DeepLinkRouter(String scheme, NavigationStrategyFactory navigationStrategyFactory, DeepLinkNavigator navigator) {
         this.navigator = navigator;
         validateScheme(scheme);
         this.scheme = scheme;
