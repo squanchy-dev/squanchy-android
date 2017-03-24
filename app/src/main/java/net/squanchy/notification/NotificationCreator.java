@@ -16,7 +16,7 @@ import java.util.List;
 
 import net.squanchy.R;
 import net.squanchy.eventdetails.EventDetailsActivity;
-import net.squanchy.navigation.HomeActivity;
+import net.squanchy.home.HomeActivity;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Place;
 

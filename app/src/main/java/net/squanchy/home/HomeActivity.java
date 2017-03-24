@@ -1,6 +1,8 @@
-package net.squanchy.navigation;
+package net.squanchy.home;
 
 import android.animation.ValueAnimator;
+import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.AttrRes;
@@ -51,6 +53,32 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private CompositeDisposable subscriptions;
 
     private boolean proximityServiceRadarStarted = PROXIMITY_SERVICE_RADAR_NOT_STARTED;
+
+    public static Intent createScheduleIntent(Context context, Optional<String> dayId, Optional<String> eventId) {
+        return new HomeActivityDeepLinkCreator(context)
+                .deepLinkTo(BottomNavigationSection.SCHEDULE)
+                .withDayId(dayId)
+                .withEventId(eventId)
+                .build();
+    }
+
+    public static Intent createFavoritesIntent(Context context) {
+        return new HomeActivityDeepLinkCreator(context)
+                .deepLinkTo(BottomNavigationSection.FAVORITES)
+                .build();
+    }
+
+    public static Intent createTweetsIntent(Context context) {
+        return new HomeActivityDeepLinkCreator(context)
+                .deepLinkTo(BottomNavigationSection.TWEETS)
+                .build();
+    }
+
+    public static Intent createVenueInfoIntent(Context context) {
+        return new HomeActivityDeepLinkCreator(context)
+                .deepLinkTo(BottomNavigationSection.VENUE_INFO)
+                .build();
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
