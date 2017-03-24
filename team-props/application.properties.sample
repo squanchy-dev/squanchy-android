@@ -1,2 +1,4 @@
 applicationId=net.squanchy.example
-socialQuery=#squanchy
+applicationName="Squanchy"
+socialQuery=#squanchy                 
+deeplinkScheme=squanchy
