@@ -1,6 +1,8 @@
 package net.squanchy.contest;
 
 import net.squanchy.remoteconfig.RemoteConfig;
+import net.squanchy.service.firebase.FirebaseAuthService;
+import net.squanchy.service.firebase.FirebaseDbService;
 
 import dagger.Module;
 import dagger.Provides;
@@ -9,7 +11,7 @@ import dagger.Provides;
 public class ContestModule {
 
     @Provides
-    ContestService contestService(RemoteConfig remoteConfig) {
-        return new ContestService(remoteConfig);
+    ContestService contestService(RemoteConfig remoteConfig, FirebaseDbService dbService, FirebaseAuthService authService) {
+        return new ContestService(remoteConfig, dbService, authService);
     }
 }
