@@ -24,6 +24,8 @@ import net.squanchy.R;
 import net.squanchy.analytics.Analytics;
 import net.squanchy.analytics.ContentType;
 import net.squanchy.fonts.TypefaceStyleableActivity;
+import net.squanchy.home.deeplink.HomeActivityDeepLinkCreator;
+import net.squanchy.home.deeplink.HomeActivityIntentParser;
 import net.squanchy.proximity.ProximityEvent;
 import net.squanchy.remoteconfig.RemoteConfig;
 import net.squanchy.service.proximity.injection.ProximityService;
@@ -35,7 +37,6 @@ import io.reactivex.disposables.CompositeDisposable;
 
 public class HomeActivity extends TypefaceStyleableActivity {
 
-    private static final String STATE_KEY_SELECTED_PAGE_INDEX = "HomeActivity.selected_page_index";
     private static final boolean PROXIMITY_SERVICE_RADAR_NOT_STARTED = false;
 
     private final Map<BottomNavigationSection, View> pageViews = new HashMap<>(4);
@@ -94,7 +95,8 @@ public class HomeActivity extends TypefaceStyleableActivity {
         bottomNavigationView = (InterceptingBottomNavigationView) findViewById(R.id.bottom_navigation);
         setupBottomNavigation(bottomNavigationView);
 
-        BottomNavigationSection selectedPage = getSelectedSectionOrDefault(Optional.fromNullable(savedInstanceState));
+        HomeActivityIntentParser intentParser = new HomeActivityIntentParser(Optional.fromNullable(savedInstanceState), getIntent());
+        BottomNavigationSection selectedPage = intentParser.getInitialSelectedPage();
         selectInitialPage(selectedPage);
 
         HomeComponent homeComponent = HomeInjector.obtain(this);
@@ -176,12 +178,6 @@ public class HomeActivity extends TypefaceStyleableActivity {
         );
     }
 
-    private BottomNavigationSection getSelectedSectionOrDefault(Optional<Bundle> savedInstanceState) {
-        int selectedPageIndex = savedInstanceState.or(new Bundle())
-                .getInt(STATE_KEY_SELECTED_PAGE_INDEX, BottomNavigationSection.SCHEDULE.ordinal());
-        return BottomNavigationSection.values()[selectedPageIndex];
-    }
-
     private void selectInitialPage(BottomNavigationSection section) {
         swapPageTo(section);
         bottomNavigationView.cancelTransitions();
@@ -255,7 +251,8 @@ public class HomeActivity extends TypefaceStyleableActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putInt(STATE_KEY_SELECTED_PAGE_INDEX, currentSection.ordinal());
+        HomeStatePersister statePersister = new HomeStatePersister();
+        statePersister.saveCurrentSection(outState, currentSection);
         super.onSaveInstanceState(outState);
     }
 
