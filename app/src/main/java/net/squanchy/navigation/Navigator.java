@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 
 import net.squanchy.BuildConfig;
-import net.squanchy.DebugActivity;
 import net.squanchy.eventdetails.EventDetailsActivity;
 import net.squanchy.home.HomeActivity;
 import net.squanchy.search.SearchActivity;
@@ -19,9 +18,11 @@ import timber.log.Timber;
 public class Navigator {
 
     private final Context context;
+    private final DebugActivityIntentFactory debugActivityIntentFactory;
 
-    public Navigator(Context context) {
+    Navigator(Context context, DebugActivityIntentFactory debugActivityIntentFactory) {
         this.context = context;
+        this.debugActivityIntentFactory = debugActivityIntentFactory;
     }
 
     public void toEventDetails(String eventId) {
@@ -81,7 +82,7 @@ public class Navigator {
 
     public void toDebugSettings() {
         if (BuildConfig.DEBUG) {
-            start(new Intent(context, DebugActivity.class));
+            start(debugActivityIntentFactory.createDebugActivityIntent(context));
         } else {
             Timber.e("Someone is trying to reach the debug activity in a release build... that won't work");
         }
