@@ -50,6 +50,9 @@
       android:theme="@style/Theme.Squanchy.Settings"
       android:label="@string/settings_label" />
 
+    <activity android:name="net.squanchy.contest.ContestActivity"
+      android:theme="@style/Theme.Squanchy.Dialog" />
+
     <receiver
       android:name="net.squanchy.notification.NotificationAlarmReceiver"
       android:directBootAware="true">
