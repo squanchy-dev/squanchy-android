@@ -1,26 +1,36 @@
 package net.squanchy.contest;
 
 import net.squanchy.remoteconfig.RemoteConfig;
+import net.squanchy.service.firebase.FirebaseAuthService;
+import net.squanchy.service.firebase.FirebaseDbService;
+import net.squanchy.service.firebase.model.FirebaseAchievements;
 
+import io.reactivex.Observable;
 import io.reactivex.Single;
+import io.reactivex.functions.BiFunction;
 import io.reactivex.schedulers.Schedulers;
 
 public class ContestService {
 
-    RemoteConfig remoteConfig;
+    private final RemoteConfig remoteConfig;
+    private final FirebaseDbService dbService;
+    private final FirebaseAuthService authService;
 
-    public ContestService(RemoteConfig remoteConfig) {
+    public ContestService(RemoteConfig remoteConfig, FirebaseDbService dbService, FirebaseAuthService authService) {
         this.remoteConfig = remoteConfig;
+        this.dbService = dbService;
+        this.authService = authService;
     }
 
-    public Single<ContestStandings> updateContest(String checkpointId) {
-        return remoteConfig.contestGoal()
-                .flatMap(goal -> buildContestStanding(goal, checkpointId))
+    public Single<ContestStandings> standings() {
+        return authService.ifUserSignedInThenObservableFrom(dbService::achievements)
+                .first(FirebaseAchievements.empty())
+                .zipWith(remoteConfig.contestGoal(), buildStandings())
                 .subscribeOn(Schedulers.io());
     }
 
-    private Single<ContestStandings> buildContestStanding(Integer total, String checkpointId){
-        // TODO add real impl
-        return Single.just(ContestStandings.create(total, 0, ""));
+    private BiFunction<FirebaseAchievements, Integer, ContestStandings> buildStandings() {
+        return (achievements, goal) -> ContestStandings.create(goal, achievements.achievements.size(), "");
     }
+    
 }
