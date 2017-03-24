@@ -64,6 +64,10 @@ public class Navigator {
         start(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
     }
 
+    public void toSchedule() {
+        toSchedule(Optional.absent(), Optional.absent());
+    }
+
     public void toSchedule(Optional<String> dayId, Optional<String> eventId) {
         start(HomeActivity.createScheduleIntent(context, dayId, eventId));
     }
