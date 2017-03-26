@@ -73,7 +73,7 @@ public class ImageViewWithForeground extends ImageView implements ViewWithForegr
 
         a.recycle();
 
-        super.setClipToOutline(true);
+//        super.setClipToOutline(true);
     }
 
     @Override
@@ -223,7 +223,7 @@ public class ImageViewWithForeground extends ImageView implements ViewWithForegr
     }
 
     @Override
-    protected final void onSizeChanged(int w, int h, int oldw, int oldh) {
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         foregroundBoundsChanged = true;
         super.onSizeChanged(w, h, oldw, oldh);
     }
