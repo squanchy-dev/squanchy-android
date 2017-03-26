@@ -41,7 +41,7 @@ public class SpeakerRepository {
                 firebaseSpeaker.id,
                 checksum.getChecksumOf(firebaseSpeaker.id),
                 firebaseSpeaker.name,
-                firebaseSpeaker.name,
+                firebaseSpeaker.bio,
                 Optional.fromNullable(firebaseSpeaker.company_name),
                 Optional.fromNullable(firebaseSpeaker.company_url),
                 Optional.fromNullable(firebaseSpeaker.personal_url),
