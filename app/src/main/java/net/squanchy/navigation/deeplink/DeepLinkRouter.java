@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public class DeepLinkRouter {
 
-    private static final Pattern PATTERN_VALID_SCHEME = Pattern.compile("[^\\w]");
+    private static final Pattern PATTERN_INVALID_SCHEME = Pattern.compile("[^\\w]");
 
     private final String scheme;
     private final NavigationStrategyFactory navigationStrategyFactory;
@@ -21,7 +21,7 @@ public class DeepLinkRouter {
     }
 
     private void validateScheme(String scheme) {
-        if (PATTERN_VALID_SCHEME.matcher(scheme).find()) {
+        if (PATTERN_INVALID_SCHEME.matcher(scheme).find()) {
             throw new IllegalArgumentException("The scheme must not contain non-word characters. Make sure you didn't include the '://' part.");
         }
     }
