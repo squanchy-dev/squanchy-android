@@ -1,17 +1,19 @@
-package net.squanchy.home;
+package net.squanchy.home.deeplink;
 
 import android.content.Context;
 import android.content.Intent;
 
+import net.squanchy.home.BottomNavigationSection;
+import net.squanchy.home.HomeActivity;
 import net.squanchy.support.lang.Optional;
 
 import timber.log.Timber;
 
 public class HomeActivityDeepLinkCreator {
 
-    private static final String KEY_INITIAL_PAGE_INDEX = "HomeActivity.initial_page_index";
-    private static final String KEY_DAY_ID = "HomeActivity.day_id";
-    private static final String KEY_EVENT_ID = "HomeActivity.event_id";
+    static final String KEY_INITIAL_PAGE_INDEX = "HomeActivity.initial_page_index";
+    static final String KEY_DAY_ID = "HomeActivity.day_id";
+    static final String KEY_EVENT_ID = "HomeActivity.event_id";
 
     private final Context context;
 
@@ -23,7 +25,7 @@ public class HomeActivityDeepLinkCreator {
         return new Builder(context).withSection(section);
     }
 
-    static class Builder {
+    public static class Builder {
 
         private final Context context;
 

@@ -1,6 +1,6 @@
 package net.squanchy.search.view;
 
-import android.content.Context;
+import android.app.Activity;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -32,7 +32,7 @@ class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     private final ImageLoader imageLoader;
-    private final Context context;
+    private final Activity activity;
 
     @Nullable
     private SearchRecyclerView.OnSearchResultClickListener listener;
@@ -40,10 +40,10 @@ class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private SearchResults searchResults = SearchResults.create(Collections.emptyList(), Collections.emptyList());
     private ItemsAdapter itemsAdapter = new ItemsAdapter(searchResults);
 
-    SearchAdapter(Context context) {
-        this.context = context;
+    SearchAdapter(Activity activity) {
+        this.activity = activity;
 
-        imageLoader = ImageLoaderInjector.obtain(context).imageLoader();
+        imageLoader = ImageLoaderInjector.obtain(activity).imageLoader();
         setHasStableIds(true);
     }
 
@@ -61,12 +61,12 @@ class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, @ViewTypeId int viewType) {
         if (viewType == ViewTypeId.HEADER) {
-            return new HeaderViewHolder(LayoutInflater.from(context).inflate(R.layout.item_search_header, parent, false));
+            return new HeaderViewHolder(LayoutInflater.from(activity).inflate(R.layout.item_search_header, parent, false));
         } else if (viewType == ViewTypeId.SPEAKER) {
-            View view = LayoutInflater.from(context).inflate(R.layout.item_search_result_small, parent, false);
+            View view = LayoutInflater.from(activity).inflate(R.layout.item_search_result_small, parent, false);
             return new SpeakerViewHolder(view);
         } else if (viewType == ViewTypeId.EVENT) {
-            View view = LayoutInflater.from(context).inflate(R.layout.item_schedule_event_talk, parent, false);
+            View view = LayoutInflater.from(activity).inflate(R.layout.item_schedule_event_talk, parent, false);
             return new EventViewHolder((EventItemView) view);
         } else {
             throw new IllegalArgumentException("Item type " + viewType + " not supported");

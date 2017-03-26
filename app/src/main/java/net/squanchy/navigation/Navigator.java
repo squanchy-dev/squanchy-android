@@ -15,6 +15,11 @@ import net.squanchy.support.lang.Optional;
 
 import timber.log.Timber;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
+
 public class Navigator {
 
     private final Context context;
@@ -34,7 +39,10 @@ public class Navigator {
     }
 
     public void toSpeakerDetails(String speakerId) {
-        start(SpeakerDetailsActivity.createIntent(context, speakerId));
+        start(
+                SpeakerDetailsActivity.createIntent(context, speakerId),
+                FLAG_ACTIVITY_SINGLE_TOP | FLAG_ACTIVITY_CLEAR_TOP
+        );
     }
 
     public void toSearch() {
@@ -64,20 +72,36 @@ public class Navigator {
         start(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
     }
 
+    public void toSchedule() {
+        toSchedule(Optional.absent(), Optional.absent());
+    }
+
     public void toSchedule(Optional<String> dayId, Optional<String> eventId) {
-        start(HomeActivity.createScheduleIntent(context, dayId, eventId));
+        start(
+                HomeActivity.createScheduleIntent(context, dayId, eventId),
+                FLAG_ACTIVITY_SINGLE_TOP | FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK
+        );
     }
 
     public void toFavorites() {
-        start(HomeActivity.createFavoritesIntent(context));
+        start(
+                HomeActivity.createFavoritesIntent(context),
+                FLAG_ACTIVITY_SINGLE_TOP | FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK
+        );
     }
 
     public void toTwitterFeed() {
-        start(HomeActivity.createTweetsIntent(context));
+        start(
+                HomeActivity.createTweetsIntent(context),
+                FLAG_ACTIVITY_SINGLE_TOP | FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK
+        );
     }
 
     public void toVenueInfo() {
-        start(HomeActivity.createVenueInfoIntent(context));
+        start(
+                HomeActivity.createVenueInfoIntent(context),
+                FLAG_ACTIVITY_SINGLE_TOP | FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK
+        );
     }
 
     public void toDebugSettings() {
@@ -89,6 +113,13 @@ public class Navigator {
     }
 
     private void start(Intent intent) {
+        start(intent, 0);
+    }
+
+    private void start(Intent intent, int flags) {
+        if (flags != 0) {
+            intent.addFlags(flags);
+        }
         context.startActivity(intent);
     }
 }
