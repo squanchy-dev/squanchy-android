@@ -37,12 +37,11 @@
     android:layout_height="@dimen/venue_info_label_height"
     android:text="@string/venue_location_label" />
 
-  <ImageView
+  <net.squanchy.support.widget.ImageViewWithForeground
     android:id="@+id/venue_map"
+    style="@style/VenueInfo.Description.Map"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:foreground="?android:attr/selectableItemBackground"
-    android:clickable="true"
     android:contentDescription="@string/venue_map_content_description" />
 
 </merge>
