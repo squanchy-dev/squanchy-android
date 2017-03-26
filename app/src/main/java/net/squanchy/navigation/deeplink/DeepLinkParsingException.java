@@ -1,6 +1,6 @@
 package net.squanchy.navigation.deeplink;
 
-public class DeepLinkParsingException extends RuntimeException {
+final class DeepLinkParsingException extends RuntimeException {
 
     static DeepLinkParsingException eventDetailsMissingEventId(String path) {
         return new DeepLinkParsingException("Event details deeplink is missing event ID: \"" + path +"\"");
