@@ -1,6 +1,6 @@
 package net.squanchy.navigation.deeplink;
 
-public class RoutingException extends RuntimeException {
+final class RoutingException extends RuntimeException {
 
     static RoutingException malformedUrl(String url, Throwable cause) {
         return new RoutingException("Malformed URL: \"" + url + "\"", cause);
