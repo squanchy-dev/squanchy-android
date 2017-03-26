@@ -12,9 +12,8 @@ class HomeService {
         this.authService = authService;
     }
 
-    public Completable signInAnonymouslyIfNecessary() {
-        return authService
-                .currentUser()
+    Completable signInAnonymouslyIfNecessary() {
+        return authService.currentUser()
                 .flatMapCompletable(user -> {
                     if (user.isPresent()) {
                         return Completable.complete();
