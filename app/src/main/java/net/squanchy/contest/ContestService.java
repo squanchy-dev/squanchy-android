@@ -5,9 +5,6 @@ import net.squanchy.service.firebase.FirebaseAuthService;
 import net.squanchy.service.firebase.FirebaseDbService;
 import net.squanchy.service.firebase.model.FirebaseAchievements;
 
-import io.fabric.sdk.android.services.common.SystemCurrentTimeProvider;
-import io.reactivex.Completable;
-import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.schedulers.Schedulers;
@@ -32,12 +29,11 @@ public class ContestService {
     }
 
     private BiFunction<FirebaseAchievements, Integer, ContestStandings> buildStandings() {
-        return (achievements, goal) -> ContestStandings.create(goal, achievements.achievements.size(), "");
+        return (achievements, goal) -> ContestStandings.create(goal, achievements.map.size());
     }
 
     public Single<ContestStandings> addAchievement(String checkpointId) {
-        return authService.ifUserSignedInThenCompletableFrom(
-                userId -> dbService.addAchievement(checkpointId, userId, System.currentTimeMillis())
-        ).andThen(standings()).subscribeOn(Schedulers.io());
+        return authService.ifUserSignedInThenCompletableFrom(userId -> dbService.addAchievement(checkpointId, userId, System.currentTimeMillis()))
+                .andThen(standings()).subscribeOn(Schedulers.io());
     }
 }
