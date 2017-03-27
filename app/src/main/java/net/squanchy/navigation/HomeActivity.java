@@ -34,7 +34,7 @@ import io.reactivex.disposables.CompositeDisposable;
 public class HomeActivity extends TypefaceStyleableActivity {
 
     private static final String STATE_KEY_SELECTED_PAGE_INDEX = "HomeActivity.selected_page_index";
-    private static final boolean PROXIMITY_SERVICE_RADAR_NOT_STARTED = false;
+    private static final String KEY_CONTEST_STAND = "stand";
 
     private final Map<BottomNavigationSection, View> pageViews = new HashMap<>(4);
     private final List<LifecycleView> lifecycleViews = new ArrayList<>(2);
@@ -48,9 +48,8 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private Analytics analytics;
     private RemoteConfig remoteConfig;
     private HomeService homeService;
+    private Navigator navigator;
     private CompositeDisposable subscriptions;
-
-    private boolean proximityServiceRadarStarted = PROXIMITY_SERVICE_RADAR_NOT_STARTED;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,6 +73,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
         remoteConfig = homeComponent.remoteConfig();
         homeService = homeComponent.homeService();
         proximityService = homeComponent.proximityService();
+        navigator = homeComponent.navigator();
         subscriptions = new CompositeDisposable();
     }
 
@@ -82,13 +82,14 @@ public class HomeActivity extends TypefaceStyleableActivity {
         super.onStart();
         selectInitialPage(currentSection);
 
-        // TODO do something useful with this once we can
         remoteConfig.proximityServicesEnabled()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(enabled -> {
                     if (enabled) {
-                        proximityServiceRadarStarted = true;
+                        // TODO ask for permission first
                         proximityService.startRadar();
+                    } else {
+                        proximityService.stopRadar();
                     }
 
                     subscriptions.add(
@@ -105,7 +106,10 @@ public class HomeActivity extends TypefaceStyleableActivity {
     }
 
     private void handleProximityEvent(ProximityEvent proximityEvent) {
-        // TODO do something with the event, like showing feedback or opening an event detail
+        // TODO highlight speach near the rooms
+        if (proximityEvent.action().equals(KEY_CONTEST_STAND)) {
+            navigator.toContest(proximityEvent.subject());
+        }
     }
 
     private void collectPageViewsInto(Map<BottomNavigationSection, View> pageViews) {
@@ -235,10 +239,10 @@ public class HomeActivity extends TypefaceStyleableActivity {
     protected void onStop() {
         super.onStop();
 
-        if (proximityServiceRadarStarted) {
+        /*if (proximityServiceRadarStarted) {
             proximityService.stopRadar();
             proximityServiceRadarStarted = PROXIMITY_SERVICE_RADAR_NOT_STARTED;
-        }
+        }*/
 
         subscriptions.clear();
 
