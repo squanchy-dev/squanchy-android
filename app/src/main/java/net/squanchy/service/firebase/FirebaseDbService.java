@@ -40,8 +40,8 @@ public final class FirebaseDbService {
     private static final String TRACKS_BY_ID_NODE = "data/tracks/%1$s";
     private static final String FAVORITES_NODE = "user/%1$s/favorites";
     private static final String FAVORITES_BY_ID_NODE = "user/%1$s/favorites/map/%2$s";
-    private static final String ACHIEVEMENS_NODE = "user/%1$s/achievements";
-    private static final String ACHIEVEMENS_BY_ID_NODE = "user/%1$s/achievements/map/%2$s";
+    private static final String ACHIEVEMENTS_NODE = "user/%1$s/achievements";
+    private static final String ACHIEVEMENTS_BY_ID_NODE = "user/%1$s/achievements/map/%2$s";
 
     private final DatabaseReference database;
 
@@ -92,7 +92,7 @@ public final class FirebaseDbService {
     }
 
     public Observable<FirebaseAchievements> achievements(String userId) {
-        String path = String.format(Locale.US, ACHIEVEMENS_NODE, userId);
+        String path = String.format(Locale.US, ACHIEVEMENTS_NODE, userId);
 
         return observeOptionalChild(path, FirebaseAchievements.class)
                 .map(optionalAchievements -> optionalAchievements.or(FirebaseAchievements.empty()));
@@ -154,13 +154,13 @@ public final class FirebaseDbService {
         });
     }
 
-    public Completable addAchievement(String achievementId, String userId, Long timestamp) {
+    public Completable addAchievement(String userId, String achievementId, Long timestamp) {
         return updateAchievement(userId, achievementId, reference -> reference.setValue(timestamp));
     }
 
     public Completable updateAchievement(String userId, String achievementId, Func1<DatabaseReference, Task<Void>> action) {
         return Completable.create(emitter -> {
-            String path = String.format(Locale.US, ACHIEVEMENS_BY_ID_NODE, userId, achievementId);
+            String path = String.format(Locale.US, ACHIEVEMENTS_BY_ID_NODE, userId, achievementId);
             action.call(database.child(path))
                     .addOnSuccessListener(result -> emitter.onComplete())
                     .addOnFailureListener(emitter::onError);

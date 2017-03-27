@@ -111,24 +111,29 @@ public class HomeActivity extends TypefaceStyleableActivity {
     }
 
     private void askProximityPersmissionToStartRadar() {
-        int permissionCheck = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION);
+        int permissionCheck = ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+        );
         if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
             proximityService.startRadar();
         } else {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[] { Manifest.permission.ACCESS_FINE_LOCATION },
+                    MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
+            );
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION)
+        if (requestCode == MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION) {
             if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 proximityService.startRadar();
             }
+        }
     }
 
     private void handleProximityEvent(ProximityEvent proximityEvent) {

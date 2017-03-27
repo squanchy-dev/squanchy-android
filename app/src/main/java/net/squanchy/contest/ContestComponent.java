@@ -11,5 +11,4 @@ import dagger.Component;
 public interface ContestComponent {
 
     ContestService contestService();
-
 }

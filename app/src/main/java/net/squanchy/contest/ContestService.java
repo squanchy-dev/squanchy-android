@@ -34,6 +34,7 @@ public class ContestService {
 
     public Single<ContestStandings> addAchievement(String achievementId) {
         return authService.ifUserSignedInThenCompletableFrom(userId -> dbService.addAchievement(achievementId, userId, System.currentTimeMillis()))
-                .andThen(standings()).subscribeOn(Schedulers.io());
+                .andThen(standings())
+                .subscribeOn(Schedulers.io());
     }
 }

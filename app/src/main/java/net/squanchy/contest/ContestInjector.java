@@ -1,7 +1,6 @@
 package net.squanchy.contest;
 
 import net.squanchy.injection.ApplicationInjector;
-import net.squanchy.speaker.DaggerSpeakerDetailsComponent;
 
 public class ContestInjector {
 
@@ -13,5 +12,4 @@ public class ContestInjector {
                 .contestModule(new ContestModule())
                 .build();
     }
-
 }
