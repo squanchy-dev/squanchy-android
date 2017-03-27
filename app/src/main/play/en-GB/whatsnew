@@ -1,6 +1,4 @@
-Version 0.4.1 alpha
+Version 0.5.0 alpha
 
-* Bug fixes and performance improvements 😆 (plus one from 0.4.0)
-* Update NearIT SDK
-* Sign-in with Google (required for favourites at the moment)
-* What's new: speaker details, settings, notifications, update NearIT SDK
+* Fixed speakers' bio missing 🐛
+* What's new: venue info screen 🏨
