@@ -39,6 +39,10 @@ public class Navigator {
         context.startActivity(new Intent(context, SearchActivity.class));
     }
 
+    public void toContest() {
+        toContest(null);
+    }
+
     public void toContest(String achievementId) {
         Intent intent = ContestActivity.createIntent(context, achievementId);
         context.startActivity(intent);

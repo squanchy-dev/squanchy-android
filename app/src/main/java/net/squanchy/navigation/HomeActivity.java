@@ -1,13 +1,18 @@
 package net.squanchy.navigation;
 
+import android.Manifest;
 import android.animation.ValueAnimator;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.transition.Fade;
 import android.support.transition.TransitionManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +40,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
 
     private static final String STATE_KEY_SELECTED_PAGE_INDEX = "HomeActivity.selected_page_index";
     private static final String KEY_CONTEST_STAND = "stand";
+    private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1000;
 
     private final Map<BottomNavigationSection, View> pageViews = new HashMap<>(4);
     private final List<LifecycleView> lifecycleViews = new ArrayList<>(2);
@@ -86,8 +92,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(enabled -> {
                     if (enabled) {
-                        // TODO ask for permission first
-                        proximityService.startRadar();
+                        askProximityPersmissionToStartRadar();
                     } else {
                         proximityService.stopRadar();
                     }
@@ -103,6 +108,27 @@ public class HomeActivity extends TypefaceStyleableActivity {
         for (LifecycleView lifecycleView : lifecycleViews) {
             lifecycleView.onStart();
         }
+    }
+
+    private void askProximityPersmissionToStartRadar() {
+        int permissionCheck = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+        if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+            proximityService.startRadar();
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION)
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                proximityService.startRadar();
+            }
     }
 
     private void handleProximityEvent(ProximityEvent proximityEvent) {
