@@ -34,11 +34,11 @@ class TwitterRepository {
     }
 
     void refresh(Callback<TimelineResult<Tweet>> callback) {
-        twitterService.refresh(callback);
+        twitterService.refresh();
     }
 
     void previous(Callback<TimelineResult<Tweet>> callback) {
-        twitterService.previous(new CallbackDecorator(callback));
+        twitterService.previous();
     }
 
     @TweetViewTypeId

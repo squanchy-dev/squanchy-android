@@ -1,7 +1,5 @@
 package net.squanchy.tweets.model;
 
-import com.twitter.sdk.android.core.models.Search;
-
 import io.reactivex.Observable;
 
 public class SearchTimeline {
@@ -20,18 +18,21 @@ public class SearchTimeline {
         this.resultType = resultType;
     }
 
-
     public void next(Long sinceId) {
         //next
     }
 
     public void previous(Long maxId) {
-       //previous
+        //previous
     }
 
-    Observable<Search> createSearchRequest(final Long sinceId, final Long maxId) {
+    public boolean isNotLoading() {
+        return !isLoading;
+    }
+
+    void createSearchRequest(final Long sinceId, final Long maxId) {
         isLoading = true;
-        return null;
+        //create the search request
     }
 
     public enum ResultType {
