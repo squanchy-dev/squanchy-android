@@ -1,6 +1,6 @@
 package net.squanchy.service.proximity.injection;
 
-import android.content.Context;
+import android.app.Application;
 
 import net.squanchy.R;
 import net.squanchy.injection.ApplicationLifecycle;
@@ -14,17 +14,17 @@ import it.near.sdk.NearItManager;
 @Module
 public class ProximityModule {
 
-    private final Context context;
+    private final Application application;
 
-    public ProximityModule(Context context) {
-        this.context = context;
+    public ProximityModule(Application application) {
+        this.application = application;
     }
 
     @ApplicationLifecycle
     @Provides
     ProximityProvider proximityProvider() {
         return new NearITProximityProvider(
-                new NearItManager(context.getApplicationContext(), context.getString(R.string.nearit_api_key))
+                new NearItManager(application, application.getString(R.string.nearit_api_key))
         );
     }
 
