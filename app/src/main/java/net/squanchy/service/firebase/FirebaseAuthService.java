@@ -105,17 +105,15 @@ public class FirebaseAuthService {
         });
     }
 
+    public Completable signOut() {
+        auth.signOut();
+        return signInAnonymously();
+    }
+
     public Completable signInAnonymously() {
         return Completable.create(e -> auth.signInAnonymously()
                 .addOnSuccessListener(result -> e.onComplete())
                 .addOnFailureListener(e::onError));
-    }
-
-    public Completable signOut() {
-        return Completable.create(e -> {
-            auth.signOut();
-            e.onComplete();
-        });
     }
 
     private interface TaskProvider<T> {
