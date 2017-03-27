@@ -1,4 +1,4 @@
-package net.squanchy.tweets.view;
+package net.squanchy.tweets.model;
 
 import com.twitter.sdk.android.tweetui.TimelineCursor;
 
@@ -8,7 +8,6 @@ public class TimelineStateHolder {
 
     private TimelineCursor nextCursor;
     private TimelineCursor previousCursor;
-    private final AtomicBoolean requestInFlight = new AtomicBoolean(false);
 
     public TimelineStateHolder() {
     }
@@ -43,13 +42,5 @@ public class TimelineStateHolder {
         if (previousCursor == null) {
             previousCursor = timelineCursor;
         }
-    }
-
-    public boolean startTimelineRequest() {
-        return requestInFlight.compareAndSet(false, true);
-    }
-
-    public void finishTimelineRequest() {
-        requestInFlight.set(false);
     }
 }
