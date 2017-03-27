@@ -68,7 +68,7 @@ public class ContestActivity extends TypefaceStyleableActivity {
                         getContentMessage(standings.current(), standings.goal())));
     }
 
-    private String getContentMessage(int current, int goal) {
+    private String getContentMessage(int current, float goal) {
         if(current == goal)
             return "Congratulation, you won!";
         else

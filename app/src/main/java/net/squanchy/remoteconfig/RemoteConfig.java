@@ -30,9 +30,8 @@ public class RemoteConfig {
                 .subscribeOn(Schedulers.io());
     }
 
-    public Single<Integer> contestGoal() {
+    public Single<Long> contestGoal() {
         return getConfigValue(() -> remoteConfig.getLong(KEY_CONTEST_GOAL))
-                .map(Long::intValue)
                 .subscribeOn(Schedulers.io());
     }
 

@@ -32,7 +32,7 @@ public class ContestService {
         ).subscribeOn(Schedulers.io());
     }
 
-    private BiFunction<FirebaseAchievements, Integer, ContestStandings> buildStandings() {
+    private BiFunction<FirebaseAchievements, Long, ContestStandings> buildStandings() {
         return (achievements, goal) -> ContestStandings.create(goal, achievements.map.size());
     }
 
