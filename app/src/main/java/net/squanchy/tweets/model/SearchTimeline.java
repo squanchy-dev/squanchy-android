@@ -1,22 +1,18 @@
 package net.squanchy.tweets.model;
 
 import com.twitter.sdk.android.core.models.Search;
-import com.twitter.sdk.android.tweetui.Timeline;
-
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 import io.reactivex.Observable;
 
 public class SearchTimeline {
 
-    static final String FILTER_RETWEETS = " -filter:retweets";
-    private static final String SCRIBE_SECTION = "search";
-    private static final SimpleDateFormat QUERY_DATE = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+    private static final String FILTER_RETWEETS = " -filter:retweets";
 
-    final String query;
-    final String resultType;
-    final Integer maxItemsPerRequest;
+    private boolean isLoading = false;
+
+    private final String query;
+    private final String resultType;
+    private final Integer maxItemsPerRequest;
 
     SearchTimeline(String query, String resultType, Integer maxItemsPerRequest) {
         this.query = query + FILTER_RETWEETS;
@@ -34,6 +30,7 @@ public class SearchTimeline {
     }
 
     Observable<Search> createSearchRequest(final Long sinceId, final Long maxId) {
+        isLoading = true;
         return null;
     }
 
