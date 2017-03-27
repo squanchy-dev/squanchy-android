@@ -1,4 +1,4 @@
-package net.squanchy.navigation;
+package net.squanchy.home;
 
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;

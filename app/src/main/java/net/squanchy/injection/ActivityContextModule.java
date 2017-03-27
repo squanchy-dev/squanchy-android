@@ -16,7 +16,7 @@ public class ActivityContextModule {
     }
 
     @Provides
-    public Context activityContext() {
+    Context activityContext() {
         return activity;
     }
 }
