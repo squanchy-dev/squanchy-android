@@ -9,7 +9,7 @@ import net.squanchy.service.proximity.injection.ProximityService;
 import dagger.Component;
 
 @ActivityLifecycle
-@Component(modules = {HomeModule.class}, dependencies = ApplicationComponent.class)
+@Component(modules = {HomeModule.class, NavigationModule.class}, dependencies = ApplicationComponent.class)
 interface HomeComponent {
 
     Analytics analytics();
@@ -19,4 +19,6 @@ interface HomeComponent {
     ProximityService proximityService();
 
     HomeService homeService();
+
+    Navigator navigator();
 }
