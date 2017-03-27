@@ -72,8 +72,6 @@ public class ImageViewWithForeground extends ImageView implements ViewWithForegr
                 R.styleable.CircleImageView_android_foregroundInsidePadding, true);
 
         a.recycle();
-
-//        super.setClipToOutline(true);
     }
 
     @Override
