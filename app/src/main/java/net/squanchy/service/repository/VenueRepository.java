@@ -1,7 +1,7 @@
 package net.squanchy.service.repository;
 
-import net.squanchy.venue.domain.view.Venue;
 import net.squanchy.service.firebase.FirebaseDbService;
+import net.squanchy.venue.domain.view.Venue;
 
 import io.reactivex.Observable;
 
@@ -21,7 +21,8 @@ public class VenueRepository {
                         firebaseVenue.lat,
                         firebaseVenue.lon,
                         firebaseVenue.description,
-                        firebaseVenue.map_url
+                        firebaseVenue.map_url,
+                        firebaseVenue.timezone
                 ));
     }
 }

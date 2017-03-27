@@ -13,4 +13,6 @@ public class FirebaseVenue {
     public String description;
 
     public String map_url;
+
+    public String timezone;
 }

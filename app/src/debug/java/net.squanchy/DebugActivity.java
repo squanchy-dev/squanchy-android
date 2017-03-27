@@ -22,6 +22,7 @@ import net.squanchy.schedule.domain.view.Track;
 import net.squanchy.speaker.domain.view.Speaker;
 import net.squanchy.support.lang.Optional;
 
+import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
 
 @SuppressWarnings("checkstyle:magicnumber")
@@ -82,10 +83,10 @@ public class DebugActivity extends Activity {
                 Event.Type.TALK,
                 true,
                 Optional.absent(),
-                Optional.of(createTrack())
+                Optional.of(createTrack()),
+                DateTimeZone.forID("Europe/Rome")
         );
     }
-
 
     private Optional<Place> createPlace() {
         Place place = Place.create("1", "That room over there", Optional.absent());
@@ -116,7 +117,7 @@ public class DebugActivity extends Activity {
                 Optional.of(generateColor()),
                 Optional.of(generateColor()),
                 Optional.of("gs://droidcon-italy-2017.appspot.com/tracks/0.webp")
-                );
+        );
     }
 
     public int getRandomColor() {

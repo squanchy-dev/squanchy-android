@@ -7,6 +7,7 @@ import net.squanchy.eventdetails.domain.view.ExperienceLevel;
 import net.squanchy.speaker.domain.view.Speaker;
 import net.squanchy.support.lang.Optional;
 
+import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
 
 import static net.squanchy.schedule.domain.view.PlaceFixtures.aPlace;
@@ -26,6 +27,7 @@ public final class EventFixtures {
     private Event.Type type = Event.Type.OTHER;
     private Optional<String> description = Optional.of("Now this is the story all about how\nMy life got flipped, turned upside down");
     private Optional<Track> track = Optional.of(aTrack().build());
+    private DateTimeZone timeZone = DateTimeZone.forID("Europe/Rome");
 
     public static EventFixtures anEvent() {
         return new EventFixtures();
@@ -95,6 +97,11 @@ public final class EventFixtures {
         return this;
     }
 
+    public EventFixtures withTimeZone(DateTimeZone timeZone) {
+        this.timeZone = timeZone;
+        return this;
+    }
+
     public Event build() {
         return Event.create(
                 eventId,
@@ -109,7 +116,8 @@ public final class EventFixtures {
                 type,
                 false,
                 description,
-                track
+                track,
+                timeZone
         );
     }
 }

@@ -14,18 +14,20 @@ import net.squanchy.service.firebase.model.FirebaseEvents;
 import net.squanchy.service.firebase.model.FirebaseFavorites;
 import net.squanchy.service.firebase.model.FirebasePlaces;
 import net.squanchy.service.firebase.model.FirebaseTracks;
+import net.squanchy.service.firebase.model.FirebaseVenue;
 import net.squanchy.speaker.domain.view.Speaker;
 import net.squanchy.support.lang.Checksum;
 import net.squanchy.support.lang.Func1;
 import net.squanchy.support.lang.Lists;
 import net.squanchy.support.lang.Optional;
 
+import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
-import io.reactivex.functions.Function5;
+import io.reactivex.functions.Function6;
 import io.reactivex.schedulers.Schedulers;
 
 import static net.squanchy.support.lang.Lists.filter;
@@ -48,6 +50,7 @@ public class EventRepository {
         Observable<FirebaseFavorites> favoritesObservable = dbService.favorites(userId);
         Observable<List<Place>> placesObservable = dbService.places().map(toPlaces());                 // TODO access them by ID directly?
         Observable<List<Track>> tracksObservable = dbService.tracks().map(toTracks());                 // TODO extract repositories?
+        Observable<DateTimeZone> timeZoneObservable = dbService.venueInfo().map(toTimeZone());
 
         return Observable.combineLatest(
                 eventObservable,
@@ -55,8 +58,13 @@ public class EventRepository {
                 favoritesObservable,
                 placesObservable,
                 tracksObservable,
+                timeZoneObservable,
                 combineIntoEvent()
         ).subscribeOn(Schedulers.io());
+    }
+
+    private Function<FirebaseVenue, DateTimeZone> toTimeZone() {
+        return firebaseVenue -> DateTimeZone.forID(firebaseVenue.timezone);
     }
 
     private Function<FirebasePlaces, List<Place>> toPlaces() {
@@ -79,8 +87,8 @@ public class EventRepository {
         );
     }
 
-    private Function5<FirebaseEvent, List<Speaker>, FirebaseFavorites, List<Place>, List<Track>, Event> combineIntoEvent() {
-        return (apiEvent, speakers, favorites, places, tracks) -> Event.create(
+    private Function6<FirebaseEvent, List<Speaker>, FirebaseFavorites, List<Place>, List<Track>, DateTimeZone, Event> combineIntoEvent() {
+        return (apiEvent, speakers, favorites, places, tracks, timeZone) -> Event.create(
                 apiEvent.id,
                 checksum.getChecksumOf(apiEvent.id),
                 apiEvent.day_id,
@@ -93,7 +101,8 @@ public class EventRepository {
                 Event.Type.fromRawType(apiEvent.type),
                 favorites.hasFavorite(apiEvent.id),
                 Optional.fromNullable(apiEvent.description),
-                trackById(tracks, apiEvent.track_id)
+                trackById(tracks, apiEvent.track_id),
+                timeZone
         );
     }
 
@@ -111,6 +120,7 @@ public class EventRepository {
         Observable<FirebaseFavorites> favoritesObservable = dbService.favorites(userId);
         Observable<List<Place>> placesObservable = dbService.places().map(toPlaces());                 // TODO access them by ID directly?
         Observable<List<Track>> tracksObservable = dbService.tracks().map(toTracks());                 // TODO extract repositories?
+        Observable<DateTimeZone> timeZoneObservable = dbService.venueInfo().map(toTimeZone());
 
         return Observable.combineLatest(
                 sessionsObservable,
@@ -118,20 +128,22 @@ public class EventRepository {
                 favoritesObservable,
                 placesObservable,
                 tracksObservable,
+                timeZoneObservable,
                 combineIntoEvents()
         );
     }
 
-    private Function5<FirebaseEvents, List<Speaker>, FirebaseFavorites, List<Place>, List<Track>, List<Event>> combineIntoEvents() {
-        return (firebaseEvents, speakers, favorites, places, tracks) ->
-                Lists.map(new ArrayList<>(firebaseEvents.events.values()), combineEventWith(speakers, favorites, places, tracks));
+    private Function6<FirebaseEvents, List<Speaker>, FirebaseFavorites, List<Place>, List<Track>, DateTimeZone, List<Event>> combineIntoEvents() {
+        return (firebaseEvents, speakers, favorites, places, tracks, timeZone) ->
+                Lists.map(new ArrayList<>(firebaseEvents.events.values()), combineEventWith(speakers, favorites, places, tracks, timeZone));
     }
 
     private Func1<FirebaseEvent, Event> combineEventWith(
             List<Speaker> speakers,
             FirebaseFavorites favorites,
             List<Place> places,
-            List<Track> tracks
+            List<Track> tracks,
+            DateTimeZone timeZone
     ) {
         return apiEvent -> Event.create(
                 apiEvent.id,
@@ -146,7 +158,9 @@ public class EventRepository {
                 Event.Type.fromRawType(apiEvent.type),
                 favorites.hasFavorite(apiEvent.id),
                 Optional.fromNullable(apiEvent.description),
-                trackById(tracks, apiEvent.track_id));
+                trackById(tracks, apiEvent.track_id),
+                timeZone
+        );
     }
 
     private List<Speaker> speakersByIds(List<Speaker> speakers, List<String> speaker_ids) {
