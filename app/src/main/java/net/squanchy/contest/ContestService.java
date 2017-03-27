@@ -32,8 +32,8 @@ public class ContestService {
         return (achievements, goal) -> ContestStandings.create(goal, achievements.map.size());
     }
 
-    public Single<ContestStandings> addAchievement(String checkpointId) {
-        return authService.ifUserSignedInThenCompletableFrom(userId -> dbService.addAchievement(checkpointId, userId, System.currentTimeMillis()))
+    public Single<ContestStandings> addAchievement(String achievementId) {
+        return authService.ifUserSignedInThenCompletableFrom(userId -> dbService.addAchievement(achievementId, userId, System.currentTimeMillis()))
                 .andThen(standings()).subscribeOn(Schedulers.io());
     }
 }

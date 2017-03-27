@@ -16,15 +16,19 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class ContestActivity extends TypefaceStyleableActivity {
 
-    private static final String EXTRA_CHECKPOINT_ID = ContestActivity.class.getCanonicalName() + ".checkpoint_id";
+    private static final String EXTRA_ACHIEVEMENT_ID = ContestActivity.class.getCanonicalName() + ".achievement_id";
 
     private ContestService contestService;
     private TextView contestResults;
 
-    public static Intent createIntent(Context context, String checkpoint) {
+    public static Intent createIntent(Context context, String achievementId) {
         Intent intent = new Intent(context, ContestActivity.class);
-        intent.putExtra(EXTRA_CHECKPOINT_ID, checkpoint);
+        intent.putExtra(EXTRA_ACHIEVEMENT_ID, achievementId);
         return intent;
+    }
+
+    public static Intent createIntent(Context context) {
+        return new Intent(context, ContestActivity.class);
     }
 
     @Override
@@ -45,11 +49,16 @@ public class ContestActivity extends TypefaceStyleableActivity {
         super.onStart();
 
         Intent intent = getIntent();
-        String checkpointId = intent.getStringExtra(EXTRA_CHECKPOINT_ID);
+        String achievementId = intent.getStringExtra(EXTRA_ACHIEVEMENT_ID);
 
-        contestService.addAchievement(checkpointId)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::updateWith);
+        if (achievementId != null) {
+            contestService.addAchievement(achievementId)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(this::updateWith);
+        } else {
+            contestService.standings()
+                    .subscribe(this::updateWith);
+        }
     }
 
     private void updateWith(ContestStandings standings) {
