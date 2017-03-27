@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
+import net.squanchy.contest.ContestActivity;
 import net.squanchy.eventdetails.EventDetailsActivity;
 import net.squanchy.search.SearchActivity;
 import net.squanchy.signin.SignInActivity;
@@ -35,6 +36,11 @@ public class Navigator {
 
     public void toSearch() {
         context.startActivity(new Intent(context, SearchActivity.class));
+    }
+
+    public void toContest(String achievementId) {
+        Intent intent = ContestActivity.createIntent(context, achievementId);
+        context.startActivity(intent);
     }
 
     public void toSettings() {
