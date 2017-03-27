@@ -5,7 +5,7 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:orientation="vertical"
-  tools:context="net.squanchy.settings.settings.SettingsActivity">
+  tools:context="net.squanchy.settings.SettingsActivity">
 
   <android.support.design.widget.AppBarLayout
     style="@style/Squanchy.Appbar"
@@ -13,11 +13,42 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <android.support.v7.widget.Toolbar
-      android:id="@+id/toolbar"
+    <net.squanchy.settings.view.SettingsHeaderLayout
+      android:id="@+id/settings_header"
       android:layout_width="match_parent"
-      android:layout_height="?attr/actionBarSize"
-      app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+      android:layout_height="wrap_content">
+
+      <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="98dp"
+        android:gravity="fill_horizontal|center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <net.squanchy.support.widget.CircleImageView
+          android:id="@+id/user_photo"
+          android:layout_width="52dp"
+          android:layout_height="52dp" />
+
+        <TextView
+          android:id="@+id/user_name"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="8dp"
+          android:maxLines="2"
+          android:textSize="20sp"
+          app:fontPath="?titleTypeface" />
+
+      </LinearLayout>
+
+    </net.squanchy.settings.view.SettingsHeaderLayout>
 
   </android.support.design.widget.AppBarLayout>
 
