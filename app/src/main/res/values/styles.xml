@@ -304,4 +304,9 @@
     <item name="fontPath">?defaultMediumTypeface</item>
   </style>
 
+  <style name="VenueInfo.Description.Map" parent="None">
+    <item name="android:clickable">true</item>
+    <item name="android:foreground">?android:attr/selectableItemBackground</item>
+  </style>
+
 </resources>

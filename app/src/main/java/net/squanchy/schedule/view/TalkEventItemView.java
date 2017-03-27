@@ -14,8 +14,6 @@ import org.joda.time.format.DateTimeFormatter;
 
 public class TalkEventItemView extends EventItemView {
 
-    private final DateTimeFormatter dateTimeFormatter;
-
     private TextView titleView;
     private TextView timestampView;
     private ExperienceLevelIconView experienceLevelIconView;
@@ -27,7 +25,6 @@ public class TalkEventItemView extends EventItemView {
 
     public TalkEventItemView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.dateTimeFormatter = DateTimeFormat.shortTime();
     }
 
     @Override
@@ -44,7 +41,7 @@ public class TalkEventItemView extends EventItemView {
     public void updateWith(Event event) {
         ensureSupportedType(event.type());
 
-        timestampView.setText(dateTimeFormatter.print(event.startTime()));
+        timestampView.setText(startTimeAsFormattedString(event));
         titleView.setText(event.title());
 
         if (event.experienceLevel().isPresent()) {
@@ -56,6 +53,13 @@ public class TalkEventItemView extends EventItemView {
 
         speakerView.setVisibility(event.speakers().isEmpty() ? GONE : VISIBLE);
         speakerView.updateWith(event.speakers(), speaker -> { });
+    }
+
+    private String startTimeAsFormattedString(Event event) {
+        DateTimeFormatter formatter = DateTimeFormat.shortTime()
+                .withZone(event.timeZone());
+
+        return formatter.print(event.startTime().toDateTime());
     }
 
     private void ensureSupportedType(Event.Type type) {

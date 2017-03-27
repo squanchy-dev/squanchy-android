@@ -2,10 +2,12 @@ package net.squanchy.venue.domain.view;
 
 import com.google.auto.value.AutoValue;
 
+import org.joda.time.DateTimeZone;
+
 @AutoValue
 public abstract class Venue {
 
-    public static Venue create(String name, String address, double latitude, double longitude, String description, String mapUrl) {
+    public static Venue create(String name, String address, double latitude, double longitude, String description, String mapUrl, String timezoneId) {
         return new AutoValue_Venue.Builder()
                 .name(name)
                 .address(address)
@@ -13,6 +15,7 @@ public abstract class Venue {
                 .longitude(longitude)
                 .description(description)
                 .mapUrl(mapUrl)
+                .timeZone(DateTimeZone.forID(timezoneId))
                 .build();
     }
 
@@ -28,6 +31,8 @@ public abstract class Venue {
 
     public abstract String mapUrl();
 
+    public abstract DateTimeZone timeZone();
+
     @AutoValue.Builder
     public abstract static class Builder {
 
@@ -42,6 +47,8 @@ public abstract class Venue {
         public abstract Builder description(String description);
 
         public abstract Builder mapUrl(String mapUrl);
+
+        public abstract Builder timeZone(DateTimeZone timeZone);
 
         public abstract Venue build();
     }

@@ -61,5 +61,6 @@
   <string name="venue_info_label">Information</string>
   <string name="venue_about_label">About the venue</string>
   <string name="venue_location_label">Location</string>
+  <string name="venue_map_content_description">Map to the venue</string>
 
 </resources>

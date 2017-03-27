@@ -12,6 +12,7 @@ import net.squanchy.settings.SettingsActivity;
 import net.squanchy.signin.SignInActivity;
 import net.squanchy.speaker.SpeakerDetailsActivity;
 import net.squanchy.support.lang.Optional;
+import net.squanchy.venue.domain.view.Venue;
 
 import timber.log.Timber;
 
@@ -66,6 +67,11 @@ public class Navigator {
         return !context.getPackageManager()
                 .queryIntentActivities(intent, 0)
                 .isEmpty();
+    }
+
+    public void toMapsFor(Venue venue) {
+        String mapsUrl = "http://maps.google.com/?daddr=" + Uri.encode(venue.name()) + "," + Uri.encode(venue.address());
+        toExternalUrl(mapsUrl);
     }
 
     public void toExternalUrl(String url) {
