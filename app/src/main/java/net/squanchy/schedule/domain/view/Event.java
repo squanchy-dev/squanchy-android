@@ -8,6 +8,7 @@ import net.squanchy.eventdetails.domain.view.ExperienceLevel;
 import net.squanchy.speaker.domain.view.Speaker;
 import net.squanchy.support.lang.Optional;
 
+import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
 
 @AutoValue
@@ -26,7 +27,8 @@ public abstract class Event {
             Type type,
             boolean favorited,
             Optional<String> description,
-            Optional<Track> track) {
+            Optional<Track> track,
+            DateTimeZone timeZone) {
         return new AutoValue_Event.Builder()
                 .id(eventId)
                 .numericId(numericEventId)
@@ -41,6 +43,7 @@ public abstract class Event {
                 .type(type)
                 .favorited(favorited)
                 .description(description)
+                .timeZone(timeZone)
                 .build();
     }
 
@@ -69,6 +72,8 @@ public abstract class Event {
     public abstract boolean favorited();
 
     public abstract Optional<String> description();
+
+    public abstract DateTimeZone timeZone();
 
     public String speakersNames() {
         StringBuilder speakersBuilder = new StringBuilder();
@@ -111,6 +116,8 @@ public abstract class Event {
         public abstract Builder favorited(boolean favorited);
 
         public abstract Builder description(Optional<String> description);
+
+        public abstract Builder timeZone(DateTimeZone timeZone);
 
         public abstract Event build();
     }
