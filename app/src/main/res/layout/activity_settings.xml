@@ -25,26 +25,22 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
       <LinearLayout
+        style="@style/Settings.Header.User.Container"
         android:layout_width="match_parent"
-        android:layout_height="98dp"
-        android:gravity="fill_horizontal|center_vertical"
-        android:orientation="horizontal"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp">
+        android:layout_height="@dimen/settings_header_user_container_height">
 
         <net.squanchy.support.widget.CircleImageView
           android:id="@+id/user_photo"
-          android:layout_width="52dp"
-          android:layout_height="52dp" />
+          style="@style/Settings.Header.User.Photo"
+          android:layout_width="@dimen/settings_header_user_photo_size"
+          android:layout_height="@dimen/settings_header_user_photo_size" />
 
         <TextView
           android:id="@+id/user_name"
+          style="@style/Settings.Header.User.Name"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginStart="8dp"
-          android:maxLines="2"
-          android:textSize="20sp"
-          app:fontPath="?titleTypeface" />
+          android:layout_marginStart="@dimen/settings_header_user_name_margin_start" />
 
       </LinearLayout>
 
