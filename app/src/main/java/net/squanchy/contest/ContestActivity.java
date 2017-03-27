@@ -36,7 +36,6 @@ public class ContestActivity extends TypefaceStyleableActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_contest_summary);
-        getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         contestResults = (TextView) findViewById(R.id.contest_result);
 
@@ -70,6 +69,9 @@ public class ContestActivity extends TypefaceStyleableActivity {
     }
 
     private String getContentMessage(int current, int goal) {
-        return current == goal ? "Congratulation, you won!" : "Still missing " + (goal - current) + " stands";
+        if(current == goal)
+            return "Congratulation, you won!";
+        else
+            return "Still missing " + (goal - current) + " stands";
     }
 }

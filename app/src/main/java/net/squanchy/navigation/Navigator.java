@@ -40,7 +40,8 @@ public class Navigator {
     }
 
     public void toContest() {
-        toContest(null);
+        Intent intent = ContestActivity.createIntent(context);
+        context.startActivity(intent);
     }
 
     public void toContest(String achievementId) {
