@@ -5,9 +5,12 @@ import net.squanchy.service.firebase.FirebaseAuthService;
 import net.squanchy.service.firebase.FirebaseDbService;
 import net.squanchy.service.firebase.model.FirebaseAchievements;
 
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.schedulers.Schedulers;
+
+import static io.reactivex.Observable.combineLatest;
 
 public class ContestService {
 
@@ -21,18 +24,19 @@ public class ContestService {
         this.authService = authService;
     }
 
-    public Single<ContestStandings> standings() {
-        return authService.ifUserSignedInThenObservableFrom(dbService::achievements)
-                .first(FirebaseAchievements.empty())
-                .zipWith(remoteConfig.contestGoal(), buildStandings())
-                .subscribeOn(Schedulers.io());
+    public Observable<ContestStandings> standings() {
+        return combineLatest(
+                authService.ifUserSignedInThenObservableFrom(dbService::achievements),
+                remoteConfig.contestGoal().toObservable(),
+                buildStandings()
+        ).subscribeOn(Schedulers.io());
     }
 
     private BiFunction<FirebaseAchievements, Integer, ContestStandings> buildStandings() {
         return (achievements, goal) -> ContestStandings.create(goal, achievements.map.size());
     }
 
-    public Single<ContestStandings> addAchievement(String achievementId) {
+    public Observable<ContestStandings> addAchievement(String achievementId) {
         return authService.ifUserSignedInThenCompletableFrom(userId -> dbService.addAchievement(achievementId, userId, System.currentTimeMillis()))
                 .andThen(standings())
                 .subscribeOn(Schedulers.io());
