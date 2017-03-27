@@ -111,6 +111,13 @@ public class FirebaseAuthService {
                 .addOnFailureListener(e::onError));
     }
 
+    public Completable signOut() {
+        return Completable.create(e -> {
+            auth.signOut();
+            e.onComplete();
+        });
+    }
+
     private interface TaskProvider<T> {
 
         Task<T> task();

@@ -64,14 +64,13 @@ public class SettingsHeaderLayout extends LinearLayout {
 
     public void updateWith(Optional<FirebaseUser> user) {
         if (user.isPresent() && !user.get().isAnonymous()) {
-            updateWithAuthenticatedUser(user);
+            updateWithAuthenticatedUser(user.get());
         } else {
             // TODO non-signed-in state
         }
     }
 
-    private void updateWithAuthenticatedUser(Optional<FirebaseUser> user) {
-        FirebaseUser firebaseUser = user.get();
+    private void updateWithAuthenticatedUser(FirebaseUser firebaseUser) {
         Optional<UserInfo> googleUserInfo = googleUserInfoFrom(firebaseUser);
         if (googleUserInfo.isPresent()) {
             UserInfo userInfo = googleUserInfo.get();

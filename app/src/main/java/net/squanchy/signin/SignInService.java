@@ -38,4 +38,9 @@ public class SignInService {
         return authService.signInWithGoogle(account)
                 .subscribeOn(Schedulers.io());
     }
+
+    public Completable signOut() {
+        return authService.signOut()
+                .subscribeOn(Schedulers.io());
+    }
 }
