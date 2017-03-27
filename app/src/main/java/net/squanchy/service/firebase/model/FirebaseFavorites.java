@@ -12,13 +12,13 @@ public class FirebaseFavorites {
     public FirebaseFavorites() {
     }
 
-    public FirebaseFavorites(Map<String, Boolean> favorites) {
-        this.favorites = favorites;
+    public FirebaseFavorites(Map<String, Boolean> map) {
+        this.map = map;
     }
 
-    public Map<String, Boolean> favorites;
+    public Map<String, Boolean> map;
 
     public boolean hasFavorite(String eventId) {
-        return favorites.containsKey(eventId);
+        return map.containsKey(eventId);
     }
 }

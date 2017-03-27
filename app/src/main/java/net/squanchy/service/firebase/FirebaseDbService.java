@@ -38,10 +38,10 @@ public final class FirebaseDbService {
     private static final String TRACKS_NODE = "data/tracks";
     private static final String VENUE_INFO_NODE = "data/venue";
     private static final String TRACKS_BY_ID_NODE = "data/tracks/%1$s";
-    private static final String FAVORITES_NODE = "user/%1$s/";
-    private static final String FAVORITES_BY_ID_NODE = "user/%1$s/favorites/%2$s";
-    private static final String ACHIEVEMENS_NODE = "user/%1$s";
-    private static final String ACHIEVEMENS_BY_ID_NODE = "user/%1$s/achievements/%2$s";
+    private static final String FAVORITES_NODE = "user/%1$s/favorites";
+    private static final String FAVORITES_BY_ID_NODE = "user/%1$s/favorites/map/%2$s";
+    private static final String ACHIEVEMENS_NODE = "user/%1$s/achievements";
+    private static final String ACHIEVEMENS_BY_ID_NODE = "user/%1$s/achievements/map/%2$s";
 
     private final DatabaseReference database;
 
@@ -158,7 +158,7 @@ public final class FirebaseDbService {
         return updateAchievement(userId, achievementId, reference -> reference.setValue(timestamp));
     }
 
-    public Completable updateAchievement(String userId, String achievementId, Func1<DatabaseReference, Task<Void>> action){
+    public Completable updateAchievement(String userId, String achievementId, Func1<DatabaseReference, Task<Void>> action) {
         return Completable.create(emitter -> {
             String path = String.format(Locale.US, ACHIEVEMENS_BY_ID_NODE, userId, achievementId);
             action.call(database.child(path))

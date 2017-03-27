@@ -12,9 +12,9 @@ public class FirebaseAchievements {
     public FirebaseAchievements() {
     }
 
-    public FirebaseAchievements(Map<String, Long> achievements) {
-        this.achievements = achievements;
+    public FirebaseAchievements(Map<String, Long> map) {
+        this.map = map;
     }
 
-    public Map<String, Long> achievements;
+    public Map<String, Long> map;
 }
