@@ -66,7 +66,7 @@ public class SettingsHeaderLayout extends LinearLayout {
         if (user.isPresent() && !user.get().isAnonymous()) {
             updateWithAuthenticatedUser(user.get());
         } else {
-            // TODO non-signed-in state
+            updateWithNoOrAnonymousUser();
         }
     }
 
@@ -103,5 +103,10 @@ public class SettingsHeaderLayout extends LinearLayout {
     private Optional<String> photoUrlFor(UserInfo userInfo) {
         return Optional.fromNullable(userInfo.getPhotoUrl())
                 .map(Uri::toString);
+    }
+
+    private void updateWithNoOrAnonymousUser() {
+        userPhotoView.setImageDrawable(null);
+        userNameView.setText(null);
     }
 }
