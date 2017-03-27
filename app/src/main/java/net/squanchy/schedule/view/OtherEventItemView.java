@@ -14,8 +14,6 @@ import org.joda.time.format.DateTimeFormatter;
 
 public class OtherEventItemView extends EventItemView {
 
-    private final DateTimeFormatter dateTimeFormatter;
-
     private TextView titleView;
     private TextView timestampView;
     private ImageView illustrationView;
@@ -26,7 +24,6 @@ public class OtherEventItemView extends EventItemView {
 
     public OtherEventItemView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.dateTimeFormatter = DateTimeFormat.shortTime();
     }
 
     @Override
@@ -42,10 +39,28 @@ public class OtherEventItemView extends EventItemView {
     public void updateWith(Event event) {
         ensureSupportedType(event.type());
 
-        timestampView.setText(dateTimeFormatter.print(event.startTime()));
+        timestampView.setText(startTimeAsFormattedString(event));
         titleView.setText(event.title());
 
         illustrationView.setImageResource(illustrationFor(event.type()));
+    }
+
+    private void ensureSupportedType(Event.Type type) {
+        if (type == Event.Type.COFFEE_BREAK
+                || type == Event.Type.LUNCH
+                || type == Event.Type.OTHER
+                || type == Event.Type.REGISTRATION
+                || type == Event.Type.SOCIAL) {
+            return;
+        }
+        throw new IllegalArgumentException("Event with type " + type.name() + " is not supported by this view");
+    }
+
+    private String startTimeAsFormattedString(Event event) {
+        DateTimeFormatter formatter = DateTimeFormat.shortTime()
+                .withZone(event.timeZone());
+
+        return formatter.print(event.startTime().toDateTime());
     }
 
     @DrawableRes
@@ -60,16 +75,5 @@ public class OtherEventItemView extends EventItemView {
             default:
                 throw new IllegalArgumentException("Type not supported: " + type.name());
         }
-    }
-
-    private void ensureSupportedType(Event.Type type) {
-        if (type == Event.Type.COFFEE_BREAK
-                || type == Event.Type.LUNCH
-                || type == Event.Type.OTHER
-                || type == Event.Type.REGISTRATION
-                || type == Event.Type.SOCIAL) {
-            return;
-        }
-        throw new IllegalArgumentException("Event with type " + type.name() + " is not supported by this view");
     }
 }
