@@ -3,11 +3,14 @@
 
   <PreferenceCategory android:title="@string/account_category_label">
     <Preference
-      android:title="user@email.com"
-      android:icon="@drawable/ic_email_default" />
+      android:key="@string/account_email_preference_key"
+      android:title="@string/settings_account_not_logged_in"
+      android:icon="@drawable/ic_email_default"
+      android:selectable="false" />
     <Preference
-      android:title="@string/sign_out_title"
-      android:icon="@drawable/ic_signout_default" />
+      android:key="@string/account_signin_signout_preference_key"
+      android:title="@string/sign_in_title"
+      android:icon="@drawable/ic_signin_signout_default" />
   </PreferenceCategory>
 
   <PreferenceCategory android:title="@string/settings_and_help_title">
@@ -30,7 +33,7 @@
   <PreferenceCategory android:title="@string/settings_about_category">
 
     <Preference
-      android:key="@string/buid_version_preference_key"
+      android:key="@string/build_version_preference_key"
       android:title="@string/settings_about_build_version_title" />
 
   </PreferenceCategory>
