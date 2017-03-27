@@ -111,11 +111,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
     }
 
     private void askProximityPersmissionToStartRadar() {
-        int permissionCheck = ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-        );
-        if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+        if (hasLocationPermission()) {
             proximityService.startRadar();
         } else {
             ActivityCompat.requestPermissions(
@@ -129,15 +125,27 @@ public class HomeActivity extends TypefaceStyleableActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION) {
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (hasGrantedFineLocationAccess(grantResults)) {
                 proximityService.startRadar();
             }
         }
     }
 
+    private boolean hasLocationPermission() {
+        final int granted = ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+        );
+        return granted == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private boolean hasGrantedFineLocationAccess(@NonNull int[] grantResults) {
+        return grantResults.length > 0 &&
+                grantResults[0] == PackageManager.PERMISSION_GRANTED;
+    }
+
     private void handleProximityEvent(ProximityEvent proximityEvent) {
-        // TODO highlight speach near the rooms
+        // TODO highlight speech near the rooms
         if (proximityEvent.action().equals(KEY_CONTEST_STAND)) {
             navigator.toContest(proximityEvent.subject());
         }
@@ -269,11 +277,6 @@ public class HomeActivity extends TypefaceStyleableActivity {
     @Override
     protected void onStop() {
         super.onStop();
-
-        /*if (proximityServiceRadarStarted) {
-            proximityService.stopRadar();
-            proximityServiceRadarStarted = PROXIMITY_SERVICE_RADAR_NOT_STARTED;
-        }*/
 
         subscriptions.clear();
 
