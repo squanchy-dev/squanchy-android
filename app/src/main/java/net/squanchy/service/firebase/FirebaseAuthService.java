@@ -86,6 +86,7 @@ public class FirebaseAuthService {
 
     public Completable ifUserSignedInThenCompletableFrom(Func1<String, Completable> completableProvider) {
         return ifUserSignedIn()
+                .firstOrError()
                 .flatMapCompletable(user -> completableProvider.call(user.getUid()));
     }
 
