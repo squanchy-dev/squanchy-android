@@ -69,7 +69,7 @@
   <string name="help_title">Help</string>
   <string name="about_title">About</string>
   <string name="settings_account_not_logged_in">Not logged in</string>
-  <string name="prompt_to_favorite">You have no favorites, yet. Which is odd. EVERYONE has at least some favorite talks. I mean who doesn\'t yo?</string>
-  <string name="prompt_to_sign_in_for_favorites">You should totally sign in and start favoriting stuff. Favoriting is good for your health and wellbeing.\n\nTouch to sign in</string>
+  <string name="prompt_to_sign_in_for_favorites">Get notified about upcoming talks, Your favorite talks are also get synced across all your devices. \n\nTap to sign in</string>
+  <string name="prompt_to_favorite">You have no favorite talks, yet. Find some talk, touch the ♥ button and you are good to go.</string>
 
 </resources>

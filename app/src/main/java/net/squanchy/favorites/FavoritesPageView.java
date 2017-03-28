@@ -6,7 +6,6 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.TextView;
 
 import net.squanchy.R;
 import net.squanchy.analytics.Analytics;
@@ -34,7 +33,8 @@ public class FavoritesPageView extends CoordinatorLayout implements LifecycleVie
     private Navigator navigate;
     private Analytics analytics;
     private FavoritesListView favoritesListView;
-    private TextView emptyView;
+    private View emptyViewSignedIn;
+    private View emptyViewSignedOut;
 
     public FavoritesPageView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -50,7 +50,9 @@ public class FavoritesPageView extends CoordinatorLayout implements LifecycleVie
 
         progressBar = findViewById(R.id.progressbar);
         favoritesListView = (FavoritesListView) findViewById(R.id.favorites_list);
-        emptyView = (TextView) findViewById(R.id.empty_view);
+        emptyViewSignedIn = findViewById(R.id.empty_view_signed_in);
+        emptyViewSignedOut = findViewById(R.id.empty_view_signed_out);
+        emptyViewSignedOut.setOnClickListener(view -> navigate.toSignIn());
 
         setupToolbar();
 
@@ -112,25 +114,24 @@ public class FavoritesPageView extends CoordinatorLayout implements LifecycleVie
     private void updateWith(Schedule schedule, ScheduleViewPagerAdapter.OnEventClickedListener listener) {
         favoritesListView.updateWith(schedule, listener);
         progressBar.setVisibility(GONE);
-        emptyView.setVisibility(GONE);
-    }
-
-    public void promptToSign() {
-        favoritesListView.setVisibility(GONE);
-        progressBar.setVisibility(GONE);
-        emptyView.setVisibility(VISIBLE);
-        emptyView.setText(R.string.prompt_to_sign_in_for_favorites);
-        emptyView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.illustration_prompt_to_sign_in, 0, 0);
-
-        emptyView.setOnClickListener(view -> navigate.toSignIn());
+        emptyViewSignedOut.setVisibility(GONE);
+        emptyViewSignedIn.setVisibility(GONE);
     }
 
     private void promptToFavorite() {
         favoritesListView.setVisibility(GONE);
         progressBar.setVisibility(GONE);
-        emptyView.setVisibility(VISIBLE);
-        emptyView.setText(R.string.prompt_to_favorite);
-        emptyView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.illustration_prompt_to_favorite, 0, 0);
+
+        emptyViewSignedOut.setVisibility(GONE);
+        emptyViewSignedIn.setVisibility(VISIBLE);
+    }
+
+    public void promptToSign() {
+        favoritesListView.setVisibility(GONE);
+        progressBar.setVisibility(GONE);
+
+        emptyViewSignedOut.setVisibility(VISIBLE);
+        emptyViewSignedIn.setVisibility(GONE);
     }
 
     private static class ScheduledAndSignedIn {

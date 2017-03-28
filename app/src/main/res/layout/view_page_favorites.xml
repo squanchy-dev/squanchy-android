@@ -26,14 +26,32 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-  <TextView
-    android:id="@+id/empty_view"
-    style="@style/Favorite.Empty.Text"
+  <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    tools:drawableTop="@drawable/illustration_lunch"
-    tools:text="@string/prompt_to_sign_in_for_favorites" />
+    android:layout_marginLeft="@dimen/card_horizontal_margin"
+    android:layout_marginRight="@dimen/card_horizontal_margin"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <net.squanchy.favorites.view.NoFavoritesView
+      android:id="@+id/empty_view_signed_in"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:visibility="gone" />
+
+    <TextView
+      android:id="@+id/empty_view_signed_out"
+      style="@style/Favorite.Empty.Text"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:drawableTop="@drawable/illustration_prompt_to_sign_in"
+      android:visibility="gone"
+      android:foreground="@drawable/card_touch_feedback"
+      android:text="@string/prompt_to_sign_in_for_favorites"
+      tools:visibility="visible" />
+  </LinearLayout>
 
   <ProgressBar
     android:id="@+id/progressbar"
