@@ -23,6 +23,7 @@ public class TweetsPageView extends LinearLayout {
     private TweetsAdapter tweetsAdapter;
     private SwipeRefreshLayout swipeLayout;
     private ScrollListener scrollListener;
+    private Disposable disposable;
     private boolean refreshingData;
 
     public TweetsPageView(Context context, AttributeSet attrs) {
@@ -71,6 +72,9 @@ public class TweetsPageView extends LinearLayout {
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         scrollListener.destroy();
+        if (disposable != null && !disposable.isDisposed()) {
+            disposable.dispose();
+        }
     }
 
     private void initList() {
@@ -94,7 +98,7 @@ public class TweetsPageView extends LinearLayout {
         swipeLayout.setRefreshing(true);
         refreshingData = true;
         scrollListener.reset();
-        tweetsAdapter.refresh()
+        disposable = tweetsAdapter.refresh()
                 .subscribe(l -> onRefreshFinished(), this::onError);
     }
 
