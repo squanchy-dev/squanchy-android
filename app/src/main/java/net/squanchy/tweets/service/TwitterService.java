@@ -1,30 +1,31 @@
 package net.squanchy.tweets.service;
 
+import com.twitter.sdk.android.core.models.Search;
+import com.twitter.sdk.android.core.models.Tweet;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import net.squanchy.tweets.model.SearchTimeline;
-import net.squanchy.tweets.model.TimelineStateHolder;
-import net.squanchy.tweets.model.Tweet;
+import io.reactivex.Observable;
 
 public class TwitterService {
 
-    private final SearchTimeline timeline;
-    private final TimelineStateHolder timelineStateHolder;
-    private List<Tweet> itemList = new ArrayList<>();
+    private final TwitterRepository repo;
+    private List<Tweet> itemList;
 
-    public TwitterService(SearchTimeline timeline) {
-        this.timeline = timeline;
-        this.timelineStateHolder = new TimelineStateHolder();
+    public TwitterService(TwitterRepository repo) {
+        this.repo = repo;
+        this.itemList = new ArrayList<>();
     }
 
-    public void refresh() {
-        timelineStateHolder.resetCursors();
-        load(timelineStateHolder.positionForNext());
+    public Observable<Search> refresh() {
+        return repo.refresh()
+                .doOnNext(this::onRefreshSuccess);
     }
 
-    public void previous() {
-        loadPrevious(timelineStateHolder.positionForPrevious());
+    public Observable<Search> previous() {
+        return repo.previous()
+                .doOnNext(this::onPreviousSuccess);
     }
 
     public int size() {
@@ -35,15 +36,18 @@ public class TwitterService {
         return itemList.get(position);
     }
 
-    private void load(Long minPosition) {
-        if (timeline.isNotLoading()) {
-            timeline.next(minPosition);
+    private void onRefreshSuccess(Search search) {
+        if (!search.tweets.isEmpty()) {
+            itemList.clear();
+            final ArrayList<Tweet> receivedItems = new ArrayList<>(search.tweets);
+            receivedItems.addAll(itemList);
+            itemList = receivedItems;
         }
     }
 
-    private void loadPrevious(Long maxPosition) {
-        if (timeline.isNotLoading()) {
-            timeline.previous(maxPosition);
+    private void onPreviousSuccess(Search search) {
+        if (!search.tweets.isEmpty()) {
+            itemList.addAll(search.tweets);
         }
     }
 }
