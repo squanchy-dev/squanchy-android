@@ -34,7 +34,6 @@ import net.squanchy.support.widget.InterceptingBottomNavigationView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import timber.log.Timber;
 
 public class HomeActivity extends TypefaceStyleableActivity {
 
