@@ -44,4 +44,6 @@ public abstract class ScrollListener extends RecyclerView.OnScrollListener {
     }
 
     protected abstract void loadMore();
+
+    public abstract void destroy();
 }

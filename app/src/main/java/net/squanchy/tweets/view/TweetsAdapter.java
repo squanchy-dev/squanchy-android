@@ -6,20 +6,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.twitter.sdk.android.core.models.Tweet;
-import com.twitter.sdk.android.tweetui.Timeline;
+import com.twitter.sdk.android.core.models.Search;
 
 import net.squanchy.R;
-import net.squanchy.tweets.TweetsPageView;
+import net.squanchy.tweets.service.TwitterRepository;
+
+import io.reactivex.Observable;
 
 public class TweetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final Context context;
-    private final TwitterRepository repository;
+    private final TwitterItemAdapter itemAdapter;
 
-    public TweetsAdapter(Timeline<Tweet> timeline, Context context) {
+    public TweetsAdapter(TwitterRepository repo, Context context) {
         this.context = context;
-        this.repository = new TwitterRepository(timeline);
+        this.itemAdapter = new TwitterItemAdapter(repo);
     }
 
     @Override
@@ -38,15 +39,15 @@ public class TweetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     @TweetViewTypeId
     public int getItemViewType(int position) {
-        return repository.getItemViewType(position);
+        return itemAdapter.getItemViewType(position);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        int viewType = repository.getItemViewType(position);
+        int viewType = itemAdapter.getItemViewType(position);
 
         if (viewType == TweetViewTypeId.TWEET) {
-            ((TweetViewHolder) holder).updateWith(repository.itemAt(position));
+            ((TweetViewHolder) holder).updateWith(itemAdapter.itemAt(position));
         } else if (viewType == TweetViewTypeId.LOADING) {
             /* do nothing */
         } else {
@@ -56,18 +57,18 @@ public class TweetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemCount() {
-        return repository.size();
+        return itemAdapter.size();
     }
 
     public boolean isEmpty() {
-        return repository.isEmpty();
+        return itemAdapter.isEmpty();
     }
 
-    public void refresh(TweetsPageView.TimelineLoadingCallback timelineLoadingCallback) {
-        repository.refresh(timelineLoadingCallback);
+    public Observable<Search> refresh() {
+        return itemAdapter.refresh();
     }
 
-    public void previous(TweetsPageView.TimelineLoadingCallback timelineLoadingCallback) {
-        repository.previous(timelineLoadingCallback);
+    public Observable<Search> previous() {
+        return itemAdapter.previous();
     }
 }

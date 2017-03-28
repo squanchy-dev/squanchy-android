@@ -8,17 +8,12 @@ import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.twitter.sdk.android.core.Callback;
-import com.twitter.sdk.android.core.Result;
-import com.twitter.sdk.android.core.TwitterException;
-import com.twitter.sdk.android.core.models.Tweet;
-import com.twitter.sdk.android.tweetui.SearchTimeline;
-import com.twitter.sdk.android.tweetui.TimelineResult;
-
 import net.squanchy.R;
+import net.squanchy.tweets.service.TwitterRepository;
 import net.squanchy.tweets.view.ScrollListener;
 import net.squanchy.tweets.view.TweetsAdapter;
 
+import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
 
 public class TweetsPageView extends LinearLayout {
@@ -72,36 +67,26 @@ public class TweetsPageView extends LinearLayout {
         initList();
     }
 
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        scrollListener.destroy();
+    }
+
     private void initList() {
 
         Context context = getContext();
         String query = context.getString(R.string.social_query);
 
-        if (!isInEditMode()) {
-            SearchTimeline timeline = new SearchTimeline.Builder()
-                    .resultType(SearchTimeline.ResultType.RECENT)
-                    .maxItemsPerRequest(10)
-                    .query(query)
-                    .build();
-
-            tweetsAdapter = new TweetsAdapter(timeline, context);
-            tweetsList.setAdapter(tweetsAdapter);
-        }
+        TwitterRepository repo = new TwitterRepository(query);
+        tweetsAdapter = new TweetsAdapter(repo, context);
+        tweetsList.setAdapter(tweetsAdapter);
 
         emptyView.setText(context.getString(R.string.no_tweets_for_query, query));
 
         LinearLayoutManager layoutManager = (LinearLayoutManager) tweetsList.getLayoutManager();
-
-        scrollListener = new ScrollListener(layoutManager) {
-            @Override
-            protected void loadMore() {
-                Timber.d("Firing request for more tweets");
-                tweetsAdapter.previous(new TimelineLoadingCallback());
-            }
-        };
-
+        scrollListener = new TweetScrollListener(layoutManager);
         tweetsList.addOnScrollListener(scrollListener);
-
         refreshTimeline();
     }
 
@@ -109,7 +94,8 @@ public class TweetsPageView extends LinearLayout {
         swipeLayout.setRefreshing(true);
         refreshingData = true;
         scrollListener.reset();
-        tweetsAdapter.refresh(new TimelineLoadingCallback());
+        tweetsAdapter.refresh()
+                .subscribe(l -> onRefreshFinished(), this::onError);
     }
 
     private void onRefreshFinished() {
@@ -127,17 +113,33 @@ public class TweetsPageView extends LinearLayout {
         tweetsAdapter.notifyDataSetChanged();
     }
 
-    public class TimelineLoadingCallback extends Callback<TimelineResult<Tweet>> {
+    private void onError(Throwable throwable) {
+        Timber.e(throwable);
+        onRefreshFinished();
+    }
 
-        @Override
-        public void success(Result<TimelineResult<Tweet>> result) {
-            onRefreshFinished();
+    private class TweetScrollListener extends ScrollListener {
+
+        private Disposable disposable;
+
+        TweetScrollListener(LinearLayoutManager layoutManager) {
+            super(layoutManager);
         }
 
         @Override
-        public void failure(TwitterException exception) {
-            onRefreshFinished();
-            Timber.e(exception, "Error while refreshing the timeline.");
+        protected void loadMore() {
+            Timber.d("Firing request for more tweets");
+            if (!refreshingData) {
+                disposable = tweetsAdapter.previous()
+                        .subscribe(search -> onRefreshFinished(), TweetsPageView.this::onError);
+            }
+        }
+
+        @Override
+        public void destroy() {
+            if (disposable != null && !disposable.isDisposed()) {
+                disposable.dispose();
+            }
         }
     }
 }
