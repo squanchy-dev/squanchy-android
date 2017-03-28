@@ -22,6 +22,9 @@ import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Place;
 import net.squanchy.support.lang.Optional;
 
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 public class EventDetailsLayout extends LinearLayout {
 
     private static final String WHEN_DATE_TIME_FORMAT = "EEEE, d MMMM 'at' HH:mm";
@@ -60,9 +63,15 @@ public class EventDetailsLayout extends LinearLayout {
     }
 
     public void updateWith(Event event) {
-        whenTextView.setText(event.startTime().toString(WHEN_DATE_TIME_FORMAT));
+        updateWhen(event);
         updateWhere(event);
         updateDescription(event.description());
+    }
+
+    private void updateWhen(Event event) {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern(WHEN_DATE_TIME_FORMAT)
+                .withZone(event.timeZone());
+        whenTextView.setText(formatter.print(event.startTime().toDateTime()));
     }
 
     private void updateWhere(Event event) {

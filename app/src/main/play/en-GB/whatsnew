@@ -1,6 +1,3 @@
-Version 0.4.1 alpha
+Version 0.6.0 alpha
 
-* Bug fixes and performance improvements 😆 (plus one from 0.4.0)
-* Update NearIT SDK
-* Sign-in with Google (required for favourites at the moment)
-* What's new: speaker details, settings, notifications, update NearIT SDK
+* What's new: setting screen (WIP), deeplinks (see ticket #148 on squanchy.net)

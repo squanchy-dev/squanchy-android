@@ -6,20 +6,16 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 
+import net.squanchy.injection.ActivityContextModule;
+
 import dagger.Module;
 import dagger.Provides;
 
-@Module
+@Module(includes = {ActivityContextModule.class})
 class ImageLoaderModule {
 
-    private final Context context;
-
-    ImageLoaderModule(Context context) {
-        this.context = context;
-    }
-
     @Provides
-    RequestManager glideRequestManager() {
+    RequestManager glideRequestManager(Context context) {
         return Glide.with(context);
     }
 

@@ -2,7 +2,6 @@ package net.squanchy.schedule;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.support.design.widget.CoordinatorLayout;
@@ -16,7 +15,7 @@ import android.view.View;
 import net.squanchy.R;
 import net.squanchy.analytics.Analytics;
 import net.squanchy.analytics.ContentType;
-import net.squanchy.navigation.LifecycleView;
+import net.squanchy.home.LifecycleView;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Schedule;
@@ -28,6 +27,8 @@ import timber.log.Timber;
 import uk.co.chrisjenx.calligraphy.CalligraphyTypefaceSpan;
 import uk.co.chrisjenx.calligraphy.CalligraphyUtils;
 import uk.co.chrisjenx.calligraphy.TypefaceUtils;
+
+import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 
 public class SchedulePageView extends CoordinatorLayout implements LifecycleView {
 
@@ -69,19 +70,6 @@ public class SchedulePageView extends CoordinatorLayout implements LifecycleView
         tabLayout.addOnTabSelectedListener(new TrackingOnTabSelectedListener(analytics, viewPagerAdapter));
 
         setupToolbar();
-    }
-
-    private static Activity unwrapToActivityContext(Context context) {
-        if (context == null) {
-            throw new NullPointerException("Context cannot be null");
-        } else if (context instanceof Activity) {
-            return (Activity) context;
-        } else if (context instanceof ContextWrapper) {
-            ContextWrapper contextWrapper = (ContextWrapper) context;
-            return unwrapToActivityContext(contextWrapper.getBaseContext());
-        } else {
-            throw new IllegalStateException("Context type not supported: " + context.getClass().getCanonicalName());
-        }
     }
 
     private void setupToolbar() {

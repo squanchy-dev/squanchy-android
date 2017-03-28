@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.DrawableTypeRequest;
 import com.bumptech.glide.RequestManager;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 final class GlideImageLoader implements ImageLoader {
@@ -23,13 +24,18 @@ final class GlideImageLoader implements ImageLoader {
     @Override
     public ImageRequest load(String url) {
         if (url.startsWith(FIREBASE_STORAGE_URL_SCHEMA)) {
-            throw new IllegalArgumentException("To load images from Firebase Storage please obtain the StorageReference first and use that one.");
+            StorageReference reference = FirebaseStorage.getInstance().getReferenceFromUrl(url);
+            return loadFromFirebase(reference);
+        } else {
+            return loadFromWeb(url);
         }
+    }
+
+    private ImageRequest loadFromWeb(String url) {
         return new GlideUrlImageRequest(requestManager, url);
     }
 
-    @Override
-    public ImageRequest load(StorageReference storageReference) {
+    private ImageRequest loadFromFirebase(StorageReference storageReference) {
         return new GlideFirebaseImageRequest(requestManager, storageReference, firebaseImageLoader);
     }
 

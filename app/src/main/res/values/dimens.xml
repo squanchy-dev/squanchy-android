@@ -73,4 +73,20 @@
   <dimen name="speaker_details_bio_padding">32dp</dimen>
   <dimen name="speaker_details_bio_line_spacing_extra">4sp</dimen>
 
+  <dimen name="venue_info_padding_top">16dp</dimen>
+  <dimen name="venue_info_horizontal_padding">16dp</dimen>
+  <dimen name="venue_info_label_height">56dp</dimen>
+  <dimen name="venue_info_label_text">14sp</dimen>
+  <dimen name="venue_info_name_text">20sp</dimen>
+  <dimen name="venue_info_address_text">14sp</dimen>
+  <dimen name="venue_info_address_line_spacing_extra">4sp</dimen>
+  <dimen name="venue_info_description_line_spacing_extra">4sp</dimen>
+  <dimen name="venue_info_description_text">14sp</dimen>
+
+  <dimen name="settings_header_user_container_height">98dp</dimen>
+  <dimen name="settings_header_user_container_padding_horizontal">16dp</dimen>
+  <dimen name="settings_header_user_photo_size">52dp</dimen>
+  <dimen name="settings_header_user_name_margin_start">8dp</dimen>
+  <dimen name="settings_header_user_name_text">20sp</dimen>
+
 </resources>

@@ -6,26 +6,49 @@ import android.view.MenuItem;
 
 import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
+import net.squanchy.settings.view.SettingsHeaderLayout;
+import net.squanchy.signin.SignInService;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 public class SettingsActivity extends TypefaceStyleableActivity {
+
+    private SignInService signInService;
+    private SettingsHeaderLayout headerLayout;
+    private Disposable subscription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_settings);
+        headerLayout = (SettingsHeaderLayout) findViewById(R.id.settings_header);
 
         setupToolbar();
 
         getFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, new SettingsFragment())
                 .commit();
+
+        SettingsComponent component = SettingsInjector.obtain(this);
+        signInService = component.signInService();
     }
 
     private void setupToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        subscription = signInService.currentUser()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(user -> headerLayout.updateWith(user));
     }
 
     @Override
@@ -35,5 +58,11 @@ public class SettingsActivity extends TypefaceStyleableActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        subscription.dispose();
     }
 }

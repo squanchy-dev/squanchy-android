@@ -2,7 +2,6 @@ package net.squanchy.favorites;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
@@ -12,7 +11,7 @@ import net.squanchy.R;
 import net.squanchy.analytics.Analytics;
 import net.squanchy.analytics.ContentType;
 import net.squanchy.favorites.view.FavoritesListView;
-import net.squanchy.navigation.LifecycleView;
+import net.squanchy.home.LifecycleView;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.schedule.ScheduleService;
 import net.squanchy.schedule.domain.view.Event;
@@ -21,6 +20,8 @@ import net.squanchy.schedule.view.ScheduleViewPagerAdapter;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+
+import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 
 public class FavoritesPageView extends CoordinatorLayout implements LifecycleView {
 
@@ -54,19 +55,6 @@ public class FavoritesPageView extends CoordinatorLayout implements LifecycleVie
         favoritesListView = (FavoritesListView) findViewById(R.id.favorites_list);
 
         setupToolbar();
-    }
-
-    private static Activity unwrapToActivityContext(Context context) {
-        if (context == null) {
-            throw new NullPointerException("Context cannot be null");
-        } else if (context instanceof Activity) {
-            return (Activity) context;
-        } else if (context instanceof ContextWrapper) {
-            ContextWrapper contextWrapper = (ContextWrapper) context;
-            return unwrapToActivityContext(contextWrapper.getBaseContext());
-        } else {
-            throw new IllegalStateException("Context type not supported: " + context.getClass().getCanonicalName());
-        }
     }
 
     private void setupToolbar() {

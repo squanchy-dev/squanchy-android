@@ -1,5 +1,6 @@
 package net.squanchy.support.widget;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -11,9 +12,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -23,6 +21,7 @@ import net.squanchy.imageloader.ImageLoader;
 import net.squanchy.imageloader.ImageLoaderInjector;
 import net.squanchy.speaker.domain.view.Speaker;
 
+import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 import static net.squanchy.support.lang.Lists.map;
 
 public abstract class SpeakerView extends LinearLayout {
@@ -47,7 +46,8 @@ public abstract class SpeakerView extends LinearLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
 
         if (!isInEditMode()) {
-            imageLoader = ImageLoaderInjector.obtain(context).imageLoader();
+            Activity activity = unwrapToActivityContext(context);
+            imageLoader = ImageLoaderInjector.obtain(activity).imageLoader();
         }
         super.setOrientation(VERTICAL);
 
@@ -110,16 +110,7 @@ public abstract class SpeakerView extends LinearLayout {
     protected abstract ImageView inflatePhotoView(ViewGroup speakerPhotoContainer);
 
     private void loadSpeakerPhoto(ImageView photoView, String photoUrl, ImageLoader imageLoader) {
-        if (isFirebaseStorageUrl(photoUrl)) {
-            StorageReference photoReference = FirebaseStorage.getInstance().getReference(photoUrl);
-            imageLoader.load(photoReference).into(photoView);
-        } else {
-            imageLoader.load(photoUrl).into(photoView);
-        }
-    }
-
-    private boolean isFirebaseStorageUrl(String url) {
-        return url.startsWith("gs://");            // TODO move elsewhere
+        imageLoader.load(photoUrl).into(photoView);
     }
 
     private List<ImageView> getAllImageViewsContainedIn(ViewGroup container) {
