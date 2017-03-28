@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 
 import net.squanchy.BuildConfig;
+import net.squanchy.about.AboutActivity;
 import net.squanchy.eventdetails.EventDetailsActivity;
 import net.squanchy.home.HomeActivity;
 import net.squanchy.search.SearchActivity;
@@ -116,6 +117,10 @@ public class Navigator {
         } else {
             Timber.e("Someone is trying to reach the debug activity in a release build... that won't work");
         }
+    }
+
+    public void toAboutSquanchy() {
+        start(new Intent(context, AboutActivity.class));
     }
 
     private void start(Intent intent) {

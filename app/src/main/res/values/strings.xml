@@ -71,4 +71,6 @@
   <string name="about_title">About</string>
   <string name="settings_account_not_logged_in">Not logged in</string>
 
+  <string name="about_label">About</string>
+
 </resources>

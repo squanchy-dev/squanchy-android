@@ -8,11 +8,21 @@
   </style>
 
   <style name="Squanchy.Toolbar" parent="Widget.AppCompat.Light.ActionBar">
-    <item name="android:titleTextStyle">@style/Squanchy.Toolbar.TextAppearance</item>
-    <item name="android:subtitleTextStyle">@style/Squanchy.Toolbar.TextAppearance</item>
+    <item name="android:titleTextStyle">@style/TextAppearance.Squanchy.Toolbar</item>
+    <item name="android:subtitleTextStyle">@style/TextAppearance.Squanchy.Toolbar</item>
   </style>
 
-  <style name="Squanchy.Toolbar.TextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
+  <style name="TextAppearance.Squanchy.Toolbar" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
+    <item name="fontPath">?titleTypeface</item>
+  </style>
+
+  <style name="Squanchy.Toolbar.Light" parent="Widget.AppCompat.Light.ActionBar">
+    <item name="android:titleTextStyle">@style/TextAppearance.Squanchy.Toolbar.Accent</item>
+    <item name="android:subtitleTextStyle">@style/TextAppearance.Squanchy.Toolbar.Accent</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.Toolbar.Accent" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+    <item name="android:textColor">?colorAccent</item>
     <item name="fontPath">?titleTypeface</item>
   </style>
 
@@ -329,6 +339,11 @@
     <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">@dimen/settings_header_user_name_text</item>
     <item name="fontPath">?titleTypeface</item>
+  </style>
+
+  <style name="ThemeOverlay.About.AppBar" parent="ThemeOverlay.AppCompat.Light">
+    <item name="android:textColorPrimary">@color/primary</item>
+    <item name="colorControlNormal">@color/primary</item>
   </style>
 
 </resources>
