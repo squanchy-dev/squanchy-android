@@ -309,4 +309,26 @@
     <item name="android:foreground">?android:attr/selectableItemBackground</item>
   </style>
 
+  <style name="Settings.Header.User.Container" parent="None">
+    <item name="android:gravity">fill_horizontal|center_vertical</item>
+    <item name="android:orientation">horizontal</item>
+    <item name="android:paddingStart">@dimen/settings_header_user_container_padding_horizontal</item>
+    <item name="android:paddingEnd">@dimen/settings_header_user_container_padding_horizontal</item>
+  </style>
+
+  <style name="Settings.Header.User.Photo" parent="None">
+    <!-- TODO add border to photo (foreground?) -->
+  </style>
+
+  <style name="Settings.Header.User.Name" parent="None">
+    <item name="android:maxLines">2</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.Settings.Header.User.Name</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.Settings.Header.User.Name" parent="None">
+    <item name="android:textColor">?android:textColorPrimary</item>
+    <item name="android:textSize">@dimen/settings_header_user_name_text</item>
+    <item name="fontPath">?titleTypeface</item>
+  </style>
+
 </resources>

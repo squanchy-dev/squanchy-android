@@ -15,7 +15,7 @@ import android.view.View;
 import net.squanchy.R;
 import net.squanchy.analytics.Analytics;
 import net.squanchy.analytics.ContentType;
-import net.squanchy.navigation.LifecycleView;
+import net.squanchy.home.LifecycleView;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Schedule;

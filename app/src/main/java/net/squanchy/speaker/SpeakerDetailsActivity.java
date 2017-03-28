@@ -23,7 +23,7 @@ public class SpeakerDetailsActivity extends TypefaceStyleableActivity {
 
     private static final String EXTRA_SPEAKER_ID = SpeakerDetailsActivity.class.getCanonicalName() + ".speaker_id";
 
-    private CompositeDisposable subscriptions;
+    private CompositeDisposable subscriptions = new CompositeDisposable();
     private SpeakerDetailsService service;
     private Navigator navigator;
 
@@ -52,8 +52,6 @@ public class SpeakerDetailsActivity extends TypefaceStyleableActivity {
         setupToolbar(toolbar);
 
         speakerDetailsLayout = (SpeakerDetailsLayout) findViewById(R.id.speaker_details_root);
-
-        subscriptions = new CompositeDisposable();
     }
 
     private void setupToolbar(Toolbar toolbar) {
@@ -64,12 +62,25 @@ public class SpeakerDetailsActivity extends TypefaceStyleableActivity {
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        subscriptions.dispose();
+        observeSpeakerFrom(intent);
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
 
         Intent intent = getIntent();
+        observeSpeakerFrom(intent);
+    }
+
+    private void observeSpeakerFrom(Intent intent) {
         String speakerId = intent.getStringExtra(EXTRA_SPEAKER_ID);
 
+        subscriptions = new CompositeDisposable();
         subscriptions.add(service.speaker(speakerId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onSpeakerRetrieved));
