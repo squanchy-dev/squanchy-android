@@ -37,7 +37,7 @@ public class ContestService {
     }
 
     public Observable<ContestStandings> addAchievement(String achievementId) {
-        return authService.ifUserSignedInThenCompletableFrom(userId -> dbService.addAchievement(achievementId, userId, System.currentTimeMillis()))
+        return authService.ifUserSignedInThenCompletableFrom(userId -> dbService.addAchievement(userId, achievementId, System.currentTimeMillis()))
                 .andThen(standings())
                 .subscribeOn(Schedulers.io());
     }
