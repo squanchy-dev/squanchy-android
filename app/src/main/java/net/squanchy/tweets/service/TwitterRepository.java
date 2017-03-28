@@ -1,7 +1,5 @@
 package net.squanchy.tweets.service;
 
-import android.support.annotation.Nullable;
-
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterCore;
@@ -15,10 +13,9 @@ import retrofit2.Call;
 
 public class TwitterRepository {
 
-    private static final int MAX_ITEM_PER_REQUEST = 20;
+    private static final int MAX_ITEM_PER_REQUEST = 100;
 
     private final SearchService searchService;
-    private TimelineState stateHolder;
     private final String query;
 
     public TwitterRepository(String query) {
@@ -26,26 +23,12 @@ public class TwitterRepository {
         this.query = query;
     }
 
-    Observable<Search> refresh() {
-        return wrapRequestWithObservable(null)
-                .doOnNext(search -> stateHolder = TimelineState.create(search.tweets));
+    Observable<Search> load() {
+        return Observable.create(e -> createSearchRequest().enqueue(new SearchCallback(e)));
     }
 
-    Observable<Search> previous() {
-        return wrapRequestWithObservable(decrement(stateHolder.previous()))
-                .doOnNext(search -> stateHolder.setPrevious(search.tweets));
-    }
-
-    private Observable<Search> wrapRequestWithObservable(@Nullable Long maxId) {
-        return Observable.create(e -> createSearchRequest(maxId).enqueue(new SearchCallback(e)));
-    }
-
-    private Call<Search> createSearchRequest(@Nullable Long maxId) {
-        return searchService.tweets(query, null, null, null, "recent", MAX_ITEM_PER_REQUEST, null, null, maxId, true);
-    }
-
-    private static Long decrement(Long maxId) {
-        return maxId - 1L;
+    private Call<Search> createSearchRequest() {
+        return searchService.tweets(query, null, null, null, "recent", MAX_ITEM_PER_REQUEST, null, null, null, true);
     }
 
     private static class SearchCallback extends Callback<Search> {

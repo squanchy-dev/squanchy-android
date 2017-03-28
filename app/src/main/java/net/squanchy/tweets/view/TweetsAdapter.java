@@ -7,68 +7,63 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.twitter.sdk.android.core.models.Search;
+import com.twitter.sdk.android.core.models.Tweet;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import net.squanchy.R;
 import net.squanchy.tweets.service.TwitterRepository;
+import net.squanchy.tweets.service.TwitterService;
 
 import io.reactivex.Observable;
+import io.reactivex.functions.Consumer;
 
-public class TweetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class TweetsAdapter extends RecyclerView.Adapter<TweetViewHolder> {
 
     private final Context context;
-    private final TwitterItemAdapter itemAdapter;
+    private final TwitterService twitterService;
+    private List<Tweet> tweetList;
 
     public TweetsAdapter(TwitterRepository repo, Context context) {
         this.context = context;
-        this.itemAdapter = new TwitterItemAdapter(repo);
+        this.twitterService = new TwitterService(repo);
+        this.tweetList = new ArrayList<>();
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, @TweetViewTypeId int viewType) {
-        if (viewType == TweetViewTypeId.TWEET) {
-            View view = LayoutInflater.from(context).inflate(R.layout.item_tweet, parent, false);
-            return new TweetViewHolder(view);
-        } else if (viewType == TweetViewTypeId.LOADING) {
-            View view = LayoutInflater.from(context).inflate(R.layout.item_tweet_loading, parent, false);
-            return new LoadingViewHolder(view);
-        } else {
-            throw new IllegalArgumentException("Item type " + viewType + " not supported");
-        }
+    public TweetViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_tweet, parent, false);
+        return new TweetViewHolder(view);
     }
 
     @Override
-    @TweetViewTypeId
-    public int getItemViewType(int position) {
-        return itemAdapter.getItemViewType(position);
-    }
-
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        int viewType = itemAdapter.getItemViewType(position);
-
-        if (viewType == TweetViewTypeId.TWEET) {
-            ((TweetViewHolder) holder).updateWith(itemAdapter.itemAt(position));
-        } else if (viewType == TweetViewTypeId.LOADING) {
-            /* do nothing */
-        } else {
-            throw new IllegalArgumentException("Item type " + viewType + " not supported");
-        }
+    public void onBindViewHolder(TweetViewHolder holder, int position) {
+        holder.updateWith(tweetList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return itemAdapter.size();
+        return tweetList.size();
     }
 
     public boolean isEmpty() {
-        return itemAdapter.isEmpty();
+        return tweetList.isEmpty();
     }
 
     public Observable<Search> refresh() {
-        return itemAdapter.refresh();
+        return twitterService.refresh()
+                .doOnNext(this::onRefreshSuccess);
     }
 
-    public Observable<Search> previous() {
-        return itemAdapter.previous();
+    private void onRefreshSuccess(Search search) {
+        if (search.tweets.isEmpty()) {
+            return;
+        }
+
+        tweetList.clear();
+        final ArrayList<Tweet> receivedItems = new ArrayList<>(search.tweets);
+        receivedItems.addAll(tweetList);
+        tweetList = receivedItems;
     }
 }
