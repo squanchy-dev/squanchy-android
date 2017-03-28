@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:orientation="vertical">
@@ -18,5 +19,76 @@
       app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
   </android.support.design.widget.AppBarLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingStart="48dp"
+    android:paddingEnd="48dp">
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginTop="24dp"
+      android:text="powered by" />
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:text="Squanchy"
+      android:textSize="32sp"
+      android:textAppearance="@style/TextAppearance.Squanchy.Card.Title" />
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginBottom="32dp"
+      android:autoLink="all"
+      android:text="http://squanchy.net"
+      android:textSize="12sp" />
+
+    <!-- We cannot use compound drawables here unfortunately -->
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginBottom="64dp"
+      android:gravity="center"
+      tools:ignore="UseCompoundDrawables">
+
+      <ImageView
+        android:theme="@style/ThemeOverlay.About.Opensource"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_opensource" />
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="This app is proudly open source and any contribution is welcome." />
+
+    </LinearLayout>
+
+    <Button
+      style="@style/About.Button"
+      android:layout_width="match_parent"
+      android:layout_height="56dp"
+      android:layout_marginBottom="24dp"
+      android:text="Fork me on GitHub" />
+
+    <Button
+      style="@style/About.Button"
+      android:layout_width="match_parent"
+      android:layout_height="56dp"
+      android:layout_marginBottom="24dp"
+      android:text="Open source licences" />
+
+  </LinearLayout>
 
 </LinearLayout>

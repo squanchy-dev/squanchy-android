@@ -89,4 +89,10 @@
   <dimen name="settings_header_user_name_margin_start">8dp</dimen>
   <dimen name="settings_header_user_name_text">20sp</dimen>
 
+  <dimen name="color_button_inset_horizontal">4dp</dimen>
+  <dimen name="color_button_inset_vertical">6dp</dimen>
+  <dimen name="color_button_padding_horizontal">8dp</dimen>
+  <dimen name="color_button_padding_vertical">4dp</dimen>
+  <dimen name="color_button_corner_radius">4dp</dimen>
+
 </resources>

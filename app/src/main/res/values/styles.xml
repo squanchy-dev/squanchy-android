@@ -346,4 +346,19 @@
     <item name="colorControlNormal">@color/primary</item>
   </style>
 
+  <style name="ThemeOverlay.About.Opensource" parent="Theme.Squanchy" />
+
+  <style name="About.Button" parent="Widget.AppCompat.Button.Colored">
+    <item name="android:background">@drawable/color_button_background</item>
+    <item name="android:backgroundTint">?colorControlNormal</item>
+    <item name="android:textAllCaps">false</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.About.Button</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.About.Button" parent="None">
+    <item name="android:textColor">@color/white</item>
+    <item name="android:textSize">16sp</item>
+    <item name="fontPath">?titleTypeface</item>
+  </style>
+
 </resources>
