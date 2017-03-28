@@ -72,7 +72,8 @@ public class ContestActivity extends TypefaceStyleableActivity {
         if (current == goal) {
             return "Congratulation, you won!";
         } else {
-            return "Still missing " + (goal - current) + " stands";
+            int missingStands = (int) (goal - current);
+            return String.format(Locale.US, "Still missing %1$d stands", missingStands);
         }
     }
 }
