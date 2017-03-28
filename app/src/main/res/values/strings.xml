@@ -15,8 +15,7 @@
   <string name="event_notification_starting_by">By %s</string>
   <string name="event_notification_starting_in">In %s</string>
   <string name="event_notification_count_starting">%s sessions are starting</string>
-  <string name="room_event_notification"
-    translatable="false">%s: %s</string>
+  <string name="room_event_notification" translatable="false">%s: %s</string>
   <plurals name="event_notification_ticker">
     <item quantity="one">1 session is about to start.</item>
     <item quantity="other">%d sessions are about to start.</item>
@@ -70,7 +69,7 @@
   <string name="help_title">Help</string>
   <string name="about_title">About</string>
   <string name="settings_account_not_logged_in">Not logged in</string>
-  <string name="no_favorites_label">You have no favorites, yet. Which is odd. EVERYONE has at least some favorite talks. I mean who doesn\'t yo?</string>
-  <string name="signin_to_favorite">You should totally sign in and start favoriting stuff. Favoriting is good for your health and wellbeing.</string>
+  <string name="prompt_to_favorite">You have no favorites, yet. Which is odd. EVERYONE has at least some favorite talks. I mean who doesn\'t yo?</string>
+  <string name="prompt_to_sign_in_for_favorites">You should totally sign in and start favoriting stuff. Favoriting is good for your health and wellbeing.\n\nTouch to sign in</string>
 
 </resources>

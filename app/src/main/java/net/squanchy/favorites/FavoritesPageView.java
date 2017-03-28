@@ -102,9 +102,9 @@ public class FavoritesPageView extends CoordinatorLayout implements LifecycleVie
             updateWith(scheduledAndSignedIn.schedule, listener);
         } else {
             if (scheduledAndSignedIn.signedIn) {
-                promptToSign();
-            } else {
                 promptToFavorite();
+            } else {
+                promptToSign();
             }
         }
     }
@@ -119,15 +119,17 @@ public class FavoritesPageView extends CoordinatorLayout implements LifecycleVie
         favoritesListView.setVisibility(GONE);
         progressBar.setVisibility(GONE);
         emptyView.setVisibility(VISIBLE);
-        emptyView.setText(R.string.no_favorites_label);
-        emptyView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.illustration_signed_in, 0, 0);
+        emptyView.setText(R.string.prompt_to_sign_in_for_favorites);
+        emptyView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.illustration_prompt_to_sign_in, 0, 0);
+
+        emptyView.setOnClickListener(view -> navigate.toSignIn());
     }
 
     private void promptToFavorite() {
         favoritesListView.setVisibility(GONE);
         progressBar.setVisibility(GONE);
         emptyView.setVisibility(VISIBLE);
-        emptyView.setText(R.string.signin_to_favorite);
+        emptyView.setText(R.string.prompt_to_favorite);
         emptyView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.illustration_prompt_to_favorite, 0, 0);
     }
 
