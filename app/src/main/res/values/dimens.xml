@@ -86,6 +86,7 @@
   <dimen name="settings_header_user_container_height">98dp</dimen>
   <dimen name="settings_header_user_container_padding_horizontal">16dp</dimen>
   <dimen name="settings_header_user_photo_size">52dp</dimen>
+  <dimen name="settings_header_user_photo_border_width">2dp</dimen>
   <dimen name="settings_header_user_name_margin_start">8dp</dimen>
   <dimen name="settings_header_user_name_text">20sp</dimen>
 

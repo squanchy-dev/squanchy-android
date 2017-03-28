@@ -319,7 +319,7 @@
   </style>
 
   <style name="Settings.Header.User.Photo" parent="None">
-    <!-- TODO add border to photo (foreground?) -->
+    <item name="android:foreground">@drawable/shape_white_circle</item>
   </style>
 
   <style name="Settings.Header.User.Name" parent="None">
