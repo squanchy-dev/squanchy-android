@@ -26,11 +26,6 @@
       android:title="@string/settings_notifications_category" />
 
     <Preference
-      android:key="@string/help_preference_key"
-      android:title="@string/help_title"
-      android:icon="@drawable/ic_help_default" />
-
-    <Preference
       android:key="@string/about_preference_key"
       android:title="@string/about_title"
       android:icon="@drawable/ic_about" />

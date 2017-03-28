@@ -18,7 +18,6 @@ import io.reactivex.disposables.Disposable;
 
 public class SettingsFragment extends PreferenceFragment {
 
-    private static final String SQUANCHY_README_URL = "https://github.com/rock3r/squanchy/blob/develop/README.md";
     private SignInService signInService;
     private Navigator navigator;
 
@@ -44,12 +43,6 @@ public class SettingsFragment extends PreferenceFragment {
 
         accountEmailPreference = findPreference(getString(R.string.account_email_preference_key));
         accountSignInSignOutPreference = findPreference(getString(R.string.account_signin_signout_preference_key));
-
-        Preference helpPreference = findPreference(getString(R.string.help_preference_key));
-        helpPreference.setOnPreferenceClickListener(preference -> {
-            navigator.toExternalUrl(SQUANCHY_README_URL);           // TODO proper help section
-            return true;
-        });
 
         Preference aboutPreference = findPreference(getString(R.string.about_preference_key));
         aboutPreference.setOnPreferenceClickListener(preference -> {
