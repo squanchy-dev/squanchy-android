@@ -28,7 +28,8 @@ public class TweetsPageView extends LinearLayout {
     private TweetsAdapter tweetsAdapter;
     private SwipeRefreshLayout swipeLayout;
     private TwitterService twitterService;
-    private Disposable disposable;
+    private Disposable subscription;
+    private String query;
     private boolean refreshingData;
 
     public TweetsPageView(Context context, AttributeSet attrs) {
@@ -75,18 +76,16 @@ public class TweetsPageView extends LinearLayout {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        if (disposable != null && !disposable.isDisposed()) {
-            disposable.dispose();
-        }
+        subscription.dispose();
     }
 
     private void initList() {
 
         Context context = getContext();
-        String query = context.getString(R.string.social_query);
+        query = context.getString(R.string.social_query);
 
         Activity activity = unwrapToActivityContext(getContext());
-        TwitterComponent component = TwitterInjector.obtain(activity, query);
+        TwitterComponent component = TwitterInjector.obtain(activity);
 
         twitterService = component.service();
         tweetsAdapter = new TweetsAdapter(context);
@@ -100,7 +99,7 @@ public class TweetsPageView extends LinearLayout {
     private void refreshTimeline() {
         swipeLayout.setRefreshing(true);
         refreshingData = true;
-        disposable = twitterService.refresh()
+        subscription = twitterService.refresh(query)
                 .subscribe(this::onRefreshFinished, this::onError);
     }
 

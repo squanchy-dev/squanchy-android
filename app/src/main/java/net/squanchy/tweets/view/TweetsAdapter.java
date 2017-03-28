@@ -43,12 +43,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetViewHolder> {
     }
 
     public void updateWith(List<Tweet> tweets) {
-        if (tweets.isEmpty()) {
-            return;
-        }
-
         tweetList.clear();
-        final ArrayList<Tweet> receivedItems = new ArrayList<>(tweets);
+        ArrayList<Tweet> receivedItems = new ArrayList<>(tweets);
         receivedItems.addAll(tweetList);
         tweetList = receivedItems;
         notifyDataSetChanged();

@@ -10,10 +10,10 @@ final class TwitterInjector {
         // no instances
     }
 
-    public static TwitterComponent obtain(Activity activity, String query) {
+    public static TwitterComponent obtain(Activity activity) {
         return DaggerTwitterComponent.builder()
                 .applicationComponent(ApplicationInjector.obtain(activity))
-                .twitterModule(new TwitterModule(query))
+                .twitterModule(new TwitterModule())
                 .build();
     }
 }

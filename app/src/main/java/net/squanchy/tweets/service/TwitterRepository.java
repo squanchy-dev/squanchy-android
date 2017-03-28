@@ -15,19 +15,13 @@ public class TwitterRepository {
 
     private static final int MAX_ITEM_PER_REQUEST = 100;
 
-    private final SearchService searchService;
-    private final String query;
+    private final SearchService searchService = TwitterCore.getInstance().getApiClient().getSearchService();
 
-    public TwitterRepository(String query) {
-        this.searchService = TwitterCore.getInstance().getApiClient().getSearchService();
-        this.query = query;
+    Observable<Search> load(String query) {
+        return Observable.create(e -> createSearchRequest(query).enqueue(new SearchCallback(e)));
     }
 
-    Observable<Search> load() {
-        return Observable.create(e -> createSearchRequest().enqueue(new SearchCallback(e)));
-    }
-
-    private Call<Search> createSearchRequest() {
+    private Call<Search> createSearchRequest(String query) {
         return searchService.tweets(query, null, null, null, "recent", MAX_ITEM_PER_REQUEST, null, null, null, true);
     }
 

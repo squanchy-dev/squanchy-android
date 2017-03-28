@@ -9,15 +9,9 @@ import dagger.Provides;
 @Module
 class TwitterModule {
 
-    public final String query;
-
-    TwitterModule(String query) {
-        this.query = query;
-    }
-
     @Provides
     TwitterRepository twitterRepository() {
-        return new TwitterRepository(query);
+        return new TwitterRepository();
     }
 
     @Provides

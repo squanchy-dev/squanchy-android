@@ -20,8 +20,8 @@ public class TwitterService {
         this.repo = repo;
     }
 
-    public Observable<List<Tweet>> refresh() {
-        return repo.load()
+    public Observable<List<Tweet>> refresh(String query) {
+        return repo.load(query)
                 .map(search -> map(search.tweets, this::toViewModel));
     }
 

@@ -22,16 +22,7 @@ public class TwitterDateFormatter {
 
     public static String getTimestampFrom(Tweet tweet, Context context) {
 
-        if (tweet.createdAt() == null) {
-            return context.getString(R.string.tweet_date_not_available);
-        }
-
-        return formatDate(tweet.createdAt(), context);
-    }
-
-    private static String formatDate(String date, Context context) {
-
-        DateTime dateTime = DateTimeFormat.forPattern(DATE_PATTERN).withLocale(Locale.US).parseDateTime(date);
+        DateTime dateTime = DateTimeFormat.forPattern(DATE_PATTERN).withLocale(Locale.US).parseDateTime(tweet.createdAt());
         String time = DateTimeFormat.shortTime().print(dateTime);
 
         if (isToday(dateTime)) {
