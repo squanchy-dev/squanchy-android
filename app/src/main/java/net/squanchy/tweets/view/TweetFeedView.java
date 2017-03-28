@@ -1,4 +1,4 @@
-package net.squanchy.tweets;
+package net.squanchy.tweets.view;
 
 import android.content.Context;
 import android.graphics.Rect;
