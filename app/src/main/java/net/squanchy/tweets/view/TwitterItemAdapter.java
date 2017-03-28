@@ -1,21 +1,19 @@
 package net.squanchy.tweets.view;
 
-import com.twitter.sdk.android.core.Callback;
-import com.twitter.sdk.android.core.Result;
-import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.models.Search;
 import com.twitter.sdk.android.core.models.Tweet;
-import com.twitter.sdk.android.tweetui.Timeline;
-import com.twitter.sdk.android.tweetui.TimelineResult;
 
-import net.squanchy.tweets.service.TwitterRepo;
+import net.squanchy.tweets.service.TwitterRepository;
 import net.squanchy.tweets.service.TwitterService;
+
+import io.reactivex.Observable;
 
 class TwitterItemAdapter {
 
     private final TwitterService twitterService;
     private boolean hasMoreItems = true;
 
-    TwitterItemAdapter(TwitterRepo repo) {
+    TwitterItemAdapter(TwitterRepository repo) {
         this.twitterService = new TwitterService(repo);
     }
 
@@ -34,12 +32,14 @@ class TwitterItemAdapter {
         return twitterService.size() == 0;
     }
 
-    void refresh(Callback<TimelineResult<Tweet>> callback) {
-        twitterService.refresh();
+    Observable<Search> refresh() {
+        return twitterService.refresh()
+                .doOnNext(search -> hasMoreItems = !search.tweets.isEmpty());
     }
 
-    void previous(Callback<TimelineResult<Tweet>> callback) {
-        twitterService.previous();
+    Observable<Search> previous() {
+        return twitterService.previous()
+                .doOnNext(search -> hasMoreItems = !search.tweets.isEmpty());
     }
 
     @TweetViewTypeId
@@ -49,27 +49,5 @@ class TwitterItemAdapter {
 
     private boolean isLoadingItem(int position) {
         return position == size() - 1 && hasMoreItems;
-    }
-
-    private class CallbackDecorator extends Callback<TimelineResult<Tweet>> {
-
-        private final Callback<TimelineResult<Tweet>> decorated;
-
-        private CallbackDecorator(Callback<TimelineResult<Tweet>> decorated) {
-            this.decorated = decorated;
-        }
-
-        @Override
-        public void success(Result<TimelineResult<Tweet>> result) {
-            if (result.data.items.isEmpty()) {
-                hasMoreItems = false;
-            }
-            decorated.success(result);
-        }
-
-        @Override
-        public void failure(TwitterException exception) {
-            decorated.failure(exception);
-        }
     }
 }

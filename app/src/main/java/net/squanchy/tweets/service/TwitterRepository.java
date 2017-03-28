@@ -15,26 +15,37 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import retrofit2.Call;
 
-public class TwitterRepo {
+public class TwitterRepository {
 
     private static final int MAX_ITEM_PER_REQUEST = 30;
 
     private final SearchService searchService;
     private final TimelineStateHolder stateHolder;
     private final String query;
+    private boolean refreshing = false;
 
-    public TwitterRepo(String query) {
+    public TwitterRepository(String query) {
         this.searchService = TwitterCore.getInstance().getApiClient().getSearchService();
         this.stateHolder = new TimelineStateHolder();
         this.query = query;
     }
 
-    public Observable<Search> refresh() {
-        return wrapRequestWithObservable(null);
+    Observable<Search> refresh() {
+        if (refreshing) {
+            return Observable.empty();
+        }
+        refreshing = true;
+        return wrapRequestWithObservable(null)
+                .doOnTerminate(() -> refreshing = false);
     }
 
-    public Observable<Search> previous(Long maxId) {
-        return wrapRequestWithObservable(decrement(maxId));
+    Observable<Search> previous(Long maxId) {
+        if (refreshing) {
+            return Observable.empty();
+        }
+        refreshing = true;
+        return wrapRequestWithObservable(decrement(maxId))
+                .doOnTerminate(() -> refreshing = false);
     }
 
     private Observable<Search> wrapRequestWithObservable(@Nullable Long maxId) {

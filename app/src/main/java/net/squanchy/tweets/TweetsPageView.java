@@ -8,14 +8,8 @@ import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.twitter.sdk.android.core.Callback;
-import com.twitter.sdk.android.core.Result;
-import com.twitter.sdk.android.core.TwitterException;
-import com.twitter.sdk.android.core.models.Tweet;
-import com.twitter.sdk.android.tweetui.TimelineResult;
-
 import net.squanchy.R;
-import net.squanchy.tweets.service.TwitterRepo;
+import net.squanchy.tweets.service.TwitterRepository;
 import net.squanchy.tweets.view.ScrollListener;
 import net.squanchy.tweets.view.TweetsAdapter;
 
@@ -77,7 +71,7 @@ public class TweetsPageView extends LinearLayout {
         Context context = getContext();
         String query = context.getString(R.string.social_query);
 
-        TwitterRepo repo = new TwitterRepo(query);
+        TwitterRepository repo = new TwitterRepository(query);
         tweetsAdapter = new TweetsAdapter(repo, context);
         tweetsList.setAdapter(tweetsAdapter);
 
@@ -89,7 +83,7 @@ public class TweetsPageView extends LinearLayout {
             @Override
             protected void loadMore() {
                 Timber.d("Firing request for more tweets");
-                tweetsAdapter.previous(new TimelineLoadingCallback());
+                tweetsAdapter.previous();
             }
         };
 
@@ -102,7 +96,8 @@ public class TweetsPageView extends LinearLayout {
         swipeLayout.setRefreshing(true);
         refreshingData = true;
         scrollListener.reset();
-        tweetsAdapter.refresh(new TimelineLoadingCallback());
+        tweetsAdapter.refresh()
+                .subscribe(l -> onRefreshFinished(), this::onError);
     }
 
     private void onRefreshFinished() {
@@ -120,17 +115,8 @@ public class TweetsPageView extends LinearLayout {
         tweetsAdapter.notifyDataSetChanged();
     }
 
-    public class TimelineLoadingCallback extends Callback<TimelineResult<Tweet>> {
-
-        @Override
-        public void success(Result<TimelineResult<Tweet>> result) {
-            onRefreshFinished();
-        }
-
-        @Override
-        public void failure(TwitterException exception) {
-            onRefreshFinished();
-            Timber.e(exception, "Error while refreshing the timeline.");
-        }
+    private void onError(Throwable throwable) {
+        Timber.e(throwable);
+        onRefreshFinished();
     }
 }
