@@ -1,5 +1,6 @@
 package net.squanchy.tweets;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
@@ -12,12 +13,13 @@ import java.util.List;
 
 import net.squanchy.R;
 import net.squanchy.tweets.domain.view.Tweet;
-import net.squanchy.tweets.service.TwitterRepository;
 import net.squanchy.tweets.service.TwitterService;
 import net.squanchy.tweets.view.TweetsAdapter;
 
 import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
+
+import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 
 public class TweetsPageView extends LinearLayout {
 
@@ -83,8 +85,10 @@ public class TweetsPageView extends LinearLayout {
         Context context = getContext();
         String query = context.getString(R.string.social_query);
 
-        TwitterRepository repo = new TwitterRepository(query);
-        twitterService = new TwitterService(repo);
+        Activity activity = unwrapToActivityContext(getContext());
+        TwitterComponent component = TwitterInjector.obtain(activity, query);
+
+        twitterService = component.service();
         tweetsAdapter = new TweetsAdapter(context);
         tweetsList.setAdapter(tweetsAdapter);
 
