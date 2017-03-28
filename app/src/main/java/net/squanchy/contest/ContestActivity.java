@@ -69,9 +69,10 @@ public class ContestActivity extends TypefaceStyleableActivity {
     }
 
     private String getContentMessage(int current, float goal) {
-        if(current == goal)
+        if (current == goal) {
             return "Congratulation, you won!";
-        else
+        } else {
             return "Still missing " + (goal - current) + " stands";
+        }
     }
 }

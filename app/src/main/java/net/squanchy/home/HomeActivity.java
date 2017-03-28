@@ -139,7 +139,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(enabled -> {
                     if (enabled) {
-                        askProximityPersmissionToStartRadar();
+                        askProximityPermissionToStartRadar();
                     } else {
                         proximityService.stopRadar();
                     }
@@ -155,18 +155,6 @@ public class HomeActivity extends TypefaceStyleableActivity {
         }
     }
 
-    private void askProximityPersmissionToStartRadar() {
-        if (hasLocationPermission()) {
-            proximityService.startRadar();
-        } else {
-            ActivityCompat.requestPermissions(
-                    this,
-                    new String[] { Manifest.permission.ACCESS_FINE_LOCATION },
-                    MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
-            );
-        }
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION) {
@@ -176,15 +164,27 @@ public class HomeActivity extends TypefaceStyleableActivity {
         }
     }
 
+    private void askProximityPermissionToStartRadar() {
+        if (hasLocationPermission()) {
+            proximityService.startRadar();
+        } else {
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
+            );
+        }
+    }
+
     private boolean hasLocationPermission() {
-        final int granted = ContextCompat.checkSelfPermission(
+        int granted = ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
         );
         return granted == PackageManager.PERMISSION_GRANTED;
     }
 
-    private boolean hasGrantedFineLocationAccess(@NonNull int[] grantResults) {
+    private boolean hasGrantedFineLocationAccess(int[] grantResults) {
         return grantResults.length > 0 &&
                 grantResults[0] == PackageManager.PERMISSION_GRANTED;
     }
