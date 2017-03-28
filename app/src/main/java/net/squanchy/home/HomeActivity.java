@@ -189,6 +189,15 @@ public class HomeActivity extends TypefaceStyleableActivity {
                 grantResults[0] == PackageManager.PERMISSION_GRANTED;
     }
 
+    //TODO fix it properly
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Resources.Theme theme = getThemeFor(currentSection);
+        bottomNavigationView.setBackgroundColor(getColorFromTheme(theme, android.support.design.R.attr.colorPrimary));
+    }
+
     private void handleProximityEvent(ProximityEvent proximityEvent) {
         // TODO highlight speech near the rooms
         if (proximityEvent.action().equals(KEY_CONTEST_STAND)) {
