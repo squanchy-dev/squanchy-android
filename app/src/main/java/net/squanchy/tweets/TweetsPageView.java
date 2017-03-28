@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.squanchy.R;
+import net.squanchy.home.LifecycleView;
 import net.squanchy.tweets.domain.view.Tweet;
 import net.squanchy.tweets.service.TwitterService;
 import net.squanchy.tweets.view.TweetsAdapter;
@@ -21,13 +22,13 @@ import timber.log.Timber;
 
 import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 
-public class TweetsPageView extends LinearLayout {
+public class TweetsPageView extends LinearLayout implements LifecycleView {
 
+    private final TwitterService twitterService;
     private TextView emptyView;
     private RecyclerView tweetsList;
     private TweetsAdapter tweetsAdapter;
     private SwipeRefreshLayout swipeLayout;
-    private TwitterService twitterService;
     private Disposable subscription;
     private String query;
     private boolean refreshingData;
@@ -44,6 +45,10 @@ public class TweetsPageView extends LinearLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
 
         super.setOrientation(VERTICAL);
+
+        Activity activity = unwrapToActivityContext(context);
+        TwitterComponent component = TwitterInjector.obtain(activity);
+        twitterService = component.service();
     }
 
     @Override
@@ -59,6 +64,9 @@ public class TweetsPageView extends LinearLayout {
         tweetsList = (RecyclerView) findViewById(R.id.tweet_feed);
         swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_container);
 
+        tweetsAdapter = new TweetsAdapter(getContext());
+        tweetsList.setAdapter(tweetsAdapter);
+
         swipeLayout.setOnRefreshListener(() -> {
             if (refreshingData) {
                 return;
@@ -68,32 +76,16 @@ public class TweetsPageView extends LinearLayout {
     }
 
     @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        initList();
+    public void onStart() {
+        Context context = getContext();
+        query = context.getString(R.string.social_query);
+        emptyView.setText(context.getString(R.string.no_tweets_for_query, query));
+        refreshTimeline();
     }
 
     @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
+    public void onStop() {
         subscription.dispose();
-    }
-
-    private void initList() {
-
-        Context context = getContext();
-        query = context.getString(R.string.social_query);
-
-        Activity activity = unwrapToActivityContext(getContext());
-        TwitterComponent component = TwitterInjector.obtain(activity);
-
-        twitterService = component.service();
-        tweetsAdapter = new TweetsAdapter(context);
-        tweetsList.setAdapter(tweetsAdapter);
-
-        emptyView.setText(context.getString(R.string.no_tweets_for_query, query));
-
-        refreshTimeline();
     }
 
     private void refreshTimeline() {
