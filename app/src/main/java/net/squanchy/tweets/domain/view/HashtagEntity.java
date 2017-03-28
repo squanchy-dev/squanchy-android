@@ -5,7 +5,7 @@ import com.google.auto.value.AutoValue;
 @AutoValue
 public abstract class HashtagEntity {
 
-    public static HashtagEntity create(String text, int start, int end){
+    public static HashtagEntity create(String text, int start, int end) {
         return new AutoValue_HashtagEntity(text, start, end);
     }
 

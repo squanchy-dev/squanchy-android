@@ -5,7 +5,7 @@ import com.google.auto.value.AutoValue;
 @AutoValue
 public abstract class UrlEntity {
 
-    public static UrlEntity create(String url, int start, int end){
+    public static UrlEntity create(String url, int start, int end) {
         return new AutoValue_UrlEntity(url, start, end);
     }
 
