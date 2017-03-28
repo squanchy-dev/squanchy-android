@@ -18,9 +18,9 @@
 
   <style name="Widget.Squanchy.CardLayout" parent="None">
     <item name="android:background">@drawable/card_background</item>
-    <item name="android:foreground">@drawable/card_touch_feedback</item>
+    <item name="android:foreground">@drawable/primary_touch_feedback</item>
     <item name="android:elevation">@dimen/card_elevation</item>
-    <item name="android:stateListAnimator">@anim/card_state_list_anim</item>
+    <item name="android:stateListAnimator">@anim/clickable_state_list_anim</item>
     <item name="cardCornerRadius">@dimen/card_corner_radius</item>
     <item name="cardInsetHorizontal">@dimen/card_inset_horizontal</item>
     <item name="cardInsetTop">@dimen/card_inset_top</item>

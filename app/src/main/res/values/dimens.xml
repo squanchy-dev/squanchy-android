@@ -99,6 +99,7 @@
   <dimen name="about_opensource_margin_bottom">32dp</dimen>
   <dimen name="about_opensource_logo_size">80dp</dimen>
   <dimen name="about_opensource_logo_margin_end">16dp</dimen>
+  <dimen name="about_opensource_blurb_text">16sp</dimen>
   <dimen name="about_button_margin_bottom">16dp</dimen>
 
   <dimen name="color_button_height">56dp</dimen>

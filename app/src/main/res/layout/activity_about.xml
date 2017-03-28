@@ -21,20 +21,16 @@
   </android.support.design.widget.AppBarLayout>
 
   <LinearLayout
+    style="@style/About.Content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:paddingStart="@dimen/about_content_padding_horizontal"
-    android:paddingEnd="@dimen/about_content_padding_horizontal">
+    android:layout_height="match_parent">
 
     <TextView
+      style="@style/About.AppName"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
-      android:text="@string/app_name"
-      android:textSize="@dimen/about_app_name_text"
-      android:textAppearance="@style/TextAppearance.Squanchy.Card.Title" />
+      android:text="@string/app_name" />
 
     <TextView
       android:layout_width="wrap_content"
@@ -44,39 +40,40 @@
       android:text="@string/about_powered_by" />
 
     <TextView
+      style="@style/About.Squanchy"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
-      android:text="@string/squanchy"
-      android:textSize="@dimen/about_squanchy_text"
-      android:textAppearance="@style/TextAppearance.Squanchy.Card.Title" />
+      android:text="@string/squanchy" />
 
-    <TextView
+    <Button
+      android:id="@+id/website_button"
+      style="@style/About.SquanchyWebsite"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
       android:layout_marginBottom="@dimen/about_squanchy_website_margin_bottom"
-      android:autoLink="all"
-      android:text="@string/squanchy_website"
-      android:textSize="@dimen/about_squanchy_website_text" />
+      android:text="@string/squanchy_website" />
 
     <!-- We cannot use compound drawables here unfortunately -->
     <LinearLayout
+      style="@style/About.Opensource"
+      android:theme="@style/ThemeOverlay.About.Opensource"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
       android:layout_marginBottom="@dimen/about_opensource_margin_bottom"
-      android:gravity="center"
       tools:ignore="UseCompoundDrawables">
 
       <ImageView
-        android:theme="@style/ThemeOverlay.About.Opensource"
         android:layout_width="@dimen/about_opensource_logo_size"
         android:layout_height="@dimen/about_opensource_logo_size"
         android:layout_marginEnd="@dimen/about_opensource_logo_margin_end"
+        android:contentDescription="@null"
         android:src="@drawable/ic_opensource" />
 
       <TextView
+        style="@style/About.Opensource.Blurb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/about_opensource_blurb" />
