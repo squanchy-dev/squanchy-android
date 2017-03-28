@@ -143,6 +143,15 @@ public class HomeActivity extends TypefaceStyleableActivity {
         }
     }
 
+    //TODO fix it properly
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Resources.Theme theme = getThemeFor(currentSection);
+        bottomNavigationView.setBackgroundColor(getColorFromTheme(theme, android.support.design.R.attr.colorPrimary));
+    }
+
     private void handleProximityEvent(ProximityEvent proximityEvent) {
         // TODO do something with the event, like showing feedback or opening an event detail
     }
