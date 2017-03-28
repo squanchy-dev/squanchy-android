@@ -81,6 +81,7 @@
     </LinearLayout>
 
     <Button
+      android:id="@+id/github_button"
       style="@style/About.Button"
       android:layout_width="match_parent"
       android:layout_height="@dimen/color_button_height"
@@ -88,6 +89,7 @@
       android:text="@string/about_fork_me" />
 
     <Button
+      android:id="@+id/foss_button"
       style="@style/About.Button"
       android:layout_width="match_parent"
       android:layout_height="@dimen/color_button_height"

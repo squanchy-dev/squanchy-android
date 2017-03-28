@@ -3,12 +3,15 @@ package net.squanchy.about;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
-import android.widget.Toast;
 
 import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
+import net.squanchy.navigation.Navigator;
 
 public class AboutActivity extends TypefaceStyleableActivity {
+
+    private static final String SQUANCHY_WEBSITE = "https://squanchy.net";
+    private static final String SQUANCHY_GITHUB = "https://github.com/rock3r/squanchy";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -18,15 +21,20 @@ public class AboutActivity extends TypefaceStyleableActivity {
 
         setupToolbar();
 
-        findViewById(R.id.website_button).setOnClickListener(
-                // TODO add a navigator and navigate
-                view -> Toast.makeText(this, "Website NAO", Toast.LENGTH_SHORT).show()
-        );
-    }
+        Navigator navigator = AboutInjector.obtain(this)
+                .navigator();
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+        findViewById(R.id.website_button).setOnClickListener(
+                view -> navigator.toExternalUrl(SQUANCHY_WEBSITE)
+        );
+
+        findViewById(R.id.github_button).setOnClickListener(
+                view -> navigator.toExternalUrl(SQUANCHY_GITHUB)
+        );
+
+        findViewById(R.id.foss_button).setOnClickListener(
+                view -> navigator.toFossLicenses()
+        );
     }
 
     private void setupToolbar() {

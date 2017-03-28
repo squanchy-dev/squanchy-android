@@ -74,7 +74,7 @@
   <string name="about_label">About</string>
   <string name="about_powered_by">is powered by</string>
   <string name="squanchy">Squanchy</string>
-  <string name="squanchy_website">http://squanchy.net</string>
+  <string name="squanchy_website">https://squanchy.net</string>
   <string name="about_opensource_blurb">This app is proudly open source and any contribution is welcome.</string>
   <string name="about_fork_me">Fork me on GitHub</string>
   <string name="about_licenses">Open source licenses</string>

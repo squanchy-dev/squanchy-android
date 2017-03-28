@@ -3,6 +3,7 @@ package net.squanchy.navigation;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.widget.Toast;
 
 import net.squanchy.BuildConfig;
 import net.squanchy.about.AboutActivity;
@@ -121,6 +122,10 @@ public class Navigator {
 
     public void toAboutSquanchy() {
         start(new Intent(context, AboutActivity.class));
+    }
+
+    public void toFossLicenses() {
+        Toast.makeText(context, "FOSS... nao", Toast.LENGTH_SHORT).show();
     }
 
     private void start(Intent intent) {
