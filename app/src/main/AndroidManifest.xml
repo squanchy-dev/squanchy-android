@@ -15,17 +15,30 @@
     android:fullBackupContent="false"
     android:icon="@mipmap/ic_launcher"
     android:label="@string/app_name"
-    android:supportsRtl="false"
+    android:supportsRtl="true"
     tools:ignore="GoogleAppIndexingWarning">
 
     <activity
-      android:name="net.squanchy.navigation.HomeActivity"
-      android:theme="@style/Theme.Squanchy.Home">
+      android:name="net.squanchy.navigation.RoutingActivity"
+      android:theme="@style/Theme.Squanchy.Transparent">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <data android:scheme="@string/deeplink_scheme" />
+      </intent-filter>
     </activity>
+
+    <activity
+      android:name="net.squanchy.home.HomeActivity"
+      android:theme="@style/Theme.Squanchy.Home"
+      android:launchMode="singleTask" />
 
     <activity
       android:name="net.squanchy.eventdetails.EventDetailsActivity"
@@ -53,9 +66,11 @@
     <activity android:name="net.squanchy.contest.ContestActivity"
       android:theme="@style/Theme.Squanchy.Dialog" />
 
+    <!-- We're ok with "directBootAware" only being used where Direct Boot exists (API 24+) -->
     <receiver
       android:name="net.squanchy.notification.NotificationAlarmReceiver"
-      android:directBootAware="true">
+      android:directBootAware="true"
+      tools:ignore="UnusedAttribute">
       <intent-filter>
         <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
       </intent-filter>

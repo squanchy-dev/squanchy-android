@@ -11,7 +11,12 @@ import dagger.Provides;
 public class NavigationModule {
 
     @Provides
-    Navigator navigator(Context context) {
-        return new Navigator(context);
+    DebugActivityIntentFactory debugActivityIntentFactory() {
+        return new DebugActivityIntentFactory();
+    }
+
+    @Provides
+    public Navigator navigator(Context context, DebugActivityIntentFactory debugActivityIntentFactory) {
+        return new Navigator(context, debugActivityIntentFactory);
     }
 }

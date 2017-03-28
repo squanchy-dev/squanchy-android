@@ -1,8 +1,10 @@
-package net.squanchy.navigation;
+package net.squanchy.home;
 
 import android.Manifest;
 import android.animation.ValueAnimator;
 import android.content.pm.PackageManager;
+import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.AttrRes;
@@ -27,6 +29,9 @@ import net.squanchy.R;
 import net.squanchy.analytics.Analytics;
 import net.squanchy.analytics.ContentType;
 import net.squanchy.fonts.TypefaceStyleableActivity;
+import net.squanchy.home.deeplink.HomeActivityDeepLinkCreator;
+import net.squanchy.home.deeplink.HomeActivityIntentParser;
+import net.squanchy.navigation.Navigator;
 import net.squanchy.proximity.ProximityEvent;
 import net.squanchy.remoteconfig.RemoteConfig;
 import net.squanchy.service.proximity.injection.ProximityService;
@@ -41,6 +46,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private static final String STATE_KEY_SELECTED_PAGE_INDEX = "HomeActivity.selected_page_index";
     private static final String KEY_CONTEST_STAND = "stand";
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1000;
+    private static final boolean PROXIMITY_SERVICE_RADAR_NOT_STARTED = false;
 
     private final Map<BottomNavigationSection, View> pageViews = new HashMap<>(4);
     private final List<LifecycleView> lifecycleViews = new ArrayList<>(2);
@@ -53,9 +59,37 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private ProximityService proximityService;
     private Analytics analytics;
     private RemoteConfig remoteConfig;
-    private HomeService homeService;
     private Navigator navigator;
+
     private CompositeDisposable subscriptions;
+
+    private boolean proximityServiceRadarStarted = PROXIMITY_SERVICE_RADAR_NOT_STARTED;
+
+    public static Intent createScheduleIntent(Context context, Optional<String> dayId, Optional<String> eventId) {
+        return new HomeActivityDeepLinkCreator(context)
+                .deepLinkTo(BottomNavigationSection.SCHEDULE)
+                .withDayId(dayId)
+                .withEventId(eventId)
+                .build();
+    }
+
+    public static Intent createFavoritesIntent(Context context) {
+        return new HomeActivityDeepLinkCreator(context)
+                .deepLinkTo(BottomNavigationSection.FAVORITES)
+                .build();
+    }
+
+    public static Intent createTweetsIntent(Context context) {
+        return new HomeActivityDeepLinkCreator(context)
+                .deepLinkTo(BottomNavigationSection.TWEETS)
+                .build();
+    }
+
+    public static Intent createVenueInfoIntent(Context context) {
+        return new HomeActivityDeepLinkCreator(context)
+                .deepLinkTo(BottomNavigationSection.VENUE_INFO)
+                .build();
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,16 +105,29 @@ public class HomeActivity extends TypefaceStyleableActivity {
         bottomNavigationView = (InterceptingBottomNavigationView) findViewById(R.id.bottom_navigation);
         setupBottomNavigation(bottomNavigationView);
 
-        BottomNavigationSection selectedPage = getSelectedSectionOrDefault(Optional.fromNullable(savedInstanceState));
-        selectInitialPage(selectedPage);
+        Intent intent = getIntent();
+        selectPageFrom(intent, Optional.fromNullable(savedInstanceState));
 
         HomeComponent homeComponent = HomeInjector.obtain(this);
         analytics = homeComponent.analytics();
         remoteConfig = homeComponent.remoteConfig();
-        homeService = homeComponent.homeService();
         proximityService = homeComponent.proximityService();
+
         navigator = homeComponent.navigator();
         subscriptions = new CompositeDisposable();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        selectPageFrom(intent, Optional.absent());
+    }
+
+    private void selectPageFrom(Intent intent, Optional<Bundle> savedState) {
+        HomeActivityIntentParser intentParser = new HomeActivityIntentParser(savedState, intent);
+        BottomNavigationSection selectedPage = intentParser.getInitialSelectedPage();
+        selectInitialPage(selectedPage);
     }
 
     @Override
@@ -102,8 +149,6 @@ public class HomeActivity extends TypefaceStyleableActivity {
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(this::handleProximityEvent));
                 });
-
-        subscriptions.add(homeService.signInAnonymouslyIfNecessary().subscribe());
 
         for (LifecycleView lifecycleView : lifecycleViews) {
             lifecycleView.onStart();
@@ -191,12 +236,6 @@ public class HomeActivity extends TypefaceStyleableActivity {
         );
     }
 
-    private BottomNavigationSection getSelectedSectionOrDefault(Optional<Bundle> savedInstanceState) {
-        int selectedPageIndex = savedInstanceState.or(new Bundle())
-                .getInt(STATE_KEY_SELECTED_PAGE_INDEX, BottomNavigationSection.SCHEDULE.ordinal());
-        return BottomNavigationSection.values()[selectedPageIndex];
-    }
-
     private void selectInitialPage(BottomNavigationSection section) {
         swapPageTo(section);
         bottomNavigationView.cancelTransitions();
@@ -270,7 +309,8 @@ public class HomeActivity extends TypefaceStyleableActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putInt(STATE_KEY_SELECTED_PAGE_INDEX, currentSection.ordinal());
+        HomeStatePersister statePersister = new HomeStatePersister();
+        statePersister.saveCurrentSection(outState, currentSection);
         super.onSaveInstanceState(outState);
     }
 

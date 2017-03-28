@@ -15,6 +15,8 @@ import net.squanchy.search.SearchResults;
 import net.squanchy.speaker.domain.view.Speaker;
 import net.squanchy.support.widget.CardLayout;
 
+import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
+
 public class SearchRecyclerView extends RecyclerView {
 
     private SearchAdapter adapter;
@@ -42,7 +44,7 @@ public class SearchRecyclerView extends RecyclerView {
         int verticalSpacing = getResources().getDimensionPixelSize(R.dimen.card_vertical_margin);
         addItemDecoration(new CardOnlySpacingItemDecorator(horizontalSpacing, verticalSpacing));
 
-        adapter = new SearchAdapter(getContext());
+        adapter = new SearchAdapter(unwrapToActivityContext(getContext()));
         setAdapter(adapter);
         setClipToPadding(false);
     }

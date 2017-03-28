@@ -9,9 +9,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.squanchy.R;
+import net.squanchy.home.LifecycleView;
 import net.squanchy.imageloader.ImageLoader;
 import net.squanchy.imageloader.ImageLoaderInjector;
-import net.squanchy.navigation.LifecycleView;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.venue.domain.view.Venue;
 
@@ -42,6 +42,11 @@ public class VenueInfoPageView extends LinearLayout implements LifecycleView {
     public VenueInfoPageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
 
+        if (!isInEditMode()) {
+            Activity activity = unwrapToActivityContext(context);
+            imageLoader = ImageLoaderInjector.obtain(activity).imageLoader();
+        }
+        
         super.setOrientation(VERTICAL);
     }
 
@@ -58,7 +63,6 @@ public class VenueInfoPageView extends LinearLayout implements LifecycleView {
         VenueInfoComponent component = VenueInfoInjector.obtain(activity);
         navigate = component.navigator();
         service = component.service();
-        imageLoader = ImageLoaderInjector.obtain(getContext()).imageLoader();
 
         nameText = (TextView) findViewById(R.id.venue_name);
         addressText = (TextView) findViewById(R.id.venue_address);

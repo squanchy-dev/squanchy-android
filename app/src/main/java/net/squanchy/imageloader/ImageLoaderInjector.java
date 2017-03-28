@@ -1,6 +1,8 @@
 package net.squanchy.imageloader;
 
-import android.content.Context;
+import android.app.Activity;
+
+import net.squanchy.injection.ActivityContextModule;
 
 public final class ImageLoaderInjector {
 
@@ -8,9 +10,10 @@ public final class ImageLoaderInjector {
         // no instances
     }
 
-    public static ImageLoaderComponent obtain(Context context) {
+    public static ImageLoaderComponent obtain(Activity activity) {
         return DaggerImageLoaderComponent.builder()
-                .imageLoaderModule(new ImageLoaderModule(context))
+                .activityContextModule(new ActivityContextModule(activity))
+                .imageLoaderModule(new ImageLoaderModule())
                 .build();
     }
 }
