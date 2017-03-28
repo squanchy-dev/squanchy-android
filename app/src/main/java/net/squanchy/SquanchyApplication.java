@@ -48,7 +48,11 @@ public class SquanchyApplication extends Application {
                 getString(R.string.api_value_twitter_api_key),
                 getString(R.string.api_value_twitter_secret)
         );
-        CrashlyticsCore crashlyticsCore = new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build();
+
+        CrashlyticsCore crashlyticsCore = new CrashlyticsCore.Builder()
+                .disabled(BuildConfig.DEBUG)
+                .build();
+
         Fabric.with(
                 this,
                 new Crashlytics.Builder().core(crashlyticsCore).build(),

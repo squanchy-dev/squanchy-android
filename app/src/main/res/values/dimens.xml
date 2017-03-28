@@ -83,4 +83,10 @@
   <dimen name="venue_info_description_line_spacing_extra">4sp</dimen>
   <dimen name="venue_info_description_text">14sp</dimen>
 
+  <dimen name="settings_header_user_container_height">98dp</dimen>
+  <dimen name="settings_header_user_container_padding_horizontal">16dp</dimen>
+  <dimen name="settings_header_user_photo_size">52dp</dimen>
+  <dimen name="settings_header_user_name_margin_start">8dp</dimen>
+  <dimen name="settings_header_user_name_text">20sp</dimen>
+
 </resources>
