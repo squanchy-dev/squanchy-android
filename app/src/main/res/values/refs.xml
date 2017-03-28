@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <drawable name="illustration_signed_in">@drawable/illustration_lunch</drawable>
+  <drawable name="illustration_prompt_to_favorite">@drawable/illustration_lunch</drawable>
+</resources>
