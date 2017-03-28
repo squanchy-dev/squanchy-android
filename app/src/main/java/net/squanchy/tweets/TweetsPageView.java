@@ -55,7 +55,6 @@ public class TweetsPageView extends LinearLayout {
 
         swipeLayout.setOnRefreshListener(() -> {
             if (refreshingData) {
-                Timber.i("Timeline refresh already underway, ignoring new refresh request");
                 return;
             }
             refreshTimeline();
@@ -132,11 +131,11 @@ public class TweetsPageView extends LinearLayout {
 
         @Override
         protected void loadMore() {
-            Timber.d("Firing request for more tweets");
-            if (!refreshingData) {
-                disposable = tweetsAdapter.previous()
-                        .subscribe(search -> onRefreshFinished(), TweetsPageView.this::onError);
+            if (refreshingData) {
+                return;
             }
+            disposable = tweetsAdapter.previous()
+                    .subscribe(search -> onRefreshFinished(), TweetsPageView.this::onError);
         }
 
         void destroy() {
