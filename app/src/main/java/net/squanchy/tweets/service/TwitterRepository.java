@@ -9,20 +9,17 @@ import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.models.Search;
 import com.twitter.sdk.android.core.services.SearchService;
 
-import net.squanchy.tweets.model.TimelineState;
-
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import retrofit2.Call;
 
 public class TwitterRepository {
 
-    private static final int MAX_ITEM_PER_REQUEST = 30;
+    private static final int MAX_ITEM_PER_REQUEST = 20;
 
     private final SearchService searchService;
     private TimelineState stateHolder;
     private final String query;
-    private boolean refreshing = false;
 
     public TwitterRepository(String query) {
         this.searchService = TwitterCore.getInstance().getApiClient().getSearchService();
@@ -30,23 +27,13 @@ public class TwitterRepository {
     }
 
     Observable<Search> refresh() {
-        if (refreshing) {
-            return Observable.empty();
-        }
-        refreshing = true;
         return wrapRequestWithObservable(null)
-                .doOnNext(search -> stateHolder = TimelineState.init(search.tweets))
-                .doOnTerminate(() -> refreshing = false);
+                .doOnNext(search -> stateHolder = TimelineState.init(search.tweets));
     }
 
     Observable<Search> previous() {
-        if (refreshing) {
-            return Observable.empty();
-        }
-        refreshing = true;
-        return wrapRequestWithObservable(decrement(stateHolder.positionForPrevious()))
-                .doOnNext(search -> stateHolder.previous(search.tweets))
-                .doOnTerminate(() -> refreshing = false);
+        return wrapRequestWithObservable(decrement(stateHolder.previous()))
+                .doOnNext(search -> stateHolder.setPrevious(search.tweets));
     }
 
     private Observable<Search> wrapRequestWithObservable(@Nullable Long maxId) {

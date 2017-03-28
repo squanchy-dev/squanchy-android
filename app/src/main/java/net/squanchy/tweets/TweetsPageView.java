@@ -13,6 +13,7 @@ import net.squanchy.tweets.service.TwitterRepository;
 import net.squanchy.tweets.view.ScrollListener;
 import net.squanchy.tweets.view.TweetsAdapter;
 
+import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
 
 public class TweetsPageView extends LinearLayout {
@@ -66,6 +67,12 @@ public class TweetsPageView extends LinearLayout {
         initList();
     }
 
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        scrollListener.destroy();
+    }
+
     private void initList() {
 
         Context context = getContext();
@@ -78,18 +85,8 @@ public class TweetsPageView extends LinearLayout {
         emptyView.setText(context.getString(R.string.no_tweets_for_query, query));
 
         LinearLayoutManager layoutManager = (LinearLayoutManager) tweetsList.getLayoutManager();
-
-        scrollListener = new ScrollListener(layoutManager) {
-            @Override
-            protected void loadMore() {
-                Timber.d("Firing request for more tweets");
-                tweetsAdapter.previous()
-                        .subscribe(search -> onRefreshFinished());
-            }
-        };
-
+        scrollListener = new TweetScrollListener(layoutManager);
         tweetsList.addOnScrollListener(scrollListener);
-
         refreshTimeline();
     }
 
@@ -119,5 +116,30 @@ public class TweetsPageView extends LinearLayout {
     private void onError(Throwable throwable) {
         Timber.e(throwable);
         onRefreshFinished();
+    }
+
+    private class TweetScrollListener extends ScrollListener {
+
+        private Disposable disposable;
+
+        TweetScrollListener(LinearLayoutManager layoutManager) {
+            super(layoutManager);
+        }
+
+        @Override
+        protected void loadMore() {
+            Timber.d("Firing request for more tweets");
+            if (!refreshingData) {
+                disposable = tweetsAdapter.previous()
+                        .subscribe(search -> onRefreshFinished());
+            }
+        }
+
+        @Override
+        public void destroy() {
+            if (disposable != null && !disposable.isDisposed()) {
+                disposable.dispose();
+            }
+        }
     }
 }

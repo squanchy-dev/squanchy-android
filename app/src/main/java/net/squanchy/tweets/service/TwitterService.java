@@ -6,8 +6,6 @@ import com.twitter.sdk.android.core.models.Tweet;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.squanchy.tweets.view.TimelineStateHolder;
-
 import io.reactivex.Observable;
 
 public class TwitterService {
