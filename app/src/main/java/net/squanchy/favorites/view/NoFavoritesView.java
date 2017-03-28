@@ -3,17 +3,17 @@ package net.squanchy.favorites.view;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import net.squanchy.R;
 
 public class NoFavoritesView extends LinearLayout {
 
+    private static final int MAGIC_NUMBER_TO_TRIGGER_ACHIEVEMENT = 5;
     private FloatingActionButton favoriteButton;
-    private TextView text;
 
     public NoFavoritesView(Context context) {
         super(context);
@@ -33,19 +33,22 @@ public class NoFavoritesView extends LinearLayout {
         super.setOrientation(VERTICAL);
         inflate(getContext(), R.layout.merge_no_favorites_view, this);
 
-        text = (TextView) findViewById(R.id.text);
         favoriteButton = (FloatingActionButton) findViewById(R.id.favorite_fab_example);
         favoriteButton.setOnClickListener(new OnClickListener() {
-            private boolean favorite;
+            int counter = 0;
 
             @Override
             public void onClick(View view) {
-                favorite = !favorite;
                 favoriteButton.setImageResource(
-                        favorite ?
+                        counter % 2 == 0 ?
                                 R.drawable.ic_favorite_filled :
                                 R.drawable.ic_favorite_empty
                 );
+
+                counter++;
+                if (counter == MAGIC_NUMBER_TO_TRIGGER_ACHIEVEMENT) {
+                    Snackbar.make(NoFavoritesView.this, R.string.achievement_unlocked, Snackbar.LENGTH_LONG).show();
+                }
             }
         });
     }

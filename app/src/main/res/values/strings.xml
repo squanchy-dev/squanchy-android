@@ -69,7 +69,8 @@
   <string name="help_title">Help</string>
   <string name="about_title">About</string>
   <string name="settings_account_not_logged_in">Not logged in</string>
-  <string name="prompt_to_sign_in_for_favorites">Get notified about upcoming talks, Your favorite talks are also get synced across all your devices. \n\nTap to sign in</string>
-  <string name="prompt_to_favorite">You have no favorite talks, yet. Find some talk, touch the ♥ button and you are good to go.</string>
+  <string name="prompt_to_sign_in_for_favorites">Get notified about upcoming talks. Your favourite talks are also get synced across all your devices. \n\nTap to sign in</string>
+  <string name="prompt_to_favorite">You have no favourite talks, yet. Find some talk, touch the ♥ button and you are good to go.</string>
+  <string name="achievement_unlocked">Achievement Unlocked: The Fast Learner!</string>
 
 </resources>
