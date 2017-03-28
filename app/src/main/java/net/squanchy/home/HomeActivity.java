@@ -34,6 +34,7 @@ import net.squanchy.support.widget.InterceptingBottomNavigationView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import timber.log.Timber;
 
 public class HomeActivity extends TypefaceStyleableActivity {
 
@@ -141,6 +142,15 @@ public class HomeActivity extends TypefaceStyleableActivity {
         for (LifecycleView lifecycleView : lifecycleViews) {
             lifecycleView.onStart();
         }
+    }
+
+    //TODO fix it properly
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Resources.Theme theme = getThemeFor(currentSection);
+        bottomNavigationView.setBackgroundColor(getColorFromTheme(theme, android.support.design.R.attr.colorPrimary));
     }
 
     private void handleProximityEvent(ProximityEvent proximityEvent) {
