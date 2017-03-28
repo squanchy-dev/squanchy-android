@@ -119,7 +119,11 @@ dependencies {
     compile libraries.app.glide
     compile libraries.app.glideOkHttp3
     compile libraries.app.googleSignIn
+    compile libraries.app.gson
     compile libraries.app.jodaTimeAndroid
+    compile libraries.app.retrofit
+    compile libraries.app.retrofitGson
+    compile libraries.app.retrofitRx
     compile libraries.app.rx
     compile libraries.app.rxAndroid
     compile libraries.app.supportAppCompat
