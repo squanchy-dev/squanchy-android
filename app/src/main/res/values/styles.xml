@@ -331,4 +331,11 @@
     <item name="fontPath">?titleTypeface</item>
   </style>
 
+  <style name="Favorite.Empty.Text" parent="None">
+    <item name="android:gravity">center_horizontal</item>
+    <item name="android:paddingLeft">@dimen/card_horizontal_margin</item>
+    <item name="android:paddingRight">@dimen/card_horizontal_margin</item>
+    <item name="android:drawablePadding">@dimen/card_horizontal_margin</item>
+  </style>
+
 </resources>

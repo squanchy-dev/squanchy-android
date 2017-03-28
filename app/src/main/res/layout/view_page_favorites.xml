@@ -28,14 +28,12 @@
 
   <TextView
     android:id="@+id/empty_view"
+    style="@style/Favorite.Empty.Text"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:paddingLeft="@dimen/card_horizontal_margin"
-    android:paddingRight="@dimen/card_horizontal_margin"
-    android:drawablePadding="@dimen/card_horizontal_margin"
     tools:drawableTop="@drawable/illustration_lunch"
-    tools:text="@string/signin_to_favorite" />
+    tools:text="@string/prompt_to_sign_in_for_favorites" />
 
   <ProgressBar
     android:id="@+id/progressbar"
