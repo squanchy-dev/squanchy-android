@@ -3,11 +3,10 @@ package net.squanchy.tweets.util;
 import android.content.Context;
 import android.support.annotation.StringRes;
 
-import com.twitter.sdk.android.core.models.Tweet;
-
 import java.util.Locale;
 
 import net.squanchy.R;
+import net.squanchy.tweets.domain.view.Tweet;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -23,16 +22,7 @@ public class TwitterDateFormatter {
 
     public static String getTimestampFrom(Tweet tweet, Context context) {
 
-        if (tweet.createdAt == null) {
-            return context.getString(R.string.tweet_date_not_available);
-        }
-
-        return formatDate(tweet.createdAt, context);
-    }
-
-    private static String formatDate(String date, Context context) {
-
-        DateTime dateTime = DateTimeFormat.forPattern(DATE_PATTERN).withLocale(Locale.US).parseDateTime(date);
+        DateTime dateTime = DateTimeFormat.forPattern(DATE_PATTERN).withLocale(Locale.US).parseDateTime(tweet.createdAt());
         String time = DateTimeFormat.shortTime().print(dateTime);
 
         if (isToday(dateTime)) {

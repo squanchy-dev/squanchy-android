@@ -3,7 +3,7 @@ package net.squanchy.tweets.view;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.View;
 
-import com.twitter.sdk.android.core.models.Tweet;
+import net.squanchy.tweets.domain.view.Tweet;
 
 class TweetViewHolder extends ViewHolder {
 
