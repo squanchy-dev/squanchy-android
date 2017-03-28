@@ -7,8 +7,13 @@ import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.Collections;
+import java.util.List;
+
 import net.squanchy.R;
+import net.squanchy.tweets.domain.view.Tweet;
 import net.squanchy.tweets.service.TwitterRepository;
+import net.squanchy.tweets.service.TwitterService;
 import net.squanchy.tweets.view.TweetsAdapter;
 
 import io.reactivex.disposables.Disposable;
@@ -20,6 +25,7 @@ public class TweetsPageView extends LinearLayout {
     private RecyclerView tweetsList;
     private TweetsAdapter tweetsAdapter;
     private SwipeRefreshLayout swipeLayout;
+    private TwitterService twitterService;
     private Disposable disposable;
     private boolean refreshingData;
 
@@ -78,7 +84,8 @@ public class TweetsPageView extends LinearLayout {
         String query = context.getString(R.string.social_query);
 
         TwitterRepository repo = new TwitterRepository(query);
-        tweetsAdapter = new TweetsAdapter(repo, context);
+        twitterService = new TwitterService(repo);
+        tweetsAdapter = new TweetsAdapter(context);
         tweetsList.setAdapter(tweetsAdapter);
 
         emptyView.setText(context.getString(R.string.no_tweets_for_query, query));
@@ -89,12 +96,14 @@ public class TweetsPageView extends LinearLayout {
     private void refreshTimeline() {
         swipeLayout.setRefreshing(true);
         refreshingData = true;
-        disposable = tweetsAdapter.refresh()
-                .subscribe(l -> onRefreshFinished(), this::onError);
+        disposable = twitterService.refresh()
+                .subscribe(this::onRefreshFinished, this::onError);
     }
 
-    private void onRefreshFinished() {
+    private void onRefreshFinished(List<Tweet> tweets) {
         refreshingData = false;
+        swipeLayout.setRefreshing(false);
+        tweetsAdapter.updateWith(tweets);
 
         if (tweetsAdapter.isEmpty()) {
             emptyView.setVisibility(VISIBLE);
@@ -103,13 +112,10 @@ public class TweetsPageView extends LinearLayout {
             emptyView.setVisibility(GONE);
             tweetsList.setVisibility(VISIBLE);
         }
-
-        swipeLayout.setRefreshing(false);
-        tweetsAdapter.notifyDataSetChanged();
     }
 
     private void onError(Throwable throwable) {
         Timber.e(throwable);
-        onRefreshFinished();
+        onRefreshFinished(Collections.emptyList());
     }
 }

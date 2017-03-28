@@ -11,21 +11,14 @@ import java.util.List;
 
 import net.squanchy.R;
 import net.squanchy.tweets.domain.view.Tweet;
-import net.squanchy.tweets.service.TwitterRepository;
-import net.squanchy.tweets.service.TwitterService;
-
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class TweetsAdapter extends RecyclerView.Adapter<TweetViewHolder> {
 
     private final Context context;
-    private final TwitterService twitterService;
     private List<Tweet> tweetList;
 
-    public TweetsAdapter(TwitterRepository repo, Context context) {
+    public TweetsAdapter(Context context) {
         this.context = context;
-        this.twitterService = new TwitterService(repo);
         this.tweetList = new ArrayList<>();
     }
 
@@ -49,12 +42,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetViewHolder> {
         return tweetList.isEmpty();
     }
 
-    public Observable<List<Tweet>> refresh() {
-        return twitterService.refresh()
-                .doOnNext(this::onRefreshSuccess);
-    }
-
-    private void onRefreshSuccess(List<Tweet> tweets) {
+    public void updateWith(List<Tweet> tweets) {
         if (tweets.isEmpty()) {
             return;
         }
@@ -63,5 +51,6 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetViewHolder> {
         final ArrayList<Tweet> receivedItems = new ArrayList<>(tweets);
         receivedItems.addAll(tweetList);
         tweetList = receivedItems;
+        notifyDataSetChanged();
     }
 }
