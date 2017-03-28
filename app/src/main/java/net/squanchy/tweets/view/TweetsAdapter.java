@@ -6,18 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.twitter.sdk.android.core.models.Search;
-import com.twitter.sdk.android.core.models.Tweet;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import net.squanchy.R;
+import net.squanchy.tweets.domain.view.Tweet;
 import net.squanchy.tweets.service.TwitterRepository;
 import net.squanchy.tweets.service.TwitterService;
 
 import io.reactivex.Observable;
-import io.reactivex.functions.Consumer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class TweetsAdapter extends RecyclerView.Adapter<TweetViewHolder> {
 
@@ -51,18 +49,18 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetViewHolder> {
         return tweetList.isEmpty();
     }
 
-    public Observable<Search> refresh() {
+    public Observable<List<Tweet>> refresh() {
         return twitterService.refresh()
                 .doOnNext(this::onRefreshSuccess);
     }
 
-    private void onRefreshSuccess(Search search) {
-        if (search.tweets.isEmpty()) {
+    private void onRefreshSuccess(List<Tweet> tweets) {
+        if (tweets.isEmpty()) {
             return;
         }
 
         tweetList.clear();
-        final ArrayList<Tweet> receivedItems = new ArrayList<>(search.tweets);
+        final ArrayList<Tweet> receivedItems = new ArrayList<>(tweets);
         receivedItems.addAll(tweetList);
         tweetList = receivedItems;
     }

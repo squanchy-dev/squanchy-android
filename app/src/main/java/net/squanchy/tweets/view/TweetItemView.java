@@ -5,10 +5,9 @@ import android.text.method.LinkMovementMethod;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-import com.twitter.sdk.android.core.models.Tweet;
-
 import net.squanchy.R;
 import net.squanchy.support.widget.CardLayout;
+import net.squanchy.tweets.domain.view.Tweet;
 import net.squanchy.tweets.util.TweetFormatter;
 import net.squanchy.tweets.util.TwitterDateFormatter;
 
