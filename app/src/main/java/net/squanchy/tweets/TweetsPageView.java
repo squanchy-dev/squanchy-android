@@ -131,7 +131,7 @@ public class TweetsPageView extends LinearLayout {
             Timber.d("Firing request for more tweets");
             if (!refreshingData) {
                 disposable = tweetsAdapter.previous()
-                        .subscribe(search -> onRefreshFinished());
+                        .subscribe(search -> onRefreshFinished(), TweetsPageView.this::onError);
             }
         }
 
