@@ -6,13 +6,17 @@ import java.util.List;
 
 public class CursorPosition {
 
-    public final Long minPosition;
-    public final Long maxPosition;
+    private final Long minPosition;
+    private final Long maxPosition;
 
     public static CursorPosition from(List<Tweet> tweets) {
         Long minPosition = tweets.isEmpty() ? null : tweets.get(tweets.size() - 1).getId();
         Long maxPosition = tweets.isEmpty() ? null : tweets.get(0).getId();
         return new CursorPosition(minPosition, maxPosition);
+    }
+
+    public static Long previousCursorFrom(List<Tweet> tweets) {
+        return tweets.isEmpty() ? null : tweets.get(tweets.size() - 1).getId();
     }
 
     private CursorPosition(long minPosition, long maxPosition) {

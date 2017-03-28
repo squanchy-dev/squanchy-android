@@ -9,7 +9,7 @@ import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.models.Search;
 import com.twitter.sdk.android.core.services.SearchService;
 
-import net.squanchy.tweets.view.TimelineStateHolder;
+import net.squanchy.tweets.model.TimelineState;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -20,13 +20,12 @@ public class TwitterRepository {
     private static final int MAX_ITEM_PER_REQUEST = 30;
 
     private final SearchService searchService;
-    private final TimelineStateHolder stateHolder;
+    private TimelineState stateHolder;
     private final String query;
     private boolean refreshing = false;
 
     public TwitterRepository(String query) {
         this.searchService = TwitterCore.getInstance().getApiClient().getSearchService();
-        this.stateHolder = new TimelineStateHolder();
         this.query = query;
     }
 
@@ -36,15 +35,17 @@ public class TwitterRepository {
         }
         refreshing = true;
         return wrapRequestWithObservable(null)
+                .doOnNext(search -> stateHolder = TimelineState.init(search.tweets))
                 .doOnTerminate(() -> refreshing = false);
     }
 
-    Observable<Search> previous(Long maxId) {
+    Observable<Search> previous() {
         if (refreshing) {
             return Observable.empty();
         }
         refreshing = true;
-        return wrapRequestWithObservable(decrement(maxId))
+        return wrapRequestWithObservable(decrement(stateHolder.positionForPrevious()))
+                .doOnNext(search -> stateHolder.previous(search.tweets))
                 .doOnTerminate(() -> refreshing = false);
     }
 

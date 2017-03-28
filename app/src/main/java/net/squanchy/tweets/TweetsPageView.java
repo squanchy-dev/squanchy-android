@@ -83,7 +83,8 @@ public class TweetsPageView extends LinearLayout {
             @Override
             protected void loadMore() {
                 Timber.d("Firing request for more tweets");
-                tweetsAdapter.previous();
+                tweetsAdapter.previous()
+                        .subscribe(search -> onRefreshFinished());
             }
         };
 
