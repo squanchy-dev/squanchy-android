@@ -70,5 +70,7 @@
   <string name="help_title">Help</string>
   <string name="about_title">About</string>
   <string name="settings_account_not_logged_in">Not logged in</string>
+  <string name="no_favorites_label">You have no favorites, yet. Which is odd. EVERYONE has at least some favorite talks. I mean who doesn\'t yo?</string>
+  <string name="signin_to_favorite">You should totally sign in and start favoriting stuff. Favoriting is good for your health and wellbeing.</string>
 
 </resources>

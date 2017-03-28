@@ -5,8 +5,7 @@
   android:id="@+id/favorites_content_root"
   android:theme="@style/Theme.Squanchy.Favorites"
   android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  tools:context="net.squanchy.schedule.ScheduleActivity">
+  android:layout_height="match_parent">
 
   <android.support.design.widget.AppBarLayout
     style="@style/Squanchy.Appbar"
@@ -26,6 +25,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+  <TextView
+    android:id="@+id/empty_view"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:paddingLeft="@dimen/card_horizontal_margin"
+    android:paddingRight="@dimen/card_horizontal_margin"
+    android:drawablePadding="@dimen/card_horizontal_margin"
+    tools:drawableTop="@drawable/illustration_lunch"
+    tools:text="@string/signin_to_favorite" />
 
   <ProgressBar
     android:id="@+id/progressbar"
