@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -60,6 +61,8 @@ public class TweetsPageView extends LinearLayout implements LifecycleView {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
+        setupToolbar();
+
         emptyView = (TextView) findViewById(R.id.empty_view);
         tweetsList = (RecyclerView) findViewById(R.id.tweet_feed);
         swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_container);
@@ -75,6 +78,23 @@ public class TweetsPageView extends LinearLayout implements LifecycleView {
         });
     }
 
+    private void setupToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.activity_favorites);
+        toolbar.inflateMenu(R.menu.homepage);
+        toolbar.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.action_search:
+                    // TODO navigate to search
+                    return true;
+                case R.id.action_settings:
+                    // TODO navigate to settings
+                    return true;
+                default:
+                    return false;
+            }
+        });
+    }
     @Override
     public void onStart() {
         Context context = getContext();

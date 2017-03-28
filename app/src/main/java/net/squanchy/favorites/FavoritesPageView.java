@@ -60,13 +60,18 @@ public class FavoritesPageView extends CoordinatorLayout implements LifecycleVie
     private void setupToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.activity_favorites);
-        toolbar.inflateMenu(R.menu.search_icon);
+        toolbar.inflateMenu(R.menu.homepage);
         toolbar.setOnMenuItemClickListener(item -> {
-            if (item.getItemId() == R.id.action_search) {
-                navigate.toSearch();
-                return true;
+            switch (item.getItemId()) {
+                case R.id.action_search:
+                    navigate.toSearch();
+                    return true;
+                case R.id.action_settings:
+                    navigate.toSettings();
+                    return true;
+                default:
+                    return false;
             }
-            return false;
         });
     }
 

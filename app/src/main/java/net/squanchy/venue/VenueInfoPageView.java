@@ -75,7 +75,7 @@ public class VenueInfoPageView extends LinearLayout implements LifecycleView {
     private void setupToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.venue_info_label);
-        toolbar.inflateMenu(R.menu.venue_info_menu);
+        toolbar.inflateMenu(R.menu.homepage);
         toolbar.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
                 case R.id.action_search:
