@@ -24,6 +24,7 @@ import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 
 public class SettingsHeaderLayout extends LinearLayout {
 
+    private static final String PROVIDER_ID_GOOGLE = "google.com";
     @Nullable
     private ImageLoader imageLoader;
 
@@ -81,7 +82,7 @@ public class SettingsHeaderLayout extends LinearLayout {
 
     private Optional<UserInfo> googleUserInfoFrom(FirebaseUser firebaseUser) {
         List<? extends UserInfo> providerData = firebaseUser.getProviderData();
-        List<? extends UserInfo> googleData = Lists.filter(providerData, data -> "google.com".equalsIgnoreCase(data.getProviderId()));
+        List<? extends UserInfo> googleData = Lists.filter(providerData, data -> PROVIDER_ID_GOOGLE.equalsIgnoreCase(data.getProviderId()));
         if (googleData.isEmpty()) {
             return Optional.absent();
         }
