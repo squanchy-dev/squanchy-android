@@ -4,7 +4,7 @@ Squanchy supports adding gamification to your event. You can access the feature 
 
 Use achievements to break down the contest progress and then add them to the user history when you detect that the user has obtained them.
 Every achievement must be represented by an unique id. The proximity-based achievements are created with the NearIT platform with a customJSON content.
-The json strucute is the following:
+The json structure is the following:
 ```json
 {
   "action": "stand",
