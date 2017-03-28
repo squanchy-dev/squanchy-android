@@ -11,7 +11,7 @@ class TimelineState {
     @Nullable
     private Long previousCursor;
 
-    static TimelineState init(List<Tweet> tweets) {
+    static TimelineState create(List<Tweet> tweets) {
         Long minPosition = tweets.isEmpty() ? null : tweets.get(tweets.size() - 1).getId();
         return new TimelineState(minPosition);
     }

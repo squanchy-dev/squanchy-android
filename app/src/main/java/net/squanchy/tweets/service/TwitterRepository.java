@@ -28,7 +28,7 @@ public class TwitterRepository {
 
     Observable<Search> refresh() {
         return wrapRequestWithObservable(null)
-                .doOnNext(search -> stateHolder = TimelineState.init(search.tweets));
+                .doOnNext(search -> stateHolder = TimelineState.create(search.tweets));
     }
 
     Observable<Search> previous() {
