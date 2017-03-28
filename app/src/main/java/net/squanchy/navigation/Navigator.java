@@ -53,12 +53,18 @@ public class Navigator {
 
     public void toContest() {
         Intent intent = ContestActivity.createIntent(context);
-        context.startActivity(intent);
+        start(
+                intent,
+                FLAG_ACTIVITY_SINGLE_TOP
+        );
     }
 
     public void toContest(String achievementId) {
         Intent intent = ContestActivity.createIntent(context, achievementId);
-        context.startActivity(intent);
+        start(
+                intent,
+                FLAG_ACTIVITY_SINGLE_TOP
+        );
     }
 
     public void toSettings() {

@@ -62,9 +62,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private Navigator navigator;
 
     private CompositeDisposable subscriptions;
-
-    private boolean proximityServiceRadarStarted = PROXIMITY_SERVICE_RADAR_NOT_STARTED;
-
+    
     public static Intent createScheduleIntent(Context context, Optional<String> dayId, Optional<String> eventId) {
         return new HomeActivityDeepLinkCreator(context)
                 .deepLinkTo(BottomNavigationSection.SCHEDULE)

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.Locale;
@@ -48,6 +47,16 @@ public class ContestActivity extends TypefaceStyleableActivity {
         super.onStart();
 
         Intent intent = getIntent();
+        handleIntent(intent);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
         String achievementId = intent.getStringExtra(EXTRA_ACHIEVEMENT_ID);
 
         if (achievementId != null) {
