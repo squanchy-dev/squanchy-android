@@ -87,6 +87,8 @@
 
   <style name="Theme.Squanchy.Search" parent="Theme.Squanchy.PrimaryStatusBar" />
 
-  <style name="Theme.Squanchy.Settings" parent="Theme.Squanchy.PrimaryStatusBar" />
+  <style name="Theme.Squanchy.Settings" parent="Theme.Squanchy.PrimaryStatusBar">
+    <item name="colorAccent">?colorPrimary</item>
+  </style>
 
 </resources>

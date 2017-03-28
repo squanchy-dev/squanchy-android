@@ -106,6 +106,11 @@ public class FirebaseAuthService {
         });
     }
 
+    public Completable signOut() {
+        auth.signOut();
+        return signInAnonymously();
+    }
+
     public Completable signInAnonymously() {
         return Completable.create(e -> auth.signInAnonymously()
                 .addOnSuccessListener(result -> e.onComplete())
