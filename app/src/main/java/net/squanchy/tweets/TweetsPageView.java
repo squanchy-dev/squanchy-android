@@ -14,6 +14,7 @@ import java.util.List;
 
 import net.squanchy.R;
 import net.squanchy.home.LifecycleView;
+import net.squanchy.navigation.Navigator;
 import net.squanchy.tweets.domain.view.Tweet;
 import net.squanchy.tweets.service.TwitterService;
 import net.squanchy.tweets.view.TweetsAdapter;
@@ -26,6 +27,8 @@ import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 public class TweetsPageView extends LinearLayout implements LifecycleView {
 
     private final TwitterService twitterService;
+    private final Navigator navigator;
+
     private TextView emptyView;
     private RecyclerView tweetsList;
     private TweetsAdapter tweetsAdapter;
@@ -50,6 +53,7 @@ public class TweetsPageView extends LinearLayout implements LifecycleView {
         Activity activity = unwrapToActivityContext(context);
         TwitterComponent component = TwitterInjector.obtain(activity);
         twitterService = component.service();
+        navigator = component.navigator();
     }
 
     @Override
@@ -85,10 +89,10 @@ public class TweetsPageView extends LinearLayout implements LifecycleView {
         toolbar.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
                 case R.id.action_search:
-                    // TODO navigate to search
+                    navigator.toSearch();
                     return true;
                 case R.id.action_settings:
-                    // TODO navigate to settings
+                    navigator.toSettings();
                     return true;
                 default:
                     return false;
