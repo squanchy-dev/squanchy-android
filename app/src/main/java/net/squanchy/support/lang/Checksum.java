@@ -8,6 +8,10 @@ public class Checksum {
 
     public long getChecksumOf(String data) {
         checksum.update(data.getBytes());
-        return checksum.getValue();
+        try {
+            return checksum.getValue();
+        } finally {
+            checksum.reset();
+        }
     }
 }
