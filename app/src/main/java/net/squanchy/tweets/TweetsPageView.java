@@ -22,7 +22,7 @@ public class TweetsPageView extends LinearLayout {
     private RecyclerView tweetsList;
     private TweetsAdapter tweetsAdapter;
     private SwipeRefreshLayout swipeLayout;
-    private ScrollListener scrollListener;
+    private TweetScrollListener scrollListener;
     private Disposable disposable;
     private boolean refreshingData;
 
@@ -139,8 +139,7 @@ public class TweetsPageView extends LinearLayout {
             }
         }
 
-        @Override
-        public void destroy() {
+        void destroy() {
             if (disposable != null && !disposable.isDisposed()) {
                 disposable.dispose();
             }
