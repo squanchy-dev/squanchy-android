@@ -73,4 +73,12 @@
   <string name="prompt_to_favorite">You have no favourite talks, yet. Find some talk, touch the ♥ button and you are good to go.</string>
   <string name="achievement_unlocked">Achievement Unlocked: The Fast Learner!</string>
 
+  <string name="about_label">About</string>
+  <string name="about_powered_by">is powered by</string>
+  <string name="squanchy" translatable="false">Squanchy</string>
+  <string name="squanchy_website" translatable="false">https://squanchy.net</string>
+  <string name="about_opensource_blurb">This app is proudly open source and any contribution is welcome.</string>
+  <string name="about_fork_me">Fork me on GitHub</string>
+  <string name="about_licenses">Open source licenses</string>
+
 </resources>

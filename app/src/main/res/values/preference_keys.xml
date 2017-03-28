@@ -5,6 +5,8 @@
   <string name="build_version_preference_key">build_version_preference_key</string>
   <string name="account_email_preference_key">account_email_preference_key</string>
   <string name="account_signin_signout_preference_key">account_signin_signout_preference_key</string>
+  <string name="help_preference_key">help_preference_key</string>
+  <string name="about_preference_key">about_preference_key</string>
   <string name="debug_category_preference_key">debug_category_preference_key</string>
   <string name="open_debug_preference_key">open_debug_preference_key</string>
 

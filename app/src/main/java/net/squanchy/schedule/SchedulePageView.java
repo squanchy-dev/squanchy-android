@@ -75,7 +75,7 @@ public class SchedulePageView extends CoordinatorLayout implements LifecycleView
     private void setupToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.activity_schedule);
-        toolbar.inflateMenu(R.menu.schedule_menu);
+        toolbar.inflateMenu(R.menu.homepage);
         toolbar.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
                 case R.id.action_search:
