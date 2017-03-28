@@ -71,4 +71,12 @@
   <string name="about_title">About</string>
   <string name="settings_account_not_logged_in">Not logged in</string>
 
+  <string name="about_label">About</string>
+  <string name="about_powered_by">is powered by</string>
+  <string name="squanchy" translatable="false">Squanchy</string>
+  <string name="squanchy_website" translatable="false">https://squanchy.net</string>
+  <string name="about_opensource_blurb">This app is proudly open source and any contribution is welcome.</string>
+  <string name="about_fork_me">Fork me on GitHub</string>
+  <string name="about_licenses">Open source licenses</string>
+
 </resources>

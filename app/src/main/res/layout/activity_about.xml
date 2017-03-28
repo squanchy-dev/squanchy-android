@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical">
+
+  <android.support.design.widget.AppBarLayout
+    android:theme="@style/ThemeOverlay.About.AppBar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:elevation="@dimen/about_appbar_elevation">
+
+    <android.support.v7.widget.Toolbar
+      android:id="@+id/toolbar"
+      style="@style/About.Toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+  </android.support.design.widget.AppBarLayout>
+
+  <LinearLayout
+    style="@style/About.Content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+      style="@style/About.AppName"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:text="@string/app_name" />
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginTop="@dimen/about_powered_by_margin_top"
+      android:text="@string/about_powered_by" />
+
+    <TextView
+      style="@style/About.Squanchy"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:text="@string/squanchy" />
+
+    <Button
+      android:id="@+id/website_button"
+      style="@style/About.SquanchyWebsite"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginBottom="@dimen/about_squanchy_website_margin_bottom"
+      android:text="@string/squanchy_website" />
+
+    <!-- We cannot use compound drawables here unfortunately -->
+    <LinearLayout
+      style="@style/About.Opensource"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginBottom="@dimen/about_opensource_margin_bottom"
+      tools:ignore="UseCompoundDrawables">
+
+      <ImageView
+        android:layout_width="@dimen/about_opensource_logo_size"
+        android:layout_height="@dimen/about_opensource_logo_size"
+        android:layout_marginEnd="@dimen/about_opensource_logo_margin_end"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_opensource" />
+
+      <TextView
+        style="@style/About.Opensource.Blurb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/about_opensource_blurb" />
+
+    </LinearLayout>
+
+    <Button
+      android:id="@+id/github_button"
+      style="@style/About.Button"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/color_button_height"
+      android:layout_marginBottom="@dimen/about_button_margin_bottom"
+      android:text="@string/about_fork_me" />
+
+    <Button
+      android:id="@+id/foss_button"
+      style="@style/About.Button"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/color_button_height"
+      android:layout_marginBottom="@dimen/about_button_margin_bottom"
+      android:text="@string/about_licenses" />
+
+  </LinearLayout>
+
+</LinearLayout>

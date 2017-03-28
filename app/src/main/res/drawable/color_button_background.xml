@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+  android:insetLeft="@dimen/color_button_inset_horizontal"
+  android:insetTop="@dimen/color_button_inset_vertical"
+  android:insetRight="@dimen/color_button_inset_horizontal"
+  android:insetBottom="@dimen/color_button_inset_vertical">
+
+  <ripple android:color="?colorControlHighlight">
+    <item>
+      <!-- As we can't use themed ColorStateLists in L, we'll use a Drawable selector which
+           changes the shape's fill color. -->
+      <selector>
+        <item android:state_enabled="false">
+          <shape android:shape="rectangle">
+            <corners android:radius="@dimen/color_button_corner_radius" />
+            <solid android:color="?colorButtonNormal" />
+            <padding
+              android:left="@dimen/color_button_padding_horizontal"
+              android:top="@dimen/color_button_padding_vertical"
+              android:right="@dimen/color_button_padding_horizontal"
+              android:bottom="@dimen/color_button_padding_vertical" />
+          </shape>
+        </item>
+        <item>
+          <shape android:shape="rectangle">
+            <corners android:radius="@dimen/color_button_corner_radius" />
+            <solid android:color="?colorAccent" />
+            <padding
+              android:left="@dimen/color_button_padding_horizontal"
+              android:top="@dimen/color_button_padding_vertical"
+              android:right="@dimen/color_button_padding_horizontal"
+              android:bottom="@dimen/color_button_padding_vertical" />
+          </shape>
+        </item>
+      </selector>
+    </item>
+  </ripple>
+</inset>

@@ -160,7 +160,7 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_menu, menu);
+        getMenuInflater().inflate(R.menu.search, menu);
         return true;
     }
 

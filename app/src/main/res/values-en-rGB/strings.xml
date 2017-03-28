@@ -3,5 +3,6 @@
 
   <string name="bottom_bar_favorites_label">Favourites</string>
   <string name="activity_favorites">Favourites</string>
+  <string name="about_licenses">Open source licences</string>
 
 </resources>

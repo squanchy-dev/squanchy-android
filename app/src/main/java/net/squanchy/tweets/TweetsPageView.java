@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import java.util.List;
 
 import net.squanchy.R;
 import net.squanchy.home.LifecycleView;
+import net.squanchy.navigation.Navigator;
 import net.squanchy.tweets.domain.view.Tweet;
 import net.squanchy.tweets.service.TwitterService;
 import net.squanchy.tweets.view.TweetsAdapter;
@@ -25,6 +27,8 @@ import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 public class TweetsPageView extends LinearLayout implements LifecycleView {
 
     private final TwitterService twitterService;
+    private final Navigator navigator;
+
     private TextView emptyView;
     private RecyclerView tweetsList;
     private TweetsAdapter tweetsAdapter;
@@ -49,6 +53,7 @@ public class TweetsPageView extends LinearLayout implements LifecycleView {
         Activity activity = unwrapToActivityContext(context);
         TwitterComponent component = TwitterInjector.obtain(activity);
         twitterService = component.service();
+        navigator = component.navigator();
     }
 
     @Override
@@ -59,6 +64,8 @@ public class TweetsPageView extends LinearLayout implements LifecycleView {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+
+        setupToolbar();
 
         emptyView = (TextView) findViewById(R.id.empty_view);
         tweetsList = (RecyclerView) findViewById(R.id.tweet_feed);
@@ -75,6 +82,23 @@ public class TweetsPageView extends LinearLayout implements LifecycleView {
         });
     }
 
+    private void setupToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.activity_favorites);
+        toolbar.inflateMenu(R.menu.homepage);
+        toolbar.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.action_search:
+                    navigator.toSearch();
+                    return true;
+                case R.id.action_settings:
+                    navigator.toSettings();
+                    return true;
+                default:
+                    return false;
+            }
+        });
+    }
     @Override
     public void onStart() {
         Context context = getContext();
