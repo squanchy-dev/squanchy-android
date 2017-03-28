@@ -7,15 +7,16 @@ import com.twitter.sdk.android.core.models.Tweet;
 import com.twitter.sdk.android.tweetui.Timeline;
 import com.twitter.sdk.android.tweetui.TimelineResult;
 
+import net.squanchy.tweets.service.TwitterRepo;
 import net.squanchy.tweets.service.TwitterService;
 
-class TwitterRepository {
+class TwitterItemAdapter {
 
     private final TwitterService twitterService;
     private boolean hasMoreItems = true;
 
-    TwitterRepository(Timeline<Tweet> timeline) {
-        this.twitterService = new TwitterService(timeline);
+    TwitterItemAdapter(TwitterRepo repo) {
+        this.twitterService = new TwitterService(repo);
     }
 
     Tweet itemAt(int position) {
@@ -34,11 +35,11 @@ class TwitterRepository {
     }
 
     void refresh(Callback<TimelineResult<Tweet>> callback) {
-        twitterService.refresh(callback);
+        twitterService.refresh();
     }
 
     void previous(Callback<TimelineResult<Tweet>> callback) {
-        twitterService.previous(new CallbackDecorator(callback));
+        twitterService.previous();
     }
 
     @TweetViewTypeId

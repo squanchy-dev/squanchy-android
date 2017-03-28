@@ -11,15 +11,16 @@ import com.twitter.sdk.android.tweetui.Timeline;
 
 import net.squanchy.R;
 import net.squanchy.tweets.TweetsPageView;
+import net.squanchy.tweets.service.TwitterRepo;
 
 public class TweetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final Context context;
-    private final TwitterRepository repository;
+    private final TwitterItemAdapter repository;
 
-    public TweetsAdapter(Timeline<Tweet> timeline, Context context) {
+    public TweetsAdapter(TwitterRepo repo, Context context) {
         this.context = context;
-        this.repository = new TwitterRepository(timeline);
+        this.repository = new TwitterItemAdapter(repo);
     }
 
     @Override

@@ -12,10 +12,10 @@ import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.models.Tweet;
-import com.twitter.sdk.android.tweetui.SearchTimeline;
 import com.twitter.sdk.android.tweetui.TimelineResult;
 
 import net.squanchy.R;
+import net.squanchy.tweets.service.TwitterRepo;
 import net.squanchy.tweets.view.ScrollListener;
 import net.squanchy.tweets.view.TweetsAdapter;
 
@@ -77,16 +77,9 @@ public class TweetsPageView extends LinearLayout {
         Context context = getContext();
         String query = context.getString(R.string.social_query);
 
-        if (!isInEditMode()) {
-            SearchTimeline timeline = new SearchTimeline.Builder()
-                    .resultType(SearchTimeline.ResultType.RECENT)
-                    .maxItemsPerRequest(10)
-                    .query(query)
-                    .build();
-
-            tweetsAdapter = new TweetsAdapter(timeline, context);
-            tweetsList.setAdapter(tweetsAdapter);
-        }
+        TwitterRepo repo = new TwitterRepo(query);
+        tweetsAdapter = new TweetsAdapter(repo, context);
+        tweetsList.setAdapter(tweetsAdapter);
 
         emptyView.setText(context.getString(R.string.no_tweets_for_query, query));
 

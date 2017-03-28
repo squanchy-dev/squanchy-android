@@ -3,8 +3,8 @@ package net.squanchy.tweets.service;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.models.Search;
 import com.twitter.sdk.android.core.models.Tweet;
-import com.twitter.sdk.android.tweetui.Timeline;
 import com.twitter.sdk.android.tweetui.TimelineResult;
 
 import java.util.ArrayList;
@@ -12,26 +12,28 @@ import java.util.List;
 
 import net.squanchy.tweets.view.TimelineStateHolder;
 
+import io.reactivex.Observable;
+
 public class TwitterService {
 
-    private final Timeline<Tweet> timeline;
+    private final TwitterRepo repo;
     private final TimelineStateHolder timelineStateHolder;
     private List<Tweet> itemList;
 
-    public TwitterService(Timeline<Tweet> timeline) {
-        this.timeline = timeline;
+    public TwitterService(TwitterRepo repo) {
+        this.repo = repo;
         this.timelineStateHolder = new TimelineStateHolder();
 
         itemList = new ArrayList<>();
     }
 
-    public void refresh(Callback<TimelineResult<Tweet>> developerCb) {
+    public Observable<Search> refresh() {
         timelineStateHolder.resetCursors();
-        load(timelineStateHolder.positionForNext(), new RefreshCallback(developerCb, timelineStateHolder));
+        return load();
     }
 
-    public void previous(Callback<TimelineResult<Tweet>> developerCb) {
-        loadPrevious(timelineStateHolder.positionForPrevious(), new PreviousCallback(developerCb, timelineStateHolder));
+    public Observable<Search> previous() {
+        return loadPrevious(timelineStateHolder.positionForPrevious());
     }
 
     public int size() {
@@ -42,20 +44,12 @@ public class TwitterService {
         return itemList.get(position);
     }
 
-    private void load(Long minPosition, Callback<TimelineResult<Tweet>> cb) {
-        if (timelineStateHolder.startTimelineRequest()) {
-            timeline.next(minPosition, cb);
-        } else {
-            cb.failure(new TwitterException("Request already in flight"));
-        }
+    private Observable<Search> load() {
+        return repo.refresh();
     }
 
-    private void loadPrevious(Long maxPosition, Callback<TimelineResult<Tweet>> cb) {
-        if (timelineStateHolder.startTimelineRequest()) {
-            timeline.previous(maxPosition, cb);
-        } else {
-            cb.failure(new TwitterException("Request already in flight"));
-        }
+    private Observable<Search> loadPrevious(Long maxPosition) {
+        return repo.previous(maxPosition);
     }
 
     class DefaultCallback extends Callback<TimelineResult<Tweet>> {
