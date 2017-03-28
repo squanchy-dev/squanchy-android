@@ -2,6 +2,8 @@
 
   <style name="None" />
 
+  <style name="Button.Colored" parent="Widget.AppCompat.Button.Colored" />
+
   <style name="Squanchy.Appbar" parent="None">
     <item name="android:background">?colorPrimary</item>
     <item name="android:elevation">@dimen/toolbar_elevation</item>
@@ -13,16 +15,6 @@
   </style>
 
   <style name="TextAppearance.Squanchy.Toolbar" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
-    <item name="fontPath">?titleTypeface</item>
-  </style>
-
-  <style name="Squanchy.Toolbar.Light" parent="Widget.AppCompat.Light.ActionBar">
-    <item name="android:titleTextStyle">@style/TextAppearance.Squanchy.Toolbar.Accent</item>
-    <item name="android:subtitleTextStyle">@style/TextAppearance.Squanchy.Toolbar.Accent</item>
-  </style>
-
-  <style name="TextAppearance.Squanchy.Toolbar.Accent" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
-    <item name="android:textColor">?colorAccent</item>
     <item name="fontPath">?titleTypeface</item>
   </style>
 
@@ -342,18 +334,20 @@
   </style>
 
   <style name="ThemeOverlay.About.AppBar" parent="ThemeOverlay.AppCompat.Light">
-    <item name="android:textColorPrimary">@color/primary</item>
+    <item name="colorPrimary">@color/white</item>
+    <item name="colorPrimaryDark">@color/white</item>
     <item name="colorControlNormal">@color/primary</item>
+    <item name="android:textColorPrimary">@color/primary</item>
   </style>
 
-  <style name="Button.Colored" parent="Widget.AppCompat.Button.Colored" />
+  <style name="About.Toolbar" parent="Widget.AppCompat.Light.ActionBar">
+    <item name="android:titleTextStyle">@style/TextAppearance.About.Toolbar</item>
+    <item name="android:subtitleTextStyle">@style/TextAppearance.About.Toolbar</item>
+  </style>
 
-  <style name="About.Button" parent="Button.Colored">
-    <item name="android:background">@drawable/color_button_background</item>
-    <item name="android:backgroundTint">?colorControlNormal</item>
-    <item name="android:textAllCaps">false</item>
-    <item name="android:textAppearance">@style/TextAppearance.Squanchy.About.Button</item>
-    <item name="android:stateListAnimator">@anim/clickable_state_list_anim</item>
+  <style name="TextAppearance.About.Toolbar" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+    <item name="android:textColor">@color/primary</item>
+    <item name="fontPath">?titleTypeface</item>
   </style>
 
   <style name="TextAppearance.Squanchy.About.Button" parent="None">
@@ -389,8 +383,6 @@
     <item name="fontPath">?titleTypeface</item>
   </style>
 
-  <!-- TODO the touch feedback is broken because the theme is all white,
-       revert theme changes AND use theme overlay just for the appbar -->
   <style name="About.SquanchyWebsite" parent="Widget.AppCompat.Button.Borderless">
     <item name="android:background">@drawable/primary_touch_feedback</item>
     <item name="android:minHeight">0dp</item>
@@ -402,10 +394,6 @@
     <item name="android:textSize">@dimen/about_squanchy_website_text</item>
     <item name="fontPath">?defaultMediumTypeface</item>
   </style>
-
-  <!-- TODO the touch feedback is broken because the theme is all white,
-       revert theme changes AND use theme overlay just for the appbar -->
-  <style name="ThemeOverlay.About.Opensource" parent="Theme.Squanchy" />
 
   <style name="About.Opensource" parent="None">
     <item name="android:gravity">center</item>
@@ -419,6 +407,14 @@
     <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">@dimen/about_opensource_blurb_text</item>
     <item name="fontPath">?defaultRegularTypeface</item>
+  </style>
+
+  <style name="About.Button" parent="Button.Colored">
+    <item name="android:background">@drawable/color_button_background</item>
+    <item name="android:backgroundTint">?colorPrimary</item>
+    <item name="android:textAllCaps">false</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.About.Button</item>
+    <item name="android:stateListAnimator">@anim/clickable_state_list_anim</item>
   </style>
 
 </resources>
