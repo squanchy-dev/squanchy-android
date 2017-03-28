@@ -96,7 +96,6 @@ public class TweetsPageView extends LinearLayout {
     private void refreshTimeline() {
         swipeLayout.setRefreshing(true);
         refreshingData = true;
-        scrollListener.reset();
         disposable = tweetsAdapter.refresh()
                 .subscribe(l -> onRefreshFinished(), this::onError);
     }
@@ -135,6 +134,8 @@ public class TweetsPageView extends LinearLayout {
                 return;
             }
             disposable = tweetsAdapter.previous()
+                    .doOnSubscribe(v -> loading = true)
+                    .doOnTerminate(() -> loading = false)
                     .subscribe(search -> onRefreshFinished(), TweetsPageView.this::onError);
         }
 
