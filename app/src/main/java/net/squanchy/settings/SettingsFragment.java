@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.design.widget.Snackbar;
+import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseUser;
 
@@ -68,9 +69,17 @@ public class SettingsFragment extends PreferenceFragment {
     public void onStart() {
         super.onStart();
 
+        hideDividers();
+
         subscription = signInService.currentUser()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onUserChanged);
+    }
+
+    private void hideDividers() {
+        ListView list = (ListView) getView().findViewById(android.R.id.list);
+        list.setDivider(null);
+        list.setDividerHeight(0);
     }
 
     private void onUserChanged(Optional<FirebaseUser> user) {
