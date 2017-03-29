@@ -1,3 +1,5 @@
-Version 0.6.0 alpha
+Version 0.7.0 alpha
 
-* What's new: setting screen (WIP), deeplinks (see ticket #148 on squanchy.net)
+* Fixed a lot of bugs: #180, #181, #176, #162 and a bunch of others 🐛
+* Improved social stream page 🐦
+* What's new: about and licences screens; favourites empty state (WIP)
