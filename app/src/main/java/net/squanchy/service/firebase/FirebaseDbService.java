@@ -6,6 +6,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Collections;
 import java.util.Locale;
 
 import net.squanchy.service.firebase.model.FirebaseAchievements;
@@ -18,6 +19,7 @@ import net.squanchy.service.firebase.model.FirebasePlaces;
 import net.squanchy.service.firebase.model.FirebaseSpeakers;
 import net.squanchy.service.firebase.model.FirebaseTrack;
 import net.squanchy.service.firebase.model.FirebaseTracks;
+import net.squanchy.service.firebase.model.FirebaseUserData;
 import net.squanchy.service.firebase.model.FirebaseVenue;
 import net.squanchy.support.lang.Func1;
 import net.squanchy.support.lang.Optional;
@@ -38,10 +40,9 @@ public final class FirebaseDbService {
     private static final String TRACKS_NODE = "data/tracks";
     private static final String VENUE_INFO_NODE = "data/venue";
     private static final String TRACKS_BY_ID_NODE = "data/tracks/%1$s";
-    private static final String FAVORITES_NODE = "user/%1$s/favorites";
-    private static final String FAVORITES_BY_ID_NODE = "user/%1$s/favorites/map/%2$s";
-    private static final String ACHIEVEMENTS_NODE = "user/%1$s/achievements";
-    private static final String ACHIEVEMENTS_BY_ID_NODE = "user/%1$s/achievements/map/%2$s";
+    private static final String USERDATA_NODE = "user/%1$s";
+    private static final String FAVORITES_BY_ID_NODE = "user/%1$s/favorites/%2$s";
+    private static final String ACHIEVEMENTS_BY_ID_NODE = "user/%1$s/achievements/%2$s";
 
     private final DatabaseReference database;
 
@@ -85,17 +86,22 @@ public final class FirebaseDbService {
     }
 
     public Observable<FirebaseFavorites> favorites(String userId) {
-        String path = String.format(Locale.US, FAVORITES_NODE, userId);
-
-        return observeOptionalChild(path, FirebaseFavorites.class)
-                .map(optionalFavorites -> optionalFavorites.or(FirebaseFavorites.empty()));
+        return userData(userId)
+                .map(firebaseUserData -> Optional.fromNullable(firebaseUserData.favorites))
+                .map(FirebaseFavorites::new);
     }
 
     public Observable<FirebaseAchievements> achievements(String userId) {
-        String path = String.format(Locale.US, ACHIEVEMENTS_NODE, userId);
+        return userData(userId)
+                .map(firebaseUserData -> Optional.fromNullable(firebaseUserData.achievements))
+                .map(FirebaseAchievements::new);
+    }
 
-        return observeOptionalChild(path, FirebaseAchievements.class)
-                .map(optionalAchievements -> optionalAchievements.or(FirebaseAchievements.empty()));
+    private Observable<FirebaseUserData> userData(String userId) {
+        String path = String.format(Locale.US, USERDATA_NODE, userId);
+
+        return observeOptionalChild(path, FirebaseUserData.class)
+                .map(optionalUserData -> optionalUserData.or(FirebaseUserData.empty()));
     }
 
     public Observable<FirebaseVenue> venueInfo() {
