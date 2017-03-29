@@ -7,7 +7,6 @@ buildscript {
     dependencies {
         classpath gradlePlugins.fabric
         classpath gradlePlugins.buildProperties
-        classpath gradlePlugins.androidApt
     }
 }
 
@@ -18,7 +17,6 @@ plugins {
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply plugin: 'com.novoda.build-properties'
-apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.github.triplet.play'
 
 repositories {
@@ -120,6 +118,7 @@ dependencies {
     compile libraries.app.glideOkHttp3
     compile libraries.app.googleSignIn
     compile libraries.app.jodaTimeAndroid
+    compile libraries.app.nearit
     compile libraries.app.rx
     compile libraries.app.rxAndroid
     compile libraries.app.supportAppCompat
@@ -127,12 +126,11 @@ dependencies {
     compile libraries.app.timber
     compile libraries.app.tweetUi
     compile libraries.app.viewPagerAdapter
-    compile libraries.app.nearit
 
-    apt libraries.app.autoValue
+    annotationProcessor libraries.app.autoValue
     provided libraries.app.autoValue
 
-    apt libraries.app.daggerCompiler
+    annotationProcessor libraries.app.daggerCompiler
     compile libraries.app.dagger
 
     retrolambdaConfig libraries.app.retrolambda

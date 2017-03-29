@@ -98,4 +98,6 @@
     <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
   </style>
 
+  <style name="Theme.Squanchy.Licenses" parent="Theme.Squanchy.PrimaryStatusBar" />
+
 </resources>

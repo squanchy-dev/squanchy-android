@@ -2,7 +2,7 @@
 <resources>
 
   <color name="card_background">@color/white</color>
-
+  <color name="licenses_notice_background">#e0e0e0</color>
   <color name="notification_led_color">@color/accent</color>
 
 </resources>

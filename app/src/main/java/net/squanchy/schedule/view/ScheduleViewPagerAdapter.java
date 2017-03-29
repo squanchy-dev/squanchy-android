@@ -58,7 +58,7 @@ public class ScheduleViewPagerAdapter extends ViewPagerAdapter<ScheduleDayPageVi
     @Override
     public CharSequence getPageTitle(int position) {
         LocalDateTime date = pages.get(position).date();
-        return date.toString(TITLE_FORMAT_TEMPLATE);
+        return date.toString(TITLE_FORMAT_TEMPLATE).toUpperCase();
     }
 
     public String getPageDayId(int position) {
