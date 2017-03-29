@@ -34,14 +34,11 @@ public class CircleImageView extends ImageViewWithForeground {
     }
 
     public CircleImageView(Context context, AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
-    }
-
-    public CircleImageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+        super(context, attrs, defStyleAttr);
 
         super.setOutlineProvider(CIRCULAR_OUTLINE_PROVIDER);
         super.setClipToOutline(true);
+        super.setScaleType(ScaleType.CENTER_CROP);
     }
 
     @Override
@@ -52,6 +49,11 @@ public class CircleImageView extends ImageViewWithForeground {
     @Override
     public final void setClipToOutline(boolean clipToOutline) {
         throw new UnsupportedOperationException("Cannot set clipping to outline on a CircleImageView");
+    }
+
+    @Override
+    public final void setScaleType(ScaleType scaleType) {
+        throw new UnsupportedOperationException("Cannot set scale type on a CircleImageView");
     }
 
     @Override
