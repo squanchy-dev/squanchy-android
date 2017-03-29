@@ -23,7 +23,15 @@
       android:key="@string/about_to_start_notification_preference_key"
       android:defaultValue="true"
       android:icon="@drawable/ic_notifications"
-      android:title="@string/settings_notifications_category" />
+      android:title="@string/settings_notifications_title" />
+
+    <SwitchPreference
+      android:key="@string/location_preference_key"
+      android:defaultValue="true"
+      android:icon="@drawable/ic_location"
+      android:title="@string/settings_location_title"
+      android:summaryOn="@string/settings_location_summary_on"
+      android:summaryOff="@string/settings_location_summary_off" />
 
     <Preference
       android:key="@string/about_preference_key"
