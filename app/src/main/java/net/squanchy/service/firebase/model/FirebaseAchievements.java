@@ -13,6 +13,6 @@ public class FirebaseAchievements {
     public FirebaseAchievements(Optional<Map<String, Long>> mapOptional) {
         this.achievements = mapOptional.or(Collections.emptyMap());
     }
-    
+
     public Map<String, Long> achievements;
 }
