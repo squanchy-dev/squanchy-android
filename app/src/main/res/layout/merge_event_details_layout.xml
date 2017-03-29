@@ -7,9 +7,12 @@
   tools:orientation="vertical">
 
   <LinearLayout
+    android:id="@+id/when_container"
     style="@style/EventDetails.Body.RowContainer"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:visibility="gone"
+    tools:visibility="visible">
 
     <TextView
       style="@style/EventDetails.Body.Label.When"
@@ -30,7 +33,9 @@
     android:id="@+id/where_container"
     style="@style/EventDetails.Body.RowContainer"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:visibility="gone"
+    tools:visibility="visible">
 
     <TextView
       style="@style/EventDetails.Body.Label.Where"
@@ -51,7 +56,9 @@
     android:id="@+id/description_header"
     style="@style/EventDetails.Body.Label.About"
     android:layout_width="@dimen/event_details_body_label_width"
-    android:layout_height="wrap_content" />
+    android:layout_height="wrap_content"
+    android:visibility="gone"
+    tools:visibility="visible" />
 
   <TextView
     android:id="@+id/description_text"
@@ -61,6 +68,8 @@
     android:layout_marginStart="@dimen/event_details_body_value_margin_start"
     android:layout_marginEnd="@dimen/event_details_body_value_margin_end"
     android:layout_marginBottom="@dimen/event_details_body_value_margin_bottom"
-    tools:text="Now this is the story all about how\nMy life got flipped, turned upside down" />
+    android:visibility="gone"
+    tools:text="Now this is the story all about how\nMy life got flipped, turned upside down"
+    tools:visibility="visible" />
 
 </merge>
