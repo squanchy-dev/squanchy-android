@@ -81,4 +81,7 @@
   <string name="about_fork_me">Fork me on GitHub</string>
   <string name="about_licenses">Open source licenses</string>
 
+  <string name="licenses_label">Open source licenses</string>
+  <string name="license_label_template">By %1$s, released under %2$s</string>
+
 </resources>
