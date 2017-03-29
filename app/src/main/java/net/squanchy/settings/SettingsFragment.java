@@ -56,7 +56,7 @@ public class SettingsFragment extends PreferenceFragment {
         String buildVersionKey = getString(R.string.build_version_preference_key);
         Preference buildVersionPreference = findPreference(buildVersionKey);
         String buildVersion = String.format(getString(R.string.version_x), BuildConfig.VERSION_NAME);
-        buildVersionPreference.setSummary(buildVersion);
+        buildVersionPreference.setTitle(buildVersion);
     }
 
     private void removeDebugCategory() {

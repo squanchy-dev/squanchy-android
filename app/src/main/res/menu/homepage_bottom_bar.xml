@@ -5,28 +5,28 @@
   <item
     android:id="@+id/action_schedule"
     android:enabled="true"
-    android:icon="@drawable/ic_schedule_default"
+    android:icon="@drawable/ic_schedule"
     android:title="@string/activity_schedule"
     app:showAsAction="ifRoom" />
 
   <item
     android:id="@+id/action_favorites"
     android:enabled="true"
-    android:icon="@drawable/ic_favorites_default"
+    android:icon="@drawable/ic_favorites"
     android:title="@string/bottom_bar_favorites_label"
     app:showAsAction="ifRoom" />
 
   <item
     android:id="@+id/action_tweets"
     android:enabled="true"
-    android:icon="@drawable/ic_twitter_default"
+    android:icon="@drawable/ic_twitter"
     android:title="@string/bottom_bar_tweets_label"
     app:showAsAction="ifRoom" />
 
   <item
     android:id="@+id/action_venue"
     android:enabled="true"
-    android:icon="@drawable/ic_venue_default"
+    android:icon="@drawable/ic_venue"
     android:title="@string/bottom_bar_venue_label"
     app:showAsAction="ifRoom" />
 
