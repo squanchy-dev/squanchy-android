@@ -27,13 +27,13 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.widget.ImageView;
 
 import net.squanchy.R;
 
-public class ImageViewWithForeground extends ImageView implements ViewWithForeground {
+public class ImageViewWithForeground extends AppCompatImageView implements ViewWithForeground {
 
     @Nullable
     private Drawable foregroundDrawable;
@@ -51,25 +51,21 @@ public class ImageViewWithForeground extends ImageView implements ViewWithForegr
     }
 
     public ImageViewWithForeground(Context context, AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
-    }
+        super(context, attrs, defStyleAttr);
 
-    public ImageViewWithForeground(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ForegroundLinearLayout,
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ImageViewWithForeground,
                 defStyleAttr, 0);
 
         foregroundGravity = a.getInt(
-                R.styleable.CircleImageView_android_foregroundGravity, foregroundGravity);
+                R.styleable.ImageViewWithForeground_android_foregroundGravity, foregroundGravity);
 
-        final Drawable d = a.getDrawable(R.styleable.CircleImageView_android_foreground);
+        final Drawable d = a.getDrawable(R.styleable.ImageViewWithForeground_android_foreground);
         if (d != null) {
             setForeground(d);
         }
 
         foregroundInPadding = a.getBoolean(
-                R.styleable.CircleImageView_android_foregroundInsidePadding, true);
+                R.styleable.ImageViewWithForeground_android_foregroundInsidePadding, true);
 
         a.recycle();
     }
