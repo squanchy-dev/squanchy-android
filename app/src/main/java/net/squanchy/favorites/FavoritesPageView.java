@@ -117,10 +117,16 @@ public class FavoritesPageView extends CoordinatorLayout implements LifecycleVie
     }
 
     private void updateWith(Schedule schedule, ScheduleViewPagerAdapter.OnEventClickedListener listener) {
-        favoritesListView.updateWith(schedule, listener);
+        if (schedule.isEmpty()) {
+            promptToFavorite();
+        } else {
+            favoritesListView.updateWith(schedule, listener);
+            favoritesListView.setVisibility(VISIBLE);
+            emptyViewSignedIn.setVisibility(GONE);
+        }
+
         progressBar.setVisibility(GONE);
         emptyViewSignedOut.setVisibility(GONE);
-        emptyViewSignedIn.setVisibility(GONE);
     }
 
     private void promptToFavorite() {
