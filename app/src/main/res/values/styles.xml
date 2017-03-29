@@ -418,6 +418,7 @@
   </style>
 
   <style name="Favorite.Empty.Text" parent="None">
+    <item name="android:foreground">@drawable/primary_touch_feedback</item>
     <item name="android:gravity">center_horizontal</item>
     <item name="android:drawablePadding">@dimen/card_horizontal_margin</item>
   </style>
