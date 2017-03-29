@@ -2,6 +2,7 @@ package net.squanchy.tweets.service;
 
 import java.util.List;
 
+import net.squanchy.support.lang.Predicate;
 import net.squanchy.tweets.domain.view.HashtagEntity;
 import net.squanchy.tweets.domain.view.MentionEntity;
 import net.squanchy.tweets.domain.view.Tweet;
@@ -9,6 +10,7 @@ import net.squanchy.tweets.domain.view.UrlEntity;
 
 import io.reactivex.Observable;
 
+import static net.squanchy.support.lang.Lists.filter;
 import static net.squanchy.support.lang.Lists.map;
 
 public class TwitterService {
@@ -21,7 +23,9 @@ public class TwitterService {
 
     public Observable<List<Tweet>> refresh(String query) {
         return repo.load(query)
-                .map(search -> map(search.tweets, this::toViewModel));
+                .map(search -> search.tweets)
+                .map(list -> filter(list, tweet -> tweet.retweetedStatus == null))
+                .map(tweets -> map(tweets, this::toViewModel));
     }
 
     private Tweet toViewModel(com.twitter.sdk.android.core.models.Tweet tweet) {
