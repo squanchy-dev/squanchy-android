@@ -85,12 +85,12 @@ public class FavoritesPageView extends CoordinatorLayout implements LifecycleVie
 
     @Override
     public void onStart() {
-        subscription = Observable.combineLatest(service.schedule(true), service.currentUserIsSignedIn(), toScheduleAndLoggedInStuff())
+        subscription = Observable.combineLatest(service.schedule(true), service.currentUserIsSignedIn(), toScheduleAndLoggedIn())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(schedule -> updateWith(schedule, this::onEventClicked));
     }
 
-    private BiFunction<Schedule, Boolean, ScheduledAndSignedIn> toScheduleAndLoggedInStuff() {
+    private BiFunction<Schedule, Boolean, ScheduledAndSignedIn> toScheduleAndLoggedIn() {
         return ScheduledAndSignedIn::new;
     }
 
