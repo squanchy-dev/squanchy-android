@@ -4,7 +4,6 @@
   android:layout_height="wrap_content"
   android:layout_gravity="center"
   android:orientation="vertical"
-
   tools:parentTag="LinearLayout">
 
   <android.support.design.widget.FloatingActionButton
