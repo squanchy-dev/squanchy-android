@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.widget.TextView;
 
 import java.util.Locale;
@@ -12,12 +13,14 @@ import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class ContestActivity extends TypefaceStyleableActivity {
 
     private static final String EXTRA_ACHIEVEMENT_ID = ContestActivity.class.getCanonicalName() + ".achievement_id";
 
     private ContestService contestService;
+    private CompositeDisposable subscriptions = new CompositeDisposable();
     private TextView contestResults;
 
     public static Intent createIntent(Context context, String achievementId) {
@@ -44,28 +47,30 @@ public class ContestActivity extends TypefaceStyleableActivity {
 
     @Override
     protected void onStart() {
+        Log.d("ContestActivity", "onStart");
         super.onStart();
 
+        subscriptions.add(contestService.standings()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::updateWith));
+
         Intent intent = getIntent();
-        handleIntent(intent);
+        addAchievementFromIntent(intent);
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        handleIntent(intent);
+        addAchievementFromIntent(intent);
     }
 
-    private void handleIntent(Intent intent) {
+    private void addAchievementFromIntent(Intent intent) {
         String achievementId = intent.getStringExtra(EXTRA_ACHIEVEMENT_ID);
 
         if (achievementId != null) {
             contestService.addAchievement(achievementId)
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(this::updateWith);
-        } else {
-            contestService.standings()
-                    .subscribe(this::updateWith);
+                    .subscribe();
         }
     }
 
@@ -84,5 +89,12 @@ public class ContestActivity extends TypefaceStyleableActivity {
             int missingStands = (int) (goal - current);
             return String.format(Locale.US, "Still missing %1$d stands", missingStands);
         }
+    }
+
+    @Override
+    protected void onStop() {
+        Log.d("ContestActivity", "onStop");
+        super.onStop();
+        subscriptions.dispose();
     }
 }

@@ -155,13 +155,9 @@ public final class FirebaseDbService {
     }
 
     public Completable addAchievement(String userId, String achievementId, Long timestamp) {
-        return updateAchievement(userId, achievementId, reference -> reference.setValue(timestamp));
-    }
-
-    public Completable updateAchievement(String userId, String achievementId, Func1<DatabaseReference, Task<Void>> action) {
         return Completable.create(emitter -> {
             String path = String.format(Locale.US, ACHIEVEMENTS_BY_ID_NODE, userId, achievementId);
-            action.call(database.child(path))
+            database.child(path).setValue(timestamp)
                     .addOnSuccessListener(result -> emitter.onComplete())
                     .addOnFailureListener(emitter::onError);
         });

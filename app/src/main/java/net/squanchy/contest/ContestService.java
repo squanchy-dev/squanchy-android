@@ -5,6 +5,7 @@ import net.squanchy.service.firebase.FirebaseAuthService;
 import net.squanchy.service.firebase.FirebaseDbService;
 import net.squanchy.service.firebase.model.FirebaseAchievements;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.functions.BiFunction;
@@ -36,9 +37,8 @@ public class ContestService {
         return (achievements, goal) -> ContestStandings.create(goal, achievements.map.size());
     }
 
-    public Observable<ContestStandings> addAchievement(String achievementId) {
+    public Completable addAchievement(String achievementId) {
         return authService.ifUserSignedInThenCompletableFrom(userId -> dbService.addAchievement(userId, achievementId, System.currentTimeMillis()))
-                .andThen(standings())
                 .subscribeOn(Schedulers.io());
     }
 }
