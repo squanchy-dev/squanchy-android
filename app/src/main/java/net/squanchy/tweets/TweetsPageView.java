@@ -117,7 +117,17 @@ public class TweetsPageView extends LinearLayout implements LifecycleView {
         swipeLayout.setRefreshing(true);
         refreshingData = true;
         subscription = twitterService.refresh(query)
-                .subscribe(tweetsAdapter::updateWith, Timber::e, this::onRefreshCompleted);
+                .subscribe(this::onSuccess, this::onError);
+    }
+
+    private void onSuccess(List<Tweet> tweets) {
+        tweetsAdapter.updateWith(tweets);
+        onRefreshCompleted();
+    }
+
+    private void onError(Throwable throwable) {
+        Timber.e(throwable);
+        onRefreshCompleted();
     }
 
     private void onRefreshCompleted() {
