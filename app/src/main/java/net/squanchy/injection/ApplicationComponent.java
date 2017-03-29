@@ -50,7 +50,8 @@ public interface ApplicationComponent {
                     .firebaseModule(new FirebaseModule())
                     .repositoryModule(new RepositoryModule())
                     .checksumModule(new ChecksumModule())
-                    .proximityModule(new ProximityModule(application))
+                    .contextModule(new ContextModule(application))
+                    .proximityModule(new ProximityModule())
                     .analyticsModule(new AnalyticsModule(application))
                     .remoteConfigModule(new RemoteConfigModule())
                     .build();
