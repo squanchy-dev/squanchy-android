@@ -117,12 +117,7 @@ public class TweetsPageView extends LinearLayout implements LifecycleView {
         swipeLayout.setRefreshing(true);
         refreshingData = true;
         subscription = twitterService.refresh(query)
-                .subscribe(this::onRefreshSuccess, this::onError);
-    }
-
-    private void onRefreshSuccess(List<Tweet> tweets) {
-        tweetsAdapter.updateWith(tweets);
-        onRefreshCompleted();
+                .subscribe(tweetsAdapter::updateWith, Timber::e, this::onRefreshCompleted);
     }
 
     private void onRefreshCompleted() {
@@ -136,10 +131,5 @@ public class TweetsPageView extends LinearLayout implements LifecycleView {
             emptyView.setVisibility(GONE);
             tweetsList.setVisibility(VISIBLE);
         }
-    }
-
-    private void onError(Throwable throwable) {
-        Timber.e(throwable);
-        onRefreshCompleted();
     }
 }
