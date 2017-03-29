@@ -13,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import net.squanchy.R;
 import net.squanchy.eventdetails.EventDetailsActivity;
@@ -173,6 +174,7 @@ public class NotificationCreator {
     }
 
     private String createSummaryTitle(int talksCount) {
-        return context.getString(R.string.event_notification_count_starting, talksCount);
+        String template = context.getString(R.string.event_notification_count_starting);
+        return String.format(Locale.US, template, talksCount);
     }
 }
