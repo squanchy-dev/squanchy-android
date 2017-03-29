@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.design.widget.Snackbar;
+import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseUser;
 
@@ -23,6 +24,7 @@ public class SettingsFragment extends PreferenceFragment {
 
     private Preference accountEmailPreference;
     private Preference accountSignInSignOutPreference;
+
     private Disposable subscription;
 
     @Override
@@ -42,13 +44,19 @@ public class SettingsFragment extends PreferenceFragment {
 
         accountEmailPreference = findPreference(getString(R.string.account_email_preference_key));
         accountSignInSignOutPreference = findPreference(getString(R.string.account_signin_signout_preference_key));
+
+        Preference aboutPreference = findPreference(getString(R.string.about_preference_key));
+        aboutPreference.setOnPreferenceClickListener(preference -> {
+            navigator.toAboutSquanchy();
+            return true;
+        });
     }
 
     private void displayBuildVersion() {
         String buildVersionKey = getString(R.string.build_version_preference_key);
         Preference buildVersionPreference = findPreference(buildVersionKey);
         String buildVersion = String.format(getString(R.string.version_x), BuildConfig.VERSION_NAME);
-        buildVersionPreference.setSummary(buildVersion);
+        buildVersionPreference.setTitle(buildVersion);
     }
 
     private void removeDebugCategory() {
@@ -61,9 +69,17 @@ public class SettingsFragment extends PreferenceFragment {
     public void onStart() {
         super.onStart();
 
+        hideDividers();
+
         subscription = signInService.currentUser()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onUserChanged);
+    }
+
+    private void hideDividers() {
+        ListView list = (ListView) getView().findViewById(android.R.id.list);
+        list.setDivider(null);
+        list.setDividerHeight(0);
     }
 
     private void onUserChanged(Optional<FirebaseUser> user) {

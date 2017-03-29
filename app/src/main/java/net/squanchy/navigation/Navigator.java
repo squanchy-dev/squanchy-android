@@ -3,9 +3,11 @@ package net.squanchy.navigation;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.widget.Toast;
 
 import net.squanchy.contest.ContestActivity;
 import net.squanchy.BuildConfig;
+import net.squanchy.about.AboutActivity;
 import net.squanchy.eventdetails.EventDetailsActivity;
 import net.squanchy.home.HomeActivity;
 import net.squanchy.search.SearchActivity;
@@ -133,6 +135,14 @@ public class Navigator {
         } else {
             Timber.e("Someone is trying to reach the debug activity in a release build... that won't work");
         }
+    }
+
+    public void toAboutSquanchy() {
+        start(new Intent(context, AboutActivity.class));
+    }
+
+    public void toFossLicenses() {
+        Toast.makeText(context, "FOSS... nao", Toast.LENGTH_SHORT).show();
     }
 
     private void start(Intent intent) {

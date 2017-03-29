@@ -30,7 +30,6 @@ import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.search.view.SearchRecyclerView;
 import net.squanchy.speaker.domain.view.Speaker;
 
-import io.reactivex.BackpressureStrategy;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -99,7 +98,6 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
                 .doOnNext(this::updateSearchActionIcon)
                 .flatMap(searchService::find)
                 .doOnNext(searchResults -> speakersSubscription.dispose())
-                .toFlowable(BackpressureStrategy.LATEST)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onReceivedSearchResults, Timber::e);
@@ -153,7 +151,7 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
     protected void onStop() {
         super.onStop();
 
-        subscriptions.dispose();
+        subscriptions.clear();
 
         if (searchTextWatcher != null) {
             searchField.removeTextChangedListener(searchTextWatcher);
@@ -162,7 +160,7 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_menu, menu);
+        getMenuInflater().inflate(R.menu.search, menu);
         return true;
     }
 

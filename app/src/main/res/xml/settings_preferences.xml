@@ -1,51 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 
-  <PreferenceCategory android:title="@string/account_category_label">
+  <PreferenceCategory
+    android:title="@string/account_category_label">
+
     <Preference
       android:key="@string/account_email_preference_key"
       android:title="@string/settings_account_not_logged_in"
-      android:icon="@drawable/ic_email_default"
+      android:icon="@drawable/ic_email"
       android:selectable="false" />
+
     <Preference
       android:key="@string/account_signin_signout_preference_key"
       android:title="@string/sign_in_title"
-      android:icon="@drawable/ic_signin_signout_default" />
+      android:icon="@drawable/ic_signin_signout" />
+
   </PreferenceCategory>
 
   <PreferenceCategory android:title="@string/settings_and_help_title">
 
     <SwitchPreference
-      android:defaultValue="true"
-      android:icon="@drawable/ic_notifications_default"
       android:key="@string/about_to_start_notification_preference_key"
-      android:title="@string/settings_notifications_category" />
+      android:defaultValue="true"
+      android:icon="@drawable/ic_notifications"
+      android:title="@string/settings_notifications_title" />
+
+    <SwitchPreference
+      android:key="@string/location_preference_key"
+      android:defaultValue="true"
+      android:icon="@drawable/ic_location"
+      android:title="@string/settings_location_title"
+      android:summaryOn="@string/settings_location_summary_on"
+      android:summaryOff="@string/settings_location_summary_off" />
 
     <Preference
-      android:title="@string/help_title"
-      android:icon="@drawable/ic_help_default" />
-    <Preference
+      android:key="@string/about_preference_key"
       android:title="@string/about_title"
       android:icon="@drawable/ic_about" />
 
-  </PreferenceCategory>
-
-  <PreferenceCategory android:title="@string/settings_about_category">
-
     <Preference
       android:key="@string/build_version_preference_key"
-      android:title="@string/settings_about_build_version_title" />
+      android:selectable="false"
+      android:icon="@android:color/transparent"
+      tools:title="Version: 1.0.0" />
 
   </PreferenceCategory>
 
   <PreferenceCategory
-    android:title="@string/settings_debug_category"
-    android:key="@string/debug_category_preference_key">
+    android:key="@string/debug_category_preference_key"
+    android:title="@string/settings_debug_category">
 
     <Preference
       android:key="@string/open_debug_preference_key"
-      android:title="@string/settings_open_debug_title">
+      android:title="@string/settings_open_debug_title"
+      android:icon="@android:color/transparent">
+
       <intent android:action="net.squanchy.DebugActivity" />
+
     </Preference>
 
   </PreferenceCategory>

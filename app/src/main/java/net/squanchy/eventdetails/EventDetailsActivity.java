@@ -92,7 +92,7 @@ public class EventDetailsActivity extends TypefaceStyleableActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_icon, menu);
+        getMenuInflater().inflate(R.menu.event_details, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

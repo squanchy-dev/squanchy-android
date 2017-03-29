@@ -1,5 +1,5 @@
 ext {
-    supportLibVersion = '25.3.0'
+    supportLibVersion = '25.3.1'
     playServicesVersion = '10.2.0'
     daggerVersion = '2.9'
 
@@ -32,7 +32,7 @@ ext {
                     supportAppCompat : "com.android.support:appcompat-v7:${supportLibVersion}",
                     supportDesign    : "com.android.support:design:${supportLibVersion}",
                     timber           : 'com.jakewharton.timber:timber:4.5.1',
-                    tweetUi          : 'com.twitter.sdk.android:tweet-ui:2.2.0',
+                    tweetUi          : 'com.twitter.sdk.android:tweet-ui:2.3.2',
                     viewPagerAdapter : 'com.novoda:view-pager-adapter:0.9.1',
                     nearit           : 'it.near.sdk.core:nearitsdk:2.1.7'
             ],

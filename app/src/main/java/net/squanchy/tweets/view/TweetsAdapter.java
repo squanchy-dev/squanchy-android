@@ -6,21 +6,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.twitter.sdk.android.core.models.Tweet;
-import com.twitter.sdk.android.tweetui.Timeline;
-import com.twitter.sdk.android.tweetui.internal.TimelineDelegate;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.squanchy.R;
-import net.squanchy.tweets.TweetsPageView;
+import net.squanchy.tweets.domain.view.Tweet;
 
 public class TweetsAdapter extends RecyclerView.Adapter<TweetViewHolder> {
 
     private final Context context;
-    private final TimelineDelegate<Tweet> delegate;
+    private List<Tweet> tweetList;
 
-    public TweetsAdapter(Timeline<Tweet> timeline, Context context) {
+    public TweetsAdapter(Context context) {
         this.context = context;
-        this.delegate = new TimelineDelegate<>(timeline);
+        this.tweetList = new ArrayList<>();
     }
 
     @Override
@@ -31,19 +30,23 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetViewHolder> {
 
     @Override
     public void onBindViewHolder(TweetViewHolder holder, int position) {
-        holder.updateWith(delegate.getItem(position));
+        holder.updateWith(tweetList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return delegate.getCount();
+        return tweetList.size();
     }
 
     public boolean isEmpty() {
-        return delegate.getCount() == 0;
+        return tweetList.isEmpty();
     }
 
-    public void refresh(TweetsPageView.TimelineLoadingCallback timelineLoadingCallback) {
-        delegate.refresh(timelineLoadingCallback);
+    public void updateWith(List<Tweet> tweets) {
+        tweetList.clear();
+        ArrayList<Tweet> receivedItems = new ArrayList<>(tweets);
+        receivedItems.addAll(tweetList);
+        tweetList = receivedItems;
+        notifyDataSetChanged();
     }
 }

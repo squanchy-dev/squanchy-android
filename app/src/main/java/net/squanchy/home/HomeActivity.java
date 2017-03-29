@@ -49,7 +49,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private static final boolean PROXIMITY_SERVICE_RADAR_NOT_STARTED = false;
 
     private final Map<BottomNavigationSection, View> pageViews = new HashMap<>(4);
-    private final List<LifecycleView> lifecycleViews = new ArrayList<>(2);
+    private final List<LifecycleView> lifecycleViews = new ArrayList<>(4);
 
     private int pageFadeDurationMillis;
 
@@ -213,6 +213,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private void collectLifecycleViewsViewsInto(List<LifecycleView> lifecycleViews) {
         lifecycleViews.add((LifecycleView) pageContainer.findViewById(R.id.schedule_content_root));
         lifecycleViews.add((LifecycleView) pageContainer.findViewById(R.id.favorites_content_root));
+        lifecycleViews.add((LifecycleView) pageContainer.findViewById(R.id.tweets_content_root));
         lifecycleViews.add((LifecycleView) pageContainer.findViewById(R.id.venue_content_root));
     }
 
