@@ -9,6 +9,7 @@ import android.view.MenuItem;
 
 import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
+import net.squanchy.support.view.CardSpacingItemDecorator;
 
 public class LicensesActivity extends TypefaceStyleableActivity {
 
@@ -37,6 +38,10 @@ public class LicensesActivity extends TypefaceStyleableActivity {
 
         licensesList.setAdapter(new LibrariesAdapter(this));
         licensesList.setLayoutManager(new LinearLayoutManager(this));
+
+        int horizontalSpacing = getResources().getDimensionPixelSize(R.dimen.card_horizontal_margin);
+        int verticalSpacing = getResources().getDimensionPixelSize(R.dimen.card_vertical_margin);
+        licensesList.addItemDecoration(new CardSpacingItemDecorator(horizontalSpacing, verticalSpacing));
     }
 
     @Override

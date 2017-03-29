@@ -432,6 +432,10 @@
     <item name="android:stateListAnimator">@anim/clickable_state_list_anim</item>
   </style>
 
+  <style name="Licenses.Library" parent="Schedule.Card.Title" />
+
+  <style name="Licenses.Label" parent="Schedule.Card.Timestamp" />
+
   <style name="Licenses.Notice" parent="None">
     <item name="android:padding">8dp</item>
     <item name="android:background">#e0e0e0</item>
@@ -440,6 +444,7 @@
 
   <style name="TextAppearance.Squanchy.Licenses.Notice" parent="None">
     <item name="android:textSize">12sp</item>
+    <item name="android:textColor">?android:textColorSecondary</item>
     <item name="fontPath">@string/license_notice_typeface</item>
   </style>
 
