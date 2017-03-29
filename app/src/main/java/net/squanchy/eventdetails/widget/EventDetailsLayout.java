@@ -117,6 +117,7 @@ public class EventDetailsLayout extends LinearLayout {
     private void updateDescription(Optional<String> description) {
         if (description.isPresent()) {
             descriptionHeader.setVisibility(VISIBLE);
+            descriptionTextView.setVisibility(VISIBLE);
             descriptionTextView.setText(parseHtml(description.get()));
         } else {
             descriptionHeader.setVisibility(GONE);

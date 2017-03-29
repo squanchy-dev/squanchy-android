@@ -18,8 +18,10 @@ import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Schedule;
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.BiFunction;
 
 import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 
@@ -31,6 +33,8 @@ public class FavoritesPageView extends CoordinatorLayout implements LifecycleVie
     private Navigator navigate;
     private Analytics analytics;
     private FavoritesListView favoritesListView;
+    private View emptyViewSignedIn;
+    private View emptyViewSignedOut;
 
     public FavoritesPageView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -44,17 +48,21 @@ public class FavoritesPageView extends CoordinatorLayout implements LifecycleVie
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        Activity activity = unwrapToActivityContext(getContext());
-        FavoritesComponent component = FavoritesInjector.obtain(activity);
-        service = component.service();
-        navigate = component.navigator();
-        analytics = component.analytics();
-
         progressBar = findViewById(R.id.progressbar);
-
         favoritesListView = (FavoritesListView) findViewById(R.id.favorites_list);
+        emptyViewSignedIn = findViewById(R.id.empty_view_signed_in);
+        emptyViewSignedOut = findViewById(R.id.empty_view_signed_out);
+        emptyViewSignedOut.setOnClickListener(view -> navigate.toSignIn());
 
         setupToolbar();
+
+        if (!isInEditMode()) {
+            Activity activity = unwrapToActivityContext(getContext());
+            FavoritesComponent component = FavoritesInjector.obtain(activity);
+            service = component.service();
+            navigate = component.navigator();
+            analytics = component.analytics();
+        }
     }
 
     private void setupToolbar() {
@@ -77,9 +85,13 @@ public class FavoritesPageView extends CoordinatorLayout implements LifecycleVie
 
     @Override
     public void onStart() {
-        subscription = service.schedule(true)
+        subscription = Observable.combineLatest(service.schedule(true), service.currentUserIsSignedIn(), toScheduleAndLoggedIn())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(schedule -> updateWith(schedule, this::onEventClicked));
+    }
+
+    private BiFunction<Schedule, Boolean, ScheduledAndSignedIn> toScheduleAndLoggedIn() {
+        return ScheduledAndSignedIn::new;
     }
 
     private void onEventClicked(Event event) {
@@ -92,8 +104,57 @@ public class FavoritesPageView extends CoordinatorLayout implements LifecycleVie
         subscription.dispose();
     }
 
-    public void updateWith(Schedule schedule, ScheduleViewPagerAdapter.OnEventClickedListener listener) {
-        favoritesListView.updateWith(schedule, listener);
+    private void updateWith(ScheduledAndSignedIn scheduledAndSignedIn, ScheduleViewPagerAdapter.OnEventClickedListener listener) {
+        if (scheduledAndSignedIn.hasFavorites()) {
+            updateWith(scheduledAndSignedIn.schedule, listener);
+        } else {
+            if (scheduledAndSignedIn.signedIn) {
+                promptToFavorite();
+            } else {
+                promptToSign();
+            }
+        }
+    }
+
+    private void updateWith(Schedule schedule, ScheduleViewPagerAdapter.OnEventClickedListener listener) {
+        if (schedule.isEmpty()) {
+            promptToFavorite();
+        } else {
+            favoritesListView.updateWith(schedule, listener);
+            favoritesListView.setVisibility(VISIBLE);
+            emptyViewSignedIn.setVisibility(GONE);
+        }
+
         progressBar.setVisibility(GONE);
+        emptyViewSignedOut.setVisibility(GONE);
+    }
+
+    private void promptToFavorite() {
+        favoritesListView.setVisibility(GONE);
+        progressBar.setVisibility(GONE);
+        emptyViewSignedOut.setVisibility(GONE);
+        emptyViewSignedIn.setVisibility(VISIBLE);
+    }
+
+    public void promptToSign() {
+        favoritesListView.setVisibility(GONE);
+        progressBar.setVisibility(GONE);
+        emptyViewSignedOut.setVisibility(VISIBLE);
+        emptyViewSignedIn.setVisibility(GONE);
+    }
+
+    private static class ScheduledAndSignedIn {
+
+        final Schedule schedule;
+        final boolean signedIn;
+
+        private ScheduledAndSignedIn(Schedule schedule, boolean signedIn) {
+            this.schedule = schedule;
+            this.signedIn = signedIn;
+        }
+
+        boolean hasFavorites() {
+            return !schedule.isEmpty();
+        }
     }
 }

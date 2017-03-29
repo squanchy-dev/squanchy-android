@@ -5,8 +5,7 @@
   android:id="@+id/favorites_content_root"
   android:theme="@style/Theme.Squanchy.Favorites"
   android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  tools:context="net.squanchy.schedule.ScheduleActivity">
+  android:layout_height="match_parent">
 
   <android.support.design.widget.AppBarLayout
     style="@style/Squanchy.Appbar"
@@ -26,6 +25,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+  <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginLeft="@dimen/card_horizontal_margin"
+    android:layout_marginRight="@dimen/card_horizontal_margin"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <net.squanchy.favorites.view.NoFavoritesView
+      android:id="@+id/empty_view_signed_in"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:visibility="gone" />
+
+    <TextView
+      android:id="@+id/empty_view_signed_out"
+      style="@style/Favorite.Empty.Text"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:drawableTop="@drawable/illustration_prompt_to_sign_in"
+      android:visibility="gone"
+      android:text="@string/prompt_to_sign_in_for_favorites"
+      tools:visibility="visible" />
+  </LinearLayout>
 
   <ProgressBar
     android:id="@+id/progressbar"

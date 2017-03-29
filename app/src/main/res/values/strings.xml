@@ -14,9 +14,8 @@
 
   <string name="event_notification_starting_by">By %s</string>
   <string name="event_notification_starting_in">In %s</string>
-  <string name="event_notification_count_starting">%d sessions are starting</string>
-  <string name="room_event_notification"
-    translatable="false">%s: %s</string>
+  <string name="event_notification_count_starting">%s sessions are starting</string>
+  <string name="room_event_notification" translatable="false">%s: %s</string>
   <plurals name="event_notification_ticker">
     <item quantity="one">1 session is about to start.</item>
     <item quantity="other">%d sessions are about to start.</item>
@@ -70,6 +69,9 @@
   <string name="venue_map_content_description">Map to the venue</string>
   <string name="about_title">About</string>
   <string name="settings_account_not_logged_in">Not logged in</string>
+  <string name="prompt_to_sign_in_for_favorites">Get notified about upcoming talks. Your favourite talks are also get synced across all your devices. \n\nTap to sign in</string>
+  <string name="prompt_to_favorite">You have no favourite talks, yet. Find some talk, touch the ♥ button and you are good to go.</string>
+  <string name="achievement_unlocked">Achievement Unlocked: The Fast Learner!</string>
 
   <string name="about_label">About</string>
   <string name="about_powered_by">is powered by</string>
