@@ -22,8 +22,9 @@
 
   <style name="Squanchy.Tabs.Schedule" parent="None">
     <item name="tabIndicatorColor">?colorControlNormal</item>
-    <item name="tabTextAppearance">@style/TextAppearance.Squanchy.Tab</item>
+    <item name="tabGravity">fill</item>
     <item name="tabSelectedTextColor">?android:textColorPrimary</item>
+    <item name="tabTextAppearance">@style/TextAppearance.Squanchy.Tab</item>
   </style>
 
   <style name="TextAppearance.Squanchy.Tab" parent="TextAppearance.AppCompat.Button">
