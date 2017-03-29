@@ -3,6 +3,7 @@ package net.squanchy.about;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
@@ -41,5 +42,14 @@ public class AboutActivity extends TypefaceStyleableActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
