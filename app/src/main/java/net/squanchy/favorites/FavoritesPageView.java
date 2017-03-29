@@ -126,7 +126,6 @@ public class FavoritesPageView extends CoordinatorLayout implements LifecycleVie
     private void promptToFavorite() {
         favoritesListView.setVisibility(GONE);
         progressBar.setVisibility(GONE);
-
         emptyViewSignedOut.setVisibility(GONE);
         emptyViewSignedIn.setVisibility(VISIBLE);
     }
@@ -134,7 +133,6 @@ public class FavoritesPageView extends CoordinatorLayout implements LifecycleVie
     public void promptToSign() {
         favoritesListView.setVisibility(GONE);
         progressBar.setVisibility(GONE);
-
         emptyViewSignedOut.setVisibility(VISIBLE);
         emptyViewSignedIn.setVisibility(GONE);
     }
