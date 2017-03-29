@@ -2,7 +2,6 @@ package net.squanchy.tweets.service;
 
 import java.util.List;
 
-import net.squanchy.support.lang.Predicate;
 import net.squanchy.tweets.domain.view.HashtagEntity;
 import net.squanchy.tweets.domain.view.MentionEntity;
 import net.squanchy.tweets.domain.view.Tweet;
