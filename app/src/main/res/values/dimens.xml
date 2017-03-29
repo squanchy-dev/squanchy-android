@@ -92,6 +92,7 @@
 
   <dimen name="about_appbar_elevation">0dp</dimen>
   <dimen name="about_content_padding_horizontal">48dp</dimen>
+  <dimen name="about_content_padding_vertical">24dp</dimen>
   <dimen name="about_app_name_text">26sp</dimen>
   <dimen name="about_attribution_label_text">12sp</dimen>
   <dimen name="about_powered_by_margin_top">16dp</dimen>

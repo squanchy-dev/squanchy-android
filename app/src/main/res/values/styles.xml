@@ -360,7 +360,9 @@
     <item name="android:gravity">center</item>
     <item name="android:orientation">vertical</item>
     <item name="android:paddingStart">@dimen/about_content_padding_horizontal</item>
+    <item name="android:paddingTop">@dimen/about_content_padding_vertical</item>
     <item name="android:paddingEnd">@dimen/about_content_padding_horizontal</item>
+    <item name="android:paddingBottom">@dimen/about_content_padding_vertical</item>
   </style>
 
   <style name="About.AppName" parent="None">

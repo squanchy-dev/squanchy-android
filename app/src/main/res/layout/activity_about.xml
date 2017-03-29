@@ -23,13 +23,13 @@
 
   <android.support.v4.widget.NestedScrollView
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
     <LinearLayout
       style="@style/About.Content"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_gravity="fill_horizontal|center_vertical">
+      android:layout_height="wrap_content">
 
       <TextView
         style="@style/About.AppName"
@@ -117,7 +117,6 @@
         style="@style/About.Button"
         android:layout_width="match_parent"
         android:layout_height="@dimen/color_button_height"
-        android:layout_marginBottom="@dimen/about_button_margin_bottom"
         android:text="@string/about_licenses" />
 
     </LinearLayout>
