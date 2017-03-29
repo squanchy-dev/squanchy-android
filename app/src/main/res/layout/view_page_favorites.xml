@@ -48,7 +48,7 @@
       android:layout_height="wrap_content"
       android:drawableTop="@drawable/illustration_prompt_to_sign_in"
       android:visibility="gone"
-      android:foreground="@drawable/card_touch_feedback"
+      android:foreground="@drawable/primary_touch_feedback"
       android:text="@string/prompt_to_sign_in_for_favorites"
       tools:visibility="visible" />
   </LinearLayout>
