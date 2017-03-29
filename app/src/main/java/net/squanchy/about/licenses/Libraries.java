@@ -110,6 +110,21 @@ final class Libraries {
                     .name("Mockito")
                     .author("the Mockito Contributors")
                     .license(License.MIT)
+                    .build(),
+            Library.builder()
+                    .name("League Spartan")
+                    .author("Micah Rich, Caroline Hadilaksono, and Tyler Finck")
+                    .license(License.OPEN_FONT_LICENSE)
+                    .build(),
+            Library.builder()
+                    .name("Quicksand")
+                    .author("the Quicksand Project Authors")
+                    .license(License.OPEN_FONT_LICENSE)
+                    .build(),
+            Library.builder()
+                    .name("VT323")
+                    .author("the VT323 Project Authors")
+                    .license(License.OPEN_FONT_LICENSE)
                     .build()
     );
 }
