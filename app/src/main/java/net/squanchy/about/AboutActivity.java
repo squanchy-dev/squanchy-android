@@ -12,6 +12,7 @@ import net.squanchy.navigation.Navigator;
 public class AboutActivity extends TypefaceStyleableActivity {
 
     private static final String SQUANCHY_WEBSITE = "https://squanchy.net";
+    private static final String NEARIT_WEBSITE = "https://www.nearit.com/";
     private static final String SQUANCHY_GITHUB = "https://github.com/rock3r/squanchy";
 
     @Override
@@ -27,6 +28,10 @@ public class AboutActivity extends TypefaceStyleableActivity {
 
         findViewById(R.id.website_button).setOnClickListener(
                 view -> navigator.toExternalUrl(SQUANCHY_WEBSITE)
+        );
+
+        findViewById(R.id.nearit_logo).setOnClickListener(
+                view -> navigator.toExternalUrl(NEARIT_WEBSITE)
         );
 
         findViewById(R.id.github_button).setOnClickListener(

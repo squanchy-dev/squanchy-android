@@ -72,6 +72,8 @@
 
   <string name="about_label">About</string>
   <string name="about_powered_by">is powered by</string>
+  <string name="about_location_powered_by">Location services and contest powered by</string>
+  <string name="content_description_nearit">NearIt</string>
   <string name="squanchy" translatable="false">Squanchy</string>
   <string name="squanchy_website" translatable="false">https://squanchy.net</string>
   <string name="about_opensource_blurb">This app is proudly open source and any contribution is welcome.</string>
