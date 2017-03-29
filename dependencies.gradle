@@ -1,5 +1,5 @@
 ext {
-    supportLibVersion = '25.3.0'
+    supportLibVersion = '25.3.1'
     playServicesVersion = '10.2.0'
     daggerVersion = '2.9'
 

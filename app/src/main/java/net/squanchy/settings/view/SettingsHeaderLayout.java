@@ -4,9 +4,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.util.AttributeSet;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseUser;
@@ -22,9 +22,10 @@ import net.squanchy.support.lang.Optional;
 
 import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 
-public class SettingsHeaderLayout extends LinearLayout {
+public class SettingsHeaderLayout extends AppBarLayout {
 
     private static final String PROVIDER_ID_GOOGLE = "google.com";
+
     @Nullable
     private ImageLoader imageLoader;
 
@@ -32,15 +33,7 @@ public class SettingsHeaderLayout extends LinearLayout {
     private TextView userNameView;
 
     public SettingsHeaderLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public SettingsHeaderLayout(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
-    }
-
-    public SettingsHeaderLayout(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+        super(context, attrs);
 
         if (!isInEditMode()) {
             imageLoader = ImageLoaderInjector.obtain(unwrapToActivityContext(context))
@@ -48,11 +41,6 @@ public class SettingsHeaderLayout extends LinearLayout {
         }
 
         super.setOrientation(VERTICAL);
-    }
-
-    @Override
-    public void setOrientation(int orientation) {
-        throw new UnsupportedOperationException("SettingsHeaderLayout doesn't support changing orientation");
     }
 
     @Override

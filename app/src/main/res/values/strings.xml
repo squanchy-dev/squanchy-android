@@ -14,7 +14,7 @@
 
   <string name="event_notification_starting_by">By %s</string>
   <string name="event_notification_starting_in">In %s</string>
-  <string name="event_notification_count_starting">%s sessions are starting</string>
+  <string name="event_notification_count_starting">%d sessions are starting</string>
   <string name="room_event_notification"
     translatable="false">%s: %s</string>
   <plurals name="event_notification_ticker">
@@ -52,12 +52,13 @@
   <string name="sign_out_title">Sign out</string>
   <string name="sign_in_title">Sign in</string>
   <string name="settings_and_help_title">Settings and help</string>
-  <string name="settings_notifications_category">Notifications</string>
+  <string name="settings_notifications_title">Notifications</string>
+  <string name="settings_location_title">Location</string>
+  <string name="settings_location_summary_on">You can participate to the contest</string>
+  <string name="settings_location_summary_off">You cannot participate to the contest.</string>
   <string name="settings_notifications_about_to_start_title">Upcoming events notification</string>
   <string name="settings_notifications_about_to_start_summary_on">Show notifications for favourite events starting soon</string>
   <string name="settings_notifications_about_to_start_summary_off">Do not show notifications for favourite events starting soon</string>
-  <string name="settings_about_category">About</string>
-  <string name="settings_about_build_version_title">Build version</string>
   <string name="settings_message_signed_out">You have been signed out.</string>
   <string name="version_x">Version: %1$s</string>
   <string name="settings_debug_category">Debug</string>
@@ -67,12 +68,13 @@
   <string name="venue_about_label">About the venue</string>
   <string name="venue_location_label">Location</string>
   <string name="venue_map_content_description">Map to the venue</string>
-  <string name="help_title">Help</string>
   <string name="about_title">About</string>
   <string name="settings_account_not_logged_in">Not logged in</string>
 
   <string name="about_label">About</string>
   <string name="about_powered_by">is powered by</string>
+  <string name="about_location_powered_by">Location services and contest powered by</string>
+  <string name="content_description_nearit" translatable="false">NearIt</string>
   <string name="squanchy" translatable="false">Squanchy</string>
   <string name="squanchy_website" translatable="false">https://squanchy.net</string>
   <string name="about_opensource_blurb">This app is proudly open source and any contribution is welcome.</string>

@@ -319,7 +319,7 @@
   </style>
 
   <style name="Settings.Header.User.Photo" parent="None">
-    <!-- TODO add border to photo (foreground?) -->
+    <item name="android:foreground">@drawable/shape_white_circle</item>
   </style>
 
   <style name="Settings.Header.User.Name" parent="None">
@@ -360,7 +360,9 @@
     <item name="android:gravity">center</item>
     <item name="android:orientation">vertical</item>
     <item name="android:paddingStart">@dimen/about_content_padding_horizontal</item>
+    <item name="android:paddingTop">@dimen/about_content_padding_vertical</item>
     <item name="android:paddingEnd">@dimen/about_content_padding_horizontal</item>
+    <item name="android:paddingBottom">@dimen/about_content_padding_vertical</item>
   </style>
 
   <style name="About.AppName" parent="None">
@@ -373,6 +375,16 @@
     <item name="fontPath">?titleTypeface</item>
   </style>
 
+  <style name="About.AttributionLabel" parent="None">
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.About.AttributionLabel</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.About.AttributionLabel" parent="None">
+    <item name="android:textColor">?android:textColorPrimary</item>
+    <item name="android:textSize">@dimen/about_attribution_label_text</item>
+    <item name="fontPath">?defaultRegularTypeface</item>
+  </style>
+
   <style name="About.Squanchy" parent="None">
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.About.Squanchy</item>
   </style>
@@ -383,9 +395,12 @@
     <item name="fontPath">?titleTypeface</item>
   </style>
 
-  <style name="About.SquanchyWebsite" parent="Widget.AppCompat.Button.Borderless">
+  <style name="About.BorderlessButton" parent="Widget.AppCompat.Button.Borderless">
     <item name="android:background">@drawable/primary_touch_feedback</item>
     <item name="android:minHeight">0dp</item>
+  </style>
+
+  <style name="About.SquanchyWebsite" parent="About.BorderlessButton">
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.About.SquanchyWebsite</item>
   </style>
 
