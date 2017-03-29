@@ -13,7 +13,7 @@ public abstract class Schedule {
 
     public abstract List<SchedulePage> pages();
 
-    public boolean hasPages() {
-        return !pages().isEmpty();
+    public boolean isEmpty() {
+        return pages().isEmpty();
     }
 }

@@ -105,7 +105,7 @@ public class FavoritesPageView extends CoordinatorLayout implements LifecycleVie
     }
 
     private void updateWith(ScheduledAndSignedIn scheduledAndSignedIn, ScheduleViewPagerAdapter.OnEventClickedListener listener) {
-        if (scheduledAndSignedIn.hasPages()) {
+        if (scheduledAndSignedIn.hasFavorites()) {
             updateWith(scheduledAndSignedIn.schedule, listener);
         } else {
             if (scheduledAndSignedIn.signedIn) {
@@ -147,8 +147,8 @@ public class FavoritesPageView extends CoordinatorLayout implements LifecycleVie
             this.signedIn = signedIn;
         }
 
-        boolean hasPages() {
-            return schedule.hasPages();
+        boolean hasFavorites() {
+            return !schedule.isEmpty();
         }
     }
 }
