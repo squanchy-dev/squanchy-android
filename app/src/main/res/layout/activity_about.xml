@@ -78,7 +78,7 @@
         android:layout_marginBottom="@dimen/about_squanchy_nearit_logo_margin_bottom"
         android:contentDescription="@string/content_description_nearit"
         android:scaleType="centerInside"
-        android:src="@drawable/nearit_logo" />
+        app:srcCompat="@drawable/nearit_logo" />
 
       <!-- We cannot use compound drawables here unfortunately -->
       <LinearLayout
