@@ -16,6 +16,7 @@
 
   <TextView
     android:id="@+id/library_license_notice"
+    style="@style/Licenses.Notice"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" />
 
