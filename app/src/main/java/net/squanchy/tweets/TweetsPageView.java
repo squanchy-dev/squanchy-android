@@ -99,6 +99,7 @@ public class TweetsPageView extends LinearLayout implements LifecycleView {
             }
         });
     }
+
     @Override
     public void onStart() {
         Context context = getContext();
@@ -116,13 +117,17 @@ public class TweetsPageView extends LinearLayout implements LifecycleView {
         swipeLayout.setRefreshing(true);
         refreshingData = true;
         subscription = twitterService.refresh(query)
-                .subscribe(this::onRefreshFinished, this::onError);
+                .subscribe(this::onRefreshSuccess, this::onError);
     }
 
-    private void onRefreshFinished(List<Tweet> tweets) {
+    private void onRefreshSuccess(List<Tweet> tweets) {
+        tweetsAdapter.updateWith(tweets);
+        onRefreshCompleted();
+    }
+
+    private void onRefreshCompleted() {
         refreshingData = false;
         swipeLayout.setRefreshing(false);
-        tweetsAdapter.updateWith(tweets);
 
         if (tweetsAdapter.isEmpty()) {
             emptyView.setVisibility(VISIBLE);
@@ -135,6 +140,6 @@ public class TweetsPageView extends LinearLayout implements LifecycleView {
 
     private void onError(Throwable throwable) {
         Timber.e(throwable);
-        onRefreshFinished(Collections.emptyList());
+        onRefreshCompleted();
     }
 }
