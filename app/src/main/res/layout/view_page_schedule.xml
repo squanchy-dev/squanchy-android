@@ -6,7 +6,7 @@
   android:theme="@style/Theme.Squanchy.Schedule"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context="net.squanchy.schedule.ScheduleActivity">
+  tools:context="net.squanchy.home.HomeActivity">
 
   <android.support.design.widget.AppBarLayout
     style="@style/Squanchy.Appbar"
