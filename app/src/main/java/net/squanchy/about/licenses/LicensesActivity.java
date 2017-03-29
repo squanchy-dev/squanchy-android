@@ -23,18 +23,6 @@ public class LicensesActivity extends TypefaceStyleableActivity {
         setupToolbar();
 
         licensesList = (RecyclerView) findViewById(R.id.libraries_list);
-    }
-
-    private void setupToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(true);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
 
         licensesList.setAdapter(new LibrariesAdapter(this));
         licensesList.setLayoutManager(new LinearLayoutManager(this));
@@ -42,6 +30,13 @@ public class LicensesActivity extends TypefaceStyleableActivity {
         int horizontalSpacing = getResources().getDimensionPixelSize(R.dimen.card_horizontal_margin);
         int verticalSpacing = getResources().getDimensionPixelSize(R.dimen.card_vertical_margin);
         licensesList.addItemDecoration(new CardSpacingItemDecorator(horizontalSpacing, verticalSpacing));
+    }
+
+    private void setupToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
     }
 
     @Override
