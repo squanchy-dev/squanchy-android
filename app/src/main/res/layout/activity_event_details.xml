@@ -53,7 +53,8 @@
       android:layout_height="wrap_content"
       android:layout_marginStart="@dimen/event_details_header_padding_start"
       android:layout_marginEnd="@dimen/event_details_header_padding_end"
-      android:layout_marginBottom="@dimen/event_details_header_padding_bottom" />
+      android:layout_marginBottom="@dimen/event_details_header_padding_bottom"
+      android:visibility="gone" />
 
   </net.squanchy.eventdetails.widget.EventDetailsHeaderLayout>
 
