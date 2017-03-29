@@ -52,4 +52,9 @@ public class NoFavoritesView extends LinearLayout {
             }
         });
     }
+
+    @Override
+    public void setOrientation(int orientation) {
+        throw new UnsupportedOperationException("Changing orientation is not supported for " + NoFavoritesView.class.getSimpleName());
+    }
 }
