@@ -47,7 +47,6 @@ public class ContestActivity extends TypefaceStyleableActivity {
 
     @Override
     protected void onStart() {
-        Log.d("ContestActivity", "onStart");
         super.onStart();
 
         subscriptions.add(contestService.standings()
@@ -93,7 +92,6 @@ public class ContestActivity extends TypefaceStyleableActivity {
 
     @Override
     protected void onStop() {
-        Log.d("ContestActivity", "onStop");
         super.onStop();
         subscriptions.dispose();
     }
