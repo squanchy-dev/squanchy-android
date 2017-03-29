@@ -11,12 +11,12 @@ public class FirebaseFavorites {
     }
 
     public FirebaseFavorites(Optional<Map<String, Boolean>> mapOptional) {
-        this.map = mapOptional.or(Collections.emptyMap());
+        this.favorites = mapOptional.or(Collections.emptyMap());
     }
 
-    public Map<String, Boolean> map;
+    public Map<String, Boolean> favorites;
 
     public boolean hasFavorite(String eventId) {
-        return map.containsKey(eventId);
+        return favorites.containsKey(eventId);
     }
 }

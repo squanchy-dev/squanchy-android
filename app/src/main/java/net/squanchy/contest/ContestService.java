@@ -7,7 +7,6 @@ import net.squanchy.service.firebase.model.FirebaseAchievements;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
-import io.reactivex.Single;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.schedulers.Schedulers;
 
@@ -34,7 +33,7 @@ public class ContestService {
     }
 
     private BiFunction<FirebaseAchievements, Long, ContestStandings> buildStandings() {
-        return (achievements, goal) -> ContestStandings.create(goal, achievements.map.size());
+        return (achievements, goal) -> ContestStandings.create(goal, achievements.achievements.size());
     }
 
     public Completable addAchievement(String achievementId) {
