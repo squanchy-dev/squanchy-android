@@ -6,4 +6,5 @@ Squanchy is brought to you by:
  * Lorenzo Quiroli - [@quiro91](https://github.com/quiro91)
  * Daniele Bonaldo - [@danybony](https://github.com/danybony)
  * Francesco Pontillo - [@frapontillo](https://github.com/frapontillo)
+ * Alexandros Stylianidis - [@alexstyl](https://github.com/alexstyl)
  * Dave Clements - [@digitalpencils](https://github.com/digitalpencils)
