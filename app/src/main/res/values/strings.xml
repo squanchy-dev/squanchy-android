@@ -86,4 +86,6 @@
   <string name="licenses_label">Open source licenses</string>
   <string name="license_label_template">By %1$s, released under %2$s</string>
 
+  <string name="onboarding_location_label">Location</string>
+
 </resources>

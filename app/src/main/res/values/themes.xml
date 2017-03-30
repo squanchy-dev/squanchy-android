@@ -102,4 +102,6 @@
 
   <style name="Theme.Squanchy.Licenses" parent="Theme.Squanchy.PrimaryStatusBar" />
 
+  <style name="Theme.Squanchy.Onboarding" parent="Theme.Squanchy.MostlyWhite" />
+
 </resources>
