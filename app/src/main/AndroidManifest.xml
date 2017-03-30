@@ -4,6 +4,8 @@
   package="net.squanchy">
 
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <uses-permission android:name="android.permission.BLUETOOTH" />
+  <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.WAKE_LOCK" />
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -75,6 +77,11 @@
       android:name="net.squanchy.about.licenses.LicensesActivity"
       android:theme="@style/Theme.Squanchy.Licenses"
       android:label="@string/licenses_label" />
+
+    <activity
+      android:name="net.squanchy.onboarding.location.LocationOnboardingActivity"
+      android:theme="@style/Theme.Squanchy.Onboarding"
+      android:label="@string/onboarding_location_label" />
 
     <!-- We're ok with "directBootAware" only being used where Direct Boot exists (API 24+) -->
     <receiver

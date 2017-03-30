@@ -1,6 +1,6 @@
 package net.squanchy.navigation.deeplink;
 
-import android.content.Context;
+import android.app.Activity;
 
 import net.squanchy.R;
 import net.squanchy.injection.ActivityContextModule;
@@ -14,8 +14,8 @@ import dagger.Provides;
 public class DeepLinkModule {
 
     @Provides
-    String deepLinkScheme(Context context) {
-        return context.getString(R.string.deeplink_scheme);
+    String deepLinkScheme(Activity activity) {
+        return activity.getString(R.string.deeplink_scheme);
     }
 
     @Provides

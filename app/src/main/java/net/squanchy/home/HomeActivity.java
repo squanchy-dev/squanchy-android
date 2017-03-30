@@ -43,10 +43,8 @@ import io.reactivex.disposables.CompositeDisposable;
 
 public class HomeActivity extends TypefaceStyleableActivity {
 
-    private static final String STATE_KEY_SELECTED_PAGE_INDEX = "HomeActivity.selected_page_index";
     private static final String KEY_CONTEST_STAND = "stand";
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1000;
-    private static final boolean PROXIMITY_SERVICE_RADAR_NOT_STARTED = false;
 
     private final Map<BottomNavigationSection, View> pageViews = new HashMap<>(4);
     private final List<LifecycleView> lifecycleViews = new ArrayList<>(4);
@@ -152,15 +150,6 @@ public class HomeActivity extends TypefaceStyleableActivity {
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION) {
-            if (hasGrantedFineLocationAccess(grantResults)) {
-                proximityService.startRadar();
-            }
-        }
-    }
-
     private void askProximityPermissionToStartRadar() {
         if (hasLocationPermission()) {
             proximityService.startRadar();
@@ -170,6 +159,15 @@ public class HomeActivity extends TypefaceStyleableActivity {
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
             );
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION) {
+            if (hasGrantedFineLocationAccess(grantResults)) {
+                proximityService.startRadar();
+            }
         }
     }
 
