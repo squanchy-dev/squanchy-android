@@ -28,6 +28,7 @@ import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
 public class Navigator {
 
     private static final int NO_FLAGS = 0;
+    
     private final Activity activity;
     private final DebugActivityIntentFactory debugActivityIntentFactory;
 
