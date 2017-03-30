@@ -9,6 +9,8 @@ import com.crashlytics.android.answers.ContentViewEvent;
 import com.crashlytics.android.answers.CustomEvent;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import net.squanchy.BuildConfig;
+
 import timber.log.Timber;
 
 public class Analytics {
@@ -19,6 +21,10 @@ public class Analytics {
     Analytics(FirebaseAnalytics firebaseAnalytics, Crashlytics crashlytics) {
         this.firebaseAnalytics = firebaseAnalytics;
         this.crashlytics = crashlytics;
+    }
+
+    public void initializeStaticUserProperties() {
+        firebaseAnalytics.setUserProperty("debug_build", String.valueOf(BuildConfig.DEBUG));
     }
 
     public void trackPageView(Activity activity, String screenName) {
