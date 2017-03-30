@@ -3,11 +3,11 @@ package net.squanchy.navigation;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.widget.Toast;
 
 import net.squanchy.contest.ContestActivity;
 import net.squanchy.BuildConfig;
 import net.squanchy.about.AboutActivity;
+import net.squanchy.about.licenses.LicensesActivity;
 import net.squanchy.eventdetails.EventDetailsActivity;
 import net.squanchy.home.HomeActivity;
 import net.squanchy.search.SearchActivity;
@@ -142,7 +142,7 @@ public class Navigator {
     }
 
     public void toFossLicenses() {
-        Toast.makeText(context, "FOSS... nao", Toast.LENGTH_SHORT).show();
+        start(new Intent(context, LicensesActivity.class));
     }
 
     private void start(Intent intent) {

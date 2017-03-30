@@ -56,6 +56,11 @@ public class ScheduleService {
         });
     }
 
+    public Observable<Boolean> currentUserIsSignedIn() {
+        return authService.currentUser()
+                .map(optionalUser -> optionalUser.map(user -> !user.isAnonymous()).or(false));
+    }
+
     private Function<List<Event>, HashMap<String, List<Event>>> groupEventsByDay() {
         return events -> Lists.reduce(new HashMap<>(), events, listToDaysHashMap());
     }
