@@ -16,7 +16,13 @@ public class LocationOnboardingActivity extends TypefaceStyleableActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
+        LocationOnboardingComponent component = LocationOnboardingInjector.obtain(this);
+        onboarding = component.onboarding();
+        service = component.proximityService();
+
+        setContentView(R.layout.activity_location_onboarding);
+
         setResult(RESULT_CANCELED);
     }
 
