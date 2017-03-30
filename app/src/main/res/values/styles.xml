@@ -458,6 +458,7 @@
   <style name="SignIn.BottomSheet" parent="Widget.Design.BottomSheet.Modal" />
 
   <style name="SignIn.BottomSheet.Label" parent="None">
+    <item name="android:gravity">start|center_vertical</item>
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.SignIn.BottomSheet.Label</item>
   </style>
 

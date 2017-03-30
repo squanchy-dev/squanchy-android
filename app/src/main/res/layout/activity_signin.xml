@@ -12,7 +12,7 @@
   <FrameLayout
     android:id="@+id/bottom_sheet"
     style="@style/SignIn.BottomSheet"
-    android:layout_width="match_parent"
+    android:layout_width="@dimen/sign_in_bottom_sheet_width"
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
@@ -24,16 +24,16 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="vertical"
-      android:padding="32dp">
+      android:padding="@dimen/sign_in_bottom_sheet_content_padding">
 
       <ImageView
         android:id="@+id/google_logo"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="@dimen/sign_in_logo_size"
+        android:layout_height="@dimen/sign_in_logo_size"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="@dimen/sign_in_label_margin_bottom"
-        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="@dimen/sign_in_logo_margin_bottom"
+        android:layout_marginEnd="@dimen/sign_in_logo_margin_end"
         android:src="@drawable/google_primary"
         android:contentDescription="@null" />
 
@@ -42,7 +42,9 @@
         style="@style/SignIn.BottomSheet.Label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_alignTop="@id/google_logo"
+        android:layout_alignBottom="@id/google_logo"
+        android:layout_toEndOf="@id/google_logo"
         android:text="@string/sign_in_label" />
 
       <com.google.android.gms.common.SignInButton
