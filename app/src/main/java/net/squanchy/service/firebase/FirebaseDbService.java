@@ -6,7 +6,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Collections;
 import java.util.Locale;
 
 import net.squanchy.service.firebase.model.FirebaseAchievements;
@@ -87,21 +86,23 @@ public final class FirebaseDbService {
 
     public Observable<FirebaseFavorites> favorites(String userId) {
         return userData(userId)
-                .map(firebaseUserData -> Optional.fromNullable(firebaseUserData.favorites))
+                .map(optionalUserData -> optionalUserData.or(FirebaseUserData.empty()))
+                .map(userData -> Optional.fromNullable(userData.favorites))
+                .map(optionalFavorites -> optionalFavorites.or(FirebaseFavorites.empty()))
                 .map(FirebaseFavorites::new);
     }
 
     public Observable<FirebaseAchievements> achievements(String userId) {
         return userData(userId)
-                .map(firebaseUserData -> Optional.fromNullable(firebaseUserData.achievements))
+                .map(optionalUserData -> optionalUserData.or(FirebaseUserData.empty()))
+                .map(userData -> Optional.fromNullable(userData.achievements))
+                .map(optionalAchievement -> optionalAchievement.or(FirebaseAchievements.empty()))
                 .map(FirebaseAchievements::new);
     }
 
-    private Observable<FirebaseUserData> userData(String userId) {
+    private Observable<Optional<FirebaseUserData>> userData(String userId) {
         String path = String.format(Locale.US, USERDATA_NODE, userId);
-
-        return observeOptionalChild(path, FirebaseUserData.class)
-                .map(optionalUserData -> optionalUserData.or(FirebaseUserData.empty()));
+        return observeOptionalChild(path, FirebaseUserData.class);
     }
 
     public Observable<FirebaseVenue> venueInfo() {

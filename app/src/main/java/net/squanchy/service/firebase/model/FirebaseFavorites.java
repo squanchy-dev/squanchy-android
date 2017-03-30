@@ -3,15 +3,17 @@ package net.squanchy.service.firebase.model;
 import java.util.Collections;
 import java.util.Map;
 
-import net.squanchy.support.lang.Optional;
-
 public class FirebaseFavorites {
 
     public FirebaseFavorites() {
     }
 
-    public FirebaseFavorites(Optional<Map<String, Boolean>> mapOptional) {
-        this.favorites = mapOptional.or(Collections.emptyMap());
+    public static Map<String, Boolean> empty() {
+        return Collections.emptyMap();
+    }
+
+    public FirebaseFavorites(Map<String, Boolean> favorites) {
+        this.favorites = favorites;
     }
 
     public Map<String, Boolean> favorites;
