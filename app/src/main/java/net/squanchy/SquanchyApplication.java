@@ -38,6 +38,7 @@ public class SquanchyApplication extends Application {
 
         Analytics analytics = applicationComponent().analytics();
         analytics.enableExceptionLogging();
+        analytics.initializeStaticUserProperties();
 
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
