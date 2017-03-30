@@ -1,6 +1,6 @@
 package net.squanchy.navigation;
 
-import android.content.Context;
+import android.app.Activity;
 
 import net.squanchy.injection.ActivityContextModule;
 
@@ -16,7 +16,7 @@ public class NavigationModule {
     }
 
     @Provides
-    public Navigator navigator(Context context, DebugActivityIntentFactory debugActivityIntentFactory) {
-        return new Navigator(context, debugActivityIntentFactory);
+    public Navigator navigator(Activity activity, DebugActivityIntentFactory debugActivityIntentFactory) {
+        return new Navigator(activity, debugActivityIntentFactory);
     }
 }

@@ -118,29 +118,29 @@ public final class FirebaseDbService {
     }
 
     private <T, V> Observable<T> observeChildAndEmit(String path, final Class<V> clazz, Func1<V, T> valueMapper) {
-        return Observable.create((ObservableEmitter<T> e) -> {
+        return Observable.create((ObservableEmitter<T> emitter) -> {
             ValueEventListener listener = new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     V value = dataSnapshot.getValue(clazz);
-                    if (e.isDisposed()) {
+                    if (emitter.isDisposed()) {
                         return;
                     }
-                    e.onNext(valueMapper.call(value));
+                    emitter.onNext(valueMapper.call(value));
                 }
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-                    if (e.isDisposed()) {
+                    if (emitter.isDisposed()) {
                         return;
                     }
-                    e.onError(databaseError.toException());
+                    emitter.onError(databaseError.toException());
                 }
             };
 
             DatabaseReference childReference = database.child(path);
             childReference.addValueEventListener(listener);
-            e.setCancellable(() -> childReference.removeEventListener(listener));
+            emitter.setCancellable(() -> childReference.removeEventListener(listener));
         }).observeOn(Schedulers.io());
     }
 

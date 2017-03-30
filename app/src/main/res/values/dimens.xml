@@ -115,6 +115,13 @@
   <dimen name="licenses_notice_padding">8dp</dimen>
   <dimen name="licenses_notice_text">12sp</dimen>
 
+  <dimen name="sign_in_bottom_sheet_width">-1px</dimen>   <!-- match_parent -->
+  <dimen name="sign_in_bottom_sheet_content_padding">32dp</dimen>
+  <dimen name="sign_in_logo_size">64dp</dimen>
+  <dimen name="sign_in_logo_margin_bottom">24dp</dimen>
+  <dimen name="sign_in_logo_margin_end">16dp</dimen>
+  <dimen name="sign_in_label_text">16sp</dimen>
+
   <dimen name="color_button_height">56dp</dimen>
   <dimen name="color_button_inset_horizontal">4dp</dimen>
   <dimen name="color_button_inset_vertical">6dp</dimen>

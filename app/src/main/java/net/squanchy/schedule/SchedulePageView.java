@@ -15,7 +15,7 @@ import android.view.View;
 import net.squanchy.R;
 import net.squanchy.analytics.Analytics;
 import net.squanchy.analytics.ContentType;
-import net.squanchy.home.LifecycleView;
+import net.squanchy.home.Loadable;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Schedule;
@@ -30,7 +30,7 @@ import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
 import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 
-public class SchedulePageView extends CoordinatorLayout implements LifecycleView {
+public class SchedulePageView extends CoordinatorLayout implements Loadable {
 
     private ScheduleViewPagerAdapter viewPagerAdapter;
     private View progressBar;
@@ -91,7 +91,7 @@ public class SchedulePageView extends CoordinatorLayout implements LifecycleView
     }
 
     @Override
-    public void onStart() {
+    public void startLoading() {
         subscription = service.schedule(false)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(schedule -> updateWith(schedule, this::onEventClicked), Timber::e);
@@ -103,7 +103,7 @@ public class SchedulePageView extends CoordinatorLayout implements LifecycleView
     }
 
     @Override
-    public void onStop() {
+    public void stopLoading() {
         subscription.dispose();
     }
 

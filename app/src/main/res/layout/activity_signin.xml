@@ -1,23 +1,68 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/main_layout"
   android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical">
+  android:layout_height="match_parent">
 
-  <TextView
-    android:id="@+id/title_text"
-    android:layout_width="wrap_content"
+  <View
+    android:id="@+id/touch_outside"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+
+  <FrameLayout
+    android:id="@+id/bottom_sheet"
+    style="@style/SignIn.BottomSheet"
+    android:layout_width="@dimen/sign_in_bottom_sheet_width"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
-    android:text="Sign in lol 🍌" />
+    android:clickable="true"
+    android:focusable="true"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+    tools:layout_width="match_parent">
 
-  <com.google.android.gms.common.SignInButton
-    android:id="@+id/sign_in_button"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_centerInParent="true"
-    android:visibility="visible"
-    tools:visibility="gone" />
+    <RelativeLayout
+      android:id="@+id/sign_in_content"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:padding="@dimen/sign_in_bottom_sheet_content_padding">
 
-</LinearLayout>
+      <ImageView
+        android:id="@+id/google_logo"
+        android:layout_width="@dimen/sign_in_logo_size"
+        android:layout_height="@dimen/sign_in_logo_size"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="@dimen/sign_in_logo_margin_bottom"
+        android:layout_marginEnd="@dimen/sign_in_logo_margin_end"
+        android:src="@drawable/google_primary"
+        android:contentDescription="@null" />
+
+      <TextView
+        android:id="@+id/title_text"
+        style="@style/SignIn.BottomSheet.Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/google_logo"
+        android:layout_alignBottom="@id/google_logo"
+        android:layout_toEndOf="@id/google_logo"
+        android:text="@string/sign_in_label" />
+
+      <com.google.android.gms.common.SignInButton
+        android:id="@+id/sign_in_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/color_button_height"
+        android:layout_below="@id/google_logo" />
+
+    </RelativeLayout>
+
+    <ProgressBar
+      android:id="@+id/progressbar"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:visibility="gone"
+      tools:visibility="visible" />
+
+  </FrameLayout>
+
+</android.support.design.widget.CoordinatorLayout>
