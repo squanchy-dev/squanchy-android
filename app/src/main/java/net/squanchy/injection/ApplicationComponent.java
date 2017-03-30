@@ -20,7 +20,7 @@ import net.squanchy.support.injection.ChecksumModule;
 import dagger.Component;
 
 @ApplicationLifecycle
-@Component(modules = {FirebaseModule.class, ChecksumModule.class, RepositoryModule.class, ProximityModule.class, AnalyticsModule.class, RemoteConfigModule.class})
+@Component(modules = {ApplicationContextModule.class, FirebaseModule.class, ChecksumModule.class, RepositoryModule.class, ProximityModule.class, AnalyticsModule.class, RemoteConfigModule.class})
 public interface ApplicationComponent {
 
     FirebaseDbService firebaseDbService();
@@ -50,7 +50,7 @@ public interface ApplicationComponent {
                     .firebaseModule(new FirebaseModule())
                     .repositoryModule(new RepositoryModule())
                     .checksumModule(new ChecksumModule())
-                    .contextModule(new ContextModule(application))
+                    .applicationContextModule(new ApplicationContextModule(application))
                     .proximityModule(new ProximityModule())
                     .analyticsModule(new AnalyticsModule(application))
                     .remoteConfigModule(new RemoteConfigModule())
