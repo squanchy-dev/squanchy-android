@@ -77,7 +77,7 @@ public class OtherEventItemView extends EventItemView {
             case OTHER:
                 return NO_DRAWABLE;
             case SOCIAL:
-                return R.drawable.illustration_lunch;        // TODO replace these with the correct images once we have them
+                return R.drawable.social;
             default:
                 throw new IllegalArgumentException("Type not supported: " + type.name());
         }
