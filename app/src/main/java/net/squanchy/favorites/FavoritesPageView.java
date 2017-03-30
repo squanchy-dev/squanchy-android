@@ -53,7 +53,7 @@ public class FavoritesPageView extends CoordinatorLayout implements Loadable {
         favoritesListView = (FavoritesListView) findViewById(R.id.favorites_list);
         emptyViewSignedIn = findViewById(R.id.empty_view_signed_in);
         emptyViewSignedOut = findViewById(R.id.empty_view_signed_out);
-        emptyViewSignedOut.setOnClickListener(view -> sequestSignIn());
+        emptyViewSignedOut.setOnClickListener(view -> requestSignIn());
 
         setupToolbar();
 
@@ -66,7 +66,7 @@ public class FavoritesPageView extends CoordinatorLayout implements Loadable {
         }
     }
 
-    private void sequestSignIn() {
+    private void requestSignIn() {
         // ⚠️ HACK this is DIRTY and HORRIBLE but it's the only way we can ship this
         // without rewriting the whole data layer. Sorry. I swear, we know it sucks
         // and we want to fix this ASAP.
