@@ -23,8 +23,9 @@ public class EventDetailsActivity extends TypefaceStyleableActivity {
     private static final String EXTRA_EVENT_ID = EventDetailsActivity.class.getCanonicalName() + ".event_id";
     private static final int REQUEST_CODE_SIGNIN = 1235;
 
+    private final CompositeDisposable subscriptions = new CompositeDisposable();;
+
     private EventDetailsService service;
-    private CompositeDisposable subscriptions;
     private EventDetailsCoordinatorLayout coordinatorLayout;
 
     private Navigator navigator;
@@ -49,7 +50,6 @@ public class EventDetailsActivity extends TypefaceStyleableActivity {
         navigator = component.navigator();
 
         coordinatorLayout = (EventDetailsCoordinatorLayout) findViewById(R.id.event_details_root);
-        subscriptions = new CompositeDisposable();
     }
 
     private void setupToolbar() {
@@ -79,8 +79,6 @@ public class EventDetailsActivity extends TypefaceStyleableActivity {
     }
 
     private void subscribeToEvent(String eventId) {
-        subscriptions = new CompositeDisposable();
-
         subscriptions.add(service.event(eventId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(event -> coordinatorLayout.updateWith(event, onEventDetailsClickListener(event))));

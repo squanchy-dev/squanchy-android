@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.squanchy.R;
-import net.squanchy.home.LifecycleView;
+import net.squanchy.home.Loadable;
 import net.squanchy.imageloader.ImageLoader;
 import net.squanchy.imageloader.ImageLoaderInjector;
 import net.squanchy.navigation.Navigator;
@@ -20,7 +20,7 @@ import io.reactivex.disposables.Disposable;
 
 import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 
-public class VenueInfoPageView extends LinearLayout implements LifecycleView {
+public class VenueInfoPageView extends LinearLayout implements Loadable {
 
     private Disposable subscription;
     private Navigator navigate;
@@ -91,7 +91,7 @@ public class VenueInfoPageView extends LinearLayout implements LifecycleView {
     }
 
     @Override
-    public void onStart() {
+    public void startLoading() {
         subscription = service.venue()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::updateWith);
@@ -116,7 +116,7 @@ public class VenueInfoPageView extends LinearLayout implements LifecycleView {
     }
 
     @Override
-    public void onStop() {
+    public void stopLoading() {
         subscription.dispose();
     }
 }
