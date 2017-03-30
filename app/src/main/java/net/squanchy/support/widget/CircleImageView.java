@@ -46,6 +46,7 @@ import timber.log.Timber;
 public class CircleImageView extends ImageViewWithForeground {
 
     private static final CircularOutlineProvider CIRCULAR_OUTLINE_PROVIDER = new CircularOutlineProvider();
+    private static final float ROUNDING_UP_FLOAT = 0.5f;
 
     private Optional<Necessaire> necessaireOptional = Optional.absent();
 
@@ -172,7 +173,7 @@ public class CircleImageView extends ImageViewWithForeground {
         Shader shader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
         int bitmapWidth = bitmap.getHeight();
         int bitmapHeight = bitmap.getWidth();
-        updateShaderMatrix(shader, bounds, bitmapWidth, bitmapHeight);
+        setTransformation(shader, bounds, bitmapWidth, bitmapHeight);
 
         Paint paint = new Paint();
         paint.setAntiAlias(true);
@@ -192,24 +193,40 @@ public class CircleImageView extends ImageViewWithForeground {
         return new RectF(left, top, left + sideLength, top + sideLength);
     }
 
-    private void updateShaderMatrix(Shader shader, RectF bounds, int bitmapWidth, int bitmapHeight) {
+    private void setTransformation(Shader shader, RectF bounds, int bitmapWidth, int bitmapHeight) {
         float scale;
-        float dx = 0;
-        float dy = 0;
-        Matrix matrix = new Matrix();
+        float translationX;
+        float translationY;
 
-        if (bitmapWidth * bounds.height() > bounds.width() * bitmapHeight) {
+        if (heightDictatesScale(bounds, bitmapWidth, bitmapHeight)) {
             scale = bounds.height() / (float) bitmapHeight;
-            dx = (bounds.width() - bitmapWidth * scale) * 0.5f;
+            translationX = (bounds.width() - bitmapWidth * scale) / 2f;
+            translationY = 0f;
         } else {
             scale = bounds.width() / (float) bitmapWidth;
-            dy = (bounds.height() - bitmapHeight * scale) * 0.5f;
+            translationX = 0f;
+            translationY = (bounds.height() - bitmapHeight * scale) / 2f;
         }
 
-        matrix.setScale(scale, scale);
-        matrix.postTranslate((int) (dx + 0.5f) + bounds.left, (int) (dy + 0.5f) + bounds.top);
-
+        Matrix matrix = createMatrixFor(scale, bounds, translationX, translationY);
         shader.setLocalMatrix(matrix);
+    }
+
+    private boolean heightDictatesScale(RectF bounds, int bitmapWidth, int bitmapHeight) {
+        return bitmapWidth * bounds.height() > bounds.width() * bitmapHeight;
+    }
+
+    private Matrix createMatrixFor(float scale, RectF bounds, float translationX, float translationY) {
+        Matrix matrix = new Matrix();
+        matrix.setScale(scale, scale);
+        float x = bounds.left + intCeil(translationX);
+        float y = bounds.top + intCeil(translationY);
+        matrix.postTranslate(x, y);
+        return matrix;
+    }
+
+    private int intCeil(float value) {
+        return (int) (value + ROUNDING_UP_FLOAT);
     }
 
     @Override
