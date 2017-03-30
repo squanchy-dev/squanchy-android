@@ -161,7 +161,7 @@ public class Navigator {
 
     public void toSignInForResult(int requestCode) {
         Intent intent = new Intent(activity, SignInActivity.class);
-        activity.startActivityForResult(intent, requestCode);
+        startForResult(intent, requestCode);
     }
 
     public void toOnboardingForResult(OnboardingPage page, int requestCode) {
