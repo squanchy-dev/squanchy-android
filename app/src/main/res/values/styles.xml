@@ -455,8 +455,15 @@
     <item name="android:drawablePadding">@dimen/card_horizontal_margin</item>
   </style>
 
-  <style name="SignIn.BottomSheet" parent="Widget.Design.BottomSheet.Modal">
+  <style name="SignIn.BottomSheet" parent="Widget.Design.BottomSheet.Modal" />
 
+  <style name="SignIn.BottomSheet.Label" parent="None">
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.SignIn.BottomSheet.Label</item>
   </style>
 
+  <style name="TextAppearance.Squanchy.SignIn.BottomSheet.Label" parent="None">
+    <item name="android:textColor">?android:textColorPrimary</item>
+    <item name="android:textSize">@dimen/sign_in_label_text</item>
+    <item name="fontPath">?defaultMediumTypeface</item>
+  </style>
 </resources>
