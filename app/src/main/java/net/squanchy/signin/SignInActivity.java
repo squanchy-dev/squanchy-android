@@ -2,7 +2,12 @@ package net.squanchy.signin;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.Snackbar;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -14,26 +19,43 @@ import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
 
 public class SignInActivity extends TypefaceStyleableActivity {
 
     private static final int RC_SIGN_IN = 9001;
+    private static final float ALPHA_DISABLED = .54f;
+    private static final float ALPHA_ENABLED = 1f;
 
     private SignInService service;
-
     private GoogleApiClient googleApiClient;
+
+    private View progressView;
+    private View signInContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signin);
-
-        findViewById(R.id.sign_in_button).setOnClickListener(view -> signIn());
 
         googleApiClient = connectToGoogleApis();
 
         SignInComponent component = SignInInjector.obtain(this);
         service = component.service();
+
+        setContentView(R.layout.activity_signin);
+
+        progressView = findViewById(R.id.progressbar);
+        signInContent = findViewById(R.id.sign_in_content);
+
+        findViewById(R.id.sign_in_button).setOnClickListener(view -> signIn());
+        findViewById(R.id.touch_outside).setOnClickListener(v -> finish());
+
+        View bottomSheet = findViewById(R.id.bottom_sheet);
+        setBottomSheetCallbackOn(bottomSheet);
+
+        setupWindowParameters();
+
+        setResult(RESULT_CANCELED);
     }
 
     private GoogleApiClient connectToGoogleApis() {
@@ -46,6 +68,30 @@ public class SignInActivity extends TypefaceStyleableActivity {
                 .enableAutoManage(this, e -> showSignInFailedError())
                 .addApi(Auth.GOOGLE_SIGN_IN_API, signInOptions)
                 .build();
+    }
+
+    private void setBottomSheetCallbackOn(View bottomSheet) {
+        BottomSheetBehavior.from(bottomSheet)
+                .setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+                    @Override
+                    public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                        switch (newState) {
+                            case BottomSheetBehavior.STATE_HIDDEN:
+                                finish();
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                        // no op
+                    }
+                });
+    }
+
+    private void setupWindowParameters() {
+        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        getWindow().setGravity(Gravity.FILL_HORIZONTAL | Gravity.BOTTOM);
     }
 
     @Override
@@ -64,25 +110,35 @@ public class SignInActivity extends TypefaceStyleableActivity {
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
-        showProgressDialog();
+        showProgress();
 
         service.signInWithGoogle(account)
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::finish);
+                .subscribe(onSignInSuccessful());
+    }
+
+    private Action onSignInSuccessful() {
+        return () -> {
+            setResult(RESULT_OK);
+            finish();
+        };
+    }
+
+    private void showProgress() {
+        signInContent.setEnabled(false);
+        signInContent.setAlpha(ALPHA_DISABLED);
+        progressView.setVisibility(View.VISIBLE);
     }
 
     private void showSignInFailedError() {
-        hideProgressDialog();
-        Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
+        hideProgress();
+        Snackbar.make(signInContent, R.string.sign_in_error_please_retry, Snackbar.LENGTH_SHORT).show();
     }
 
-    private void showProgressDialog() {
-        // TODO implement UI
-        Toast.makeText(this, "Logging you in...", Toast.LENGTH_SHORT).show();
-    }
-
-    private void hideProgressDialog() {
-        // TODO implement UI
+    private void hideProgress() {
+        signInContent.setEnabled(true);
+        signInContent.setAlpha(ALPHA_ENABLED);
+        progressView.setVisibility(View.GONE);
     }
 
     private void signIn() {

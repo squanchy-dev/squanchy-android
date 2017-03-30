@@ -11,7 +11,8 @@ import net.squanchy.R;
 import net.squanchy.analytics.Analytics;
 import net.squanchy.analytics.ContentType;
 import net.squanchy.favorites.view.FavoritesListView;
-import net.squanchy.home.LifecycleView;
+import net.squanchy.home.HomeActivity;
+import net.squanchy.home.Loadable;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.schedule.ScheduleService;
 import net.squanchy.schedule.domain.view.Event;
@@ -25,7 +26,7 @@ import io.reactivex.functions.BiFunction;
 
 import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 
-public class FavoritesPageView extends CoordinatorLayout implements LifecycleView {
+public class FavoritesPageView extends CoordinatorLayout implements Loadable {
 
     private View progressBar;
     private Disposable subscription;
@@ -52,7 +53,7 @@ public class FavoritesPageView extends CoordinatorLayout implements LifecycleVie
         favoritesListView = (FavoritesListView) findViewById(R.id.favorites_list);
         emptyViewSignedIn = findViewById(R.id.empty_view_signed_in);
         emptyViewSignedOut = findViewById(R.id.empty_view_signed_out);
-        emptyViewSignedOut.setOnClickListener(view -> navigate.toSignIn());
+        emptyViewSignedOut.setOnClickListener(view -> requestSignIn());
 
         setupToolbar();
 
@@ -63,6 +64,14 @@ public class FavoritesPageView extends CoordinatorLayout implements LifecycleVie
             navigate = component.navigator();
             analytics = component.analytics();
         }
+    }
+
+    private void requestSignIn() {
+        // ⚠️ HACK this is DIRTY and HORRIBLE but it's the only way we can ship this
+        // without rewriting the whole data layer. Sorry. I swear, we know it sucks
+        // and we want to fix this ASAP.
+        HomeActivity activity = (HomeActivity) unwrapToActivityContext(getContext());
+        activity.requestSignIn();
     }
 
     private void setupToolbar() {
@@ -84,7 +93,7 @@ public class FavoritesPageView extends CoordinatorLayout implements LifecycleVie
     }
 
     @Override
-    public void onStart() {
+    public void startLoading() {
         subscription = Observable.combineLatest(service.schedule(true), service.currentUserIsSignedIn(), toScheduleAndLoggedIn())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(schedule -> updateWith(schedule, this::onEventClicked));
@@ -100,7 +109,7 @@ public class FavoritesPageView extends CoordinatorLayout implements LifecycleVie
     }
 
     @Override
-    public void onStop() {
+    public void stopLoading() {
         subscription.dispose();
     }
 

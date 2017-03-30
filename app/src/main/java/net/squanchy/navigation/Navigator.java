@@ -28,6 +28,7 @@ import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
 public class Navigator {
 
     private static final int NO_FLAGS = 0;
+
     private final Activity activity;
     private final DebugActivityIntentFactory debugActivityIntentFactory;
 
@@ -38,6 +39,11 @@ public class Navigator {
 
     public void toEventDetails(String eventId) {
         start(EventDetailsActivity.createIntent(activity, eventId));
+    }
+
+    public void toSignInForResult(int requestCode) {
+        Intent intent = new Intent(activity, SignInActivity.class);
+        activity.startActivityForResult(intent, requestCode);
     }
 
     public void toSpeakerDetails(String speakerId) {

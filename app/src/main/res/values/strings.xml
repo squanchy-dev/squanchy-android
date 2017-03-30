@@ -85,6 +85,8 @@
 
   <string name="licenses_label">Open source licenses</string>
   <string name="license_label_template">By %1$s, released under %2$s</string>
+  <string name="sign_in_label">Please sign in with your Google account to proceed.</string>
+  <string name="sign_in_error_please_retry">Unable to sign you in. Please try again shortly.</string>
 
   <string name="onboarding_skip_button">SKIP</string>
 

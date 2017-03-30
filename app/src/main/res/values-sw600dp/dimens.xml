@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <dimen name="sign_in_bottom_sheet_width">400dp</dimen>
+
+</resources>

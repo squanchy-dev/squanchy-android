@@ -9,11 +9,10 @@ import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.Collections;
 import java.util.List;
 
 import net.squanchy.R;
-import net.squanchy.home.LifecycleView;
+import net.squanchy.home.Loadable;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.tweets.domain.view.Tweet;
 import net.squanchy.tweets.service.TwitterService;
@@ -24,7 +23,7 @@ import timber.log.Timber;
 
 import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 
-public class TweetsPageView extends LinearLayout implements LifecycleView {
+public class TweetsPageView extends LinearLayout implements Loadable {
 
     private final TwitterService twitterService;
     private final Navigator navigator;
@@ -101,7 +100,7 @@ public class TweetsPageView extends LinearLayout implements LifecycleView {
     }
 
     @Override
-    public void onStart() {
+    public void startLoading() {
         Context context = getContext();
         query = context.getString(R.string.social_query);
         emptyView.setText(context.getString(R.string.no_tweets_for_query, query));
@@ -109,7 +108,7 @@ public class TweetsPageView extends LinearLayout implements LifecycleView {
     }
 
     @Override
-    public void onStop() {
+    public void stopLoading() {
         subscription.dispose();
     }
 
