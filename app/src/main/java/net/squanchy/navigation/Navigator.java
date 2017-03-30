@@ -10,6 +10,7 @@ import net.squanchy.about.licenses.LicensesActivity;
 import net.squanchy.contest.ContestActivity;
 import net.squanchy.eventdetails.EventDetailsActivity;
 import net.squanchy.home.HomeActivity;
+import net.squanchy.onboarding.OnboardingPage;
 import net.squanchy.search.SearchActivity;
 import net.squanchy.settings.SettingsActivity;
 import net.squanchy.signin.SignInActivity;
@@ -155,5 +156,14 @@ public class Navigator {
             intent.addFlags(flags);
         }
         activity.startActivity(intent);
+    }
+
+    public void toOnboardingForResult(OnboardingPage page, int requestCode) {
+        Intent intent = new Intent(activity, page.activityClass());
+        startForResult(intent, requestCode);
+    }
+
+    private void startForResult(Intent intent, int requestCode) {
+        activity.startActivityForResult(intent, requestCode);
     }
 }
