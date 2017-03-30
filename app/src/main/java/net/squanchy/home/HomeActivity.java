@@ -131,7 +131,6 @@ public class HomeActivity extends TypefaceStyleableActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        selectInitialPage(currentSection);
 
         remoteConfig.proximityServicesEnabled()
                 .observeOn(AndroidSchedulers.mainThread())
@@ -187,13 +186,11 @@ public class HomeActivity extends TypefaceStyleableActivity {
                 grantResults[0] == PackageManager.PERMISSION_GRANTED;
     }
 
-    //TODO fix it properly
     @Override
     protected void onResume() {
         super.onResume();
 
-        Resources.Theme theme = getThemeFor(currentSection);
-        bottomNavigationView.setBackgroundColor(getColorFromTheme(theme, android.support.design.R.attr.colorPrimary));
+        selectInitialPage(currentSection);
     }
 
     private void handleProximityEvent(ProximityEvent proximityEvent) {
