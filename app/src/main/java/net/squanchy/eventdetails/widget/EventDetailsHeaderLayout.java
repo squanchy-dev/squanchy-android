@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import net.squanchy.R;
 import net.squanchy.schedule.domain.view.Event;
+import net.squanchy.support.lang.Optional;
 import net.squanchy.support.widget.SpeakerView;
 
 public class EventDetailsHeaderLayout extends AppBarLayout {
@@ -31,6 +32,6 @@ public class EventDetailsHeaderLayout extends AppBarLayout {
         titleView.setVisibility(VISIBLE);
 
         speakerView.setVisibility(event.speakers().isEmpty() ? GONE : VISIBLE);
-        speakerView.updateWith(event.speakers(), listener);
+        speakerView.updateWith(event.speakers(), Optional.of(listener));
     }
 }
