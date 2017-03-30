@@ -41,9 +41,17 @@ public class RoutingActivity extends TypefaceStyleableActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == ONBOARDING_REQUEST_CODE) {
-            routeTo(getIntent());
+            handleOnboardingResult(resultCode);
         } else {
             super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private void handleOnboardingResult(int resultCode) {
+        if (resultCode == RESULT_OK) {
+            routeTo(getIntent());
+        } else {
+            finish();
         }
     }
 
