@@ -26,6 +26,13 @@
     <item name="android:statusBarColor">@color/status_bar_primary</item>
   </style>
 
+  <style name="Theme.Squanchy.MostlyWhite" parent="Theme.Squanchy">
+    <item name="android:actionBarStyle">@style/MostlyWhite.Toolbar</item>
+    <item name="android:windowBackground">@color/white</item>
+    <!-- We're ok with the light statusbar only applying to API 23+, where it exists -->
+    <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
+  </style>
+
   <!-- Copied from support library's: v7/appcompat/res/values/themes_base.xml -->
   <style name="Theme.Squanchy.Dialog" parent="Theme.Squanchy">
     <item name="windowActionBar">false</item>
@@ -91,12 +98,7 @@
     <item name="colorAccent">?colorPrimary</item>
   </style>
 
-  <style name="Theme.Squanchy.About" parent="Theme.Squanchy">
-    <item name="android:actionBarStyle">@style/About.Toolbar</item>
-    <item name="android:windowBackground">@color/white</item>
-    <!-- We're ok with the light statusbar only applying to API 23+, where it exists -->
-    <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
-  </style>
+  <style name="Theme.Squanchy.About" parent="Theme.Squanchy" />
 
   <style name="Theme.Squanchy.Licenses" parent="Theme.Squanchy.PrimaryStatusBar" />
 

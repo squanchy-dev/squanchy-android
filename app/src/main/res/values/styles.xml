@@ -341,12 +341,12 @@
     <item name="android:textColorPrimary">@color/primary</item>
   </style>
 
-  <style name="About.Toolbar" parent="Widget.AppCompat.Light.ActionBar">
-    <item name="android:titleTextStyle">@style/TextAppearance.About.Toolbar</item>
-    <item name="android:subtitleTextStyle">@style/TextAppearance.About.Toolbar</item>
+  <style name="MostlyWhite.Toolbar" parent="Widget.AppCompat.Light.ActionBar">
+    <item name="android:titleTextStyle">@style/TextAppearance.Squanchy.MostlyWhite.Toolbar</item>
+    <item name="android:subtitleTextStyle">@style/TextAppearance.Squanchy.MostlyWhite.Toolbar</item>
   </style>
 
-  <style name="TextAppearance.About.Toolbar" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+  <style name="TextAppearance.Squanchy.MostlyWhite.Toolbar" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
     <item name="android:textColor">@color/primary</item>
     <item name="fontPath">?titleTypeface</item>
   </style>
