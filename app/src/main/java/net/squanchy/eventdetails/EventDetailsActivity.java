@@ -21,12 +21,14 @@ import io.reactivex.disposables.CompositeDisposable;
 public class EventDetailsActivity extends TypefaceStyleableActivity {
 
     private static final String EXTRA_EVENT_ID = EventDetailsActivity.class.getCanonicalName() + ".event_id";
+    private static final int REQUEST_CODE_SIGNIN = 1235;
 
     private EventDetailsService service;
     private CompositeDisposable subscriptions;
     private EventDetailsCoordinatorLayout coordinatorLayout;
 
     private Navigator navigator;
+    private String eventId;
 
     public static Intent createIntent(Context context, String eventId) {
         Intent intent = new Intent(context, EventDetailsActivity.class);
@@ -62,7 +64,22 @@ public class EventDetailsActivity extends TypefaceStyleableActivity {
         super.onStart();
 
         Intent intent = getIntent();
-        String eventId = intent.getStringExtra(EXTRA_EVENT_ID);
+        eventId = intent.getStringExtra(EXTRA_EVENT_ID);
+
+        subscribeToEvent(eventId);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_SIGNIN) {
+            subscribeToEvent(eventId);
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private void subscribeToEvent(String eventId) {
+        subscriptions = new CompositeDisposable();
 
         subscriptions.add(service.event(eventId)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -78,14 +95,18 @@ public class EventDetailsActivity extends TypefaceStyleableActivity {
 
             @Override
             public void onFavoriteClick() {
-
                 subscriptions.add(service.toggleFavorite(event).subscribe(result -> {
                     if (result == FavoriteResult.MUST_AUTHENTICATE) {
-                        navigate().toSignIn();
+                        requestSignIn();
                     }
                 }));
             }
         };
+    }
+
+    private void requestSignIn() {
+        navigate().toSignInForResult(REQUEST_CODE_SIGNIN);
+        unsubscribeFromUpdates();
     }
 
     @Override
@@ -114,6 +135,10 @@ public class EventDetailsActivity extends TypefaceStyleableActivity {
     protected void onStop() {
         super.onStop();
 
+        unsubscribeFromUpdates();
+    }
+
+    private void unsubscribeFromUpdates() {
         subscriptions.clear();
     }
 }

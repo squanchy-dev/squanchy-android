@@ -1,7 +1,5 @@
 package net.squanchy.schedule;
 
-import android.content.Context;
-
 import net.squanchy.analytics.Analytics;
 import net.squanchy.injection.ActivityLifecycle;
 import net.squanchy.injection.ApplicationComponent;
@@ -15,8 +13,6 @@ import dagger.Component;
 interface ScheduleComponent {
 
     ScheduleService service();
-
-    Context context();
 
     Navigator navigator();
 

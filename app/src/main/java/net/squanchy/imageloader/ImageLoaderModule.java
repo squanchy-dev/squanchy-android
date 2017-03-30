@@ -1,6 +1,6 @@
 package net.squanchy.imageloader;
 
-import android.content.Context;
+import android.app.Activity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
@@ -15,8 +15,8 @@ import dagger.Provides;
 class ImageLoaderModule {
 
     @Provides
-    RequestManager glideRequestManager(Context context) {
-        return Glide.with(context);
+    RequestManager glideRequestManager(Activity activity) {
+        return Glide.with(activity);
     }
 
     @Provides

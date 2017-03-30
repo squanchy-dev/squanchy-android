@@ -1,7 +1,5 @@
 package net.squanchy.favorites;
 
-import android.content.Context;
-
 import net.squanchy.analytics.Analytics;
 import net.squanchy.injection.ActivityLifecycle;
 import net.squanchy.injection.ApplicationComponent;
@@ -17,8 +15,6 @@ import dagger.Component;
 interface FavoritesComponent {
 
     ScheduleService service();
-
-    Context context();
 
     Navigator navigator();
 

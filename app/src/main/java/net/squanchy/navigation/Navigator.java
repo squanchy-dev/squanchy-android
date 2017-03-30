@@ -1,13 +1,13 @@
 package net.squanchy.navigation;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 
-import net.squanchy.contest.ContestActivity;
 import net.squanchy.BuildConfig;
 import net.squanchy.about.AboutActivity;
 import net.squanchy.about.licenses.LicensesActivity;
+import net.squanchy.contest.ContestActivity;
 import net.squanchy.eventdetails.EventDetailsActivity;
 import net.squanchy.home.HomeActivity;
 import net.squanchy.search.SearchActivity;
@@ -26,35 +26,40 @@ import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
 
 public class Navigator {
 
-    private final Context context;
+    private final Activity activity;
     private final DebugActivityIntentFactory debugActivityIntentFactory;
 
-    Navigator(Context context, DebugActivityIntentFactory debugActivityIntentFactory) {
-        this.context = context;
+    Navigator(Activity activity, DebugActivityIntentFactory debugActivityIntentFactory) {
+        this.activity = activity;
         this.debugActivityIntentFactory = debugActivityIntentFactory;
     }
 
     public void toEventDetails(String eventId) {
-        start(EventDetailsActivity.createIntent(context, eventId));
+        start(EventDetailsActivity.createIntent(activity, eventId));
     }
 
     public void toSignIn() {
-        start(new Intent(context, SignInActivity.class));
+        start(new Intent(activity, SignInActivity.class));
+    }
+
+    public void toSignInForResult(int requestCode) {
+        Intent intent = new Intent(activity, SignInActivity.class);
+        activity.startActivityForResult(intent, requestCode);
     }
 
     public void toSpeakerDetails(String speakerId) {
         start(
-                SpeakerDetailsActivity.createIntent(context, speakerId),
+                SpeakerDetailsActivity.createIntent(activity, speakerId),
                 FLAG_ACTIVITY_SINGLE_TOP | FLAG_ACTIVITY_CLEAR_TOP
         );
     }
 
     public void toSearch() {
-        start(new Intent(context, SearchActivity.class));
+        start(new Intent(activity, SearchActivity.class));
     }
 
     public void toContest() {
-        Intent intent = ContestActivity.createIntent(context);
+        Intent intent = ContestActivity.createIntent(activity);
         start(
                 intent,
                 FLAG_ACTIVITY_SINGLE_TOP
@@ -62,7 +67,7 @@ public class Navigator {
     }
 
     public void toContest(String achievementId) {
-        Intent intent = ContestActivity.createIntent(context, achievementId);
+        Intent intent = ContestActivity.createIntent(activity, achievementId);
         start(
                 intent,
                 FLAG_ACTIVITY_SINGLE_TOP
@@ -70,7 +75,7 @@ public class Navigator {
     }
 
     public void toSettings() {
-        start(new Intent(context, SettingsActivity.class));
+        start(new Intent(activity, SettingsActivity.class));
     }
 
     public void toTwitterProfile(String username) {
@@ -83,7 +88,7 @@ public class Navigator {
     }
 
     private boolean canResolve(Intent intent) {
-        return !context.getPackageManager()
+        return !activity.getPackageManager()
                 .queryIntentActivities(intent, 0)
                 .isEmpty();
     }
@@ -103,46 +108,46 @@ public class Navigator {
 
     public void toSchedule(Optional<String> dayId, Optional<String> eventId) {
         start(
-                HomeActivity.createScheduleIntent(context, dayId, eventId),
+                HomeActivity.createScheduleIntent(activity, dayId, eventId),
                 FLAG_ACTIVITY_SINGLE_TOP | FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK
         );
     }
 
     public void toFavorites() {
         start(
-                HomeActivity.createFavoritesIntent(context),
+                HomeActivity.createFavoritesIntent(activity),
                 FLAG_ACTIVITY_SINGLE_TOP | FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK
         );
     }
 
     public void toTwitterFeed() {
         start(
-                HomeActivity.createTweetsIntent(context),
+                HomeActivity.createTweetsIntent(activity),
                 FLAG_ACTIVITY_SINGLE_TOP | FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK
         );
     }
 
     public void toVenueInfo() {
         start(
-                HomeActivity.createVenueInfoIntent(context),
+                HomeActivity.createVenueInfoIntent(activity),
                 FLAG_ACTIVITY_SINGLE_TOP | FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK
         );
     }
 
     public void toDebugSettings() {
         if (BuildConfig.DEBUG) {
-            start(debugActivityIntentFactory.createDebugActivityIntent(context));
+            start(debugActivityIntentFactory.createDebugActivityIntent(activity));
         } else {
             Timber.e("Someone is trying to reach the debug activity in a release build... that won't work");
         }
     }
 
     public void toAboutSquanchy() {
-        start(new Intent(context, AboutActivity.class));
+        start(new Intent(activity, AboutActivity.class));
     }
 
     public void toFossLicenses() {
-        start(new Intent(context, LicensesActivity.class));
+        start(new Intent(activity, LicensesActivity.class));
     }
 
     private void start(Intent intent) {
@@ -153,6 +158,6 @@ public class Navigator {
         if (flags != 0) {
             intent.addFlags(flags);
         }
-        context.startActivity(intent);
+        activity.startActivity(intent);
     }
 }

@@ -1,7 +1,6 @@
 package net.squanchy.injection;
 
 import android.app.Activity;
-import android.content.Context;
 
 import dagger.Module;
 import dagger.Provides;
@@ -16,7 +15,7 @@ public class ActivityContextModule {
     }
 
     @Provides
-    Context activityContext() {
+    Activity activityContext() {
         return activity;
     }
 }

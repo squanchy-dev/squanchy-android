@@ -19,6 +19,7 @@ import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
 
 public class SignInActivity extends TypefaceStyleableActivity {
 
@@ -53,6 +54,8 @@ public class SignInActivity extends TypefaceStyleableActivity {
         setBottomSheetCallbackOn(bottomSheet);
 
         setupWindowParameters();
+
+        setResult(RESULT_CANCELED);
     }
 
     private GoogleApiClient connectToGoogleApis() {
@@ -111,7 +114,14 @@ public class SignInActivity extends TypefaceStyleableActivity {
 
         service.signInWithGoogle(account)
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::finish);
+                .subscribe(onSignInSuccessful());
+    }
+
+    private Action onSignInSuccessful() {
+        return () -> {
+            setResult(RESULT_OK);
+            finish();
+        };
     }
 
     private void showProgress() {
