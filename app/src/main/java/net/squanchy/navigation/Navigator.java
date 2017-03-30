@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
+import net.squanchy.contest.ContestActivity;
 import net.squanchy.BuildConfig;
 import net.squanchy.about.AboutActivity;
 import net.squanchy.about.licenses.LicensesActivity;
@@ -50,6 +51,22 @@ public class Navigator {
 
     public void toSearch() {
         start(new Intent(context, SearchActivity.class));
+    }
+
+    public void toContest() {
+        Intent intent = ContestActivity.createIntent(context);
+        start(
+                intent,
+                FLAG_ACTIVITY_SINGLE_TOP
+        );
+    }
+
+    public void toContest(String achievementId) {
+        Intent intent = ContestActivity.createIntent(context, achievementId);
+        start(
+                intent,
+                FLAG_ACTIVITY_SINGLE_TOP
+        );
     }
 
     public void toSettings() {

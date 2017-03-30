@@ -4,4 +4,8 @@
     <key>proximity_enabled</key>
     <value>false</value>
   </entry>
+  <entry>
+    <key>contest_goal</key>
+    <value>12</value>
+  </entry>
 </defaultsMap>

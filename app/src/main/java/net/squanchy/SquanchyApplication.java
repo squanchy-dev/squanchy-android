@@ -30,6 +30,7 @@ public class SquanchyApplication extends Application {
         setupTracking();
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         TypefaceManager.init();
+        applicationComponent().service();
     }
 
     private void setupTracking() {

@@ -1,15 +1,20 @@
 package net.squanchy.home;
 
+import android.Manifest;
 import android.animation.ValueAnimator;
+import android.content.pm.PackageManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.transition.Fade;
 import android.support.transition.TransitionManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +31,7 @@ import net.squanchy.analytics.ContentType;
 import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.home.deeplink.HomeActivityDeepLinkCreator;
 import net.squanchy.home.deeplink.HomeActivityIntentParser;
+import net.squanchy.navigation.Navigator;
 import net.squanchy.proximity.ProximityEvent;
 import net.squanchy.remoteconfig.RemoteConfig;
 import net.squanchy.service.proximity.injection.ProximityService;
@@ -37,6 +43,9 @@ import io.reactivex.disposables.CompositeDisposable;
 
 public class HomeActivity extends TypefaceStyleableActivity {
 
+    private static final String STATE_KEY_SELECTED_PAGE_INDEX = "HomeActivity.selected_page_index";
+    private static final String KEY_CONTEST_STAND = "stand";
+    private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1000;
     private static final boolean PROXIMITY_SERVICE_RADAR_NOT_STARTED = false;
 
     private final Map<BottomNavigationSection, View> pageViews = new HashMap<>(4);
@@ -50,10 +59,10 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private ProximityService proximityService;
     private Analytics analytics;
     private RemoteConfig remoteConfig;
+    private Navigator navigator;
+
     private CompositeDisposable subscriptions;
-
-    private boolean proximityServiceRadarStarted = PROXIMITY_SERVICE_RADAR_NOT_STARTED;
-
+    
     public static Intent createScheduleIntent(Context context, Optional<String> dayId, Optional<String> eventId) {
         return new HomeActivityDeepLinkCreator(context)
                 .deepLinkTo(BottomNavigationSection.SCHEDULE)
@@ -101,7 +110,8 @@ public class HomeActivity extends TypefaceStyleableActivity {
         analytics = homeComponent.analytics();
         remoteConfig = homeComponent.remoteConfig();
         proximityService = homeComponent.proximityService();
-        
+
+        navigator = homeComponent.navigator();
         subscriptions = new CompositeDisposable();
     }
 
@@ -123,13 +133,13 @@ public class HomeActivity extends TypefaceStyleableActivity {
         super.onStart();
         selectInitialPage(currentSection);
 
-        // TODO do something useful with this once we can
         remoteConfig.proximityServicesEnabled()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(enabled -> {
                     if (enabled) {
-                        proximityServiceRadarStarted = true;
-                        proximityService.startRadar();
+                        askProximityPermissionToStartRadar();
+                    } else {
+                        proximityService.stopRadar();
                     }
 
                     subscriptions.add(
@@ -143,6 +153,40 @@ public class HomeActivity extends TypefaceStyleableActivity {
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION) {
+            if (hasGrantedFineLocationAccess(grantResults)) {
+                proximityService.startRadar();
+            }
+        }
+    }
+
+    private void askProximityPermissionToStartRadar() {
+        if (hasLocationPermission()) {
+            proximityService.startRadar();
+        } else {
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
+            );
+        }
+    }
+
+    private boolean hasLocationPermission() {
+        int granted = ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+        );
+        return granted == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private boolean hasGrantedFineLocationAccess(int[] grantResults) {
+        return grantResults.length > 0 &&
+                grantResults[0] == PackageManager.PERMISSION_GRANTED;
+    }
+
     //TODO fix it properly
     @Override
     protected void onResume() {
@@ -153,7 +197,10 @@ public class HomeActivity extends TypefaceStyleableActivity {
     }
 
     private void handleProximityEvent(ProximityEvent proximityEvent) {
-        // TODO do something with the event, like showing feedback or opening an event detail
+        // TODO highlight speech near the rooms
+        if (proximityEvent.action().equals(KEY_CONTEST_STAND)) {
+            navigator.toContest(proximityEvent.subject());
+        }
     }
 
     private void collectPageViewsInto(Map<BottomNavigationSection, View> pageViews) {
@@ -278,11 +325,6 @@ public class HomeActivity extends TypefaceStyleableActivity {
     @Override
     protected void onStop() {
         super.onStop();
-
-        if (proximityServiceRadarStarted) {
-            proximityService.stopRadar();
-            proximityServiceRadarStarted = PROXIMITY_SERVICE_RADAR_NOT_STARTED;
-        }
 
         subscriptions.clear();
 

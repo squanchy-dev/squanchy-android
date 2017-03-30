@@ -5,11 +5,11 @@ import java.util.Map;
 
 public class FirebaseFavorites {
 
-    public static FirebaseFavorites empty() {
-        return new FirebaseFavorites(Collections.emptyMap());
+    public FirebaseFavorites() {
     }
 
-    public FirebaseFavorites() {
+    public static Map<String, Boolean> empty() {
+        return Collections.emptyMap();
     }
 
     public FirebaseFavorites(Map<String, Boolean> favorites) {
