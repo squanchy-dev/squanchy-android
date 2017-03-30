@@ -2,9 +2,9 @@ package net.squanchy.home;
 
 import android.Manifest;
 import android.animation.ValueAnimator;
-import android.content.pm.PackageManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.AttrRes;
@@ -44,10 +44,12 @@ import io.reactivex.disposables.CompositeDisposable;
 public class HomeActivity extends TypefaceStyleableActivity {
 
     private static final String KEY_CONTEST_STAND = "stand";
-    private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1000;
+
+    private static final int REQUEST_SIGN_IN_MAY_GOD_HAVE_MERCY_OF_OUR_SOULS = 666;
+    private static final int REQUEST_GRANT_PERMISSIONS = 1000;
 
     private final Map<BottomNavigationSection, View> pageViews = new HashMap<>(4);
-    private final List<LifecycleView> lifecycleViews = new ArrayList<>(4);
+    private final List<Loadable> loadables = new ArrayList<>(4);
 
     private int pageFadeDurationMillis;
 
@@ -60,7 +62,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private Navigator navigator;
 
     private CompositeDisposable subscriptions;
-    
+
     public static Intent createScheduleIntent(Context context, Optional<String> dayId, Optional<String> eventId) {
         return new HomeActivityDeepLinkCreator(context)
                 .deepLinkTo(BottomNavigationSection.SCHEDULE)
@@ -96,7 +98,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
 
         pageContainer = (ViewGroup) findViewById(R.id.page_container);
         collectPageViewsInto(pageViews);
-        collectLifecycleViewsViewsInto(lifecycleViews);
+        collectLoadablesInto(loadables);
 
         bottomNavigationView = (InterceptingBottomNavigationView) findViewById(R.id.bottom_navigation);
         setupBottomNavigation(bottomNavigationView);
@@ -130,23 +132,15 @@ public class HomeActivity extends TypefaceStyleableActivity {
     protected void onStart() {
         super.onStart();
 
-        remoteConfig.proximityServicesEnabled()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(enabled -> {
-                    if (enabled) {
-                        askProximityPermissionToStartRadar();
-                    } else {
-                        proximityService.stopRadar();
-                    }
+        startAllSubscriptions();
+    }
 
-                    subscriptions.add(
-                            proximityService.observeProximityEvents()
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe(this::handleProximityEvent));
-                });
-
-        for (LifecycleView lifecycleView : lifecycleViews) {
-            lifecycleView.onStart();
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_GRANT_PERMISSIONS) {
+            if (hasGrantedFineLocationAccess(grantResults)) {
+                proximityService.startRadar();
+            }
         }
     }
 
@@ -157,17 +151,8 @@ public class HomeActivity extends TypefaceStyleableActivity {
             ActivityCompat.requestPermissions(
                     this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
+                    REQUEST_GRANT_PERMISSIONS
             );
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION) {
-            if (hasGrantedFineLocationAccess(grantResults)) {
-                proximityService.startRadar();
-            }
         }
     }
 
@@ -205,11 +190,11 @@ public class HomeActivity extends TypefaceStyleableActivity {
         pageViews.put(BottomNavigationSection.VENUE_INFO, pageContainer.findViewById(R.id.venue_content_root));
     }
 
-    private void collectLifecycleViewsViewsInto(List<LifecycleView> lifecycleViews) {
-        lifecycleViews.add((LifecycleView) pageContainer.findViewById(R.id.schedule_content_root));
-        lifecycleViews.add((LifecycleView) pageContainer.findViewById(R.id.favorites_content_root));
-        lifecycleViews.add((LifecycleView) pageContainer.findViewById(R.id.tweets_content_root));
-        lifecycleViews.add((LifecycleView) pageContainer.findViewById(R.id.venue_content_root));
+    private void collectLoadablesInto(List<Loadable> loadables) {
+        loadables.add((Loadable) pageContainer.findViewById(R.id.schedule_content_root));
+        loadables.add((Loadable) pageContainer.findViewById(R.id.favorites_content_root));
+        loadables.add((Loadable) pageContainer.findViewById(R.id.tweets_content_root));
+        loadables.add((Loadable) pageContainer.findViewById(R.id.venue_content_root));
     }
 
     private void setupBottomNavigation(InterceptingBottomNavigationView bottomNavigationView) {
@@ -310,6 +295,41 @@ public class HomeActivity extends TypefaceStyleableActivity {
         analytics.trackPageView(this, section.name());
     }
 
+    public void requestSignIn() {
+        disposeAllSubscriptions();
+        navigator.toSignInForResult(REQUEST_SIGN_IN_MAY_GOD_HAVE_MERCY_OF_OUR_SOULS);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_SIGN_IN_MAY_GOD_HAVE_MERCY_OF_OUR_SOULS) {
+            startAllSubscriptions();
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private void startAllSubscriptions() {
+        subscriptions.add(remoteConfig.proximityServicesEnabled()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(enabled -> {
+                    if (enabled) {
+                        askProximityPermissionToStartRadar();
+                    } else {
+                        proximityService.stopRadar();
+                    }
+
+                    subscriptions.add(
+                            proximityService.observeProximityEvents()
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(this::handleProximityEvent));
+                }));
+
+        for (Loadable loadable : loadables) {
+            loadable.startLoading();
+        }
+    }
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         HomeStatePersister statePersister = new HomeStatePersister();
@@ -321,10 +341,14 @@ public class HomeActivity extends TypefaceStyleableActivity {
     protected void onStop() {
         super.onStop();
 
+        disposeAllSubscriptions();
+    }
+
+    private void disposeAllSubscriptions() {
         subscriptions.clear();
 
-        for (LifecycleView lifecycleView : lifecycleViews) {
-            lifecycleView.onStop();
+        for (Loadable loadable : loadables) {
+            loadable.stopLoading();
         }
     }
 }

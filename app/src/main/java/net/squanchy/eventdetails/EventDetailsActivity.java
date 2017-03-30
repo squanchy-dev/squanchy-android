@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import net.squanchy.R;
 import net.squanchy.eventdetails.EventDetailsService.FavoriteResult;
@@ -22,12 +21,15 @@ import io.reactivex.disposables.CompositeDisposable;
 public class EventDetailsActivity extends TypefaceStyleableActivity {
 
     private static final String EXTRA_EVENT_ID = EventDetailsActivity.class.getCanonicalName() + ".event_id";
+    private static final int REQUEST_CODE_SIGNIN = 1235;
+
+    private final CompositeDisposable subscriptions = new CompositeDisposable();;
 
     private EventDetailsService service;
-    private CompositeDisposable subscriptions;
     private EventDetailsCoordinatorLayout coordinatorLayout;
 
     private Navigator navigator;
+    private String eventId;
 
     public static Intent createIntent(Context context, String eventId) {
         Intent intent = new Intent(context, EventDetailsActivity.class);
@@ -48,7 +50,6 @@ public class EventDetailsActivity extends TypefaceStyleableActivity {
         navigator = component.navigator();
 
         coordinatorLayout = (EventDetailsCoordinatorLayout) findViewById(R.id.event_details_root);
-        subscriptions = new CompositeDisposable();
     }
 
     private void setupToolbar() {
@@ -63,8 +64,21 @@ public class EventDetailsActivity extends TypefaceStyleableActivity {
         super.onStart();
 
         Intent intent = getIntent();
-        String eventId = intent.getStringExtra(EXTRA_EVENT_ID);
+        eventId = intent.getStringExtra(EXTRA_EVENT_ID);
 
+        subscribeToEvent(eventId);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_SIGNIN) {
+            subscribeToEvent(eventId);
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private void subscribeToEvent(String eventId) {
         subscriptions.add(service.event(eventId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(event -> coordinatorLayout.updateWith(event, onEventDetailsClickListener(event))));
@@ -79,15 +93,18 @@ public class EventDetailsActivity extends TypefaceStyleableActivity {
 
             @Override
             public void onFavoriteClick() {
-
                 subscriptions.add(service.toggleFavorite(event).subscribe(result -> {
                     if (result == FavoriteResult.MUST_AUTHENTICATE) {
-                        Toast.makeText(EventDetailsActivity.this, "You need to sign in for this", Toast.LENGTH_SHORT).show();
-                        navigate().toSignIn(); // TODO UI stuff
+                        requestSignIn();
                     }
                 }));
             }
         };
+    }
+
+    private void requestSignIn() {
+        navigate().toSignInForResult(REQUEST_CODE_SIGNIN);
+        unsubscribeFromUpdates();
     }
 
     @Override
@@ -116,6 +133,10 @@ public class EventDetailsActivity extends TypefaceStyleableActivity {
     protected void onStop() {
         super.onStop();
 
+        unsubscribeFromUpdates();
+    }
+
+    private void unsubscribeFromUpdates() {
         subscriptions.clear();
     }
 }

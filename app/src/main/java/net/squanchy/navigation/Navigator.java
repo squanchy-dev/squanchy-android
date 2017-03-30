@@ -28,7 +28,7 @@ import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
 public class Navigator {
 
     private static final int NO_FLAGS = 0;
-    
+
     private final Activity activity;
     private final DebugActivityIntentFactory debugActivityIntentFactory;
 
@@ -157,6 +157,11 @@ public class Navigator {
             intent.addFlags(flags);
         }
         activity.startActivity(intent);
+    }
+
+    public void toSignInForResult(int requestCode) {
+        Intent intent = new Intent(activity, SignInActivity.class);
+        activity.startActivityForResult(intent, requestCode);
     }
 
     public void toOnboardingForResult(OnboardingPage page, int requestCode) {
