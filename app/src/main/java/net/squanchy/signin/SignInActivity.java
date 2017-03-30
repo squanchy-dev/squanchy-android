@@ -23,6 +23,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 public class SignInActivity extends TypefaceStyleableActivity {
 
     private static final int RC_SIGN_IN = 9001;
+    private static final float ALPHA_DISABLED = .54f;
+    private static final float ALPHA_ENABLED = 1f;
 
     private SignInService service;
     private GoogleApiClient googleApiClient;
@@ -114,7 +116,7 @@ public class SignInActivity extends TypefaceStyleableActivity {
 
     private void showProgress() {
         signInContent.setEnabled(false);
-        signInContent.setAlpha(.54f);
+        signInContent.setAlpha(ALPHA_DISABLED);
         progressView.setVisibility(View.VISIBLE);
     }
 
@@ -125,7 +127,7 @@ public class SignInActivity extends TypefaceStyleableActivity {
 
     private void hideProgress() {
         signInContent.setEnabled(true);
-        signInContent.setAlpha(1f);
+        signInContent.setAlpha(ALPHA_ENABLED);
         progressView.setVisibility(View.GONE);
     }
 
