@@ -95,7 +95,7 @@ public class SettingsHeaderLayout extends AppBarLayout {
     }
 
     private void updateWithNoOrAnonymousUser() {
-        userPhotoView.setImageDrawable(null);
-        userNameView.setText(null);
+        userPhotoView.setImageResource(R.drawable.avatar_not_signed_in);
+        userNameView.setText(R.string.settings_header_not_signed_in);
     }
 }
