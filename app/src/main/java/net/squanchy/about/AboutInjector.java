@@ -4,8 +4,6 @@ import android.app.Activity;
 
 import net.squanchy.injection.ActivityContextModule;
 import net.squanchy.navigation.NavigationModule;
-import net.squanchy.settings.DaggerSettingsComponent;
-import net.squanchy.settings.SettingsComponent;
 
 final class AboutInjector {
 
