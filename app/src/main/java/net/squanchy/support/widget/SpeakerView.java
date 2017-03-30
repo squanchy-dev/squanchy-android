@@ -20,6 +20,7 @@ import net.squanchy.R;
 import net.squanchy.imageloader.ImageLoader;
 import net.squanchy.imageloader.ImageLoaderInjector;
 import net.squanchy.speaker.domain.view.Speaker;
+import net.squanchy.support.lang.Optional;
 
 import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 import static net.squanchy.support.lang.Lists.map;
@@ -67,7 +68,7 @@ public abstract class SpeakerView extends LinearLayout {
         speakerNameView = (TextView) findViewById(R.id.speaker_name);
     }
 
-    public void updateWith(List<Speaker> speakers, OnSpeakerClickListener listener) {
+    public void updateWith(List<Speaker> speakers, Optional<OnSpeakerClickListener> listener) {
         speakerNameView.setText(toCommaSeparatedNames(speakers));
         updateSpeakerPhotos(speakers, listener);
     }
@@ -76,7 +77,7 @@ public abstract class SpeakerView extends LinearLayout {
         return TextUtils.join(", ", map(speakers, Speaker::name));
     }
 
-    private void updateSpeakerPhotos(List<Speaker> speakers, OnSpeakerClickListener listener) {
+    private void updateSpeakerPhotos(List<Speaker> speakers, Optional<OnSpeakerClickListener> listener) {
         if (imageLoader == null) {
             throw new IllegalStateException("Unable to access the ImageLoader, it hasn't been initialized yet");
         }
@@ -93,9 +94,19 @@ public abstract class SpeakerView extends LinearLayout {
             if (speaker.photoUrl().isPresent()) {
                 ImageView photoView = recycleOrInflatePhotoView(photoViews);
                 speakerPhotoContainer.addView(photoView);
-                photoView.setOnClickListener(v -> listener.onSpeakerClicked(speaker));
+                setClickListenerOrNotClickable(photoView, listener, speaker);
                 loadSpeakerPhoto(photoView, speaker.photoUrl().get(), imageLoader);
             }
+        }
+    }
+
+    private void setClickListenerOrNotClickable(ImageView photoView, Optional<OnSpeakerClickListener> listener, Speaker speaker) {
+        if (listener.isPresent()) {
+            photoView.setOnClickListener(v -> listener.get().onSpeakerClicked(speaker));
+            photoView.setClickable(true);
+        } else {
+            photoView.setOnClickListener(null);
+            photoView.setClickable(false);
         }
     }
 

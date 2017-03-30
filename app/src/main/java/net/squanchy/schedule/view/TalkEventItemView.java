@@ -7,6 +7,7 @@ import android.widget.TextView;
 import net.squanchy.R;
 import net.squanchy.eventdetails.widget.ExperienceLevelIconView;
 import net.squanchy.schedule.domain.view.Event;
+import net.squanchy.support.lang.Optional;
 import net.squanchy.support.widget.SpeakerView;
 
 import org.joda.time.format.DateTimeFormat;
@@ -52,7 +53,7 @@ public class TalkEventItemView extends EventItemView {
         }
 
         speakerView.setVisibility(event.speakers().isEmpty() ? GONE : VISIBLE);
-        speakerView.updateWith(event.speakers(), speaker -> { });
+        speakerView.updateWith(event.speakers(), Optional.absent());
     }
 
     private String startTimeAsFormattedString(Event event) {
