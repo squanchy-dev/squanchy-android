@@ -90,9 +90,9 @@ public abstract class SpeakerView extends LinearLayout {
         }
 
         for (Speaker speaker : speakers) {
-            ImageView photoView = recycleOrInflatePhotoView(photoViews);
-            speakerPhotoContainer.addView(photoView);
             if (speaker.photoUrl().isPresent()) {
+                ImageView photoView = recycleOrInflatePhotoView(photoViews);
+                speakerPhotoContainer.addView(photoView);
                 photoView.setOnClickListener(v -> listener.onSpeakerClicked(speaker));
                 loadSpeakerPhoto(photoView, speaker.photoUrl().get(), imageLoader);
             }
@@ -110,7 +110,9 @@ public abstract class SpeakerView extends LinearLayout {
     protected abstract ImageView inflatePhotoView(ViewGroup speakerPhotoContainer);
 
     private void loadSpeakerPhoto(ImageView photoView, String photoUrl, ImageLoader imageLoader) {
-        imageLoader.load(photoUrl).into(photoView);
+        photoView.setImageDrawable(null);
+        imageLoader.load(photoUrl)
+                .into(photoView);
     }
 
     private List<ImageView> getAllImageViewsContainedIn(ViewGroup container) {
