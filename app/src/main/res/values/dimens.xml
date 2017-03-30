@@ -115,6 +115,8 @@
   <dimen name="licenses_notice_padding">8dp</dimen>
   <dimen name="licenses_notice_text">12sp</dimen>
 
+  <dimen name="signin_bottom_sheet_width">-1px</dimen>   <!-- match_parent -->
+
   <dimen name="color_button_height">56dp</dimen>
   <dimen name="color_button_inset_horizontal">4dp</dimen>
   <dimen name="color_button_inset_vertical">6dp</dimen>

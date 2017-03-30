@@ -1,23 +1,39 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/main_layout"
   android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical">
+  android:layout_height="match_parent">
 
-  <TextView
-    android:id="@+id/title_text"
-    android:layout_width="wrap_content"
+  <View
+    android:id="@+id/touch_outside"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+
+  <LinearLayout
+    android:id="@+id/bottom_sheet"
+    style="@style/SignIn.BottomSheet"
+    android:layout_width="@dimen/signin_bottom_sheet_width"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
-    android:text="Sign in lol 🍌" />
+    android:orientation="vertical"
+    android:padding="32dp"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
-  <com.google.android.gms.common.SignInButton
-    android:id="@+id/sign_in_button"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_centerInParent="true"
-    android:visibility="visible"
-    tools:visibility="gone" />
+    <TextView
+      android:id="@+id/title_text"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="8dp"
+      android:text="Sign in lol 🍌" />
 
-</LinearLayout>
+    <com.google.android.gms.common.SignInButton
+      android:id="@+id/sign_in_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerInParent="true"
+      android:visibility="visible"
+      tools:visibility="gone" />
+
+  </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

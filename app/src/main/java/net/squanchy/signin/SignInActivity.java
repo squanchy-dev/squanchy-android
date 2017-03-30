@@ -2,6 +2,9 @@ package net.squanchy.signin;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -34,6 +37,25 @@ public class SignInActivity extends TypefaceStyleableActivity {
 
         SignInComponent component = SignInInjector.obtain(this);
         service = component.service();
+
+        findViewById(R.id.touch_outside).setOnClickListener(v -> finish());
+
+        BottomSheetBehavior.from(findViewById(R.id.bottom_sheet))
+                .setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+                    @Override
+                    public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                        switch (newState) {
+                            case BottomSheetBehavior.STATE_HIDDEN:
+                                finish();
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                        // no op
+                    }
+                });
     }
 
     private GoogleApiClient connectToGoogleApis() {

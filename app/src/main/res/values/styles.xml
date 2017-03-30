@@ -455,4 +455,8 @@
     <item name="android:drawablePadding">@dimen/card_horizontal_margin</item>
   </style>
 
+  <style name="SignIn.BottomSheet" parent="Widget.Design.BottomSheet.Modal">
+
+  </style>
+
 </resources>
