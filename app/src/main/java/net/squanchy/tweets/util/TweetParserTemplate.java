@@ -13,13 +13,12 @@ import static net.squanchy.tweets.util.SpannableDataExtractor.extract;
 
 abstract class TweetParserTemplate<T> {
 
-    @ParsingRegex
-    abstract String regex();
+    abstract Pattern pattern();
 
     abstract T convertFrom(TweetSpecialTextData data);
 
     List<T> parseDataFrom(@NonNull String text) {
-        Matcher matcher = Pattern.compile(regex()).matcher(text);
+        Matcher matcher = pattern().matcher(text);
         List<T> matches = new ArrayList<>();
 
         while (matcher.find()) {

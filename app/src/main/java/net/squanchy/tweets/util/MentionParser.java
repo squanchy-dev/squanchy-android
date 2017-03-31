@@ -3,7 +3,7 @@ package net.squanchy.tweets.util;
 import net.squanchy.tweets.domain.view.MentionEntity;
 import net.squanchy.tweets.model.TweetSpecialTextData;
 
-public class MentionParser extends TweetParserTemplate<MentionEntity>{
+public class MentionParser extends TweetRegexParserTemplate<MentionEntity> {
 
     @Override
     String regex() {
