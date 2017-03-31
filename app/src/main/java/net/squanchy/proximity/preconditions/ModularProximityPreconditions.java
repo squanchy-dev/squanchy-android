@@ -54,39 +54,34 @@ public class ModularProximityPreconditions implements ProximityPreconditions {
         }
     }
 
-    private void startCheckingFrom(Precondition initialPrecondition) {
-        Optional<Precondition> nextPrecondition = Optional.of(initialPrecondition);
-        while (nextPrecondition.isPresent()) {
-            Precondition precondition = nextPrecondition.get();
-            if (!precondition.available()) {
-                Timber.d("Skipping unavailable precondition: %s", precondition);
-                return;
-            }
-
-            if (precondition.satisfied()) {
-                nextPrecondition = registry.preconditionAfter(precondition);
-            } else {
-                precondition.satisfy()
-                        .subscribe(() -> {
-                            if (!precondition.satisfied()) {
-                                // Waiting on some external resource (e.g., onActivityResult) that will
-                                // unblock us in the onActivityResult/onPermissionRequestResult. We give
-                                // up for now, those will restart us.
-                                return;
-                            }
-
-                            Optional<Precondition> preconditionOptional = registry.preconditionAfter(precondition);
-                            if (preconditionOptional.isPresent()) {
-                                startCheckingFrom(preconditionOptional.get());
-                            } else {
-                                callback.allChecksPassed();
-                            }
-                        });
-                return;
-            }
+    private void startCheckingFrom(Precondition precondition) {
+        if (!precondition.available()) {
+            Timber.d("Skipping unavailable precondition: %s", precondition);
+            return;
         }
 
-        callback.allChecksPassed();
+        if (precondition.satisfied()) {
+            continueAfterSucceedingCheck(precondition);
+        } else {
+            precondition.satisfy()
+                    .subscribe(() -> {
+                        if (precondition.satisfied()) {
+                            continueAfterSucceedingCheck(precondition);
+                        }
+                        // Waiting on some external resource (e.g., onActivityResult) that will
+                        // unblock us in the onActivityResult/onPermissionRequestResult. We give
+                        // up for now, those will restart us.
+                    }, this::handleCheckError);
+        }
+    }
+
+    private void continueAfterSucceedingCheck(Precondition passedPrecondition) {
+        Optional<Precondition> nextPrecondition = registry.preconditionAfter(passedPrecondition);
+        if (nextPrecondition.isPresent()) {
+            startCheckingFrom(nextPrecondition.get());
+        } else {
+            callback.allChecksPassed();
+        }
     }
 
     private void handleCheckError(Throwable throwable) {
