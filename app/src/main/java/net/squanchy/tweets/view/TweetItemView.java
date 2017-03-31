@@ -36,6 +36,6 @@ public class TweetItemView extends CardLayout {
 
     public void updateWith(Tweet tweet) {
         tweetText.setText(TweetFormatter.format(tweet));
-        tweetFooter.updateWith(tweet.user().photoUrl(), TwitterDateFormatter.getTimestampFrom(tweet, getContext()));
+        tweetFooter.updateWith(tweet.user().photoUrl(), TwitterDateFormatter.recapFrom(tweet, getContext()));
     }
 }
