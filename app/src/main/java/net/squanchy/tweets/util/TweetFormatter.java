@@ -10,6 +10,8 @@ import net.squanchy.tweets.domain.view.HashtagEntity;
 import net.squanchy.tweets.domain.view.MentionEntity;
 import net.squanchy.tweets.domain.view.Tweet;
 import net.squanchy.tweets.domain.view.UrlEntity;
+import net.squanchy.tweets.model.ParsedTweetData;
+import net.squanchy.tweets.parsing.ParsedTweetFactory;
 
 public class TweetFormatter {
 
@@ -19,9 +21,11 @@ public class TweetFormatter {
     public static Spannable format(Tweet tweet) {
         Spannable spannable = new SpannableString(tweet.text());
 
-        addUrlSpan(spannable, tweet.urls());
-        addMentionSpan(spannable, tweet.mentions());
-        addHashtagSpan(spannable, tweet.hashtags());
+        ParsedTweetData parsedTweet = ParsedTweetFactory.from(tweet);
+
+        addUrlSpan(spannable, parsedTweet.urls());
+        addMentionSpan(spannable, parsedTweet.mentions());
+        addHashtagSpan(spannable, parsedTweet.hashtags());
 
         return spannable;
     }
