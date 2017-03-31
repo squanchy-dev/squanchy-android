@@ -95,9 +95,10 @@
   <string name="onboarding_location_label">Location</string>
   <string name="onboarding_location_title">Win prizes with our sponsors</string>
   <string name="onboarding_location_blurb">Allow the app your location and visit our sponsors to win prizes 🎁</string>
-  <string name="onboarding_location_explanation">We\'ll need to ask for the location permission, and to have the Bluetooth radio on</string>
+  <string name="onboarding_location_explanation">We\'ll need to ask for access to the device location, and to have the Bluetooth turned on</string>
   <string name="onboarding_location_cta">✨ I like swag! ✨</string>
   <string name="onboarding_error_permission_denied">We need the location permission to continue.</string>
+  <string name="onboarding_error_location_denied">We need the location permission to continue.</string>
   <string name="onboarding_error_bluetooth_denied">We need the Bluetooth to be active to continue.</string>
   <string name="onboarding_error_location_failed">Unable to verify location settings for the device.</string>
   <string name="onboarding_error_location_failed_action">ENABLE MANUALLY</string>
