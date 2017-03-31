@@ -1,5 +1,8 @@
-Version 0.7.0 alpha
+Version 0.8.0
 
-* Fixed a lot of bugs: #180, #181, #176, #162 and a bunch of others 🐛
-* Improved social stream page 🐦
-* What's new: about and licences screens; favourites empty state (WIP)
+* Fixed a lot of bugs: #201, #142, #184 and a bunch of others 🐛
+* Improved twitter feed 🐦
+* Improved settings screen ⚙️
+* Added new illustrations to schedule 🖌️
+* New glorious app icon 💅
+* What's new: signin doesn't look like crap anymore 🤸
