@@ -3,6 +3,10 @@
 
   <string name="bottom_bar_favorites_label">Favourites</string>
   <string name="activity_favorites">Favourites</string>
+  <string name="prompt_to_sign_in_for_favorites">Get notified about upcoming talks. Your favourite talks are also get synced across all your devices.\n\nTap to sign in.</string>
+  <string name="prompt_to_favorite">You have no favourite talks, yet. Find some talk, touch the ♥ button and you are good to go.</string>
+  <string name="settings_notifications_about_to_start_summary_on">Show notifications for favourite events starting soon</string>
+  <string name="settings_notifications_about_to_start_summary_off">Do not show notifications for favourite events starting soon</string>
   <string name="about_licenses">Open source licences</string>
   <string name="licenses_label">Open source licences</string>
 

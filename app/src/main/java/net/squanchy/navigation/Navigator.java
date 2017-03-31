@@ -3,6 +3,7 @@ package net.squanchy.navigation;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.provider.Settings;
 
 import net.squanchy.BuildConfig;
 import net.squanchy.about.AboutActivity;
@@ -166,6 +167,11 @@ public class Navigator {
 
     public void toOnboardingForResult(OnboardingPage page, int requestCode) {
         Intent intent = new Intent(activity, page.activityClass());
+        startForResult(intent, requestCode);
+    }
+
+    public void toLocationSettingsForResult(int requestCode) {
+        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
         startForResult(intent, requestCode);
     }
 
