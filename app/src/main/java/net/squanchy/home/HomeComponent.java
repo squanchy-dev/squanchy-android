@@ -7,11 +7,12 @@ import net.squanchy.navigation.NavigationModule;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.remoteconfig.RemoteConfig;
 import net.squanchy.service.proximity.injection.ProximityService;
+import net.squanchy.support.injection.CurrentTimeModule;
 
 import dagger.Component;
 
 @ActivityLifecycle
-@Component(modules = {NavigationModule.class}, dependencies = ApplicationComponent.class)
+@Component(modules = {NavigationModule.class, CurrentEventModule.class, CurrentTimeModule.class}, dependencies = ApplicationComponent.class)
 interface HomeComponent {
 
     Analytics analytics();
@@ -21,4 +22,6 @@ interface HomeComponent {
     ProximityService proximityService();
 
     Navigator navigator();
+
+    CurrentEventService currentEvent();
 }

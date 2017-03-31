@@ -4,6 +4,7 @@
   <string name="activity_social_feed">@string/social_query</string>
   <string name="activity_schedule">Schedule</string>
   <string name="activity_favorites">Favorites</string>
+  <string name="event_details">Details</string>
 
   <string name="experience_level_beginner">beginner</string>
   <string name="experience_level_intermediate">intermediate</string>

@@ -1,8 +1,15 @@
 package net.squanchy.support.system;
 
+import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
+
 public class CurrentTime {
 
-    public Long getCurrentTimestamp() {
+    public Long currentTimestamp() {
         return System.currentTimeMillis();
+    }
+
+    public LocalDateTime currentLocalDateTime() {
+        return LocalDateTime.now();
     }
 }
