@@ -10,6 +10,6 @@ public class CurrentTime {
     }
 
     public LocalDateTime currentLocalDateTime() {
-        return new DateTime(1491487091000L).toLocalDateTime();
+        return LocalDateTime.now();
     }
 }
