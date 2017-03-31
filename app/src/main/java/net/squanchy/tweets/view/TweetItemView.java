@@ -9,7 +9,7 @@ import net.squanchy.R;
 import net.squanchy.support.widget.CardLayout;
 import net.squanchy.tweets.domain.view.Tweet;
 import net.squanchy.tweets.util.TweetFormatter;
-import net.squanchy.tweets.util.TwitterDateFormatter;
+import net.squanchy.tweets.util.TwitterFooterFormatter;
 
 public class TweetItemView extends CardLayout {
 
@@ -36,6 +36,6 @@ public class TweetItemView extends CardLayout {
 
     public void updateWith(Tweet tweet) {
         tweetText.setText(TweetFormatter.format(tweet));
-        tweetFooter.updateWith(tweet.user().photoUrl(), TwitterDateFormatter.recapFrom(tweet, getContext()));
+        tweetFooter.updateWith(tweet.user().photoUrl(), TwitterFooterFormatter.recapFrom(tweet, getContext()));
     }
 }
