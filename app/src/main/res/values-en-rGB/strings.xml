@@ -5,5 +5,6 @@
   <string name="activity_favorites">Favourites</string>
   <string name="about_licenses">Open source licences</string>
   <string name="licenses_label">Open source licences</string>
+  <string name="favorites_empty_state_signed_out_blurb">Pick your favourite talks, synced across devices, and get notifications when they’re about to start.</string>
 
 </resources>

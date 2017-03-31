@@ -449,10 +449,19 @@
     <item name="fontPath">@string/license_notice_typeface</item>
   </style>
 
-  <style name="Favorite.Empty.Text" parent="None">
-    <item name="android:foreground">@drawable/primary_touch_feedback</item>
+  <style name="Favorite.Empty.Blurb" parent="None">
     <item name="android:gravity">center_horizontal</item>
-    <item name="android:drawablePadding">@dimen/card_horizontal_margin</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.Favorite.Empty.Blurb</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.Favorite.Empty.Blurb" parent="None">
+    <item name="android:textSize">@dimen/favorites_empty_blurb_text</item>
+    <item name="android:textColor">?android:textColorSecondary</item>
+    <item name="fontPath">?defaultRegularTypeface</item>
+  </style>
+
+  <style name="Favorite.Empty.Cta" parent="Button.Colored">
+    <item name="android:backgroundTint">?colorPrimary</item>
   </style>
 
   <style name="SignIn.BottomSheet" parent="Widget.Design.BottomSheet.Modal" />

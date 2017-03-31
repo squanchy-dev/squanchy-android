@@ -5,7 +5,8 @@
   android:id="@+id/favorites_content_root"
   android:theme="@style/Theme.Squanchy.Favorites"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
+  android:layout_height="match_parent"
+  tools:context="net.squanchy.home.HomeActivity">
 
   <android.support.design.widget.AppBarLayout
     style="@style/Squanchy.Appbar"
@@ -26,36 +27,60 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-  <LinearLayout
+  <net.squanchy.favorites.view.FavoritesSignedInEmptyLayout
+    android:id="@+id/empty_view_signed_in"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_marginLeft="@dimen/card_horizontal_margin"
-    android:layout_marginRight="@dimen/card_horizontal_margin"
-    android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:layout_marginStart="@dimen/favorites_empty_margin_horizontal"
+    android:layout_marginEnd="@dimen/favorites_empty_margin_horizontal"
+    android:visibility="gone">
 
-    <net.squanchy.favorites.view.NoFavoritesView
-      android:id="@+id/empty_view_signed_in"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:visibility="gone" />
+    <include layout="@layout/merge_no_favorites_view" />
+
+  </net.squanchy.favorites.view.FavoritesSignedInEmptyLayout>
+
+  <LinearLayout
+    android:id="@+id/empty_view_signed_out"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginStart="@dimen/favorites_empty_margin_horizontal"
+    android:layout_marginEnd="@dimen/favorites_empty_margin_horizontal"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:visibility="gone"
+    tools:visibility="visible">
+
+    <ImageView
+      android:layout_width="@dimen/favorites_empty_image_size"
+      android:layout_height="@dimen/favorites_empty_image_size"
+      android:layout_marginBottom="@dimen/favorites_empty_image_margin_bottom"
+      android:contentDescription="@null"
+      android:scaleType="fitCenter"
+      app:srcCompat="@drawable/empty_favorites_signed_out" />
 
     <TextView
-      android:id="@+id/empty_view_signed_out"
-      style="@style/Favorite.Empty.Text"
+      style="@style/Favorite.Empty.Blurb"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:drawableTop="@drawable/illustration_prompt_to_sign_in"
-      android:visibility="gone"
-      android:text="@string/prompt_to_sign_in_for_favorites"
-      tools:visibility="visible" />
+      android:layout_marginBottom="@dimen/favorites_empty_blurb_margin_bottom"
+      android:text="@string/favorites_empty_state_signed_out_blurb" />
+
+    <Button
+      android:id="@+id/empty_view_signed_out_button"
+      style="@style/Favorite.Empty.Cta"
+      android:layout_width="wrap_content"
+      android:layout_height="@dimen/favorites_empty_cta_height"
+      android:text="@string/favorites_empty_state_signed_out_cta" />
+
   </LinearLayout>
 
   <ProgressBar
     android:id="@+id/progressbar"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_gravity="center" />
+    android:layout_gravity="center"
+    android:visibility="gone" />
 
 </net.squanchy.favorites.FavoritesPageView>
