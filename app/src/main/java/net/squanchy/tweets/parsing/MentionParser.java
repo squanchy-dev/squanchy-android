@@ -1,4 +1,4 @@
-package net.squanchy.tweets.util;
+package net.squanchy.tweets.parsing;
 
 import net.squanchy.tweets.domain.view.MentionEntity;
 import net.squanchy.tweets.model.TweetSpecialTextData;

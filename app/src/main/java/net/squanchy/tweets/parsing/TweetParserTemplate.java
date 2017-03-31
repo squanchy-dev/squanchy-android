@@ -1,4 +1,4 @@
-package net.squanchy.tweets.util;
+package net.squanchy.tweets.parsing;
 
 import android.support.annotation.NonNull;
 
@@ -8,8 +8,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.squanchy.tweets.model.TweetSpecialTextData;
-
-import static net.squanchy.tweets.util.SpannableDataExtractor.extract;
 
 abstract class TweetParserTemplate<T> {
 
@@ -22,7 +20,7 @@ abstract class TweetParserTemplate<T> {
         List<T> matches = new ArrayList<>();
 
         while (matcher.find()) {
-            matches.add(convertFrom(extract(text, matcher.start(), matcher.end())));
+            matches.add(convertFrom(SpannableDataExtractor.extract(text, matcher.start(), matcher.end())));
         }
 
         return matches;

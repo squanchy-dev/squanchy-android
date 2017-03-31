@@ -1,4 +1,4 @@
-package net.squanchy.tweets.util;
+package net.squanchy.tweets.parsing;
 
 import java.util.List;
 
