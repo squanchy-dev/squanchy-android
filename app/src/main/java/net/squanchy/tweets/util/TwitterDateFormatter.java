@@ -17,7 +17,7 @@ public class TwitterDateFormatter {
     // Sat Mar 14 02:34:20 +0000 2009
     private static final String DATE_PATTERN = "EEE MMM dd HH:mm:ss Z yyyy";
     private static final String AT = "@";
-    private static final String SPACED_EM_DASH = " — ";
+    private static final String EM_DASH = "—";
 
     private TwitterDateFormatter() {
     }
@@ -26,7 +26,7 @@ public class TwitterDateFormatter {
         return new StringBuilder()
                 .append(AT)
                 .append(tweet.user().screenName())
-                .append(SPACED_EM_DASH)
+                .append(EM_DASH)
                 .append(timestampFrom(tweet, context))
                 .toString();
     }
