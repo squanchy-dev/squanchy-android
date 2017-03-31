@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -92,14 +91,21 @@ public class LocationOnboardingActivity extends TypefaceStyleableActivity {
             @Override
             public void permissionDenied() {
                 Timber.i("User denied location permission");
-                Snackbar.make(contentRoot, R.string.onboarding_error_permission_denied, Toast.LENGTH_LONG).show();
+                Snackbar.make(contentRoot, R.string.onboarding_error_permission_denied, Snackbar.LENGTH_LONG).show();
+                enableUi();
+            }
+
+            @Override
+            public void locationProviderDenied() {
+                Timber.i("User denied location provider");
+                Snackbar.make(contentRoot, R.string.onboarding_error_location_denied, Snackbar.LENGTH_LONG).show();
                 enableUi();
             }
 
             @Override
             public void locationProviderFailed(LocationProviderPrecondition.FailureInfo failureInfo) {
                 Timber.i("Location provider check failed. Status: %s", failureInfo);
-                Snackbar.make(contentRoot, R.string.onboarding_error_location_failed, Toast.LENGTH_LONG)
+                Snackbar.make(contentRoot, R.string.onboarding_error_location_failed, Snackbar.LENGTH_LONG)
                         .setAction(R.string.onboarding_error_location_failed_action, view -> openLocationSettings())
                         .show();
                 enableUi();
@@ -108,14 +114,14 @@ public class LocationOnboardingActivity extends TypefaceStyleableActivity {
             @Override
             public void bluetoothDenied() {
                 Timber.i("User denied turning Bluetooth on");
-                Snackbar.make(contentRoot, R.string.onboarding_error_bluetooth_denied, Toast.LENGTH_LONG).show();
+                Snackbar.make(contentRoot, R.string.onboarding_error_bluetooth_denied, Snackbar.LENGTH_LONG).show();
                 enableUi();
             }
 
             @Override
             public void exceptionWhileSatisfying(Throwable throwable) {
                 Timber.e(throwable, "Exception occurred while checking");
-                Snackbar.make(contentRoot, R.string.onboarding_error_bluetooth_denied, Toast.LENGTH_LONG).show();
+                Snackbar.make(contentRoot, R.string.onboarding_error_bluetooth_denied, Snackbar.LENGTH_LONG).show();
                 enableUi();
             }
         };
