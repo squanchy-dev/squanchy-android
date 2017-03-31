@@ -4,6 +4,7 @@
   <string name="about_to_start_notification_preference_key">about_to_start_notification_preference_key</string>
   <string name="location_preference_key">location_preference_key</string>
   <string name="build_version_preference_key">build_version_preference_key</string>
+  <string name="account_category_key">account_category_key</string>
   <string name="account_email_preference_key">account_email_preference_key</string>
   <string name="account_signin_signout_preference_key">account_signin_signout_preference_key</string>
   <string name="about_preference_key">about_preference_key</string>
