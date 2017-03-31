@@ -2,10 +2,10 @@ package net.squanchy.venue;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.squanchy.R;
@@ -20,7 +20,7 @@ import io.reactivex.disposables.Disposable;
 
 import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 
-public class VenueInfoPageView extends LinearLayout implements Loadable {
+public class VenueInfoPageView extends CoordinatorLayout implements Loadable {
 
     private Disposable subscription;
     private Navigator navigate;
@@ -36,23 +36,7 @@ public class VenueInfoPageView extends LinearLayout implements Loadable {
     }
 
     public VenueInfoPageView(Context context, AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
-    }
-
-    public VenueInfoPageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-
-        if (!isInEditMode()) {
-            Activity activity = unwrapToActivityContext(context);
-            imageLoader = ImageLoaderInjector.obtain(activity).imageLoader();
-        }
-        
-        super.setOrientation(VERTICAL);
-    }
-
-    @Override
-    public void setOrientation(int orientation) {
-        throw new UnsupportedOperationException(VenueInfoPageView.class.getSimpleName() + " doesn't support changing orientation");
+        super(context, attrs, defStyleAttr);
     }
 
     @Override
@@ -70,6 +54,10 @@ public class VenueInfoPageView extends LinearLayout implements Loadable {
         mapView = (ImageView) findViewById(R.id.venue_map);
 
         setupToolbar();
+
+        if (!isInEditMode()) {
+            imageLoader = ImageLoaderInjector.obtain(activity).imageLoader();
+        }
     }
 
     private void setupToolbar() {
