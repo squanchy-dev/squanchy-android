@@ -88,6 +88,10 @@ public abstract class Event {
         return speakersBuilder.toString();
     }
 
+    public boolean isDuring(LocalDateTime time) {
+        return time.isAfter(startTime()) && time.isBefore(endTime());
+    }
+
     @AutoValue.Builder
     public abstract static class Builder {
 
