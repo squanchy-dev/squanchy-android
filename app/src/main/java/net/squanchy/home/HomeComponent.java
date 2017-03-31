@@ -23,5 +23,5 @@ interface HomeComponent {
 
     Navigator navigator();
 
-    CurrentEventSnackbarService currentEvent();
+    CurrentEventService currentEvent();
 }

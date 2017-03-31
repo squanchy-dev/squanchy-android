@@ -11,9 +11,9 @@ import dagger.Provides;
 public class CurrentEventModule {
 
     @Provides
-    CurrentEventSnackbarService currentEventService(EventRepository eventRepository,
-                                                    FirebaseAuthService firebaseAuthService,
-                                                    CurrentTime currentTime) {
-        return new CurrentEventSnackbarService(eventRepository, firebaseAuthService, currentTime);
+    CurrentEventService currentEventService(EventRepository eventRepository,
+                                            FirebaseAuthService firebaseAuthService,
+                                            CurrentTime currentTime) {
+        return new CurrentEventService(eventRepository, firebaseAuthService, currentTime);
     }
 }

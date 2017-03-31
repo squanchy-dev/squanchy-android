@@ -25,6 +25,7 @@ import android.view.Window;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import net.squanchy.R;
@@ -41,6 +42,9 @@ import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.support.lang.Optional;
 import net.squanchy.support.widget.InterceptingBottomNavigationView;
 
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -48,6 +52,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
 
     private static final String KEY_CONTEST_STAND = "stand";
     private static final String KEY_ROOM_EVENT = "room";
+    private static final String WHEN_DATE_TIME_FORMAT = "HH:mm";
 
     private static final int REQUEST_SIGN_IN_MAY_GOD_HAVE_MERCY_OF_OUR_SOULS = 666;
     private static final int REQUEST_GRANT_PERMISSIONS = 1000;
@@ -64,7 +69,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private Analytics analytics;
     private RemoteConfig remoteConfig;
     private Navigator navigator;
-    private CurrentEventSnackbarService currentEventSnackbarService;
+    private CurrentEventService currentEventService;
 
     private CompositeDisposable subscriptions;
 
@@ -115,7 +120,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
         analytics = homeComponent.analytics();
         remoteConfig = homeComponent.remoteConfig();
         proximityService = homeComponent.proximityService();
-        currentEventSnackbarService = homeComponent.currentEvent();
+        currentEventService = homeComponent.currentEvent();
 
         navigator = homeComponent.navigator();
         subscriptions = new CompositeDisposable();
@@ -194,17 +199,28 @@ public class HomeActivity extends TypefaceStyleableActivity {
     }
 
     private void showCurrentEvent(String placeId) {
-        currentEventSnackbarService.eventIn(placeId)
+        currentEventService.eventIn(placeId)
                 .map(this::toSnackbar)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(Snackbar::show);
     }
 
-    private Snackbar toSnackbar(Event event) {
-        return currentEventSnackbarService.buildSnackbar(
-                pageViews.get(currentSection),
-                event,
-                view -> navigator.toEventDetails(event.id())
+    public Snackbar toSnackbar(Event event) {
+        Snackbar snackbar = Snackbar.make(pageViews.get(currentSection), buildString(event), BaseTransientBottomBar.LENGTH_INDEFINITE);
+        snackbar.setAction(R.string.event_details, view -> navigator.toEventDetails(event.id()));
+        snackbar.setActionTextColor(getResources().getColor(R.color.text_inverse));
+        return snackbar;
+    }
+
+    private String buildString(Event event) {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern(WHEN_DATE_TIME_FORMAT)
+                .withZone(event.timeZone());
+        return String.format(
+                Locale.US,
+                "Room: %s %s \n%s",
+                event.place().get().name(),
+                formatter.print(event.startTime().toDateTime()),
+                event.title()
         );
     }
 
