@@ -52,10 +52,10 @@ public class CurrentEventSnackbarService {
                 .withZone(event.timeZone());
         return String.format(
                 Locale.US,
-                "Room: %s %s %s",
+                "Room: %s %s \n%s",
                 event.place().get().name(),
-                event.speakersNames(),
-                formatter.print(event.startTime().toDateTime())
+                formatter.print(event.startTime().toDateTime()),
+                event.title()
         );
     }
 }
