@@ -18,6 +18,8 @@ public interface ProximityPreconditions {
 
         void permissionDenied();
 
+        void locationProviderDenied();
+
         void locationProviderFailed(LocationProviderPrecondition.FailureInfo failureStatus);
 
         void bluetoothDenied();

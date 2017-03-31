@@ -1,5 +1,6 @@
 package net.squanchy.proximity.preconditions;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.MainThread;
 
@@ -7,6 +8,8 @@ import net.squanchy.proximity.preconditions.LocationProviderPrecondition.Provide
 import net.squanchy.support.lang.Optional;
 
 import timber.log.Timber;
+
+import static android.content.pm.PackageManager.PERMISSION_DENIED;
 
 public class ModularProximityPreconditions implements ProximityPreconditions {
 
@@ -34,23 +37,49 @@ public class ModularProximityPreconditions implements ProximityPreconditions {
     @Override
     public boolean onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         Optional<Precondition> requestingPrecondition = registry.findPreconditionHandlingRequestCode(requestCode);
-        Timber.i(requestingPrecondition.toString());
         if (requestingPrecondition.isPresent()) {
-            startCheckingFrom(requestingPrecondition.get());
+            handlePermissionsRequestResult(requestingPrecondition.get(), grantResults);
             return true;
         } else {
             return false;
         }
     }
 
+    private void handlePermissionsRequestResult(Precondition precondition, int[] grantResults) {
+        if (deniedAnyPermissions(grantResults)) {
+            callback.permissionDenied();
+        } else {
+            startCheckingFrom(precondition);
+        }
+    }
+
+    private boolean deniedAnyPermissions(int[] grantResults) {
+        for (int grantResult : grantResults) {
+            if (grantResult == PERMISSION_DENIED) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
         Optional<Precondition> requestingPrecondition = registry.findPreconditionHandlingRequestCode(requestCode);
         if (requestingPrecondition.isPresent()) {
-            startCheckingFrom(requestingPrecondition.get());
+            handleActivityResult(requestingPrecondition.get(), resultCode);
             return true;
         } else {
             return false;
+        }
+    }
+
+    private void handleActivityResult(Precondition precondition, int resultCode) {
+        if (resultCode == Activity.RESULT_OK) {
+            startCheckingFrom(precondition);
+        } else if (precondition instanceof BluetoothPrecondition) {
+            callback.bluetoothDenied();
+        } else if (precondition instanceof LocationProviderPrecondition) {
+            callback.locationProviderDenied();
         }
     }
 
