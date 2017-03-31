@@ -88,7 +88,7 @@ public abstract class Event {
         return speakersBuilder.toString();
     }
 
-    public boolean isDuring(LocalDateTime time) {
+    public boolean isHappeningAt(LocalDateTime time) {
         return time.isAfter(startTime()) && time.isBefore(endTime());
     }
 

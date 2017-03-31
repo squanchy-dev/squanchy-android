@@ -40,7 +40,7 @@ public class ContestService {
     }
 
     public Completable addAchievement(String achievementId) {
-        return authService.ifUserSignedInThenCompletableFrom(userId -> dbService.addAchievement(userId, achievementId, currentTime.getCurrentTimestamp()))
+        return authService.ifUserSignedInThenCompletableFrom(userId -> dbService.addAchievement(userId, achievementId, currentTime.currentTimestamp()))
                 .subscribeOn(Schedulers.io());
     }
 }

@@ -21,6 +21,7 @@ import io.reactivex.Observable;
 public class CurrentEventSnackbarService {
 
     private static final String WHEN_DATE_TIME_FORMAT = "HH:mm";
+
     private final EventRepository eventRepository;
     private final FirebaseAuthService authService;
     private final CurrentTime currentTime;
@@ -36,7 +37,7 @@ public class CurrentEventSnackbarService {
                 .flatMap(Observable::fromIterable)
                 .filter(event -> event.place().isPresent())
                 .filter(event -> event.place().get().id().equals(placeId))
-                .filter(event -> event.isDuring(currentTime.getLocalDateTime()))
+                .filter(event -> event.isHappeningAt(currentTime.currentLocalDateTime()))
                 .firstElement();
     }
 
