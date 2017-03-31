@@ -73,9 +73,9 @@
 
   <string name="favorites_empty_state_signed_out_blurb">Pick your favorite talks, synced across devices, and get notifications when they’re about to start.</string>
   <string name="favorites_empty_state_signed_out_cta">SIGN IN</string>
-  <string name="prompt_to_favorite">You have no favourite talks, yet. Find some talk, touch the ♥ button and you are good to go.</string>
-  <string name="favorites_achievement_fast_learner">Achievement Unlocked: <b>The Fast Learner</b> 🤓</string>
-  <string name="favorites_achievement_persevering">Achievement Unlocked: <b>The harder you try, the luckier you get.</b> Now give it a rest.</string>
+  <string name="favorites_empty_state_signed_in_blurb">You haven’t picked any favorites yet.\n\n1️⃣ Find a talk you like.\n2️⃣ Aim for the big ♥ button.\n3️⃣ That’s it. Really.</string>
+  <string name="favorites_achievement_fast_learner"><![CDATA[Achievement Unlocked: <b>The Fast Learner</b> 🤓]]></string>
+  <string name="favorites_achievement_persevering"><![CDATA[Achievement Unlocked: <b>The harder you try, the luckier you get.</b> Now give it a rest.]]></string>
 
   <string name="about_label">About</string>
   <string name="about_powered_by">is powered by</string>

@@ -28,12 +28,13 @@
 
     <net.squanchy.favorites.view.FavoritesSignedInEmptyLayout
       android:id="@+id/empty_view_signed_in"
-      android:layout_width="wrap_content"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
       android:layout_marginStart="@dimen/favorites_empty_margin_horizontal"
       android:layout_marginEnd="@dimen/favorites_empty_margin_horizontal"
-      android:visibility="gone">
+      android:visibility="gone"
+      tools:visibility="visible">
 
       <include layout="@layout/merge_no_favorites_view" />
 
@@ -41,15 +42,14 @@
 
     <LinearLayout
       android:id="@+id/empty_view_signed_out"
-      android:layout_width="wrap_content"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
       android:layout_marginStart="@dimen/favorites_empty_margin_horizontal"
       android:layout_marginEnd="@dimen/favorites_empty_margin_horizontal"
       android:gravity="center"
       android:orientation="vertical"
-      android:visibility="gone"
-      tools:visibility="visible">
+      android:visibility="gone">
 
       <ImageView
         android:layout_width="@dimen/favorites_empty_image_size"

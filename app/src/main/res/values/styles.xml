@@ -464,6 +464,8 @@
     <item name="android:backgroundTint">?colorPrimary</item>
   </style>
 
+  <style name="Favorite.Empty.Fab" parent="EventDetails.Fab" />
+
   <style name="SignIn.BottomSheet" parent="Widget.Design.BottomSheet.Modal" />
 
   <style name="SignIn.BottomSheet.Label" parent="None">
