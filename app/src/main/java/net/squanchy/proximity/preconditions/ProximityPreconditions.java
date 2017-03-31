@@ -4,6 +4,8 @@ import android.content.Intent;
 
 public interface ProximityPreconditions {
 
+    boolean needsActionToSatisfyPreconditions();
+
     void startSatisfyingPreconditions();
 
     void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults);

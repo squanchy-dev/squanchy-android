@@ -42,8 +42,12 @@ public class ProximityPreconditionsOld implements ProximityPreconditions {
     }
 
     @Override
+    public boolean needsActionToSatisfyPreconditions() {
+        return true;       // This will have us re-check all preconditions every time; we don't know how to pre-check unfortunately
+    }
+
+    @Override
     public void startSatisfyingPreconditions() {
-        // TODO store opt-in here
         if (hasLocationPermission()) {
             enableLocationProviderIfNecessaryThenProceed();
         } else {

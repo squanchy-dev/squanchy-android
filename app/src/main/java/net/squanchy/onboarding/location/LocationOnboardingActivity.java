@@ -1,6 +1,5 @@
 package net.squanchy.onboarding.location;
 
-import android.bluetooth.BluetoothManager;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,19 +40,18 @@ public class LocationOnboardingActivity extends TypefaceStyleableActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        LocationOnboardingComponent component = LocationOnboardingInjector.obtain(this);
-        onboarding = component.onboarding();
-        service = component.proximityService();
-        navigator = component.navigator();
-
-        BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(BLUETOOTH_SERVICE);
         GoogleApiClient googleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this, connectionResult -> onGoogleConnectionFailed())
                 .addApi(LocationServices.API)
                 .build();
-        googleApiClient.connect();
 
-        proximityPreconditions = new ProximityPreconditionsOld(this, bluetoothManager, googleApiClient, proximityPreconditionsCallback());
+        LocationOnboardingComponent component = LocationOnboardingInjector.obtain(this, googleApiClient, proximityPreconditionsCallback());
+        onboarding = component.onboarding();
+        service = component.proximityService();
+        navigator = component.navigator();
+        proximityPreconditions = component.proximityPreconditions();
+
+        googleApiClient.connect();
 
         setContentView(R.layout.activity_location_onboarding);
         contentRoot = findViewById(R.id.onboarding_content_root);
@@ -66,7 +64,12 @@ public class LocationOnboardingActivity extends TypefaceStyleableActivity {
 
     private void optInToProximity() {
         disableUi();
-        proximityPreconditions.startSatisfyingPreconditions();
+        // TODO store opt-in here
+        if (proximityPreconditions.needsActionToSatisfyPreconditions()) {
+            proximityPreconditions.startSatisfyingPreconditions();
+        } else {
+            markPageAsSeenAndFinish();
+        }
     }
 
     private void disableUi() {
@@ -116,6 +119,13 @@ public class LocationOnboardingActivity extends TypefaceStyleableActivity {
             @Override
             public void bluetoothDenied() {
                 Timber.i("User denied turning Bluetooth on");
+                Snackbar.make(contentRoot, R.string.onboarding_error_bluetooth_denied, Toast.LENGTH_LONG).show();
+                enableUi();
+            }
+
+            @Override
+            public void exceptionWhileSatisfying(Throwable throwable) {
+                Timber.e(throwable, "Exception occurred while checking");
                 Snackbar.make(contentRoot, R.string.onboarding_error_bluetooth_denied, Toast.LENGTH_LONG).show();
                 enableUi();
             }
