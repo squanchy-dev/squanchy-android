@@ -105,7 +105,7 @@ public class SettingsFragment extends PreferenceFragment {
     }
 
     private void onSignedOut() {
-        accountEmailPreference.setTitle(R.string.settings_account_not_logged_in);
+        accountEmailPreference.setTitle(R.string.settings_account_not_signed_in);
         accountSignInSignOutPreference.setTitle(R.string.sign_in_title);
         accountSignInSignOutPreference.setOnPreferenceClickListener(
                 preference -> {

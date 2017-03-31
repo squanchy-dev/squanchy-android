@@ -6,7 +6,7 @@
 
     <Preference
       android:key="@string/account_email_preference_key"
-      android:title="@string/settings_account_not_logged_in"
+      android:title="@string/settings_account_not_signed_in"
       android:icon="@drawable/ic_email"
       android:selectable="false" />
 
