@@ -18,7 +18,9 @@ import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.onboarding.Onboarding;
 import net.squanchy.onboarding.OnboardingPage;
+import net.squanchy.proximity.preconditions.LocationProviderPrecondition;
 import net.squanchy.proximity.preconditions.ProximityPreconditions;
+import net.squanchy.proximity.preconditions.ProximityPreconditionsOld;
 import net.squanchy.service.proximity.injection.ProximityService;
 
 import timber.log.Timber;
@@ -51,7 +53,7 @@ public class LocationOnboardingActivity extends TypefaceStyleableActivity {
                 .build();
         googleApiClient.connect();
 
-        proximityPreconditions = new ProximityPreconditions(this, bluetoothManager, googleApiClient, proximityPreconditionsCallback());
+        proximityPreconditions = new ProximityPreconditionsOld(this, bluetoothManager, googleApiClient, proximityPreconditionsCallback());
 
         setContentView(R.layout.activity_location_onboarding);
         contentRoot = findViewById(R.id.onboarding_content_root);
@@ -64,7 +66,7 @@ public class LocationOnboardingActivity extends TypefaceStyleableActivity {
 
     private void optInToProximity() {
         disableUi();
-        proximityPreconditions.startOptInProcedure();
+        proximityPreconditions.startSatisfyingPreconditions();
     }
 
     private void disableUi() {
@@ -77,8 +79,8 @@ public class LocationOnboardingActivity extends TypefaceStyleableActivity {
         Snackbar.make(contentRoot, R.string.onboarding_error_google_client_connection, Snackbar.LENGTH_LONG).show();
     }
 
-    private ProximityPreconditions.Callback proximityPreconditionsCallback() {
-        return new ProximityPreconditions.Callback() {
+    private ProximityPreconditionsOld.Callback proximityPreconditionsCallback() {
+        return new ProximityPreconditionsOld.Callback() {
 
             @Override
             public void bubbleUpOnActivityResult(int requestCode, int resultCode, Intent data) {
@@ -103,8 +105,8 @@ public class LocationOnboardingActivity extends TypefaceStyleableActivity {
             }
 
             @Override
-            public void locationProviderFailed(ProximityPreconditions.LocationProviderFailureStatus failureStatus) {
-                Timber.i("Location provider check failed. Status: %s", failureStatus);
+            public void locationProviderFailed(LocationProviderPrecondition.FailureInfo failureInfo) {
+                Timber.i("Location provider check failed. Status: %s", failureInfo);
                 Snackbar.make(contentRoot, R.string.onboarding_error_location_failed, Toast.LENGTH_LONG)
                         .setAction(R.string.onboarding_error_location_failed_action, view -> openLocationSettings())
                         .show();
