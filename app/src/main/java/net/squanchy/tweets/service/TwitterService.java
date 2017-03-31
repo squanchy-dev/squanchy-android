@@ -6,6 +6,7 @@ import net.squanchy.tweets.domain.view.HashtagEntity;
 import net.squanchy.tweets.domain.view.MentionEntity;
 import net.squanchy.tweets.domain.view.Tweet;
 import net.squanchy.tweets.domain.view.UrlEntity;
+import net.squanchy.tweets.domain.view.User;
 
 import io.reactivex.Observable;
 
@@ -32,6 +33,7 @@ public class TwitterService {
                 .id(tweet.id)
                 .text(tweet.text)
                 .createdAt(tweet.createdAt)
+                .user(User.create(tweet.user.name, tweet.user.screenName, tweet.user.profileImageUrl))
                 .hashtags(parseHashtags(tweet.entities.hashtags))
                 .mentions(parseMentions(tweet.entities.userMentions))
                 .urls(parseUrls(tweet.entities.urls))
