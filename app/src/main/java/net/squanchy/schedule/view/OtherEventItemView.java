@@ -14,6 +14,8 @@ import org.joda.time.format.DateTimeFormatter;
 
 public class OtherEventItemView extends EventItemView {
 
+    private static final int NO_DRAWABLE = 0;
+    
     private TextView titleView;
     private TextView timestampView;
     private ImageView illustrationView;
@@ -67,11 +69,15 @@ public class OtherEventItemView extends EventItemView {
     private int illustrationFor(Event.Type type) {
         switch (type) {
             case COFFEE_BREAK:
+                return R.drawable.coffee_break;
             case LUNCH:
-            case OTHER:
+                return R.drawable.illustration_lunch;
             case REGISTRATION:
+                return R.drawable.registration;
+            case OTHER:
+                return NO_DRAWABLE;
             case SOCIAL:
-                return R.drawable.illustration_lunch;        // TODO replace these with the correct images once we have them
+                return R.drawable.social;
             default:
                 throw new IllegalArgumentException("Type not supported: " + type.name());
         }
