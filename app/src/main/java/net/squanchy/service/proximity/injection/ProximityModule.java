@@ -3,8 +3,8 @@ package net.squanchy.service.proximity.injection;
 import android.app.Application;
 
 import net.squanchy.R;
-import net.squanchy.injection.ApplicationLifecycle;
 import net.squanchy.injection.ApplicationContextModule;
+import net.squanchy.injection.ApplicationLifecycle;
 import net.squanchy.proximity.ProximityProvider;
 import net.squanchy.proximity.near.NearITProximityProvider;
 

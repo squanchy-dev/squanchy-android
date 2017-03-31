@@ -1,75 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  android:id="@+id/onboarding_content_root"
   android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:gravity="center_horizontal|fill_vertical"
-  android:orientation="vertical">
+  android:layout_height="match_parent">
 
-  <Button
-    android:id="@+id/skip_button"
-    style="@style/Onboarding.Skip"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="end"
-    android:layout_marginTop="@dimen/onboarding_skip_button_margin_vertical"
-    android:layout_marginEnd="@dimen/onboarding_skip_button_margin_end"
-    android:layout_marginBottom="@dimen/onboarding_skip_button_margin_vertical"
-    android:text="@string/onboarding_skip_button" />
-
-  <ImageView
-    style="@style/Onboarding.Logo"
-    android:layout_width="wrap_content"
-    android:layout_height="@dimen/onboarding_logo_height"
-    android:layout_marginStart="@dimen/onboarding_content_margin_horizontal"
-    android:layout_marginTop="@dimen/onboarding_logo_margin_top"
-    android:layout_marginEnd="@dimen/onboarding_content_margin_horizontal"
-    android:contentDescription="@null"
-    app:srcCompat="@drawable/location_primary" />
-
-  <TextView
-    style="@style/Onboarding.Title"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/onboarding_content_margin_horizontal"
-    android:layout_marginTop="@dimen/onboarding_title_margin_top"
-    android:layout_marginEnd="@dimen/onboarding_content_margin_horizontal"
-    android:text="@string/onboarding_location_title" />
-
-  <TextView
-    style="@style/Onboarding.Blurb"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/onboarding_content_margin_horizontal"
-    android:layout_marginTop="@dimen/onboarding_blurb_margin_top"
-    android:layout_marginEnd="@dimen/onboarding_content_margin_horizontal"
-    android:text="@string/onboarding_location_blurb" />
-
-  <Space
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:layout_weight="1" />
-
-  <TextView
-    style="@style/Onboarding.Location.Explanation"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/onboarding_location_explanation_margin_horizontal"
-    android:layout_marginTop="@dimen/onboarding_location_explanation_margin_top"
-    android:layout_marginEnd="@dimen/onboarding_location_explanation_margin_horizontal"
-    android:text="@string/onboarding_location_explanation" />
-
-  <Button
-    android:id="@+id/location_opt_in_button"
-    style="@style/Onboarding.Cta"
+  <LinearLayout
+    android:id="@+id/onboarding_content_root"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/onboarding_cta_height"
-    android:layout_gravity="fill_horizontal"
-    android:layout_marginStart="@dimen/onboarding_content_margin_horizontal"
-    android:layout_marginTop="@dimen/onboarding_cta_margin_top"
-    android:layout_marginEnd="@dimen/onboarding_content_margin_horizontal"
-    android:layout_marginBottom="@dimen/onboarding_cta_margin_bottom"
-    android:text="@string/onboarding_location_cta" />
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal|fill_vertical"
+    android:orientation="vertical">
 
-</LinearLayout>
+    <Button
+      android:id="@+id/skip_button"
+      style="@style/Onboarding.Skip"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="end"
+      android:layout_marginTop="@dimen/onboarding_skip_button_margin_vertical"
+      android:layout_marginEnd="@dimen/onboarding_skip_button_margin_end"
+      android:layout_marginBottom="@dimen/onboarding_skip_button_margin_vertical"
+      android:text="@string/onboarding_skip_button" />
+
+    <ImageView
+      style="@style/Onboarding.Logo"
+      android:layout_width="wrap_content"
+      android:layout_height="@dimen/onboarding_logo_height"
+      android:layout_marginStart="@dimen/onboarding_content_margin_horizontal"
+      android:layout_marginTop="@dimen/onboarding_logo_margin_top"
+      android:layout_marginEnd="@dimen/onboarding_content_margin_horizontal"
+      android:contentDescription="@null"
+      app:srcCompat="@drawable/location_primary" />
+
+    <TextView
+      style="@style/Onboarding.Title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/onboarding_content_margin_horizontal"
+      android:layout_marginTop="@dimen/onboarding_title_margin_top"
+      android:layout_marginEnd="@dimen/onboarding_content_margin_horizontal"
+      android:text="@string/onboarding_location_title" />
+
+    <TextView
+      style="@style/Onboarding.Blurb"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/onboarding_content_margin_horizontal"
+      android:layout_marginTop="@dimen/onboarding_blurb_margin_top"
+      android:layout_marginEnd="@dimen/onboarding_content_margin_horizontal"
+      android:text="@string/onboarding_location_blurb" />
+
+    <Space
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_weight="1" />
+
+    <TextView
+      style="@style/Onboarding.Location.Explanation"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/onboarding_location_explanation_margin_horizontal"
+      android:layout_marginTop="@dimen/onboarding_location_explanation_margin_top"
+      android:layout_marginEnd="@dimen/onboarding_location_explanation_margin_horizontal"
+      android:text="@string/onboarding_location_explanation" />
+
+    <Button
+      android:id="@+id/location_opt_in_button"
+      style="@style/Onboarding.Cta"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/onboarding_cta_height"
+      android:layout_gravity="fill_horizontal"
+      android:layout_marginStart="@dimen/onboarding_content_margin_horizontal"
+      android:layout_marginTop="@dimen/onboarding_cta_margin_top"
+      android:layout_marginEnd="@dimen/onboarding_content_margin_horizontal"
+      android:layout_marginBottom="@dimen/onboarding_cta_margin_bottom"
+      android:text="@string/onboarding_location_cta" />
+
+  </LinearLayout>
+  
+</android.support.design.widget.CoordinatorLayout>
