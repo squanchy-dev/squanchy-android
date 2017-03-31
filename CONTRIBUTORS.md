@@ -8,3 +8,4 @@ Squanchy is brought to you by:
  * Francesco Pontillo - [@frapontillo](https://github.com/frapontillo)
  * Alexandros Stylianidis - [@alexstyl](https://github.com/alexstyl)
  * Dave Clements - [@digitalpencils](https://github.com/digitalpencils)
+ * Chris Basha - [@chris95x8](https://github.com/chris95x8)
