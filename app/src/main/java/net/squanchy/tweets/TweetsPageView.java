@@ -25,8 +25,8 @@ import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 
 public class TweetsPageView extends CoordinatorLayout implements Loadable {
 
-    private TwitterService twitterService;
-    private Navigator navigator;
+    private final TwitterService twitterService;
+    private final Navigator navigator;
 
     private TextView emptyView;
     private RecyclerView tweetsList;
@@ -42,16 +42,15 @@ public class TweetsPageView extends CoordinatorLayout implements Loadable {
 
     public TweetsPageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        Activity activity = unwrapToActivityContext(getContext());
+        TwitterComponent component = TwitterInjector.obtain(activity);
+        twitterService = component.service();
+        navigator = component.navigator();
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
-        Activity activity = unwrapToActivityContext(getContext());
-        TwitterComponent component = TwitterInjector.obtain(activity);
-        twitterService = component.service();
-        navigator = component.navigator();
 
         setupToolbar();
 

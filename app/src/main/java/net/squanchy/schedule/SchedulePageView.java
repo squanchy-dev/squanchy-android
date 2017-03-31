@@ -35,9 +35,10 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
     private ScheduleViewPagerAdapter viewPagerAdapter;
     private View progressBar;
     private Disposable subscription;
-    private ScheduleService service;
-    private Navigator navigate;
-    private Analytics analytics;
+    private final ScheduleService service;
+    private final Navigator navigate;
+    private final Analytics analytics;
+    private final Activity activity;
 
     public SchedulePageView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -45,17 +46,17 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
 
     public SchedulePageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+
+        activity = unwrapToActivityContext(getContext());
+        ScheduleComponent component = ScheduleInjector.obtain(activity);
+        service = component.service();
+        navigate = component.navigator();
+        analytics = component.analytics();
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
-        Activity activity = unwrapToActivityContext(getContext());
-        ScheduleComponent component = ScheduleInjector.obtain(activity);
-        service = component.service();
-        navigate = component.navigator();
-        analytics = component.analytics();
 
         progressBar = findViewById(R.id.progressbar);
 

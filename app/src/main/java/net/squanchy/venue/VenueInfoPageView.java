@@ -23,8 +23,8 @@ import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 public class VenueInfoPageView extends CoordinatorLayout implements Loadable {
 
     private Disposable subscription;
-    private Navigator navigate;
-    private VenueInfoService service;
+    private final Navigator navigate;
+    private final VenueInfoService service;
     private TextView nameText;
     private TextView addressText;
     private TextView descriptionText;
@@ -37,16 +37,19 @@ public class VenueInfoPageView extends CoordinatorLayout implements Loadable {
 
     public VenueInfoPageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        Activity activity = unwrapToActivityContext(getContext());
+        VenueInfoComponent component = VenueInfoInjector.obtain(activity);
+        navigate = component.navigator();
+        service = component.service();
+
+        if (!isInEditMode()) {
+            imageLoader = ImageLoaderInjector.obtain(activity).imageLoader();
+        }
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
-        Activity activity = unwrapToActivityContext(getContext());
-        VenueInfoComponent component = VenueInfoInjector.obtain(activity);
-        navigate = component.navigator();
-        service = component.service();
 
         nameText = (TextView) findViewById(R.id.venue_name);
         addressText = (TextView) findViewById(R.id.venue_address);
@@ -54,10 +57,6 @@ public class VenueInfoPageView extends CoordinatorLayout implements Loadable {
         mapView = (ImageView) findViewById(R.id.venue_map);
 
         setupToolbar();
-
-        if (!isInEditMode()) {
-            imageLoader = ImageLoaderInjector.obtain(activity).imageLoader();
-        }
     }
 
     private void setupToolbar() {

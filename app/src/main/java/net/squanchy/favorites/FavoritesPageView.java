@@ -43,6 +43,14 @@ public class FavoritesPageView extends CoordinatorLayout implements Loadable {
 
     public FavoritesPageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+
+        if (!isInEditMode()) {
+            Activity activity = unwrapToActivityContext(getContext());
+            FavoritesComponent component = FavoritesInjector.obtain(activity);
+            service = component.service();
+            navigate = component.navigator();
+            analytics = component.analytics();
+        }
     }
 
     @Override
@@ -56,14 +64,6 @@ public class FavoritesPageView extends CoordinatorLayout implements Loadable {
         emptyViewSignedOut.setOnClickListener(view -> requestSignIn());
 
         setupToolbar();
-
-        if (!isInEditMode()) {
-            Activity activity = unwrapToActivityContext(getContext());
-            FavoritesComponent component = FavoritesInjector.obtain(activity);
-            service = component.service();
-            navigate = component.navigator();
-            analytics = component.analytics();
-        }
     }
 
     private void requestSignIn() {

@@ -1,5 +1,6 @@
 package net.squanchy.support.system;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 
 public class CurrentTime {
@@ -9,6 +10,6 @@ public class CurrentTime {
     }
 
     public LocalDateTime currentLocalDateTime() {
-        return LocalDateTime.now();
+        return new DateTime(1491487091000L).toLocalDateTime();
     }
 }
