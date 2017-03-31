@@ -1,4 +1,4 @@
-package net.squanchy.proximity;
+package net.squanchy.proximity.preconditions;
 
 import android.Manifest;
 import android.app.Activity;

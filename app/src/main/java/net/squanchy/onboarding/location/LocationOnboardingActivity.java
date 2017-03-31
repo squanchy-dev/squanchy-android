@@ -18,7 +18,7 @@ import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.onboarding.Onboarding;
 import net.squanchy.onboarding.OnboardingPage;
-import net.squanchy.proximity.ProximityPreconditions;
+import net.squanchy.proximity.preconditions.ProximityPreconditions;
 import net.squanchy.service.proximity.injection.ProximityService;
 
 import timber.log.Timber;
