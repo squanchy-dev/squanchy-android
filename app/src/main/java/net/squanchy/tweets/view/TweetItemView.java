@@ -14,7 +14,7 @@ import net.squanchy.tweets.util.TwitterDateFormatter;
 public class TweetItemView extends CardLayout {
 
     private TextView tweetText;
-    private TextView tweetTimestamp;
+    private TweetFooterView tweetFooter;
 
     public TweetItemView(Context context, AttributeSet attrs) {
         this(context, attrs, R.attr.cardViewDefaultStyle);
@@ -29,13 +29,13 @@ public class TweetItemView extends CardLayout {
         super.onFinishInflate();
 
         tweetText = (TextView) findViewById(R.id.tweet_text);
-        tweetTimestamp = (TextView) findViewById(R.id.tweet_timestamp);
+        tweetFooter = (TweetFooterView) findViewById(R.id.tweet_footer);
 
         tweetText.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     public void updateWith(Tweet tweet) {
         tweetText.setText(TweetFormatter.format(tweet));
-        tweetTimestamp.setText(TwitterDateFormatter.getTimestampFrom(tweet, getContext()));
+        tweetFooter.updateWith(tweet.user().photoUrl(), TwitterDateFormatter.getTimestampFrom(tweet, getContext()));
     }
 }
