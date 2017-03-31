@@ -22,12 +22,27 @@
       android:bufferType="spannable"
       tools:text="This is a tweet I wrote to show how it looks" />
 
-    <TextView
-      android:id="@+id/tweet_timestamp"
-      style="@style/Tweet.Card.Timestamp"
+    <net.squanchy.tweets.view.TweetFooterView
+      android:id="@+id/tweet_footer"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      tools:text="Posted last night" />
+      android:layout_gravity="center"
+      android:paddingTop="@dimen/twitter_footer_top_padding"
+      android:gravity="center">
+
+      <net.squanchy.support.widget.CircleImageView
+        android:id="@+id/author_photo"
+        android:layout_width="@dimen/twitter_user_photo"
+        android:layout_height="@dimen/twitter_user_photo"
+        android:layout_margin="@dimen/twitter_user_photo_margin" />
+
+      <TextView
+        android:id="@+id/recap_footer"
+        style="@style/Tweet.Card.Timestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    </net.squanchy.tweets.view.TweetFooterView>
 
   </LinearLayout>
 </net.squanchy.tweets.view.TweetItemView>
