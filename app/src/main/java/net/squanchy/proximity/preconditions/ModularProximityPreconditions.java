@@ -32,23 +32,25 @@ public class ModularProximityPreconditions implements ProximityPreconditions {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public boolean onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         Optional<Precondition> requestingPrecondition = registry.findPreconditionHandlingRequestCode(requestCode);
         Timber.i(requestingPrecondition.toString());
         if (requestingPrecondition.isPresent()) {
             startCheckingFrom(requestingPrecondition.get());
+            return true;
         } else {
-            callback.bubbleUpOnRequestPermissionsResult(requestCode, permissions, grantResults);
+            return false;
         }
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
         Optional<Precondition> requestingPrecondition = registry.findPreconditionHandlingRequestCode(requestCode);
         if (requestingPrecondition.isPresent()) {
             startCheckingFrom(requestingPrecondition.get());
+            return true;
         } else {
-            callback.bubbleUpOnActivityResult(requestCode, resultCode, data);
+            return false;
         }
     }
 

@@ -86,16 +86,6 @@ public class LocationOnboardingActivity extends TypefaceStyleableActivity {
         return new ProximityPreconditionsOld.Callback() {
 
             @Override
-            public void bubbleUpOnActivityResult(int requestCode, int resultCode, Intent data) {
-                LocationOnboardingActivity.super.onActivityResult(requestCode, resultCode, data);
-            }
-
-            @Override
-            public void bubbleUpOnRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-                LocationOnboardingActivity.super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-            }
-
-            @Override
             public void allChecksPassed() {
                 startRadarAndFinish();
             }
@@ -158,11 +148,17 @@ public class LocationOnboardingActivity extends TypefaceStyleableActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        proximityPreconditions.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        boolean handled = proximityPreconditions.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (!handled) {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        proximityPreconditions.onActivityResult(requestCode, resultCode, data);
+        boolean handled = proximityPreconditions.onActivityResult(requestCode, resultCode, data);
+        if (!handled) {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }
