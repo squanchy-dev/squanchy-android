@@ -41,11 +41,6 @@ public class Navigator {
         start(EventDetailsActivity.createIntent(activity, eventId));
     }
 
-    public void toSignInForResult(int requestCode) {
-        Intent intent = new Intent(activity, SignInActivity.class);
-        activity.startActivityForResult(intent, requestCode);
-    }
-
     public void toSpeakerDetails(String speakerId) {
         start(
                 SpeakerDetailsActivity.createIntent(activity, speakerId),
@@ -162,6 +157,11 @@ public class Navigator {
             intent.addFlags(flags);
         }
         activity.startActivity(intent);
+    }
+
+    public void toSignInForResult(int requestCode) {
+        Intent intent = new Intent(activity, SignInActivity.class);
+        startForResult(intent, requestCode);
     }
 
     public void toOnboardingForResult(OnboardingPage page, int requestCode) {
