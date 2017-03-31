@@ -11,6 +11,8 @@ import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BaseTransientBottomBar;
+import android.support.design.widget.Snackbar;
 import android.support.transition.Fade;
 import android.support.transition.TransitionManager;
 import android.support.v4.app.ActivityCompat;
@@ -34,6 +36,7 @@ import net.squanchy.home.deeplink.HomeActivityIntentParser;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.proximity.ProximityEvent;
 import net.squanchy.remoteconfig.RemoteConfig;
+import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.support.lang.Optional;
 import net.squanchy.support.widget.InterceptingBottomNavigationView;
@@ -44,6 +47,7 @@ import io.reactivex.disposables.CompositeDisposable;
 public class HomeActivity extends TypefaceStyleableActivity {
 
     private static final String KEY_CONTEST_STAND = "stand";
+    private static final String KEY_ROOM_EVENT = "room";
 
     private static final int REQUEST_SIGN_IN_MAY_GOD_HAVE_MERCY_OF_OUR_SOULS = 666;
     private static final int REQUEST_GRANT_PERMISSIONS = 1000;
@@ -60,6 +64,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private Analytics analytics;
     private RemoteConfig remoteConfig;
     private Navigator navigator;
+    private CurrentEventSnackbarService currentEventSnackbarService;
 
     private CompositeDisposable subscriptions;
 
@@ -110,6 +115,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
         analytics = homeComponent.analytics();
         remoteConfig = homeComponent.remoteConfig();
         proximityService = homeComponent.proximityService();
+        currentEventSnackbarService = homeComponent.currentEvent();
 
         navigator = homeComponent.navigator();
         subscriptions = new CompositeDisposable();
@@ -177,10 +183,29 @@ public class HomeActivity extends TypefaceStyleableActivity {
     }
 
     private void handleProximityEvent(ProximityEvent proximityEvent) {
-        // TODO highlight speech near the rooms
-        if (proximityEvent.action().equals(KEY_CONTEST_STAND)) {
-            navigator.toContest(proximityEvent.subject());
+        switch (proximityEvent.action()) {
+            case KEY_CONTEST_STAND:
+                navigator.toContest(proximityEvent.subject());
+                break;
+            case KEY_ROOM_EVENT:
+                showCurrentEvent(proximityEvent.subject());
+                break;
         }
+    }
+
+    private void showCurrentEvent(String placeId) {
+        currentEventSnackbarService.eventIn(placeId)
+                .map(this::toSnackbar)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(Snackbar::show);
+    }
+
+    private Snackbar toSnackbar(Event event) {
+        return currentEventSnackbarService.buildSnackbar(
+                pageViews.get(currentSection),
+                event,
+                view -> navigator.toEventDetails(event.id())
+        );
     }
 
     private void collectPageViewsInto(Map<BottomNavigationSection, View> pageViews) {
