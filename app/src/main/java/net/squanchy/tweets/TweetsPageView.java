@@ -72,7 +72,6 @@ public class TweetsPageView extends CoordinatorLayout implements Loadable {
 
     private void setupToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.activity_favorites);
         toolbar.inflateMenu(R.menu.homepage);
         toolbar.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {

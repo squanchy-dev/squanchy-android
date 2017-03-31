@@ -11,6 +11,8 @@ public abstract class Tweet {
 
     public abstract String text();
 
+    public abstract User user();
+
     public abstract String createdAt();
 
     public abstract List<HashtagEntity> hashtags();
@@ -29,6 +31,8 @@ public abstract class Tweet {
         public abstract Builder id(long id);
 
         public abstract Builder text(String text);
+
+        public abstract Builder user(User user);
 
         public abstract Builder createdAt(String createdAt);
 
