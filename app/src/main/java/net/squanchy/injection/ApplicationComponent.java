@@ -16,11 +16,12 @@ import net.squanchy.service.repository.SpeakerRepository;
 import net.squanchy.service.repository.VenueRepository;
 import net.squanchy.service.repository.injection.RepositoryModule;
 import net.squanchy.support.injection.ChecksumModule;
+import net.squanchy.support.injection.CurrentTimeModule;
 
 import dagger.Component;
 
 @ApplicationLifecycle
-@Component(modules = {ApplicationContextModule.class, FirebaseModule.class, ChecksumModule.class, RepositoryModule.class, ProximityModule.class, AnalyticsModule.class, RemoteConfigModule.class})
+@Component(modules = {ApplicationContextModule.class, FirebaseModule.class, ChecksumModule.class, RepositoryModule.class, ProximityModule.class, AnalyticsModule.class, RemoteConfigModule.class, CurrentTimeModule.class})
 public interface ApplicationComponent {
 
     FirebaseDbService firebaseDbService();
