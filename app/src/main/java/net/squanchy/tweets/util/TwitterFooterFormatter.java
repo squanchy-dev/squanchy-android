@@ -12,15 +12,26 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-public class TwitterDateFormatter {
+public class TwitterFooterFormatter {
 
     // Sat Mar 14 02:34:20 +0000 2009
     private static final String DATE_PATTERN = "EEE MMM dd HH:mm:ss Z yyyy";
+    private static final String AT = "@";
+    private static final String EM_DASH = "—";
 
-    private TwitterDateFormatter() {
+    private TwitterFooterFormatter() {
     }
 
-    public static String getTimestampFrom(Tweet tweet, Context context) {
+    public static String recapFrom(Tweet tweet, Context context){
+        return new StringBuilder()
+                .append(AT)
+                .append(tweet.user().screenName())
+                .append(EM_DASH)
+                .append(timestampFrom(tweet, context))
+                .toString();
+    }
+
+    private static String timestampFrom(Tweet tweet, Context context) {
 
         DateTime dateTime = DateTimeFormat.forPattern(DATE_PATTERN).withLocale(Locale.US).parseDateTime(tweet.createdAt());
         String time = DateTimeFormat.shortTime().print(dateTime);
