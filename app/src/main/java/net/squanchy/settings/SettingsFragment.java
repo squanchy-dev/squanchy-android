@@ -2,6 +2,7 @@ package net.squanchy.settings;
 
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.support.design.widget.Snackbar;
 import android.widget.ListView;
@@ -22,6 +23,7 @@ public class SettingsFragment extends PreferenceFragment {
     private SignInService signInService;
     private Navigator navigator;
 
+    private PreferenceCategory accountCategory;
     private Preference accountEmailPreference;
     private Preference accountSignInSignOutPreference;
 
@@ -32,6 +34,8 @@ public class SettingsFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.settings_preferences);
+        getPreferenceScreen().setOrderingAsAdded(false);
+
         displayBuildVersion();
 
         if (!BuildConfig.DEBUG) {
@@ -42,7 +46,9 @@ public class SettingsFragment extends PreferenceFragment {
         signInService = component.signInService();
         navigator = component.navigator();
 
+        accountCategory = (PreferenceCategory) findPreference(getString(R.string.account_category_key));
         accountEmailPreference = findPreference(getString(R.string.account_email_preference_key));
+        accountCategory.removePreference(accountEmailPreference);
         accountSignInSignOutPreference = findPreference(getString(R.string.account_signin_signout_preference_key));
 
         Preference aboutPreference = findPreference(getString(R.string.about_preference_key));
@@ -91,7 +97,9 @@ public class SettingsFragment extends PreferenceFragment {
     }
 
     private void onSignedInWith(FirebaseUser firebaseUser) {
+        accountCategory.addPreference(accountEmailPreference);
         accountEmailPreference.setTitle(firebaseUser.getEmail());
+
         accountSignInSignOutPreference.setTitle(R.string.sign_out_title);
         accountSignInSignOutPreference.setOnPreferenceClickListener(
                 preference -> {
@@ -105,7 +113,8 @@ public class SettingsFragment extends PreferenceFragment {
     }
 
     private void onSignedOut() {
-        accountEmailPreference.setTitle(R.string.settings_account_not_logged_in);
+        accountCategory.removePreference(accountEmailPreference);
+
         accountSignInSignOutPreference.setTitle(R.string.sign_in_title);
         accountSignInSignOutPreference.setOnPreferenceClickListener(
                 preference -> {

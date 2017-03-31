@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  tools:context="net.squanchy.settings.SettingsActivity">
 
   <PreferenceCategory
-    android:title="@string/account_category_label">
+    android:key="@string/account_category_key"
+    android:title="@string/account_category_label"
+    android:orderingFromXml="true">
 
     <Preference
       android:key="@string/account_email_preference_key"
-      android:title="@string/settings_account_not_logged_in"
+      android:title="@string/settings_account_not_signed_in"
       android:icon="@drawable/ic_email"
+      android:order="0"
       android:selectable="false" />
 
     <Preference
       android:key="@string/account_signin_signout_preference_key"
       android:title="@string/sign_in_title"
-      android:icon="@drawable/ic_signin_signout" />
+      android:icon="@drawable/ic_signin_signout"
+      android:order="1" />
 
   </PreferenceCategory>
 
