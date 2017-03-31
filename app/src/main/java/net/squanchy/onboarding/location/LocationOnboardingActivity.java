@@ -19,7 +19,6 @@ import net.squanchy.onboarding.Onboarding;
 import net.squanchy.onboarding.OnboardingPage;
 import net.squanchy.proximity.preconditions.LocationProviderPrecondition;
 import net.squanchy.proximity.preconditions.ProximityPreconditions;
-import net.squanchy.proximity.preconditions.ProximityPreconditionsOld;
 import net.squanchy.service.proximity.injection.ProximityService;
 
 import timber.log.Timber;
@@ -82,8 +81,8 @@ public class LocationOnboardingActivity extends TypefaceStyleableActivity {
         Snackbar.make(contentRoot, R.string.onboarding_error_google_client_connection, Snackbar.LENGTH_LONG).show();
     }
 
-    private ProximityPreconditionsOld.Callback proximityPreconditionsCallback() {
-        return new ProximityPreconditionsOld.Callback() {
+    private ProximityPreconditions.Callback proximityPreconditionsCallback() {
+        return new ProximityPreconditions.Callback() {
 
             @Override
             public void allChecksPassed() {
