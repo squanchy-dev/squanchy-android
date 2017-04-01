@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 import net.squanchy.tweets.domain.view.UrlEntity;
 import net.squanchy.tweets.model.TweetSpecialTextData;
 
-public class UrlParser extends TweetParserTemplate<UrlEntity>{
+class UrlParser extends TweetParserTemplate<UrlEntity> {
 
     @Override
     Pattern pattern() {
