@@ -18,7 +18,7 @@ abstract class TweetParser<T> {
         List<T> matches = new ArrayList<>();
 
         while (matcher.find()) {
-            matches.add(convertFrom(SpannableDataExtractor.extract(text, matcher.start(), matcher.end())));
+            matches.add(convertFrom(SpannableTextExtractor.extract(text, matcher.start(), matcher.end())));
         }
 
         return matches;
