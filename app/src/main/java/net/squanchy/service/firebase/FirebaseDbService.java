@@ -157,7 +157,13 @@ public final class FirebaseDbService {
             String path = String.format(Locale.US, FAVORITES_BY_ID_NODE, userId, eventId);
             action.call(database.child(path))
                     .addOnSuccessListener(result -> emitter.onComplete())
-                    .addOnFailureListener(emitter::onError);
+                    .addOnFailureListener(e -> {
+                        if (emitter.isDisposed()) {
+                            return;
+                        }
+
+                        emitter.onError(e);
+                    });
         });
     }
 
@@ -166,7 +172,13 @@ public final class FirebaseDbService {
             String path = String.format(Locale.US, ACHIEVEMENTS_BY_ID_NODE, userId, achievementId);
             database.child(path).setValue(timestamp)
                     .addOnSuccessListener(result -> emitter.onComplete())
-                    .addOnFailureListener(emitter::onError);
+                    .addOnFailureListener(e -> {
+                        if (emitter.isDisposed()) {
+                            return;
+                        }
+
+                        emitter.onError(e);
+                    });
         });
     }
 }

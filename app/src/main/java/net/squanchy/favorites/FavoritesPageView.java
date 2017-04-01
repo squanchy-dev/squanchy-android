@@ -53,7 +53,8 @@ public class FavoritesPageView extends CoordinatorLayout implements Loadable {
         favoritesListView = (FavoritesListView) findViewById(R.id.favorites_list);
         emptyViewSignedIn = findViewById(R.id.empty_view_signed_in);
         emptyViewSignedOut = findViewById(R.id.empty_view_signed_out);
-        emptyViewSignedOut.setOnClickListener(view -> requestSignIn());
+
+        findViewById(R.id.empty_view_signed_out_button).setOnClickListener(view -> requestSignIn());
 
         setupToolbar();
 

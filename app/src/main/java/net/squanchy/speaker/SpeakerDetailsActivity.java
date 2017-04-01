@@ -7,13 +7,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 
 import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.speaker.domain.view.Speaker;
 import net.squanchy.speaker.widget.SpeakerDetailsLayout;
+import net.squanchy.support.config.DialogLayoutParameters;
 import net.squanchy.support.lang.Optional;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -42,7 +42,9 @@ public class SpeakerDetailsActivity extends TypefaceStyleableActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_speaker_details);
-        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+        DialogLayoutParameters.fullHeight(this)
+                .applyTo(getWindow());
 
         SpeakerDetailsComponent component = SpeakerDetailsInjector.obtain(this);
         service = component.service();

@@ -33,6 +33,13 @@
   <dimen name="card_speaker_margin_end">2dp</dimen>
   <dimen name="card_other_illustration_width">132dp</dimen>
   <dimen name="card_other_illustration_height">62dp</dimen>
+  
+  <dimen name="favorites_empty_margin_horizontal">32dp</dimen>
+  <dimen name="favorites_empty_image_size">80dp</dimen>
+  <dimen name="favorites_empty_image_margin_bottom">16dp</dimen>
+  <dimen name="favorites_empty_blurb_margin_bottom">24dp</dimen>
+  <dimen name="favorites_empty_blurb_text">16sp</dimen>
+  <dimen name="favorites_empty_cta_height">56dp</dimen>
 
   <dimen name="search_title_margin">16dp</dimen>
   <dimen name="search_card_item_padding">8dp</dimen>
@@ -62,6 +69,7 @@
   <dimen name="event_details_body_label_text">14sp</dimen>
   <dimen name="event_details_body_value_line_spacing_extra">4sp</dimen>
   <dimen name="event_details_body_value_text">14sp</dimen>
+
   <dimen name="speaker_details_speaker_height">56dp</dimen>
   <dimen name="speaker_details_speaker_photo">40dp</dimen>
   <dimen name="speaker_details_speaker_photo_margin_end">8dp</dimen>
@@ -132,5 +140,19 @@
   <dimen name="color_button_padding_horizontal">8dp</dimen>
   <dimen name="color_button_padding_vertical">4dp</dimen>
   <dimen name="color_button_corner_radius">4dp</dimen>
+  <dimen name="favorites_empty_fab_margin_bottom">24dp</dimen>
+
+  <dimen name="first_start_with_no_network_padding">16dp</dimen>
+  <dimen name="first_start_with_no_network_title_text">24sp</dimen>
+  <dimen name="first_start_with_no_network_title_margin_bottom">24dp</dimen>
+  <dimen name="first_start_with_no_network_blurb_text">16sp</dimen>
+  <dimen name="first_start_with_no_network_blurb_margin_bottom">24dp</dimen>
+  <dimen name="first_start_with_no_network_cta_margin_horizontal">16dp</dimen>
+  <dimen name="first_start_with_no_network_cta_margin_bottom">24dp</dimen>
+  <dimen name="first_start_with_no_network_cta_text">16sp</dimen>
+  <dimen name="first_start_with_no_network_progress_margin_end">16dp</dimen>
+  <dimen name="first_start_with_no_network_cancel_min_height">56dp</dimen>
+  <dimen name="first_start_with_no_network_cancel_padding_horizontal">24dp</dimen>
+  <dimen name="fist_start_with_no_network_progress_size">48dp</dimen>
 
 </resources>
