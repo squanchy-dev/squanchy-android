@@ -1,5 +1,6 @@
 package net.squanchy.tweets.service;
 
+import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.URLSpan;
@@ -12,6 +13,9 @@ import com.twitter.sdk.android.core.models.Tweet;
 import com.twitter.sdk.android.core.models.UrlEntity;
 
 import java.util.List;
+import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.squanchy.support.lang.Lists;
 import net.squanchy.support.lang.Optional;
@@ -82,6 +86,8 @@ public class TweetModelConverter {
             url = offsetStart(url, startIndex);
             builder.setSpan(createUrlSpanFor(url), url.getStart(), url.getEnd(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
+
+        unescapeEntities(builder);
         return builder;
     }
 
@@ -124,6 +130,18 @@ public class TweetModelConverter {
 
     private URLSpan createUrlSpanFor(UrlEntity url) {
         return new URLSpan(url.url);
+    }
+
+    private void unescapeEntities(SpannableStringBuilder builder) {
+        String string = builder.toString();
+        Pattern pattern = Pattern.compile("&\\w+;");
+        Matcher matcher = pattern.matcher(string);
+
+        while (matcher.find()) {
+            MatchResult matchResult = matcher.toMatchResult();
+            Spanned unescapedEntity = Html.fromHtml(matchResult.group());
+            builder.replace(matchResult.start(), matchResult.end(), unescapedEntity);
+        }
     }
 
     private Optional<String> photoUrlMaybeFrom(List<String> urls) {
