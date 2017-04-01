@@ -42,7 +42,7 @@ public class FirstStartWithNoNetworkActivity extends TypefaceStyleableActivity {
 
     private ConnectivityManager.NetworkCallback networkCallback;
     private ConnectivityManager connectivityManager;
-    private Handler handler;
+    private Handler mainThreadHandler;
 
     private ImageView ctaProgressView;
     private TextView ctaTextView;
@@ -71,7 +71,7 @@ public class FirstStartWithNoNetworkActivity extends TypefaceStyleableActivity {
 
         connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         networkCallback = new NetworkConnectedCallback();
-        handler = new Handler(Looper.getMainLooper());
+        mainThreadHandler = new Handler(Looper.getMainLooper());
 
         shortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
     }
@@ -200,7 +200,7 @@ public class FirstStartWithNoNetworkActivity extends TypefaceStyleableActivity {
 
             receivedOnAvailable = true;
 
-            handler.post(FirstStartWithNoNetworkActivity.this::showNetworkAcquiredAndFinish);
+            mainThreadHandler.post(FirstStartWithNoNetworkActivity.this::showNetworkAcquiredAndFinish);
         }
     }
 
