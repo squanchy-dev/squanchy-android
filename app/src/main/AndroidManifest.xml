@@ -63,7 +63,8 @@
       android:theme="@style/Theme.Squanchy.Settings"
       android:label="@string/settings_label" />
 
-    <activity android:name="net.squanchy.contest.ContestActivity"
+    <activity
+      android:name="net.squanchy.contest.ContestActivity"
       android:theme="@style/Theme.Squanchy.Dialog" />
 
     <activity
@@ -75,6 +76,13 @@
       android:name="net.squanchy.about.licenses.LicensesActivity"
       android:theme="@style/Theme.Squanchy.Licenses"
       android:label="@string/licenses_label" />
+
+    <activity
+      android:name="net.squanchy.navigation.firststart.FirstStartWithNoNetworkActivity"
+      android:theme="@style/Theme.Squanchy.FirstStartWithNoNetwork"
+      android:label="@string/first_start_with_no_network_label"
+      android:excludeFromRecents="true"
+      android:noHistory="true" />
 
     <!-- We're ok with "directBootAware" only being used where Direct Boot exists (API 24+) -->
     <receiver

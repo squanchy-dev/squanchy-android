@@ -20,6 +20,7 @@ public class SignInService {
 
     public Completable signInAnonymouslyIfNecessary() {
         return authService.currentUser()
+                .firstOrError()
                 .flatMapCompletable(user -> {
                     if (user.isPresent()) {
                         return Completable.complete();

@@ -142,4 +142,17 @@
   <dimen name="color_button_corner_radius">4dp</dimen>
   <dimen name="favorites_empty_fab_margin_bottom">24dp</dimen>
 
+  <dimen name="first_start_with_no_network_padding">16dp</dimen>
+  <dimen name="first_start_with_no_network_title_text">24sp</dimen>
+  <dimen name="first_start_with_no_network_title_margin_bottom">24dp</dimen>
+  <dimen name="first_start_with_no_network_blurb_text">16sp</dimen>
+  <dimen name="first_start_with_no_network_blurb_margin_bottom">24dp</dimen>
+  <dimen name="first_start_with_no_network_cta_margin_horizontal">16dp</dimen>
+  <dimen name="first_start_with_no_network_cta_margin_bottom">24dp</dimen>
+  <dimen name="first_start_with_no_network_cta_text">16sp</dimen>
+  <dimen name="first_start_with_no_network_progress_margin_end">16dp</dimen>
+  <dimen name="first_start_with_no_network_cancel_min_height">56dp</dimen>
+  <dimen name="first_start_with_no_network_cancel_padding_horizontal">24dp</dimen>
+  <dimen name="fist_start_with_no_network_progress_size">48dp</dimen>
+
 </resources>

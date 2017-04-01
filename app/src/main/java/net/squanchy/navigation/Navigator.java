@@ -10,6 +10,7 @@ import net.squanchy.about.licenses.LicensesActivity;
 import net.squanchy.contest.ContestActivity;
 import net.squanchy.eventdetails.EventDetailsActivity;
 import net.squanchy.home.HomeActivity;
+import net.squanchy.navigation.firststart.FirstStartWithNoNetworkActivity;
 import net.squanchy.search.SearchActivity;
 import net.squanchy.settings.SettingsActivity;
 import net.squanchy.signin.SignInActivity;
@@ -94,7 +95,7 @@ public class Navigator {
     }
 
     public void toMapsFor(Venue venue) {
-        String mapsUrl = "http://maps.google.com/?daddr=" + Uri.encode(venue.name()) + "," + Uri.encode(venue.address());
+        String mapsUrl = String.format("http://maps.google.com/?daddr=%s,%s", Uri.encode(venue.name()), Uri.encode(venue.address()));
         toExternalUrl(mapsUrl);
     }
 
@@ -102,7 +103,7 @@ public class Navigator {
         start(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
     }
 
-    public void toSchedule() {
+    void toHomePage() {
         toSchedule(Optional.absent(), Optional.absent());
     }
 
@@ -148,6 +149,13 @@ public class Navigator {
 
     public void toFossLicenses() {
         start(new Intent(activity, LicensesActivity.class));
+    }
+
+    void toFirstStartWithNoNetwork(Intent continuationIntent) {
+        start(
+                FirstStartWithNoNetworkActivity.createIntentContinuingTo(activity, continuationIntent),
+                FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK
+        );
     }
 
     private void start(Intent intent) {
