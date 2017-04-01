@@ -9,7 +9,7 @@ import net.squanchy.tweets.domain.view.MentionEntity;
 import net.squanchy.tweets.domain.view.UrlEntity;
 
 @AutoValue
-public abstract class ParsedTweetData {
+public abstract class ParsedTweet {
 
     public abstract List<HashtagEntity> hashtags();
 
@@ -17,10 +17,11 @@ public abstract class ParsedTweetData {
 
     public abstract List<UrlEntity> urls();
 
-    public static ParsedTweetData create(List<HashtagEntity> hashtags,
-                                         List<MentionEntity> mentions,
-                                         List<UrlEntity> urls) {
-
-        return new AutoValue_ParsedTweetData(hashtags, mentions, urls);
+    public static ParsedTweet create(
+            List<HashtagEntity> hashtags,
+            List<MentionEntity> mentions,
+            List<UrlEntity> urls
+    ) {
+        return new AutoValue_ParsedTweet(hashtags, mentions, urls);
     }
 }

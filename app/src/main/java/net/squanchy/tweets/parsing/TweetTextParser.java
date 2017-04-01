@@ -1,7 +1,6 @@
 package net.squanchy.tweets.parsing;
 
-import net.squanchy.tweets.domain.view.Tweet;
-import net.squanchy.tweets.model.ParsedTweetData;
+import net.squanchy.tweets.model.ParsedTweet;
 
 public class TweetTextParser {
 
@@ -9,11 +8,11 @@ public class TweetTextParser {
     private static final MentionParser mentionParser = new MentionParser();
     private static final UrlParser urlParser = new UrlParser();
 
-    public ParsedTweetData parse(Tweet tweet) {
-        return ParsedTweetData.create(
-                hashtagParser.parseDataFrom(tweet.text()),
-                mentionParser.parseDataFrom(tweet.text()),
-                urlParser.parseDataFrom(tweet.text())
+    public ParsedTweet parse(String tweetText) {
+        return ParsedTweet.create(
+                hashtagParser.parseDataFrom(tweetText),
+                mentionParser.parseDataFrom(tweetText),
+                urlParser.parseDataFrom(tweetText)
         );
     }
 }
