@@ -207,6 +207,11 @@
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.Card.Title</item>
   </style>
 
+  <style name="Tweet.Card.Photo" parent="None">
+    <item name="android:maxHeight">@dimen/card_twitter_photo_max_height</item>
+    <item name="android:scaleType">fitCenter</item>
+  </style>
+
   <style name="Tweet.Card.Timestamp" parent="None">
     <item name="android:gravity">center</item>
     <item name="android:lineSpacingExtra">@dimen/card_twitter_line_spacing_extra</item>

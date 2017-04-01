@@ -22,6 +22,13 @@
       android:bufferType="spannable"
       tools:text="This is a tweet I wrote to show how it looks" />
 
+    <ImageView
+      android:id="@+id/tweet_photo"
+      style="@style/Tweet.Card.Photo"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/card_twitter_photo_margin_top"/>
+
     <net.squanchy.tweets.view.TweetFooterView
       android:id="@+id/tweet_footer"
       android:layout_width="match_parent"

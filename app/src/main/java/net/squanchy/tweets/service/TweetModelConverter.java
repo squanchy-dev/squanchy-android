@@ -71,15 +71,15 @@ public class TweetModelConverter {
         SpannableStringBuilder builder = new SpannableStringBuilder(text);
         for (HashtagEntity hashtag : hashtags) {
             hashtag = offsetStart(hashtag, startIndex);
-            builder.setSpan(createUrlSpanFor(hashtag), hashtag.getStart(), hashtag.getEnd(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+            builder.setSpan(createUrlSpanFor(hashtag), hashtag.getStart(), hashtag.getEnd(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         for (MentionEntity mention : mentions) {
             mention = offsetStart(mention, startIndex);
-            builder.setSpan(createUrlSpanFor(mention), mention.getStart(), mention.getEnd(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+            builder.setSpan(createUrlSpanFor(mention), mention.getStart(), mention.getEnd(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         for (UrlEntity url : urls) {
             url = offsetStart(url, startIndex);
-            builder.setSpan(createUrlSpanFor(url), url.getStart(), url.getEnd(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+            builder.setSpan(createUrlSpanFor(url), url.getStart(), url.getEnd(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         return builder;
     }
