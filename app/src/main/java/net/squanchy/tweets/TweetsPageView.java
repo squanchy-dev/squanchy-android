@@ -119,7 +119,7 @@ public class TweetsPageView extends LinearLayout implements Loadable {
     }
 
     private void onSuccess(List<TweetViewModel> tweet) {
-        tweetsAdapter.updateWith(tweet);
+        tweetsAdapter.updateWith(tweet, navigator::toTweet);
         onRefreshCompleted();
     }
 

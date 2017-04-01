@@ -1,6 +1,5 @@
 package net.squanchy.tweets.service;
 
-import com.google.auto.value.AutoValue;
 import com.twitter.sdk.android.core.models.HashtagEntity;
 import com.twitter.sdk.android.core.models.MediaEntity;
 import com.twitter.sdk.android.core.models.MentionEntity;
@@ -11,6 +10,7 @@ import java.util.List;
 
 import net.squanchy.support.lang.Lists;
 import net.squanchy.support.lang.Optional;
+import net.squanchy.tweets.domain.TweetLinkInfo;
 import net.squanchy.tweets.domain.view.TweetViewModel;
 import net.squanchy.tweets.domain.view.User;
 
@@ -18,7 +18,11 @@ public class TweetModelConverter {
 
     private static final String MEDIA_TYPE_PHOTO = "photo";
 
-    private final TweetSpannedTextBuilder tweetSpannedTextBuilder = new TweetSpannedTextBuilder();
+    private final TweetSpannedTextBuilder tweetSpannedTextBuilder;
+
+    public TweetModelConverter(TweetSpannedTextBuilder tweetSpannedTextBuilder) {
+        this.tweetSpannedTextBuilder = tweetSpannedTextBuilder;
+    }
 
     TweetViewModel toViewModel(Tweet tweet) {
         User user = User.create(tweet.user.name, tweet.user.screenName, tweet.user.profileImageUrlHttps);
@@ -37,6 +41,7 @@ public class TweetModelConverter {
                 .createdAt(tweet.createdAt)
                 .user(user)
                 .photoUrl(photoUrlMaybeFrom(photoUrls))
+                .linkInfo(TweetLinkInfo.from(tweet))
                 .build();
     }
 
@@ -70,19 +75,30 @@ public class TweetModelConverter {
         return Optional.of(urls.get(0));
     }
 
-    @AutoValue
-    abstract static class Range {
+    private static class Range {
+
+        private final int start;
+        private final int end;
 
         static Range from(List<Integer> positions, int textLength) {
             if (positions.size() != 2) {
-                return new AutoValue_TweetModelConverter_Range(0, textLength - 1);
+                return new Range(0, textLength - 1);
             }
-            return new AutoValue_TweetModelConverter_Range(positions.get(0), positions.get(1));
+            return new Range(positions.get(0), positions.get(1));
         }
 
-        abstract int start();
+        private Range(int start, int end) {
+            this.start = start;
+            this.end = end;
+        }
 
-        abstract int end();
+        int start() {
+            return start;
+        }
+
+        int end() {
+            return end;
+        }
 
         boolean contains(int start, int end) {
             return start() <= start && end <= end();

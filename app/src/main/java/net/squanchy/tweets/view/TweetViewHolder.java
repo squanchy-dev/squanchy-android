@@ -11,7 +11,8 @@ class TweetViewHolder extends ViewHolder {
         super(itemView);
     }
 
-    void updateWith(TweetViewModel tweet) {
-        ((TweetItemView) itemView).updateWith(tweet);
+    void updateWith(TweetViewModel tweet, TweetItemView.OnTweetClickedListener listener) {
+        TweetItemView tweetView = (TweetItemView) itemView;
+        tweetView.updateWith(tweet, listener);
     }
 }

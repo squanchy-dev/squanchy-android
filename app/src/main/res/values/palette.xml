@@ -32,6 +32,9 @@
   <color name="tertiary_text">#4d4d4d</color>
   <color name="hint_text">#bfbfbf</color>
 
+  <color name="tweet_text">#6a6a6a</color>
+  <color name="tweet_link">#1d8dee</color>
+
   <color name="text_inverse">#ffffff</color>
   <color name="text_inverse_inactive">#99ffffff</color>
 

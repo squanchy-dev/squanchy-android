@@ -3,7 +3,6 @@ package net.squanchy.tweets.service;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
-import android.text.style.URLSpan;
 
 import com.twitter.sdk.android.core.models.HashtagEntity;
 import com.twitter.sdk.android.core.models.MentionEntity;
@@ -14,12 +13,21 @@ import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class TweetSpannedTextBuilder {
+import net.squanchy.tweets.view.TweetUrlSpan;
+import net.squanchy.tweets.view.TweetUrlSpanFactory;
+
+public class TweetSpannedTextBuilder {
 
     private static final String BASE_TWITTER_URL = "https://twitter.com/";
     private static final String MENTION_URL_TEMPLATE = BASE_TWITTER_URL + "%s";
     private static final String QUERY_URL_TEMPLATE = BASE_TWITTER_URL + "search?q=%s";
     private static final Pattern HTML_ENTITY_PATTERN = Pattern.compile("&#?\\w+;");
+
+    private final TweetUrlSpanFactory spanFactory;
+
+    public TweetSpannedTextBuilder(TweetUrlSpanFactory spanFactory) {
+        this.spanFactory = spanFactory;
+    }
 
     Spanned applySpans(String text, int startIndex, List<HashtagEntity> hashtags, List<MentionEntity> mentions, List<UrlEntity> urls) {
         SpannableStringBuilder builder = new SpannableStringBuilder(text);
@@ -48,8 +56,12 @@ class TweetSpannedTextBuilder {
         );
     }
 
-    private URLSpan createUrlSpanFor(HashtagEntity hashtag) {
-        return new URLSpan(String.format(QUERY_URL_TEMPLATE, hashtag.text));
+    private TweetUrlSpan createUrlSpanFor(HashtagEntity hashtag) {
+        return span(String.format(QUERY_URL_TEMPLATE, hashtag.text));
+    }
+
+    private TweetUrlSpan span(String url) {
+        return spanFactory.createFor(url);
     }
 
     private MentionEntity offsetStart(MentionEntity mention, int startIndex) {
@@ -63,8 +75,8 @@ class TweetSpannedTextBuilder {
         );
     }
 
-    private URLSpan createUrlSpanFor(MentionEntity mention) {
-        return new URLSpan(String.format(MENTION_URL_TEMPLATE, mention.screenName));
+    private TweetUrlSpan createUrlSpanFor(MentionEntity mention) {
+        return span(String.format(MENTION_URL_TEMPLATE, mention.screenName));
     }
 
     private UrlEntity offsetStart(UrlEntity url, int startIndex) {
@@ -77,8 +89,8 @@ class TweetSpannedTextBuilder {
         );
     }
 
-    private URLSpan createUrlSpanFor(UrlEntity url) {
-        return new URLSpan(url.url);
+    private TweetUrlSpan createUrlSpanFor(UrlEntity url) {
+        return span(url.url);
     }
 
     private void unescapeEntities(SpannableStringBuilder builder) {
