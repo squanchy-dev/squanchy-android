@@ -15,14 +15,14 @@ import static net.squanchy.support.lang.Lists.map;
 
 public class TwitterService {
 
-    private final TwitterRepository repo;
+    private final TwitterRepository repository;
 
-    public TwitterService(TwitterRepository repo) {
-        this.repo = repo;
+    public TwitterService(TwitterRepository repository) {
+        this.repository = repository;
     }
 
     public Observable<List<Tweet>> refresh(String query) {
-        return repo.load(query)
+        return repository.load(query)
                 .map(search -> search.tweets)
                 .map(list -> filter(list, tweet -> tweet.retweetedStatus == null))
                 .map(tweets -> map(tweets, this::toViewModel));
@@ -31,13 +31,23 @@ public class TwitterService {
     private Tweet toViewModel(com.twitter.sdk.android.core.models.Tweet tweet) {
         return Tweet.builder()
                 .id(tweet.id)
-                .text(tweet.text)
+                .text(displayableTextFor(tweet))
                 .createdAt(tweet.createdAt)
                 .user(User.create(tweet.user.name, tweet.user.screenName, tweet.user.profileImageUrl))
                 .hashtags(parseHashtags(tweet.entities.hashtags))
                 .mentions(parseMentions(tweet.entities.userMentions))
                 .urls(parseUrls(tweet.entities.urls))
                 .build();
+    }
+
+    private String displayableTextFor(com.twitter.sdk.android.core.models.Tweet tweet) {
+        List<Integer> displayTextRange = tweet.displayTextRange;
+        if (displayTextRange.size() != 2) {
+            return tweet.text;
+        }
+        Integer beginIndex = displayTextRange.get(0);
+        Integer endIndex = displayTextRange.get(1);
+        return tweet.text.substring(beginIndex, endIndex);
     }
 
     private List<HashtagEntity> parseHashtags(List<com.twitter.sdk.android.core.models.HashtagEntity> entities) {
