@@ -4,8 +4,7 @@ import java.util.regex.Pattern;
 
 abstract class TweetRegexParser<T> extends TweetParser<T> {
 
-    @ParsingRegex
-    abstract String regex();
+    abstract Regex regex();
 
     @Override
     Pattern pattern() {

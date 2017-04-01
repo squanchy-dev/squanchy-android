@@ -6,8 +6,8 @@ import net.squanchy.tweets.model.TweetSpecialTextData;
 class HashtagParser extends TweetRegexParser<HashtagEntity> {
 
     @Override
-    String regex() {
-        return ParsingRegex.HASHTAG_REGEX;
+    Regex regex() {
+        return Regex.HASHTAG;
     }
 
     @Override

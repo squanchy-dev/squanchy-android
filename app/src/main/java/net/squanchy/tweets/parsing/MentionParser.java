@@ -6,8 +6,8 @@ import net.squanchy.tweets.model.TweetSpecialTextData;
 class MentionParser extends TweetRegexParser<MentionEntity> {
 
     @Override
-    String regex() {
-        return ParsingRegex.MENTIONS_REGEX;
+    Regex regex() {
+        return Regex.MENTION;
     }
 
     @Override
