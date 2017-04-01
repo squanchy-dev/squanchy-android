@@ -1,6 +1,6 @@
 package net.squanchy.tweets.parsing;
 
-import android.util.Patterns;
+import android.support.v4.util.PatternsCompat;
 
 import java.util.regex.Pattern;
 
@@ -11,7 +11,7 @@ class UrlParser extends TweetParserTemplate<UrlEntity> {
 
     @Override
     Pattern pattern() {
-        return Patterns.WEB_URL;
+        return PatternsCompat.WEB_URL;
     }
 
     @Override
