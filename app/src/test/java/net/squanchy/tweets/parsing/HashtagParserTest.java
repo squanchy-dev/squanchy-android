@@ -22,10 +22,10 @@ public class HashtagParserTest {
 
         assertThat(hashtags).containsExactly(
                 HashtagEntity.create("#droidconit", 23, 34),
-                HashtagEntity.create("#Torino", 46, 53),
-                HashtagEntity.create("#android", 54, 62),
-                HashtagEntity.create("#adroiddev", 63, 73),
-                HashtagEntity.create("#AndDev", 74, 81)
+                HashtagEntity.create("#Torino", 58, 65),
+                HashtagEntity.create("#android", 66, 74),
+                HashtagEntity.create("#adroiddev", 75, 85),
+                HashtagEntity.create("#AndDev", 86, 93)
 
         );
     }
