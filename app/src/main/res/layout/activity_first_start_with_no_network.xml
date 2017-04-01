@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="wrap_content"
+  android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:orientation="vertical"
   android:padding="@dimen/first_start_with_no_network_padding"
@@ -26,7 +26,10 @@
     style="@style/FirstStartWithNoNetwork.Cta"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/first_start_with_no_network_cta_margin_bottom">
+    android:layout_marginStart="@dimen/first_start_with_no_network_cta_margin_horizontal"
+    android:layout_marginEnd="@dimen/first_start_with_no_network_cta_margin_horizontal"
+    android:layout_marginBottom="@dimen/first_start_with_no_network_cta_margin_bottom"
+    android:gravity="center">
 
     <ProgressBar
       android:layout_width="wrap_content"
@@ -46,7 +49,7 @@
     style="@style/FirstStartWithNoNetwork.Cancel"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_gravity="end"
+    android:layout_gravity="center_horizontal|bottom"
     android:text="@string/first_start_with_no_network_cancel_button" />
 
 </LinearLayout>

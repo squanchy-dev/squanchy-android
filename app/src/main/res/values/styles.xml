@@ -518,6 +518,8 @@
   <style name="FirstStartWithNoNetwork.Cancel" parent="Button.Colored">
     <item name="android:backgroundTint">?colorPrimary</item>
     <item name="android:minHeight">@dimen/first_start_with_no_network_cancel_min_height</item>
+    <item name="android:paddingStart">@dimen/first_start_with_no_network_cancel_padding_horizontal</item>
+    <item name="android:paddingEnd">@dimen/first_start_with_no_network_cancel_padding_horizontal</item>
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.FirstStartWithNoNetwork.Cancel</item>
   </style>
 

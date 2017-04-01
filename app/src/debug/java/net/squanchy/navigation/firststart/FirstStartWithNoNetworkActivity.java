@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
+import net.squanchy.support.config.DialogLayoutParameters;
 
 public class FirstStartWithNoNetworkActivity extends TypefaceStyleableActivity {
 
@@ -33,6 +34,9 @@ public class FirstStartWithNoNetworkActivity extends TypefaceStyleableActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_first_start_with_no_network);
+
+        DialogLayoutParameters.wrapHeight(this)
+                .applyTo(getWindow());
 
         findViewById(R.id.first_start_nevermind_button).setOnClickListener(view -> finish());
 

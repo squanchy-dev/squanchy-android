@@ -147,9 +147,11 @@
   <dimen name="first_start_with_no_network_title_margin_bottom">24dp</dimen>
   <dimen name="first_start_with_no_network_blurb_text">16sp</dimen>
   <dimen name="first_start_with_no_network_blurb_margin_bottom">24dp</dimen>
-  <dimen name="first_start_with_no_network_cta_text">16sp</dimen>
+  <dimen name="first_start_with_no_network_cta_margin_horizontal">16dp</dimen>
   <dimen name="first_start_with_no_network_cta_margin_bottom">24dp</dimen>
+  <dimen name="first_start_with_no_network_cta_text">16sp</dimen>
   <dimen name="first_start_with_no_network_progress_margin_end">16dp</dimen>
   <dimen name="first_start_with_no_network_cancel_min_height">56dp</dimen>
+  <dimen name="first_start_with_no_network_cancel_padding_horizontal">24dp</dimen>
 
 </resources>
