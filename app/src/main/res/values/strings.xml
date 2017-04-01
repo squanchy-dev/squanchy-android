@@ -33,11 +33,10 @@
   <string name="speaker_list_title">Speakers</string>
   <string name="talks_list_title">Talks</string>
 
-  <string name="tweet_date_not_available">Unknown date</string>
-  <string name="tweet_date_recent_format">%1$s at %2$s</string>
-  <string name="tweet_date_normal_format">%1$s at %2$s</string>
-  <string name="tweet_date_today">Today</string>
-  <string name="tweet_date_yesterday">Yesterday</string>
+  <string name="tweet_footer_format" translatable="false">\@%1$s—%2$s</string>
+  <string name="tweet_date_format">%1$s at %2$s</string>
+  <string name="tweet_date_today">today</string>
+  <string name="tweet_date_yesterday">yesterday</string>
 
   <string name="event_details_body_label_when_text">When</string>
   <string name="event_details_body_label_where_text">Where</string>

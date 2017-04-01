@@ -15,12 +15,13 @@ import net.squanchy.support.ContextUnwrapper;
 import net.squanchy.support.lang.Optional;
 import net.squanchy.support.widget.CardLayout;
 import net.squanchy.tweets.domain.view.TweetViewModel;
-import net.squanchy.tweets.util.TwitterFooterFormatter;
 
 public class TweetItemView extends CardLayout {
 
     @Nullable
     private ImageLoader imageLoader;
+
+    private final TwitterFooterFormatter footerFormatter;
 
     private TextView tweetTextView;
     private TweetFooterView tweetFooterView;
@@ -38,6 +39,8 @@ public class TweetItemView extends CardLayout {
             imageLoader = ImageLoaderInjector.obtain(activity)
                     .imageLoader();
         }
+
+        footerFormatter = new TwitterFooterFormatter(context);
     }
 
     @Override
@@ -53,7 +56,7 @@ public class TweetItemView extends CardLayout {
 
     public void updateWith(TweetViewModel tweet) {
         tweetTextView.setText(tweet.spannedText());
-        tweetFooterView.updateWith(tweet.user().photoUrl(), TwitterFooterFormatter.recapFrom(tweet, getContext()));
+        tweetFooterView.updateWith(tweet.user().photoUrl(), footerFormatter.footerTextFor(tweet));
 
         if (imageLoader == null) {
             throw new IllegalStateException("Unable to access the ImageLoader, it hasn't been initialized yet");
