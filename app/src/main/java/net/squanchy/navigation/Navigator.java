@@ -98,12 +98,12 @@ public class Navigator {
         attemptDeeplinkOrFallback(deeplinkStatusUrl, fallbackStatusUrl);
     }
 
-    private void attemptDeeplinkOrFallback(String deeplinkProfileUrl, String fallbackProfileUrl) {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(deeplinkProfileUrl));
+    private void attemptDeeplinkOrFallback(String deeplinkUrl, String fallbackUrl) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(deeplinkUrl));
         if (canResolve(intent)) {
             start(intent);
         } else {
-            toExternalUrl(fallbackProfileUrl);
+            toExternalUrl(fallbackUrl);
         }
     }
 
