@@ -14,6 +14,7 @@ import com.twitter.sdk.android.core.models.UrlEntity;
 import java.util.List;
 
 import net.squanchy.support.lang.Lists;
+import net.squanchy.support.lang.Optional;
 import net.squanchy.tweets.domain.view.TweetViewModel;
 import net.squanchy.tweets.domain.view.User;
 
@@ -40,7 +41,7 @@ public class TweetModelConverter {
                 .spannedText(applySpans(displayableText, displayTextRange.start(), hashtags, mentions, urls))
                 .createdAt(tweet.createdAt)
                 .user(user)
-                .photoUrls(photoUrls)
+                .photoUrl(photoUrlMaybeFrom(photoUrls))
                 .build();
     }
 
@@ -123,6 +124,13 @@ public class TweetModelConverter {
 
     private URLSpan createUrlSpanFor(UrlEntity url) {
         return new URLSpan(url.url);
+    }
+
+    private Optional<String> photoUrlMaybeFrom(List<String> urls) {
+        if (urls.isEmpty()) {
+            return Optional.absent();
+        }
+        return Optional.of(urls.get(0));
     }
 
     @AutoValue

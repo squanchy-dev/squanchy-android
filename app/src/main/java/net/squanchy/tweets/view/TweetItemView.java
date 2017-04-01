@@ -12,6 +12,7 @@ import net.squanchy.R;
 import net.squanchy.imageloader.ImageLoader;
 import net.squanchy.imageloader.ImageLoaderInjector;
 import net.squanchy.support.ContextUnwrapper;
+import net.squanchy.support.lang.Optional;
 import net.squanchy.support.widget.CardLayout;
 import net.squanchy.tweets.domain.view.TweetViewModel;
 import net.squanchy.tweets.util.TwitterFooterFormatter;
@@ -59,11 +60,12 @@ public class TweetItemView extends CardLayout {
         }
 
         tweetPhotoView.setImageDrawable(null);
-        if (tweet.photoUrls().isEmpty()) {
+        Optional<String> photoUrl = tweet.photoUrl();
+        if (photoUrl.isPresent()) {
             tweetPhotoView.setVisibility(GONE);
         } else {
             tweetPhotoView.setVisibility(VISIBLE);
-            imageLoader.load(tweet.photoUrls().get(0)).into(tweetPhotoView);         // TODO make photoUrls be Optional<String> photoUrlx
+            imageLoader.load(photoUrl.get()).into(tweetPhotoView);
         }
     }
 }

@@ -2,7 +2,7 @@ package net.squanchy.tweets.domain.view;
 
 import com.google.auto.value.AutoValue;
 
-import java.util.List;
+import net.squanchy.support.lang.Optional;
 
 @AutoValue
 public abstract class TweetViewModel {
@@ -17,7 +17,7 @@ public abstract class TweetViewModel {
 
     public abstract String createdAt();
 
-    public abstract List<String> photoUrls();
+    public abstract Optional<String> photoUrl();
 
     public static Builder builder() {
         return new AutoValue_TweetViewModel.Builder();
@@ -36,7 +36,7 @@ public abstract class TweetViewModel {
 
         public abstract Builder createdAt(String createdAt);
 
-        public abstract Builder photoUrls(List<String> photoUrls);
+        public abstract Builder photoUrl(Optional<String> photoUrl);
 
         public abstract TweetViewModel build();
     }
