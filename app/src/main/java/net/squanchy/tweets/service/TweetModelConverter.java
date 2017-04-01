@@ -10,6 +10,7 @@ import java.util.List;
 
 import net.squanchy.support.lang.Lists;
 import net.squanchy.support.lang.Optional;
+import net.squanchy.tweets.domain.TweetLinkInfo;
 import net.squanchy.tweets.domain.view.TweetViewModel;
 import net.squanchy.tweets.domain.view.User;
 
@@ -40,6 +41,7 @@ public class TweetModelConverter {
                 .createdAt(tweet.createdAt)
                 .user(user)
                 .photoUrl(photoUrlMaybeFrom(photoUrls))
+                .linkInfo(TweetLinkInfo.from(tweet))
                 .build();
     }
 

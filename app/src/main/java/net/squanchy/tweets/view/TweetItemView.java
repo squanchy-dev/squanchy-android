@@ -14,6 +14,7 @@ import net.squanchy.imageloader.ImageLoaderInjector;
 import net.squanchy.support.ContextUnwrapper;
 import net.squanchy.support.lang.Optional;
 import net.squanchy.support.widget.CardLayout;
+import net.squanchy.tweets.domain.TweetLinkInfo;
 import net.squanchy.tweets.domain.view.TweetViewModel;
 
 public class TweetItemView extends CardLayout {
@@ -54,21 +55,30 @@ public class TweetItemView extends CardLayout {
         tweetTextView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
-    public void updateWith(TweetViewModel tweet) {
+    public void updateWith(TweetViewModel tweet, OnTweetClickedListener listener) {
         tweetTextView.setText(tweet.spannedText());
+        updatePhotoWith(tweet.photoUrl());
         tweetFooterView.updateWith(tweet.user().photoUrl(), footerFormatter.footerTextFor(tweet));
 
+        setOnClickListener(view -> listener.onTweetClicked(tweet.linkInfo()));
+    }
+
+    private void updatePhotoWith(Optional<String> photoUrl) {
         if (imageLoader == null) {
             throw new IllegalStateException("Unable to access the ImageLoader, it hasn't been initialized yet");
         }
 
         tweetPhotoView.setImageDrawable(null);
-        Optional<String> photoUrl = tweet.photoUrl();
         if (photoUrl.isPresent()) {
             tweetPhotoView.setVisibility(VISIBLE);
             imageLoader.load(photoUrl.get()).into(tweetPhotoView);
         } else {
             tweetPhotoView.setVisibility(GONE);
         }
+    }
+
+    public interface OnTweetClickedListener {
+
+        void onTweetClicked(TweetLinkInfo tweet);
     }
 }

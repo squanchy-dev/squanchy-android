@@ -16,6 +16,7 @@ import net.squanchy.settings.SettingsActivity;
 import net.squanchy.signin.SignInActivity;
 import net.squanchy.speaker.SpeakerDetailsActivity;
 import net.squanchy.support.lang.Optional;
+import net.squanchy.tweets.domain.TweetLinkInfo;
 import net.squanchy.venue.domain.view.Venue;
 
 import timber.log.Timber;
@@ -26,6 +27,12 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
 
 public class Navigator {
+
+    private static final String TWITTER_PROFILE_URL_TEMPLATE = "twitter://user?screen_name=%s";
+    private static final String TWITTER_PROFILE_FALLBACK_URL_TEMPLATE = "https://twitter.com/%s";
+    private static final String TWITTER_STATUS_URL_TEMPLATE = "twitter://status?status_id=%s";
+    private static final String TWITTER_STATUS_FALLBACK_URL_TEMPLATE = "http://twitter.com/%1$s/status/%2$s";
+    private static final String MAPS_VENUE_URL_TEMPLATE = "http://maps.google.com/?daddr=%s,%s";
 
     private final Activity activity;
     private final DebugActivityIntentFactory debugActivityIntentFactory;
@@ -80,11 +87,23 @@ public class Navigator {
     }
 
     public void toTwitterProfile(String username) {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("twitter://user?screen_name=" + username));
+        String deeplinkProfileUrl = String.format(TWITTER_PROFILE_URL_TEMPLATE, username);
+        String fallbackProfileUrl = String.format(TWITTER_PROFILE_FALLBACK_URL_TEMPLATE, username);
+        attemptDeeplinkOrFallback(deeplinkProfileUrl, fallbackProfileUrl);
+    }
+
+    public void toTweet(TweetLinkInfo linkInfo) {
+        String deeplinkStatusUrl = String.format(TWITTER_STATUS_URL_TEMPLATE, linkInfo.statusId());
+        String fallbackStatusUrl = String.format(TWITTER_STATUS_FALLBACK_URL_TEMPLATE, linkInfo.screenName(), linkInfo.statusId());
+        attemptDeeplinkOrFallback(deeplinkStatusUrl, fallbackStatusUrl);
+    }
+
+    private void attemptDeeplinkOrFallback(String deeplinkProfileUrl, String fallbackProfileUrl) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(deeplinkProfileUrl));
         if (canResolve(intent)) {
             start(intent);
         } else {
-            toExternalUrl("https://twitter.com/" + username);
+            toExternalUrl(fallbackProfileUrl);
         }
     }
 
@@ -95,7 +114,7 @@ public class Navigator {
     }
 
     public void toMapsFor(Venue venue) {
-        String mapsUrl = String.format("http://maps.google.com/?daddr=%s,%s", Uri.encode(venue.name()), Uri.encode(venue.address()));
+        String mapsUrl = String.format(MAPS_VENUE_URL_TEMPLATE, Uri.encode(venue.name()), Uri.encode(venue.address()));
         toExternalUrl(mapsUrl);
     }
 
