@@ -1,9 +1,12 @@
 package net.squanchy.settings;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
+import android.preference.SwitchPreference;
 import android.support.design.widget.Snackbar;
 import android.widget.ListView;
 
@@ -12,6 +15,8 @@ import com.google.firebase.auth.FirebaseUser;
 import net.squanchy.BuildConfig;
 import net.squanchy.R;
 import net.squanchy.navigation.Navigator;
+import net.squanchy.onboarding.OnboardingPage;
+import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.signin.SignInService;
 import net.squanchy.support.lang.Optional;
 
@@ -20,12 +25,16 @@ import io.reactivex.disposables.Disposable;
 
 public class SettingsFragment extends PreferenceFragment {
 
+    public static final int TURN_LOCATION_ON_REQUEST_CODE = 6429;
+
     private SignInService signInService;
     private Navigator navigator;
+    private ProximityService proximityService;
 
     private PreferenceCategory accountCategory;
     private Preference accountEmailPreference;
     private Preference accountSignInSignOutPreference;
+    private SwitchPreference locationPreferences;
 
     private Disposable subscription;
 
@@ -45,11 +54,16 @@ public class SettingsFragment extends PreferenceFragment {
         SettingsComponent component = SettingsInjector.obtain(getActivity());
         signInService = component.signInService();
         navigator = component.navigator();
+        proximityService = component.proximityService();
 
         accountCategory = (PreferenceCategory) findPreference(getString(R.string.account_category_key));
         accountEmailPreference = findPreference(getString(R.string.account_email_preference_key));
         accountCategory.removePreference(accountEmailPreference);
         accountSignInSignOutPreference = findPreference(getString(R.string.account_signin_signout_preference_key));
+        locationPreferences = (SwitchPreference) findPreference(getString(R.string.location_preference_key));
+        locationPreferences.setOnPreferenceChangeListener((preference, isEnabling) ->
+                handleLocationPreferenceChange((Boolean) isEnabling)
+        );
 
         Preference aboutPreference = findPreference(getString(R.string.about_preference_key));
         aboutPreference.setOnPreferenceClickListener(preference -> {
@@ -122,6 +136,25 @@ public class SettingsFragment extends PreferenceFragment {
                     return true;
                 }
         );
+    }
+
+    private boolean handleLocationPreferenceChange(Boolean isEnabling) {
+        if (isEnabling) {
+            navigator.toOnboardingForResult(OnboardingPage.LOCATION, TURN_LOCATION_ON_REQUEST_CODE);
+            return false;
+        } else {
+            proximityService.stopRadar();
+            return true;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == TURN_LOCATION_ON_REQUEST_CODE &&
+                resultCode == Activity.RESULT_OK) {
+            locationPreferences.setChecked(true);
+        }
     }
 
     @Override
