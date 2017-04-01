@@ -20,6 +20,7 @@ final class RoutingInjector {
                 .deepLinkModule(new DeepLinkModule())
                 .navigationModule(new NavigationModule())
                 .signInModule(new SignInModule())
+                .routingModule(new RoutingModule())
                 .build();
     }
 }
