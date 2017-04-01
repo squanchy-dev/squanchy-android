@@ -124,6 +124,7 @@ public class TweetsPageView extends LinearLayout implements Loadable {
     }
 
     private void onError(Throwable throwable) {
+        Timber.e(throwable, "Error refreshing the Twitter timeline");
         onRefreshCompleted();
     }
 

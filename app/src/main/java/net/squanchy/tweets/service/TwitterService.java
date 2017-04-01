@@ -1,7 +1,11 @@
 package net.squanchy.tweets.service;
 
+import com.google.auto.value.AutoValue;
+import com.twitter.sdk.android.core.models.MediaEntity;
+
 import java.util.List;
 
+import net.squanchy.support.lang.Lists;
 import net.squanchy.tweets.domain.view.HashtagEntity;
 import net.squanchy.tweets.domain.view.MentionEntity;
 import net.squanchy.tweets.domain.view.Tweet;
@@ -29,36 +33,77 @@ public class TwitterService {
     }
 
     private Tweet toViewModel(com.twitter.sdk.android.core.models.Tweet tweet) {
+        User user = User.create(tweet.user.name, tweet.user.screenName, tweet.user.profileImageUrl);
+
+        Range displayTextRange = Range.from(tweet.displayTextRange, tweet.text.length());
+        List<HashtagEntity> hashtags = parseHashtags(tweet.entities.hashtags, displayTextRange);
+        List<MentionEntity> mentions = parseMentions(tweet.entities.userMentions, displayTextRange);
+        List<UrlEntity> urls = parseUrls(tweet.entities.urls, displayTextRange);
+        List<String> media = parseMedia(tweet.entities.media, displayTextRange);
+
         return Tweet.builder()
                 .id(tweet.id)
-                .text(displayableTextFor(tweet))
+                .text(displayableTextFor(tweet, displayTextRange))
                 .createdAt(tweet.createdAt)
-                .user(User.create(tweet.user.name, tweet.user.screenName, tweet.user.profileImageUrl))
-                .hashtags(parseHashtags(tweet.entities.hashtags))
-                .mentions(parseMentions(tweet.entities.userMentions))
-                .urls(parseUrls(tweet.entities.urls))
+                .user(user)
+                .hashtags(hashtags)
+                .mentions(mentions)
+                .urls(urls)
+                .mediaUrls(media)
                 .build();
     }
 
-    private String displayableTextFor(com.twitter.sdk.android.core.models.Tweet tweet) {
-        List<Integer> displayTextRange = tweet.displayTextRange;
-        if (displayTextRange.size() != 2) {
-            return tweet.text;
-        }
-        Integer beginIndex = displayTextRange.get(0);
-        Integer endIndex = displayTextRange.get(1);
+    private String displayableTextFor(com.twitter.sdk.android.core.models.Tweet tweet, Range displayTextRange) {
+        Integer beginIndex = displayTextRange.start();
+        Integer endIndex = displayTextRange.end();
         return tweet.text.substring(beginIndex, endIndex);
     }
 
-    private List<HashtagEntity> parseHashtags(List<com.twitter.sdk.android.core.models.HashtagEntity> entities) {
-        return map(entities, entity -> HashtagEntity.create(entity.text, entity.getStart(), entity.getEnd()));
+    private List<HashtagEntity> parseHashtags(List<com.twitter.sdk.android.core.models.HashtagEntity> entities, Range displayTextRange) {
+        List<com.twitter.sdk.android.core.models.HashtagEntity> visibleEntities = Lists.filter(entities, entity ->
+                displayTextRange.contains(entity.getStart(), entity.getEnd())
+        );
+        return map(visibleEntities, entity -> HashtagEntity.create(entity.text, entity.getStart(), entity.getEnd()));
     }
 
-    private List<MentionEntity> parseMentions(List<com.twitter.sdk.android.core.models.MentionEntity> entities) {
-        return map(entities, entity -> MentionEntity.create(entity.screenName, entity.getStart(), entity.getEnd()));
+    private List<MentionEntity> parseMentions(List<com.twitter.sdk.android.core.models.MentionEntity> entities, Range displayTextRange) {
+        List<com.twitter.sdk.android.core.models.MentionEntity> visibleEntities = Lists.filter(entities, entity ->
+                displayTextRange.contains(entity.getStart(), entity.getEnd())
+        );
+        return map(visibleEntities, entity -> MentionEntity.create(entity.screenName, entity.getStart(), entity.getEnd()));
     }
 
-    private List<UrlEntity> parseUrls(List<com.twitter.sdk.android.core.models.UrlEntity> entities) {
-        return map(entities, entity -> UrlEntity.create(entity.url, entity.getStart(), entity.getEnd()));
+    private List<UrlEntity> parseUrls(List<com.twitter.sdk.android.core.models.UrlEntity> entities, Range displayTextRange) {
+        List<com.twitter.sdk.android.core.models.UrlEntity> visibleEntities = Lists.filter(entities, entity ->
+                displayTextRange.contains(entity.getStart(), entity.getEnd())
+        );
+        return map(visibleEntities, entity -> UrlEntity.create(entity.url, entity.getStart(), entity.getEnd()));
+    }
+
+    private List<String> parseMedia(List<MediaEntity> media, Range displayTextRange) {
+        List<MediaEntity> photos = Lists.filter(media, mediaEntity -> "photo".equals(mediaEntity.type));
+        List<com.twitter.sdk.android.core.models.MediaEntity> visibleEntities = Lists.filter(photos, entity ->
+                displayTextRange.contains(entity.getStart(), entity.getEnd())
+        );
+        return map(visibleEntities, mediaEntity -> mediaEntity.mediaUrlHttps);
+    }
+
+    @AutoValue
+    abstract static class Range {
+
+        static Range from(List<Integer> positions, int textLength) {
+            if (positions.size() != 2) {
+                return new AutoValue_TwitterService_Range(0, textLength - 1);
+            }
+            return new AutoValue_TwitterService_Range(positions.get(0), positions.get(1));
+        }
+
+        abstract int start();
+
+        abstract int end();
+
+        boolean contains(int start, int end) {
+            return start() <= start && end <= end();
+        }
     }
 }

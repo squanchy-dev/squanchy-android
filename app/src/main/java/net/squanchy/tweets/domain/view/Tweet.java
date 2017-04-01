@@ -15,6 +15,8 @@ public abstract class Tweet {
 
     public abstract String createdAt();
 
+    public abstract List<String> mediaUrls();
+
     public abstract List<HashtagEntity> hashtags();
 
     public abstract List<MentionEntity> mentions();
@@ -35,6 +37,8 @@ public abstract class Tweet {
         public abstract Builder user(User user);
 
         public abstract Builder createdAt(String createdAt);
+
+        public abstract Builder mediaUrls(List<String> mediaUrls);
 
         public abstract Builder hashtags(List<HashtagEntity> hashtagEntities);
 
