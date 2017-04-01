@@ -5,15 +5,15 @@ import android.text.Spanned;
 import android.text.style.URLSpan;
 
 import com.google.auto.value.AutoValue;
+import com.twitter.sdk.android.core.models.HashtagEntity;
 import com.twitter.sdk.android.core.models.MediaEntity;
+import com.twitter.sdk.android.core.models.MentionEntity;
+import com.twitter.sdk.android.core.models.UrlEntity;
 
 import java.util.List;
 
 import net.squanchy.support.lang.Lists;
-import net.squanchy.tweets.domain.view.HashtagEntity;
-import net.squanchy.tweets.domain.view.MentionEntity;
 import net.squanchy.tweets.domain.view.Tweet;
-import net.squanchy.tweets.domain.view.UrlEntity;
 import net.squanchy.tweets.domain.view.User;
 
 import io.reactivex.Observable;
@@ -67,62 +67,80 @@ public class TwitterService {
         return tweet.text.substring(beginIndex, endIndex);
     }
 
-    private List<HashtagEntity> parseHashtags(List<com.twitter.sdk.android.core.models.HashtagEntity> entities, Range displayTextRange) {
-        List<com.twitter.sdk.android.core.models.HashtagEntity> visibleEntities = Lists.filter(entities, entity ->
-                displayTextRange.contains(entity.getStart(), entity.getEnd())
-        );
-        return map(visibleEntities, entity -> HashtagEntity.create(entity.text, entity.getStart(), entity.getEnd()));
+    private List<HashtagEntity> parseHashtags(List<HashtagEntity> entities, Range displayTextRange) {
+        return Lists.filter(entities, entity -> displayTextRange.contains(entity.getStart(), entity.getEnd()));
     }
 
-    private List<MentionEntity> parseMentions(List<com.twitter.sdk.android.core.models.MentionEntity> entities, Range displayTextRange) {
-        List<com.twitter.sdk.android.core.models.MentionEntity> visibleEntities = Lists.filter(entities, entity ->
-                displayTextRange.contains(entity.getStart(), entity.getEnd())
-        );
-        return map(visibleEntities, entity -> MentionEntity.create(entity.screenName, entity.getStart(), entity.getEnd()));
+    private List<MentionEntity> parseMentions(List<MentionEntity> entities, Range displayTextRange) {
+        return Lists.filter(entities, entity -> displayTextRange.contains(entity.getStart(), entity.getEnd()));
     }
 
-    private List<UrlEntity> parseUrls(List<com.twitter.sdk.android.core.models.UrlEntity> entities, Range displayTextRange) {
-        List<com.twitter.sdk.android.core.models.UrlEntity> visibleEntities = Lists.filter(entities, entity ->
-                displayTextRange.contains(entity.getStart(), entity.getEnd())
-        );
-        return map(visibleEntities, entity -> UrlEntity.create(entity.url, entity.getStart(), entity.getEnd()));
+    private List<UrlEntity> parseUrls(List<UrlEntity> entities, Range displayTextRange) {
+        return Lists.filter(entities, entity -> displayTextRange.contains(entity.getStart(), entity.getEnd()));
     }
 
     private List<String> parseMedia(List<MediaEntity> media, Range displayTextRange) {
         List<MediaEntity> photos = Lists.filter(media, mediaEntity -> MEDIA_TYPE_PHOTO.equals(mediaEntity.type));
-        List<com.twitter.sdk.android.core.models.MediaEntity> visibleEntities = Lists.filter(photos, entity ->
-                displayTextRange.contains(entity.getStart(), entity.getEnd())
-        );
+        List<MediaEntity> visibleEntities = Lists.filter(photos, entity -> displayTextRange.contains(entity.getStart(), entity.getEnd()));
         return map(visibleEntities, mediaEntity -> mediaEntity.mediaUrlHttps);
     }
 
     private Spanned applySpans(String text, int startIndex, List<HashtagEntity> hashtags, List<MentionEntity> mentions, List<UrlEntity> urls) {
         SpannableStringBuilder builder = new SpannableStringBuilder(text);
         for (HashtagEntity hashtag : hashtags) {
-            hashtag = hashtag.offsetForStart(startIndex);
-            builder.setSpan(createUrlSpanFor(hashtag), hashtag.start(), hashtag.end(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+            hashtag = offsetStart(hashtag, startIndex);
+            builder.setSpan(createUrlSpanFor(hashtag), hashtag.getStart(), hashtag.getEnd(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         }
         for (MentionEntity mention : mentions) {
-            mention = mention.offsetForStart(startIndex);
-            builder.setSpan(createUrlSpanFor(mention), mention.start(), mention.end(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+            mention = offsetStart(mention, startIndex);
+            builder.setSpan(createUrlSpanFor(mention), mention.getStart(), mention.getEnd(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         }
         for (UrlEntity url : urls) {
-            url = url.offsetForStart(startIndex);
-            builder.setSpan(createUrlSpanFor(url), url.start(), url.end(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+            url = offsetStart(url, startIndex);
+            builder.setSpan(createUrlSpanFor(url), url.getStart(), url.getEnd(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         }
         return builder;
     }
 
+    private HashtagEntity offsetStart(HashtagEntity hashtag, int startIndex) {
+        return new HashtagEntity(
+                hashtag.text,
+                hashtag.getStart() - startIndex,
+                hashtag.getEnd() - startIndex
+        );
+    }
+
     private URLSpan createUrlSpanFor(HashtagEntity hashtag) {
-        return new URLSpan(String.format(QUERY_URL_TEMPLATE, hashtag.text()));
+        return new URLSpan(String.format(QUERY_URL_TEMPLATE, hashtag.text));
+    }
+
+    private MentionEntity offsetStart(MentionEntity mention, int startIndex) {
+        return new MentionEntity(
+                mention.id,
+                mention.idStr,
+                mention.name,
+                mention.screenName,
+                mention.getStart() - startIndex,
+                mention.getEnd() - startIndex
+        );
     }
 
     private URLSpan createUrlSpanFor(MentionEntity mention) {
-        return new URLSpan(String.format(MENTION_URL_TEMPLATE, mention.displayName()));
+        return new URLSpan(String.format(MENTION_URL_TEMPLATE, mention.screenName));
+    }
+
+    private UrlEntity offsetStart(UrlEntity url, int startIndex) {
+        return new UrlEntity(
+                url.url,
+                url.expandedUrl,
+                url.displayUrl,
+                url.getStart() - startIndex,
+                url.getEnd() - startIndex
+        );
     }
 
     private URLSpan createUrlSpanFor(UrlEntity url) {
-        return new URLSpan(url.url());
+        return new URLSpan(url.url);
     }
 
     @AutoValue
