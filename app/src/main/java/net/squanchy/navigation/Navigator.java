@@ -151,10 +151,10 @@ public class Navigator {
         start(new Intent(activity, LicensesActivity.class));
     }
 
-    void toFirstStartWithNoNetwork() {
+    void toFirstStartWithNoNetwork(Intent continuationIntent) {
         start(
-                new Intent(activity, FirstStartWithNoNetworkActivity.class),
-                FLAG_ACTIVITY_SINGLE_TOP | FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK
+                FirstStartWithNoNetworkActivity.createIntentContinuingTo(activity, continuationIntent),
+                FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK
         );
     }
 

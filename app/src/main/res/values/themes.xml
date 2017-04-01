@@ -120,4 +120,6 @@
 
   <style name="Theme.Squanchy.Licenses" parent="Theme.Squanchy.PrimaryStatusBar" />
 
+  <style name="Theme.Squanchy.FirstStartWithNoNetwork" parent="Theme.Squanchy.Dialog" />
+
 </resources>

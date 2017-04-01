@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:gravity="center"
+  android:orientation="vertical">
+
+  <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:text="Not so fast!" />
+
+  <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:text="Unfortunately, the first time you open this app you will need to be connected to the internet." />
+
+  <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:text="Go ahead, connect to a network. I'll be waiting." />
+
+  <ProgressBar
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
+
+  <Button
+    android:id="@+id/first_start_nevermind_button"
+    android:layout_width="wrap_content"
+    android:layout_height="56dp"
+    android:layout_gravity="end"
+    android:text="You know what, nevermind"/>
+
+</LinearLayout>

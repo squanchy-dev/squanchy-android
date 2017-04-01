@@ -3,7 +3,9 @@ package net.squanchy.navigation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.widget.Toast;
 
+import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.navigation.deeplink.DeepLinkRouter;
 import net.squanchy.signin.SignInService;
@@ -58,9 +60,20 @@ public class RoutingActivity extends TypefaceStyleableActivity {
         if (isFirstStart()) {
             // We likely have no data here and it'd be a horrible UX, so we show a warning instead
             // to let people know it won't work.
-            navigator.toFirstStartWithNoNetwork();
-            finish();
+            Intent continuationIntent = createContinueIntentFrom(getIntent());
+            navigator.toFirstStartWithNoNetwork(continuationIntent);
+        } else {
+            Toast.makeText(this, R.string.routing_sign_in_unexpected_error, Toast.LENGTH_LONG).show();
         }
+
+        finish();
+    }
+
+    private Intent createContinueIntentFrom(Intent intent) {
+        Intent continuationIntent = new Intent(intent);
+        continuationIntent.removeCategory(Intent.CATEGORY_LAUNCHER);
+        continuationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        return continuationIntent;
     }
 
     private boolean isFirstStart() {
@@ -68,8 +81,8 @@ public class RoutingActivity extends TypefaceStyleableActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStop() {
+        super.onStop();
         subscription.dispose();
     }
 }
