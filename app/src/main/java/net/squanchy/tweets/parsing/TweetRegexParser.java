@@ -2,13 +2,13 @@ package net.squanchy.tweets.parsing;
 
 import java.util.regex.Pattern;
 
-abstract class TweetRegexParserTemplate<T> extends TweetParserTemplate<T> {
+abstract class TweetRegexParser<T> extends TweetParser<T> {
 
     @ParsingRegex
     abstract String regex();
 
     @Override
     Pattern pattern() {
-        return Pattern.compile(regex());
+        return regex().pattern();
     }
 }
