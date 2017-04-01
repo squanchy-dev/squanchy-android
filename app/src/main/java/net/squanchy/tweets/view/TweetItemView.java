@@ -62,10 +62,10 @@ public class TweetItemView extends CardLayout {
         tweetPhotoView.setImageDrawable(null);
         Optional<String> photoUrl = tweet.photoUrl();
         if (photoUrl.isPresent()) {
-            tweetPhotoView.setVisibility(GONE);
-        } else {
             tweetPhotoView.setVisibility(VISIBLE);
             imageLoader.load(photoUrl.get()).into(tweetPhotoView);
+        } else {
+            tweetPhotoView.setVisibility(GONE);
         }
     }
 }
