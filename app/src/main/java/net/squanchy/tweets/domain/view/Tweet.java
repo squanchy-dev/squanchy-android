@@ -19,12 +19,6 @@ public abstract class Tweet {
 
     public abstract List<String> mediaUrls();
 
-    public abstract List<HashtagEntity> hashtags();
-
-    public abstract List<MentionEntity> mentions();
-
-    public abstract List<UrlEntity> urls();
-
     public static Builder builder() {
         return new AutoValue_Tweet.Builder();
     }
@@ -43,12 +37,6 @@ public abstract class Tweet {
         public abstract Builder createdAt(String createdAt);
 
         public abstract Builder mediaUrls(List<String> mediaUrls);
-
-        public abstract Builder hashtags(List<HashtagEntity> hashtagEntities);
-
-        public abstract Builder mentions(List<MentionEntity> mentionEntities);
-
-        public abstract Builder urls(List<UrlEntity> urlEntities);
 
         public abstract Tweet build();
     }

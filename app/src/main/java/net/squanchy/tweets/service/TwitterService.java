@@ -57,9 +57,6 @@ public class TwitterService {
                 .spannedText(applySpans(displayableText, displayTextRange.start(), hashtags, mentions, urls))
                 .createdAt(tweet.createdAt)
                 .user(user)
-                .hashtags(hashtags)
-                .mentions(mentions)
-                .urls(urls)
                 .mediaUrls(media)
                 .build();
     }
