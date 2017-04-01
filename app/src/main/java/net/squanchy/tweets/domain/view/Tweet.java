@@ -11,6 +11,8 @@ public abstract class Tweet {
 
     public abstract String text();
 
+    public abstract CharSequence spannedText();
+
     public abstract User user();
 
     public abstract String createdAt();
@@ -33,6 +35,8 @@ public abstract class Tweet {
         public abstract Builder id(long id);
 
         public abstract Builder text(String text);
+
+        public abstract Builder spannedText(CharSequence spannedText);
 
         public abstract Builder user(User user);
 

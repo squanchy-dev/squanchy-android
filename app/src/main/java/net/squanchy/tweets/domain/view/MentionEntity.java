@@ -14,4 +14,8 @@ public abstract class MentionEntity {
     public abstract int start();
 
     public abstract int end();
+
+    public MentionEntity offsetForStart(int startIndex) {
+        return create(displayName(), start() - startIndex, end() - startIndex);
+    }
 }

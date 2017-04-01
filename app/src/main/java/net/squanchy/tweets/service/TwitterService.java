@@ -1,5 +1,9 @@
 package net.squanchy.tweets.service;
 
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.URLSpan;
+
 import com.google.auto.value.AutoValue;
 import com.twitter.sdk.android.core.models.MediaEntity;
 
@@ -19,6 +23,11 @@ import static net.squanchy.support.lang.Lists.map;
 
 public class TwitterService {
 
+    private static final String MEDIA_TYPE_PHOTO = "photo";
+    private static final String BASE_TWITTER_URL = "https://twitter.com/";
+    private static final String MENTION_URL_TEMPLATE = BASE_TWITTER_URL + "%s";
+    private static final String QUERY_URL_TEMPLATE = BASE_TWITTER_URL + "search?q=%s";
+
     private final TwitterRepository repository;
 
     public TwitterService(TwitterRepository repository) {
@@ -33,17 +42,19 @@ public class TwitterService {
     }
 
     private Tweet toViewModel(com.twitter.sdk.android.core.models.Tweet tweet) {
-        User user = User.create(tweet.user.name, tweet.user.screenName, tweet.user.profileImageUrl);
+        User user = User.create(tweet.user.name, tweet.user.screenName, tweet.user.profileImageUrlHttps);
 
         Range displayTextRange = Range.from(tweet.displayTextRange, tweet.text.length());
         List<HashtagEntity> hashtags = parseHashtags(tweet.entities.hashtags, displayTextRange);
         List<MentionEntity> mentions = parseMentions(tweet.entities.userMentions, displayTextRange);
         List<UrlEntity> urls = parseUrls(tweet.entities.urls, displayTextRange);
         List<String> media = parseMedia(tweet.entities.media, displayTextRange);
+        String displayableText = displayableTextFor(tweet, displayTextRange);
 
         return Tweet.builder()
                 .id(tweet.id)
-                .text(displayableTextFor(tweet, displayTextRange))
+                .text(displayableText)
+                .spannedText(applySpans(displayableText, displayTextRange.start(), hashtags, mentions, urls))
                 .createdAt(tweet.createdAt)
                 .user(user)
                 .hashtags(hashtags)
@@ -81,11 +92,40 @@ public class TwitterService {
     }
 
     private List<String> parseMedia(List<MediaEntity> media, Range displayTextRange) {
-        List<MediaEntity> photos = Lists.filter(media, mediaEntity -> "photo".equals(mediaEntity.type));
+        List<MediaEntity> photos = Lists.filter(media, mediaEntity -> MEDIA_TYPE_PHOTO.equals(mediaEntity.type));
         List<com.twitter.sdk.android.core.models.MediaEntity> visibleEntities = Lists.filter(photos, entity ->
                 displayTextRange.contains(entity.getStart(), entity.getEnd())
         );
         return map(visibleEntities, mediaEntity -> mediaEntity.mediaUrlHttps);
+    }
+
+    private Spanned applySpans(String text, int startIndex, List<HashtagEntity> hashtags, List<MentionEntity> mentions, List<UrlEntity> urls) {
+        SpannableStringBuilder builder = new SpannableStringBuilder(text);
+        for (HashtagEntity hashtag : hashtags) {
+            hashtag = hashtag.offsetForStart(startIndex);
+            builder.setSpan(createUrlSpanFor(hashtag), hashtag.start(), hashtag.end(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        }
+        for (MentionEntity mention : mentions) {
+            mention = mention.offsetForStart(startIndex);
+            builder.setSpan(createUrlSpanFor(mention), mention.start(), mention.end(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        }
+        for (UrlEntity url : urls) {
+            url = url.offsetForStart(startIndex);
+            builder.setSpan(createUrlSpanFor(url), url.start(), url.end(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        }
+        return builder;
+    }
+
+    private URLSpan createUrlSpanFor(HashtagEntity hashtag) {
+        return new URLSpan(String.format(QUERY_URL_TEMPLATE, hashtag.text()));
+    }
+
+    private URLSpan createUrlSpanFor(MentionEntity mention) {
+        return new URLSpan(String.format(MENTION_URL_TEMPLATE, mention.displayName()));
+    }
+
+    private URLSpan createUrlSpanFor(UrlEntity url) {
+        return new URLSpan(url.url());
     }
 
     @AutoValue

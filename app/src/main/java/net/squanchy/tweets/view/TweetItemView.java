@@ -8,13 +8,9 @@ import android.widget.TextView;
 import net.squanchy.R;
 import net.squanchy.support.widget.CardLayout;
 import net.squanchy.tweets.domain.view.Tweet;
-import net.squanchy.tweets.parsing.TweetTextParser;
-import net.squanchy.tweets.util.TweetTextFormatter;
 import net.squanchy.tweets.util.TwitterFooterFormatter;
 
 public class TweetItemView extends CardLayout {
-
-    private final TweetTextFormatter tweetTextFormatter;
 
     private TextView tweetTextView;
     private TweetFooterView tweetFooterView;
@@ -25,9 +21,6 @@ public class TweetItemView extends CardLayout {
 
     public TweetItemView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-
-        TweetTextParser tweetTextParser = new TweetTextParser();
-        tweetTextFormatter = new TweetTextFormatter(tweetTextParser);
     }
 
     @Override
@@ -41,7 +34,7 @@ public class TweetItemView extends CardLayout {
     }
 
     public void updateWith(Tweet tweet) {
-        tweetTextView.setText(tweetTextFormatter.format(tweet));
+        tweetTextView.setText(tweet.spannedText());
         tweetFooterView.updateWith(tweet.user().photoUrl(), TwitterFooterFormatter.recapFrom(tweet, getContext()));
     }
 }

@@ -14,4 +14,8 @@ public abstract class UrlEntity {
     public abstract int start();
 
     public abstract int end();
+
+    public UrlEntity offsetForStart(int startIndex) {
+        return create(url(), start() - startIndex, end() - startIndex);
+    }
 }

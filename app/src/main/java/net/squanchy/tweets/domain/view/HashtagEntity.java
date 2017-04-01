@@ -14,4 +14,8 @@ public abstract class HashtagEntity {
     public abstract int start();
 
     public abstract int end();
+
+    public HashtagEntity offsetForStart(int startIndex) {
+        return create(text(), start() - startIndex, end() - startIndex);
+    }
 }
