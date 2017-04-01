@@ -153,5 +153,6 @@
   <dimen name="first_start_with_no_network_progress_margin_end">16dp</dimen>
   <dimen name="first_start_with_no_network_cancel_min_height">56dp</dimen>
   <dimen name="first_start_with_no_network_cancel_padding_horizontal">24dp</dimen>
+  <dimen name="fist_start_with_no_network_progress_size">48dp</dimen>
 
 </resources>

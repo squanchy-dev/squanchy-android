@@ -503,7 +503,8 @@
   </style>
 
   <style name="FirstStartWithNoNetwork.Cta" parent="None">
-    <item name="android:gravity">fill_horizontal|center_vertical</item>
+    <item name="android:animateLayoutChanges">true</item>
+    <item name="android:gravity">center</item>
   </style>
 
   <style name="FirstStartWithNoNetwork.Cta.Text" parent="None">

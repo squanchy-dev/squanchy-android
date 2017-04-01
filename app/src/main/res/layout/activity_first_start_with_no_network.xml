@@ -3,6 +3,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   android:orientation="vertical"
   android:padding="@dimen/first_start_with_no_network_padding"
   tools:context="net.squanchy.navigation.firststart.FirstStartWithNoNetworkActivity">
@@ -28,15 +29,18 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/first_start_with_no_network_cta_margin_horizontal"
     android:layout_marginEnd="@dimen/first_start_with_no_network_cta_margin_horizontal"
-    android:layout_marginBottom="@dimen/first_start_with_no_network_cta_margin_bottom"
-    android:gravity="center">
+    android:layout_marginBottom="@dimen/first_start_with_no_network_cta_margin_bottom">
 
-    <ProgressBar
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginEnd="@dimen/first_start_with_no_network_progress_margin_end" />
+    <ImageView
+      android:id="@+id/cta_progressbar"
+      android:layout_width="@dimen/fist_start_with_no_network_progress_size"
+      android:layout_height="@dimen/fist_start_with_no_network_progress_size"
+      android:layout_marginEnd="@dimen/first_start_with_no_network_progress_margin_end"
+      android:scaleType="fitCenter"
+      app:srcCompat="@drawable/indeterminate_progress_animated" />
 
     <TextView
+      android:id="@+id/cta_text"
       style="@style/FirstStartWithNoNetwork.Cta.Text"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"

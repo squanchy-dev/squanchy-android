@@ -120,6 +120,8 @@
 
   <style name="Theme.Squanchy.Licenses" parent="Theme.Squanchy.PrimaryStatusBar" />
 
-  <style name="Theme.Squanchy.FirstStartWithNoNetwork" parent="Theme.Squanchy.Dialog" />
+  <style name="Theme.Squanchy.FirstStartWithNoNetwork" parent="Theme.Squanchy.Dialog">
+    <item name="android:backgroundDimEnabled">false</item>
+  </style>
 
 </resources>
