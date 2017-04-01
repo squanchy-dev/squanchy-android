@@ -6,6 +6,7 @@
     <item name="colorPrimaryDark">@color/primary_dark</item>
     <item name="colorAccent">@color/accent</item>
     <item name="colorControlNormal">@color/white</item>
+    <item name="tweetLinkTextColor">@color/tweet_link</item>
     <item name="android:statusBarColor">@color/status_bar</item>
     <item name="android:textColorPrimary">@color/primary_text</item>
     <item name="android:textColorPrimaryInverse">@color/text_inverse</item>

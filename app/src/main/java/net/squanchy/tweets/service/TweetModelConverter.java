@@ -18,7 +18,11 @@ public class TweetModelConverter {
 
     private static final String MEDIA_TYPE_PHOTO = "photo";
 
-    private final TweetSpannedTextBuilder tweetSpannedTextBuilder = new TweetSpannedTextBuilder();
+    private final TweetSpannedTextBuilder tweetSpannedTextBuilder;
+
+    public TweetModelConverter(TweetSpannedTextBuilder tweetSpannedTextBuilder) {
+        this.tweetSpannedTextBuilder = tweetSpannedTextBuilder;
+    }
 
     TweetViewModel toViewModel(Tweet tweet) {
         User user = User.create(tweet.user.name, tweet.user.screenName, tweet.user.profileImageUrlHttps);
