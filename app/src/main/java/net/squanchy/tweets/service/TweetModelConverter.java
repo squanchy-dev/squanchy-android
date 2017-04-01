@@ -8,12 +8,13 @@ import com.google.auto.value.AutoValue;
 import com.twitter.sdk.android.core.models.HashtagEntity;
 import com.twitter.sdk.android.core.models.MediaEntity;
 import com.twitter.sdk.android.core.models.MentionEntity;
+import com.twitter.sdk.android.core.models.Tweet;
 import com.twitter.sdk.android.core.models.UrlEntity;
 
 import java.util.List;
 
 import net.squanchy.support.lang.Lists;
-import net.squanchy.tweets.domain.view.Tweet;
+import net.squanchy.tweets.domain.view.TweetViewModel;
 import net.squanchy.tweets.domain.view.User;
 
 public class TweetModelConverter {
@@ -26,7 +27,7 @@ public class TweetModelConverter {
     public TweetModelConverter() {
     }
 
-    Tweet toViewModel(com.twitter.sdk.android.core.models.Tweet tweet) {
+    TweetViewModel toViewModel(Tweet tweet) {
         User user = User.create(tweet.user.name, tweet.user.screenName, tweet.user.profileImageUrlHttps);
 
         Range displayTextRange = Range.from(tweet.displayTextRange, tweet.text.length());
@@ -36,7 +37,7 @@ public class TweetModelConverter {
         List<String> media = parseMedia(tweet.entities.media, displayTextRange);
         String displayableText = displayableTextFor(tweet, displayTextRange);
 
-        return Tweet.builder()
+        return TweetViewModel.builder()
                 .id(tweet.id)
                 .text(displayableText)
                 .spannedText(applySpans(displayableText, displayTextRange.start(), hashtags, mentions, urls))
@@ -46,7 +47,7 @@ public class TweetModelConverter {
                 .build();
     }
 
-    private String displayableTextFor(com.twitter.sdk.android.core.models.Tweet tweet, Range displayTextRange) {
+    private String displayableTextFor(Tweet tweet, Range displayTextRange) {
         Integer beginIndex = displayTextRange.start();
         Integer endIndex = displayTextRange.end();
         return tweet.text.substring(beginIndex, endIndex);

@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import net.squanchy.R;
 import net.squanchy.support.widget.CardLayout;
-import net.squanchy.tweets.domain.view.Tweet;
+import net.squanchy.tweets.domain.view.TweetViewModel;
 import net.squanchy.tweets.util.TwitterFooterFormatter;
 
 public class TweetItemView extends CardLayout {
@@ -33,7 +33,7 @@ public class TweetItemView extends CardLayout {
         tweetTextView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
-    public void updateWith(Tweet tweet) {
+    public void updateWith(TweetViewModel tweet) {
         tweetTextView.setText(tweet.spannedText());
         tweetFooterView.updateWith(tweet.user().photoUrl(), TwitterFooterFormatter.recapFrom(tweet, getContext()));
     }

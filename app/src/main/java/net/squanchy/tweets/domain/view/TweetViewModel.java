@@ -5,7 +5,7 @@ import com.google.auto.value.AutoValue;
 import java.util.List;
 
 @AutoValue
-public abstract class Tweet {
+public abstract class TweetViewModel {
 
     public abstract long id();
 
@@ -20,7 +20,7 @@ public abstract class Tweet {
     public abstract List<String> mediaUrls();
 
     public static Builder builder() {
-        return new AutoValue_Tweet.Builder();
+        return new AutoValue_TweetViewModel.Builder();
     }
 
     @AutoValue.Builder
@@ -38,6 +38,6 @@ public abstract class Tweet {
 
         public abstract Builder mediaUrls(List<String> mediaUrls);
 
-        public abstract Tweet build();
+        public abstract TweetViewModel build();
     }
 }
