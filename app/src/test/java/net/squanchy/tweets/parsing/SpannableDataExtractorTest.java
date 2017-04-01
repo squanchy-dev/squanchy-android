@@ -15,7 +15,7 @@ public class SpannableDataExtractorTest {
         int end = 34;
         String text = "#droidconit";
 
-        TweetSpannableText data = SpannableDataExtractor.extract(TweetTestData.MentionsAndUrls.TEST_TWEET_WITh_MENTIONS_AND_URLS, start, end);
+        TweetSpannableText data = SpannableDataExtractor.extract("Look who's speaking at #droidconit this year! #Torino #android #adroiddev #AndDev https://t.co/wOMBeVINLW https://t.co/La0kCuU4aa", start, end);
 
         assertEquals(text, data.text());
     }
