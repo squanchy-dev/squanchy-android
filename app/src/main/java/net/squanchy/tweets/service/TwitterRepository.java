@@ -25,8 +25,7 @@ public class TwitterRepository {
     }
 
     private Call<Search> createSearchRequest(String query) throws Exception{
-        throw new SocketTimeoutException("Fake");
-        //return searchService.tweets(query, null, null, null, "recent", MAX_ITEM_PER_REQUEST, null, null, null, true);
+        return searchService.tweets(query, null, null, null, "recent", MAX_ITEM_PER_REQUEST, null, null, null, true);
     }
 
     private static class SearchCallback extends Callback<Search> {
