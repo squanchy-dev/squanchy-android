@@ -3,7 +3,7 @@ package net.squanchy.tweets.parsing;
 import net.squanchy.tweets.domain.view.HashtagEntity;
 import net.squanchy.tweets.model.TweetSpannableText;
 
-class HashtagParser extends TweetRegexParser<HashtagEntity> {
+class HashtagParser extends ElementRegexParser<HashtagEntity> {
 
     @Override
     Regex regex() {

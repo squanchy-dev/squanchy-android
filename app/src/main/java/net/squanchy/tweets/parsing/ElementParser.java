@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 import net.squanchy.tweets.model.TweetSpannableText;
 
-abstract class TweetParser<T> {
+abstract class ElementParser<T> {
 
     abstract Pattern pattern();
 

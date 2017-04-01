@@ -2,7 +2,7 @@ package net.squanchy.tweets.parsing;
 
 import java.util.regex.Pattern;
 
-abstract class TweetRegexParser<T> extends TweetParser<T> {
+abstract class ElementRegexParser<T> extends ElementParser<T> {
 
     abstract Regex regex();
 
