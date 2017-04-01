@@ -24,17 +24,14 @@ public class TweetModelConverter {
     private static final String MENTION_URL_TEMPLATE = BASE_TWITTER_URL + "%s";
     private static final String QUERY_URL_TEMPLATE = BASE_TWITTER_URL + "search?q=%s";
 
-    public TweetModelConverter() {
-    }
-
     TweetViewModel toViewModel(Tweet tweet) {
         User user = User.create(tweet.user.name, tweet.user.screenName, tweet.user.profileImageUrlHttps);
 
         Range displayTextRange = Range.from(tweet.displayTextRange, tweet.text.length());
-        List<HashtagEntity> hashtags = parseHashtags(tweet.entities.hashtags, displayTextRange);
-        List<MentionEntity> mentions = parseMentions(tweet.entities.userMentions, displayTextRange);
-        List<UrlEntity> urls = parseUrls(tweet.entities.urls, displayTextRange);
-        List<String> media = parseMedia(tweet.entities.media, displayTextRange);
+        List<HashtagEntity> hashtags = onlyHashtagsInRange(tweet.entities.hashtags, displayTextRange);
+        List<MentionEntity> mentions = onlyMentionsInRange(tweet.entities.userMentions, displayTextRange);
+        List<UrlEntity> urls = onlyUrlsInRange(tweet.entities.urls, displayTextRange);
+        List<String> photoUrls = onlyPhotoUrls(tweet.entities.media);
         String displayableText = displayableTextFor(tweet, displayTextRange);
 
         return TweetViewModel.builder()
@@ -43,7 +40,7 @@ public class TweetModelConverter {
                 .spannedText(applySpans(displayableText, displayTextRange.start(), hashtags, mentions, urls))
                 .createdAt(tweet.createdAt)
                 .user(user)
-                .mediaUrls(media)
+                .photoUrls(photoUrls)
                 .build();
     }
 
@@ -53,22 +50,21 @@ public class TweetModelConverter {
         return tweet.text.substring(beginIndex, endIndex);
     }
 
-    private List<HashtagEntity> parseHashtags(List<HashtagEntity> entities, Range displayTextRange) {
+    private List<HashtagEntity> onlyHashtagsInRange(List<HashtagEntity> entities, Range displayTextRange) {
         return Lists.filter(entities, entity -> displayTextRange.contains(entity.getStart(), entity.getEnd()));
     }
 
-    private List<MentionEntity> parseMentions(List<MentionEntity> entities, Range displayTextRange) {
+    private List<MentionEntity> onlyMentionsInRange(List<MentionEntity> entities, Range displayTextRange) {
         return Lists.filter(entities, entity -> displayTextRange.contains(entity.getStart(), entity.getEnd()));
     }
 
-    private List<UrlEntity> parseUrls(List<UrlEntity> entities, Range displayTextRange) {
+    private List<UrlEntity> onlyUrlsInRange(List<UrlEntity> entities, Range displayTextRange) {
         return Lists.filter(entities, entity -> displayTextRange.contains(entity.getStart(), entity.getEnd()));
     }
 
-    private List<String> parseMedia(List<MediaEntity> media, Range displayTextRange) {
+    private List<String> onlyPhotoUrls(List<MediaEntity> media) {
         List<MediaEntity> photos = Lists.filter(media, mediaEntity -> MEDIA_TYPE_PHOTO.equals(mediaEntity.type));
-        List<MediaEntity> visibleEntities = Lists.filter(photos, entity -> displayTextRange.contains(entity.getStart(), entity.getEnd()));
-        return Lists.map(visibleEntities, mediaEntity -> mediaEntity.mediaUrlHttps);
+        return Lists.map(photos, mediaEntity -> mediaEntity.mediaUrlHttps);
     }
 
     private Spanned applySpans(String text, int startIndex, List<HashtagEntity> hashtags, List<MentionEntity> mentions, List<UrlEntity> urls) {
@@ -134,9 +130,9 @@ public class TweetModelConverter {
 
         static Range from(List<Integer> positions, int textLength) {
             if (positions.size() != 2) {
-                return new AutoValue_TwitterService_Range(0, textLength - 1);
+                return new AutoValue_TweetModelConverter_Range(0, textLength - 1);
             }
-            return new AutoValue_TwitterService_Range(positions.get(0), positions.get(1));
+            return new AutoValue_TweetModelConverter_Range(positions.get(0), positions.get(1));
         }
 
         abstract int start();

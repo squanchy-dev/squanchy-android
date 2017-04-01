@@ -17,7 +17,7 @@ public abstract class TweetViewModel {
 
     public abstract String createdAt();
 
-    public abstract List<String> mediaUrls();
+    public abstract List<String> photoUrls();
 
     public static Builder builder() {
         return new AutoValue_TweetViewModel.Builder();
@@ -36,7 +36,7 @@ public abstract class TweetViewModel {
 
         public abstract Builder createdAt(String createdAt);
 
-        public abstract Builder mediaUrls(List<String> mediaUrls);
+        public abstract Builder photoUrls(List<String> photoUrls);
 
         public abstract TweetViewModel build();
     }
