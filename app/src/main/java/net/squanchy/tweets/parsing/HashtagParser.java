@@ -1,7 +1,7 @@
 package net.squanchy.tweets.parsing;
 
 import net.squanchy.tweets.domain.view.HashtagEntity;
-import net.squanchy.tweets.model.TweetSpecialTextData;
+import net.squanchy.tweets.model.TweetSpannableText;
 
 class HashtagParser extends TweetRegexParser<HashtagEntity> {
 
@@ -11,7 +11,7 @@ class HashtagParser extends TweetRegexParser<HashtagEntity> {
     }
 
     @Override
-    HashtagEntity convertFrom(TweetSpecialTextData data) {
+    HashtagEntity convertFrom(TweetSpannableText data) {
         return HashtagEntity.create(data.text(), data.begin(), data.end());
     }
 }

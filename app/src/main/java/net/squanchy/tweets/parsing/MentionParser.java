@@ -1,7 +1,7 @@
 package net.squanchy.tweets.parsing;
 
 import net.squanchy.tweets.domain.view.MentionEntity;
-import net.squanchy.tweets.model.TweetSpecialTextData;
+import net.squanchy.tweets.model.TweetSpannableText;
 
 class MentionParser extends TweetRegexParser<MentionEntity> {
 
@@ -11,7 +11,7 @@ class MentionParser extends TweetRegexParser<MentionEntity> {
     }
 
     @Override
-    MentionEntity convertFrom(TweetSpecialTextData data) {
+    MentionEntity convertFrom(TweetSpannableText data) {
         return MentionEntity.create(data.text(), data.begin(), data.end());
     }
 }

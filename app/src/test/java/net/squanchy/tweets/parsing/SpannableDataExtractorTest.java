@@ -1,6 +1,6 @@
 package net.squanchy.tweets.parsing;
 
-import net.squanchy.tweets.model.TweetSpecialTextData;
+import net.squanchy.tweets.model.TweetSpannableText;
 
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ public class SpannableDataExtractorTest {
         int end = 34;
         String text = "#droidconit";
 
-        TweetSpecialTextData data = SpannableDataExtractor.extract(TweetTestData.MentionsAndUrls.TEST_TWEET_WITh_MENTIONS_AND_URLS, start, end);
+        TweetSpannableText data = SpannableDataExtractor.extract(TweetTestData.MentionsAndUrls.TEST_TWEET_WITh_MENTIONS_AND_URLS, start, end);
 
         assertEquals(text, data.text());
     }

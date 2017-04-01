@@ -5,13 +5,13 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.squanchy.tweets.model.TweetSpecialTextData;
+import net.squanchy.tweets.model.TweetSpannableText;
 
 abstract class TweetParser<T> {
 
     abstract Pattern pattern();
 
-    abstract T convertFrom(TweetSpecialTextData data);
+    abstract T convertFrom(TweetSpannableText data);
 
     List<T> parseDataFrom(String text) {
         Matcher matcher = pattern().matcher(text);
