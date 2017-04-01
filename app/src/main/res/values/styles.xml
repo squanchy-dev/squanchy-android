@@ -462,7 +462,10 @@
 
   <style name="Favorite.Empty.Cta" parent="Button.Colored">
     <item name="android:backgroundTint">?colorPrimary</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.Favorite.Empty.Cta</item>
   </style>
+
+  <style name="TextAppearance.Squanchy.Favorite.Empty.Cta" parent="TextAppearance.Squanchy.About.Button" />
 
   <style name="Favorite.Empty.Fab" parent="EventDetails.Fab" />
 
@@ -478,4 +481,46 @@
     <item name="android:textSize">@dimen/sign_in_label_text</item>
     <item name="fontPath">?defaultMediumTypeface</item>
   </style>
+
+  <style name="FirstStartWithNoNetwork.Title" parent="None">
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.FirstStartWithNoNetwork.Title</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.FirstStartWithNoNetwork.Title" parent="None">
+    <item name="android:textColor">?colorPrimary</item>
+    <item name="android:textSize">@dimen/first_start_with_no_network_title_text</item>
+    <item name="fontPath">?titleTypeface</item>
+  </style>
+
+  <style name="FirstStartWithNoNetwork.Blurb" parent="None">
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.FirstStartWithNoNetwork.Blurb</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.FirstStartWithNoNetwork.Blurb" parent="None">
+    <item name="android:textColor">?android:textColorPrimary</item>
+    <item name="android:textSize">@dimen/first_start_with_no_network_blurb_text</item>
+    <item name="fontPath">?defaultRegularTypeface</item>
+  </style>
+
+  <style name="FirstStartWithNoNetwork.Cta" parent="None">
+    <item name="android:gravity">fill_horizontal|center_vertical</item>
+  </style>
+
+  <style name="FirstStartWithNoNetwork.Cta.Text" parent="None">
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.FirstStartWithNoNetwork.Cta</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.FirstStartWithNoNetwork.Cta" parent="TextAppearance.Squanchy.FirstStartWithNoNetwork.Blurb">
+    <item name="android:textSize">@dimen/first_start_with_no_network_cta_text</item>
+    <item name="fontPath">?defaultMediumTypeface</item>
+  </style>
+
+  <style name="FirstStartWithNoNetwork.Cancel" parent="Button.Colored">
+    <item name="android:backgroundTint">?colorPrimary</item>
+    <item name="android:minHeight">@dimen/first_start_with_no_network_cancel_min_height</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.FirstStartWithNoNetwork.Cancel</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.FirstStartWithNoNetwork.Cancel" parent="TextAppearance.Squanchy.About.Button" />
+
 </resources>

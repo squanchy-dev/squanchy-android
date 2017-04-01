@@ -1,37 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="wrap_content"
   android:layout_height="wrap_content"
-  android:gravity="center"
-  android:orientation="vertical">
+  android:orientation="vertical"
+  android:padding="@dimen/first_start_with_no_network_padding"
+  tools:context="net.squanchy.navigation.firststart.FirstStartWithNoNetworkActivity">
 
   <TextView
+    style="@style/FirstStartWithNoNetwork.Title"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
-    android:text="Not so fast!" />
+    android:layout_marginBottom="@dimen/first_start_with_no_network_title_margin_bottom"
+    android:text="@string/first_start_with_no_network_title" />
 
   <TextView
+    style="@style/FirstStartWithNoNetwork.Blurb"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
-    android:text="Unfortunately, the first time you open this app you will need to be connected to the internet." />
+    android:layout_marginBottom="@dimen/first_start_with_no_network_blurb_margin_bottom"
+    android:text="@string/first_start_with_no_network_blurb" />
 
-  <TextView
+  <LinearLayout
+    android:id="@+id/first_start_with_no_network_cta"
+    style="@style/FirstStartWithNoNetwork.Cta"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
-    android:text="Go ahead, connect to a network. I'll be waiting." />
+    android:layout_marginBottom="@dimen/first_start_with_no_network_cta_margin_bottom">
 
-  <ProgressBar
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
+    <ProgressBar
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="@dimen/first_start_with_no_network_progress_margin_end" />
+
+    <TextView
+      style="@style/FirstStartWithNoNetwork.Cta.Text"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/first_start_with_no_network_cta" />
+
+  </LinearLayout>
 
   <Button
     android:id="@+id/first_start_nevermind_button"
+    style="@style/FirstStartWithNoNetwork.Cancel"
     android:layout_width="wrap_content"
-    android:layout_height="56dp"
+    android:layout_height="wrap_content"
     android:layout_gravity="end"
-    android:text="You know what, nevermind"/>
+    android:text="@string/first_start_with_no_network_cancel_button" />
 
 </LinearLayout>

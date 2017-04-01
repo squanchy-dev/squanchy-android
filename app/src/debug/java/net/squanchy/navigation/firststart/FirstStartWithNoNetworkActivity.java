@@ -70,7 +70,7 @@ public class FirstStartWithNoNetworkActivity extends TypefaceStyleableActivity {
 
             receivedOnAvailable = true;
 
-            Toast.makeText(FirstStartWithNoNetworkActivity.this, R.string.network_connected, Toast.LENGTH_SHORT).show();
+            Toast.makeText(FirstStartWithNoNetworkActivity.this, R.string.first_start_with_no_network_network_connected, Toast.LENGTH_SHORT).show();
             startActivity(continuationIntent);      // We don't use the navigator here, we basically want to restart the whole flow
             finish();
         }
