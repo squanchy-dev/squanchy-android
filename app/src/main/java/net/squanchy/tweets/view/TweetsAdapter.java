@@ -10,16 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.squanchy.R;
-import net.squanchy.tweets.domain.view.Tweet;
+import net.squanchy.tweets.domain.view.TweetViewModel;
 
 public class TweetsAdapter extends RecyclerView.Adapter<TweetViewHolder> {
 
     private final Context context;
-    private List<Tweet> tweetList;
+    private List<TweetViewModel> tweets;
 
     public TweetsAdapter(Context context) {
         this.context = context;
-        this.tweetList = new ArrayList<>();
+        this.tweets = new ArrayList<>();
     }
 
     @Override
@@ -30,23 +30,23 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetViewHolder> {
 
     @Override
     public void onBindViewHolder(TweetViewHolder holder, int position) {
-        holder.updateWith(tweetList.get(position));
+        holder.updateWith(tweets.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return tweetList.size();
+        return tweets.size();
     }
 
     public boolean isEmpty() {
-        return tweetList.isEmpty();
+        return tweets.isEmpty();
     }
 
-    public void updateWith(List<Tweet> tweets) {
-        tweetList.clear();
-        ArrayList<Tweet> receivedItems = new ArrayList<>(tweets);
-        receivedItems.addAll(tweetList);
-        tweetList = receivedItems;
+    public void updateWith(List<TweetViewModel> tweet) {
+        this.tweets.clear();
+        ArrayList<TweetViewModel> receivedItems = new ArrayList<>(tweet);
+        receivedItems.addAll(this.tweets);
+        this.tweets = receivedItems;
         notifyDataSetChanged();
     }
 }

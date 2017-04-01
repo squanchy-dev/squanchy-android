@@ -26,14 +26,21 @@
   <dimen name="card_title_margin_top">4dp</dimen>
   <dimen name="card_speaker_container_height">36dp</dimen>
   <dimen name="card_speaker">14sp</dimen>
-  <dimen name="card_twitter">14sp</dimen>
   <dimen name="card_speaker_line_spacing_extra">4sp</dimen>
-  <dimen name="card_twitter_line_spacing_extra">4sp</dimen>
   <dimen name="card_speaker_photo">24dp</dimen>
   <dimen name="card_speaker_margin_end">2dp</dimen>
   <dimen name="card_other_illustration_width">132dp</dimen>
   <dimen name="card_other_illustration_height">62dp</dimen>
-  
+
+  <dimen name="tweet_text">14sp</dimen>
+  <dimen name="tweet_line_spacing_extra">4sp</dimen>
+  <dimen name="tweet_photo_max_height">200dp</dimen>
+  <dimen name="tweet_photo_margin_top">16dp</dimen>
+  <dimen name="tweet_footer_text">12sp</dimen>
+  <dimen name="tweet_footer_user_photo_size">24dp</dimen>
+  <dimen name="tweet_footer_user_photo_margin">4dp</dimen>
+  <dimen name="tweet_footer_margin_top">8dp</dimen>
+
   <dimen name="favorites_empty_margin_horizontal">32dp</dimen>
   <dimen name="favorites_empty_image_size">80dp</dimen>
   <dimen name="favorites_empty_image_margin_bottom">16dp</dimen>
@@ -117,10 +124,6 @@
   <dimen name="about_opensource_logo_margin_end">16dp</dimen>
   <dimen name="about_opensource_blurb_text">16sp</dimen>
   <dimen name="about_button_margin_bottom">16dp</dimen>
-
-  <dimen name="twitter_user_photo">24dp</dimen>
-  <dimen name="twitter_user_photo_margin">4dp</dimen>
-  <dimen name="twitter_footer_top_padding">8dp</dimen>
 
   <dimen name="licenses_library_name_margin_bottom">8dp</dimen>
   <dimen name="licenses_license_label_margin_bottom">16dp</dimen>

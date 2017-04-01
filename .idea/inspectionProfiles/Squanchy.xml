@@ -187,6 +187,9 @@
       <option name="ignoreIterators" value="true" />
     </inspection_tool>
     <inspection_tool class="MagicNumber" enabled="true" level="INFO" enabled_by_default="true">
+      <scope name="Tests" level="INFO" enabled="false">
+        <option name="ignoreInTestCode" value="true" />
+      </scope>
       <option name="ignoreInTestCode" value="true" />
     </inspection_tool>
     <inspection_tool class="MissortedModifiers" enabled="true" level="INFO" enabled_by_default="true">

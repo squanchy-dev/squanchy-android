@@ -1,20 +1,30 @@
 package net.squanchy.tweets.view;
 
+import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.text.method.LinkMovementMethod;
 import android.util.AttributeSet;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.squanchy.R;
+import net.squanchy.imageloader.ImageLoader;
+import net.squanchy.imageloader.ImageLoaderInjector;
+import net.squanchy.support.ContextUnwrapper;
+import net.squanchy.support.lang.Optional;
 import net.squanchy.support.widget.CardLayout;
-import net.squanchy.tweets.domain.view.Tweet;
-import net.squanchy.tweets.util.TweetFormatter;
+import net.squanchy.tweets.domain.view.TweetViewModel;
 import net.squanchy.tweets.util.TwitterFooterFormatter;
 
 public class TweetItemView extends CardLayout {
 
-    private TextView tweetText;
-    private TweetFooterView tweetFooter;
+    @Nullable
+    private ImageLoader imageLoader;
+
+    private TextView tweetTextView;
+    private TweetFooterView tweetFooterView;
+    private ImageView tweetPhotoView;
 
     public TweetItemView(Context context, AttributeSet attrs) {
         this(context, attrs, R.attr.cardViewDefaultStyle);
@@ -22,20 +32,40 @@ public class TweetItemView extends CardLayout {
 
     public TweetItemView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+
+        if (!isInEditMode()) {
+            Activity activity = ContextUnwrapper.unwrapToActivityContext(context);
+            imageLoader = ImageLoaderInjector.obtain(activity)
+                    .imageLoader();
+        }
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        tweetText = (TextView) findViewById(R.id.tweet_text);
-        tweetFooter = (TweetFooterView) findViewById(R.id.tweet_footer);
+        tweetTextView = (TextView) findViewById(R.id.tweet_text);
+        tweetFooterView = (TweetFooterView) findViewById(R.id.tweet_footer);
+        tweetPhotoView = (ImageView) findViewById(R.id.tweet_photo);
 
-        tweetText.setMovementMethod(LinkMovementMethod.getInstance());
+        tweetTextView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
-    public void updateWith(Tweet tweet) {
-        tweetText.setText(TweetFormatter.format(tweet));
-        tweetFooter.updateWith(tweet.user().photoUrl(), TwitterFooterFormatter.recapFrom(tweet, getContext()));
+    public void updateWith(TweetViewModel tweet) {
+        tweetTextView.setText(tweet.spannedText());
+        tweetFooterView.updateWith(tweet.user().photoUrl(), TwitterFooterFormatter.recapFrom(tweet, getContext()));
+
+        if (imageLoader == null) {
+            throw new IllegalStateException("Unable to access the ImageLoader, it hasn't been initialized yet");
+        }
+
+        tweetPhotoView.setImageDrawable(null);
+        Optional<String> photoUrl = tweet.photoUrl();
+        if (photoUrl.isPresent()) {
+            tweetPhotoView.setVisibility(VISIBLE);
+            imageLoader.load(photoUrl.get()).into(tweetPhotoView);
+        } else {
+            tweetPhotoView.setVisibility(GONE);
+        }
     }
 }

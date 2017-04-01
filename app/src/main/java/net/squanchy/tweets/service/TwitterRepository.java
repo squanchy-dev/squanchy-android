@@ -7,6 +7,8 @@ import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.models.Search;
 import com.twitter.sdk.android.core.services.SearchService;
 
+import java.net.SocketTimeoutException;
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import retrofit2.Call;
@@ -18,10 +20,11 @@ public class TwitterRepository {
     private final SearchService searchService = TwitterCore.getInstance().getApiClient().getSearchService();
 
     Observable<Search> load(String query) {
-        return Observable.create(e -> createSearchRequest(query).enqueue(new SearchCallback(e)));
+        return Observable.create(e -> createSearchRequest(query)
+                .enqueue(new SearchCallback(e)));
     }
 
-    private Call<Search> createSearchRequest(String query) {
+    private Call<Search> createSearchRequest(String query) throws Exception{
         return searchService.tweets(query, null, null, null, "recent", MAX_ITEM_PER_REQUEST, null, null, null, true);
     }
 

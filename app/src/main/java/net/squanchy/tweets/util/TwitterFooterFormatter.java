@@ -6,7 +6,7 @@ import android.support.annotation.StringRes;
 import java.util.Locale;
 
 import net.squanchy.R;
-import net.squanchy.tweets.domain.view.Tweet;
+import net.squanchy.tweets.domain.view.TweetViewModel;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -22,7 +22,7 @@ public class TwitterFooterFormatter {
     private TwitterFooterFormatter() {
     }
 
-    public static String recapFrom(Tweet tweet, Context context){
+    public static String recapFrom(TweetViewModel tweet, Context context){
         return new StringBuilder()
                 .append(AT)
                 .append(tweet.user().screenName())
@@ -31,7 +31,7 @@ public class TwitterFooterFormatter {
                 .toString();
     }
 
-    private static String timestampFrom(Tweet tweet, Context context) {
+    private static String timestampFrom(TweetViewModel tweet, Context context) {
 
         DateTime dateTime = DateTimeFormat.forPattern(DATE_PATTERN).withLocale(Locale.US).parseDateTime(tweet.createdAt());
         String time = DateTimeFormat.shortTime().print(dateTime);

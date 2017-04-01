@@ -17,7 +17,7 @@ import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 public class TweetFooterView extends LinearLayout {
 
     private ImageView photoView;
-    private TextView recapView;
+    private TextView textView;
 
     @Nullable
     private ImageLoader imageLoader;
@@ -50,16 +50,21 @@ public class TweetFooterView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        photoView = (ImageView) findViewById(R.id.author_photo);
-        recapView = (TextView) findViewById(R.id.recap_footer);
+        photoView = (ImageView) findViewById(R.id.tweet_user_photo);
+        textView = (TextView) findViewById(R.id.tweet_footer_text);
     }
 
     public void updateWith(String url, String formattedRecap) {
-        recapView.setText(formattedRecap);
+        textView.setText(formattedRecap);
+        updateUserPhoto(url);
+    }
+
+    private void updateUserPhoto(String url) {
         if (imageLoader == null) {
             throw new IllegalStateException("Unable to access the ImageLoader, it hasn't been initialized yet");
         }
 
+        photoView.setImageDrawable(null);
         imageLoader.load(url).into(photoView);
     }
 }

@@ -1,5 +1,6 @@
 package net.squanchy.tweets;
 
+import net.squanchy.tweets.service.TweetModelConverter;
 import net.squanchy.tweets.service.TwitterRepository;
 import net.squanchy.tweets.service.TwitterService;
 
@@ -15,7 +16,12 @@ class TwitterModule {
     }
 
     @Provides
-    TwitterService twitterService(TwitterRepository repository) {
-        return new TwitterService(repository);
+    TweetModelConverter tweetModelConverter() {
+        return new TweetModelConverter();
+    }
+
+    @Provides
+    TwitterService twitterService(TwitterRepository repository, TweetModelConverter modelConverter) {
+        return new TwitterService(repository, modelConverter);
     }
 }

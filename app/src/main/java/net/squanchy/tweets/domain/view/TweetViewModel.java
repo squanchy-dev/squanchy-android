@@ -2,27 +2,25 @@ package net.squanchy.tweets.domain.view;
 
 import com.google.auto.value.AutoValue;
 
-import java.util.List;
+import net.squanchy.support.lang.Optional;
 
 @AutoValue
-public abstract class Tweet {
+public abstract class TweetViewModel {
 
     public abstract long id();
 
     public abstract String text();
 
+    public abstract CharSequence spannedText();
+
     public abstract User user();
 
     public abstract String createdAt();
 
-    public abstract List<HashtagEntity> hashtags();
-
-    public abstract List<MentionEntity> mentions();
-
-    public abstract List<UrlEntity> urls();
+    public abstract Optional<String> photoUrl();
 
     public static Builder builder() {
-        return new AutoValue_Tweet.Builder();
+        return new AutoValue_TweetViewModel.Builder();
     }
 
     @AutoValue.Builder
@@ -32,16 +30,14 @@ public abstract class Tweet {
 
         public abstract Builder text(String text);
 
+        public abstract Builder spannedText(CharSequence spannedText);
+
         public abstract Builder user(User user);
 
         public abstract Builder createdAt(String createdAt);
 
-        public abstract Builder hashtags(List<HashtagEntity> hashtagEntities);
+        public abstract Builder photoUrl(Optional<String> photoUrl);
 
-        public abstract Builder mentions(List<MentionEntity> mentionEntities);
-
-        public abstract Builder urls(List<UrlEntity> urlEntities);
-
-        public abstract Tweet build();
+        public abstract TweetViewModel build();
     }
 }
