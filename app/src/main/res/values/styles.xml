@@ -204,7 +204,7 @@
   </style>
 
   <style name="TextAppearance.Squanchy.Tweet.Title" parent="None">
-    <item name="android:textColor">?android:textColorPrimary</item>
+    <item name="android:textColor">@color/tweet_text</item>
     <item name="android:textSize">@dimen/card_title</item>
     <item name="fontPath">?titleTypeface</item>
   </style>

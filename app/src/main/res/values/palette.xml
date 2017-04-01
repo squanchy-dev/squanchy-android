@@ -38,5 +38,6 @@
   <color name="shadows">#19000000</color>
   <color name="white">#ffffff</color>
   <color name="white_60">#99ffffff</color>
+  <color name="tweet_text">#6a6a6a</color>
 
 </resources>
