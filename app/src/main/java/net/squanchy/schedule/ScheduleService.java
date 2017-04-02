@@ -92,7 +92,7 @@ public class ScheduleService {
                 Optional<String> rawDate = findDate(apiDays, dayId);
                 if (rawDate.isPresent()) {
                     LocalDateTime date = LocalDateTime.parse(rawDate.get(), DATE_FORMATTER);
-                    pages.add(SchedulePage.create(dayId, date, map.get(dayId)));
+                    pages.add(SchedulePage.Companion.create(dayId, date, map.get(dayId)));
                 }
             }
 
@@ -108,7 +108,7 @@ public class ScheduleService {
     private Function<Schedule, Schedule> sortPagesByDate() {
         return schedule -> {
             ArrayList<SchedulePage> sortedPages = new ArrayList<>(schedule.getPages());
-            Collections.sort(sortedPages, (firstPage, secondPage) -> firstPage.date().compareTo(secondPage.date()));
+            Collections.sort(sortedPages, (firstPage, secondPage) -> firstPage.getDate().compareTo(secondPage.getDate()));
             return Schedule.Companion.create(sortedPages);
         };
     }
@@ -119,7 +119,7 @@ public class ScheduleService {
             List<SchedulePage> sortedPages = new ArrayList<>(pages.size());
 
             for (SchedulePage page : pages) {
-                sortedPages.add(SchedulePage.create(page.dayId(), page.date(), sortByStartDate(page)));
+                sortedPages.add(SchedulePage.Companion.create(page.getDayId(), page.getDate(), sortByStartDate(page)));
             }
 
             return Schedule.Companion.create(sortedPages);
@@ -127,7 +127,7 @@ public class ScheduleService {
     }
 
     private List<Event> sortByStartDate(SchedulePage schedulePage) {
-        ArrayList<Event> sortedEvents = new ArrayList<>(schedulePage.events());
+        ArrayList<Event> sortedEvents = new ArrayList<>(schedulePage.getEvents());
         Collections.sort(sortedEvents, (firstEvent, secondEvent) -> firstEvent.getStartTime().compareTo(secondEvent.getStartTime()));
         return sortedEvents;
     }

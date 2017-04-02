@@ -49,8 +49,8 @@ class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 0,
                 position,
                 schedule.getPages(),
-                schedulePage -> (long) -schedulePage.dayId().hashCode(),
-                (schedulePage, positionInPage) -> schedulePage.events().get(positionInPage).getNumericId()
+                schedulePage -> (long) -schedulePage.getDayId().hashCode(),
+                (schedulePage, positionInPage) -> schedulePage.getEvents().get(positionInPage).getNumericId()
         );
     }
 
@@ -94,7 +94,7 @@ class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     schedulePage -> {
                         throw new IndexOutOfBoundsException();
                     },
-                    (schedulePage, positionInPage) -> schedulePage.events().get(positionInPage)
+                    (schedulePage, positionInPage) -> schedulePage.getEvents().get(positionInPage)
             );
 
             ((EventViewHolder) holder).updateWith(event, listener);
@@ -103,7 +103,7 @@ class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     0,
                     position,
                     schedule.getPages(),
-                    SchedulePage::date,
+                    SchedulePage::getDate,
                     (schedulePage, positionInPage) -> {
                         throw new IndexOutOfBoundsException();
                     }
@@ -118,7 +118,7 @@ class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return Lists.reduce(0, schedule.getPages(), (count, page) -> count + page.events().size() + 1);
+        return Lists.reduce(0, schedule.getPages(), (count, page) -> count + page.getEvents().size() + 1);
     }
 
     private <T> T findFor(int pagePosition, int position, List<SchedulePage> pages, Header<T> header, Row<T> row) {
@@ -134,7 +134,7 @@ class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         int adjustedPosition = position - 1;
 
-        int size = schedulePage.events().size();
+        int size = schedulePage.getEvents().size();
         if (adjustedPosition < size) {
             return row.get(schedulePage, adjustedPosition);
         }
