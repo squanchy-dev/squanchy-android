@@ -9,8 +9,10 @@ data class SchedulePage(
 ) {
     companion object {
 
-        fun create(dayId: String, date: LocalDateTime, events: List<Event>): SchedulePage {
-            return SchedulePage(dayId, date, events)
-        }
+        fun create(
+                dayId: String,
+                date: LocalDateTime,
+                events: List<Event>
+        ) = SchedulePage(dayId, date, events)
     }
 }

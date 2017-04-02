@@ -7,8 +7,6 @@ data class Schedule(val pages: List<SchedulePage>) {
 
     companion object {
 
-        fun create(pages: List<SchedulePage>): Schedule {
-            return Schedule(pages)
-        }
+        fun create(pages: List<SchedulePage>) = Schedule(pages)
     }
 }
