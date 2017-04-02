@@ -483,7 +483,11 @@
 
   <style name="Favorite.Empty.Fab" parent="EventDetails.Fab" />
 
-  <style name="SignIn.BottomSheet" parent="Widget.Design.BottomSheet.Modal" />
+  <style name="SignIn.BottomSheet" parent="Widget.Design.BottomSheet.Modal">
+    <item name="android:maxWidth">@dimen/sign_in_bottom_sheet_max_width</item>
+    <item name="android:clickable">true</item>
+    <item name="android:focusable">true</item>
+  </style>
 
   <style name="SignIn.BottomSheet.Label" parent="None">
     <item name="android:gravity">start|center_vertical</item>

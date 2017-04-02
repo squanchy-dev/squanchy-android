@@ -130,7 +130,7 @@
   <dimen name="licenses_notice_padding">8dp</dimen>
   <dimen name="licenses_notice_text">12sp</dimen>
 
-  <dimen name="sign_in_bottom_sheet_width">-1px</dimen>   <!-- match_parent -->
+  <dimen name="sign_in_bottom_sheet_max_width">400dp</dimen>
   <dimen name="sign_in_bottom_sheet_content_padding">32dp</dimen>
   <dimen name="sign_in_logo_size">64dp</dimen>
   <dimen name="sign_in_logo_margin_bottom">24dp</dimen>

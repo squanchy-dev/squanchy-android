@@ -35,4 +35,9 @@
     <attr name="android:foregroundGravity" />
   </declare-styleable>
 
+  <declare-styleable name="MaxSizeFrameLayout">
+    <attr name="android:maxWidth" />
+    <attr name="android:maxHeight" />
+  </declare-styleable>
+
 </resources>
