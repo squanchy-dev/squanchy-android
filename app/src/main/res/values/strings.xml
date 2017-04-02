@@ -100,4 +100,6 @@
   <string name="first_start_with_no_network_cta">Go ahead, connect to a network. I\'ll be waiting.</string>
   <string name="first_start_with_no_network_cancel_button">You know what, nevermind</string>
 
+  <string name="contest_label">Contest</string>
+
 </resources>
