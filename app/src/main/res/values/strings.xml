@@ -51,9 +51,10 @@
   <string name="sign_in_title">Sign in</string>
   <string name="settings_and_help_title">Settings and help</string>
   <string name="settings_notifications_title">Notifications</string>
-  <string name="settings_location_title">Location</string>
-  <string name="settings_location_summary_on">You can participate to the contest</string>
+  <string name="settings_location_title">Geo-location and beacons</string>
+  <string name="settings_location_summary_on">You can participate to the contest.</string>
   <string name="settings_location_summary_off">You cannot participate to the contest.</string>
+  <string name="settings_contest_standings_title">Contest progress</string>
   <string name="settings_notifications_about_to_start_title">Upcoming events notification</string>
   <string name="settings_notifications_about_to_start_summary_on">Show notifications for favourite events starting soon</string>
   <string name="settings_notifications_about_to_start_summary_off">Do not show notifications for favourite events starting soon</string>

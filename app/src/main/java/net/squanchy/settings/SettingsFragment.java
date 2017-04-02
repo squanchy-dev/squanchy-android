@@ -51,6 +51,12 @@ public class SettingsFragment extends PreferenceFragment {
         accountCategory.removePreference(accountEmailPreference);
         accountSignInSignOutPreference = findPreference(getString(R.string.account_signin_signout_preference_key));
 
+        Preference contestStandingsPreference = findPreference(getString(R.string.contest_standings_preference_key));
+        contestStandingsPreference.setOnPreferenceClickListener(preference -> {
+            navigator.toContest();
+            return true;
+        });
+
         Preference aboutPreference = findPreference(getString(R.string.about_preference_key));
         aboutPreference.setOnPreferenceClickListener(preference -> {
             navigator.toAboutSquanchy();
