@@ -16,6 +16,7 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
+    android:layout_gravity="center_horizontal"
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
     tools:layout_width="match_parent">
 
