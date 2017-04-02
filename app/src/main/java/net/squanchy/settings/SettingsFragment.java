@@ -1,7 +1,5 @@
 package net.squanchy.settings;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -16,6 +14,7 @@ import net.squanchy.BuildConfig;
 import net.squanchy.R;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.onboarding.OnboardingPage;
+import net.squanchy.proximity.preconditions.OptInPreferencePersister;
 import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.signin.SignInService;
 import net.squanchy.support.lang.Optional;
@@ -30,6 +29,7 @@ public class SettingsFragment extends PreferenceFragment {
     private SignInService signInService;
     private Navigator navigator;
     private ProximityService proximityService;
+    private OptInPreferencePersister optInPreferencePersister;
 
     private PreferenceCategory accountCategory;
     private Preference accountEmailPreference;
@@ -55,6 +55,7 @@ public class SettingsFragment extends PreferenceFragment {
         signInService = component.signInService();
         navigator = component.navigator();
         proximityService = component.proximityService();
+        optInPreferencePersister = component.optInPreferencePersister();
 
         accountCategory = (PreferenceCategory) findPreference(getString(R.string.account_category_key));
         accountEmailPreference = findPreference(getString(R.string.account_email_preference_key));
@@ -88,6 +89,8 @@ public class SettingsFragment extends PreferenceFragment {
     @Override
     public void onStart() {
         super.onStart();
+
+        locationPreferences.setChecked(optInPreferencePersister.getOptInPreferenceGranted());
 
         hideDividers();
 
@@ -144,16 +147,8 @@ public class SettingsFragment extends PreferenceFragment {
             return false;
         } else {
             proximityService.stopRadar();
+            optInPreferencePersister.setOptInPreferenceTo(false);
             return true;
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == TURN_LOCATION_ON_REQUEST_CODE &&
-                resultCode == Activity.RESULT_OK) {
-            locationPreferences.setChecked(true);
         }
     }
 
