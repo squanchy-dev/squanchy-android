@@ -45,21 +45,7 @@ public class RoutingActivity extends TypefaceStyleableActivity {
         super.onStart();
 
         subscription = signInService.signInAnonymouslyIfNecessary()
-                .subscribe(this::proceedToRouting, this::handleSignInError);
-    }
-
-    private void proceedToRouting() {
-        Intent intent = getIntent();
-        if (deepLinkRouter.hasDeepLink(intent)) {
-            String intentUriString = intent.getDataString();
-            Timber.i("Deeplink detected, navigating to \"%s\"", intentUriString);
-            deepLinkRouter.navigateTo(intentUriString);
-        } else {
-            navigator.toHomePage();
-        }
-
-        firstStartPersister.storeHasBeenStarted();
-        finish();
+                .subscribe(this::onboardOrproceedToRouting, this::handleSignInError);
     }
 
     private void handleSignInError(Throwable throwable) {
@@ -98,18 +84,18 @@ public class RoutingActivity extends TypefaceStyleableActivity {
 
     private void handleOnboardingResult(int resultCode) {
         if (resultCode == RESULT_OK) {
-            routeTo(getIntent());
+            onboardOrproceedToRouting();
         } else {
             finish();
         }
     }
 
-    private void routeTo(Intent intent) {
+    private void onboardOrproceedToRouting() {
         Optional<OnboardingPage> onboardingPageToShow = onboarding.nextPageToShow();
         if (onboardingPageToShow.isPresent()) {
             navigator.toOnboardingForResult(onboardingPageToShow.get(), ONBOARDING_REQUEST_CODE);
         } else {
-            proceedTo(intent);
+            proceedTo(getIntent());
         }
     }
 
