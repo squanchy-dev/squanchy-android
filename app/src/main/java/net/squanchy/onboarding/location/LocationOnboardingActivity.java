@@ -17,6 +17,7 @@ import net.squanchy.navigation.Navigator;
 import net.squanchy.onboarding.Onboarding;
 import net.squanchy.onboarding.OnboardingPage;
 import net.squanchy.proximity.preconditions.LocationProviderPrecondition;
+import net.squanchy.proximity.preconditions.OptInPreferencePersister;
 import net.squanchy.proximity.preconditions.ProximityPreconditions;
 import net.squanchy.service.proximity.injection.ProximityService;
 
@@ -29,6 +30,7 @@ public class LocationOnboardingActivity extends TypefaceStyleableActivity {
     private Onboarding onboarding;
     private ProximityService service;
     private Navigator navigator;
+    private OptInPreferencePersister optInPersister;
 
     private ProximityPreconditions proximityPreconditions;
 
@@ -48,13 +50,17 @@ public class LocationOnboardingActivity extends TypefaceStyleableActivity {
         service = component.proximityService();
         navigator = component.navigator();
         proximityPreconditions = component.proximityPreconditions();
+        optInPersister = component.optInPersister();
 
         googleApiClient.connect();
 
         setContentView(R.layout.activity_location_onboarding);
         contentRoot = findViewById(R.id.onboarding_content_root);
 
-        findViewById(R.id.skip_button).setOnClickListener(view -> markPageAsSeenAndFinish());
+        findViewById(R.id.skip_button).setOnClickListener(view -> {
+            optInPersister.setOptInPreferenceTo(false);
+            markPageAsSeenAndFinish();
+        });
         findViewById(R.id.location_opt_in_button).setOnClickListener(view -> optInToProximity());
 
         setResult(RESULT_CANCELED);
@@ -62,7 +68,7 @@ public class LocationOnboardingActivity extends TypefaceStyleableActivity {
 
     private void optInToProximity() {
         disableUi();
-        // TODO store opt-in here
+        optInPersister.setOptInPreferenceTo(true);
         if (proximityPreconditions.needsActionToSatisfyPreconditions()) {
             proximityPreconditions.startSatisfyingPreconditions();
         } else {
