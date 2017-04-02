@@ -5,7 +5,6 @@ import net.squanchy.injection.ActivityLifecycle;
 import net.squanchy.injection.ApplicationComponent;
 import net.squanchy.navigation.NavigationModule;
 import net.squanchy.navigation.Navigator;
-import net.squanchy.remoteconfig.RemoteConfig;
 import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.support.injection.CurrentTimeModule;
 
@@ -16,8 +15,6 @@ import dagger.Component;
 interface HomeComponent {
 
     Analytics analytics();
-
-    RemoteConfig remoteConfig();
 
     ProximityService proximityService();
 
