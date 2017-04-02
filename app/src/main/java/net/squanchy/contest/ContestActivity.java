@@ -2,6 +2,7 @@ package net.squanchy.contest;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import io.reactivex.disposables.CompositeDisposable;
 public class ContestActivity extends TypefaceStyleableActivity {
 
     private static final String EXTRA_ACHIEVEMENT_ID = ContestActivity.class.getCanonicalName() + ".achievement_id";
+    private static final boolean ANIMATE = true;
 
     private final CompositeDisposable subscriptions = new CompositeDisposable();
 
@@ -97,7 +99,16 @@ public class ContestActivity extends TypefaceStyleableActivity {
 
     private void updateProgressBarWith(ContestStandings standings) {
         contestProgressView.setMax((int) standings.goal());
-        contestProgressView.setProgress(standings.current());
+
+        if (isAtLeastNougat()) {
+            contestProgressView.setProgress(standings.current(), ANIMATE);
+        } else {
+            contestProgressView.setProgress(standings.current());
+        }
+    }
+
+    private boolean isAtLeastNougat() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N;
     }
 
     private long missingSponsorsCount(ContestStandings standings) {
