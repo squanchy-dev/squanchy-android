@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -99,6 +100,7 @@ public class ContestActivity extends TypefaceStyleableActivity {
     }
 
     private void updateProgressBarWith(ContestStandings standings) {
+        contestProgressView.setVisibility(View.VISIBLE);
         contestProgressView.setMax((int) standings.goal());
 
         if (isAtLeastNougat()) {
@@ -117,6 +119,8 @@ public class ContestActivity extends TypefaceStyleableActivity {
     }
 
     private void updateStatusTextWith(int missingStands) {
+        contestStatusView.setVisibility(View.VISIBLE);
+
         if (missingStands > 0) {
             CharSequence status = getResources()
                     .getQuantityString(R.plurals.contest_status_missing_sponsors, missingStands, missingStands);

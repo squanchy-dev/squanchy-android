@@ -595,4 +595,5 @@
     <item name="android:textSize">@dimen/contest_status_text</item>
     <item name="fontPath">?defaultMediumTypeface</item>
   </style>
+
 </resources>
