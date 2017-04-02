@@ -39,7 +39,7 @@ class SearchService {
         return authService.ifUserSignedInThenObservableFrom(userId -> Observable.combineLatest(
                 findEvents(query, userId),
                 findSpeakers(query),
-                SearchResults::create
+                SearchResults.Companion::create
         ));
     }
 

@@ -573,8 +573,8 @@ public class ItemsAdapterTest {
         }
 
         void givenSearchResultsWith(List<Event> events, List<Speaker> speakers) {
-            given(searchResults.events()).willReturn(events);
-            given(searchResults.speakers()).willReturn(speakers);
+            given(searchResults.getEvents()).willReturn(events);
+            given(searchResults.getSpeakers()).willReturn(speakers);
             given(searchResults.isEmpty()).willReturn(events.isEmpty() && speakers.isEmpty());
         }
     }
