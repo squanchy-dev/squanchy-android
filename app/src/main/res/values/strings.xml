@@ -104,6 +104,10 @@
   <string name="contest_label">Contest</string>
   <string name="contest_title">Visit our sponsors and win</string>
   <string name="contest_blurb">Check in at all of our sponsors’ booths and win cool swag!</string>
-  <string name="contest_missing_sponsors">%1$d sponsors still to visit</string>
+  <plurals name="contest_status_missing_sponsors">
+    <item quantity="one">Just one sponsor left to visit!</item>
+    <item quantity="other">%1$d sponsors left to visit</item>
+  </plurals>
+  <string name="contest_completed">You got all the sponsors!\nVisit the Synesthesia booth to claim your swag 🎁</string>
 
 </resources>

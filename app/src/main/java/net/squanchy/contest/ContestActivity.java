@@ -42,7 +42,7 @@ public class ContestActivity extends TypefaceStyleableActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_contest_summary);
+        setContentView(R.layout.activity_contest);
 
         ContestComponent component = ContestInjector.obtain(this);
         contestService = component.contestService();
@@ -93,8 +93,9 @@ public class ContestActivity extends TypefaceStyleableActivity {
 
     private void updateWith(ContestStandings standings) {
         updateProgressBarWith(standings);
-        long missingStands = missingSponsorsCount(standings);
-        contestStatusView.setText(getString(R.string.contest_missing_sponsors, missingStands));
+
+        int missingStands = missingSponsorsCount(standings);
+        updateStatusTextWith(missingStands);
     }
 
     private void updateProgressBarWith(ContestStandings standings) {
@@ -111,8 +112,19 @@ public class ContestActivity extends TypefaceStyleableActivity {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N;
     }
 
-    private long missingSponsorsCount(ContestStandings standings) {
-        return standings.goal() - standings.current();
+    private int missingSponsorsCount(ContestStandings standings) {
+        return (int) (standings.goal() - standings.current());
+    }
+
+    private void updateStatusTextWith(int missingStands) {
+        if (missingStands > 0) {
+            CharSequence status = getResources()
+                    .getQuantityString(R.plurals.contest_status_missing_sponsors, missingStands, missingStands);
+
+            contestStatusView.setText(status);
+        } else {
+            contestStatusView.setText(R.string.contest_completed);
+        }
     }
 
     @Override

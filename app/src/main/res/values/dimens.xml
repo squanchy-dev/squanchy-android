@@ -171,7 +171,9 @@
   <dimen name="contest_progress_margin_horizontal">16dp</dimen>
   <dimen name="contest_progress_margin_top">40dp</dimen>
   <dimen name="contest_progress_margin_bottom">8dp</dimen>
-  <dimen name="contest_status_margin_horizontal">16dp</dimen>
   <dimen name="contest_progress_corners">1dp</dimen>
+  <dimen name="contest_status_margin_horizontal">16dp</dimen>
+  <dimen name="contest_status_text">16sp</dimen>
+  <dimen name="contest_status_line_spacing_extra">2dp</dimen>
 
 </resources>

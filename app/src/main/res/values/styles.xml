@@ -553,6 +553,7 @@
   <style name="Contest.Blurb" parent="None">
     <item name="android:gravity">center</item>
     <item name="android:lineSpacingExtra">@dimen/contest_blurb_line_spacing_extra</item>
+    <item name="android:lineSpacingMultiplier">1</item>
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.Contest.Blurb</item>
   </style>
 
@@ -583,7 +584,15 @@
   </style>
 
   <style name="Contest.Status" parent="None">
-    
+    <item name="android:gravity">center</item>
+    <item name="android:lineSpacingExtra">@dimen/contest_status_line_spacing_extra</item>
+    <item name="android:lineSpacingMultiplier">1</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.Contest.Status</item>
   </style>
 
+  <style name="TextAppearance.Squanchy.Contest.Status" parent="None">
+    <item name="android:textColor">?android:textColorPrimary</item>
+    <item name="android:textSize">@dimen/contest_status_text</item>
+    <item name="fontPath">?defaultMediumTypeface</item>
+  </style>
 </resources>
