@@ -56,11 +56,11 @@ public class TweetItemView extends CardLayout {
     }
 
     public void updateWith(TweetViewModel tweet, OnTweetClickedListener listener) {
-        tweetTextView.setText(tweet.spannedText());
-        updatePhotoWith(tweet.photoUrl());
-        tweetFooterView.updateWith(tweet.user().photoUrl(), footerFormatter.footerTextFor(tweet));
+        tweetTextView.setText(tweet.getSpannedText());
+        updatePhotoWith(tweet.getPhotoUrl());
+        tweetFooterView.updateWith(tweet.getUser().photoUrl(), footerFormatter.footerTextFor(tweet));
 
-        setOnClickListener(view -> listener.onTweetClicked(tweet.linkInfo()));
+        setOnClickListener(view -> listener.onTweetClicked(tweet.getLinkInfo()));
     }
 
     private void updatePhotoWith(Optional<String> photoUrl) {

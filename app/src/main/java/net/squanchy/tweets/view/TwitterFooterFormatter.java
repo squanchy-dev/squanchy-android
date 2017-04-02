@@ -30,7 +30,7 @@ class TwitterFooterFormatter {
     }
 
     String footerTextFor(TweetViewModel tweet) {
-        String username = tweet.user().screenName();
+        String username = tweet.getUser().screenName();
         String timestamp = timestampFrom(tweet);
         return context.getString(R.string.tweet_footer_format, username, timestamp);
     }
@@ -38,7 +38,7 @@ class TwitterFooterFormatter {
     private String timestampFrom(TweetViewModel tweet) {
         DateTime createdAt = DateTimeFormat.forPattern(DATE_PATTERN)
                 .withLocale(Locale.US)
-                .parseDateTime(tweet.createdAt());
+                .parseDateTime(tweet.getCreatedAt());
 
         String formattedTime = timeFormatter.print(createdAt);
 
