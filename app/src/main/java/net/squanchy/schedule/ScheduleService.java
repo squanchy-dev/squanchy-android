@@ -96,7 +96,7 @@ public class ScheduleService {
                 }
             }
 
-            return Schedule.create(pages);
+            return Schedule.Companion.create(pages);
         };
     }
 
@@ -107,22 +107,22 @@ public class ScheduleService {
 
     private Function<Schedule, Schedule> sortPagesByDate() {
         return schedule -> {
-            ArrayList<SchedulePage> sortedPages = new ArrayList<>(schedule.pages());
+            ArrayList<SchedulePage> sortedPages = new ArrayList<>(schedule.getPages());
             Collections.sort(sortedPages, (firstPage, secondPage) -> firstPage.date().compareTo(secondPage.date()));
-            return Schedule.create(sortedPages);
+            return Schedule.Companion.create(sortedPages);
         };
     }
 
     private Function<Schedule, Schedule> sortEventsByStartDate() {
         return schedule -> {
-            List<SchedulePage> pages = schedule.pages();
+            List<SchedulePage> pages = schedule.getPages();
             List<SchedulePage> sortedPages = new ArrayList<>(pages.size());
 
             for (SchedulePage page : pages) {
                 sortedPages.add(SchedulePage.create(page.dayId(), page.date(), sortByStartDate(page)));
             }
 
-            return Schedule.create(sortedPages);
+            return Schedule.Companion.create(sortedPages);
         };
     }
 

@@ -148,7 +148,7 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
     }
 
     public void updateWith(Schedule schedule, ScheduleViewPagerAdapter.OnEventClickedListener listener) {
-        viewPagerAdapter.updateWith(schedule.pages(), listener);
+        viewPagerAdapter.updateWith(schedule.getPages(), listener);
         progressBar.setVisibility(GONE);
     }
 
