@@ -15,7 +15,7 @@ import dagger.Provides;
 
 import static android.content.Context.BLUETOOTH_SERVICE;
 
-@Module(includes = ActivityContextModule.class)
+@Module(includes = {ActivityContextModule.class, OptInPreferencePersisterModule.class})
 public class PreconditionsRegistryModule {
 
     private final GoogleApiClient googleApiClient;
@@ -45,12 +45,19 @@ public class PreconditionsRegistryModule {
     }
 
     @Provides
+    OptInPrecondition optInPrecondition(ProximityOptInPersister proximityOptInPersister) {
+        return new OptInPrecondition(proximityOptInPersister);
+    }
+
+    @Provides
     List<Precondition> preconditions(
+            OptInPrecondition optInPrecondition,
             LocationPermissionPrecondition locationPermissionPrecondition,
             LocationProviderPrecondition locationProviderPrecondition,
             BluetoothPrecondition bluetoothPrecondition
     ) {
         return Arrays.asList(
+                optInPrecondition,
                 locationPermissionPrecondition,
                 locationProviderPrecondition,
                 bluetoothPrecondition

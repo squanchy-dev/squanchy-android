@@ -34,7 +34,6 @@
     <SwitchPreference
       android:key="@string/location_preference_key"
       android:defaultValue="false"
-      android:enabled="false"
       android:icon="@drawable/ic_location"
       android:title="@string/settings_location_title"
       android:summaryOn="@string/settings_location_summary_on"

@@ -5,6 +5,7 @@ import android.app.Activity;
 import net.squanchy.injection.ActivityContextModule;
 import net.squanchy.injection.ApplicationInjector;
 import net.squanchy.navigation.NavigationModule;
+import net.squanchy.proximity.preconditions.OptInPreferencePersisterModule;
 import net.squanchy.signin.SignInModule;
 
 final class SettingsInjector {
@@ -19,6 +20,7 @@ final class SettingsInjector {
                 .applicationComponent(ApplicationInjector.obtain(activity))
                 .navigationModule(new NavigationModule())
                 .signInModule(new SignInModule())
+                .optInPreferencePersisterModule(new OptInPreferencePersisterModule())
                 .build();
     }
 }

@@ -1,22 +1,17 @@
 package net.squanchy.home;
 
-import android.Manifest;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
 import android.support.transition.Fade;
 import android.support.transition.TransitionManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +31,6 @@ import net.squanchy.home.deeplink.HomeActivityDeepLinkCreator;
 import net.squanchy.home.deeplink.HomeActivityIntentParser;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.proximity.ProximityEvent;
-import net.squanchy.remoteconfig.RemoteConfig;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.support.lang.Optional;
@@ -55,7 +49,6 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private static final String WHEN_DATE_TIME_FORMAT = "HH:mm";
 
     private static final int REQUEST_SIGN_IN_MAY_GOD_HAVE_MERCY_OF_OUR_SOULS = 666;
-    private static final int REQUEST_GRANT_PERMISSIONS = 1000;
 
     private final Map<BottomNavigationSection, View> pageViews = new HashMap<>(4);
     private final List<Loadable> loadables = new ArrayList<>(4);
@@ -67,7 +60,6 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private ViewGroup pageContainer;
     private ProximityService proximityService;
     private Analytics analytics;
-    private RemoteConfig remoteConfig;
     private Navigator navigator;
     private CurrentEventService currentEventService;
 
@@ -118,7 +110,6 @@ public class HomeActivity extends TypefaceStyleableActivity {
 
         HomeComponent homeComponent = HomeInjector.obtain(this);
         analytics = homeComponent.analytics();
-        remoteConfig = homeComponent.remoteConfig();
         proximityService = homeComponent.proximityService();
         currentEventService = homeComponent.currentEvent();
 
@@ -144,40 +135,6 @@ public class HomeActivity extends TypefaceStyleableActivity {
         super.onStart();
 
         startAllSubscriptions();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_GRANT_PERMISSIONS) {
-            if (hasGrantedFineLocationAccess(grantResults)) {
-                proximityService.startRadar();
-            }
-        }
-    }
-
-    private void askProximityPermissionToStartRadar() {
-        if (hasLocationPermission()) {
-            proximityService.startRadar();
-        } else {
-            ActivityCompat.requestPermissions(
-                    this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    REQUEST_GRANT_PERMISSIONS
-            );
-        }
-    }
-
-    private boolean hasLocationPermission() {
-        int granted = ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-        );
-        return granted == PackageManager.PERMISSION_GRANTED;
-    }
-
-    private boolean hasGrantedFineLocationAccess(int[] grantResults) {
-        return grantResults.length > 0 &&
-                grantResults[0] == PackageManager.PERMISSION_GRANTED;
     }
 
     @Override
@@ -351,20 +308,10 @@ public class HomeActivity extends TypefaceStyleableActivity {
     }
 
     private void startAllSubscriptions() {
-        subscriptions.add(remoteConfig.proximityServicesEnabled()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(enabled -> {
-                    if (enabled) {
-                        askProximityPermissionToStartRadar();
-                    } else {
-                        proximityService.stopRadar();
-                    }
-
-                    subscriptions.add(
-                            proximityService.observeProximityEvents()
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe(this::handleProximityEvent));
-                }));
+        subscriptions.add(
+                proximityService.observeProximityEvents()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(this::handleProximityEvent));
 
         for (Loadable loadable : loadables) {
             loadable.startLoading();
