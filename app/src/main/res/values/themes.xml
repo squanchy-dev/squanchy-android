@@ -100,9 +100,7 @@
     <item name="android:textColorSecondary">@color/secondary_text_54</item>
   </style>
 
-  <style name="Theme.Squanchy.SpeakerDetails" parent="Theme.Squanchy.Dialog">
-    <item name="android:statusBarColor">@color/status_bar_primary_azure</item>
-  </style>
+  <style name="Theme.Squanchy.SpeakerDetails" parent="Theme.Squanchy.Dialog" />
 
   <style name="Theme.Squanchy.SignIn" parent="Theme.Squanchy.BottomSheet" />
 
