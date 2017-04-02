@@ -13,7 +13,7 @@ import net.squanchy.R;
 
 class LibrariesAdapter extends RecyclerView.Adapter {
 
-    private static final List<Library> LIBRARIES = Libraries.LIBRARIES;
+    private static final List<Library> LIBRARIES = Libraries.INSTANCE.getLIBRARIES();
 
     private final LayoutInflater layoutInflater;
 
@@ -51,10 +51,10 @@ class LibrariesAdapter extends RecyclerView.Adapter {
         }
 
         void updateWith(Library library) {
-            libraryNameView.setText(library.name());
+            libraryNameView.setText(library.getName());
 
-            License license = library.license();
-            String licenseLabel = itemView.getContext().getString(R.string.license_label_template, library.author(), license.label());
+            License license = library.getLicense();
+            String licenseLabel = itemView.getContext().getString(R.string.license_label_template, library.getAuthor(), license.label());
             libraryLicenseLabelView.setText(licenseLabel);
             libraryLicenseNoticeView.setText(license.noticeResId());
         }
