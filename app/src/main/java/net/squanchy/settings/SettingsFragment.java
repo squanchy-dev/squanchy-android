@@ -14,7 +14,7 @@ import net.squanchy.BuildConfig;
 import net.squanchy.R;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.onboarding.OnboardingPage;
-import net.squanchy.proximity.preconditions.OptInPreferencePersister;
+import net.squanchy.proximity.preconditions.ProximityOptInPersister;
 import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.signin.SignInService;
 import net.squanchy.support.lang.Optional;
@@ -24,12 +24,12 @@ import io.reactivex.disposables.Disposable;
 
 public class SettingsFragment extends PreferenceFragment {
 
-    public static final int TURN_LOCATION_ON_REQUEST_CODE = 6429;
+    public static final int REQUEST_TURN_LOCATION_ON = 6429;
 
     private SignInService signInService;
     private Navigator navigator;
     private ProximityService proximityService;
-    private OptInPreferencePersister optInPreferencePersister;
+    private ProximityOptInPersister proximityOptInPersister;
 
     private PreferenceCategory accountCategory;
     private Preference accountEmailPreference;
@@ -55,7 +55,7 @@ public class SettingsFragment extends PreferenceFragment {
         signInService = component.signInService();
         navigator = component.navigator();
         proximityService = component.proximityService();
-        optInPreferencePersister = component.optInPreferencePersister();
+        proximityOptInPersister = component.proximityOptInPersister();
 
         accountCategory = (PreferenceCategory) findPreference(getString(R.string.account_category_key));
         accountEmailPreference = findPreference(getString(R.string.account_email_preference_key));
@@ -63,7 +63,7 @@ public class SettingsFragment extends PreferenceFragment {
         accountSignInSignOutPreference = findPreference(getString(R.string.account_signin_signout_preference_key));
         locationPreferences = (SwitchPreference) findPreference(getString(R.string.location_preference_key));
         locationPreferences.setOnPreferenceChangeListener((preference, isEnabling) ->
-                handleLocationPreferenceChange((Boolean) isEnabling)
+                handleLocationPreferenceChange((boolean) isEnabling)
         );
 
         Preference aboutPreference = findPreference(getString(R.string.about_preference_key));
@@ -90,7 +90,7 @@ public class SettingsFragment extends PreferenceFragment {
     public void onStart() {
         super.onStart();
 
-        locationPreferences.setChecked(optInPreferencePersister.getOptInPreferenceGranted());
+        locationPreferences.setChecked(proximityOptInPersister.userOptedIn());
 
         hideDividers();
 
@@ -141,13 +141,13 @@ public class SettingsFragment extends PreferenceFragment {
         );
     }
 
-    private boolean handleLocationPreferenceChange(Boolean isEnabling) {
+    private boolean handleLocationPreferenceChange(boolean isEnabling) {
         if (isEnabling) {
-            navigator.toOnboardingForResult(OnboardingPage.LOCATION, TURN_LOCATION_ON_REQUEST_CODE);
-            return false;
+            navigator.toOnboardingForResult(OnboardingPage.LOCATION, REQUEST_TURN_LOCATION_ON);
+            return true;
         } else {
             proximityService.stopRadar();
-            optInPreferencePersister.setOptInPreferenceTo(false);
+            proximityOptInPersister.storeUserOptedOut();
             return true;
         }
     }

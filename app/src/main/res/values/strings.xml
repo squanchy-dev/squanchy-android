@@ -109,7 +109,6 @@
   <string name="onboarding_error_location_failed">Unable to verify location settings for the device.</string>
   <string name="onboarding_error_location_failed_action">ENABLE MANUALLY</string>
   <string name="onboarding_error_google_client_connection">Unable to verify location settings for the device. Please try again shortly.</string>
-  <string name="onboarding_error_canceled_contest">The contest is unavailable.</string>
 
   <string name="routing_sign_in_unexpected_error">Something went very wrong while starting Squanchy, sorry.</string>
 

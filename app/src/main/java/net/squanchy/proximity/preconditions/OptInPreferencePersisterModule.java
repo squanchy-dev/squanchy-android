@@ -15,8 +15,8 @@ public class OptInPreferencePersisterModule {
     private static final String OPT_IN_PREFERENCES_NAME = "opt_in_preferences";
 
     @Provides
-    OptInPreferencePersister optInPreferencePersister(Activity activity) {
+    ProximityOptInPersister optInPreferencePersister(Activity activity) {
         SharedPreferences preferences = activity.getSharedPreferences(OPT_IN_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        return new OptInPreferencePersister(preferences);
+        return new ProximityOptInPersister(preferences);
     }
 }

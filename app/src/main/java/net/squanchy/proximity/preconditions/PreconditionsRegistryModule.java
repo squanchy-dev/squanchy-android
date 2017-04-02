@@ -2,9 +2,6 @@ package net.squanchy.proximity.preconditions;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothManager;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 
@@ -48,8 +45,8 @@ public class PreconditionsRegistryModule {
     }
 
     @Provides
-    OptInPrecondition optInPrecondition(OptInPreferencePersister optInPreferencePersister) {
-        return new OptInPrecondition(optInPreferencePersister);
+    OptInPrecondition optInPrecondition(ProximityOptInPersister proximityOptInPersister) {
+        return new OptInPrecondition(proximityOptInPersister);
     }
 
     @Provides

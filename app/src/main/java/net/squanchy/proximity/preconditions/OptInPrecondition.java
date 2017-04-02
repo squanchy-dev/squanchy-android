@@ -6,9 +6,9 @@ import io.reactivex.Completable;
 
 public class OptInPrecondition implements Precondition {
 
-    private final OptInPreferencePersister preferences_persister;
+    private final ProximityOptInPersister preferences_persister;
 
-    public OptInPrecondition(OptInPreferencePersister preferences_persister) {
+    public OptInPrecondition(ProximityOptInPersister preferences_persister) {
         this.preferences_persister = preferences_persister;
     }
 
@@ -19,12 +19,12 @@ public class OptInPrecondition implements Precondition {
 
     @Override
     public boolean satisfied() {
-        return preferences_persister.getOptInPreferenceGranted();
+        return preferences_persister.userOptedIn();
     }
 
     @Override
     public Completable satisfy() {
-        preferences_persister.setOptInPreferenceTo(true);
+        preferences_persister.storeUserOptedIn();
         return Completable.complete();
     }
 

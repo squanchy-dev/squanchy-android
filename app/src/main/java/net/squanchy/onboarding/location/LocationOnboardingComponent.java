@@ -6,7 +6,7 @@ import net.squanchy.navigation.NavigationModule;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.onboarding.Onboarding;
 import net.squanchy.onboarding.OnboardingModule;
-import net.squanchy.proximity.preconditions.OptInPreferencePersister;
+import net.squanchy.proximity.preconditions.ProximityOptInPersister;
 import net.squanchy.proximity.preconditions.ProximityPreconditions;
 import net.squanchy.proximity.preconditions.ProximityPreconditionsModule;
 import net.squanchy.service.proximity.injection.ProximityService;
@@ -25,5 +25,5 @@ public interface LocationOnboardingComponent {
 
     ProximityPreconditions proximityPreconditions();
 
-    OptInPreferencePersister optInPersister();
+    ProximityOptInPersister proximityOptInPersister();
 }
