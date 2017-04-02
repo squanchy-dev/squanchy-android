@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -41,14 +42,23 @@ public class ContestActivity extends TypefaceStyleableActivity {
 
         setContentView(R.layout.activity_contest_summary);
 
-        contestProgressView = (ProgressBar) findViewById(R.id.contest_progressbar);
-        contestStatusView = (TextView) findViewById(R.id.contest_status);
-
         ContestComponent component = ContestInjector.obtain(this);
         contestService = component.contestService();
 
+        addTestingControlsIfDebugOptionActive((ViewGroup) findViewById(R.id.contest_container));
+
+        contestProgressView = (ProgressBar) findViewById(R.id.contest_progressbar);
+        contestStatusView = (TextView) findViewById(R.id.contest_status);
+
         DialogLayoutParameters.wrapHeight(this)
                 .applyTo(getWindow());
+    }
+
+    private void addTestingControlsIfDebugOptionActive(ViewGroup container) {
+        ContestTester contentTester = new ContestTester(this);
+        if (contentTester.testingEnabled()) {
+            contentTester.appendDebugControls(container, contestService);
+        }
     }
 
     @Override
