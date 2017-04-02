@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.widget.TextView;
 
 import java.util.Locale;
@@ -19,9 +18,11 @@ public class ContestActivity extends TypefaceStyleableActivity {
 
     private static final String EXTRA_ACHIEVEMENT_ID = ContestActivity.class.getCanonicalName() + ".achievement_id";
 
+    private final CompositeDisposable subscriptions = new CompositeDisposable();
+
     private ContestService contestService;
-    private CompositeDisposable subscriptions = new CompositeDisposable();
-    private TextView contestResults;
+
+    private TextView contestResultsView;
 
     public static Intent createIntent(Context context, String achievementId) {
         Intent intent = new Intent(context, ContestActivity.class);
@@ -39,7 +40,7 @@ public class ContestActivity extends TypefaceStyleableActivity {
 
         setContentView(R.layout.activity_contest_summary);
 
-        contestResults = (TextView) findViewById(R.id.contest_result);
+        contestResultsView = (TextView) findViewById(R.id.contest_result);
 
         ContestComponent component = ContestInjector.obtain(this);
         contestService = component.contestService();
@@ -74,7 +75,7 @@ public class ContestActivity extends TypefaceStyleableActivity {
     }
 
     private void updateWith(ContestStandings standings) {
-        contestResults.setText(
+        contestResultsView.setText(
                 String.format(Locale.US, "Checked %1$d out of %2$d stands: \n%3$s",
                         standings.current(),
                         standings.goal(),
@@ -93,6 +94,6 @@ public class ContestActivity extends TypefaceStyleableActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        subscriptions.dispose();
+        subscriptions.clear();
     }
 }
