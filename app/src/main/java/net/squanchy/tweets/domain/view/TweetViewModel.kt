@@ -23,6 +23,14 @@ data class TweetViewModel(
                 createdAt: String,
                 photoUrl: Optional<String>,
                 linkInfo: TweetLinkInfo
-        ): TweetViewModel = TweetViewModel(id, text, spannedText, user, createdAt, photoUrl, linkInfo)
+        ): TweetViewModel = TweetViewModel(
+                id,
+                text,
+                spannedText,
+                user,
+                createdAt,
+                photoUrl,
+                linkInfo
+        )
     }
 }

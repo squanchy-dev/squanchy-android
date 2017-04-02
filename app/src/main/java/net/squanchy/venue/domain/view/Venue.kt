@@ -22,6 +22,14 @@ data class Venue(
                 description: String,
                 mapUrl: String,
                 timezoneId: String
-        ) = Venue(name, address, latitude, longitude, description, mapUrl, DateTimeZone.forID(timezoneId))
+        ) = Venue(
+                name,
+                address,
+                latitude,
+                longitude,
+                description,
+                mapUrl,
+                DateTimeZone.forID(timezoneId)
+        )
     }
 }

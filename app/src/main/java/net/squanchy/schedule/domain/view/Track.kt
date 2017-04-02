@@ -17,6 +17,12 @@ data class Track(
                 accentColor: Optional<String>,
                 textColor: Optional<String>,
                 iconUrl: Optional<String>
-        ) = Track(id, name, accentColor, textColor, iconUrl)
+        ) = Track(
+                id,
+                name,
+                accentColor,
+                textColor,
+                iconUrl
+        )
     }
 }

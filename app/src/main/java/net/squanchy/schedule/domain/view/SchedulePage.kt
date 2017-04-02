@@ -13,6 +13,10 @@ data class SchedulePage(
                 dayId: String,
                 date: LocalDateTime,
                 events: List<Event>
-        ) = SchedulePage(dayId, date, events)
+        ) = SchedulePage(
+                dayId,
+                date,
+                events
+        )
     }
 }

@@ -36,7 +36,6 @@ data class Event(
         SOCIAL("social"),
         OTHER("other");
 
-
         companion object {
 
             fun fromRawType(rawType: String): Type {
