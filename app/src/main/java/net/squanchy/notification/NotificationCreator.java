@@ -160,7 +160,7 @@ public class NotificationCreator {
                 richNotification.addLine(
                         context.getString(
                                 R.string.room_event_notification,
-                                event.getPlace().get().name(),
+                                event.getPlace().get().getName(),
                                 event.getTitle()
                         )
                 );
