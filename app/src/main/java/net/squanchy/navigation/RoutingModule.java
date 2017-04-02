@@ -15,12 +15,10 @@ class RoutingModule {
     private static final String FIRST_START_SHARED_PREFERENCES_NAME = "first_start";
 
     @Provides
-    SharedPreferences firstStartSharedPreferences(Activity activity) {
-        return activity.getSharedPreferences(FIRST_START_SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-    }
-
-    @Provides
-    FirstStartPersister firstStartPersister(SharedPreferences preferences) {
+    FirstStartPersister firstStartPersister(Activity activity) {
+        // The preferences cannot be @Provide'd because we need different ones in different places
+        // (but they are all SharedPreferences) and the Persister is our abstraction of preferences.
+        SharedPreferences preferences = activity.getSharedPreferences(FIRST_START_SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         return new FirstStartPersister(preferences);
     }
 }
