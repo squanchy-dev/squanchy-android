@@ -1,5 +1,6 @@
-Version 0.7.0 alpha
+Version 0.9.0
 
-* Fixed a lot of bugs: #180, #181, #176, #162 and a bunch of others 🐛
-* Improved social stream page 🐦
-* What's new: about and licences screens; favourites empty state (WIP)
+* Fixed a major crash for first startup when offline 🐛
+* Twitter feed: improved styling, clickable tweets, and images 🐦
+* Favourites: improved empty state 🥚
+* Fixed crash in about screen on some Android 5.0 devices

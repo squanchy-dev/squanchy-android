@@ -7,6 +7,8 @@
   <attr name="defaultBoldTypeface" format="string" />
   <attr name="defaultLightTypeface" format="string" />
 
+  <attr name="tweetLinkTextColor" format="color" />
+
   <declare-styleable name="CardLayout">
     <attr name="cardCornerRadius" format="dimension" />
     <attr name="cardInsetHorizontal" format="dimension" />

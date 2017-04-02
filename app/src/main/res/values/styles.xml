@@ -223,21 +223,35 @@
     <item name="android:src">@drawable/ic_favorite_empty</item>
   </style>
 
-  <style name="TextAppearance.Squanchy.Tweet.Timestamp" parent="None">
-    <item name="android:textColor">?android:textColorSecondary</item>
-    <item name="android:textSize">@dimen/card_twitter</item>
-    <item name="fontPath">?defaultMediumTypeface</item>
-  </style>
-
-  <style name="Tweet.Card.Title" parent="None">
-    <item name="android:textAppearance">@style/TextAppearance.Squanchy.Card.Title</item>
-  </style>
-
-  <style name="Tweet.Card.Timestamp" parent="None">
-    <item name="android:gravity">center</item>
-    <item name="android:lineSpacingExtra">@dimen/card_twitter_line_spacing_extra</item>
+  <style name="Tweet.Title" parent="None">
+    <item name="android:lineSpacingExtra">@dimen/tweet_line_spacing_extra</item>
     <item name="android:lineSpacingMultiplier">1</item>
-    <item name="android:textAppearance">@style/TextAppearance.Squanchy.Tweet.Timestamp</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.Tweet.Title</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.Tweet.Title" parent="None">
+    <item name="android:textColor">@color/tweet_text</item>
+    <item name="android:textSize">@dimen/card_title</item>
+    <item name="fontPath">?titleTypeface</item>
+  </style>
+
+  <style name="Tweet.Photo" parent="None">
+    <item name="android:maxHeight">@dimen/tweet_photo_max_height</item>
+  </style>
+
+  <style name="Tweet.Footer" parent="None">
+    <item name="android:gravity">center</item>
+  </style>
+
+  <style name="Tweet.Footer.Text" parent="None">
+    <item name="android:gravity">center</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.Tweet.Footer.Text</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.Tweet.Footer.Text" parent="None">
+    <item name="android:textColor">?android:textColorSecondary</item>
+    <item name="android:textSize">@dimen/tweet_footer_text</item>
+    <item name="fontPath">?defaultMediumTypeface</item>
   </style>
 
   <style name="SpeakerDetails.Header.Speaker.Photo" parent="None" />
@@ -459,10 +473,9 @@
     <item name="fontPath">@string/license_notice_typeface</item>
   </style>
 
-  <style name="Favorite.Empty.Text" parent="None">
-    <item name="android:foreground">@drawable/primary_touch_feedback</item>
+  <style name="Favorite.Empty.Blurb" parent="None">
     <item name="android:gravity">center_horizontal</item>
-    <item name="android:drawablePadding">@dimen/card_horizontal_margin</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.Favorite.Empty.Blurb</item>
   </style>
 
   <style name="Onboarding.Skip" parent="Button.Colored.NormallyResting">
@@ -524,6 +537,21 @@
 
   <style name="Onboarding.Cta" parent="Button.Colored" />
 
+  <style name="TextAppearance.Squanchy.Favorite.Empty.Blurb" parent="None">
+    <item name="android:textSize">@dimen/favorites_empty_blurb_text</item>
+    <item name="android:textColor">?android:textColorSecondary</item>
+    <item name="fontPath">?defaultMediumTypeface</item>
+  </style>
+
+  <style name="Favorite.Empty.Cta" parent="Button.Colored">
+    <item name="android:backgroundTint">?colorPrimary</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.Favorite.Empty.Cta</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.Favorite.Empty.Cta" parent="TextAppearance.Squanchy.Button.Colored" />
+
+  <style name="Favorite.Empty.Fab" parent="EventDetails.Fab" />
+
   <style name="SignIn.BottomSheet" parent="Widget.Design.BottomSheet.Modal" />
 
   <style name="SignIn.BottomSheet.Label" parent="None">
@@ -536,4 +564,49 @@
     <item name="android:textSize">@dimen/sign_in_label_text</item>
     <item name="fontPath">?defaultMediumTypeface</item>
   </style>
+
+  <style name="FirstStartWithNoNetwork.Title" parent="None">
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.FirstStartWithNoNetwork.Title</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.FirstStartWithNoNetwork.Title" parent="None">
+    <item name="android:textColor">?colorPrimary</item>
+    <item name="android:textSize">@dimen/first_start_with_no_network_title_text</item>
+    <item name="fontPath">?titleTypeface</item>
+  </style>
+
+  <style name="FirstStartWithNoNetwork.Blurb" parent="None">
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.FirstStartWithNoNetwork.Blurb</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.FirstStartWithNoNetwork.Blurb" parent="None">
+    <item name="android:textColor">?android:textColorPrimary</item>
+    <item name="android:textSize">@dimen/first_start_with_no_network_blurb_text</item>
+    <item name="fontPath">?defaultRegularTypeface</item>
+  </style>
+
+  <style name="FirstStartWithNoNetwork.Cta" parent="None">
+    <item name="android:animateLayoutChanges">true</item>
+    <item name="android:gravity">center</item>
+  </style>
+
+  <style name="FirstStartWithNoNetwork.Cta.Text" parent="None">
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.FirstStartWithNoNetwork.Cta</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.FirstStartWithNoNetwork.Cta" parent="TextAppearance.Squanchy.FirstStartWithNoNetwork.Blurb">
+    <item name="android:textSize">@dimen/first_start_with_no_network_cta_text</item>
+    <item name="fontPath">?defaultMediumTypeface</item>
+  </style>
+
+  <style name="FirstStartWithNoNetwork.Cancel" parent="Button.Colored">
+    <item name="android:backgroundTint">?colorPrimary</item>
+    <item name="android:minHeight">@dimen/first_start_with_no_network_cancel_min_height</item>
+    <item name="android:paddingStart">@dimen/first_start_with_no_network_cancel_padding_horizontal</item>
+    <item name="android:paddingEnd">@dimen/first_start_with_no_network_cancel_padding_horizontal</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.FirstStartWithNoNetwork.Cancel</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.FirstStartWithNoNetwork.Cancel" parent="TextAppearance.Squanchy.Button.Colored" />
+
 </resources>

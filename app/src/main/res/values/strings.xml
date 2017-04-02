@@ -34,11 +34,10 @@
   <string name="speaker_list_title">Speakers</string>
   <string name="talks_list_title">Talks</string>
 
-  <string name="tweet_date_not_available">Unknown date</string>
-  <string name="tweet_date_recent_format">%1$s at %2$s</string>
-  <string name="tweet_date_normal_format">%1$s at %2$s</string>
-  <string name="tweet_date_today">Today</string>
-  <string name="tweet_date_yesterday">Yesterday</string>
+  <string name="tweet_footer_format" translatable="false">\@%1$s—%2$s</string>
+  <string name="tweet_date_format">%1$s at %2$s</string>
+  <string name="tweet_date_today">today</string>
+  <string name="tweet_date_yesterday">yesterday</string>
 
   <string name="event_details_body_label_when_text">When</string>
   <string name="event_details_body_label_where_text">Where</string>
@@ -76,6 +75,12 @@
   <string name="prompt_to_favorite">You have no favorite talks, yet. Find some talk, touch the ♥ button and you are good to go.</string>
   <string name="achievement_unlocked">Achievement Unlocked: The Fast Learner!</string>
 
+  <string name="favorites_empty_state_signed_out_blurb">Pick your favorite talks, synced across devices, and get notifications when they’re about to start.</string>
+  <string name="favorites_empty_state_signed_out_cta">SIGN IN</string>
+  <string name="favorites_empty_state_signed_in_blurb">You haven’t picked any favorites yet.\n\n1️⃣ Find a talk you like.\n2️⃣ Aim for the big ♥ button.\n3️⃣ That’s it. Really.</string>
+  <string name="favorites_achievement_fast_learner"><![CDATA[Achievement Unlocked: <b>The Fast Learner</b> 🤓]]></string>
+  <string name="favorites_achievement_persevering"><![CDATA[Achievement Unlocked: <b>The harder you try, the luckier you get.</b> Now give it a rest.]]></string>
+
   <string name="about_label">About</string>
   <string name="about_powered_by">is powered by</string>
   <string name="about_location_powered_by">Location services and contest powered by</string>
@@ -104,5 +109,14 @@
   <string name="onboarding_error_location_failed">Unable to verify location settings for the device.</string>
   <string name="onboarding_error_location_failed_action">ENABLE MANUALLY</string>
   <string name="onboarding_error_google_client_connection">Unable to verify location settings for the device. Please try again shortly.</string>
+
+  <string name="routing_sign_in_unexpected_error">Something went very wrong while starting Squanchy, sorry.</string>
+
+  <string name="first_start_with_no_network_label">Not so fast!</string>
+  <string name="first_start_with_no_network_network_connected">Yay network is back! 🎉</string>
+  <string name="first_start_with_no_network_title">Not so fast!</string>
+  <string name="first_start_with_no_network_blurb">Unfortunately, the first time you open this app you will need to be connected to the internet.</string>
+  <string name="first_start_with_no_network_cta">Go ahead, connect to a network. I\'ll be waiting.</string>
+  <string name="first_start_with_no_network_cancel_button">You know what, nevermind</string>
 
 </resources>
