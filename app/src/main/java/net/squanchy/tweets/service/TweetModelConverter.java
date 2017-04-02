@@ -41,7 +41,7 @@ public class TweetModelConverter {
                 .createdAt(tweet.createdAt)
                 .user(user)
                 .photoUrl(photoUrlMaybeFrom(photoUrls))
-                .linkInfo(TweetLinkInfo.from(tweet))
+                .linkInfo(TweetLinkInfo.Companion.create(tweet))
                 .build();
     }
 
