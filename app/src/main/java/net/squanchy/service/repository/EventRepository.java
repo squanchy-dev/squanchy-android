@@ -77,7 +77,7 @@ public class EventRepository {
     private Function<FirebaseTracks, List<Track>> toTracks() {
         return firebaseTracks -> Lists.map(
                 firebaseTracks.tracks,
-                firebaseTrack -> Track.create(
+                firebaseTrack -> Track.Companion.create(
                         firebaseTrack.id,
                         firebaseTrack.name,
                         Optional.fromNullable(firebaseTrack.accent_color),
@@ -111,7 +111,7 @@ public class EventRepository {
     }
 
     private Optional<Track> trackById(List<Track> tracks, String trackId) {
-        return Lists.find(tracks, track -> track.id().equals(trackId));
+        return Lists.find(tracks, track -> track.getId().equals(trackId));
     }
 
     public Observable<List<Event>> events(String userId) {

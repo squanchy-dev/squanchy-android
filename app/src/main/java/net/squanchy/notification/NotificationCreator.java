@@ -119,7 +119,7 @@ public class NotificationCreator {
     private int getTrackColor(Event event) {
         return event
                 .getTrack()
-                .map(track -> Color.parseColor(track.accentColor().or(ARGB_TRANSPARENT)))
+                .map(track -> Color.parseColor(track.getAccentColor().or(ARGB_TRANSPARENT)))
                 .or(Color.TRANSPARENT);
     }
 

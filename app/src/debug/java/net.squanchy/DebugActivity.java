@@ -110,7 +110,7 @@ public class DebugActivity extends Activity {
     }
 
     private Track createTrack() {
-        return Track.create(
+        return Track.Companion.create(
                 "0",
                 "UI",
                 Optional.of(generateColor()),
