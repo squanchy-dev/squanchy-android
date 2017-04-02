@@ -22,8 +22,8 @@ class FavoritesService {
 
     public Observable<Favorites> favorites() {
         return authService.ifUserSignedInThenObservableFrom(userId -> eventRepository.events(userId)
-                .map(events -> filter(events, Event::favorited))
-                .map(Favorites::create)
+                .map(events -> filter(events, Event::getFavorited))
+                .map(Favorites.Companion::create)
                 .subscribeOn(Schedulers.io()));
     }
 }

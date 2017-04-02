@@ -36,7 +36,7 @@ public class ScheduleService {
     private final FirebaseAuthService authService;
     private final EventRepository eventRepository;
 
-    public ScheduleService(FirebaseDbService dbService, FirebaseAuthService authService, EventRepository eventRepository) {
+    ScheduleService(FirebaseDbService dbService, FirebaseAuthService authService, EventRepository eventRepository) {
         this.dbService = dbService;
         this.authService = authService;
         this.eventRepository = eventRepository;
@@ -47,7 +47,7 @@ public class ScheduleService {
             Observable<FirebaseDays> daysObservable = dbService.days();
 
             return eventRepository.events(userId)
-                    .map(events -> onlyFavorites ? filter(events, Event::favorited) : events)
+                    .map(events -> onlyFavorites ? filter(events, Event::getFavorited) : events)
                     .map(groupEventsByDay())
                     .withLatestFrom(daysObservable, combineEventsById())
                     .map(sortPagesByDate())
@@ -69,17 +69,17 @@ public class ScheduleService {
         return (map, event) -> {
             List<Event> dayList = getOrCreateDayList(map, event);
             dayList.add(event);
-            map.put(event.dayId(), dayList);
+            map.put(event.getDayId(), dayList);
             return map;
         };
     }
 
     private List<Event> getOrCreateDayList(HashMap<String, List<Event>> map, Event event) {
-        List<Event> currentList = map.get(event.dayId());
+        List<Event> currentList = map.get(event.getDayId());
 
         if (currentList == null) {
             currentList = new ArrayList<>();
-            map.put(event.dayId(), currentList);
+            map.put(event.getDayId(), currentList);
         }
 
         return currentList;
@@ -92,11 +92,11 @@ public class ScheduleService {
                 Optional<String> rawDate = findDate(apiDays, dayId);
                 if (rawDate.isPresent()) {
                     LocalDateTime date = LocalDateTime.parse(rawDate.get(), DATE_FORMATTER);
-                    pages.add(SchedulePage.create(dayId, date, map.get(dayId)));
+                    pages.add(SchedulePage.Companion.create(dayId, date, map.get(dayId)));
                 }
             }
 
-            return Schedule.create(pages);
+            return Schedule.Companion.create(pages);
         };
     }
 
@@ -107,28 +107,28 @@ public class ScheduleService {
 
     private Function<Schedule, Schedule> sortPagesByDate() {
         return schedule -> {
-            ArrayList<SchedulePage> sortedPages = new ArrayList<>(schedule.pages());
-            Collections.sort(sortedPages, (firstPage, secondPage) -> firstPage.date().compareTo(secondPage.date()));
-            return Schedule.create(sortedPages);
+            ArrayList<SchedulePage> sortedPages = new ArrayList<>(schedule.getPages());
+            Collections.sort(sortedPages, (firstPage, secondPage) -> firstPage.getDate().compareTo(secondPage.getDate()));
+            return Schedule.Companion.create(sortedPages);
         };
     }
 
     private Function<Schedule, Schedule> sortEventsByStartDate() {
         return schedule -> {
-            List<SchedulePage> pages = schedule.pages();
+            List<SchedulePage> pages = schedule.getPages();
             List<SchedulePage> sortedPages = new ArrayList<>(pages.size());
 
             for (SchedulePage page : pages) {
-                sortedPages.add(SchedulePage.create(page.dayId(), page.date(), sortByStartDate(page)));
+                sortedPages.add(SchedulePage.Companion.create(page.getDayId(), page.getDate(), sortByStartDate(page)));
             }
 
-            return Schedule.create(sortedPages);
+            return Schedule.Companion.create(sortedPages);
         };
     }
 
     private List<Event> sortByStartDate(SchedulePage schedulePage) {
-        ArrayList<Event> sortedEvents = new ArrayList<>(schedulePage.events());
-        Collections.sort(sortedEvents, (firstEvent, secondEvent) -> firstEvent.startTime().compareTo(secondEvent.startTime()));
+        ArrayList<Event> sortedEvents = new ArrayList<>(schedulePage.getEvents());
+        Collections.sort(sortedEvents, (firstEvent, secondEvent) -> firstEvent.getStartTime().compareTo(secondEvent.getStartTime()));
         return sortedEvents;
     }
 }

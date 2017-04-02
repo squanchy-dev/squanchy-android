@@ -105,8 +105,8 @@ public class FavoritesPageView extends CoordinatorLayout implements Loadable {
     }
 
     private void onEventClicked(Event event) {
-        analytics.trackItemSelected(ContentType.FAVORITES_ITEM, event.id());
-        navigate.toEventDetails(event.id());
+        analytics.trackItemSelected(ContentType.FAVORITES_ITEM, event.getId());
+        navigate.toEventDetails(event.getId());
     }
 
     @Override

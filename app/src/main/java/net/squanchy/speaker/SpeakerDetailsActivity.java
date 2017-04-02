@@ -109,8 +109,8 @@ public class SpeakerDetailsActivity extends TypefaceStyleableActivity {
         if (speaker.isPresent()) {
             Speaker speaker = this.speaker.get();
 
-            twitterItem.setVisible(speaker.twitterUsername().isPresent());
-            websiteItem.setVisible(speaker.personalUrl().isPresent());
+            twitterItem.setVisible(speaker.getTwitterUsername().isPresent());
+            websiteItem.setVisible(speaker.getPersonalUrl().isPresent());
         } else {
             twitterItem.setVisible(false);
             websiteItem.setVisible(false);
@@ -126,10 +126,10 @@ public class SpeakerDetailsActivity extends TypefaceStyleableActivity {
             finish();
             return true;
         } else if (itemId == R.id.action_speaker_twitter) {
-            navigate().toTwitterProfile(speaker.get().twitterUsername().get());
+            navigate().toTwitterProfile(speaker.get().getTwitterUsername().get());
             return true;
         } else if (itemId == R.id.action_speaker_website) {
-            navigate().toExternalUrl(speaker.get().personalUrl().get());
+            navigate().toExternalUrl(speaker.get().getPersonalUrl().get());
             return true;
         } else {
             return super.onOptionsItemSelected(item);

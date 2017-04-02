@@ -39,12 +39,12 @@ public class OtherEventItemView extends EventItemView {
 
     @Override
     public void updateWith(Event event) {
-        ensureSupportedType(event.type());
+        ensureSupportedType(event.getType());
 
         timestampView.setText(startTimeAsFormattedString(event));
-        titleView.setText(event.title());
+        titleView.setText(event.getTitle());
 
-        illustrationView.setImageResource(illustrationFor(event.type()));
+        illustrationView.setImageResource(illustrationFor(event.getType()));
     }
 
     private void ensureSupportedType(Event.Type type) {
@@ -60,9 +60,9 @@ public class OtherEventItemView extends EventItemView {
 
     private String startTimeAsFormattedString(Event event) {
         DateTimeFormatter formatter = DateTimeFormat.shortTime()
-                .withZone(event.timeZone());
+                .withZone(event.getTimeZone());
 
-        return formatter.print(event.startTime().toDateTime());
+        return formatter.print(event.getStartTime().toDateTime());
     }
 
     @DrawableRes

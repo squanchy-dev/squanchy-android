@@ -39,10 +39,10 @@ class EventDetailsService {
     }
 
     private Completable toggleFavoriteOn(Event event) {
-        if (event.favorited()) {
-            return removeFavorite(event.id());
+        if (event.getFavorited()) {
+            return removeFavorite(event.getId());
         } else {
-            return favorite(event.id());
+            return favorite(event.getId());
         }
     }
 

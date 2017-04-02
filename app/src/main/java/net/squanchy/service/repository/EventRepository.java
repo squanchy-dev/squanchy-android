@@ -70,14 +70,14 @@ public class EventRepository {
     private Function<FirebasePlaces, List<Place>> toPlaces() {
         return firebasePlaces -> Lists.map(
                 firebasePlaces.places,
-                firebasePlace -> Place.create(firebasePlace.id, firebasePlace.name, Optional.fromNullable(firebasePlace.floor))
+                firebasePlace -> Place.Companion.create(firebasePlace.id, firebasePlace.name, Optional.fromNullable(firebasePlace.floor))
         );
     }
 
     private Function<FirebaseTracks, List<Track>> toTracks() {
         return firebaseTracks -> Lists.map(
                 firebaseTracks.tracks,
-                firebaseTrack -> Track.create(
+                firebaseTrack -> Track.Companion.create(
                         firebaseTrack.id,
                         firebaseTrack.name,
                         Optional.fromNullable(firebaseTrack.accent_color),
@@ -88,7 +88,7 @@ public class EventRepository {
     }
 
     private Function6<FirebaseEvent, List<Speaker>, FirebaseFavorites, List<Place>, List<Track>, DateTimeZone, Event> combineIntoEvent() {
-        return (apiEvent, speakers, favorites, places, tracks, timeZone) -> Event.create(
+        return (apiEvent, speakers, favorites, places, tracks, timeZone) -> Event.Companion.create(
                 apiEvent.id,
                 checksum.getChecksumOf(apiEvent.id),
                 apiEvent.day_id,
@@ -98,7 +98,7 @@ public class EventRepository {
                 placeById(places, apiEvent.place_id),
                 Optional.fromNullable(apiEvent.experience_level).flatMap(ExperienceLevel::fromNullableRawLevel),
                 speakersByIds(speakers, apiEvent.speaker_ids),
-                Event.Type.fromRawType(apiEvent.type),
+                Event.Type.Companion.fromRawType(apiEvent.type),
                 favorites.hasFavorite(apiEvent.id),
                 Optional.fromNullable(apiEvent.description),
                 trackById(tracks, apiEvent.track_id),
@@ -107,11 +107,11 @@ public class EventRepository {
     }
 
     private Optional<Place> placeById(List<Place> places, String placeId) {
-        return Lists.find(places, place -> place.id().equals(placeId));
+        return Lists.find(places, place -> place.getId().equals(placeId));
     }
 
     private Optional<Track> trackById(List<Track> tracks, String trackId) {
-        return Lists.find(tracks, track -> track.id().equals(trackId));
+        return Lists.find(tracks, track -> track.getId().equals(trackId));
     }
 
     public Observable<List<Event>> events(String userId) {
@@ -145,7 +145,7 @@ public class EventRepository {
             List<Track> tracks,
             DateTimeZone timeZone
     ) {
-        return apiEvent -> Event.create(
+        return apiEvent -> Event.Companion.create(
                 apiEvent.id,
                 checksum.getChecksumOf(apiEvent.id),
                 apiEvent.day_id,
@@ -155,7 +155,7 @@ public class EventRepository {
                 placeById(places, apiEvent.place_id),
                 Optional.fromNullable(apiEvent.experience_level).flatMap(ExperienceLevel::fromNullableRawLevel),
                 speakersByIds(speakers, apiEvent.speaker_ids),
-                Event.Type.fromRawType(apiEvent.type),
+                Event.Type.Companion.fromRawType(apiEvent.type),
                 favorites.hasFavorite(apiEvent.id),
                 Optional.fromNullable(apiEvent.description),
                 trackById(tracks, apiEvent.track_id),
@@ -168,7 +168,7 @@ public class EventRepository {
             return Collections.emptyList();
         }
 
-        return filter(speakers, speaker -> speaker_ids.contains(speaker.id()));
+        return filter(speakers, speaker -> speaker_ids.contains(speaker.getId()));
     }
 
     public Completable addFavorite(String eventId, String userId) {

@@ -14,6 +14,8 @@ import net.squanchy.tweets.domain.TweetLinkInfo;
 import net.squanchy.tweets.domain.view.TweetViewModel;
 import net.squanchy.tweets.domain.view.User;
 
+import static android.R.attr.id;
+
 public class TweetModelConverter {
 
     private static final String MEDIA_TYPE_PHOTO = "photo";
@@ -25,7 +27,7 @@ public class TweetModelConverter {
     }
 
     TweetViewModel toViewModel(Tweet tweet) {
-        User user = User.create(tweet.user.name, tweet.user.screenName, tweet.user.profileImageUrlHttps);
+        User user = User.Companion.create(tweet.user.name, tweet.user.screenName, tweet.user.profileImageUrlHttps);
 
         Range displayTextRange = Range.from(tweet.displayTextRange, tweet.text.length());
         List<HashtagEntity> hashtags = onlyHashtagsInRange(tweet.entities.hashtags, displayTextRange);
@@ -34,15 +36,15 @@ public class TweetModelConverter {
         List<String> photoUrls = onlyPhotoUrls(tweet.entities.media);
         String displayableText = displayableTextFor(tweet, displayTextRange);
 
-        return TweetViewModel.builder()
-                .id(tweet.id)
-                .text(displayableText)
-                .spannedText(tweetSpannedTextBuilder.applySpans(displayableText, displayTextRange.start(), hashtags, mentions, urls))
-                .createdAt(tweet.createdAt)
-                .user(user)
-                .photoUrl(photoUrlMaybeFrom(photoUrls))
-                .linkInfo(TweetLinkInfo.from(tweet))
-                .build();
+        return TweetViewModel.Companion.create(
+                id,
+                displayableText,
+                tweetSpannedTextBuilder.applySpans(displayableText, displayTextRange.start(), hashtags, mentions, urls),
+                user,
+                tweet.createdAt,
+                photoUrlMaybeFrom(photoUrls),
+                TweetLinkInfo.Companion.create(tweet)
+        );
     }
 
     private String displayableTextFor(Tweet tweet, Range displayTextRange) {

@@ -15,7 +15,7 @@ public class VenueRepository {
 
     public Observable<Venue> venue() {
         return dbService.venueInfo()
-                .map(firebaseVenue -> Venue.create(
+                .map(firebaseVenue -> Venue.Companion.create(
                         firebaseVenue.name,
                         firebaseVenue.address,
                         firebaseVenue.lat,

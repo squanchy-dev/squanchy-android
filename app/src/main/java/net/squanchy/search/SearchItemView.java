@@ -44,7 +44,7 @@ public class SearchItemView extends LinearLayout {
     }
 
     public void updateWith(Speaker speaker, ImageLoader imageLoader, OnSearchResultClickListener listener) {
-        name.setText(speaker.name());
+        name.setText(speaker.getName());
         updateSpeakerPhotos(speaker, imageLoader);
         setOnClickListener(v -> listener.onSpeakerClicked(speaker));
     }
@@ -54,7 +54,7 @@ public class SearchItemView extends LinearLayout {
             throw new IllegalStateException("Unable to access the ImageLoader, it hasn't been initialized yet");
         }
 
-        Optional<String> avatarImageURL = speaker.photoUrl();
+        Optional<String> avatarImageURL = speaker.getPhotoUrl();
         if (avatarImageURL.isPresent()) {
             imageLoader.load(avatarImageURL.get()).into(image);
         }

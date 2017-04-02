@@ -103,7 +103,7 @@ public final class EventFixtures {
     }
 
     public Event build() {
-        return Event.create(
+        return Event.Companion.create(
                 eventId,
                 numericEventId,
                 dayId,

@@ -90,7 +90,7 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
         searchField.addTextChangedListener(searchTextWatcher);
 
         Disposable speakersSubscription = searchService.speakers()
-                .map(speakers -> SearchResults.create(Collections.emptyList(), speakers))
+                .map(speakers -> SearchResults.Companion.create(Collections.emptyList(), speakers))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(searchResults -> searchRecyclerView.updateWith(searchResults, this), Timber::e);
 
@@ -215,12 +215,12 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
 
     @Override
     public void onSpeakerClicked(Speaker speaker) {
-        navigate().toSpeakerDetails(speaker.id());
+        navigate().toSpeakerDetails(speaker.getId());
     }
 
     @Override
     public void onEventClicked(Event event) {
-        navigate().toEventDetails(event.id());
+        navigate().toEventDetails(event.getId());
     }
 
     private Navigator navigate() {
