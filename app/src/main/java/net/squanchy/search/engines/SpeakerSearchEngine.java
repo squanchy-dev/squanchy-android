@@ -18,7 +18,7 @@ class SpeakerSearchEngine implements SearchEngine<Speaker> {
 
     private boolean matchesQuery(Speaker speaker, String query) {
         String normalizedQuery = StringNormalizer.normalize(query);
-        String normalizedTitle = StringNormalizer.normalize(speaker.name());
+        String normalizedTitle = StringNormalizer.normalize(speaker.getName());
 
         return normalizedTitle.contains(normalizedQuery);
     }

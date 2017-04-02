@@ -76,7 +76,7 @@ class ItemsAdapter {
             if (adjustedPosition == 0) {
                 return ITEM_ID_SPEAKERS_HEADER;
             } else {
-                return searchResults.getSpeakers().get(adjustedPosition - 1).numericId();
+                return searchResults.getSpeakers().get(adjustedPosition - 1).getNumericId();
             }
         }
     }

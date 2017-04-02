@@ -215,7 +215,7 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
 
     @Override
     public void onSpeakerClicked(Speaker speaker) {
-        navigate().toSpeakerDetails(speaker.id());
+        navigate().toSpeakerDetails(speaker.getId());
     }
 
     @Override

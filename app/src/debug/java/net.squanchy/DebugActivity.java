@@ -94,7 +94,7 @@ public class DebugActivity extends Activity {
 
     private List<Speaker> createTalkSpeakers() {
         List<Speaker> speakers = new ArrayList<>(2);
-        speakers.add(Speaker.create(
+        speakers.add(Speaker.Companion.create(
                 "1",
                 101L,
                 "Ajeje Brazorf",

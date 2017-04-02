@@ -37,7 +37,7 @@ public class SpeakerRepository {
     }
 
     private Speaker toSpeaker(FirebaseSpeaker firebaseSpeaker) {
-        return Speaker.create(
+        return Speaker.Companion.create(
                 firebaseSpeaker.id,
                 checksum.getChecksumOf(firebaseSpeaker.id),
                 firebaseSpeaker.name,

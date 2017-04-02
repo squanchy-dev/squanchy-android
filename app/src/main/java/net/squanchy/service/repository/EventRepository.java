@@ -168,7 +168,7 @@ public class EventRepository {
             return Collections.emptyList();
         }
 
-        return filter(speakers, speaker -> speaker_ids.contains(speaker.id()));
+        return filter(speakers, speaker -> speaker_ids.contains(speaker.getId()));
     }
 
     public Completable addFavorite(String eventId, String userId) {

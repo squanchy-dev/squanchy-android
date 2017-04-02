@@ -224,7 +224,7 @@ public class ItemsAdapterTest {
 
             long itemId = itemsAdapter.itemIdAtAbsolutePosition(1);      // 1 = (1 header + 1 speaker) - 1 [because zero-based]
 
-            assertThat(itemId).isEqualTo(ANY_TWO_SPEAKERS.get(0).numericId());
+            assertThat(itemId).isEqualTo(ANY_TWO_SPEAKERS.get(0).getNumericId());
         }
 
         @Test
@@ -260,7 +260,7 @@ public class ItemsAdapterTest {
 
             long itemId = itemsAdapter.itemIdAtAbsolutePosition(5);     // 5 = (1 header + 3 events + 1 header + 1 speaker) - 1 [because zero-based]
 
-            assertThat(itemId).isEqualTo(ANY_TWO_SPEAKERS.get(0).numericId());
+            assertThat(itemId).isEqualTo(ANY_TWO_SPEAKERS.get(0).getNumericId());
         }
     }
 
