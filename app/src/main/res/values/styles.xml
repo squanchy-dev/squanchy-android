@@ -191,7 +191,7 @@
   </style>
 
   <style name="EventDetails.Fab" parent="None">
-    <item name="backgroundTint">?colorPrimary</item>
+    <item name="backgroundTint">@color/selector_color_primary</item>
     <item name="android:clickable">true</item>
     <item name="android:foreground">@drawable/white_circle_bound_touch_feedback</item>
     <item name="android:src">@drawable/ic_favorite_empty</item>
