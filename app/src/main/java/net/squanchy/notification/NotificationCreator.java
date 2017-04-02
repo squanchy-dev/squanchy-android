@@ -156,11 +156,11 @@ public class NotificationCreator {
         NotificationCompat.InboxStyle richNotification = new NotificationCompat.InboxStyle(notificationBuilder)
                 .setBigContentTitle(bigContentTitle);
         for (Event event : events) {
-            if (event.getPlace() != null) {
+            if (event.getPlace().isPresent()) {
                 richNotification.addLine(
                         context.getString(
                                 R.string.room_event_notification,
-                                event.getPlace(),
+                                event.getPlace().get().name(),
                                 event.getTitle()
                         )
                 );
