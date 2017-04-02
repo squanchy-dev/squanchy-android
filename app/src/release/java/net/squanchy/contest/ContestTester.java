@@ -3,15 +3,18 @@ package net.squanchy.contest;
 import android.app.Activity;
 import android.view.ViewGroup;
 
-import net.squanchy.navigation.Navigator;
-
+@SuppressWarnings("unused")    // This is a no-op version for a debug facility
 class ContestTester {
 
-    ContestTester(Activity activity, Navigator navigator) {
+    ContestTester(Activity activity) {
         // No-op (only does stuff in debug)
     }
 
-    void appendDebugControlsIfRequestedTo(ViewGroup viewGroup) {
+    boolean testingEnabled() {
+        return false;
+    }
+
+    void appendDebugControls(ViewGroup container, ContestService contestService) {
         // No-op (only does stuff in debug)
     }
 }
