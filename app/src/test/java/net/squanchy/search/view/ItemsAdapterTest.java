@@ -9,20 +9,17 @@ import net.squanchy.search.SearchResults;
 import net.squanchy.search.view.SearchAdapter.ViewTypeId;
 import net.squanchy.speaker.domain.view.Speaker;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
 import static net.squanchy.schedule.domain.view.EventFixtures.anEvent;
 import static net.squanchy.speaker.domain.view.SpeakerFixtures.aSpeaker;
 import static org.fest.assertions.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
 
 @RunWith(Enclosed.class)
 public class ItemsAdapterTest {
@@ -558,24 +555,15 @@ public class ItemsAdapterTest {
         @Rule
         public ExpectedException thrown = ExpectedException.none();
 
-        @Mock
-        SearchResults searchResults;
-
         ItemsAdapter itemsAdapter;
-
-        @Before
-        public void setUp() {
-            itemsAdapter = new ItemsAdapter(searchResults);
-        }
 
         void givenEmptySearchResults() {
             givenSearchResultsWith(NO_EVENTS, NO_SPEAKERS);
         }
 
         void givenSearchResultsWith(List<Event> events, List<Speaker> speakers) {
-            given(searchResults.getEvents()).willReturn(events);
-            given(searchResults.getSpeakers()).willReturn(speakers);
-            given(searchResults.isEmpty()).willReturn(events.isEmpty() && speakers.isEmpty());
+            SearchResults searchResults = SearchResults.Companion.create(events, speakers);
+            itemsAdapter = new ItemsAdapter(searchResults);
         }
     }
 }
