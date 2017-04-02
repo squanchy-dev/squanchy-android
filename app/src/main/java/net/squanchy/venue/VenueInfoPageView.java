@@ -98,10 +98,10 @@ public class VenueInfoPageView extends LinearLayout implements Loadable {
     }
 
     private void updateWith(Venue venue) {
-        nameText.setText(venue.name());
-        addressText.setText(venue.address());
-        descriptionText.setText(venue.description());
-        loadMap(mapView, venue.mapUrl(), imageLoader);
+        nameText.setText(venue.getName());
+        addressText.setText(venue.getAddress());
+        descriptionText.setText(venue.getDescription());
+        loadMap(mapView, venue.getMapUrl(), imageLoader);
         updateMapClickListenerWith(venue);
     }
 

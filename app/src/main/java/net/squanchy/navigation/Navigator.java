@@ -114,7 +114,7 @@ public class Navigator {
     }
 
     public void toMapsFor(Venue venue) {
-        String mapsUrl = String.format(MAPS_VENUE_URL_TEMPLATE, Uri.encode(venue.name()), Uri.encode(venue.address()));
+        String mapsUrl = String.format(MAPS_VENUE_URL_TEMPLATE, Uri.encode(venue.getName()), Uri.encode(venue.getAddress()));
         toExternalUrl(mapsUrl);
     }
 
