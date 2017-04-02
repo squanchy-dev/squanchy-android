@@ -98,9 +98,12 @@
   <string name="first_start_with_no_network_network_connected">Yay network is back! 🎉</string>
   <string name="first_start_with_no_network_title">Not so fast!</string>
   <string name="first_start_with_no_network_blurb">Unfortunately, the first time you open this app you will need to be connected to the internet.</string>
-  <string name="first_start_with_no_network_cta">Go ahead, connect to a network. I\'ll be waiting.</string>
+  <string name="first_start_with_no_network_cta">Go ahead, connect to a network. I’ll be waiting.</string>
   <string name="first_start_with_no_network_cancel_button">You know what, nevermind</string>
 
   <string name="contest_label">Contest</string>
+  <string name="contest_title">Visit our sponsors and win</string>
+  <string name="contest_blurb">Check in at all of our sponsors’ booths and win cool swag!</string>
+  <string name="contest_missing_sponsors">%1$d sponsors still to visit</string>
 
 </resources>

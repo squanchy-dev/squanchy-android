@@ -540,4 +540,50 @@
 
   <style name="TextAppearance.Squanchy.FirstStartWithNoNetwork.Cancel" parent="TextAppearance.Squanchy.About.Button" />
 
+  <style name="Contest.Title" parent="None">
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.Contest.Title</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.Contest.Title" parent="None">
+    <item name="android:textColor">?colorPrimary</item>
+    <item name="android:textSize">@dimen/contest_title_text</item>
+    <item name="fontPath">?titleTypeface</item>
+  </style>
+
+  <style name="Contest.Blurb" parent="None">
+    <item name="android:gravity">center</item>
+    <item name="android:lineSpacingExtra">@dimen/contest_blurb_line_spacing_extra</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.Contest.Blurb</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.Contest.Blurb" parent="None">
+    <item name="android:textColor">?android:textColorPrimary</item>
+    <item name="android:textSize">@dimen/contest_blurb_text</item>
+    <item name="fontPath">?defaultRegularTypeface</item>
+  </style>
+
+  <style name="Contest.Container" parent="None">
+    <item name="android:gravity">center_horizontal|top</item>
+    <item name="android:orientation">vertical</item>
+    <item name="android:paddingStart">@dimen/contest_content_padding_horizontal</item>
+    <item name="android:paddingTop">@dimen/contest_content_padding_vertical</item>
+    <item name="android:paddingEnd">@dimen/contest_content_padding_horizontal</item>
+    <item name="android:paddingBottom">@dimen/contest_content_padding_vertical</item>
+  </style>
+
+  <style name="Contest.Icon" parent="None">
+    <item name="android:scaleType">fitCenter</item>
+  </style>
+
+  <style name="Contest.Progress" parent="Widget.AppCompat.ProgressBar.Horizontal">
+    <item name="android:progressDrawable">@drawable/contest_progress_horizontal</item>
+    <item name="android:progressTint">?colorPrimary</item>
+    <item name="android:progressBackgroundTint">@color/contest_progress_background</item>
+    <item name="android:progressBackgroundTintMode">src_over</item>
+  </style>
+
+  <style name="Contest.Status" parent="None">
+    
+  </style>
+
 </resources>
