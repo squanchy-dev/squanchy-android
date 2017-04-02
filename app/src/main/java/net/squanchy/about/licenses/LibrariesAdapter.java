@@ -15,11 +15,9 @@ class LibrariesAdapter extends RecyclerView.Adapter {
 
     private static final List<Library> LIBRARIES = Libraries.LIBRARIES;
 
-    private final Context context;
     private final LayoutInflater layoutInflater;
 
     LibrariesAdapter(Context context) {
-        this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
     }
 
