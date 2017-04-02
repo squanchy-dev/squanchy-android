@@ -5,6 +5,7 @@ internal object Libraries {
     val LIBRARIES = listOf(
             Library("Squanchy", "the Squanchy Contributors", License.APACHE_2),
             Library("Android", "Google Inc. and the Open Handset Alliance", License.APACHE_2),
+            Library("Kotlin", "JetBrains s.r.o. and the Kotlin contributors", License.APACHE_2),
             Library("Calligraphy", "Christopher Jenkins", License.APACHE_2),
             Library("Glide", "Google Inc.", License.GLIDE),
             Library("Joda-Time", "Joda.org", License.APACHE_2),
