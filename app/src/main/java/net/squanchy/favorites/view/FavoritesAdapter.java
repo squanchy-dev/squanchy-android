@@ -50,7 +50,7 @@ class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 position,
                 schedule.pages(),
                 schedulePage -> (long) -schedulePage.dayId().hashCode(),
-                (schedulePage, positionInPage) -> schedulePage.events().get(positionInPage).numericId()
+                (schedulePage, positionInPage) -> schedulePage.events().get(positionInPage).getNumericId()
         );
     }
 

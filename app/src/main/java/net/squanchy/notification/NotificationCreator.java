@@ -50,11 +50,11 @@ public class NotificationCreator {
     private Notification createFrom(Event event) {
         NotificationCompat.Builder notificationBuilder = createDefaultBuilder(1);
         notificationBuilder
-                .setContentIntent(createPendingIntentForSingleEvent(event.id()))
-                .setContentTitle(event.title())
+                .setContentIntent(createPendingIntentForSingleEvent(event.getId()))
+                .setContentTitle(event.getTitle())
                 .setContentText(getPlaceName(event))
                 .setColor(getTrackColor(event))
-                .setWhen(event.startTime().toDateTime().getMillis())
+                .setWhen(event.getStartTime().toDateTime().getMillis())
                 .setShowWhen(true)
                 .setGroup(GROUP_KEY_NOTIFY_SESSION);
 
@@ -113,12 +113,12 @@ public class NotificationCreator {
     }
 
     private String getPlaceName(Event event) {
-        return event.place().map(Place::name).or(EMPTY_PLACE_NAME);
+        return event.getPlace().map(Place::name).or(EMPTY_PLACE_NAME);
     }
 
     private int getTrackColor(Event event) {
         return event
-                .track()
+                .getTrack()
                 .map(track -> Color.parseColor(track.accentColor().or(ARGB_TRANSPARENT)))
                 .or(Color.TRANSPARENT);
     }
@@ -143,7 +143,7 @@ public class NotificationCreator {
             bigTextBuilder.append(context.getString(R.string.event_notification_starting_in, placeName));
         }
         return new NotificationCompat.BigTextStyle(notificationBuilder)
-                .setBigContentTitle(event.title())
+                .setBigContentTitle(event.getTitle())
                 .bigText(bigTextBuilder.toString());
     }
 
@@ -156,16 +156,16 @@ public class NotificationCreator {
         NotificationCompat.InboxStyle richNotification = new NotificationCompat.InboxStyle(notificationBuilder)
                 .setBigContentTitle(bigContentTitle);
         for (Event event : events) {
-            if (event.place() != null) {
+            if (event.getPlace() != null) {
                 richNotification.addLine(
                         context.getString(
                                 R.string.room_event_notification,
-                                event.place(),
-                                event.title()
+                                event.getPlace(),
+                                event.getTitle()
                         )
                 );
             } else {
-                richNotification.addLine(event.title());
+                richNotification.addLine(event.getTitle());
             }
         }
 

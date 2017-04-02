@@ -36,7 +36,7 @@ class EventsAdapter extends RecyclerView.Adapter<EventViewHolder> {
 
     @Override
     public long getItemId(int position) {
-        return events.get(position).numericId();
+        return events.get(position).getNumericId();
     }
 
     void updateWith(List<Event> events, ScheduleViewPagerAdapter.OnEventClickedListener listener) {
@@ -47,7 +47,7 @@ class EventsAdapter extends RecyclerView.Adapter<EventViewHolder> {
     @Override
     @ItemViewType
     public int getItemViewType(int position) {
-        Event.Type itemType = events.get(position).type();
+        Event.Type itemType = events.get(position).getType();
         switch (itemType) {
             case KEYNOTE:
             case TALK:

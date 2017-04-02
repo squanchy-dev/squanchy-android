@@ -220,7 +220,7 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
 
     @Override
     public void onEventClicked(Event event) {
-        navigate().toEventDetails(event.id());
+        navigate().toEventDetails(event.getId());
     }
 
     private Navigator navigate() {

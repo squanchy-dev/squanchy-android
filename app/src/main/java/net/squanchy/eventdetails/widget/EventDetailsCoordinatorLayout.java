@@ -40,7 +40,7 @@ public class EventDetailsCoordinatorLayout extends CoordinatorLayout {
 
         if (canBeFavorited(event)) {
             floatingActionButton.setImageResource(
-                    event.favorited() ?
+                    event.getFavorited() ?
                             R.drawable.ic_favorite_filled :
                             R.drawable.ic_favorite_empty
             );
@@ -52,7 +52,7 @@ public class EventDetailsCoordinatorLayout extends CoordinatorLayout {
     }
 
     private boolean canBeFavorited(Event event) {
-        Event.Type type = event.type();
+        Event.Type type = event.getType();
         return type == Type.TALK || type == Type.KEYNOTE;
     }
 
@@ -60,7 +60,7 @@ public class EventDetailsCoordinatorLayout extends CoordinatorLayout {
 
     }
 
-    public interface OnFavoriteClickListener {
+    interface OnFavoriteClickListener {
         void onFavoriteClick();
     }
 }

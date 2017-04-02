@@ -206,7 +206,7 @@ public class ItemsAdapterTest {
 
             long itemId = itemsAdapter.itemIdAtAbsolutePosition(1);      // 1 = (1 header + 1 event) - 1 [because zero-based]
 
-            assertThat(itemId).isEqualTo(ANY_THREE_EVENTS.get(0).numericId());
+            assertThat(itemId).isEqualTo(ANY_THREE_EVENTS.get(0).getNumericId());
         }
 
         @Test
@@ -242,7 +242,7 @@ public class ItemsAdapterTest {
 
             long itemId = itemsAdapter.itemIdAtAbsolutePosition(1);      // 1 = (1 header + 1 event) - 1 [because zero-based]
 
-            assertThat(itemId).isEqualTo(ANY_THREE_EVENTS.get(0).numericId());
+            assertThat(itemId).isEqualTo(ANY_THREE_EVENTS.get(0).getNumericId());
         }
 
         @Test

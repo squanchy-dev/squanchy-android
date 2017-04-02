@@ -88,7 +88,7 @@ public class EventRepository {
     }
 
     private Function6<FirebaseEvent, List<Speaker>, FirebaseFavorites, List<Place>, List<Track>, DateTimeZone, Event> combineIntoEvent() {
-        return (apiEvent, speakers, favorites, places, tracks, timeZone) -> Event.create(
+        return (apiEvent, speakers, favorites, places, tracks, timeZone) -> Event.Companion.create(
                 apiEvent.id,
                 checksum.getChecksumOf(apiEvent.id),
                 apiEvent.day_id,
@@ -98,7 +98,7 @@ public class EventRepository {
                 placeById(places, apiEvent.place_id),
                 Optional.fromNullable(apiEvent.experience_level).flatMap(ExperienceLevel::fromNullableRawLevel),
                 speakersByIds(speakers, apiEvent.speaker_ids),
-                Event.Type.fromRawType(apiEvent.type),
+                Event.Type.Companion.fromRawType(apiEvent.type),
                 favorites.hasFavorite(apiEvent.id),
                 Optional.fromNullable(apiEvent.description),
                 trackById(tracks, apiEvent.track_id),
@@ -145,7 +145,7 @@ public class EventRepository {
             List<Track> tracks,
             DateTimeZone timeZone
     ) {
-        return apiEvent -> Event.create(
+        return apiEvent -> Event.Companion.create(
                 apiEvent.id,
                 checksum.getChecksumOf(apiEvent.id),
                 apiEvent.day_id,
@@ -155,7 +155,7 @@ public class EventRepository {
                 placeById(places, apiEvent.place_id),
                 Optional.fromNullable(apiEvent.experience_level).flatMap(ExperienceLevel::fromNullableRawLevel),
                 speakersByIds(speakers, apiEvent.speaker_ids),
-                Event.Type.fromRawType(apiEvent.type),
+                Event.Type.Companion.fromRawType(apiEvent.type),
                 favorites.hasFavorite(apiEvent.id),
                 Optional.fromNullable(apiEvent.description),
                 trackById(tracks, apiEvent.track_id),

@@ -18,12 +18,12 @@ class EventSearchEngine implements SearchEngine<Event> {
     }
 
     private boolean eventIsSearchable(Event event) {
-        return event.type() == Event.Type.TALK || event.type() == Event.Type.KEYNOTE;
+        return event.getType() == Event.Type.TALK || event.getType() == Event.Type.KEYNOTE;
     }
 
     private boolean matchesQuery(Event event, String query) {
         String normalizedQuery = StringNormalizer.normalize(query);
-        String normalizedTitle = StringNormalizer.normalize(event.title());
+        String normalizedTitle = StringNormalizer.normalize(event.getTitle());
 
         return normalizedTitle.contains(normalizedQuery);
     }

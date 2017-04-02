@@ -53,14 +53,14 @@ public class NotificationsIntentService extends IntentService {
         LocalDateTime now = new LocalDateTime();
         if (shouldShowNotifications()) {
             sortedFavourites
-                    .map(events -> filter(events, event -> event.startTime().isAfter(now)))
-                    .map(events -> filter(events, event -> isBeforeOrEqualTo(event.startTime(), notificationIntervalEnd)))
+                    .map(events -> filter(events, event -> event.getStartTime().isAfter(now)))
+                    .map(events -> filter(events, event -> isBeforeOrEqualTo(event.getStartTime(), notificationIntervalEnd)))
                     .map(notificationCreator::createFrom)
                     .subscribe(notifier::showNotifications);
         }
 
         sortedFavourites
-                .map(events -> filter(events, event -> event.startTime().isAfter(notificationIntervalEnd)))
+                .map(events -> filter(events, event -> event.getStartTime().isAfter(notificationIntervalEnd)))
                 .subscribe(this::scheduleNextAlarm);
     }
 
@@ -79,7 +79,7 @@ public class NotificationsIntentService extends IntentService {
             return;
         }
         Event firstEvent = events.get(0);
-        LocalDateTime serviceAlarm = firstEvent.startTime().minusMinutes(NOTIFICATION_INTERVAL_MINUTES);
+        LocalDateTime serviceAlarm = firstEvent.getStartTime().minusMinutes(NOTIFICATION_INTERVAL_MINUTES);
         Timber.d("Next alarm scheduled for " + serviceAlarm.toString());
 
         Intent serviceIntent = new Intent(this, NotificationsIntentService.class);

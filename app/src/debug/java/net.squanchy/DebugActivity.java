@@ -3,7 +3,6 @@ package net.squanchy;
 import android.app.Activity;
 import android.app.Notification;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.NotificationManagerCompat;
 import android.widget.Button;
@@ -70,7 +69,7 @@ public class DebugActivity extends Activity {
     private Event createTestEvent(int id) {
         LocalDateTime start = new LocalDateTime().plusMinutes(5);
         LocalDateTime end = new LocalDateTime().plusMinutes(45);
-        return Event.create(
+        return Event.Companion.create(
                 String.valueOf(id),
                 id,
                 "1",
@@ -118,11 +117,6 @@ public class DebugActivity extends Activity {
                 Optional.of(generateColor()),
                 Optional.of("gs://droidcon-italy-2017.appspot.com/tracks/0.webp")
         );
-    }
-
-    public int getRandomColor() {
-        Random rnd = new Random();
-        return Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
     }
 
     private String generateColor() {

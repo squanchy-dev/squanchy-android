@@ -67,20 +67,20 @@ public class EventDetailsLayout extends LinearLayout {
     public void updateWith(Event event) {
         updateWhen(event);
         updateWhere(event);
-        updateDescription(event.description());
+        updateDescription(event.getDescription());
     }
 
     private void updateWhen(Event event) {
         DateTimeFormatter formatter = DateTimeFormat.forPattern(WHEN_DATE_TIME_FORMAT)
-                .withZone(event.timeZone());
-        whenTextView.setText(formatter.print(event.startTime().toDateTime()));
+                .withZone(event.getTimeZone());
+        whenTextView.setText(formatter.print(event.getStartTime().toDateTime()));
         whenContainer.setVisibility(VISIBLE);
     }
 
     private void updateWhere(Event event) {
-        if (event.place().isPresent()) {
+        if (event.getPlace().isPresent()) {
             whereContainer.setVisibility(VISIBLE);
-            whereTextView.setText(placeTextFrom(event.place().get()));
+            whereTextView.setText(placeTextFrom(event.getPlace().get()));
         } else {
             whereContainer.setVisibility(GONE);
         }

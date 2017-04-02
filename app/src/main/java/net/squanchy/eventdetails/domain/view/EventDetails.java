@@ -8,14 +8,14 @@ import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.speaker.domain.view.Speaker;
 
 @AutoValue
-public abstract class EventDetails {
+abstract class EventDetails {
 
     public static EventDetails create(
             Event event,
             List<Speaker> speakers
     ) {
         return new AutoValue_EventDetails.Builder()
-                .id(event.id())
+                .id(event.getId())
                 .event(event)
                 .speakers(speakers)
                 .build();

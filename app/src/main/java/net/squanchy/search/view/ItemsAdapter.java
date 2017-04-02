@@ -68,7 +68,7 @@ class ItemsAdapter {
             if (position == 0) {
                 return ITEM_ID_EVENTS_HEADER;
             } else {
-                return searchResults.events().get(position - 1).numericId();
+                return searchResults.events().get(position - 1).getNumericId();
             }
         } else {
             int adjustedPosition = position - totalEventItemsCount;
