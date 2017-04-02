@@ -30,7 +30,7 @@ class TwitterFooterFormatter {
     }
 
     String footerTextFor(TweetViewModel tweet) {
-        String username = tweet.getUser().screenName();
+        String username = tweet.getUser().getScreenName();
         String timestamp = timestampFrom(tweet);
         return context.getString(R.string.tweet_footer_format, username, timestamp);
     }

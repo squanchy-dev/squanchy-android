@@ -27,7 +27,7 @@ public class TweetModelConverter {
     }
 
     TweetViewModel toViewModel(Tweet tweet) {
-        User user = User.create(tweet.user.name, tweet.user.screenName, tweet.user.profileImageUrlHttps);
+        User user = User.Companion.create(tweet.user.name, tweet.user.screenName, tweet.user.profileImageUrlHttps);
 
         Range displayTextRange = Range.from(tweet.displayTextRange, tweet.text.length());
         List<HashtagEntity> hashtags = onlyHashtagsInRange(tweet.entities.hashtags, displayTextRange);
