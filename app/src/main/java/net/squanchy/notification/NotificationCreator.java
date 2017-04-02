@@ -113,7 +113,7 @@ public class NotificationCreator {
     }
 
     private String getPlaceName(Event event) {
-        return event.getPlace().map(Place::name).or(EMPTY_PLACE_NAME);
+        return event.getPlace().map(Place::getName).or(EMPTY_PLACE_NAME);
     }
 
     private int getTrackColor(Event event) {

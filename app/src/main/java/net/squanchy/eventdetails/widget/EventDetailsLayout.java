@@ -87,9 +87,9 @@ public class EventDetailsLayout extends LinearLayout {
     }
 
     private CharSequence placeTextFrom(Place place) {
-        SpannableStringBuilder builder = new SpannableStringBuilder(place.name());
-        if (place.floor().isPresent()) {
-            String floorLabel = place.floor().get();
+        SpannableStringBuilder builder = new SpannableStringBuilder(place.getName());
+        if (place.getFloor().isPresent()) {
+            String floorLabel = place.getFloor().get();
             builder.append("   ")
                     .append(floorLabel)
                     .setSpan(

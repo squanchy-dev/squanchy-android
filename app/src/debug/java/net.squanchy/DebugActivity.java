@@ -88,7 +88,7 @@ public class DebugActivity extends Activity {
     }
 
     private Optional<Place> createPlace() {
-        Place place = Place.create("1", "That room over there", Optional.absent());
+        Place place = Place.Companion.create("1", "That room over there", Optional.absent());
         return Optional.of(place);
     }
 

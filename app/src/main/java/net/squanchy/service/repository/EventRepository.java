@@ -70,7 +70,7 @@ public class EventRepository {
     private Function<FirebasePlaces, List<Place>> toPlaces() {
         return firebasePlaces -> Lists.map(
                 firebasePlaces.places,
-                firebasePlace -> Place.create(firebasePlace.id, firebasePlace.name, Optional.fromNullable(firebasePlace.floor))
+                firebasePlace -> Place.Companion.create(firebasePlace.id, firebasePlace.name, Optional.fromNullable(firebasePlace.floor))
         );
     }
 
@@ -107,7 +107,7 @@ public class EventRepository {
     }
 
     private Optional<Place> placeById(List<Place> places, String placeId) {
-        return Lists.find(places, place -> place.id().equals(placeId));
+        return Lists.find(places, place -> place.getId().equals(placeId));
     }
 
     private Optional<Track> trackById(List<Track> tracks, String trackId) {
