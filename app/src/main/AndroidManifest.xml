@@ -65,7 +65,7 @@
 
     <activity
       android:name="net.squanchy.contest.ContestActivity"
-      android:theme="@style/Theme.Squanchy.Dialog" />
+      android:theme="@style/Theme.Squanchy.Contest" />
 
     <activity
       android:name="net.squanchy.about.AboutActivity"
