@@ -12,7 +12,7 @@ import net.squanchy.signin.SignInService;
 import dagger.Component;
 
 @ActivityLifecycle
-@Component(modules = {DeepLinkModule.class, SignInModule.class, OnboardingModule.class}, dependencies = ApplicationComponent.class)
+@Component(modules = {DeepLinkModule.class, SignInModule.class, OnboardingModule.class, RoutingModule.class}, dependencies = ApplicationComponent.class)
 public interface RoutingComponent {
 
     DeepLinkRouter deepLinkRouter();
@@ -20,6 +20,8 @@ public interface RoutingComponent {
     Navigator navigator();
 
     SignInService signInService();
+
+    FirstStartPersister firstStartPersister();
 
     Onboarding onboarding();
 }

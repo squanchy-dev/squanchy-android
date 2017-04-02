@@ -7,7 +7,7 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.Snackbar;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.Window;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -17,6 +17,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
+import net.squanchy.support.config.DialogLayoutParameters;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Action;
@@ -90,8 +91,10 @@ public class SignInActivity extends TypefaceStyleableActivity {
     }
 
     private void setupWindowParameters() {
-        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        getWindow().setGravity(Gravity.FILL_HORIZONTAL | Gravity.BOTTOM);
+        Window window = getWindow();
+        DialogLayoutParameters.wrapHeight(this)
+                .applyTo(window);
+        window.setGravity(Gravity.FILL_HORIZONTAL | Gravity.BOTTOM);
     }
 
     @Override

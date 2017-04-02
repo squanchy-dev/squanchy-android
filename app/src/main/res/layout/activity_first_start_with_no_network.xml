@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:orientation="vertical"
+  android:padding="@dimen/first_start_with_no_network_padding"
+  tools:context="net.squanchy.navigation.firststart.FirstStartWithNoNetworkActivity">
+
+  <TextView
+    style="@style/FirstStartWithNoNetwork.Title"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/first_start_with_no_network_title_margin_bottom"
+    android:text="@string/first_start_with_no_network_title" />
+
+  <TextView
+    style="@style/FirstStartWithNoNetwork.Blurb"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/first_start_with_no_network_blurb_margin_bottom"
+    android:text="@string/first_start_with_no_network_blurb" />
+
+  <LinearLayout
+    android:id="@+id/first_start_with_no_network_cta"
+    style="@style/FirstStartWithNoNetwork.Cta"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/first_start_with_no_network_cta_margin_horizontal"
+    android:layout_marginEnd="@dimen/first_start_with_no_network_cta_margin_horizontal"
+    android:layout_marginBottom="@dimen/first_start_with_no_network_cta_margin_bottom">
+
+    <ImageView
+      android:id="@+id/cta_progressbar"
+      android:layout_width="@dimen/fist_start_with_no_network_progress_size"
+      android:layout_height="@dimen/fist_start_with_no_network_progress_size"
+      android:layout_marginEnd="@dimen/first_start_with_no_network_progress_margin_end"
+      android:scaleType="fitCenter"
+      app:srcCompat="@drawable/indeterminate_progress_animated" />
+
+    <TextView
+      android:id="@+id/cta_text"
+      style="@style/FirstStartWithNoNetwork.Cta.Text"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/first_start_with_no_network_cta" />
+
+  </LinearLayout>
+
+  <Button
+    android:id="@+id/first_start_nevermind_button"
+    style="@style/FirstStartWithNoNetwork.Cancel"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal|bottom"
+    android:text="@string/first_start_with_no_network_cancel_button" />
+
+</LinearLayout>

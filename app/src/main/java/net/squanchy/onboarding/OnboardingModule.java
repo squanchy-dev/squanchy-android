@@ -15,12 +15,10 @@ public class OnboardingModule {
     private static final String ONBOARDING_PREFERENCES_NAME = "onboarding";
 
     @Provides
-    SharedPreferences onboardingPreferences(Activity activity) {
-        return activity.getSharedPreferences(ONBOARDING_PREFERENCES_NAME, Context.MODE_PRIVATE);
-    }
-
-    @Provides
-    OnboardingPersister onboardingPersister(SharedPreferences preferences) {
+    OnboardingPersister onboardingPersister(Activity activity) {
+        // The preferences cannot be @Provide'd because we need different ones in different places
+        // (but they are all SharedPreferences) and the Persister is our abstraction of preferences.
+        SharedPreferences preferences = activity.getSharedPreferences(ONBOARDING_PREFERENCES_NAME, Context.MODE_PRIVATE);
         return new OnboardingPersister(preferences);
     }
 

@@ -14,7 +14,7 @@ import java.util.List;
 import net.squanchy.R;
 import net.squanchy.home.Loadable;
 import net.squanchy.navigation.Navigator;
-import net.squanchy.tweets.domain.view.Tweet;
+import net.squanchy.tweets.domain.view.TweetViewModel;
 import net.squanchy.tweets.service.TwitterService;
 import net.squanchy.tweets.view.TweetsAdapter;
 
@@ -106,13 +106,13 @@ public class TweetsPageView extends CoordinatorLayout implements Loadable {
                 .subscribe(this::onSuccess, this::onError);
     }
 
-    private void onSuccess(List<Tweet> tweets) {
-        tweetsAdapter.updateWith(tweets);
+    private void onSuccess(List<TweetViewModel> tweet) {
+        tweetsAdapter.updateWith(tweet, navigator::toTweet);
         onRefreshCompleted();
     }
 
     private void onError(Throwable throwable) {
-        Timber.e(throwable);
+        Timber.e(throwable, "Error refreshing the Twitter timeline");
         onRefreshCompleted();
     }
 

@@ -7,19 +7,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.squanchy.R;
-import net.squanchy.tweets.domain.view.Tweet;
+import net.squanchy.tweets.domain.view.TweetViewModel;
 
 public class TweetsAdapter extends RecyclerView.Adapter<TweetViewHolder> {
 
     private final Context context;
-    private List<Tweet> tweetList;
+
+    private List<TweetViewModel> tweets;
+    private TweetItemView.OnTweetClickedListener listener;
 
     public TweetsAdapter(Context context) {
         this.context = context;
-        this.tweetList = new ArrayList<>();
+        this.tweets = new ArrayList<>();
     }
 
     @Override
@@ -30,23 +33,21 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetViewHolder> {
 
     @Override
     public void onBindViewHolder(TweetViewHolder holder, int position) {
-        holder.updateWith(tweetList.get(position));
+        holder.updateWith(tweets.get(position), listener);
     }
 
     @Override
     public int getItemCount() {
-        return tweetList.size();
+        return tweets.size();
     }
 
     public boolean isEmpty() {
-        return tweetList.isEmpty();
+        return tweets.isEmpty();
     }
 
-    public void updateWith(List<Tweet> tweets) {
-        tweetList.clear();
-        ArrayList<Tweet> receivedItems = new ArrayList<>(tweets);
-        receivedItems.addAll(tweetList);
-        tweetList = receivedItems;
+    public void updateWith(List<TweetViewModel> tweets, TweetItemView.OnTweetClickedListener listener) {
+        this.tweets = Collections.unmodifiableList(tweets);
+        this.listener = listener;
         notifyDataSetChanged();
     }
 }
