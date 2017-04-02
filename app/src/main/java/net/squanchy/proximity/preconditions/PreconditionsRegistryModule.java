@@ -18,10 +18,9 @@ import dagger.Provides;
 
 import static android.content.Context.BLUETOOTH_SERVICE;
 
-@Module(includes = ActivityContextModule.class)
+@Module(includes = {ActivityContextModule.class, OptInPreferencePersisterModule.class})
 public class PreconditionsRegistryModule {
 
-    private static final String OPT_IN_PREFERENCES_NAME = "opt_in_preferences";
     private final GoogleApiClient googleApiClient;
 
     public PreconditionsRegistryModule(GoogleApiClient googleApiClient) {
@@ -46,12 +45,6 @@ public class PreconditionsRegistryModule {
     @Provides
     BluetoothPrecondition bluetoothPrecondition(Activity activity, BluetoothManager bluetoothManager) {
         return new BluetoothPrecondition(activity, bluetoothManager);
-    }
-
-    @Provides
-    OptInPreferencePersister optInPreferencePersister(Activity activity) {
-        SharedPreferences preferences = activity.getSharedPreferences(OPT_IN_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        return new OptInPreferencePersister(preferences);
     }
 
     @Provides
