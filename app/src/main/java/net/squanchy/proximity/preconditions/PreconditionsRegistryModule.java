@@ -2,6 +2,9 @@ package net.squanchy.proximity.preconditions;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothManager;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 
@@ -18,6 +21,7 @@ import static android.content.Context.BLUETOOTH_SERVICE;
 @Module(includes = ActivityContextModule.class)
 public class PreconditionsRegistryModule {
 
+    private static final String OPT_IN_PREFERENCES_NAME = "opt_in_preferences";
     private final GoogleApiClient googleApiClient;
 
     public PreconditionsRegistryModule(GoogleApiClient googleApiClient) {
@@ -45,12 +49,25 @@ public class PreconditionsRegistryModule {
     }
 
     @Provides
+    OptInPreferencePersister optInPreferencePersister(Activity activity) {
+        SharedPreferences preferences = activity.getSharedPreferences(OPT_IN_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        return new OptInPreferencePersister(preferences);
+    }
+
+    @Provides
+    OptInPrecondition optInPrecondition(OptInPreferencePersister optInPreferencePersister) {
+        return new OptInPrecondition(optInPreferencePersister);
+    }
+
+    @Provides
     List<Precondition> preconditions(
+            OptInPrecondition optInPrecondition,
             LocationPermissionPrecondition locationPermissionPrecondition,
             LocationProviderPrecondition locationProviderPrecondition,
             BluetoothPrecondition bluetoothPrecondition
     ) {
         return Arrays.asList(
+                optInPrecondition,
                 locationPermissionPrecondition,
                 locationProviderPrecondition,
                 bluetoothPrecondition
