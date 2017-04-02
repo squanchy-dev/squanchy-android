@@ -30,6 +30,6 @@ public class OptInPrecondition implements Precondition {
 
     @Override
     public Optional<Integer> requestCode() {
-        return null;
+        return Optional.absent();
     }
 }
