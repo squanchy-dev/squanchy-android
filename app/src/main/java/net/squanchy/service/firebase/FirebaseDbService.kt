@@ -14,7 +14,6 @@ import net.squanchy.service.firebase.model.FirebaseDays
 import net.squanchy.service.firebase.model.FirebaseEvent
 import net.squanchy.service.firebase.model.FirebaseEvents
 import net.squanchy.service.firebase.model.FirebaseFavorites
-import net.squanchy.service.firebase.model.FirebasePlace
 import net.squanchy.service.firebase.model.FirebasePlaces
 import net.squanchy.service.firebase.model.FirebaseSpeakers
 import net.squanchy.service.firebase.model.FirebaseTrack
@@ -43,10 +42,6 @@ class FirebaseDbService(private val database: DatabaseReference) {
 
     fun places(): Observable<FirebasePlaces> {
         return observeChild(placesNode(), FirebasePlaces::class.java)
-    }
-
-    fun place(placeId: String): Observable<FirebasePlace> {
-        return observeChild(placeByIdNode(placeId), FirebasePlace::class.java)
     }
 
     fun tracks(): Observable<FirebaseTracks> {
@@ -157,7 +152,6 @@ private fun speakersNode() = data("speakers")
 private fun eventsNode() = data("events")
 private fun eventByIdNode(eventId: String) = data("events/events/$eventId")
 private fun placesNode() = data("places")
-private fun placeByIdNode(placeId: String) = data("places/$placeId")
 private fun tracksNode() = data("tracks")
 private fun trackByIdNode(trackId: String) = data("tracks/$trackId")
 private fun venudInfoNode() = data("venue")
