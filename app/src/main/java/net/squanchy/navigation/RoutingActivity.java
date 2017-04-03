@@ -32,10 +32,7 @@ public class RoutingActivity extends TypefaceStyleableActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        RoutingComponent component = RoutingInjector.obtain(
-                this
-                // TODO not used here
-        );
+        RoutingComponent component = RoutingInjector.obtain(this);
         deepLinkRouter = component.deepLinkRouter();
         navigator = component.navigator();
         onboarding = component.onboarding();

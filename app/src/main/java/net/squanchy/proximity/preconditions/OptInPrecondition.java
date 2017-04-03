@@ -13,11 +13,6 @@ public class OptInPrecondition implements Precondition {
     }
 
     @Override
-    public boolean performsSynchronousSatisfiedCheck() {
-        return CAN_PERFORM_SYNCHRONOUS_CHECK;
-    }
-
-    @Override
     public boolean satisfied() {
         return preferences.userOptedIn();
     }

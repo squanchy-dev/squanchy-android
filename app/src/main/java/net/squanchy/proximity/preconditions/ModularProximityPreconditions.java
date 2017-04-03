@@ -80,8 +80,7 @@ public class ModularProximityPreconditions implements ProximityPreconditions {
     }
 
     private void startCheckingFrom(Precondition precondition) {
-        boolean canCheckIfSatisfied = precondition.performsSynchronousSatisfiedCheck();
-        if (canCheckIfSatisfied && precondition.satisfied()) {
+        if (precondition.satisfied()) {
             continueAfterSucceedingCheck(precondition);
         } else {
             precondition.satisfy()

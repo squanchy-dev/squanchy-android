@@ -6,11 +6,7 @@ import io.reactivex.Single;
 
 interface Precondition {
 
-    boolean CAN_PERFORM_SYNCHRONOUS_CHECK = true;
-    boolean CANNOT_PERFORM_SYNCHRONOUS_CHECK = false;
     boolean ALWAYS_NOT_SATISFIED = false;
-
-    boolean performsSynchronousSatisfiedCheck();
 
     boolean satisfied();
 

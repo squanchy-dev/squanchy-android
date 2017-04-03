@@ -31,11 +31,6 @@ public class LocationProviderPrecondition implements Precondition {
     }
 
     @Override
-    public boolean performsSynchronousSatisfiedCheck() {
-        return CANNOT_PERFORM_SYNCHRONOUS_CHECK;
-    }
-
-    @Override
     public boolean satisfied() {
         return ALWAYS_NOT_SATISFIED;
     }

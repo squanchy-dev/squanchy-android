@@ -18,11 +18,6 @@ class LocationPermissionPrecondition implements Precondition {
     }
 
     @Override
-    public boolean performsSynchronousSatisfiedCheck() {
-        return CAN_PERFORM_SYNCHRONOUS_CHECK;
-    }
-
-    @Override
     public boolean satisfied() {
         return taskLauncher.permissionGranted(Manifest.permission.ACCESS_FINE_LOCATION);
     }
