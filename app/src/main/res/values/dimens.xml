@@ -162,6 +162,24 @@
   <dimen name="first_start_with_no_network_progress_margin_end">16dp</dimen>
   <dimen name="first_start_with_no_network_cancel_min_height">56dp</dimen>
   <dimen name="first_start_with_no_network_cancel_padding_horizontal">24dp</dimen>
-  <dimen name="fist_start_with_no_network_progress_size">48dp</dimen>
+  <dimen name="first_start_with_no_network_progress_size">48dp</dimen>
+
+  <dimen name="contest_content_padding_horizontal">32dp</dimen>
+  <dimen name="contest_content_padding_vertical">36dp</dimen>
+  <dimen name="contest_title_text">20sp</dimen>
+  <dimen name="contest_title_margin_bottom">16dp</dimen>
+  <dimen name="contest_blurb_text">16sp</dimen>
+  <dimen name="contest_blurb_line_spacing_extra">4dp</dimen>
+  <dimen name="contest_blurb_margin_horizontal">8dp</dimen>
+  <dimen name="contest_blurb_margin_bottom">24dp</dimen>
+  <dimen name="contest_icon_width">150dp</dimen>
+  <dimen name="contest_progress_height">12dp</dimen>
+  <dimen name="contest_progress_margin_horizontal">16dp</dimen>
+  <dimen name="contest_progress_margin_top">40dp</dimen>
+  <dimen name="contest_progress_margin_bottom">8dp</dimen>
+  <dimen name="contest_progress_corners">1dp</dimen>
+  <dimen name="contest_status_margin_horizontal">16dp</dimen>
+  <dimen name="contest_status_text">16sp</dimen>
+  <dimen name="contest_status_line_spacing_extra">2dp</dimen>
 
 </resources>

@@ -23,7 +23,7 @@ public class EventDetailsActivity extends TypefaceStyleableActivity {
     private static final String EXTRA_EVENT_ID = EventDetailsActivity.class.getCanonicalName() + ".event_id";
     private static final int REQUEST_CODE_SIGNIN = 1235;
 
-    private final CompositeDisposable subscriptions = new CompositeDisposable();;
+    private final CompositeDisposable subscriptions = new CompositeDisposable();
 
     private EventDetailsService service;
     private EventDetailsCoordinatorLayout coordinatorLayout;

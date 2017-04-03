@@ -40,6 +40,13 @@
       android:summaryOff="@string/settings_location_summary_off" />
 
     <Preference
+      android:key="@string/contest_standings_preference_key"
+      android:dependency="@string/location_preference_key"
+      android:shouldDisableView="true"
+      android:icon="@drawable/ic_trophy"
+      android:title="@string/settings_contest_standings_title" />
+
+    <Preference
       android:key="@string/about_preference_key"
       android:title="@string/about_title"
       android:icon="@drawable/ic_about" />

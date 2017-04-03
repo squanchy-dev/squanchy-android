@@ -3,6 +3,7 @@
 <resources>
 
   <color name="primary">#e65b77</color>
+  <color name="primary_disabled">#999193</color>
   <color name="primary_dark">#bf4c63</color>
   <color name="accent">#67b6e2</color>
 
@@ -27,6 +28,7 @@
   <color name="button_inverse_text">#bc5c51</color>
 
   <color name="primary_text">#4e4e4e</color>
+  <color name="primary_text_disabled">#b64e4e4e</color>
   <color name="secondary_text">#6b6b6b</color>
   <color name="secondary_text_54">#8a6b6b6b</color>
   <color name="tertiary_text">#4d4d4d</color>

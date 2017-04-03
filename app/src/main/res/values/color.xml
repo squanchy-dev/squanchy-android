@@ -7,5 +7,6 @@
   <color name="venue_info_name">#2e676e</color>
   <color name="venue_info_address">#38828a</color>
   <color name="venue_info_label">#38828a</color>
+  <color name="contest_progress_background">#26e55b77</color>
 
 </resources>
