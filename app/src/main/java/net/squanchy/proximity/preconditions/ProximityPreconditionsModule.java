@@ -1,5 +1,7 @@
 package net.squanchy.proximity.preconditions;
 
+import net.squanchy.navigation.Navigator;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -13,7 +15,7 @@ public class ProximityPreconditionsModule {
     }
 
     @Provides
-    ProximityPreconditions proximityPreconditions(PreconditionsRegistry registry) {
-        return new ModularProximityPreconditions(registry, callback);
+    ProximityPreconditions proximityPreconditions(PreconditionsRegistry registry, Navigator navigator) {
+        return new ModularProximityPreconditions(registry, navigator, callback);
     }
 }

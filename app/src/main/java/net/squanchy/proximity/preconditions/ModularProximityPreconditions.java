@@ -1,9 +1,11 @@
 package net.squanchy.proximity.preconditions;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.support.annotation.MainThread;
 
+import net.squanchy.navigation.Navigator;
 import net.squanchy.proximity.preconditions.LocationProviderPrecondition.ProviderPreconditionException;
 import net.squanchy.support.lang.Optional;
 
@@ -13,11 +15,15 @@ import static android.content.pm.PackageManager.PERMISSION_DENIED;
 
 public class ModularProximityPreconditions implements ProximityPreconditions {
 
+    private static final int REQUEST_LOCATION_SETTINGS = 2541;
+
     private final PreconditionsRegistry registry;
+    private final Navigator navigator;
     private final Callback callback;
 
-    ModularProximityPreconditions(PreconditionsRegistry registry, Callback callback) {
+    ModularProximityPreconditions(PreconditionsRegistry registry, Navigator navigator, Callback callback) {
         this.registry = registry;
+        this.navigator = navigator;
         this.callback = callback;
     }
 
@@ -64,12 +70,26 @@ public class ModularProximityPreconditions implements ProximityPreconditions {
 
     @Override
     public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_LOCATION_SETTINGS) {
+            callback.recheckAfterActivityResult();
+            return true;
+        }
+
         Optional<Precondition> requestingPrecondition = registry.findPreconditionHandlingRequestCode(requestCode);
         if (requestingPrecondition.isPresent()) {
             handleActivityResult(requestingPrecondition.get(), resultCode);
             return true;
         } else {
             return false;
+        }
+    }
+
+    @Override
+    public void navigateToLocationSettings() {
+        try {
+            navigator.toLocationSettingsForResult(REQUEST_LOCATION_SETTINGS);
+        } catch (ActivityNotFoundException e) {
+            Timber.e(e, "Unable to open location settings");
         }
     }
 

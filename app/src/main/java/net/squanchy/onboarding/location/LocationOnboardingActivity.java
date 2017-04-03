@@ -1,6 +1,5 @@
 package net.squanchy.onboarding.location;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,7 +12,6 @@ import com.google.android.gms.location.LocationServices;
 
 import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
-import net.squanchy.navigation.Navigator;
 import net.squanchy.onboarding.Onboarding;
 import net.squanchy.onboarding.OnboardingPage;
 import net.squanchy.proximity.preconditions.LocationProviderPrecondition;
@@ -25,11 +23,8 @@ import timber.log.Timber;
 
 public class LocationOnboardingActivity extends TypefaceStyleableActivity {
 
-    private static final int REQUEST_SETTINGS = 2541;
-
     private Onboarding onboarding;
     private ProximityService service;
-    private Navigator navigator;
     private ProximityOptInPersister proximityOptInPersister;
 
     private ProximityPreconditions proximityPreconditions;
@@ -48,7 +43,6 @@ public class LocationOnboardingActivity extends TypefaceStyleableActivity {
         LocationOnboardingComponent component = LocationOnboardingInjector.obtain(this, googleApiClient, proximityPreconditionsCallback());
         onboarding = component.onboarding();
         service = component.proximityService();
-        navigator = component.navigator();
         proximityPreconditions = component.proximityPreconditions();
         proximityOptInPersister = component.proximityOptInPersister();
 
@@ -57,7 +51,7 @@ public class LocationOnboardingActivity extends TypefaceStyleableActivity {
         setContentView(R.layout.activity_location_onboarding);
         contentRoot = findViewById(R.id.onboarding_content_root);
 
-        findViewById(R.id.skip_button).setOnClickListener(view -> optOutToProximity());
+        findViewById(R.id.skip_button).setOnClickListener(view -> optOutFromProximity());
         findViewById(R.id.location_opt_in_button).setOnClickListener(view -> optInToProximity());
 
         setResult(RESULT_CANCELED);
@@ -73,7 +67,7 @@ public class LocationOnboardingActivity extends TypefaceStyleableActivity {
         }
     }
 
-    private void optOutToProximity() {
+    private void optOutFromProximity() {
         proximityOptInPersister.storeUserOptedOut();
         markPageAsSeenAndFinish();
     }
@@ -98,54 +92,47 @@ public class LocationOnboardingActivity extends TypefaceStyleableActivity {
 
             @Override
             public void permissionDenied() {
-                Timber.i("User denied location permission");
-                Snackbar.make(contentRoot, R.string.onboarding_error_permission_denied, Snackbar.LENGTH_LONG).show();
-                enableUi();
+                showLocationError(Snackbar.make(contentRoot, R.string.onboarding_error_permission_denied, Snackbar.LENGTH_LONG));
             }
 
             @Override
             public void locationProviderDenied() {
-                Timber.i("User denied location provider");
-                Snackbar.make(contentRoot, R.string.onboarding_error_location_denied, Snackbar.LENGTH_LONG).show();
-                enableUi();
+                showLocationError(Snackbar.make(contentRoot, R.string.onboarding_error_location_denied, Snackbar.LENGTH_LONG));
             }
 
             @Override
             public void locationProviderFailed(LocationProviderPrecondition.FailureInfo failureInfo) {
-                Timber.i("Location provider check failed. Status: %s", failureInfo);
-                Snackbar.make(contentRoot, R.string.onboarding_error_location_failed, Snackbar.LENGTH_LONG)
-                        .setAction(R.string.onboarding_error_location_failed_action, view -> openLocationSettings())
-                        .show();
-                enableUi();
+                Snackbar snackbar = Snackbar.make(contentRoot, R.string.onboarding_error_location_failed, Snackbar.LENGTH_LONG)
+                        .setAction(R.string.onboarding_error_location_failed_action, view -> proximityPreconditions.navigateToLocationSettings());
+                showLocationError(snackbar);
             }
 
             @Override
             public void bluetoothDenied() {
-                Timber.i("User denied turning Bluetooth on");
-                Snackbar.make(contentRoot, R.string.onboarding_error_bluetooth_denied, Snackbar.LENGTH_LONG).show();
-                enableUi();
+                showLocationError(Snackbar.make(contentRoot, R.string.onboarding_error_bluetooth_denied, Snackbar.LENGTH_LONG));
             }
 
             @Override
             public void exceptionWhileSatisfying(Throwable throwable) {
                 Timber.e(throwable, "Exception occurred while checking");
-                Snackbar.make(contentRoot, R.string.onboarding_error_bluetooth_denied, Snackbar.LENGTH_LONG).show();
-                enableUi();
+                showLocationError(Snackbar.make(contentRoot, R.string.onboarding_error_bluetooth_denied, Snackbar.LENGTH_LONG));
+            }
+
+            @Override
+            public void recheckAfterActivityResult() {
+                optInToProximity();
             }
         };
+    }
+
+    private void showLocationError(Snackbar snackbar) {
+        enableUi();
+        snackbar.show();
     }
 
     private void enableUi() {
         contentRoot.setEnabled(true);
         contentRoot.setAlpha(1f);
-    }
-
-    private void openLocationSettings() {
-        try {
-            navigator.toLocationSettingsForResult(REQUEST_SETTINGS);
-        } catch (ActivityNotFoundException e) {
-            Timber.e(e, "Unable to open location settings");
-        }
     }
 
     private void startRadarAndFinish() {

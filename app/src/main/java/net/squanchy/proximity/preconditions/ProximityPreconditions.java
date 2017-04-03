@@ -12,6 +12,8 @@ public interface ProximityPreconditions {
 
     boolean onActivityResult(int requestCode, int resultCode, Intent data);
 
+    void navigateToLocationSettings();
+
     interface Callback {
 
         void allChecksPassed();
@@ -25,5 +27,7 @@ public interface ProximityPreconditions {
         void bluetoothDenied();
 
         void exceptionWhileSatisfying(Throwable throwable);
+
+        void recheckAfterActivityResult();
     }
 }
