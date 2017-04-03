@@ -18,11 +18,6 @@ class LocationPermissionPrecondition implements Precondition {
     }
 
     @Override
-    public boolean unavailable() {
-        return NEVER_UNAVAILABLE;
-    }
-
-    @Override
     public boolean performsSynchronousSatisfiedCheck() {
         return CAN_PERFORM_SYNCHRONOUS_CHECK;
     }

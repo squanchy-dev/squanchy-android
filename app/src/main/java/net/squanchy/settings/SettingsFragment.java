@@ -20,10 +20,10 @@ import com.google.firebase.auth.FirebaseUser;
 import net.squanchy.BuildConfig;
 import net.squanchy.R;
 import net.squanchy.navigation.Navigator;
+import net.squanchy.proximity.ProximityFeature;
 import net.squanchy.proximity.preconditions.ProximityOptInPersister;
 import net.squanchy.proximity.preconditions.ProximityPreconditions;
 import net.squanchy.proximity.preconditions.TaskLauncherFactory;
-import net.squanchy.remoteconfig.RemoteConfig;
 import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.signin.SignInService;
 import net.squanchy.support.debug.DebugPreferences;
@@ -38,7 +38,7 @@ public class SettingsFragment extends PreferenceFragment {
     private final CompositeDisposable subscriptions = new CompositeDisposable();
 
     private SignInService signInService;
-    private RemoteConfig remoteConfig;
+    private ProximityFeature proximityFeature;
     private Navigator navigator;
     private ProximityService proximityService;
     private ProximityPreconditions proximityPreconditions;
@@ -48,7 +48,6 @@ public class SettingsFragment extends PreferenceFragment {
     private Preference accountEmailPreference;
     private Preference accountSignInSignOutPreference;
 
-    private PreferenceCategory settingsCategory;
     private SwitchPreference proximityOptInPreference;
     private Preference contestStandingsPreference;
 
@@ -78,11 +77,11 @@ public class SettingsFragment extends PreferenceFragment {
                 proximityPreconditionsCallback()
         );
         signInService = component.signInService();
-        remoteConfig = component.remoteConfig();
         navigator = component.navigator();
         proximityService = component.proximityService();
         proximityOptInPersister = component.proximityOptInPersister();
         proximityPreconditions = component.proximityPreconditions();
+        proximityFeature = component.proximityFeature();
 
         accountCategory = (PreferenceCategory) findPreference(getString(R.string.account_category_key));
         accountEmailPreference = findPreference(getString(R.string.account_email_preference_key));
@@ -91,7 +90,6 @@ public class SettingsFragment extends PreferenceFragment {
         proximityOptInPreference = (SwitchPreference) findPreference(getString(R.string.proximity_opt_in_preference_key));
         proximityOptInPreference.setOnPreferenceChangeListener((preference, isEnabling) -> handleProximityPreferenceChange((boolean) isEnabling));
 
-        settingsCategory = (PreferenceCategory) findPreference(getString(R.string.settings_category_key));
         contestStandingsPreference = findPreference(getString(R.string.contest_standings_preference_key));
         contestStandingsPreference.setOnPreferenceClickListener(preference -> {
             navigator.toContest();
@@ -194,7 +192,7 @@ public class SettingsFragment extends PreferenceFragment {
 
         hideDividers();
 
-        hideProximityAndContestBasedOnRemoteConfig();
+        disableProximityAndContestBasedOnFeature();
 
         subscriptions.add(
                 signInService.currentUser()
@@ -209,44 +207,36 @@ public class SettingsFragment extends PreferenceFragment {
         list.setDividerHeight(0);
     }
 
-    private void hideProximityAndContestBasedOnRemoteConfig() {
+    private void disableProximityAndContestBasedOnFeature() {
         DebugPreferences debugPreferences = new DebugPreferences(getActivity());
         if (debugPreferences.contestTestingEnabled()) {
             // We always show the location and contest settings when testing is enabled.
-            showProximityAndContestPreferences();
+            enableProximityAndContestPreferences();
             return;
         }
 
         subscriptions.add(
-                remoteConfig.proximityServicesEnabled()
+                proximityFeature.enabled()
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(this::setProximityAndContestUiAvailable)
+                        .subscribe(this::setProximityAndContestUiEnabled)
         );
     }
 
-    private void setProximityAndContestUiAvailable(boolean enabled) {
+    private void setProximityAndContestUiEnabled(boolean enabled) {
         if (enabled) {
-            showProximityAndContestPreferences();
+            enableProximityAndContestPreferences();
         } else {
-            removeProximityAndContestPreferences();
+            disableProximityAndContestPreferences();
         }
     }
 
-    private void showProximityAndContestPreferences() {
-        showIfNotAlreadyShown(proximityOptInPreference);
-        showIfNotAlreadyShown(contestStandingsPreference);
+    private void enableProximityAndContestPreferences() {
         proximityOptInPreference.setSelectable(true);
     }
 
-    private void showIfNotAlreadyShown(Preference preference) {
-        if (settingsCategory.findPreference(preference.getKey()) == null) {
-            settingsCategory.addPreference(preference);
-        }
-    }
-
-    private void removeProximityAndContestPreferences() {
-        settingsCategory.removePreference(proximityOptInPreference);
-        settingsCategory.removePreference(contestStandingsPreference);
+    private void disableProximityAndContestPreferences() {
+        proximityOptInPreference.setSelectable(false);
+        contestStandingsPreference.setSelectable(false);
     }
 
     private void onUserChanged(Optional<FirebaseUser> user) {

@@ -1,19 +1,16 @@
 package net.squanchy.onboarding;
 
 import android.app.Activity;
-import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import net.squanchy.injection.ActivityContextModule;
-import net.squanchy.proximity.BluetoothModule;
 import net.squanchy.proximity.ProximityFeature;
-import net.squanchy.remoteconfig.RemoteConfig;
 
 import dagger.Module;
 import dagger.Provides;
 
-@Module(includes = {ActivityContextModule.class, BluetoothModule.class})
+@Module(includes = {ActivityContextModule.class})
 public class OnboardingModule {
 
     private static final String ONBOARDING_PREFERENCES_NAME = "onboarding";
@@ -24,11 +21,6 @@ public class OnboardingModule {
         // (but they are all SharedPreferences) and the Persister is our abstraction of preferences.
         SharedPreferences preferences = activity.getSharedPreferences(ONBOARDING_PREFERENCES_NAME, Context.MODE_PRIVATE);
         return new OnboardingPersister(preferences);
-    }
-
-    @Provides
-    ProximityFeature proximityFeature(RemoteConfig remoteConfig, BluetoothManager bluetoothManager) {
-        return new ProximityFeature(remoteConfig, bluetoothManager);
     }
 
     @Provides

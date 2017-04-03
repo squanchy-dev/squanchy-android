@@ -5,6 +5,7 @@ import android.app.Activity;
 import net.squanchy.injection.ActivityContextModule;
 import net.squanchy.injection.ApplicationInjector;
 import net.squanchy.navigation.deeplink.DeepLinkModule;
+import net.squanchy.proximity.ProximityFeatureModule;
 import net.squanchy.signin.SignInModule;
 
 final class RoutingInjector {
@@ -21,6 +22,7 @@ final class RoutingInjector {
                 .navigationModule(new NavigationModule())
                 .signInModule(new SignInModule())
                 .routingModule(new RoutingModule())
+                .proximityFeatureModule(new ProximityFeatureModule())
                 .build();
     }
 }

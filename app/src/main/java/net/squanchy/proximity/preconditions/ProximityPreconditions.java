@@ -4,8 +4,6 @@ import android.content.Intent;
 
 public interface ProximityPreconditions {
 
-    boolean isProximityAvailable();
-
     boolean needsActionToSatisfyPreconditions();
 
     void startSatisfyingPreconditions();
