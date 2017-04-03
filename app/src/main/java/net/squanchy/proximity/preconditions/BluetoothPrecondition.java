@@ -21,8 +21,8 @@ class BluetoothPrecondition implements Precondition {
     }
 
     @Override
-    public boolean available() {
-        return bluetoothManager.getAdapter() != null;
+    public boolean unavailable() {
+        return bluetoothManager.getAdapter() == null;
     }
 
     @Override

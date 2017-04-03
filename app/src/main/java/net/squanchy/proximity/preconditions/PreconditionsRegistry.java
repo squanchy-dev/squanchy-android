@@ -24,6 +24,15 @@ class PreconditionsRegistry {
         return false;
     }
 
+    boolean anyUnavailable() {
+        for (Precondition precondition : preconditions) {
+            if (precondition.unavailable()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     boolean isEmpty() {
         return preconditions.isEmpty();
     }

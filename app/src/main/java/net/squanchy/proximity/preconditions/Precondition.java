@@ -6,13 +6,12 @@ import io.reactivex.Single;
 
 interface Precondition {
 
-    boolean ALWAYS_AVAILABLE = true;
+    boolean NEVER_UNAVAILABLE = false;
     boolean CAN_PERFORM_SYNCHRONOUS_CHECK = true;
     boolean CANNOT_PERFORM_SYNCHRONOUS_CHECK = false;
     boolean ALWAYS_NOT_SATISFIED = false;
-    boolean ALWAYS_SATISFIED = false;
 
-    boolean available();
+    boolean unavailable();
 
     boolean performsSynchronousSatisfiedCheck();
 

@@ -5,11 +5,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import net.squanchy.injection.ActivityContextModule;
+import net.squanchy.proximity.preconditions.ProximityPreconditions;
+import net.squanchy.proximity.preconditions.ProximityPreconditionsModule;
 
 import dagger.Module;
 import dagger.Provides;
 
-@Module(includes = ActivityContextModule.class)
+@Module(includes = {ProximityPreconditionsModule.class, ActivityContextModule.class})
 public class OnboardingModule {
 
     private static final String ONBOARDING_PREFERENCES_NAME = "onboarding";
@@ -23,7 +25,7 @@ public class OnboardingModule {
     }
 
     @Provides
-    public Onboarding onboarding(OnboardingPersister persister) {
-        return new Onboarding(persister);
+    public Onboarding onboarding(OnboardingPersister persister, ProximityPreconditions proximityPreconditions) {
+        return new Onboarding(persister, proximityPreconditions);
     }
 }

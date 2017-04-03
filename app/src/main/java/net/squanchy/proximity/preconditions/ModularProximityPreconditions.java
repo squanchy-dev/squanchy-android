@@ -24,6 +24,11 @@ public class ModularProximityPreconditions implements ProximityPreconditions {
     }
 
     @Override
+    public boolean isProximityAvailable() {
+        return !registry.anyUnavailable();
+    }
+
+    @Override
     public boolean needsActionToSatisfyPreconditions() {
         return registry.anyUnsatisfied();
     }
@@ -32,7 +37,6 @@ public class ModularProximityPreconditions implements ProximityPreconditions {
     @MainThread
     public void startSatisfyingPreconditions() {
         Precondition precondition = registry.firstPrecondition();
-
         startCheckingFrom(precondition);
     }
 
@@ -81,7 +85,7 @@ public class ModularProximityPreconditions implements ProximityPreconditions {
     }
 
     private void startCheckingFrom(Precondition precondition) {
-        if (!precondition.available()) {
+        if (precondition.unavailable()) {
             Timber.d("Skipping unavailable precondition: %s", precondition);
             return;
         }

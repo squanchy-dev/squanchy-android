@@ -10,6 +10,7 @@ import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.navigation.deeplink.DeepLinkRouter;
 import net.squanchy.onboarding.Onboarding;
 import net.squanchy.onboarding.OnboardingPage;
+import net.squanchy.proximity.preconditions.TaskLauncherFactory;
 import net.squanchy.signin.SignInService;
 import net.squanchy.support.lang.Optional;
 
@@ -32,7 +33,12 @@ public class RoutingActivity extends TypefaceStyleableActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        RoutingComponent component = RoutingInjector.obtain(this);
+        RoutingComponent component = RoutingInjector.obtain(
+                this,
+                TaskLauncherFactory.forActivity(this),
+                null,
+                null
+        );
         deepLinkRouter = component.deepLinkRouter();
         navigator = component.navigator();
         onboarding = component.onboarding();

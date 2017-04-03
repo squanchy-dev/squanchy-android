@@ -13,8 +13,8 @@ public class OptInPrecondition implements Precondition {
     }
 
     @Override
-    public boolean available() {
-        return ALWAYS_AVAILABLE;
+    public boolean unavailable() {
+        return NEVER_UNAVAILABLE;
     }
 
     @Override
