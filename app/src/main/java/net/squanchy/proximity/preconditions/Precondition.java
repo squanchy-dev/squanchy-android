@@ -15,9 +15,4 @@ interface Precondition {
     Completable satisfy();
 
     Optional<Integer> requestCode();
-
-    enum SatisfactionResult {
-        SUCCESS,
-        RETRY
-    }
 }
