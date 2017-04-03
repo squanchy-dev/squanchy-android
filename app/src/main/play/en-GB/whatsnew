@@ -1,7 +1,8 @@
-Version 0.9.1
+Version 1.0.0
 
-* Fixed a major crash for first startup when offline 🐛
-* Twitter feed: improved styling, clickable tweets, and images 🐦
-* Favourites: improved empty state 🥚
-* Fixed crash in about screen on some Android 5.0 devices
-* Fixed notifications showing room data incorrectly 🐛
+* First production release! 💃
+* Revamped venue screen 💅
+* Put contest/location behind feature flag 🏁
+* Implemented contest activity (behind feature flag) 🏆
+* Improved notifications format ⏰
+* Fixed bug #227 🐛
