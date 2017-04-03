@@ -8,6 +8,7 @@
   <string name="account_category_key">account_category_key</string>
   <string name="account_email_preference_key">account_email_preference_key</string>
   <string name="account_signin_signout_preference_key">account_signin_signout_preference_key</string>
+  <string name="settings_category_key">settings_category_key</string>
   <string name="about_preference_key">about_preference_key</string>
   <string name="debug_category_preference_key">debug_category_preference_key</string>
   <string name="open_debug_preference_key">open_debug_preference_key</string>
