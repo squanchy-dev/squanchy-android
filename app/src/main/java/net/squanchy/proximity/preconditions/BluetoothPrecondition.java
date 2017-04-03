@@ -1,6 +1,5 @@
 package net.squanchy.proximity.preconditions;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.Intent;
@@ -13,12 +12,12 @@ class BluetoothPrecondition implements Precondition {
 
     private static final int REQUEST_ENABLE_BLUETOOTH = 8909;
 
-    private final Activity activity;
     private final BluetoothManager bluetoothManager;
+    private final TaskLauncher taskLauncher;
 
-    BluetoothPrecondition(Activity activity, BluetoothManager bluetoothManager) {
-        this.activity = activity;
+    BluetoothPrecondition(BluetoothManager bluetoothManager, TaskLauncher taskLauncher) {
         this.bluetoothManager = bluetoothManager;
+        this.taskLauncher = taskLauncher;
     }
 
     @Override
@@ -41,7 +40,7 @@ class BluetoothPrecondition implements Precondition {
     public Single<SatisfyResult> satisfy() {
         return Single.create(emitter -> {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            activity.startActivityForResult(enableBtIntent, REQUEST_ENABLE_BLUETOOTH);
+            taskLauncher.startActivityForResult(enableBtIntent, REQUEST_ENABLE_BLUETOOTH);
             emitter.onSuccess(SatisfyResult.WAIT_FOR_EXTERNAL_RESULT);
         });
     }

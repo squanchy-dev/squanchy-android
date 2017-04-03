@@ -11,6 +11,7 @@ import net.squanchy.proximity.preconditions.OptInPreferencePersisterModule;
 import net.squanchy.proximity.preconditions.PreconditionsRegistryModule;
 import net.squanchy.proximity.preconditions.ProximityPreconditions;
 import net.squanchy.proximity.preconditions.ProximityPreconditionsModule;
+import net.squanchy.proximity.preconditions.TaskLauncher;
 import net.squanchy.signin.SignInModule;
 
 final class SettingsInjector {
@@ -19,14 +20,19 @@ final class SettingsInjector {
         // no instances
     }
 
-    static SettingsFragmentComponent obtainForFragment(Activity activity, GoogleApiClient googleApiClient, ProximityPreconditions.Callback callback) {
+    static SettingsFragmentComponent obtainForFragment(
+            Activity activity,
+            TaskLauncher taskLauncher,
+            GoogleApiClient googleApiClient,
+            ProximityPreconditions.Callback callback
+    ) {
         return DaggerSettingsFragmentComponent.builder()
                 .activityContextModule(new ActivityContextModule(activity))
                 .applicationComponent(ApplicationInjector.obtain(activity))
                 .navigationModule(new NavigationModule())
                 .signInModule(new SignInModule())
                 .optInPreferencePersisterModule(new OptInPreferencePersisterModule())
-                .preconditionsRegistryModule(new PreconditionsRegistryModule(googleApiClient))
+                .preconditionsRegistryModule(new PreconditionsRegistryModule(googleApiClient, taskLauncher))
                 .proximityPreconditionsModule(new ProximityPreconditionsModule(callback))
                 .build();
     }

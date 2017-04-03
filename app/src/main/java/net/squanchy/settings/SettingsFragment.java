@@ -1,10 +1,13 @@
 package net.squanchy.settings;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -19,6 +22,7 @@ import net.squanchy.R;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.proximity.preconditions.ProximityOptInPersister;
 import net.squanchy.proximity.preconditions.ProximityPreconditions;
+import net.squanchy.proximity.preconditions.TaskLauncherFactory;
 import net.squanchy.remoteconfig.RemoteConfig;
 import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.signin.SignInService;
@@ -61,12 +65,18 @@ public class SettingsFragment extends PreferenceFragment {
             removeDebugCategory();
         }
 
-        GoogleApiClient googleApiClient = new GoogleApiClient.Builder(getActivity())
-                .enableAutoManage((FragmentActivity) getActivity(), connectionResult -> onGoogleConnectionFailed())
+        Activity activity = getActivity();
+        GoogleApiClient googleApiClient = new GoogleApiClient.Builder(activity)
+                .enableAutoManage((FragmentActivity) activity, connectionResult -> onGoogleConnectionFailed())
                 .addApi(LocationServices.API)
                 .build();
 
-        SettingsFragmentComponent component = SettingsInjector.obtainForFragment(getActivity(), googleApiClient, proximityPreconditionsCallback());
+        SettingsFragmentComponent component = SettingsInjector.obtainForFragment(
+                activity,
+                TaskLauncherFactory.forFragment(this, activity),
+                googleApiClient,
+                proximityPreconditionsCallback()
+        );
         signInService = component.signInService();
         remoteConfig = component.remoteConfig();
         navigator = component.navigator();
@@ -309,6 +319,22 @@ public class SettingsFragment extends PreferenceFragment {
     private void disableAndOptOutFromProximity() {
         proximityService.stopRadar();
         proximityOptInPersister.storeUserOptedOut();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        boolean handled = proximityPreconditions.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (!handled) {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        boolean handled = proximityPreconditions.onActivityResult(requestCode, resultCode, data);
+        if (!handled) {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     @Override

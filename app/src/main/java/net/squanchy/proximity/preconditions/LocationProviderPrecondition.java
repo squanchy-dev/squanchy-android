@@ -1,6 +1,5 @@
 package net.squanchy.proximity.preconditions;
 
-import android.app.Activity;
 import android.content.IntentSender;
 
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -23,11 +22,11 @@ public class LocationProviderPrecondition implements Precondition {
     private static final int REQUEST_INTERVAL_MS = 10000;
     private static final int REQUEST_FASTEST_INTERVAL_MS = 5000;
 
-    private final Activity activity;
+    private final TaskLauncher taskLauncher;
     private final GoogleApiClient googleApiClient;
 
-    LocationProviderPrecondition(Activity activity, GoogleApiClient googleApiClient) {
-        this.activity = activity;
+    LocationProviderPrecondition(TaskLauncher taskLauncher, GoogleApiClient googleApiClient) {
+        this.taskLauncher = taskLauncher;
         this.googleApiClient = googleApiClient;
     }
 
@@ -61,7 +60,7 @@ public class LocationProviderPrecondition implements Precondition {
                         break;
                     case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
                         try {
-                            status.startResolutionForResult(activity, REQUEST_ENABLE_LOCATION_PROVIDER);
+                            taskLauncher.startIntentSenderForResult(status.getResolution().getIntentSender(), REQUEST_ENABLE_LOCATION_PROVIDER);
                             emitter.onSuccess(SatisfyResult.WAIT_FOR_EXTERNAL_RESULT);
                         } catch (IntentSender.SendIntentException e) {
                             emitter.onSuccess(SatisfyResult.ABORT);

@@ -21,9 +21,11 @@ import static android.content.Context.BLUETOOTH_SERVICE;
 public class PreconditionsRegistryModule {
 
     private final GoogleApiClient googleApiClient;
+    private final TaskLauncher taskLauncher;
 
-    public PreconditionsRegistryModule(GoogleApiClient googleApiClient) {
+    public PreconditionsRegistryModule(GoogleApiClient googleApiClient, TaskLauncher taskLauncher) {
         this.googleApiClient = googleApiClient;
+        this.taskLauncher = taskLauncher;
     }
 
     @Provides
@@ -42,23 +44,23 @@ public class PreconditionsRegistryModule {
     }
 
     @Provides
+    LocationPermissionPrecondition locationPermissionPrecondition() {
+        return new LocationPermissionPrecondition(taskLauncher);
+    }
+
+    @Provides
+    LocationProviderPrecondition locationProviderPrecondition() {
+        return new LocationProviderPrecondition(taskLauncher, googleApiClient);
+    }
+
+    @Provides
     BluetoothManager bluetoothManager(Activity activity) {
         return (BluetoothManager) activity.getSystemService(BLUETOOTH_SERVICE);
     }
 
     @Provides
-    LocationPermissionPrecondition locationPermissionPrecondition(Activity activity) {
-        return new LocationPermissionPrecondition(activity);
-    }
-
-    @Provides
-    LocationProviderPrecondition locationProviderPrecondition(Activity activity) {
-        return new LocationProviderPrecondition(activity, googleApiClient);
-    }
-
-    @Provides
-    BluetoothPrecondition bluetoothPrecondition(Activity activity, BluetoothManager bluetoothManager) {
-        return new BluetoothPrecondition(activity, bluetoothManager);
+    BluetoothPrecondition bluetoothPrecondition(BluetoothManager bluetoothManager) {
+        return new BluetoothPrecondition(bluetoothManager, taskLauncher);
     }
 
     @Provides
