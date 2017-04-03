@@ -80,11 +80,12 @@ public class NotificationCreator {
 
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(context)
+                        .setContentIntent(createPendingIntentForProximityNotification(proximityId))
                         .setContentTitle(getApplicationName(context))
-                        .setSmallIcon(R.drawable.ic_place_white_24dp)
+                        .setSmallIcon(R.drawable.ic_notificationdroid)
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(text))
-                        .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.ic_notificationdroid));
+                        .setAutoCancel(true);
         return builder.build();
     }
 
@@ -106,6 +107,14 @@ public class NotificationCreator {
         NotificationCompat.InboxStyle richNotification = createInboxStyleRichNotification(summaryBuilder, events);
 
         return richNotification.build();
+    }
+
+    private PendingIntent createPendingIntentForProximityNotification(String proximityId) {
+        TaskStackBuilder taskBuilder = createBaseTaskStackBuilder();
+        Intent homeIntent = HomeActivity.createProximityIntent(context, proximityId);
+        taskBuilder.addNextIntent(homeIntent);
+
+        return taskBuilder.getPendingIntent(0, PendingIntent.FLAG_CANCEL_CURRENT);
     }
 
     private NotificationCompat.Builder createDefaultBuilder(int talksCount) {
@@ -206,12 +215,6 @@ public class NotificationCreator {
         }
 
         return richNotification;
-    }
-
-    private NotificationCompat.BigTextStyle createBigTextStyleNotification(NotificationCompat.Builder notificationBuilder, String notificationText) {
-        NotificationCompat.BigTextStyle bigNotification = new NotificationCompat.BigTextStyle(notificationBuilder)
-                .setBigContentTitle(notificationText);
-        return bigNotification;
     }
 
     private String createSummaryTitle(int talksCount) {
