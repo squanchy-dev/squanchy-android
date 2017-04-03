@@ -108,14 +108,14 @@ class FirebaseDbService(private val database: DatabaseReference) {
     }
 
     fun addFavorite(eventId: String, userId: String): Completable {
-        return updateFavorite(eventId, { it.setValue(true) }, userId)
+        return updateFavorite(eventId, userId) { it.setValue(true) }
     }
 
     fun removeFavorite(eventId: String, userId: String): Completable {
-        return updateFavorite(eventId, { it.removeValue() }, userId)
+        return updateFavorite(eventId, userId) { it.removeValue() }
     }
 
-    private fun updateFavorite(eventId: String, action: (DatabaseReference) -> Task<Void>, userId: String): Completable {
+    private fun updateFavorite(eventId: String, userId: String, action: (DatabaseReference) -> Task<Void>): Completable {
         return Completable.create { emitter ->
             action(database.child(favoriteByIdNode(userId, eventId)))
                     .addOnSuccessListener { emitter.onComplete() }
@@ -153,6 +153,6 @@ private fun placesNode() = data("places")
 private fun tracksNode() = data("tracks")
 private fun trackByIdNode(trackId: String) = data("tracks/$trackId")
 private fun venueInfoNode() = data("venue")
-private fun userDataNode(userId: String) = data("user/$userId")
+private fun userDataNode(userId: String) = "user/$userId"
 private fun favoriteByIdNode(userId: String, eventId: String) = "${userDataNode(userId)}/favorites/$eventId"
 private fun achievementByIdNode(userId: String, achievementId: String) = "${userDataNode(userId)}/achievements/$achievementId"
