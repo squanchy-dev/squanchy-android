@@ -41,7 +41,7 @@ class LocationPermissionPrecondition implements Precondition {
     public Single<SatisfyResult> satisfy() {
         return Single.create(emitter -> {
             ActivityCompat.requestPermissions(activity, REQUIRED_PERMISSIONS, REQUEST_GRANT_PERMISSIONS);
-            emitter.onSuccess(SatisfyResult.RETRY);
+            emitter.onSuccess(SatisfyResult.WAIT_FOR_EXTERNAL_RESULT);
         });
     }
 

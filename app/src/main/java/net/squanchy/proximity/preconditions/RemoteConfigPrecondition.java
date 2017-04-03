@@ -11,8 +11,6 @@ public class RemoteConfigPrecondition implements Precondition {
     private final RemoteConfig remoteConfig;
     private final DebugPreferences debugPreferences;
 
-    private boolean satisfied;
-
     RemoteConfigPrecondition(RemoteConfig remoteConfig, DebugPreferences debugPreferences) {
         this.remoteConfig = remoteConfig;
         this.debugPreferences = debugPreferences;
@@ -34,20 +32,14 @@ public class RemoteConfigPrecondition implements Precondition {
             return true;
         }
 
-        return satisfied;
+        // This means we'll rely on the result of satisfy() to determine if we want to proceed
+        return ALWAYS_NOT_SATISFIED;
     }
 
     @Override
     public Single<SatisfyResult> satisfy() {
         return remoteConfig.proximityServicesEnabled()
-                .map(enabled -> {
-                    satisfied = enabled;
-                    if (enabled) {
-                        return SatisfyResult.RETRY;
-                    } else {
-                        return SatisfyResult.ABORT;
-                    }
-                });
+                .map(enabled -> enabled ? SatisfyResult.SUCCESS : SatisfyResult.ABORT);
     }
 
     @Override

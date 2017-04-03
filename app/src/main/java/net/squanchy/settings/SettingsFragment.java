@@ -17,7 +17,6 @@ import com.google.firebase.auth.FirebaseUser;
 import net.squanchy.BuildConfig;
 import net.squanchy.R;
 import net.squanchy.navigation.Navigator;
-import net.squanchy.proximity.preconditions.LocationProviderPrecondition;
 import net.squanchy.proximity.preconditions.ProximityOptInPersister;
 import net.squanchy.proximity.preconditions.ProximityPreconditions;
 import net.squanchy.remoteconfig.RemoteConfig;
@@ -98,11 +97,36 @@ public class SettingsFragment extends PreferenceFragment {
 
     private void onGoogleConnectionFailed() {
         Timber.e("Google Client connection failed");
-        Snackbar.make(getViewOrThrow(), R.string.onboarding_error_google_client_connection, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(getViewOrThrow(), R.string.proximity_error_google_client_connection, Snackbar.LENGTH_LONG).show();
     }
 
     private ProximityPreconditions.Callback proximityPreconditionsCallback() {
         return new ProximityPreconditions.Callback() {
+            @Override
+            public void notOptedIn() {
+                showProximityEnablingError(Snackbar.make(getViewOrThrow(), R.string.proximity_error_not_opted_in, Snackbar.LENGTH_LONG));
+            }
+
+            @Override
+            public void featureDisabled() {
+                showProximityEnablingError(Snackbar.make(getViewOrThrow(), R.string.proximity_error_remote_config_kill_switch, Snackbar.LENGTH_LONG));
+            }
+
+            @Override
+            public void permissionDenied() {
+                showProximityEnablingError(Snackbar.make(getViewOrThrow(), R.string.proximity_error_permission_denied, Snackbar.LENGTH_LONG));
+            }
+
+            @Override
+            public void locationProviderDenied() {
+                showProximityEnablingError(Snackbar.make(getViewOrThrow(), R.string.proximity_error_location_denied, Snackbar.LENGTH_LONG));
+            }
+
+            @Override
+            public void bluetoothDenied() {
+                showProximityEnablingError(Snackbar.make(getViewOrThrow(), R.string.proximity_error_bluetooth_denied, Snackbar.LENGTH_LONG));
+            }
+
             @Override
             public void allChecksPassed() {
                 enableUi();
@@ -110,31 +134,9 @@ public class SettingsFragment extends PreferenceFragment {
             }
 
             @Override
-            public void permissionDenied() {
-                showLocationError(Snackbar.make(getViewOrThrow(), R.string.onboarding_error_permission_denied, Snackbar.LENGTH_LONG));
-            }
-
-            @Override
-            public void locationProviderDenied() {
-                showLocationError(Snackbar.make(getViewOrThrow(), R.string.onboarding_error_location_denied, Snackbar.LENGTH_LONG));
-            }
-
-            @Override
-            public void locationProviderFailed(LocationProviderPrecondition.FailureInfo failureInfo) {
-                Snackbar snackbar = Snackbar.make(getViewOrThrow(), R.string.onboarding_error_location_failed, Snackbar.LENGTH_LONG)
-                        .setAction(R.string.onboarding_error_location_failed_action, view -> proximityPreconditions.navigateToLocationSettings());
-                showLocationError(snackbar);
-            }
-
-            @Override
-            public void bluetoothDenied() {
-                showLocationError(Snackbar.make(getViewOrThrow(), R.string.onboarding_error_bluetooth_denied, Snackbar.LENGTH_LONG));
-            }
-
-            @Override
             public void exceptionWhileSatisfying(Throwable throwable) {
                 Timber.e(throwable, "Exception occurred while checking");
-                showLocationError(Snackbar.make(getViewOrThrow(), R.string.onboarding_error_bluetooth_denied, Snackbar.LENGTH_LONG));
+                showProximityEnablingError(Snackbar.make(getViewOrThrow(), R.string.proximity_error_bluetooth_denied, Snackbar.LENGTH_LONG));
             }
 
             @Override
@@ -144,7 +146,7 @@ public class SettingsFragment extends PreferenceFragment {
         };
     }
 
-    private void showLocationError(Snackbar snackbar) {
+    private void showProximityEnablingError(Snackbar snackbar) {
         enableUi();
         snackbar.show();
         proximityOptInPreference.setChecked(false);

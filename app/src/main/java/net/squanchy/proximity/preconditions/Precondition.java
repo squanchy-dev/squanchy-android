@@ -9,7 +9,8 @@ interface Precondition {
     boolean ALWAYS_AVAILABLE = true;
     boolean CAN_PERFORM_SYNCHRONOUS_CHECK = true;
     boolean CANNOT_PERFORM_SYNCHRONOUS_CHECK = false;
-    boolean ALWAYS_ATTEMPT_SATISFYING = false;
+    boolean ALWAYS_NOT_SATISFIED = false;
+    boolean ALWAYS_SATISFIED = false;
 
     boolean available();
 
@@ -22,7 +23,8 @@ interface Precondition {
     Optional<Integer> requestCode();
 
     enum SatisfyResult {
-        RETRY,
+        SUCCESS,
+        WAIT_FOR_EXTERNAL_RESULT,
         ABORT
     }
 }

@@ -42,7 +42,7 @@ class BluetoothPrecondition implements Precondition {
         return Single.create(emitter -> {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             activity.startActivityForResult(enableBtIntent, REQUEST_ENABLE_BLUETOOTH);
-            emitter.onSuccess(SatisfyResult.RETRY);
+            emitter.onSuccess(SatisfyResult.WAIT_FOR_EXTERNAL_RESULT);
         });
     }
 

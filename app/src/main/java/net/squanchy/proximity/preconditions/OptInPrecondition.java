@@ -29,6 +29,8 @@ public class OptInPrecondition implements Precondition {
 
     @Override
     public Single<SatisfyResult> satisfy() {
+        // This cannot be satisfied in the satisfaction loop 😏 -- instead, it must be enabled
+        // explicitly by the user. This is the Gandalf of the preconditions.
         return Single.just(SatisfyResult.ABORT);
     }
 

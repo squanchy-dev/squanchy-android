@@ -12,19 +12,19 @@ public interface ProximityPreconditions {
 
     boolean onActivityResult(int requestCode, int resultCode, Intent data);
 
-    void navigateToLocationSettings();
-
     interface Callback {
 
-        void allChecksPassed();
+        void notOptedIn();
+
+        void featureDisabled();
 
         void permissionDenied();
 
         void locationProviderDenied();
 
-        void locationProviderFailed(LocationProviderPrecondition.FailureInfo failureStatus);
-
         void bluetoothDenied();
+
+        void allChecksPassed();
 
         void exceptionWhileSatisfying(Throwable throwable);
 
