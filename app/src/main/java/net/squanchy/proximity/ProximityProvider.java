@@ -16,5 +16,5 @@ public interface ProximityProvider {
 
     Observable<ProximityEvent> observeProximityEvents();
 
-    void trackProximityEvent(Context context, String proximityId, ProximityTrackingType trackingType);
+    void trackProximityEvent(Context context, ProximityEvent proximityEvent, ProximityTrackingType trackingType);
 }

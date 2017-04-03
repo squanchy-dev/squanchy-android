@@ -15,7 +15,7 @@ public class ProximityAnalytics {
         this.proximityProvider = proximityProvider;
     }
 
-    public void trackProximityEvent(String proximityId, ProximityTrackingType trackingType) {
-        proximityProvider.trackProximityEvent(context, proximityId, trackingType);
+    public void trackProximityEvent(ProximityEvent proximityEvent, ProximityTrackingType trackingType) {
+        proximityProvider.trackProximityEvent(context, proximityEvent, trackingType);
     }
 }
