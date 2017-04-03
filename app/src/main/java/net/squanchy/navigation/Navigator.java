@@ -63,18 +63,12 @@ public class Navigator {
 
     public void toContest() {
         Intent intent = ContestActivity.createIntent(activity);
-        start(
-                intent,
-                FLAG_ACTIVITY_SINGLE_TOP
-        );
+        start(intent, FLAG_ACTIVITY_SINGLE_TOP);
     }
 
-    public void toContest(String achievementId) {
+    public void toContestUnlockingAchievement(String achievementId) {
         Intent intent = ContestActivity.createIntent(activity, achievementId);
-        start(
-                intent,
-                FLAG_ACTIVITY_SINGLE_TOP
-        );
+        start(intent, FLAG_ACTIVITY_SINGLE_TOP);
     }
 
     public void toSettings() {

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <dimen name="debug_content_padding">16dp</dimen>
+  <dimen name="debug_header_margin_top">16dp</dimen>
+  <dimen name="debug_header_margin_bottom">8dp</dimen>
+  <dimen name="debug_header_text">16sp</dimen>
+  <dimen name="debug_switch_header_height">56dp</dimen>
+  <dimen name="debug_contest_testing_controls_margin_top">16dp</dimen>
+
+</resources>

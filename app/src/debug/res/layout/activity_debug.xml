@@ -1,28 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:orientation="vertical"
-  android:padding="8dp">
+  android:padding="@dimen/debug_content_padding"
+  android:clipToPadding="false">
 
-  <Button
-    android:id="@+id/button_test_single_notification"
-    android:layout_width="wrap_content"
+  <LinearLayout
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="@string/debug_activity_button_single_notification" />
+    android:orientation="vertical">
 
-  <Button
-    android:id="@+id/button_test_multiple_notifications"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="8dp"
-    android:text="@string/debug_activity_button_multiple_notifications" />
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/debug_header_margin_top"
+      android:layout_marginBottom="@dimen/debug_header_margin_bottom"
+      android:text="@string/debug_test_notifications"
+      android:textAppearance="@style/TextAppearance.Squanchy.EventDetails.Body.Label"
+      android:textSize="@dimen/debug_header_text" />
 
-  <Button
-    android:id="@+id/button_test_service"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="8dp"
-    android:text="@string/debug_activity_button_service" />
+    <LinearLayout
+      style="?android:attr/buttonBarStyle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:gravity="fill_horizontal|center_vertical">
 
-</LinearLayout>
+      <Button
+        android:id="@+id/button_test_single_notification"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/debug_activity_button_single_notification"
+        android:textAppearance="@style/TextAppearance.Squanchy.Card.Title" />
+
+      <Button
+        android:id="@+id/button_test_multiple_notifications"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/debug_activity_button_multiple_notifications"
+        android:textAppearance="@style/TextAppearance.Squanchy.Card.Title" />
+
+      <Button
+        android:id="@+id/button_test_service"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/debug_activity_button_service"
+        android:textAppearance="@style/TextAppearance.Squanchy.Card.Title" />
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/debug_switch_header_height"
+      android:layout_marginTop="@dimen/debug_header_margin_top"
+      android:layout_marginBottom="@dimen/debug_header_margin_bottom"
+      android:clickable="true"
+      android:focusable="true"
+      android:orientation="horizontal"
+      android:gravity="fill_horizontal|center_vertical">
+
+      <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/debug_test_contest"
+        android:textAppearance="@style/TextAppearance.Squanchy.EventDetails.Body.Label"
+        android:textSize="@dimen/debug_header_text" />
+
+      <Switch
+        android:id="@+id/debug_contest_testing_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+</ScrollView>

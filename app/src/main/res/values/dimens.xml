@@ -47,6 +47,7 @@
   <dimen name="favorites_empty_blurb_margin_bottom">24dp</dimen>
   <dimen name="favorites_empty_blurb_text">16sp</dimen>
   <dimen name="favorites_empty_cta_height">56dp</dimen>
+  <dimen name="favorites_empty_cta_padding_horizontal">24dp</dimen>
 
   <dimen name="search_title_margin">16dp</dimen>
   <dimen name="search_card_item_padding">8dp</dimen>
@@ -88,13 +89,18 @@
   <dimen name="speaker_details_bio_padding">32dp</dimen>
   <dimen name="speaker_details_bio_line_spacing_extra">4sp</dimen>
 
-  <dimen name="venue_info_padding_top">16dp</dimen>
-  <dimen name="venue_info_horizontal_padding">16dp</dimen>
+  <dimen name="venue_info_content_padding_horizontal">16dp</dimen>
+  <dimen name="venue_info_content_padding_bottom">16dp</dimen>
+  <dimen name="venue_info_name_margin_top">16dp</dimen>
+  <dimen name="venue_info_name_text">20sp</dimen>
+  <dimen name="venue_info_address_margin_top">4dp</dimen>
+  <dimen name="venue_info_address_line_spacing_extra">4sp</dimen>
+  <dimen name="venue_info_address_text">14sp</dimen>
+  <dimen name="venue_info_map_margin_top">16dp</dimen>
+  <dimen name="venue_info_map_margin_bottom">16dp</dimen>
   <dimen name="venue_info_label_height">56dp</dimen>
   <dimen name="venue_info_label_text">14sp</dimen>
-  <dimen name="venue_info_name_text">20sp</dimen>
-  <dimen name="venue_info_address_text">14sp</dimen>
-  <dimen name="venue_info_address_line_spacing_extra">4sp</dimen>
+  <dimen name="venue_info_description_margin_bottom">16dp</dimen>
   <dimen name="venue_info_description_line_spacing_extra">4sp</dimen>
   <dimen name="venue_info_description_text">14sp</dimen>
 
@@ -158,7 +164,7 @@
   <dimen name="normally_resting_elevation_active">4dp</dimen>
   <dimen name="normally_resting_pressed_z_translation">2dp</dimen>
 
-  <dimen name="sign_in_bottom_sheet_width">-1px</dimen>   <!-- match_parent -->
+  <dimen name="sign_in_bottom_sheet_max_width">0dp</dimen>
   <dimen name="sign_in_bottom_sheet_content_padding">32dp</dimen>
   <dimen name="sign_in_logo_size">64dp</dimen>
   <dimen name="sign_in_logo_margin_bottom">24dp</dimen>
@@ -185,6 +191,24 @@
   <dimen name="first_start_with_no_network_progress_margin_end">16dp</dimen>
   <dimen name="first_start_with_no_network_cancel_min_height">56dp</dimen>
   <dimen name="first_start_with_no_network_cancel_padding_horizontal">24dp</dimen>
-  <dimen name="fist_start_with_no_network_progress_size">48dp</dimen>
+  <dimen name="first_start_with_no_network_progress_size">48dp</dimen>
+
+  <dimen name="contest_content_padding_horizontal">32dp</dimen>
+  <dimen name="contest_content_padding_vertical">36dp</dimen>
+  <dimen name="contest_title_text">20sp</dimen>
+  <dimen name="contest_title_margin_bottom">16dp</dimen>
+  <dimen name="contest_blurb_text">16sp</dimen>
+  <dimen name="contest_blurb_line_spacing_extra">4dp</dimen>
+  <dimen name="contest_blurb_margin_horizontal">8dp</dimen>
+  <dimen name="contest_blurb_margin_bottom">24dp</dimen>
+  <dimen name="contest_icon_width">150dp</dimen>
+  <dimen name="contest_progress_height">12dp</dimen>
+  <dimen name="contest_progress_margin_horizontal">16dp</dimen>
+  <dimen name="contest_progress_margin_top">40dp</dimen>
+  <dimen name="contest_progress_margin_bottom">8dp</dimen>
+  <dimen name="contest_progress_corners">1dp</dimen>
+  <dimen name="contest_status_margin_horizontal">16dp</dimen>
+  <dimen name="contest_status_text">16sp</dimen>
+  <dimen name="contest_status_line_spacing_extra">2dp</dimen>
 
 </resources>

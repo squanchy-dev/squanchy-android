@@ -149,7 +149,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
         switch (proximityEvent.action()) {
             case KEY_CONTEST_STAND:
                 analytics.trackProximityEventShown(proximityEvent);
-                navigator.toContest(proximityEvent.subject());
+                navigator.toContestUnlockingAchievement(proximityEvent.subject());
                 break;
             case KEY_ROOM_EVENT:
                 showCurrentEvent(proximityEvent);

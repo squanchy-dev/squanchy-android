@@ -52,9 +52,10 @@
   <string name="sign_in_title">Sign in</string>
   <string name="settings_and_help_title">Settings and help</string>
   <string name="settings_notifications_title">Notifications</string>
-  <string name="settings_location_title">Location</string>
-  <string name="settings_location_summary_on">You can participate to the contest</string>
+  <string name="settings_location_title">Geo-location and beacons</string>
+  <string name="settings_location_summary_on">You can participate to the contest.</string>
   <string name="settings_location_summary_off">You cannot participate to the contest.</string>
+  <string name="settings_contest_standings_title">Contest progress</string>
   <string name="settings_notifications_about_to_start_title">Upcoming events notification</string>
   <string name="settings_notifications_about_to_start_summary_on">Show notifications for favorite events starting soon</string>
   <string name="settings_notifications_about_to_start_summary_off">Do not show notifications for favorite events starting soon</string>
@@ -68,7 +69,6 @@
 
   <string name="venue_info_label">Information</string>
   <string name="venue_about_label">About the venue</string>
-  <string name="venue_location_label">Location</string>
   <string name="venue_map_content_description">Map to the venue</string>
 
   <string name="prompt_to_sign_in_for_favorites">Get notified about upcoming talks. Your favorite talks are also get synced across all your devices.\n\nTap to sign in.</string>
@@ -116,7 +116,16 @@
   <string name="first_start_with_no_network_network_connected">Yay network is back! 🎉</string>
   <string name="first_start_with_no_network_title">Not so fast!</string>
   <string name="first_start_with_no_network_blurb">Unfortunately, the first time you open this app you will need to be connected to the internet.</string>
-  <string name="first_start_with_no_network_cta">Go ahead, connect to a network. I\'ll be waiting.</string>
+  <string name="first_start_with_no_network_cta">Go ahead, connect to a network. I’ll be waiting.</string>
   <string name="first_start_with_no_network_cancel_button">You know what, nevermind</string>
+
+  <string name="contest_label">Contest</string>
+  <string name="contest_title">Visit our sponsors and win</string>
+  <string name="contest_blurb">Check in at all of our sponsors’ booths and win cool swag!</string>
+  <plurals name="contest_status_missing_sponsors">
+    <item quantity="one">Just one sponsor left to visit!</item>
+    <item quantity="other">%1$d sponsors left to visit</item>
+  </plurals>
+  <string name="contest_completed">You got all the sponsors!\nVisit the Synesthesia booth to claim your swag 🎁</string>
 
 </resources>

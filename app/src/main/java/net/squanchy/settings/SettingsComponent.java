@@ -7,6 +7,7 @@ import net.squanchy.navigation.Navigator;
 import net.squanchy.proximity.preconditions.ProximityOptInPersister;
 import net.squanchy.proximity.preconditions.OptInPreferencePersisterModule;
 import net.squanchy.service.proximity.injection.ProximityService;
+import net.squanchy.remoteconfig.RemoteConfig;
 import net.squanchy.signin.SignInModule;
 import net.squanchy.signin.SignInService;
 
@@ -23,4 +24,6 @@ public interface SettingsComponent {
     ProximityService proximityService();
 
     ProximityOptInPersister proximityOptInPersister();
+
+    RemoteConfig remoteConfig();
 }

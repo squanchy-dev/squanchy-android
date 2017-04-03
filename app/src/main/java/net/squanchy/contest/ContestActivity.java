@@ -2,15 +2,17 @@ package net.squanchy.contest;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import java.util.Locale;
 
 import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
+import net.squanchy.support.config.DialogLayoutParameters;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -18,10 +20,14 @@ import io.reactivex.disposables.CompositeDisposable;
 public class ContestActivity extends TypefaceStyleableActivity {
 
     private static final String EXTRA_ACHIEVEMENT_ID = ContestActivity.class.getCanonicalName() + ".achievement_id";
+    private static final boolean ANIMATE = true;
+
+    private final CompositeDisposable subscriptions = new CompositeDisposable();
 
     private ContestService contestService;
-    private CompositeDisposable subscriptions = new CompositeDisposable();
-    private TextView contestResults;
+
+    private TextView contestStatusView;
+    private ProgressBar contestProgressView;
 
     public static Intent createIntent(Context context, String achievementId) {
         Intent intent = new Intent(context, ContestActivity.class);
@@ -37,12 +43,25 @@ public class ContestActivity extends TypefaceStyleableActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_contest_summary);
-
-        contestResults = (TextView) findViewById(R.id.contest_result);
+        setContentView(R.layout.activity_contest);
 
         ContestComponent component = ContestInjector.obtain(this);
         contestService = component.contestService();
+
+        addTestingControlsIfDebugOptionActive((ViewGroup) findViewById(R.id.contest_container));
+
+        contestProgressView = (ProgressBar) findViewById(R.id.contest_progressbar);
+        contestStatusView = (TextView) findViewById(R.id.contest_status);
+
+        DialogLayoutParameters.wrapHeight(this)
+                .applyTo(getWindow());
+    }
+
+    private void addTestingControlsIfDebugOptionActive(ViewGroup container) {
+        ContestTester contentTester = new ContestTester(this);
+        if (contentTester.testingEnabled()) {
+            contentTester.appendDebugControls(container, contestService);
+        }
     }
 
     @Override
@@ -74,25 +93,47 @@ public class ContestActivity extends TypefaceStyleableActivity {
     }
 
     private void updateWith(ContestStandings standings) {
-        contestResults.setText(
-                String.format(Locale.US, "Checked %1$d out of %2$d stands: \n%3$s",
-                        standings.current(),
-                        standings.goal(),
-                        getContentMessage(standings.current(), standings.goal())));
+        updateProgressBarWith(standings);
+
+        int missingStands = missingSponsorsCount(standings);
+        updateStatusTextWith(missingStands);
     }
 
-    private String getContentMessage(int current, float goal) {
-        if (current == goal) {
-            return "Congratulation, you won!";
+    private void updateProgressBarWith(ContestStandings standings) {
+        contestProgressView.setVisibility(View.VISIBLE);
+        contestProgressView.setMax((int) standings.goal());
+
+        if (isAtLeastNougat()) {
+            contestProgressView.setProgress(standings.current(), ANIMATE);
         } else {
-            int missingStands = (int) (goal - current);
-            return String.format(Locale.US, "Still missing %1$d stands", missingStands);
+            contestProgressView.setProgress(standings.current());
+        }
+    }
+
+    private boolean isAtLeastNougat() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N;
+    }
+
+    private int missingSponsorsCount(ContestStandings standings) {
+        return (int) (standings.goal() - standings.current());
+    }
+
+    private void updateStatusTextWith(int missingStands) {
+        contestStatusView.setVisibility(View.VISIBLE);
+
+        if (missingStands > 0) {
+            CharSequence status = getResources()
+                    .getQuantityString(R.plurals.contest_status_missing_sponsors, missingStands, missingStands);
+
+            contestStatusView.setText(status);
+        } else {
+            contestStatusView.setText(R.string.contest_completed);
         }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        subscriptions.dispose();
+        subscriptions.clear();
     }
 }

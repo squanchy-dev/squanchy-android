@@ -75,19 +75,6 @@ public abstract class Event {
 
     public abstract DateTimeZone timeZone();
 
-    public String speakersNames() {
-        StringBuilder speakersBuilder = new StringBuilder();
-        for (Speaker speaker : speakers()) {
-            if (speakersBuilder.length() > 0) {
-                speakersBuilder.append(", ");
-            }
-
-            speakersBuilder.append(speaker.name());
-        }
-
-        return speakersBuilder.toString();
-    }
-
     public boolean isHappeningAt(LocalDateTime time) {
         return time.isAfter(startTime()) && time.isBefore(endTime());
     }

@@ -16,17 +16,21 @@ import net.squanchy.navigation.Navigator;
 import net.squanchy.onboarding.OnboardingPage;
 import net.squanchy.proximity.preconditions.ProximityOptInPersister;
 import net.squanchy.service.proximity.injection.ProximityService;
+import net.squanchy.remoteconfig.RemoteConfig;
 import net.squanchy.signin.SignInService;
 import net.squanchy.support.lang.Optional;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class SettingsFragment extends PreferenceFragment {
 
     public static final int REQUEST_TURN_LOCATION_ON = 6429;
 
+    private final CompositeDisposable subscriptions = new CompositeDisposable();
+
     private SignInService signInService;
+    private RemoteConfig remoteConfig;
     private Navigator navigator;
     private ProximityService proximityService;
     private ProximityOptInPersister proximityOptInPersister;
@@ -36,7 +40,9 @@ public class SettingsFragment extends PreferenceFragment {
     private Preference accountSignInSignOutPreference;
     private SwitchPreference locationPreferences;
 
-    private Disposable subscription;
+    private PreferenceCategory settingsCategory;
+    private Preference proximityOptInPreference;
+    private Preference contestStandingsPreference;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,6 +59,7 @@ public class SettingsFragment extends PreferenceFragment {
 
         SettingsComponent component = SettingsInjector.obtain(getActivity());
         signInService = component.signInService();
+        remoteConfig = component.remoteConfig();
         navigator = component.navigator();
         proximityService = component.proximityService();
         proximityOptInPersister = component.proximityOptInPersister();
@@ -65,6 +72,14 @@ public class SettingsFragment extends PreferenceFragment {
         locationPreferences.setOnPreferenceChangeListener((preference, isEnabling) ->
                 handleLocationPreferenceChange((boolean) isEnabling)
         );
+
+        settingsCategory = (PreferenceCategory) findPreference(getString(R.string.settings_category_key));
+        proximityOptInPreference = findPreference(getString(R.string.location_preference_key));
+        contestStandingsPreference = findPreference(getString(R.string.contest_standings_preference_key));
+        contestStandingsPreference.setOnPreferenceClickListener(preference -> {
+            navigator.toContest();
+            return true;
+        });
 
         Preference aboutPreference = findPreference(getString(R.string.about_preference_key));
         aboutPreference.setOnPreferenceClickListener(preference -> {
@@ -94,15 +109,44 @@ public class SettingsFragment extends PreferenceFragment {
 
         hideDividers();
 
-        subscription = signInService.currentUser()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onUserChanged);
+        hideProximityAndContestBasedOnRemoteConfig();
+
+        subscriptions.add(
+                signInService.currentUser()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(this::onUserChanged)
+        );
     }
 
     private void hideDividers() {
         ListView list = (ListView) getView().findViewById(android.R.id.list);
         list.setDivider(null);
         list.setDividerHeight(0);
+    }
+
+    private void hideProximityAndContestBasedOnRemoteConfig() {
+        subscriptions.add(
+                remoteConfig.proximityServicesEnabled()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(this::setProximityAndContestUiStatus)
+        );
+    }
+
+    private void setProximityAndContestUiStatus(boolean enabled) {
+        if (enabled) {
+            showIfNotAlreadyShown(proximityOptInPreference);
+            showIfNotAlreadyShown(contestStandingsPreference);
+            proximityOptInPreference.setSelectable(true);
+        } else {
+            settingsCategory.removePreference(proximityOptInPreference);
+            settingsCategory.removePreference(contestStandingsPreference);
+        }
+    }
+
+    private void showIfNotAlreadyShown(Preference preference) {
+        if (settingsCategory.findPreference(preference.getKey()) == null) {
+            settingsCategory.addPreference(preference);
+        }
     }
 
     private void onUserChanged(Optional<FirebaseUser> user) {
@@ -155,6 +199,6 @@ public class SettingsFragment extends PreferenceFragment {
     @Override
     public void onStop() {
         super.onStop();
-        subscription.dispose();
+        subscriptions.clear();
     }
 }

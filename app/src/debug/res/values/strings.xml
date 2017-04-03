@@ -1,8 +1,12 @@
 <resources>
 
   <string name="debug_activity_title">Squanchy Debug</string>
+
   <string name="debug_activity_button_single_notification">Test single notification</string>
   <string name="debug_activity_button_multiple_notifications">Test multiple notifications</string>
   <string name="debug_activity_button_service">Test service</string>
+  <string name="debug_test_notifications">Test notifications</string>
+  <string name="debug_test_contest">Test contest</string>
+  <string name="debug_add_achievement">Add achievement</string>
 
 </resources>

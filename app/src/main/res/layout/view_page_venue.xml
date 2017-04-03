@@ -22,16 +22,17 @@
   <android.support.v4.widget.NestedScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:paddingBottom="@dimen/venue_info_content_padding_bottom"
     app:layout_behavior="@string/appbar_scrolling_view_behavior" >
 
-    <LinearLayout
+    <net.squanchy.support.widget.CardLayout
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical">
+      android:layout_height="wrap_content">
 
       <include layout="@layout/merge_venue_info_layout" />
 
-    </LinearLayout>
+    </net.squanchy.support.widget.CardLayout>
 
   </android.support.v4.widget.NestedScrollView>
 

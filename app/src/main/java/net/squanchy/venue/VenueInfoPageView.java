@@ -1,9 +1,13 @@
 package net.squanchy.venue;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
+import android.os.Build;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -87,9 +91,20 @@ public class VenueInfoPageView extends CoordinatorLayout implements Loadable {
     private void updateWith(Venue venue) {
         nameText.setText(venue.name());
         addressText.setText(venue.address());
-        descriptionText.setText(venue.description());
+        descriptionText.setText(parseHtml(venue.description()));
         loadMap(mapView, venue.mapUrl(), imageLoader);
         updateMapClickListenerWith(venue);
+    }
+
+    @TargetApi(Build.VERSION_CODES.N)
+    @SuppressWarnings("deprecation")        // The older fromHtml() is only called pre-24
+    private Spanned parseHtml(String description) {
+        // TODO handle this properly
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY);
+        } else {
+            return Html.fromHtml(description);
+        }
     }
 
     private void loadMap(ImageView imageView, String mapUrl, ImageLoader imageLoader) {
