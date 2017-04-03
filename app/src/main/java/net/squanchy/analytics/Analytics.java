@@ -71,11 +71,19 @@ public class Analytics {
     }
 
     public void trackProximityEventShown(ProximityEvent event) {
-        proximityAnalytics.trackProximityEvent(event, ProximityTrackingType.NOTIFIED);
+        trackProximityIdShown(event.id());
     }
 
     public void trackProximityEventEngaged(ProximityEvent event) {
-        proximityAnalytics.trackProximityEvent(event, ProximityTrackingType.ENGAGED);
+        trackProximityIdEngaged(event.id());
+    }
+
+    public void trackProximityIdShown(String proximityId) {
+        proximityAnalytics.trackProximityEvent(proximityId, ProximityTrackingType.NOTIFIED);
+    }
+
+    public void trackProximityIdEngaged(String proximityId) {
+        proximityAnalytics.trackProximityEvent(proximityId, ProximityTrackingType.ENGAGED);
     }
 
     public void enableExceptionLogging() {
