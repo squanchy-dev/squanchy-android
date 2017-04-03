@@ -54,17 +54,15 @@ class FirebaseDbService(private val database: DatabaseReference) {
 
     fun favorites(userId: String): Observable<FirebaseFavorites> {
         return userData(userId)
-                .map { optionalUserData -> optionalUserData.or(FirebaseUserData.empty()) }
-                .map { userData -> Optional.fromNullable(userData.favorites) }
-                .map { optionalFavorites -> optionalFavorites.or(FirebaseFavorites.empty()) }
+                .map { optionalUserData -> optionalUserData.or(FirebaseUserData()) }
+                .map { (favorites) -> favorites ?: emptyMap() }
                 .map(::FirebaseFavorites)
     }
 
     fun achievements(userId: String): Observable<FirebaseAchievements> {
         return userData(userId)
-                .map { optionalUserData -> optionalUserData.or(FirebaseUserData.empty()) }
-                .map { userData -> Optional.fromNullable(userData.achievements) }
-                .map { optionalAchievement -> optionalAchievement.or(FirebaseAchievements.empty()) }
+                .map { optionalUserData -> optionalUserData.or(FirebaseUserData()) }
+                .map { (_, achievements) -> achievements ?: emptyMap() }
                 .map(::FirebaseAchievements)
     }
 
