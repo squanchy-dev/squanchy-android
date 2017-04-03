@@ -58,7 +58,8 @@ public class SettingsFragment extends PreferenceFragment {
             removeDebugCategory();
         }
 
-        SettingsComponent component = SettingsInjector.obtain(getActivity());
+        // TODO setup all the new dependencies
+        SettingsComponent component = SettingsInjector.obtainForFragment(getActivity(), null, null);
         signInService = component.signInService();
         remoteConfig = component.remoteConfig();
         navigator = component.navigator();

@@ -31,7 +31,7 @@ public class SettingsActivity extends TypefaceStyleableActivity {
                 .replace(R.id.fragment_container, new SettingsFragment())
                 .commit();
 
-        SettingsComponent component = SettingsInjector.obtain(this);
+        SettingsActivityComponent component = SettingsInjector.obtainForFragment(this);
         signInService = component.signInService();
     }
 

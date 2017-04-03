@@ -4,18 +4,20 @@ import net.squanchy.injection.ActivityLifecycle;
 import net.squanchy.injection.ApplicationComponent;
 import net.squanchy.navigation.NavigationModule;
 import net.squanchy.navigation.Navigator;
-import net.squanchy.proximity.preconditions.ProximityOptInPersister;
 import net.squanchy.proximity.preconditions.OptInPreferencePersisterModule;
-import net.squanchy.service.proximity.injection.ProximityService;
+import net.squanchy.proximity.preconditions.ProximityOptInPersister;
+import net.squanchy.proximity.preconditions.ProximityPreconditions;
+import net.squanchy.proximity.preconditions.ProximityPreconditionsModule;
 import net.squanchy.remoteconfig.RemoteConfig;
+import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.signin.SignInModule;
 import net.squanchy.signin.SignInService;
 
 import dagger.Component;
 
 @ActivityLifecycle
-@Component(modules = {SignInModule.class, NavigationModule.class, OptInPreferencePersisterModule.class}, dependencies = ApplicationComponent.class)
-public interface SettingsComponent {
+@Component(modules = {SignInModule.class, NavigationModule.class, OptInPreferencePersisterModule.class, ProximityPreconditionsModule.class}, dependencies = ApplicationComponent.class)
+public interface SettingsFragmentComponent {
 
     Navigator navigator();
 
@@ -26,4 +28,6 @@ public interface SettingsComponent {
     ProximityOptInPersister proximityOptInPersister();
 
     RemoteConfig remoteConfig();
+
+    ProximityPreconditions proximityPreconditions();
 }
