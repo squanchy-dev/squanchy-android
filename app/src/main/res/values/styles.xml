@@ -469,6 +469,8 @@
 
   <style name="Favorite.Empty.Cta" parent="Button.Colored">
     <item name="android:backgroundTint">?colorPrimary</item>
+    <item name="android:paddingStart">@dimen/favorites_empty_cta_padding_horizontal</item>
+    <item name="android:paddingEnd">@dimen/favorites_empty_cta_padding_horizontal</item>
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.Favorite.Empty.Cta</item>
   </style>
 
