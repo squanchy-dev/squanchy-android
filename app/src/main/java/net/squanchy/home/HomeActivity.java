@@ -1,12 +1,14 @@
 package net.squanchy.home;
 
 import android.animation.ValueAnimator;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
@@ -16,6 +18,9 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +36,10 @@ import net.squanchy.home.deeplink.HomeActivityDeepLinkCreator;
 import net.squanchy.home.deeplink.HomeActivityIntentParser;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.proximity.ProximityEvent;
+import net.squanchy.proximity.preconditions.LocationProviderPrecondition;
+import net.squanchy.proximity.preconditions.ProximityOptInPersister;
+import net.squanchy.proximity.preconditions.ProximityPreconditions;
+import net.squanchy.remoteconfig.RemoteConfig;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.support.lang.Optional;
@@ -42,17 +51,20 @@ import org.joda.time.format.DateTimeFormatter;
 import io.reactivex.Maybe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import timber.log.Timber;
 
-public class HomeActivity extends TypefaceStyleableActivity {
+public class HomeActivity extends TypefaceStyleableActivity{
 
     private static final String KEY_CONTEST_STAND = "stand";
     private static final String KEY_ROOM_EVENT = "room";
     private static final String WHEN_DATE_TIME_FORMAT = "HH:mm";
 
+    private static final int REQUEST_SETTINGS = 9375;
     private static final int REQUEST_SIGN_IN_MAY_GOD_HAVE_MERCY_OF_OUR_SOULS = 666;
 
     private final Map<BottomNavigationSection, View> pageViews = new HashMap<>(4);
     private final List<Loadable> loadables = new ArrayList<>(4);
+    private Snackbar prerequisitesSnackbar;
 
     private int pageFadeDurationMillis;
 
@@ -63,6 +75,9 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private Analytics analytics;
     private Navigator navigator;
     private CurrentEventService currentEventService;
+    private RemoteConfig remoteConfig;
+    private ProximityPreconditions proximityPreconditions;
+    private ProximityOptInPersister proximityOptInPersister;
 
     private CompositeDisposable subscriptions;
 
@@ -109,13 +124,34 @@ public class HomeActivity extends TypefaceStyleableActivity {
         Intent intent = getIntent();
         selectPageFrom(intent, Optional.fromNullable(savedInstanceState));
 
-        HomeComponent homeComponent = HomeInjector.obtain(this);
+        GoogleApiClient googleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, connectionResult -> Timber.e("Google Client connection failed"))
+                .addApi(LocationServices.API)
+                .build();
+
+        prerequisitesSnackbar = buildPrerequisitesSnackbar();
+
+        HomeComponent homeComponent = HomeInjector.obtain(this, googleApiClient, proximityPreconditionsCallback());
         analytics = homeComponent.analytics();
         proximityService = homeComponent.proximityService();
         currentEventService = homeComponent.currentEvent();
+        remoteConfig = homeComponent.remoteConfig();
+        proximityPreconditions = homeComponent.proximityPreconditions();
+        proximityOptInPersister = homeComponent.proximityOptInPersister();
 
         navigator = homeComponent.navigator();
         subscriptions = new CompositeDisposable();
+    }
+
+    private Snackbar buildPrerequisitesSnackbar() {
+        Snackbar snackbar = Snackbar.make(
+                pageViews.get(currentSection),
+                getString(R.string.missing_prerequisites_for_location),
+                BaseTransientBottomBar.LENGTH_INDEFINITE
+        );
+        snackbar.setAction(R.string.missing_prerequisites_action, view -> proximityPreconditions.startSatisfyingPreconditions());
+        snackbar.setActionTextColor(getResources().getColor(R.color.text_inverse));
+        return snackbar;
     }
 
     @Override
@@ -313,10 +349,21 @@ public class HomeActivity extends TypefaceStyleableActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_SIGN_IN_MAY_GOD_HAVE_MERCY_OF_OUR_SOULS) {
-            startAllSubscriptions();
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
+        boolean handled = proximityPreconditions.onActivityResult(requestCode, resultCode, data);
+        if (!handled) {
+            if (requestCode == REQUEST_SIGN_IN_MAY_GOD_HAVE_MERCY_OF_OUR_SOULS) {
+                startAllSubscriptions();
+            } else {
+                super.onActivityResult(requestCode, resultCode, data);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        boolean handled = proximityPreconditions.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (!handled) {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 
@@ -326,9 +373,36 @@ public class HomeActivity extends TypefaceStyleableActivity {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(this::handleProximityEvent));
 
+        subscriptions.add(
+                remoteConfig.proximityServicesEnabled()
+                        .subscribeOn(AndroidSchedulers.mainThread())
+                        .doOnSuccess(enabled -> {
+                            if (enabled) {
+                                checkPrerequisiteForProximity();
+                            }
+                        }).subscribe()
+        );
+
         for (Loadable loadable : loadables) {
             loadable.startLoading();
         }
+    }
+
+    private void checkPrerequisiteForProximity() {
+        proximityOptInPersister.storeUserOptedIn();
+        if (proximityPreconditions.needsActionToSatisfyPreconditions()) {
+            showPrerequisitesSnackbar();
+        } else {
+            dismissPrerequisitesSnackbar();
+        }
+    }
+
+    private void showPrerequisitesSnackbar() {
+        prerequisitesSnackbar.show();
+    }
+
+    private void dismissPrerequisitesSnackbar() {
+        prerequisitesSnackbar.dismiss();
     }
 
     @Override
@@ -350,6 +424,56 @@ public class HomeActivity extends TypefaceStyleableActivity {
 
         for (Loadable loadable : loadables) {
             loadable.stopLoading();
+        }
+    }
+
+    private ProximityPreconditions.Callback proximityPreconditionsCallback() {
+        return new ProximityPreconditions.Callback() {
+            @Override
+            public void allChecksPassed() {
+                proximityService.startRadar();
+                dismissPrerequisitesSnackbar();
+            }
+
+            @Override
+            public void permissionDenied() {
+                Timber.i("User denied location permission");
+                showPrerequisitesSnackbar();
+            }
+
+            @Override
+            public void locationProviderDenied() {
+                Timber.i("User denied location provider");
+                showPrerequisitesSnackbar();
+            }
+
+            @Override
+            public void locationProviderFailed(LocationProviderPrecondition.FailureInfo failureInfo) {
+                Timber.i("Location provider check failed. Status: %s", failureInfo);
+                Snackbar.make(pageViews.get(currentSection), R.string.onboarding_error_location_failed, Snackbar.LENGTH_LONG)
+                        .setAction(R.string.onboarding_error_location_failed_action, view -> openLocationSettings())
+                        .show();
+            }
+
+            @Override
+            public void bluetoothDenied() {
+                Timber.i("User denied turning Bluetooth on");
+                showPrerequisitesSnackbar();
+            }
+
+            @Override
+            public void exceptionWhileSatisfying(Throwable throwable) {
+                Timber.e(throwable, "Exception occurred while checking");
+                showPrerequisitesSnackbar();
+            }
+        };
+    }
+
+    private void openLocationSettings() {
+        try {
+            navigator.toLocationSettingsForResult(REQUEST_SETTINGS);
+        } catch (ActivityNotFoundException e) {
+            Timber.e(e, "Unable to open location settings");
         }
     }
 }
