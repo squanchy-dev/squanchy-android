@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 public class ProximityOptInPersister {
 
     private static final String OPT_IN_PREFERENCE_KEY = "opt_in_preference";
-    private static final boolean DEFAULT_OPT_IN = true;
+    private static final boolean DEFAULT_OPT_OUT = false;
 
     private final SharedPreferences preferences;
 
@@ -26,6 +26,6 @@ public class ProximityOptInPersister {
     }
 
     public boolean userOptedIn() {
-        return preferences.getBoolean(OPT_IN_PREFERENCE_KEY, DEFAULT_OPT_IN);
+        return preferences.getBoolean(OPT_IN_PREFERENCE_KEY, DEFAULT_OPT_OUT);
     }
 }

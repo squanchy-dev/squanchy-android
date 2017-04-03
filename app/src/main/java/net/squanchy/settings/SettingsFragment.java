@@ -211,7 +211,7 @@ public class SettingsFragment extends PreferenceFragment {
         DebugPreferences debugPreferences = new DebugPreferences(getActivity());
         if (debugPreferences.contestTestingEnabled()) {
             // We always show the location and contest settings when testing is enabled.
-            enableProximityAndContestPreferences();
+            setProximityAndContestUiEnabled(true);
             return;
         }
 
@@ -223,20 +223,8 @@ public class SettingsFragment extends PreferenceFragment {
     }
 
     private void setProximityAndContestUiEnabled(boolean enabled) {
-        if (enabled) {
-            enableProximityAndContestPreferences();
-        } else {
-            disableProximityAndContestPreferences();
-        }
-    }
-
-    private void enableProximityAndContestPreferences() {
-        proximityOptInPreference.setSelectable(true);
-    }
-
-    private void disableProximityAndContestPreferences() {
-        proximityOptInPreference.setSelectable(false);
-        contestStandingsPreference.setSelectable(false);
+        proximityOptInPreference.setSelectable(enabled);
+        contestStandingsPreference.setSelectable(enabled);
     }
 
     private void onUserChanged(Optional<FirebaseUser> user) {
