@@ -6,15 +6,20 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentActivity;
+import android.view.View;
 import android.widget.ListView;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.firebase.auth.FirebaseUser;
 
 import net.squanchy.BuildConfig;
 import net.squanchy.R;
 import net.squanchy.navigation.Navigator;
-import net.squanchy.onboarding.OnboardingPage;
+import net.squanchy.proximity.preconditions.LocationProviderPrecondition;
 import net.squanchy.proximity.preconditions.ProximityOptInPersister;
+import net.squanchy.proximity.preconditions.ProximityPreconditions;
 import net.squanchy.remoteconfig.RemoteConfig;
 import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.signin.SignInService;
@@ -23,10 +28,9 @@ import net.squanchy.support.lang.Optional;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import timber.log.Timber;
 
 public class SettingsFragment extends PreferenceFragment {
-
-    public static final int REQUEST_TURN_LOCATION_ON = 6429;
 
     private final CompositeDisposable subscriptions = new CompositeDisposable();
 
@@ -34,15 +38,15 @@ public class SettingsFragment extends PreferenceFragment {
     private RemoteConfig remoteConfig;
     private Navigator navigator;
     private ProximityService proximityService;
+    private ProximityPreconditions proximityPreconditions;
     private ProximityOptInPersister proximityOptInPersister;
 
     private PreferenceCategory accountCategory;
     private Preference accountEmailPreference;
     private Preference accountSignInSignOutPreference;
-    private SwitchPreference locationPreferences;
 
     private PreferenceCategory settingsCategory;
-    private Preference proximityOptInPreference;
+    private SwitchPreference proximityOptInPreference;
     private Preference contestStandingsPreference;
 
     @Override
@@ -58,25 +62,27 @@ public class SettingsFragment extends PreferenceFragment {
             removeDebugCategory();
         }
 
-        // TODO setup all the new dependencies
-        SettingsComponent component = SettingsInjector.obtainForFragment(getActivity(), null, null);
+        GoogleApiClient googleApiClient = new GoogleApiClient.Builder(getActivity())
+                .enableAutoManage((FragmentActivity) getActivity(), connectionResult -> onGoogleConnectionFailed())
+                .addApi(LocationServices.API)
+                .build();
+
+        SettingsFragmentComponent component = SettingsInjector.obtainForFragment(getActivity(), googleApiClient, proximityPreconditionsCallback());
         signInService = component.signInService();
         remoteConfig = component.remoteConfig();
         navigator = component.navigator();
         proximityService = component.proximityService();
         proximityOptInPersister = component.proximityOptInPersister();
+        proximityPreconditions = component.proximityPreconditions();
 
         accountCategory = (PreferenceCategory) findPreference(getString(R.string.account_category_key));
         accountEmailPreference = findPreference(getString(R.string.account_email_preference_key));
         accountCategory.removePreference(accountEmailPreference);
         accountSignInSignOutPreference = findPreference(getString(R.string.account_signin_signout_preference_key));
-        locationPreferences = (SwitchPreference) findPreference(getString(R.string.location_preference_key));
-        locationPreferences.setOnPreferenceChangeListener((preference, isEnabling) ->
-                handleLocationPreferenceChange((boolean) isEnabling)
-        );
+        proximityOptInPreference = (SwitchPreference) findPreference(getString(R.string.proximity_opt_in_preference_key));
+        proximityOptInPreference.setOnPreferenceChangeListener((preference, isEnabling) -> handleProximityPreferenceChange((boolean) isEnabling));
 
         settingsCategory = (PreferenceCategory) findPreference(getString(R.string.settings_category_key));
-        proximityOptInPreference = findPreference(getString(R.string.location_preference_key));
         contestStandingsPreference = findPreference(getString(R.string.contest_standings_preference_key));
         contestStandingsPreference.setOnPreferenceClickListener(preference -> {
             navigator.toContest();
@@ -88,6 +94,71 @@ public class SettingsFragment extends PreferenceFragment {
             navigator.toAboutSquanchy();
             return true;
         });
+    }
+
+    private void onGoogleConnectionFailed() {
+        Timber.e("Google Client connection failed");
+        Snackbar.make(getViewOrThrow(), R.string.onboarding_error_google_client_connection, Snackbar.LENGTH_LONG).show();
+    }
+
+    private ProximityPreconditions.Callback proximityPreconditionsCallback() {
+        return new ProximityPreconditions.Callback() {
+            @Override
+            public void allChecksPassed() {
+                enableUi();
+                proximityService.startRadar();
+            }
+
+            @Override
+            public void permissionDenied() {
+                showLocationError(Snackbar.make(getViewOrThrow(), R.string.onboarding_error_permission_denied, Snackbar.LENGTH_LONG));
+            }
+
+            @Override
+            public void locationProviderDenied() {
+                showLocationError(Snackbar.make(getViewOrThrow(), R.string.onboarding_error_location_denied, Snackbar.LENGTH_LONG));
+            }
+
+            @Override
+            public void locationProviderFailed(LocationProviderPrecondition.FailureInfo failureInfo) {
+                Snackbar snackbar = Snackbar.make(getViewOrThrow(), R.string.onboarding_error_location_failed, Snackbar.LENGTH_LONG)
+                        .setAction(R.string.onboarding_error_location_failed_action, view -> proximityPreconditions.navigateToLocationSettings());
+                showLocationError(snackbar);
+            }
+
+            @Override
+            public void bluetoothDenied() {
+                showLocationError(Snackbar.make(getViewOrThrow(), R.string.onboarding_error_bluetooth_denied, Snackbar.LENGTH_LONG));
+            }
+
+            @Override
+            public void exceptionWhileSatisfying(Throwable throwable) {
+                Timber.e(throwable, "Exception occurred while checking");
+                showLocationError(Snackbar.make(getViewOrThrow(), R.string.onboarding_error_bluetooth_denied, Snackbar.LENGTH_LONG));
+            }
+
+            @Override
+            public void recheckAfterActivityResult() {
+                tryOptingInAgain();
+            }
+        };
+    }
+
+    private void showLocationError(Snackbar snackbar) {
+        enableUi();
+        snackbar.show();
+        proximityOptInPreference.setChecked(false);
+    }
+
+    private void tryOptingInAgain() {
+        enableUi();
+        if (proximityOptInPreference.isChecked()) {
+            optInAndEnableProximity();
+        }
+    }
+
+    private void enableUi() {
+        getViewOrThrow().setEnabled(true);
     }
 
     private void displayBuildVersion() {
@@ -107,7 +178,7 @@ public class SettingsFragment extends PreferenceFragment {
     public void onStart() {
         super.onStart();
 
-        locationPreferences.setChecked(proximityOptInPersister.userOptedIn());
+        proximityOptInPreference.setChecked(proximityOptInPersister.userOptedIn());
 
         hideDividers();
 
@@ -121,7 +192,7 @@ public class SettingsFragment extends PreferenceFragment {
     }
 
     private void hideDividers() {
-        ListView list = (ListView) getView().findViewById(android.R.id.list);
+        ListView list = (ListView) getViewOrThrow().findViewById(android.R.id.list);
         list.setDivider(null);
         list.setDividerHeight(0);
     }
@@ -183,7 +254,7 @@ public class SettingsFragment extends PreferenceFragment {
                 preference -> {
                     signInService.signOut()
                             .subscribe(() ->
-                                    Snackbar.make(getView(), R.string.settings_message_signed_out, Snackbar.LENGTH_SHORT).show()
+                                    Snackbar.make(getViewOrThrow(), R.string.settings_message_signed_out, Snackbar.LENGTH_SHORT).show()
                             );
                     return true;
                 }
@@ -202,15 +273,40 @@ public class SettingsFragment extends PreferenceFragment {
         );
     }
 
-    private boolean handleLocationPreferenceChange(boolean isEnabling) {
-        if (isEnabling) {
-            navigator.toOnboardingForResult(OnboardingPage.LOCATION, REQUEST_TURN_LOCATION_ON);
-            return true;
+    private boolean handleProximityPreferenceChange(boolean enableProximity) {
+        if (enableProximity) {
+            optInAndEnableProximity();
         } else {
-            proximityService.stopRadar();
-            proximityOptInPersister.storeUserOptedOut();
-            return true;
+            disableAndOptOutFromProximity();
         }
+        return true;
+    }
+
+    private void optInAndEnableProximity() {
+        proximityOptInPersister.storeUserOptedIn();
+        if (proximityPreconditions.needsActionToSatisfyPreconditions()) {
+            disableUi();
+            proximityPreconditions.startSatisfyingPreconditions();
+        } else {
+            proximityService.startRadar();
+        }
+    }
+
+    private void disableUi() {
+        getViewOrThrow().setEnabled(false);
+    }
+
+    private View getViewOrThrow() {
+        View view = getView();
+        if (view == null) {
+            throw new IllegalStateException("You cannot access the fragment's view when it doesn't exist yet");
+        }
+        return view;
+    }
+
+    private void disableAndOptOutFromProximity() {
+        proximityService.stopRadar();
+        proximityOptInPersister.storeUserOptedOut();
     }
 
     @Override
