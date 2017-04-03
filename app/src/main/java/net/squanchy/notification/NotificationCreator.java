@@ -57,11 +57,15 @@ public class NotificationCreator {
         notificationBuilder
                 .setContentIntent(createPendingIntentForSingleEvent(event.id()))
                 .setContentTitle(event.title())
-                .setContentText(getPlaceName(event))
                 .setColor(getTrackColor(event))
                 .setWhen(event.startTime().toDateTime().getMillis())
                 .setShowWhen(true)
                 .setGroup(GROUP_KEY_NOTIFY_SESSION);
+
+        String placeName = getPlaceName(event);
+        if (!placeName.isEmpty()) {
+            notificationBuilder.setContentText(placeName);
+        }
 
         NotificationCompat.BigTextStyle richNotification = createBigTextRichNotification(notificationBuilder, event);
 
@@ -141,12 +145,13 @@ public class NotificationCreator {
 
     private NotificationCompat.BigTextStyle createBigTextRichNotification(NotificationCompat.Builder notificationBuilder, Event event) {
         StringBuilder bigTextBuilder = new StringBuilder()
-                .append(getSpeakerNamesFrom(event.speakers()))
-                .append('\n');
+                .append(getSpeakerNamesFrom(event.speakers()));
 
         String placeName = getPlaceName(event);
         if (!placeName.isEmpty()) {
-            bigTextBuilder.append(context.getString(R.string.event_notification_starting_in, placeName));
+            bigTextBuilder
+                    .append('\n')
+                    .append(context.getString(R.string.event_notification_starting_in, placeName));
         }
 
         return new NotificationCompat.BigTextStyle(notificationBuilder)
