@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.squanchy.injection.ActivityContextModule;
+import net.squanchy.remoteconfig.RemoteConfig;
 
 import dagger.Module;
 import dagger.Provides;
@@ -22,6 +23,16 @@ public class PreconditionsRegistryModule {
 
     public PreconditionsRegistryModule(GoogleApiClient googleApiClient) {
         this.googleApiClient = googleApiClient;
+    }
+
+    @Provides
+    OptInPrecondition optInPrecondition(ProximityOptInPersister proximityOptInPersister) {
+        return new OptInPrecondition(proximityOptInPersister);
+    }
+
+    @Provides
+    RemoteConfigPrecondition remoteConfigPrecondition(RemoteConfig remoteConfig) {
+        return new RemoteConfigPrecondition(remoteConfig);
     }
 
     @Provides
@@ -45,19 +56,16 @@ public class PreconditionsRegistryModule {
     }
 
     @Provides
-    OptInPrecondition optInPrecondition(ProximityOptInPersister proximityOptInPersister) {
-        return new OptInPrecondition(proximityOptInPersister);
-    }
-
-    @Provides
     List<Precondition> preconditions(
             OptInPrecondition optInPrecondition,
+            RemoteConfigPrecondition remoteConfigPrecondition,
             LocationPermissionPrecondition locationPermissionPrecondition,
             LocationProviderPrecondition locationProviderPrecondition,
             BluetoothPrecondition bluetoothPrecondition
     ) {
         return Arrays.asList(
                 optInPrecondition,
+                remoteConfigPrecondition,
                 locationPermissionPrecondition,
                 locationProviderPrecondition,
                 bluetoothPrecondition

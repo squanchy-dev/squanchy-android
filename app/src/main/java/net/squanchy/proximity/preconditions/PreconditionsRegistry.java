@@ -15,9 +15,9 @@ class PreconditionsRegistry {
 
     boolean anyUnsatisfied() {
         for (Precondition precondition : preconditions) {
-            boolean canCheck = precondition.performsSynchronousSatisfiedCheck();
+            boolean canCheckIfSatisfied = precondition.performsSynchronousSatisfiedCheck();
             boolean preconditionNotSatisfied = !precondition.satisfied();
-            if (canCheck && preconditionNotSatisfied) {
+            if (canCheckIfSatisfied && preconditionNotSatisfied) {
                 return true;
             }
         }
