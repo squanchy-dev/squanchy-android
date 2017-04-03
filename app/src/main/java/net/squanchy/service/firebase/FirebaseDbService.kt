@@ -20,7 +20,6 @@ import net.squanchy.service.firebase.model.FirebaseTrack
 import net.squanchy.service.firebase.model.FirebaseTracks
 import net.squanchy.service.firebase.model.FirebaseUserData
 import net.squanchy.service.firebase.model.FirebaseVenue
-import net.squanchy.support.lang.Optional
 
 class FirebaseDbService(private val database: DatabaseReference) {
 
@@ -54,20 +53,18 @@ class FirebaseDbService(private val database: DatabaseReference) {
 
     fun favorites(userId: String): Observable<FirebaseFavorites> {
         return userData(userId)
-                .map { optionalUserData -> optionalUserData.or(FirebaseUserData()) }
                 .map { (favorites) -> favorites ?: emptyMap() }
                 .map(::FirebaseFavorites)
     }
 
     fun achievements(userId: String): Observable<FirebaseAchievements> {
         return userData(userId)
-                .map { optionalUserData -> optionalUserData.or(FirebaseUserData()) }
                 .map { (_, achievements) -> achievements ?: emptyMap() }
                 .map(::FirebaseAchievements)
     }
 
-    private fun userData(userId: String): Observable<Optional<FirebaseUserData>> {
-        return observeOptionalChild(userDataNode(userId), FirebaseUserData::class.java)
+    private fun userData(userId: String): Observable<FirebaseUserData> {
+        return observeOptionalChild(userDataNode(userId), FirebaseUserData::class.java, lazy { FirebaseUserData() })
     }
 
     fun venueInfo(): Observable<FirebaseVenue> {
@@ -75,14 +72,14 @@ class FirebaseDbService(private val database: DatabaseReference) {
     }
 
     private fun <T> observeChild(path: String, clazz: Class<T>): Observable<T> {
-        return observeChildAndEmit(path, clazz, { value: T -> value })
+        return observeChildAndEmit(path, clazz, { it!! })
     }
 
-    private fun <T> observeOptionalChild(path: String, clazz: Class<T>): Observable<Optional<T>> {
-        return observeChildAndEmit(path, clazz, { Optional.fromNullable(it) })
+    private fun <T> observeOptionalChild(path: String, clazz: Class<T>, default: Lazy<T>): Observable<T> {
+        return observeChildAndEmit(path, clazz, { it ?: default.value })
     }
 
-    private fun <T, V> observeChildAndEmit(path: String, clazz: Class<V>, map: (V) -> T): Observable<T> {
+    private fun <T, V> observeChildAndEmit(path: String, clazz: Class<V>, map: (V?) -> T): Observable<T> {
         return Observable.create { emitter: ObservableEmitter<T> ->
             val listener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
