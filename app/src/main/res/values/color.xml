@@ -4,6 +4,9 @@
   <color name="card_background">@color/white</color>
   <color name="licenses_notice_background">#e0e0e0</color>
   <color name="notification_led_color">@color/accent</color>
+  <color name="venue_info_name">#2e676e</color>
+  <color name="venue_info_address">#38828a</color>
+  <color name="venue_info_label">#38828a</color>
   <color name="contest_progress_background">#26e55b77</color>
 
 </resources>

@@ -271,38 +271,33 @@
 
   <style name="VenueInfo.Label" parent="None">
     <item name="android:gravity">start|center_vertical</item>
-    <item name="android:paddingStart">@dimen/venue_info_horizontal_padding</item>
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.VenueInfo.Label</item>
   </style>
 
   <style name="TextAppearance.Squanchy.VenueInfo.Label" parent="None">
-    <item name="android:textColor">?colorPrimary</item>
+    <item name="android:textColor">@color/venue_info_label</item>
     <item name="android:textSize">@dimen/venue_info_label_text</item>
     <item name="fontPath">?titleTypeface</item>
   </style>
 
-  <style name="VenueInfo.Name.Text" parent="None">
-    <item name="android:paddingStart">@dimen/venue_info_horizontal_padding</item>
-    <item name="android:paddingEnd">@dimen/venue_info_horizontal_padding</item>
+  <style name="VenueInfo.Name" parent="None">
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.VenueInfo.Name</item>
   </style>
 
   <style name="TextAppearance.Squanchy.VenueInfo.Name" parent="None">
-    <item name="android:textColor">?android:textColorPrimary</item>
+    <item name="android:textColor">@color/venue_info_name</item>
     <item name="android:textSize">@dimen/venue_info_name_text</item>
     <item name="fontPath">?titleTypeface</item>
   </style>
 
-  <style name="VenueInfo.Address.Text" parent="None">
+  <style name="VenueInfo.Address" parent="None">
     <item name="android:lineSpacingExtra">@dimen/venue_info_address_line_spacing_extra</item>
     <item name="android:lineSpacingMultiplier">1</item>
-    <item name="android:paddingStart">@dimen/venue_info_horizontal_padding</item>
-    <item name="android:paddingEnd">@dimen/venue_info_horizontal_padding</item>
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.VenueInfo.Address</item>
   </style>
 
   <style name="TextAppearance.Squanchy.VenueInfo.Address" parent="None">
-    <item name="android:textColor">?android:textColorSecondary</item>
+    <item name="android:textColor">@color/venue_info_address</item>
     <item name="android:textSize">@dimen/venue_info_address_text</item>
     <item name="fontPath">?defaultMediumTypeface</item>
   </style>
@@ -310,8 +305,6 @@
   <style name="VenueInfo.Description.Text" parent="None">
     <item name="android:lineSpacingExtra">@dimen/venue_info_description_line_spacing_extra</item>
     <item name="android:lineSpacingMultiplier">1</item>
-    <item name="android:paddingStart">@dimen/venue_info_horizontal_padding</item>
-    <item name="android:paddingEnd">@dimen/venue_info_horizontal_padding</item>
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.VenueInfo.Description</item>
   </style>
 
@@ -476,6 +469,8 @@
 
   <style name="Favorite.Empty.Cta" parent="Button.Colored">
     <item name="android:backgroundTint">?colorPrimary</item>
+    <item name="android:paddingStart">@dimen/favorites_empty_cta_padding_horizontal</item>
+    <item name="android:paddingEnd">@dimen/favorites_empty_cta_padding_horizontal</item>
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.Favorite.Empty.Cta</item>
   </style>
 
