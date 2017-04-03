@@ -23,31 +23,47 @@
 
   </PreferenceCategory>
 
-  <PreferenceCategory android:title="@string/settings_and_help_title">
+  <PreferenceCategory
+    android:key="@string/settings_category_key"
+    android:title="@string/settings_and_help_title"
+    android:orderingFromXml="true">
 
     <SwitchPreference
       android:key="@string/about_to_start_notification_preference_key"
       android:defaultValue="true"
       android:icon="@drawable/ic_notifications"
-      android:title="@string/settings_notifications_title" />
+      android:title="@string/settings_notifications_title"
+      android:order="0"/>
 
     <SwitchPreference
       android:key="@string/location_preference_key"
       android:defaultValue="true"
       android:icon="@drawable/ic_location"
+      android:shouldDisableView="true"
       android:title="@string/settings_location_title"
       android:summaryOn="@string/settings_location_summary_on"
-      android:summaryOff="@string/settings_location_summary_off" />
+      android:summaryOff="@string/settings_location_summary_off"
+      android:order="1" />
+
+    <Preference
+      android:key="@string/contest_standings_preference_key"
+      android:dependency="@string/location_preference_key"
+      android:shouldDisableView="true"
+      android:icon="@drawable/ic_trophy"
+      android:title="@string/settings_contest_standings_title"
+      android:order="2" />
 
     <Preference
       android:key="@string/about_preference_key"
       android:title="@string/about_title"
-      android:icon="@drawable/ic_about" />
+      android:icon="@drawable/ic_about"
+      android:order="3" />
 
     <Preference
       android:key="@string/build_version_preference_key"
       android:selectable="false"
       android:icon="@android:color/transparent"
+      android:order="4"
       tools:title="Version: 1.0.0" />
 
   </PreferenceCategory>

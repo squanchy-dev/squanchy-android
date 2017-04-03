@@ -1,17 +1,18 @@
 package net.squanchy;
 
-import android.app.Activity;
 import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NotificationManagerCompat;
 import android.widget.Button;
+import android.widget.Switch;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import net.squanchy.eventdetails.domain.view.ExperienceLevel;
+import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.notification.NotificationCreator;
 import net.squanchy.notification.NotificationsIntentService;
 import net.squanchy.notification.Notifier;
@@ -19,13 +20,14 @@ import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Place;
 import net.squanchy.schedule.domain.view.Track;
 import net.squanchy.speaker.domain.view.Speaker;
+import net.squanchy.support.debug.DebugPreferences;
 import net.squanchy.support.lang.Optional;
 
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
 
-@SuppressWarnings("checkstyle:magicnumber")
-public class DebugActivity extends Activity {
+@SuppressWarnings("MagicNumber")
+public class DebugActivity extends TypefaceStyleableActivity {
 
     private NotificationCreator notificationCreator;
 
@@ -43,7 +45,22 @@ public class DebugActivity extends Activity {
         Button buttonService = (Button) findViewById(R.id.button_test_service);
         buttonService.setOnClickListener(view -> testService());
 
+        DebugPreferences debugPreferences = new DebugPreferences(this);
+        Switch switchView = (Switch) findViewById(R.id.debug_contest_testing_switch);
+        setupContestTestingSwitch(switchView, debugPreferences);
+
         notificationCreator = new NotificationCreator(this);
+    }
+
+    private void setupContestTestingSwitch(Switch switchView, DebugPreferences debugPreferences) {
+        switchView.setChecked(debugPreferences.contestTestingEnabled());
+        switchView.setOnCheckedChangeListener((view, checked) -> {
+            if (checked) {
+                debugPreferences.enableContestTesting();
+            } else {
+                debugPreferences.disableContestTesting();
+            }
+        });
     }
 
     private void testSingleNotification() {

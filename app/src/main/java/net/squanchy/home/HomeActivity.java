@@ -179,7 +179,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private void handleProximityEvent(ProximityEvent proximityEvent) {
         // TODO highlight speech near the rooms
         if (proximityEvent.action().equals(KEY_CONTEST_STAND)) {
-            navigator.toContest(proximityEvent.subject());
+            navigator.toContestUnlockingAchievement(proximityEvent.subject());
         }
     }
 
