@@ -89,6 +89,7 @@
   <dimen name="speaker_details_bio_line_spacing_extra">4sp</dimen>
 
   <dimen name="venue_info_content_padding_horizontal">16dp</dimen>
+  <dimen name="venue_info_content_padding_bottom">16dp</dimen>
   <dimen name="venue_info_name_margin_top">16dp</dimen>
   <dimen name="venue_info_name_text">20sp</dimen>
   <dimen name="venue_info_address_margin_top">4dp</dimen>

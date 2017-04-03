@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
-  tools:layout_width="match_parent"
-  tools:layout_height="match_parent"
-  tools:parentTag="LinearLayout"
-  tools:orientation="vertical">
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical"
+  tools:showIn="@layout/view_page_venue">
 
   <TextView
     android:id="@+id/venue_name"
@@ -50,4 +50,4 @@
     android:layout_marginEnd="@dimen/venue_info_content_padding_horizontal"
     android:layout_marginBottom="@dimen/venue_info_description_margin_bottom" />
 
-</merge>
+</LinearLayout>
