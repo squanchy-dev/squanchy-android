@@ -114,7 +114,13 @@ public class ModularProximityPreconditions implements ProximityPreconditions {
             continueAfterSucceedingCheck(precondition);
         } else {
             precondition.satisfy()
-                    .subscribe(() -> {
+                    .subscribe(result -> {
+                        if (result == Precondition.SatisfyResult.ABORT) {
+                            callback.permissionDenied();    // TODO proper callback
+                            return;
+                        }
+                        // TODO SUCCESS
+
                         if (canCheckIfSatisfied && precondition.satisfied()) {
                             continueAfterSucceedingCheck(precondition);
                         }

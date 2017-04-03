@@ -7,7 +7,7 @@ import android.content.Intent;
 
 import net.squanchy.support.lang.Optional;
 
-import io.reactivex.Completable;
+import io.reactivex.Single;
 
 class BluetoothPrecondition implements Precondition {
 
@@ -38,11 +38,11 @@ class BluetoothPrecondition implements Precondition {
     }
 
     @Override
-    public Completable satisfy() {
-        return Completable.create(emitter -> {
+    public Single<SatisfyResult> satisfy() {
+        return Single.create(emitter -> {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             activity.startActivityForResult(enableBtIntent, REQUEST_ENABLE_BLUETOOTH);
-            emitter.onComplete();
+            emitter.onSuccess(SatisfyResult.RETRY);
         });
     }
 

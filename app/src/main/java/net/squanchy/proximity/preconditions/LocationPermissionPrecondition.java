@@ -8,7 +8,7 @@ import android.support.v4.content.ContextCompat;
 
 import net.squanchy.support.lang.Optional;
 
-import io.reactivex.Completable;
+import io.reactivex.Single;
 
 class LocationPermissionPrecondition implements Precondition {
 
@@ -38,10 +38,10 @@ class LocationPermissionPrecondition implements Precondition {
     }
 
     @Override
-    public Completable satisfy() {
-        return Completable.create(emitter -> {
+    public Single<SatisfyResult> satisfy() {
+        return Single.create(emitter -> {
             ActivityCompat.requestPermissions(activity, REQUIRED_PERMISSIONS, REQUEST_GRANT_PERMISSIONS);
-            emitter.onComplete();
+            emitter.onSuccess(SatisfyResult.RETRY);
         });
     }
 
@@ -49,5 +49,4 @@ class LocationPermissionPrecondition implements Precondition {
     public Optional<Integer> requestCode() {
         return Optional.of(REQUEST_GRANT_PERMISSIONS);
     }
-
 }

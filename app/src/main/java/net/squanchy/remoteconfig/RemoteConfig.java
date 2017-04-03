@@ -39,7 +39,7 @@ public class RemoteConfig {
 
     private <T> Single<T> getConfigValue(Func0<T> action) {
         return fetchAndActivate(cacheExpiryInSeconds())
-                .andThen((SingleSource<T>) emitter -> action.call());
+                .andThen((SingleSource<T>) emitter -> emitter.onSuccess(action.call()));
     }
 
     public Completable fetchNow() {
@@ -52,6 +52,12 @@ public class RemoteConfig {
                 .addOnCompleteListener(task -> {
                     remoteConfig.activateFetched();
                     emitter.onComplete();
+                })
+                .addOnFailureListener(exception -> {
+                    if (emitter.isDisposed()) {
+                        return;
+                    }
+                    emitter.onError(exception);
                 })
         );
     }

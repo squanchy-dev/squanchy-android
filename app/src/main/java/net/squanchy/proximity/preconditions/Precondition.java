@@ -2,7 +2,7 @@ package net.squanchy.proximity.preconditions;
 
 import net.squanchy.support.lang.Optional;
 
-import io.reactivex.Completable;
+import io.reactivex.Single;
 
 interface Precondition {
 
@@ -17,7 +17,12 @@ interface Precondition {
 
     boolean satisfied();
 
-    Completable satisfy();
+    Single<SatisfyResult> satisfy();
 
     Optional<Integer> requestCode();
+
+    enum SatisfyResult {
+        RETRY,
+        ABORT
+    }
 }

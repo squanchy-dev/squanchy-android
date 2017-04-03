@@ -2,14 +2,14 @@ package net.squanchy.proximity.preconditions;
 
 import net.squanchy.support.lang.Optional;
 
-import io.reactivex.Completable;
+import io.reactivex.Single;
 
 public class OptInPrecondition implements Precondition {
 
-    private final ProximityOptInPersister preferences_persister;
+    private final ProximityOptInPersister preferences;
 
-    OptInPrecondition(ProximityOptInPersister preferences_persister) {
-        this.preferences_persister = preferences_persister;
+    OptInPrecondition(ProximityOptInPersister preferences) {
+        this.preferences = preferences;
     }
 
     @Override
@@ -24,13 +24,12 @@ public class OptInPrecondition implements Precondition {
 
     @Override
     public boolean satisfied() {
-        return preferences_persister.userOptedIn();
+        return preferences.userOptedIn();
     }
 
     @Override
-    public Completable satisfy() {
-        preferences_persister.storeUserOptedIn();
-        return Completable.complete();
+    public Single<SatisfyResult> satisfy() {
+        return Single.just(SatisfyResult.ABORT);
     }
 
     @Override

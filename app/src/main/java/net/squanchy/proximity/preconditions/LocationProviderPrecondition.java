@@ -16,7 +16,7 @@ import com.google.auto.value.AutoValue;
 
 import net.squanchy.support.lang.Optional;
 
-import io.reactivex.Completable;
+import io.reactivex.Single;
 
 public class LocationProviderPrecondition implements Precondition {
 
@@ -51,8 +51,8 @@ public class LocationProviderPrecondition implements Precondition {
     }
 
     @Override
-    public Completable satisfy() {
-        return Completable.create(emitter -> {
+    public Single<SatisfyResult> satisfy() {
+        return Single.create(emitter -> {
             LocationSettingsRequest settingsRequest = createLocationSettingsRequest();
             PendingResult<LocationSettingsResult> result = LocationServices.SettingsApi.checkLocationSettings(googleApiClient, settingsRequest);
 
@@ -63,22 +63,20 @@ public class LocationProviderPrecondition implements Precondition {
                 switch (status.getStatusCode()) {
                     case LocationSettingsStatusCodes.SUCCESS:
                         satisfied = true;
-                        emitter.onComplete();
+                        emitter.onSuccess(SatisfyResult.RETRY);
                         break;
                     case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
                         satisfied = false;
                         try {
                             status.startResolutionForResult(activity, REQUEST_ENABLE_LOCATION_PROVIDER);
-                            emitter.onComplete();
+                            emitter.onSuccess(SatisfyResult.RETRY);
                         } catch (IntentSender.SendIntentException e) {
-                            FailureInfo failure = FailureInfo.from(locationSettingsStates);
-                            emitter.onError(new ProviderPreconditionException(failure, e));
+                            emitter.onSuccess(SatisfyResult.ABORT);
                         }
                         break;
                     case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
                         satisfied = false;
-                        FailureInfo failure = FailureInfo.from(locationSettingsStates);
-                        emitter.onError(new ProviderPreconditionException(failure));
+                        emitter.onSuccess(SatisfyResult.ABORT);
                         break;
                 }
             });

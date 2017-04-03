@@ -4,8 +4,7 @@ import net.squanchy.remoteconfig.RemoteConfig;
 import net.squanchy.support.debug.DebugPreferences;
 import net.squanchy.support.lang.Optional;
 
-import io.reactivex.Completable;
-import io.reactivex.CompletableObserver;
+import io.reactivex.Single;
 
 public class RemoteConfigPrecondition implements Precondition {
 
@@ -39,11 +38,15 @@ public class RemoteConfigPrecondition implements Precondition {
     }
 
     @Override
-    public Completable satisfy() {
+    public Single<SatisfyResult> satisfy() {
         return remoteConfig.proximityServicesEnabled()
-                .flatMapCompletable(enabled -> {
+                .map(enabled -> {
                     satisfied = enabled;
-                    return CompletableObserver::onComplete;
+                    if (enabled) {
+                        return SatisfyResult.RETRY;
+                    } else {
+                        return SatisfyResult.ABORT;
+                    }
                 });
     }
 
