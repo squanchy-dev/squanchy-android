@@ -15,9 +15,10 @@ import net.squanchy.R;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.onboarding.OnboardingPage;
 import net.squanchy.proximity.preconditions.ProximityOptInPersister;
-import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.remoteconfig.RemoteConfig;
+import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.signin.SignInService;
+import net.squanchy.support.debug.DebugPreferences;
 import net.squanchy.support.lang.Optional;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -125,28 +126,43 @@ public class SettingsFragment extends PreferenceFragment {
     }
 
     private void hideProximityAndContestBasedOnRemoteConfig() {
+        DebugPreferences debugPreferences = new DebugPreferences(getActivity());
+        if (debugPreferences.contestTestingEnabled()) {
+            // We always show the location and contest settings when testing is enabled.
+            showProximityAndContestPreferences();
+            return;
+        }
+
         subscriptions.add(
                 remoteConfig.proximityServicesEnabled()
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(this::setProximityAndContestUiStatus)
+                        .subscribe(this::setProximityAndContestUiAvailable)
         );
     }
 
-    private void setProximityAndContestUiStatus(boolean enabled) {
+    private void setProximityAndContestUiAvailable(boolean enabled) {
         if (enabled) {
-            showIfNotAlreadyShown(proximityOptInPreference);
-            showIfNotAlreadyShown(contestStandingsPreference);
-            proximityOptInPreference.setSelectable(true);
+            showProximityAndContestPreferences();
         } else {
-            settingsCategory.removePreference(proximityOptInPreference);
-            settingsCategory.removePreference(contestStandingsPreference);
+            removeProximityAndContestPreferences();
         }
+    }
+
+    private void showProximityAndContestPreferences() {
+        showIfNotAlreadyShown(proximityOptInPreference);
+        showIfNotAlreadyShown(contestStandingsPreference);
+        proximityOptInPreference.setSelectable(true);
     }
 
     private void showIfNotAlreadyShown(Preference preference) {
         if (settingsCategory.findPreference(preference.getKey()) == null) {
             settingsCategory.addPreference(preference);
         }
+    }
+
+    private void removeProximityAndContestPreferences() {
+        settingsCategory.removePreference(proximityOptInPreference);
+        settingsCategory.removePreference(contestStandingsPreference);
     }
 
     private void onUserChanged(Optional<FirebaseUser> user) {
