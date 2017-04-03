@@ -58,7 +58,6 @@ public class HomeActivity extends TypefaceStyleableActivity {
 
     private static final String KEY_CONTEST_STAND = "stand";
     private static final String KEY_ROOM_EVENT = "room";
-    private static final String WHEN_DATE_TIME_FORMAT = "HH:mm";
 
     private static final int REQUEST_SETTINGS = 9375;
     private static final int REQUEST_SIGN_IN_MAY_GOD_HAVE_MERCY_OF_OUR_SOULS = 666;
@@ -225,13 +224,10 @@ public class HomeActivity extends TypefaceStyleableActivity {
     }
 
     private String buildString(Event event) {
-        DateTimeFormatter formatter = DateTimeFormat.forPattern(WHEN_DATE_TIME_FORMAT)
-                .withZone(event.timeZone());
         return String.format(
                 Locale.US,
-                "Room: %s %s \n%s",
+                "Now in %1$s: %2$s",
                 event.place().get().name(),
-                formatter.print(event.startTime().toDateTime()),
                 event.title()
         );
     }
