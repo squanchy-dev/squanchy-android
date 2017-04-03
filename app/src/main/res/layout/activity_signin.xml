@@ -9,13 +9,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
 
-  <FrameLayout
+  <net.squanchy.support.widget.MaxSizeFrameLayout
     android:id="@+id/bottom_sheet"
     style="@style/SignIn.BottomSheet"
-    android:layout_width="@dimen/sign_in_bottom_sheet_width"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clickable="true"
-    android:focusable="true"
+    android:layout_gravity="center_horizontal"
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
     tools:layout_width="match_parent">
 
@@ -63,6 +62,6 @@
       android:visibility="gone"
       tools:visibility="visible" />
 
-  </FrameLayout>
+  </net.squanchy.support.widget.MaxSizeFrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>
