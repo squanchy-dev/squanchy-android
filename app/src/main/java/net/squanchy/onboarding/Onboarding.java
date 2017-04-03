@@ -1,39 +1,40 @@
 package net.squanchy.onboarding;
 
-import net.squanchy.proximity.preconditions.ProximityPreconditions;
-import net.squanchy.support.lang.Optional;
+import net.squanchy.remoteconfig.RemoteConfig;
+
+import io.reactivex.Maybe;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 
 public class Onboarding {
 
     private final OnboardingPersister persister;
-    private final ProximityPreconditions proximityPreconditions;
+    private final RemoteConfig remoteConfig;
 
-    Onboarding(OnboardingPersister persister, ProximityPreconditions proximityPreconditions) {
+    Onboarding(OnboardingPersister persister, RemoteConfig remoteConfig) {
         this.persister = persister;
-        this.proximityPreconditions = proximityPreconditions;
+        this.remoteConfig = remoteConfig;
     }
 
-    public Optional<OnboardingPage> nextPageToShow() {
-        for (OnboardingPage onboardingPage : OnboardingPage.values()) {
-            if (shouldShowNext(onboardingPage)) {
-                return Optional.of(onboardingPage);
-            }
+    public Maybe<OnboardingPage> nextPageToShow() {
+        return Observable.fromArray(OnboardingPage.values())
+                .flatMapMaybe(page -> canShow(page)
+                        .filter(canShow -> canShow)
+                        .map(canShow -> page)
+                )
+                .firstElement();
+    }
+
+    private Single<Boolean> canShow(OnboardingPage page) {
+        if (persister.pageSeen(page)) {
+            return Single.just(false);
         }
-        return Optional.absent();
-    }
 
-    private boolean shouldShowNext(OnboardingPage page) {
-        boolean pageNotSeenYet = !persister.pageSeen(page);
-        boolean needToShowPage = needToShow(page);
-        return pageNotSeenYet && needToShowPage;
-    }
-
-    private boolean needToShow(OnboardingPage page) {
         switch (page) {
             case LOCATION:
-                return proximityPreconditions.isProximityAvailable() && proximityPreconditions.needsActionToSatisfyPreconditions();
+                return remoteConfig.proximityServicesEnabled();
             default:
-                return true;
+                return Single.just(true);
         }
     }
 
