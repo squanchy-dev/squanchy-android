@@ -71,7 +71,7 @@ class FirebaseDbService(private val database: DatabaseReference) {
     }
 
     fun venueInfo(): Observable<FirebaseVenue> {
-        return observeChild(venudInfoNode(), FirebaseVenue::class.java)
+        return observeChild(venueInfoNode(), FirebaseVenue::class.java)
     }
 
     private fun <T> observeChild(path: String, clazz: Class<T>): Observable<T> {
@@ -152,7 +152,7 @@ private fun eventByIdNode(eventId: String) = data("events/events/$eventId")
 private fun placesNode() = data("places")
 private fun tracksNode() = data("tracks")
 private fun trackByIdNode(trackId: String) = data("tracks/$trackId")
-private fun venudInfoNode() = data("venue")
+private fun venueInfoNode() = data("venue")
 private fun userDataNode(userId: String) = data("user/$userId")
 private fun favoriteByIdNode(userId: String, eventId: String) = "${userDataNode(userId)}/favorites/$eventId"
 private fun achievementByIdNode(userId: String, achievementId: String) = "${userDataNode(userId)}/achievements/$achievementId"
