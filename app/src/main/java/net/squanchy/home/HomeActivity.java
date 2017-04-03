@@ -61,6 +61,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
 
     private static final int REQUEST_SETTINGS = 9375;
     private static final int REQUEST_SIGN_IN_MAY_GOD_HAVE_MERCY_OF_OUR_SOULS = 666;
+    private static final String KEY_PROXIMITY_ID = "proximity_id";
 
     private final Map<BottomNavigationSection, View> pageViews = new HashMap<>(4);
     private final List<Loadable> loadables = new ArrayList<>(4);
@@ -105,6 +106,11 @@ public class HomeActivity extends TypefaceStyleableActivity {
         return new HomeActivityDeepLinkCreator(context)
                 .deepLinkTo(BottomNavigationSection.VENUE_INFO)
                 .build();
+    }
+
+    public static Intent createProximityIntent(Context context, String proximityId) {
+        return new Intent(context, HomeActivity.class)
+                .putExtra(KEY_PROXIMITY_ID, proximityId);
     }
 
     @Override
@@ -164,6 +170,8 @@ public class HomeActivity extends TypefaceStyleableActivity {
         super.onNewIntent(intent);
 
         selectPageFrom(intent, Optional.absent());
+
+        trackProximityEnagement(intent);
     }
 
     private void selectPageFrom(Intent intent, Optional<Bundle> savedState) {
@@ -195,6 +203,13 @@ public class HomeActivity extends TypefaceStyleableActivity {
             case KEY_ROOM_EVENT:
                 showCurrentEvent(proximityEvent);
                 break;
+        }
+    }
+
+    private void trackProximityEnagement(Intent intent) {
+        if (intent.hasExtra(KEY_PROXIMITY_ID)){
+            String proximityId = intent.getStringExtra(KEY_PROXIMITY_ID);
+            analytics.trackProximityIdEngaged(proximityId);
         }
     }
 
