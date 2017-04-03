@@ -47,6 +47,7 @@
   <dimen name="favorites_empty_blurb_margin_bottom">24dp</dimen>
   <dimen name="favorites_empty_blurb_text">16sp</dimen>
   <dimen name="favorites_empty_cta_height">56dp</dimen>
+  <dimen name="favorites_empty_cta_padding_horizontal">24dp</dimen>
 
   <dimen name="search_title_margin">16dp</dimen>
   <dimen name="search_card_item_padding">8dp</dimen>
