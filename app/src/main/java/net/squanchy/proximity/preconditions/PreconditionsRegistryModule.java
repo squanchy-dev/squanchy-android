@@ -10,6 +10,7 @@ import java.util.List;
 
 import net.squanchy.injection.ActivityContextModule;
 import net.squanchy.remoteconfig.RemoteConfig;
+import net.squanchy.support.debug.DebugPreferences;
 
 import dagger.Module;
 import dagger.Provides;
@@ -31,8 +32,13 @@ public class PreconditionsRegistryModule {
     }
 
     @Provides
-    RemoteConfigPrecondition remoteConfigPrecondition(RemoteConfig remoteConfig) {
-        return new RemoteConfigPrecondition(remoteConfig);
+    DebugPreferences debugPreferences(Activity activity) {
+        return new DebugPreferences(activity);
+    }
+
+    @Provides
+    RemoteConfigPrecondition remoteConfigPrecondition(RemoteConfig remoteConfig, DebugPreferences debugPreferences) {
+        return new RemoteConfigPrecondition(remoteConfig, debugPreferences);
     }
 
     @Provides
