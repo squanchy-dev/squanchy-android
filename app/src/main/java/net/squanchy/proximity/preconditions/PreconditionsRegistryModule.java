@@ -9,15 +9,14 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.squanchy.injection.ActivityContextModule;
+import net.squanchy.proximity.BluetoothModule;
 import net.squanchy.remoteconfig.RemoteConfig;
 import net.squanchy.support.debug.DebugPreferences;
 
 import dagger.Module;
 import dagger.Provides;
 
-import static android.content.Context.BLUETOOTH_SERVICE;
-
-@Module(includes = {ActivityContextModule.class, OptInPreferencePersisterModule.class})
+@Module(includes = {ActivityContextModule.class, OptInPreferencePersisterModule.class, BluetoothModule.class})
 public class PreconditionsRegistryModule {
 
     private final GoogleApiClient googleApiClient;
@@ -51,11 +50,6 @@ public class PreconditionsRegistryModule {
     @Provides
     LocationProviderPrecondition locationProviderPrecondition() {
         return new LocationProviderPrecondition(taskLauncher, googleApiClient);
-    }
-
-    @Provides
-    BluetoothManager bluetoothManager(Activity activity) {
-        return (BluetoothManager) activity.getSystemService(BLUETOOTH_SERVICE);
     }
 
     @Provides

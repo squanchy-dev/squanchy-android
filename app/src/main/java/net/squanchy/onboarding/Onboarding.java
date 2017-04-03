@@ -1,6 +1,6 @@
 package net.squanchy.onboarding;
 
-import net.squanchy.remoteconfig.RemoteConfig;
+import net.squanchy.proximity.ProximityFeature;
 
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
@@ -9,11 +9,11 @@ import io.reactivex.Single;
 public class Onboarding {
 
     private final OnboardingPersister persister;
-    private final RemoteConfig remoteConfig;
+    private final ProximityFeature proximityFeature;
 
-    Onboarding(OnboardingPersister persister, RemoteConfig remoteConfig) {
+    Onboarding(OnboardingPersister persister, ProximityFeature proximityFeature) {
         this.persister = persister;
-        this.remoteConfig = remoteConfig;
+        this.proximityFeature = proximityFeature;
     }
 
     public Maybe<OnboardingPage> nextPageToShow() {
@@ -32,7 +32,7 @@ public class Onboarding {
 
         switch (page) {
             case LOCATION:
-                return remoteConfig.proximityServicesEnabled();
+                return proximityFeature.enabled();
             default:
                 return Single.just(true);
         }
