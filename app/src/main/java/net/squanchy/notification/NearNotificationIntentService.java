@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.squanchy.analytics.Analytics;
+import net.squanchy.proximity.ProximityEvent;
 
 import it.near.sdk.utils.NearItIntentConstants;
 
@@ -29,7 +30,7 @@ public class NearNotificationIntentService extends NotificationsIntentService {
         }
         String proximityId = intent.getStringExtra(NearItIntentConstants.RECIPE_ID);
         String notificationText = intent.getStringExtra(NearItIntentConstants.NOTIF_BODY);
-        analytics.trackProximityIdShown(proximityId);
+        analytics.trackProximityEventShown(ProximityEvent.create(proximityId));
 
         List<Notification> notifications = new ArrayList<>();
         notifications.add(

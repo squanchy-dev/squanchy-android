@@ -209,7 +209,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private void trackProximityEnagement(Intent intent) {
         if (intent.hasExtra(KEY_PROXIMITY_ID)){
             String proximityId = intent.getStringExtra(KEY_PROXIMITY_ID);
-            analytics.trackProximityIdEngaged(proximityId);
+            analytics.trackProximityEventEngaged(ProximityEvent.create(proximityId));
         }
     }
 
