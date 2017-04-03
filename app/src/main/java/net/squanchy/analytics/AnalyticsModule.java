@@ -5,10 +5,14 @@ import android.app.Application;
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import net.squanchy.proximity.ProximityEvent;
+import net.squanchy.proximity.ProximityProvider;
+import net.squanchy.service.proximity.injection.ProximityModule;
+
 import dagger.Module;
 import dagger.Provides;
 
-@Module
+@Module(includes = ProximityModule.class)
 public class AnalyticsModule {
 
     private final Application application;
@@ -28,7 +32,12 @@ public class AnalyticsModule {
     }
 
     @Provides
-    Analytics analytics(FirebaseAnalytics firebaseAnalytics, Crashlytics crashlytics) {
-        return new Analytics(firebaseAnalytics, crashlytics);
+    ProximityAnalytics proximityAnalytics(Application application, ProximityProvider proximityProvider) {
+        return new ProximityAnalytics(application, proximityProvider);
+    }
+
+    @Provides
+    Analytics analytics(FirebaseAnalytics firebaseAnalytics, Crashlytics crashlytics, ProximityAnalytics proximityAnalitics) {
+        return new Analytics(firebaseAnalytics, crashlytics, proximityAnalitics);
     }
 }
