@@ -4,11 +4,11 @@ import android.content.SharedPreferences;
 
 import java.util.Locale;
 
-class OnboardingPersister {
+public class OnboardingPersister {
 
     private final SharedPreferences preferences;
 
-    OnboardingPersister(SharedPreferences preferences) {
+    public OnboardingPersister(SharedPreferences preferences) {
         this.preferences = preferences;
     }
 

@@ -7,6 +7,8 @@
   <string name="debug_activity_button_service">Test service</string>
   <string name="debug_test_notifications">Test notifications</string>
   <string name="debug_test_contest">Test contest</string>
+  <string name="debug_reset_onboarding">Reset onboarding</string>
+  <string name="debug_reset_onboarding_button">DEWWEEETTT</string>
   <string name="debug_add_achievement">Add achievement</string>
 
 </resources>
