@@ -81,7 +81,7 @@ public class NotificationCreator {
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(context)
                         .setContentTitle(getApplicationName(context))
-                        .setSmallIcon(android.R.color.transparent)
+                        .setSmallIcon(R.drawable.ic_place_white_24dp)
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(text))
                         .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.ic_notificationdroid));
