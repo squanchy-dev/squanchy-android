@@ -22,6 +22,8 @@ import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Place;
 import net.squanchy.speaker.domain.view.Speaker;
 
+import static net.squanchy.support.lang.Lists.map;
+
 public class NotificationCreator {
 
     private static final String GROUP_KEY_NOTIFY_SESSION = "group_key_notify_session";
@@ -160,7 +162,7 @@ public class NotificationCreator {
     }
 
     private String getSpeakerNamesFrom(List<Speaker> speakers) {
-        String speakerNames = TextUtils.join(SPEAKER_NAMES_SEPARATOR, speakers);
+        String speakerNames = TextUtils.join(", ", map(speakers, Speaker::name));
         return context.getString(R.string.event_notification_starting_by, speakerNames);
     }
 
