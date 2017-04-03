@@ -31,6 +31,7 @@ ext {
                     nearit           : 'it.near.sdk.core:nearitsdk:2.1.7',
                     retrolambda      : 'net.orfjackal.retrolambda:retrolambda:2.5.0',
                     rx               : 'io.reactivex.rxjava2:rxjava:2.0.5',
+                    rxKotlin         : 'io.reactivex.rxjava2:rxkotlin:2.0.0',
                     rxAndroid        : 'io.reactivex.rxjava2:rxandroid:2.0.1',
                     supportAppCompat : "com.android.support:appcompat-v7:${supportLibVersion}",
                     supportDesign    : "com.android.support:design:${supportLibVersion}",

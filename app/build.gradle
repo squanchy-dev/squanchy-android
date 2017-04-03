@@ -123,6 +123,7 @@ dependencies {
     compile libraries.app.jodaTimeAndroid
     compile libraries.app.nearit
     compile libraries.app.rx
+    compile libraries.app.rxKotlin
     compile libraries.app.rxAndroid
     compile libraries.app.supportAppCompat
     compile libraries.app.supportDesign
