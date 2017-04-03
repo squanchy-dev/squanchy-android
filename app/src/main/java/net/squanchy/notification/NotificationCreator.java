@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -72,6 +73,25 @@ public class NotificationCreator {
         NotificationCompat.BigTextStyle richNotification = createBigTextRichNotification(notificationBuilder, event);
 
         return richNotification.build();
+    }
+
+    public Notification createFromProximity(String proximityId, String text) {
+        Resources resources = context.getResources();
+
+        NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(context)
+                        .setContentTitle(getApplicationName(context))
+                        .setSmallIcon(android.R.color.transparent)
+                        .setStyle(new NotificationCompat.BigTextStyle()
+                                .bigText(text))
+                        .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.ic_notificationdroid));
+        return builder.build();
+    }
+
+    private String getApplicationName(Context context) {
+        ApplicationInfo applicationInfo = context.getApplicationInfo();
+        int stringId = applicationInfo.labelRes;
+        return stringId == 0 ? applicationInfo.nonLocalizedLabel.toString() : context.getString(stringId);
     }
 
     private Notification createSummaryNotification(List<Event> events) {
@@ -186,6 +206,12 @@ public class NotificationCreator {
         }
 
         return richNotification;
+    }
+
+    private NotificationCompat.BigTextStyle createBigTextStyleNotification(NotificationCompat.Builder notificationBuilder, String notificationText) {
+        NotificationCompat.BigTextStyle bigNotification = new NotificationCompat.BigTextStyle(notificationBuilder)
+                .setBigContentTitle(notificationText);
+        return bigNotification;
     }
 
     private String createSummaryTitle(int talksCount) {
