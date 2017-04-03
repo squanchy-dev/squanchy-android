@@ -9,6 +9,7 @@
   <string name="debug_test_contest">Test contest</string>
   <string name="debug_reset_onboarding">Reset onboarding</string>
   <string name="debug_reset_onboarding_button">DEWWEEETTT</string>
+  <string name="debug_activity_button_geofence_notification">Test geofence notification</string>
   <string name="debug_add_achievement">Add achievement</string>
 
 </resources>

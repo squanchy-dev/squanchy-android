@@ -54,6 +54,15 @@
         android:text="@string/debug_activity_button_service"
         android:textAppearance="@style/TextAppearance.Squanchy.Card.Title" />
 
+      <Button
+        android:id="@+id/button_test_geofence_service"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/debug_activity_button_geofence_notification"
+        android:textAppearance="@style/TextAppearance.Squanchy.Card.Title"/>
+
     </LinearLayout>
 
     <LinearLayout
