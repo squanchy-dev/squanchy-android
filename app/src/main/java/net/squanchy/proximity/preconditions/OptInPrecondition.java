@@ -8,13 +8,18 @@ public class OptInPrecondition implements Precondition {
 
     private final ProximityOptInPersister preferences_persister;
 
-    public OptInPrecondition(ProximityOptInPersister preferences_persister) {
+    OptInPrecondition(ProximityOptInPersister preferences_persister) {
         this.preferences_persister = preferences_persister;
     }
 
     @Override
     public boolean available() {
-        return true;
+        return ALWAYS_AVAILABLE;
+    }
+
+    @Override
+    public boolean performsSynchronousSatisfiedCheck() {
+        return CAN_PERFORM_SYNCHRONOUS_CHECK;
     }
 
     @Override

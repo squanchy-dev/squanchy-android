@@ -37,7 +37,12 @@ public class LocationProviderPrecondition implements Precondition {
 
     @Override
     public boolean available() {
-        return true;
+        return ALWAYS_AVAILABLE;
+    }
+
+    @Override
+    public boolean performsSynchronousSatisfiedCheck() {
+        return CANNOT_PERFORM_SYNCHRONOUS_CHECK;
     }
 
     @Override
