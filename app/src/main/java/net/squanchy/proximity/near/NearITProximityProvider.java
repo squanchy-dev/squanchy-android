@@ -59,9 +59,9 @@ public class NearITProximityProvider implements ProximityProvider {
     }
 
     @Override
-    public void trackProximityEvent(Context context, ProximityEvent event, ProximityTrackingType trackingType){
+    public void trackProximityEvent(Context context, String proximityId, ProximityTrackingType trackingType){
         try {
-            RecipesManager.sendTracking(context, event.id(), trackingType.rawTrackingType());
+            RecipesManager.sendTracking(context, proximityId, trackingType.rawTrackingType());
         } catch (JSONException e) {
             Timber.d("Proximity tracking could not be sent to NearIT");
         }
