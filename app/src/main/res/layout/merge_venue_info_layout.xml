@@ -8,40 +8,46 @@
 
   <TextView
     android:id="@+id/venue_name"
-    style="@style/VenueInfo.Name.Text"
+    style="@style/VenueInfo.Name"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/venue_info_padding_top" />
+    android:layout_marginStart="@dimen/venue_info_content_padding_horizontal"
+    android:layout_marginTop="@dimen/venue_info_name_margin_top"
+    android:layout_marginEnd="@dimen/venue_info_content_padding_horizontal" />
 
   <TextView
     android:id="@+id/venue_address"
-    style="@style/VenueInfo.Address.Text"
+    style="@style/VenueInfo.Address"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
-
-  <TextView
-    style="@style/VenueInfo.Label"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/venue_info_label_height"
-    android:text="@string/venue_about_label" />
-
-  <TextView
-    android:id="@+id/venue_description"
-    style="@style/VenueInfo.Description.Text"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
-
-  <TextView
-    style="@style/VenueInfo.Label"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/venue_info_label_height"
-    android:text="@string/venue_location_label" />
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/venue_info_content_padding_horizontal"
+    android:layout_marginTop="@dimen/venue_info_address_margin_top"
+    android:layout_marginEnd="@dimen/venue_info_content_padding_horizontal" />
 
   <net.squanchy.support.widget.ImageViewWithForeground
     android:id="@+id/venue_map"
     style="@style/VenueInfo.Description.Map"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/venue_info_map_margin_top"
+    android:layout_marginBottom="@dimen/venue_info_map_margin_bottom"
     android:contentDescription="@string/venue_map_content_description" />
+
+  <TextView
+    style="@style/VenueInfo.Label"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/venue_info_label_height"
+    android:layout_marginStart="@dimen/venue_info_content_padding_horizontal"
+    android:layout_marginEnd="@dimen/venue_info_content_padding_horizontal"
+    android:text="@string/venue_about_label" />
+
+  <TextView
+    android:id="@+id/venue_description"
+    style="@style/VenueInfo.Description.Text"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/venue_info_content_padding_horizontal"
+    android:layout_marginEnd="@dimen/venue_info_content_padding_horizontal"
+    android:layout_marginBottom="@dimen/venue_info_description_margin_bottom" />
 
 </merge>
