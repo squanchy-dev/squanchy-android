@@ -33,8 +33,13 @@ public class MaxSizeFrameLayout extends FrameLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MaxSizeFrameLayout, defStyleAttr, defStyleRes);
-        setMaxWidth(a.getDimensionPixelSize(R.styleable.MaxSizeFrameLayout_android_maxWidth, NO_CONSTRAINTS));
-        setMaxHeight(a.getDimensionPixelSize(R.styleable.MaxSizeFrameLayout_android_maxHeight, NO_CONSTRAINTS));
+
+        try {
+            setMaxWidth(a.getDimensionPixelSize(R.styleable.MaxSizeFrameLayout_android_maxWidth, NO_CONSTRAINTS));
+            setMaxHeight(a.getDimensionPixelSize(R.styleable.MaxSizeFrameLayout_android_maxHeight, NO_CONSTRAINTS));
+        } finally {
+            a.recycle();
+        }
     }
 
     @Px
