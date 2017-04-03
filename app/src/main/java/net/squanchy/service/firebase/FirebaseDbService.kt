@@ -144,15 +144,14 @@ class FirebaseDbService(private val database: DatabaseReference) {
     }
 }
 
-private fun data(node: String) = "data/$node"
-private fun daysNode() = data("days")
-private fun speakersNode() = data("speakers")
-private fun eventsNode() = data("events")
-private fun eventByIdNode(eventId: String) = data("events/events/$eventId")
-private fun placesNode() = data("places")
-private fun tracksNode() = data("tracks")
-private fun trackByIdNode(trackId: String) = data("tracks/$trackId")
-private fun venueInfoNode() = data("venue")
+private fun daysNode() = "data/days"
+private fun speakersNode() = "data/speakers"
+private fun eventsNode() = "data/events"
+private fun eventByIdNode(eventId: String) = "data/events/events/$eventId"
+private fun placesNode() = "data/places"
+private fun tracksNode() = "data/tracks"
+private fun trackByIdNode(trackId: String) = "data/tracks/$trackId"
+private fun venueInfoNode() = "data/venue"
 private fun userDataNode(userId: String) = "user/$userId"
 private fun favoriteByIdNode(userId: String, eventId: String) = "${userDataNode(userId)}/favorites/$eventId"
 private fun achievementByIdNode(userId: String, achievementId: String) = "${userDataNode(userId)}/achievements/$achievementId"
