@@ -39,6 +39,7 @@ import net.squanchy.support.widget.InterceptingBottomNavigationView;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import io.reactivex.Maybe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -147,26 +148,38 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private void handleProximityEvent(ProximityEvent proximityEvent) {
         switch (proximityEvent.action()) {
             case KEY_CONTEST_STAND:
+                analytics.trackProximityEventShown(proximityEvent);
                 navigator.toContest(proximityEvent.subject());
                 break;
             case KEY_ROOM_EVENT:
-                showCurrentEvent(proximityEvent.subject());
+                showCurrentEvent(proximityEvent);
                 break;
         }
     }
 
-    private void showCurrentEvent(String placeId) {
-        currentEventService.eventIn(placeId)
-                .map(this::toSnackbar)
+    private void showCurrentEvent(ProximityEvent proximityEvent) {
+        currentEventService.eventIn(proximityEvent.subject())
+                .flatMap(event -> trackShownMessage(event, proximityEvent))
+                .map(event -> toSnackbar(event, proximityEvent))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(Snackbar::show);
     }
 
-    public Snackbar toSnackbar(Event event) {
+    private Maybe<Event> trackShownMessage(Event event, ProximityEvent proximityEvent) {
+        analytics.trackProximityEventShown(proximityEvent);
+        return Maybe.just(event);
+    }
+
+    public Snackbar toSnackbar(Event event, ProximityEvent proximityEvent) {
         Snackbar snackbar = Snackbar.make(pageViews.get(currentSection), buildString(event), BaseTransientBottomBar.LENGTH_INDEFINITE);
-        snackbar.setAction(R.string.event_details, view -> navigator.toEventDetails(event.id()));
+        snackbar.setAction(R.string.event_details, view -> tapOnSnackbarAction(event, proximityEvent));
         snackbar.setActionTextColor(getResources().getColor(R.color.text_inverse));
         return snackbar;
+    }
+
+    private void tapOnSnackbarAction(Event event, ProximityEvent proximityEvent) {
+        analytics.trackProximityEventEngaged(proximityEvent);
+        navigator.toEventDetails(event.id());
     }
 
     private String buildString(Event event) {
