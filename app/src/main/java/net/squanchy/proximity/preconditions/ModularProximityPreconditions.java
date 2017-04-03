@@ -89,12 +89,13 @@ public class ModularProximityPreconditions implements ProximityPreconditions {
             return;
         }
 
-        if (precondition.satisfied()) {
+        boolean canCheckIfSatisfied = precondition.performsSynchronousSatisfiedCheck();
+        if (canCheckIfSatisfied && precondition.satisfied()) {
             continueAfterSucceedingCheck(precondition);
         } else {
             precondition.satisfy()
                     .subscribe(() -> {
-                        if (precondition.satisfied()) {
+                        if (canCheckIfSatisfied && precondition.satisfied()) {
                             continueAfterSucceedingCheck(precondition);
                         }
                         // Waiting on some external resource (e.g., onActivityResult) that will
