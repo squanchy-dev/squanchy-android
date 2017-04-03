@@ -22,11 +22,6 @@ data class Event(
         val description: Optional<String>,
         val timeZone: DateTimeZone
 ) {
-
-    fun speakersNames(): String {
-        return speakers.joinToString(separator = ", ")
-    }
-
     enum class Type constructor(private val rawType: String) {
         REGISTRATION("registration"),
         TALK("talk"),

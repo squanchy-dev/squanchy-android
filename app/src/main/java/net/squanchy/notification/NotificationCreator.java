@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,9 @@ import net.squanchy.eventdetails.EventDetailsActivity;
 import net.squanchy.home.HomeActivity;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Place;
+import net.squanchy.speaker.domain.view.Speaker;
+
+import static net.squanchy.support.lang.Lists.map;
 
 public class NotificationCreator {
 
@@ -38,9 +42,11 @@ public class NotificationCreator {
 
     public List<Notification> createFrom(List<Event> events) {
         List<Notification> notifications = new ArrayList<>();
+
         for (Event event : events) {
             notifications.add(createFrom(event));
         }
+
         if (events.size() > 1) {
             notifications.add(createSummaryNotification(events));
         }
@@ -52,11 +58,15 @@ public class NotificationCreator {
         notificationBuilder
                 .setContentIntent(createPendingIntentForSingleEvent(event.getId()))
                 .setContentTitle(event.getTitle())
-                .setContentText(getPlaceName(event))
                 .setColor(getTrackColor(event))
                 .setWhen(event.getStartTime().toDateTime().getMillis())
                 .setShowWhen(true)
                 .setGroup(GROUP_KEY_NOTIFY_SESSION);
+
+        String placeName = getPlaceName(event);
+        if (!placeName.isEmpty()) {
+            notificationBuilder.setContentText(placeName);
+        }
 
         NotificationCompat.BigTextStyle richNotification = createBigTextRichNotification(notificationBuilder, event);
 
@@ -117,8 +127,7 @@ public class NotificationCreator {
     }
 
     private int getTrackColor(Event event) {
-        return event
-                .getTrack()
+        return event.getTrack()
                 .map(track -> Color.parseColor(track.getAccentColor().or(ARGB_TRANSPARENT)))
                 .or(Color.TRANSPARENT);
     }
@@ -129,32 +138,38 @@ public class NotificationCreator {
     }
 
     private TaskStackBuilder createBaseTaskStackBuilder() {
-        Intent baseIntent = new Intent(context, HomeActivity.class);
-        baseIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        Intent homescreenIntent = new Intent(context, HomeActivity.class);
+        homescreenIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         return TaskStackBuilder.create(context)
-                .addNextIntent(baseIntent);
+                .addNextIntent(homescreenIntent);
     }
 
     private NotificationCompat.BigTextStyle createBigTextRichNotification(NotificationCompat.Builder notificationBuilder, Event event) {
         StringBuilder bigTextBuilder = new StringBuilder()
-                .append(getDisplayedSpeakers(event));
+                .append(getSpeakerNamesFrom(event.getSpeakers()));
+
         String placeName = getPlaceName(event);
         if (!placeName.isEmpty()) {
-            bigTextBuilder.append(context.getString(R.string.event_notification_starting_in, placeName));
+            bigTextBuilder
+                    .append('\n')
+                    .append(context.getString(R.string.event_notification_starting_in, placeName));
         }
+
         return new NotificationCompat.BigTextStyle(notificationBuilder)
                 .setBigContentTitle(event.getTitle())
                 .bigText(bigTextBuilder.toString());
     }
 
-    private String getDisplayedSpeakers(Event event) {
-        return context.getString(R.string.event_notification_starting_by, event.speakersNames()) + "\n";
+    private String getSpeakerNamesFrom(List<Speaker> speakers) {
+        String speakerNames = TextUtils.join(", ", map(speakers, Speaker::getName));
+        return context.getString(R.string.event_notification_starting_by, speakerNames);
     }
 
     private NotificationCompat.InboxStyle createInboxStyleRichNotification(NotificationCompat.Builder notificationBuilder, List<Event> events) {
         String bigContentTitle = createSummaryTitle(events.size());
         NotificationCompat.InboxStyle richNotification = new NotificationCompat.InboxStyle(notificationBuilder)
                 .setBigContentTitle(bigContentTitle);
+
         for (Event event : events) {
             if (event.getPlace().isPresent()) {
                 richNotification.addLine(

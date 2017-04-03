@@ -191,7 +191,7 @@
   </style>
 
   <style name="EventDetails.Fab" parent="None">
-    <item name="backgroundTint">?colorPrimary</item>
+    <item name="backgroundTint">@color/selector_color_primary</item>
     <item name="android:clickable">true</item>
     <item name="android:foreground">@drawable/white_circle_bound_touch_feedback</item>
     <item name="android:src">@drawable/ic_favorite_empty</item>
@@ -271,38 +271,33 @@
 
   <style name="VenueInfo.Label" parent="None">
     <item name="android:gravity">start|center_vertical</item>
-    <item name="android:paddingStart">@dimen/venue_info_horizontal_padding</item>
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.VenueInfo.Label</item>
   </style>
 
   <style name="TextAppearance.Squanchy.VenueInfo.Label" parent="None">
-    <item name="android:textColor">?colorPrimary</item>
+    <item name="android:textColor">@color/venue_info_label</item>
     <item name="android:textSize">@dimen/venue_info_label_text</item>
     <item name="fontPath">?titleTypeface</item>
   </style>
 
-  <style name="VenueInfo.Name.Text" parent="None">
-    <item name="android:paddingStart">@dimen/venue_info_horizontal_padding</item>
-    <item name="android:paddingEnd">@dimen/venue_info_horizontal_padding</item>
+  <style name="VenueInfo.Name" parent="None">
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.VenueInfo.Name</item>
   </style>
 
   <style name="TextAppearance.Squanchy.VenueInfo.Name" parent="None">
-    <item name="android:textColor">?android:textColorPrimary</item>
+    <item name="android:textColor">@color/venue_info_name</item>
     <item name="android:textSize">@dimen/venue_info_name_text</item>
     <item name="fontPath">?titleTypeface</item>
   </style>
 
-  <style name="VenueInfo.Address.Text" parent="None">
+  <style name="VenueInfo.Address" parent="None">
     <item name="android:lineSpacingExtra">@dimen/venue_info_address_line_spacing_extra</item>
     <item name="android:lineSpacingMultiplier">1</item>
-    <item name="android:paddingStart">@dimen/venue_info_horizontal_padding</item>
-    <item name="android:paddingEnd">@dimen/venue_info_horizontal_padding</item>
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.VenueInfo.Address</item>
   </style>
 
   <style name="TextAppearance.Squanchy.VenueInfo.Address" parent="None">
-    <item name="android:textColor">?android:textColorSecondary</item>
+    <item name="android:textColor">@color/venue_info_address</item>
     <item name="android:textSize">@dimen/venue_info_address_text</item>
     <item name="fontPath">?defaultMediumTypeface</item>
   </style>
@@ -310,8 +305,6 @@
   <style name="VenueInfo.Description.Text" parent="None">
     <item name="android:lineSpacingExtra">@dimen/venue_info_description_line_spacing_extra</item>
     <item name="android:lineSpacingMultiplier">1</item>
-    <item name="android:paddingStart">@dimen/venue_info_horizontal_padding</item>
-    <item name="android:paddingEnd">@dimen/venue_info_horizontal_padding</item>
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.VenueInfo.Description</item>
   </style>
 
@@ -476,6 +469,8 @@
 
   <style name="Favorite.Empty.Cta" parent="Button.Colored">
     <item name="android:backgroundTint">?colorPrimary</item>
+    <item name="android:paddingStart">@dimen/favorites_empty_cta_padding_horizontal</item>
+    <item name="android:paddingEnd">@dimen/favorites_empty_cta_padding_horizontal</item>
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.Favorite.Empty.Cta</item>
   </style>
 
@@ -483,7 +478,11 @@
 
   <style name="Favorite.Empty.Fab" parent="EventDetails.Fab" />
 
-  <style name="SignIn.BottomSheet" parent="Widget.Design.BottomSheet.Modal" />
+  <style name="SignIn.BottomSheet" parent="Widget.Design.BottomSheet.Modal">
+    <item name="android:maxWidth">@dimen/sign_in_bottom_sheet_max_width</item>
+    <item name="android:clickable">true</item>
+    <item name="android:focusable">true</item>
+  </style>
 
   <style name="SignIn.BottomSheet.Label" parent="None">
     <item name="android:gravity">start|center_vertical</item>
@@ -539,5 +538,61 @@
   </style>
 
   <style name="TextAppearance.Squanchy.FirstStartWithNoNetwork.Cancel" parent="TextAppearance.Squanchy.About.Button" />
+
+  <style name="Contest.Title" parent="None">
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.Contest.Title</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.Contest.Title" parent="None">
+    <item name="android:textColor">?colorPrimary</item>
+    <item name="android:textSize">@dimen/contest_title_text</item>
+    <item name="fontPath">?titleTypeface</item>
+  </style>
+
+  <style name="Contest.Blurb" parent="None">
+    <item name="android:gravity">center</item>
+    <item name="android:lineSpacingExtra">@dimen/contest_blurb_line_spacing_extra</item>
+    <item name="android:lineSpacingMultiplier">1</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.Contest.Blurb</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.Contest.Blurb" parent="None">
+    <item name="android:textColor">?android:textColorPrimary</item>
+    <item name="android:textSize">@dimen/contest_blurb_text</item>
+    <item name="fontPath">?defaultRegularTypeface</item>
+  </style>
+
+  <style name="Contest.Container" parent="None">
+    <item name="android:gravity">center_horizontal|top</item>
+    <item name="android:orientation">vertical</item>
+    <item name="android:paddingStart">@dimen/contest_content_padding_horizontal</item>
+    <item name="android:paddingTop">@dimen/contest_content_padding_vertical</item>
+    <item name="android:paddingEnd">@dimen/contest_content_padding_horizontal</item>
+    <item name="android:paddingBottom">@dimen/contest_content_padding_vertical</item>
+  </style>
+
+  <style name="Contest.Icon" parent="None">
+    <item name="android:scaleType">fitCenter</item>
+  </style>
+
+  <style name="Contest.Progress" parent="Widget.AppCompat.ProgressBar.Horizontal">
+    <item name="android:progressDrawable">@drawable/contest_progress_horizontal</item>
+    <item name="android:progressTint">?colorPrimary</item>
+    <item name="android:progressBackgroundTint">@color/contest_progress_background</item>
+    <item name="android:progressBackgroundTintMode">src_over</item>
+  </style>
+
+  <style name="Contest.Status" parent="None">
+    <item name="android:gravity">center</item>
+    <item name="android:lineSpacingExtra">@dimen/contest_status_line_spacing_extra</item>
+    <item name="android:lineSpacingMultiplier">1</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.Contest.Status</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.Contest.Status" parent="None">
+    <item name="android:textColor">?android:textColorPrimary</item>
+    <item name="android:textSize">@dimen/contest_status_text</item>
+    <item name="fontPath">?defaultMediumTypeface</item>
+  </style>
 
 </resources>
