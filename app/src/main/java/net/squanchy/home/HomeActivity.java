@@ -1,7 +1,6 @@
 package net.squanchy.home;
 
 import android.animation.ValueAnimator;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -39,7 +38,6 @@ import net.squanchy.proximity.ProximityEvent;
 import net.squanchy.proximity.ProximityFeature;
 import net.squanchy.proximity.preconditions.ProximityOptInPersister;
 import net.squanchy.proximity.preconditions.ProximityPreconditions;
-import net.squanchy.proximity.preconditions.TaskLauncherFactory;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.support.lang.Optional;
@@ -131,7 +129,6 @@ public class HomeActivity extends TypefaceStyleableActivity {
         HomeComponent homeComponent = HomeInjector.obtain(
                 this,
                 getGoogleApiClient(),
-                TaskLauncherFactory.forActivity(this),
                 proximityPreconditionsCallback()
         );
         analytics = homeComponent.analytics();

@@ -1,6 +1,5 @@
 package net.squanchy.settings;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -10,7 +9,7 @@ import android.preference.SwitchPreference;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ListView;
 
@@ -24,7 +23,6 @@ import net.squanchy.navigation.Navigator;
 import net.squanchy.proximity.ProximityFeature;
 import net.squanchy.proximity.preconditions.ProximityOptInPersister;
 import net.squanchy.proximity.preconditions.ProximityPreconditions;
-import net.squanchy.proximity.preconditions.TaskLauncherFactory;
 import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.signin.SignInService;
 import net.squanchy.support.debug.DebugPreferences;
@@ -66,15 +64,15 @@ public class SettingsFragment extends PreferenceFragment {
             removeDebugCategory();
         }
 
-        Activity activity = getActivity();
+        AppCompatActivity activity = (AppCompatActivity) getActivity(); // TODO UNYOLO
         GoogleApiClient googleApiClient = new GoogleApiClient.Builder(activity)
-                .enableAutoManage((FragmentActivity) activity, connectionResult -> onGoogleConnectionFailed())
+                .enableAutoManage(activity, connectionResult -> onGoogleConnectionFailed())
                 .addApi(LocationServices.API)
                 .build();
 
         SettingsFragmentComponent component = SettingsInjector.obtainForFragment(
+                this,
                 activity,
-                TaskLauncherFactory.forFragment(this, activity),
                 googleApiClient,
                 proximityPreconditionsCallback()
         );

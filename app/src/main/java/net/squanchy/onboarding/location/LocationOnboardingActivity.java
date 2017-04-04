@@ -17,7 +17,6 @@ import net.squanchy.onboarding.Onboarding;
 import net.squanchy.onboarding.OnboardingPage;
 import net.squanchy.proximity.preconditions.ProximityOptInPersister;
 import net.squanchy.proximity.preconditions.ProximityPreconditions;
-import net.squanchy.proximity.preconditions.TaskLauncherFactory;
 import net.squanchy.service.proximity.injection.ProximityService;
 
 import timber.log.Timber;
@@ -43,7 +42,6 @@ public class LocationOnboardingActivity extends TypefaceStyleableActivity {
 
         LocationOnboardingComponent component = LocationOnboardingInjector.obtain(
                 this,
-                TaskLauncherFactory.forActivity(this),
                 googleApiClient,
                 proximityPreconditionsCallback()
         );

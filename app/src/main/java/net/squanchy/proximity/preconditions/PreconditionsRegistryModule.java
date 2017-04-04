@@ -21,11 +21,9 @@ import dagger.Provides;
 public class PreconditionsRegistryModule {
 
     private final GoogleApiClient googleApiClient;
-    private final TaskLauncher taskLauncher;
 
-    public PreconditionsRegistryModule(GoogleApiClient googleApiClient, TaskLauncher taskLauncher) {
+    public PreconditionsRegistryModule(GoogleApiClient googleApiClient) {
         this.googleApiClient = googleApiClient;
-        this.taskLauncher = taskLauncher;
     }
 
     @Provides
@@ -34,7 +32,7 @@ public class PreconditionsRegistryModule {
     }
 
     @Provides
-    LocationPermissionPrecondition locationPermissionPrecondition() {
+    LocationPermissionPrecondition locationPermissionPrecondition(TaskLauncher taskLauncher) {
         return new LocationPermissionPrecondition(taskLauncher);
     }
 
@@ -44,12 +42,12 @@ public class PreconditionsRegistryModule {
     }
 
     @Provides
-    LocationProviderPrecondition locationProviderPrecondition(LocationManager locationManager) {
+    LocationProviderPrecondition locationProviderPrecondition(TaskLauncher taskLauncher, LocationManager locationManager) {
         return new LocationProviderPrecondition(taskLauncher, googleApiClient, locationManager);
     }
 
     @Provides
-    BluetoothPrecondition bluetoothPrecondition(BluetoothManager bluetoothManager) {
+    BluetoothPrecondition bluetoothPrecondition(BluetoothManager bluetoothManager, TaskLauncher taskLauncher) {
         return new BluetoothPrecondition(bluetoothManager, taskLauncher);
     }
 

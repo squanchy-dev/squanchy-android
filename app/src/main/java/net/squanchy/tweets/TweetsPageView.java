@@ -1,9 +1,9 @@
 package net.squanchy.tweets;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
@@ -42,7 +42,7 @@ public class TweetsPageView extends CoordinatorLayout implements Loadable {
 
     public TweetsPageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        Activity activity = unwrapToActivityContext(getContext());
+        AppCompatActivity activity = unwrapToActivityContext(getContext());
         TwitterComponent component = TwitterInjector.obtain(activity);
         twitterService = component.service();
         navigator = component.navigator();
