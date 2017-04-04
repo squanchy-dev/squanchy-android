@@ -85,6 +85,7 @@ public class NotificationsIntentService extends IntentService {
         Intent serviceIntent = new Intent(this, NotificationsIntentService.class);
         PendingIntent pendingIntent = PendingIntent.getService(this, 0, serviceIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, serviceAlarm.toDateTime().getMillis(), pendingIntent);
     }
 }
