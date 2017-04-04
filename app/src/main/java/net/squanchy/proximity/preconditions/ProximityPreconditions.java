@@ -14,16 +14,20 @@ public interface ProximityPreconditions {
 
     interface Callback {
 
-        void allChecksPassed();
+        void notOptedIn();
+
+        void featureDisabled();
 
         void permissionDenied();
 
         void locationProviderDenied();
 
-        void locationProviderFailed(LocationProviderPrecondition.FailureInfo failureStatus);
-
         void bluetoothDenied();
 
+        void allChecksPassed();
+
         void exceptionWhileSatisfying(Throwable throwable);
+
+        void recheckAfterActivityResult();
     }
 }

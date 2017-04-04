@@ -1,6 +1,5 @@
 package net.squanchy.proximity.preconditions;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothManager;
 
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -9,39 +8,23 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.squanchy.injection.ActivityContextModule;
+import net.squanchy.proximity.BluetoothModule;
+import net.squanchy.remoteconfig.RemoteConfig;
+import net.squanchy.support.debug.DebugPreferences;
+import net.squanchy.support.debug.DebugPreferencesModule;
 
 import dagger.Module;
 import dagger.Provides;
 
-import static android.content.Context.BLUETOOTH_SERVICE;
-
-@Module(includes = {ActivityContextModule.class, OptInPreferencePersisterModule.class})
+@Module(includes = {ActivityContextModule.class, OptInPreferencePersisterModule.class, BluetoothModule.class, DebugPreferencesModule.class})
 public class PreconditionsRegistryModule {
 
     private final GoogleApiClient googleApiClient;
+    private final TaskLauncher taskLauncher;
 
-    public PreconditionsRegistryModule(GoogleApiClient googleApiClient) {
+    public PreconditionsRegistryModule(GoogleApiClient googleApiClient, TaskLauncher taskLauncher) {
         this.googleApiClient = googleApiClient;
-    }
-
-    @Provides
-    BluetoothManager bluetoothManager(Activity activity) {
-        return (BluetoothManager) activity.getSystemService(BLUETOOTH_SERVICE);
-    }
-
-    @Provides
-    LocationPermissionPrecondition locationPermissionPrecondition(Activity activity) {
-        return new LocationPermissionPrecondition(activity);
-    }
-
-    @Provides
-    LocationProviderPrecondition locationProviderPrecondition(Activity activity) {
-        return new LocationProviderPrecondition(activity, googleApiClient);
-    }
-
-    @Provides
-    BluetoothPrecondition bluetoothPrecondition(Activity activity, BluetoothManager bluetoothManager) {
-        return new BluetoothPrecondition(activity, bluetoothManager);
+        this.taskLauncher = taskLauncher;
     }
 
     @Provides
@@ -50,14 +33,36 @@ public class PreconditionsRegistryModule {
     }
 
     @Provides
+    RemoteConfigPrecondition remoteConfigPrecondition(RemoteConfig remoteConfig, DebugPreferences debugPreferences) {
+        return new RemoteConfigPrecondition(remoteConfig, debugPreferences);
+    }
+
+    @Provides
+    LocationPermissionPrecondition locationPermissionPrecondition() {
+        return new LocationPermissionPrecondition(taskLauncher);
+    }
+
+    @Provides
+    LocationProviderPrecondition locationProviderPrecondition() {
+        return new LocationProviderPrecondition(taskLauncher, googleApiClient);
+    }
+
+    @Provides
+    BluetoothPrecondition bluetoothPrecondition(BluetoothManager bluetoothManager) {
+        return new BluetoothPrecondition(bluetoothManager, taskLauncher);
+    }
+
+    @Provides
     List<Precondition> preconditions(
             OptInPrecondition optInPrecondition,
+            RemoteConfigPrecondition remoteConfigPrecondition,
             LocationPermissionPrecondition locationPermissionPrecondition,
             LocationProviderPrecondition locationProviderPrecondition,
             BluetoothPrecondition bluetoothPrecondition
     ) {
         return Arrays.asList(
                 optInPrecondition,
+                remoteConfigPrecondition,
                 locationPermissionPrecondition,
                 locationProviderPrecondition,
                 bluetoothPrecondition

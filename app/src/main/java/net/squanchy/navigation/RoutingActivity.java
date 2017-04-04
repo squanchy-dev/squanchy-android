@@ -9,10 +9,10 @@ import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.navigation.deeplink.DeepLinkRouter;
 import net.squanchy.onboarding.Onboarding;
-import net.squanchy.onboarding.OnboardingPage;
 import net.squanchy.signin.SignInService;
 import net.squanchy.support.lang.Optional;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
 
@@ -45,7 +45,7 @@ public class RoutingActivity extends TypefaceStyleableActivity {
         super.onStart();
 
         subscription = signInService.signInAnonymouslyIfNecessary()
-                .subscribe(this::onboardOrproceedToRouting, this::handleSignInError);
+                .subscribe(this::onboardOrProceedToRouting, this::handleSignInError);
     }
 
     private void handleSignInError(Throwable throwable) {
@@ -84,19 +84,24 @@ public class RoutingActivity extends TypefaceStyleableActivity {
 
     private void handleOnboardingResult(int resultCode) {
         if (resultCode == RESULT_OK) {
-            onboardOrproceedToRouting();
+            onboardOrProceedToRouting();
         } else {
             finish();
         }
     }
 
-    private void onboardOrproceedToRouting() {
-        Optional<OnboardingPage> onboardingPageToShow = onboarding.nextPageToShow();
-        if (onboardingPageToShow.isPresent()) {
-            navigator.toOnboardingForResult(onboardingPageToShow.get(), ONBOARDING_REQUEST_CODE);
-        } else {
-            proceedTo(getIntent());
-        }
+    private void onboardOrProceedToRouting() {
+        onboarding.nextPageToShow()
+                .map(Optional::of)
+                .defaultIfEmpty(Optional.absent())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(page -> {
+                    if (page.isPresent()) {
+                        navigator.toOnboardingForResult(page.get(), ONBOARDING_REQUEST_CODE);
+                    } else {
+                        proceedTo(getIntent());
+                    }
+                });
     }
 
     private void proceedTo(Intent intent) {

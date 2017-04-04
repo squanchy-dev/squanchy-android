@@ -1,8 +1,9 @@
-package net.squanchy;
+package net.squanchy.support.debug;
 
 import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationManagerCompat;
 import android.widget.Button;
 import android.widget.Switch;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import net.squanchy.R;
 import net.squanchy.eventdetails.domain.view.ExperienceLevel;
 import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.notification.NotificationCreator;
@@ -20,7 +22,6 @@ import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Place;
 import net.squanchy.schedule.domain.view.Track;
 import net.squanchy.speaker.domain.view.Speaker;
-import net.squanchy.support.debug.DebugPreferences;
 import net.squanchy.support.lang.Optional;
 
 import org.joda.time.DateTimeZone;
@@ -48,6 +49,9 @@ public class DebugActivity extends TypefaceStyleableActivity {
         DebugPreferences debugPreferences = new DebugPreferences(this);
         Switch switchView = (Switch) findViewById(R.id.debug_contest_testing_switch);
         setupContestTestingSwitch(switchView, debugPreferences);
+
+        Button buttonResetOnboarding = (Button) findViewById(R.id.button_reset_onboarding);
+        buttonResetOnboarding.setOnClickListener(view -> resetOnboarding());
 
         notificationCreator = new NotificationCreator(this);
     }
@@ -154,5 +158,11 @@ public class DebugActivity extends TypefaceStyleableActivity {
     private void testService() {
         Intent serviceIntent = new Intent(this, NotificationsIntentService.class);
         startService(serviceIntent);
+    }
+
+    private void resetOnboarding() {
+        new OnboardingResetter(this)
+                .resetOnboarding();
+        Snackbar.make(findViewById(R.id.debug_root), "It's daaaawnnnn", Snackbar.LENGTH_SHORT).show();
     }
 }

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.support.config.DialogLayoutParameters;
+import net.squanchy.support.debug.DebugPreferences;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -28,6 +29,7 @@ public class ContestActivity extends TypefaceStyleableActivity {
 
     private TextView contestStatusView;
     private ProgressBar contestProgressView;
+    private DebugPreferences debugPreferences;
 
     public static Intent createIntent(Context context, String achievementId) {
         Intent intent = new Intent(context, ContestActivity.class);
@@ -47,6 +49,7 @@ public class ContestActivity extends TypefaceStyleableActivity {
 
         ContestComponent component = ContestInjector.obtain(this);
         contestService = component.contestService();
+        debugPreferences = component.debugPreferences();
 
         addTestingControlsIfDebugOptionActive((ViewGroup) findViewById(R.id.contest_container));
 
@@ -58,7 +61,7 @@ public class ContestActivity extends TypefaceStyleableActivity {
     }
 
     private void addTestingControlsIfDebugOptionActive(ViewGroup container) {
-        ContestTester contentTester = new ContestTester(this);
+        ContestTester contentTester = new ContestTester(this, debugPreferences);
         if (contentTester.testingEnabled()) {
             contentTester.appendDebugControls(container, contestService);
         }

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.MainThread;
 
-import net.squanchy.proximity.preconditions.LocationProviderPrecondition.ProviderPreconditionException;
 import net.squanchy.support.lang.Optional;
 
 import timber.log.Timber;
@@ -12,6 +11,9 @@ import timber.log.Timber;
 import static android.content.pm.PackageManager.PERMISSION_DENIED;
 
 public class ModularProximityPreconditions implements ProximityPreconditions {
+
+    private static final int REQUEST_LOCATION_SETTINGS = 2541;
+    private static final int RESULT_ABORT = Activity.RESULT_FIRST_USER;
 
     private final PreconditionsRegistry registry;
     private final Callback callback;
@@ -30,7 +32,6 @@ public class ModularProximityPreconditions implements ProximityPreconditions {
     @MainThread
     public void startSatisfyingPreconditions() {
         Precondition precondition = registry.firstPrecondition();
-
         startCheckingFrom(precondition);
     }
 
@@ -64,44 +65,51 @@ public class ModularProximityPreconditions implements ProximityPreconditions {
 
     @Override
     public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_LOCATION_SETTINGS) {
+            callback.recheckAfterActivityResult();
+            return true;
+        }
+
         Optional<Precondition> requestingPrecondition = registry.findPreconditionHandlingRequestCode(requestCode);
         if (requestingPrecondition.isPresent()) {
-            handleActivityResult(requestingPrecondition.get(), resultCode);
+            handleCheckResult(requestingPrecondition.get(), resultCode);
             return true;
         } else {
             return false;
         }
     }
 
-    private void handleActivityResult(Precondition precondition, int resultCode) {
+    private void startCheckingFrom(Precondition precondition) {
+        if (precondition.satisfied()) {
+            continueAfterSucceedingCheck(precondition);
+        } else {
+            precondition.satisfy()
+                    .subscribe(result -> {
+                        if (result == Precondition.SatisfyResult.ABORT) {
+                            handleCheckResult(precondition, RESULT_ABORT);
+                        } else if (result == Precondition.SatisfyResult.SUCCESS) {
+                            continueAfterSucceedingCheck(precondition);
+                        } else if (result == Precondition.SatisfyResult.WAIT_FOR_EXTERNAL_RESULT) {
+                            // Waiting on some external resource (e.g., onActivityResult) that will
+                            // unblock us in the onActivityResult/onPermissionRequestResult. We give
+                            // up for now, those will restart us.
+                            Timber.d("Precondition requires us to check again: %s", precondition.getClass().getSimpleName());
+                        }
+                    }, this::handleCheckError);
+        }
+    }
+
+    private void handleCheckResult(Precondition precondition, int resultCode) {
         if (resultCode == Activity.RESULT_OK) {
             startCheckingFrom(precondition);
         } else if (precondition instanceof BluetoothPrecondition) {
             callback.bluetoothDenied();
         } else if (precondition instanceof LocationProviderPrecondition) {
             callback.locationProviderDenied();
-        }
-    }
-
-    private void startCheckingFrom(Precondition precondition) {
-        if (!precondition.available()) {
-            Timber.d("Skipping unavailable precondition: %s", precondition);
-            return;
-        }
-
-        boolean canCheckIfSatisfied = precondition.performsSynchronousSatisfiedCheck();
-        if (canCheckIfSatisfied && precondition.satisfied()) {
-            continueAfterSucceedingCheck(precondition);
-        } else {
-            precondition.satisfy()
-                    .subscribe(() -> {
-                        if (canCheckIfSatisfied && precondition.satisfied()) {
-                            continueAfterSucceedingCheck(precondition);
-                        }
-                        // Waiting on some external resource (e.g., onActivityResult) that will
-                        // unblock us in the onActivityResult/onPermissionRequestResult. We give
-                        // up for now, those will restart us.
-                    }, this::handleCheckError);
+        } else if (precondition instanceof OptInPrecondition) {
+            callback.notOptedIn();
+        } else if (precondition instanceof RemoteConfigPrecondition) {
+            callback.featureDisabled();
         }
     }
 
@@ -115,11 +123,6 @@ public class ModularProximityPreconditions implements ProximityPreconditions {
     }
 
     private void handleCheckError(Throwable throwable) {
-        if (throwable instanceof LocationProviderPrecondition.ProviderPreconditionException) {
-            ProviderPreconditionException exception = (ProviderPreconditionException) throwable;
-            callback.locationProviderFailed(exception.failureInfo());
-        } else {
-            callback.exceptionWhileSatisfying(throwable);
-        }
+        callback.exceptionWhileSatisfying(throwable);
     }
 }

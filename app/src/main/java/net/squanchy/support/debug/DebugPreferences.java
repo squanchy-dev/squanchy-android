@@ -13,7 +13,7 @@ public class DebugPreferences {
 
     private final SharedPreferences preferences;
 
-    public DebugPreferences(Context context) {
+    DebugPreferences(Context context) {
         this.preferences = context.getSharedPreferences(DebugPreferences.PREFERENCES_NAME_DEBUG, Context.MODE_PRIVATE);
     }
 
@@ -21,11 +21,11 @@ public class DebugPreferences {
         return IS_DEBUG && preferences.getBoolean(KEY_CONTEST_TESTING_ENABLED, false);
     }
 
-    public void enableContestTesting() {
+    void enableContestTesting() {
         storeDebugPreference(KEY_CONTEST_TESTING_ENABLED, true);
     }
 
-    public void disableContestTesting() {
+    void disableContestTesting() {
         storeDebugPreference(KEY_CONTEST_TESTING_ENABLED, false);
     }
 

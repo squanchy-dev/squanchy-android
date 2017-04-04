@@ -2,35 +2,26 @@ package net.squanchy.proximity.preconditions;
 
 import net.squanchy.support.lang.Optional;
 
-import io.reactivex.Completable;
+import io.reactivex.Single;
 
 public class OptInPrecondition implements Precondition {
 
-    private final ProximityOptInPersister preferences_persister;
+    private final ProximityOptInPersister preferences;
 
-    OptInPrecondition(ProximityOptInPersister preferences_persister) {
-        this.preferences_persister = preferences_persister;
-    }
-
-    @Override
-    public boolean available() {
-        return ALWAYS_AVAILABLE;
-    }
-
-    @Override
-    public boolean performsSynchronousSatisfiedCheck() {
-        return CAN_PERFORM_SYNCHRONOUS_CHECK;
+    OptInPrecondition(ProximityOptInPersister preferences) {
+        this.preferences = preferences;
     }
 
     @Override
     public boolean satisfied() {
-        return preferences_persister.userOptedIn();
+        return preferences.userOptedIn();
     }
 
     @Override
-    public Completable satisfy() {
-        preferences_persister.storeUserOptedIn();
-        return Completable.complete();
+    public Single<SatisfyResult> satisfy() {
+        // This cannot be satisfied in the satisfaction loop 😏 -- instead, it must be enabled
+        // explicitly by the user. This is the Gandalf of the preconditions.
+        return Single.just(SatisfyResult.ABORT);
     }
 
     @Override

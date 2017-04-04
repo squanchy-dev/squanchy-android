@@ -117,7 +117,7 @@
     <item name="colorAccent">?colorPrimary</item>
   </style>
 
-  <style name="Theme.Squanchy.About" parent="Theme.Squanchy" />
+  <style name="Theme.Squanchy.About" parent="Theme.Squanchy.MostlyWhite" />
 
   <style name="Theme.Squanchy.Licenses" parent="Theme.Squanchy.PrimaryStatusBar" />
 

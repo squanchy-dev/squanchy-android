@@ -4,6 +4,7 @@ import android.app.Application;
 
 import net.squanchy.analytics.Analytics;
 import net.squanchy.analytics.AnalyticsModule;
+import net.squanchy.proximity.BluetoothModule;
 import net.squanchy.remoteconfig.RemoteConfig;
 import net.squanchy.remoteconfig.RemoteConfigModule;
 import net.squanchy.service.firebase.FirebaseAuthService;
@@ -21,7 +22,16 @@ import net.squanchy.support.injection.CurrentTimeModule;
 import dagger.Component;
 
 @ApplicationLifecycle
-@Component(modules = {ApplicationContextModule.class, FirebaseModule.class, ChecksumModule.class, RepositoryModule.class, ProximityModule.class, AnalyticsModule.class, RemoteConfigModule.class, CurrentTimeModule.class})
+@Component(modules = {
+        ApplicationContextModule.class,
+        FirebaseModule.class,
+        ChecksumModule.class,
+        RepositoryModule.class,
+        ProximityModule.class,
+        AnalyticsModule.class,
+        RemoteConfigModule.class,
+        CurrentTimeModule.class,
+        BluetoothModule.class})
 public interface ApplicationComponent {
 
     FirebaseDbService firebaseDbService();
@@ -39,6 +49,8 @@ public interface ApplicationComponent {
     RemoteConfig remoteConfig();
 
     ProximityService service();
+
+    Application application();
 
     class Factory {
 

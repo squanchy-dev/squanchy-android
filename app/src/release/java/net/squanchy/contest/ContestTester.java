@@ -3,10 +3,12 @@ package net.squanchy.contest;
 import android.app.Activity;
 import android.view.ViewGroup;
 
+import net.squanchy.support.debug.DebugPreferences;
+
 @SuppressWarnings("unused")    // This is a no-op version for a debug facility
 class ContestTester {
 
-    ContestTester(Activity activity) {
+    ContestTester(Activity activity, DebugPreferences debugPreferences) {
         // No-op (only does stuff in debug)
     }
 
