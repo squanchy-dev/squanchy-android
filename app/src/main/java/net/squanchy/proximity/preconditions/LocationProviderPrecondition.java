@@ -1,6 +1,7 @@
 package net.squanchy.proximity.preconditions;
 
 import android.content.IntentSender;
+import android.location.LocationManager;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -18,21 +19,24 @@ import io.reactivex.Single;
 public class LocationProviderPrecondition implements Precondition {
 
     private static final int REQUEST_ENABLE_LOCATION_PROVIDER = 8999;
-    
+
     private static final int REQUEST_INTERVAL_MS = 10000;
     private static final int REQUEST_FASTEST_INTERVAL_MS = 5000;
 
     private final TaskLauncher taskLauncher;
     private final GoogleApiClient googleApiClient;
+    private final LocationManager locationManager;
 
-    LocationProviderPrecondition(TaskLauncher taskLauncher, GoogleApiClient googleApiClient) {
+    LocationProviderPrecondition(TaskLauncher taskLauncher, GoogleApiClient googleApiClient, LocationManager locationManager) {
         this.taskLauncher = taskLauncher;
         this.googleApiClient = googleApiClient;
+        this.locationManager = locationManager;
     }
 
     @Override
     public boolean satisfied() {
-        return ALWAYS_NOT_SATISFIED;
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
     @Override
