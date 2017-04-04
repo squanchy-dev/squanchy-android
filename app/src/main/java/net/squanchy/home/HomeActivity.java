@@ -126,16 +126,11 @@ public class HomeActivity extends TypefaceStyleableActivity {
         Intent intent = getIntent();
         selectPageFrom(intent, Optional.fromNullable(savedInstanceState));
 
-        GoogleApiClient googleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, connectionResult -> Timber.e("Google Client connection failed"))
-                .addApi(LocationServices.API)
-                .build();
-
         prerequisitesSnackbar = buildPrerequisitesSnackbar();
 
         HomeComponent homeComponent = HomeInjector.obtain(
                 this,
-                googleApiClient,
+                getGoogleApiClient(),
                 TaskLauncherFactory.forActivity(this),
                 proximityPreconditionsCallback()
         );
@@ -148,6 +143,13 @@ public class HomeActivity extends TypefaceStyleableActivity {
 
         navigator = homeComponent.navigator();
         subscriptions = new CompositeDisposable();
+    }
+
+    private GoogleApiClient getGoogleApiClient() {
+        return new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, connectionResult -> Timber.e("Google Client connection failed"))
+                .addApi(LocationServices.API)
+                .build();
     }
 
     private Snackbar buildPrerequisitesSnackbar() {
@@ -176,6 +178,13 @@ public class HomeActivity extends TypefaceStyleableActivity {
         selectInitialPage(selectedPage);
     }
 
+    private void trackProximityEnagement(Intent intent) {
+        if (intent.hasExtra(KEY_PROXIMITY_ID)) {
+            String proximityId = intent.getStringExtra(KEY_PROXIMITY_ID);
+            analytics.trackProximityEventEngaged(ProximityEvent.create(proximityId));
+        }
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -199,13 +208,6 @@ public class HomeActivity extends TypefaceStyleableActivity {
             case KEY_ROOM_EVENT:
                 showCurrentEvent(proximityEvent);
                 break;
-        }
-    }
-
-    private void trackProximityEnagement(Intent intent) {
-        if (intent.hasExtra(KEY_PROXIMITY_ID)){
-            String proximityId = intent.getStringExtra(KEY_PROXIMITY_ID);
-            analytics.trackProximityEventEngaged(ProximityEvent.create(proximityId));
         }
     }
 
@@ -362,13 +364,14 @@ public class HomeActivity extends TypefaceStyleableActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        boolean handled = proximityPreconditions.onActivityResult(requestCode, resultCode, data);
-        if (!handled) {
-            if (requestCode == REQUEST_SIGN_IN_MAY_GOD_HAVE_MERCY_OF_OUR_SOULS) {
-                startAllSubscriptions();
-            } else {
-                super.onActivityResult(requestCode, resultCode, data);
-            }
+        if (proximityPreconditions.onActivityResult(requestCode, resultCode, data)) {
+            return;
+        }
+
+        if (requestCode == REQUEST_SIGN_IN_MAY_GOD_HAVE_MERCY_OF_OUR_SOULS) {
+            startAllSubscriptions();
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -389,11 +392,11 @@ public class HomeActivity extends TypefaceStyleableActivity {
 
         subscriptions.add(
                 proximityFeature.enabled()
-                .doOnSuccess(enabled -> {
-                    if (enabled) {
-                        checkPrerequisiteForProximity();
-                    }
-                }).subscribe()
+                        .doOnSuccess(enabled -> {
+                            if (enabled) {
+                                checkPrerequisiteForProximity();
+                            }
+                        }).subscribe()
         );
 
         for (Loadable loadable : loadables) {
@@ -483,13 +486,5 @@ public class HomeActivity extends TypefaceStyleableActivity {
                 proximityPreconditions.needsActionToSatisfyPreconditions();
             }
         };
-    }
-
-    private void openLocationSettings() {
-        try {
-            navigator.toLocationSettingsForResult(REQUEST_SETTINGS);
-        } catch (ActivityNotFoundException e) {
-            Timber.e(e, "Unable to open location settings");
-        }
     }
 }
