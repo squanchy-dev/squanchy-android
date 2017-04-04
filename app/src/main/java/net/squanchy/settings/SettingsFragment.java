@@ -43,6 +43,7 @@ public class SettingsFragment extends PreferenceFragment {
     private ProximityService proximityService;
     private ProximityPreconditions proximityPreconditions;
     private ProximityOptInPersister proximityOptInPersister;
+    private DebugPreferences debugPreferences;
 
     private PreferenceCategory accountCategory;
     private Preference accountEmailPreference;
@@ -82,6 +83,7 @@ public class SettingsFragment extends PreferenceFragment {
         proximityOptInPersister = component.proximityOptInPersister();
         proximityPreconditions = component.proximityPreconditions();
         proximityFeature = component.proximityFeature();
+        debugPreferences = component.debugPreferences();
 
         accountCategory = (PreferenceCategory) findPreference(getString(R.string.account_category_key));
         accountEmailPreference = findPreference(getString(R.string.account_email_preference_key));
@@ -208,7 +210,6 @@ public class SettingsFragment extends PreferenceFragment {
     }
 
     private void disableProximityAndContestBasedOnFeature() {
-        DebugPreferences debugPreferences = new DebugPreferences(getActivity());
         if (debugPreferences.contestTestingEnabled()) {
             // We always show the location and contest settings when testing is enabled.
             setProximityAndContestUiEnabled(true);

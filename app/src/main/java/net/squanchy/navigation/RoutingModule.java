@@ -4,12 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import net.squanchy.injection.ApplicationContextModule;
+import net.squanchy.injection.ActivityContextModule;
 
 import dagger.Module;
 import dagger.Provides;
 
-@Module(includes = ApplicationContextModule.class)
+@Module(includes = ActivityContextModule.class)
 class RoutingModule {
 
     private static final String FIRST_START_SHARED_PREFERENCES_NAME = "first_start";

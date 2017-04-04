@@ -3,7 +3,6 @@ package net.squanchy.navigation;
 import android.app.Activity;
 
 import net.squanchy.injection.ActivityContextModule;
-import net.squanchy.injection.ApplicationContextModule;
 import net.squanchy.injection.ApplicationInjector;
 import net.squanchy.navigation.deeplink.DeepLinkModule;
 import net.squanchy.proximity.ProximityFeatureModule;
@@ -26,7 +25,6 @@ final class RoutingInjector {
                 .routingModule(new RoutingModule())
                 .proximityFeatureModule(new ProximityFeatureModule())
                 .debugPreferencesModule(new DebugPreferencesModule())
-                .applicationContextModule(new ApplicationContextModule(activity.getApplication()))      // This shouldn't be necessary
                 .build();
     }
 }

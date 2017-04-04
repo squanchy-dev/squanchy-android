@@ -14,6 +14,7 @@ import net.squanchy.remoteconfig.RemoteConfig;
 import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.signin.SignInModule;
 import net.squanchy.signin.SignInService;
+import net.squanchy.support.debug.DebugPreferences;
 
 import dagger.Component;
 
@@ -41,4 +42,6 @@ public interface SettingsFragmentComponent {
     ProximityPreconditions proximityPreconditions();
 
     ProximityFeature proximityFeature();
+
+    DebugPreferences debugPreferences();
 }

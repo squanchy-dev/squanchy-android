@@ -1,4 +1,4 @@
-package net.squanchy;
+package net.squanchy.support.debug;
 
 import android.app.Notification;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import net.squanchy.R;
 import net.squanchy.eventdetails.domain.view.ExperienceLevel;
 import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.notification.NotificationCreator;
@@ -21,8 +22,6 @@ import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Place;
 import net.squanchy.schedule.domain.view.Track;
 import net.squanchy.speaker.domain.view.Speaker;
-import net.squanchy.support.debug.DebugPreferences;
-import net.squanchy.support.debug.OnboardingResetter;
 import net.squanchy.support.lang.Optional;
 
 import org.joda.time.DateTimeZone;

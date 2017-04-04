@@ -2,7 +2,6 @@ package net.squanchy.tweets;
 
 import android.app.Activity;
 
-import net.squanchy.injection.ApplicationContextModule;
 import net.squanchy.tweets.service.TweetModelConverter;
 import net.squanchy.tweets.service.TweetSpannedTextBuilder;
 import net.squanchy.tweets.service.TwitterRepository;
@@ -12,7 +11,7 @@ import net.squanchy.tweets.view.TweetUrlSpanFactory;
 import dagger.Module;
 import dagger.Provides;
 
-@Module(includes = ApplicationContextModule.class)
+@Module
 class TwitterModule {
 
     @Provides

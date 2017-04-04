@@ -48,6 +48,8 @@ public interface ApplicationComponent {
 
     ProximityService service();
 
+    Application application();
+
     class Factory {
 
         private Factory() {
