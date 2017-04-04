@@ -114,11 +114,13 @@ public class SettingsFragment extends PreferenceFragment {
         return new ProximityPreconditions.Callback() {
             @Override
             public void notOptedIn() {
+                Timber.e(new IllegalStateException("Trying to enable Proximity when the user is not opted in"));
                 showProximityEnablingError(Snackbar.make(getViewOrThrow(), R.string.proximity_error_not_opted_in, Snackbar.LENGTH_LONG));
             }
 
             @Override
             public void featureDisabled() {
+                Timber.e(new IllegalStateException("Trying to enable Proximity when the feature is disabled"));
                 showProximityEnablingError(Snackbar.make(getViewOrThrow(), R.string.proximity_error_remote_config_kill_switch, Snackbar.LENGTH_LONG));
             }
 

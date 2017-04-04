@@ -93,11 +93,13 @@ public class LocationOnboardingActivity extends TypefaceStyleableActivity {
 
             @Override
             public void notOptedIn() {
+                Timber.e(new IllegalStateException("Proximity onboarding shown when the user is not opted in"));
                 showFatalProximityError(R.string.proximity_error_not_opted_in);
             }
 
             @Override
             public void featureDisabled() {
+                Timber.e(new IllegalStateException("Proximity onboarding shown when the feature is disabled (missing BT or kill-switched)"));
                 showFatalProximityError(R.string.proximity_error_remote_config_kill_switch);
             }
 
