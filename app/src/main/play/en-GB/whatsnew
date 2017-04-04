@@ -1,8 +1,6 @@
-Version 1.0.0
+Version 1.0.1
 
-* First production release! 💃
-* Revamped venue screen 💅
-* Put contest/location behind feature flag 🏁
-* Implemented contest activity (behind feature flag) 🏆
-* Improved notifications format ⏰
-* Fixed bug #227 🐛
+* Fixes crashes with the Twitter SDK #226
+* Fixes potential issues with Firebase #259 (one crash in the wild)
+* Fixes notifications not being properly scheduled
+* Update Firebase to the latest version for peace of mind
