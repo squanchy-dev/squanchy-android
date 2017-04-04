@@ -9,8 +9,6 @@ import java.util.List;
 
 import net.squanchy.injection.ActivityContextModule;
 import net.squanchy.proximity.BluetoothModule;
-import net.squanchy.remoteconfig.RemoteConfig;
-import net.squanchy.support.debug.DebugPreferences;
 import net.squanchy.support.debug.DebugPreferencesModule;
 
 import dagger.Module;
@@ -33,11 +31,6 @@ public class PreconditionsRegistryModule {
     }
 
     @Provides
-    RemoteConfigPrecondition remoteConfigPrecondition(RemoteConfig remoteConfig, DebugPreferences debugPreferences) {
-        return new RemoteConfigPrecondition(remoteConfig, debugPreferences);
-    }
-
-    @Provides
     LocationPermissionPrecondition locationPermissionPrecondition() {
         return new LocationPermissionPrecondition(taskLauncher);
     }
@@ -55,14 +48,12 @@ public class PreconditionsRegistryModule {
     @Provides
     List<Precondition> preconditions(
             OptInPrecondition optInPrecondition,
-            RemoteConfigPrecondition remoteConfigPrecondition,
             LocationPermissionPrecondition locationPermissionPrecondition,
             LocationProviderPrecondition locationProviderPrecondition,
             BluetoothPrecondition bluetoothPrecondition
     ) {
         return Arrays.asList(
                 optInPrecondition,
-                remoteConfigPrecondition,
                 locationPermissionPrecondition,
                 locationProviderPrecondition,
                 bluetoothPrecondition
