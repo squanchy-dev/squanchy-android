@@ -387,6 +387,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private void startAllSubscriptions() {
         subscriptions.add(
                 proximityService.observeProximityEvents()
+                        .distinctUntilChanged()
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(this::handleProximityEvent));
 
