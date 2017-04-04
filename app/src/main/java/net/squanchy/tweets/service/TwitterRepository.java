@@ -1,15 +1,16 @@
 package net.squanchy.tweets.service;
 
-import com.twitter.sdk.android.core.Callback;
-import com.twitter.sdk.android.core.Result;
+import android.support.annotation.Nullable;
+
 import com.twitter.sdk.android.core.TwitterCore;
-import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.models.Search;
 import com.twitter.sdk.android.core.services.SearchService;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TwitterRepository {
 
@@ -26,7 +27,7 @@ public class TwitterRepository {
         return searchService.tweets(query, null, null, null, "recent", MAX_ITEM_PER_REQUEST, null, null, null, true);
     }
 
-    private static class SearchCallback extends Callback<Search> {
+    private static class SearchCallback implements Callback<Search> {
 
         private final ObservableEmitter<Search> searchEmitter;
 
@@ -35,14 +36,18 @@ public class TwitterRepository {
         }
 
         @Override
-        public void success(Result<Search> result) {
-            searchEmitter.onNext(result.data);
-            searchEmitter.onComplete();
+        public void onResponse(Call<Search> call, Response<Search> response) {
+            if (response.isSuccessful()) {
+                searchEmitter.onNext(response.body());
+                searchEmitter.onComplete();
+            } else {
+                onFailure(null, new RuntimeException("Unable to load tweets"));
+            }
         }
 
         @Override
-        public void failure(TwitterException e) {
-            searchEmitter.onError(e);
+        public void onFailure(@Nullable Call<Search> call, Throwable throwable) {
+            searchEmitter.onError(throwable);
         }
     }
 }
