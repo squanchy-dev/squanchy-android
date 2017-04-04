@@ -5,6 +5,7 @@
   <string name="activity_schedule">Schedule</string>
   <string name="activity_favorites">Favorites</string>
   <string name="event_details">Details</string>
+  <string name="missing_prerequisites_action">Fix it</string>
 
   <string name="experience_level_beginner">beginner</string>
   <string name="experience_level_intermediate">intermediate</string>
@@ -74,6 +75,7 @@
   <string name="prompt_to_sign_in_for_favorites">Get notified about upcoming talks. Your favorite talks are also get synced across all your devices.\n\nTap to sign in.</string>
   <string name="prompt_to_favorite">You have no favorite talks, yet. Find some talk, touch the ♥ button and you are good to go.</string>
   <string name="achievement_unlocked">Achievement Unlocked: The Fast Learner!</string>
+  <string name="missing_prerequisites_for_location">Uh oh! Location features will not work with the current devices settings</string>
 
   <string name="favorites_empty_state_signed_out_blurb">Pick your favorite talks, synced across devices, and get notifications when they’re about to start.</string>
   <string name="favorites_empty_state_signed_out_cta">SIGN IN</string>

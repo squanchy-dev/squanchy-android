@@ -609,6 +609,7 @@
   <style name="TextAppearance.Squanchy.FirstStartWithNoNetwork.Cancel" parent="TextAppearance.Squanchy.Button.Colored" />
 
   <style name="Contest.Title" parent="None">
+    <item name="android:gravity">center</item>
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.Contest.Title</item>
   </style>
 

@@ -1,6 +1,9 @@
 package net.squanchy.proximity.preconditions;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothManager;
+import android.content.Context;
+import android.location.LocationManager;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 
@@ -36,8 +39,13 @@ public class PreconditionsRegistryModule {
     }
 
     @Provides
-    LocationProviderPrecondition locationProviderPrecondition() {
-        return new LocationProviderPrecondition(taskLauncher, googleApiClient);
+    LocationManager locationManager(Activity activity) {
+        return (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
+    }
+
+    @Provides
+    LocationProviderPrecondition locationProviderPrecondition(LocationManager locationManager) {
+        return new LocationProviderPrecondition(taskLauncher, googleApiClient, locationManager);
     }
 
     @Provides

@@ -1,12 +1,14 @@
 package net.squanchy.home;
 
 import android.animation.ValueAnimator;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
@@ -16,6 +18,9 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,28 +36,32 @@ import net.squanchy.home.deeplink.HomeActivityDeepLinkCreator;
 import net.squanchy.home.deeplink.HomeActivityIntentParser;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.proximity.ProximityEvent;
+import net.squanchy.proximity.ProximityFeature;
+import net.squanchy.proximity.preconditions.ProximityOptInPersister;
+import net.squanchy.proximity.preconditions.ProximityPreconditions;
+import net.squanchy.proximity.preconditions.TaskLauncherFactory;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.support.lang.Optional;
 import net.squanchy.support.widget.InterceptingBottomNavigationView;
 
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-
 import io.reactivex.Maybe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import timber.log.Timber;
 
 public class HomeActivity extends TypefaceStyleableActivity {
 
     private static final String KEY_CONTEST_STAND = "stand";
     private static final String KEY_ROOM_EVENT = "room";
-    private static final String WHEN_DATE_TIME_FORMAT = "HH:mm";
 
+    private static final int REQUEST_SETTINGS = 9375;
     private static final int REQUEST_SIGN_IN_MAY_GOD_HAVE_MERCY_OF_OUR_SOULS = 666;
+    private static final String KEY_PROXIMITY_ID = "proximity_id";
 
     private final Map<BottomNavigationSection, View> pageViews = new HashMap<>(4);
     private final List<Loadable> loadables = new ArrayList<>(4);
+    private Snackbar prerequisitesSnackbar;
 
     private int pageFadeDurationMillis;
 
@@ -63,6 +72,9 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private Analytics analytics;
     private Navigator navigator;
     private CurrentEventService currentEventService;
+    private ProximityPreconditions proximityPreconditions;
+    private ProximityOptInPersister proximityOptInPersister;
+    private ProximityFeature proximityFeature;
 
     private CompositeDisposable subscriptions;
 
@@ -92,6 +104,11 @@ public class HomeActivity extends TypefaceStyleableActivity {
                 .build();
     }
 
+    public static Intent createProximityIntent(Context context, String proximityId) {
+        return new Intent(context, HomeActivity.class)
+                .putExtra(KEY_PROXIMITY_ID, proximityId);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,13 +126,41 @@ public class HomeActivity extends TypefaceStyleableActivity {
         Intent intent = getIntent();
         selectPageFrom(intent, Optional.fromNullable(savedInstanceState));
 
-        HomeComponent homeComponent = HomeInjector.obtain(this);
+        prerequisitesSnackbar = buildPrerequisitesSnackbar();
+
+        HomeComponent homeComponent = HomeInjector.obtain(
+                this,
+                getGoogleApiClient(),
+                TaskLauncherFactory.forActivity(this),
+                proximityPreconditionsCallback()
+        );
         analytics = homeComponent.analytics();
         proximityService = homeComponent.proximityService();
         currentEventService = homeComponent.currentEvent();
+        proximityPreconditions = homeComponent.proximityPreconditions();
+        proximityOptInPersister = homeComponent.proximityOptInPersister();
+        proximityFeature = homeComponent.proximityFeature();
 
         navigator = homeComponent.navigator();
         subscriptions = new CompositeDisposable();
+    }
+
+    private GoogleApiClient getGoogleApiClient() {
+        return new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, connectionResult -> Timber.e("Google Client connection failed"))
+                .addApi(LocationServices.API)
+                .build();
+    }
+
+    private Snackbar buildPrerequisitesSnackbar() {
+        Snackbar snackbar = Snackbar.make(
+                pageViews.get(currentSection),
+                getString(R.string.missing_prerequisites_for_location),
+                BaseTransientBottomBar.LENGTH_INDEFINITE
+        );
+        snackbar.setAction(R.string.missing_prerequisites_action, view -> proximityPreconditions.startSatisfyingPreconditions());
+        snackbar.setActionTextColor(getResources().getColor(R.color.text_inverse));
+        return snackbar;
     }
 
     @Override
@@ -123,12 +168,21 @@ public class HomeActivity extends TypefaceStyleableActivity {
         super.onNewIntent(intent);
 
         selectPageFrom(intent, Optional.absent());
+
+        trackProximityEnagement(intent);
     }
 
     private void selectPageFrom(Intent intent, Optional<Bundle> savedState) {
         HomeActivityIntentParser intentParser = new HomeActivityIntentParser(savedState, intent);
         BottomNavigationSection selectedPage = intentParser.getInitialSelectedPage();
         selectInitialPage(selectedPage);
+    }
+
+    private void trackProximityEnagement(Intent intent) {
+        if (intent.hasExtra(KEY_PROXIMITY_ID)) {
+            String proximityId = intent.getStringExtra(KEY_PROXIMITY_ID);
+            analytics.trackProximityEventEngaged(ProximityEvent.create(proximityId));
+        }
     }
 
     @Override
@@ -183,13 +237,10 @@ public class HomeActivity extends TypefaceStyleableActivity {
     }
 
     private String buildString(Event event) {
-        DateTimeFormatter formatter = DateTimeFormat.forPattern(WHEN_DATE_TIME_FORMAT)
-                .withZone(event.timeZone());
         return String.format(
                 Locale.US,
-                "Room: %s %s \n%s",
+                "Now in %1$s: %2$s",
                 event.place().get().name(),
-                formatter.print(event.startTime().toDateTime()),
                 event.title()
         );
     }
@@ -313,6 +364,10 @@ public class HomeActivity extends TypefaceStyleableActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (proximityPreconditions.onActivityResult(requestCode, resultCode, data)) {
+            return;
+        }
+
         if (requestCode == REQUEST_SIGN_IN_MAY_GOD_HAVE_MERCY_OF_OUR_SOULS) {
             startAllSubscriptions();
         } else {
@@ -320,15 +375,50 @@ public class HomeActivity extends TypefaceStyleableActivity {
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        boolean handled = proximityPreconditions.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (!handled) {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
     private void startAllSubscriptions() {
         subscriptions.add(
                 proximityService.observeProximityEvents()
+                        .distinctUntilChanged()
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(this::handleProximityEvent));
+
+        subscriptions.add(
+                proximityFeature.enabled()
+                        .doOnSuccess(enabled -> {
+                            if (enabled) {
+                                checkPrerequisiteForProximity();
+                            }
+                        }).subscribe()
+        );
 
         for (Loadable loadable : loadables) {
             loadable.startLoading();
         }
+    }
+
+    private void checkPrerequisiteForProximity() {
+        proximityOptInPersister.storeUserOptedIn();
+        if (proximityPreconditions.needsActionToSatisfyPreconditions()) {
+            showPrerequisitesSnackbar();
+        } else {
+            dismissPrerequisitesSnackbar();
+        }
+    }
+
+    private void showPrerequisitesSnackbar() {
+        prerequisitesSnackbar.show();
+    }
+
+    private void dismissPrerequisitesSnackbar() {
+        prerequisitesSnackbar.dismiss();
     }
 
     @Override
@@ -351,5 +441,50 @@ public class HomeActivity extends TypefaceStyleableActivity {
         for (Loadable loadable : loadables) {
             loadable.stopLoading();
         }
+    }
+
+    private ProximityPreconditions.Callback proximityPreconditionsCallback() {
+        return new ProximityPreconditions.Callback() {
+            @Override
+            public void allChecksPassed() {
+                proximityService.startRadar();
+                dismissPrerequisitesSnackbar();
+            }
+
+            @Override
+            public void notOptedIn() {
+                Timber.i("user didn't opt-in");
+                showPrerequisitesSnackbar();
+            }
+
+            @Override
+            public void permissionDenied() {
+                Timber.i("User denied location permission");
+                showPrerequisitesSnackbar();
+            }
+
+            @Override
+            public void locationProviderDenied() {
+                Timber.i("User denied location provider");
+                showPrerequisitesSnackbar();
+            }
+
+            @Override
+            public void bluetoothDenied() {
+                Timber.i("User denied turning Bluetooth on");
+                showPrerequisitesSnackbar();
+            }
+
+            @Override
+            public void exceptionWhileSatisfying(Throwable throwable) {
+                Timber.e(throwable, "Exception occurred while checking");
+                showPrerequisitesSnackbar();
+            }
+
+            @Override
+            public void recheckAfterActivityResult() {
+                proximityPreconditions.needsActionToSatisfyPreconditions();
+            }
+        };
     }
 }

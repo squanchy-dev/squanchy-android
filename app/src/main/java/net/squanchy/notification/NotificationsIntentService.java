@@ -26,9 +26,9 @@ public class NotificationsIntentService extends IntentService {
     private static final boolean SHOW_NOTIFICATIONS_DEFAULT = true;
 
     private NotificationService service;
-    private NotificationCreator notificationCreator;
-    private Notifier notifier;
-    private SharedPreferences preferences;
+    protected NotificationCreator notificationCreator;
+    protected Notifier notifier;
+    protected SharedPreferences preferences;
 
     public NotificationsIntentService() {
         super(NotificationsIntentService.class.getSimpleName());
