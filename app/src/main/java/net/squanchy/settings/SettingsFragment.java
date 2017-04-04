@@ -120,12 +120,6 @@ public class SettingsFragment extends PreferenceFragment {
             }
 
             @Override
-            public void featureDisabled() {
-                Timber.e(new IllegalStateException("Trying to enable Proximity when the feature is disabled"));
-                showProximityEnablingError(R.string.proximity_error_remote_config_kill_switch);
-            }
-
-            @Override
             public void permissionDenied() {
                 showProximityEnablingError(R.string.proximity_error_permission_denied);
             }

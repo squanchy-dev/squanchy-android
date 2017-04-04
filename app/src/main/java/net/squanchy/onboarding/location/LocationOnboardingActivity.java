@@ -98,12 +98,6 @@ public class LocationOnboardingActivity extends TypefaceStyleableActivity {
             }
 
             @Override
-            public void featureDisabled() {
-                Timber.e(new IllegalStateException("Proximity onboarding shown when the feature is disabled (missing BT or kill-switched)"));
-                showFatalProximityError(R.string.proximity_error_remote_config_kill_switch);
-            }
-
-            @Override
             public void permissionDenied() {
                 showNonFatalProximityError(R.string.proximity_error_permission_denied);
             }

@@ -16,8 +16,6 @@ public interface ProximityPreconditions {
 
         void notOptedIn();
 
-        void featureDisabled();
-
         void permissionDenied();
 
         void locationProviderDenied();

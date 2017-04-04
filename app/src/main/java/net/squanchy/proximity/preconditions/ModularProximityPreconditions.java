@@ -108,8 +108,6 @@ public class ModularProximityPreconditions implements ProximityPreconditions {
             callback.locationProviderDenied();
         } else if (precondition instanceof OptInPrecondition) {
             callback.notOptedIn();
-        } else if (precondition instanceof RemoteConfigPrecondition) {
-            callback.featureDisabled();
         }
     }
 
