@@ -78,6 +78,9 @@ public class NotificationCreator {
     public Notification createFromProximity(String proximityId, String text) {
         Resources resources = context.getResources();
 
+        NotificationCompat.WearableExtender extender = new NotificationCompat.WearableExtender();
+        extender.setBackground(BitmapFactory.decodeResource(resources, R.drawable.notification_background));
+
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(context)
                         .setContentIntent(createPendingIntentForProximityNotification(proximityId))
@@ -88,11 +91,12 @@ public class NotificationCreator {
                                 NOTIFICATION_LED_ON_MS,
                                 NOTIFICATION_LED_OFF_MS
                         )
-                        .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.ic_notificationdroid))
+                        .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(text))
                         .setPriority(Notification.PRIORITY_MAX)
-                        .setAutoCancel(true);
+                        .setAutoCancel(true)
+                        .extend(extender);
         return builder.build();
     }
 
