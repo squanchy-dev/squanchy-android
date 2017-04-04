@@ -125,11 +125,11 @@
       android:exported="false" />
 
     <service
-      android:name=".notification.NearNotificationIntentService"
+      android:name="net.squanchy.notification.NearNotificationIntentService"
       android:exported="false" />
 
     <receiver
-      android:name=".notification.NearNotificationReceiver"
+      android:name="net.squanchy.notification.NearNotificationReceiver"
       android:exported="false">
       <intent-filter>
         <action android:name="it.near.sdk.permission.GEO_MESSAGE" />
