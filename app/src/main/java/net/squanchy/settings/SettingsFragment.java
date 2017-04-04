@@ -143,7 +143,6 @@ public class SettingsFragment extends PreferenceFragment {
             @Override
             public void allChecksPassed() {
                 enableUi();
-                proximityService.startRadar();
             }
 
             @Override

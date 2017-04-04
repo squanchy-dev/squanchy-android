@@ -39,6 +39,7 @@ import net.squanchy.proximity.ProximityEvent;
 import net.squanchy.proximity.preconditions.LocationProviderPrecondition;
 import net.squanchy.proximity.preconditions.ProximityOptInPersister;
 import net.squanchy.proximity.preconditions.ProximityPreconditions;
+import net.squanchy.proximity.preconditions.TaskLauncherFactory;
 import net.squanchy.remoteconfig.RemoteConfig;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.service.proximity.injection.ProximityService;
@@ -53,7 +54,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import timber.log.Timber;
 
-public class HomeActivity extends TypefaceStyleableActivity{
+public class HomeActivity extends TypefaceStyleableActivity {
 
     private static final String KEY_CONTEST_STAND = "stand";
     private static final String KEY_ROOM_EVENT = "room";
@@ -131,7 +132,12 @@ public class HomeActivity extends TypefaceStyleableActivity{
 
         prerequisitesSnackbar = buildPrerequisitesSnackbar();
 
-        HomeComponent homeComponent = HomeInjector.obtain(this, googleApiClient, proximityPreconditionsCallback());
+        HomeComponent homeComponent = HomeInjector.obtain(
+                this,
+                googleApiClient,
+                TaskLauncherFactory.forActivity(this),
+                proximityPreconditionsCallback()
+        );
         analytics = homeComponent.analytics();
         proximityService = homeComponent.proximityService();
         currentEventService = homeComponent.currentEvent();
@@ -436,6 +442,17 @@ public class HomeActivity extends TypefaceStyleableActivity{
             }
 
             @Override
+            public void notOptedIn() {
+                Timber.i("user didn't opt-in");
+                showPrerequisitesSnackbar();
+            }
+
+            @Override
+            public void featureDisabled() {
+                Timber.i("Feature is disabled");
+            }
+
+            @Override
             public void permissionDenied() {
                 Timber.i("User denied location permission");
                 showPrerequisitesSnackbar();
@@ -448,14 +465,6 @@ public class HomeActivity extends TypefaceStyleableActivity{
             }
 
             @Override
-            public void locationProviderFailed(LocationProviderPrecondition.FailureInfo failureInfo) {
-                Timber.i("Location provider check failed. Status: %s", failureInfo);
-                Snackbar.make(pageViews.get(currentSection), R.string.onboarding_error_location_failed, Snackbar.LENGTH_LONG)
-                        .setAction(R.string.onboarding_error_location_failed_action, view -> openLocationSettings())
-                        .show();
-            }
-
-            @Override
             public void bluetoothDenied() {
                 Timber.i("User denied turning Bluetooth on");
                 showPrerequisitesSnackbar();
@@ -465,6 +474,11 @@ public class HomeActivity extends TypefaceStyleableActivity{
             public void exceptionWhileSatisfying(Throwable throwable) {
                 Timber.e(throwable, "Exception occurred while checking");
                 showPrerequisitesSnackbar();
+            }
+
+            @Override
+            public void recheckAfterActivityResult() {
+                proximityPreconditions.needsActionToSatisfyPreconditions();
             }
         };
     }
