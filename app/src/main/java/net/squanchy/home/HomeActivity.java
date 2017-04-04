@@ -36,6 +36,7 @@ import net.squanchy.home.deeplink.HomeActivityDeepLinkCreator;
 import net.squanchy.home.deeplink.HomeActivityIntentParser;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.proximity.ProximityEvent;
+import net.squanchy.proximity.ProximityFeature;
 import net.squanchy.proximity.preconditions.LocationProviderPrecondition;
 import net.squanchy.proximity.preconditions.ProximityOptInPersister;
 import net.squanchy.proximity.preconditions.ProximityPreconditions;
@@ -79,6 +80,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private RemoteConfig remoteConfig;
     private ProximityPreconditions proximityPreconditions;
     private ProximityOptInPersister proximityOptInPersister;
+    private ProximityFeature proximityFeature;
 
     private CompositeDisposable subscriptions;
 
@@ -149,6 +151,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
         remoteConfig = homeComponent.remoteConfig();
         proximityPreconditions = homeComponent.proximityPreconditions();
         proximityOptInPersister = homeComponent.proximityOptInPersister();
+        proximityFeature = homeComponent.proximityFeature();
 
         navigator = homeComponent.navigator();
         subscriptions = new CompositeDisposable();
@@ -392,13 +395,12 @@ public class HomeActivity extends TypefaceStyleableActivity {
                         .subscribe(this::handleProximityEvent));
 
         subscriptions.add(
-                remoteConfig.proximityServicesEnabled()
-                        .subscribeOn(AndroidSchedulers.mainThread())
-                        .doOnSuccess(enabled -> {
-                            if (enabled) {
-                                checkPrerequisiteForProximity();
-                            }
-                        }).subscribe()
+                proximityFeature.enabled()
+                .doOnSuccess(enabled -> {
+                    if (enabled) {
+                        checkPrerequisiteForProximity();
+                    }
+                }).subscribe()
         );
 
         for (Loadable loadable : loadables) {
