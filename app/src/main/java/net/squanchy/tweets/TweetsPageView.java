@@ -115,7 +115,7 @@ public class TweetsPageView extends LinearLayout implements Loadable {
         swipeLayout.setRefreshing(true);
         refreshingData = true;
         subscription = twitterService.refresh(query)
-                .subscribe(this::onSuccess, this::onError);
+                .subscribe(this::onSuccess, e -> onError());
     }
 
     private void onSuccess(List<TweetViewModel> tweet) {
@@ -123,8 +123,8 @@ public class TweetsPageView extends LinearLayout implements Loadable {
         onRefreshCompleted();
     }
 
-    private void onError(Throwable throwable) {
-        Timber.e(throwable, "Error refreshing the Twitter timeline");
+    private void onError() {
+        Timber.e("Error refreshing the Twitter timeline");
         onRefreshCompleted();
     }
 
