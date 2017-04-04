@@ -29,12 +29,13 @@ public class NearNotificationIntentService extends NotificationsIntentService {
             return;
         }
         String proximityId = intent.getStringExtra(NearItIntentConstants.RECIPE_ID);
-        String notificationText = intent.getStringExtra(NearItIntentConstants.NOTIF_BODY);
+        String bigText = intent.getStringExtra(NearItIntentConstants.NOTIF_BODY);
+        String smallText = intent.getStringExtra(NearItIntentConstants.NOTIF_TITLE);
         analytics.trackProximityEventShown(ProximityEvent.create(proximityId));
 
         List<Notification> notifications = new ArrayList<>();
         notifications.add(
-                notificationCreator.createFromProximity(proximityId, notificationText)
+                notificationCreator.createFromProximity(proximityId, bigText, smallText)
         );
         notifier.showNotifications(notifications);
         NearNotificationReceiver.completeWakefulIntent(intent);

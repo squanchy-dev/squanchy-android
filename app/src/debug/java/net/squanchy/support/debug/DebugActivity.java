@@ -174,7 +174,8 @@ public class DebugActivity extends TypefaceStyleableActivity {
         notifications.add(
                 notificationCreator.createFromProximity(
                         "ayy lmao",
-                        "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Dam."
+                        "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Dam.",
+                        "Small message, swipe to open up"
                 )
         );
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);

@@ -75,7 +75,7 @@ public class NotificationCreator {
         return richNotification.build();
     }
 
-    public Notification createFromProximity(String proximityId, String text) {
+    public Notification createFromProximity(String proximityId, String bigText, String smallText) {
         Resources resources = context.getResources();
 
         NotificationCompat.WearableExtender extender = new NotificationCompat.WearableExtender();
@@ -85,6 +85,7 @@ public class NotificationCreator {
                 new NotificationCompat.Builder(context)
                         .setContentIntent(createPendingIntentForProximityNotification(proximityId))
                         .setContentTitle(getApplicationName(context))
+                        .setContentText(smallText)
                         .setSmallIcon(R.drawable.ic_place_white_24dp)
                         .setLights(
                                 ContextCompat.getColor(context, R.color.notification_led_color),
@@ -93,7 +94,7 @@ public class NotificationCreator {
                         )
                         .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
                         .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText(text))
+                                .bigText(bigText))
                         .setPriority(Notification.PRIORITY_MAX)
                         .setAutoCancel(true)
                         .extend(extender);
