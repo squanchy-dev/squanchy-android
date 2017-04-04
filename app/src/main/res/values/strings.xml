@@ -104,7 +104,7 @@
   <string name="onboarding_location_explanation">We’ll need to ask for access to the device location, and to have the Bluetooth turned on</string>
   <string name="onboarding_location_cta">✨ I like swag! ✨</string>
 
-  <string name="proximity_error_not_opted_in">Sorry, unable to opt in because… you’re not opted in? If that makes any sense.</string>
+  <string name="proximity_error_not_opted_in">Sorry, unable to opt in because… you’ve not opted in? If that makes any sense.</string>
   <string name="proximity_error_remote_config_kill_switch">Sorry, the feature has been disabled remotely.</string>
   <string name="proximity_error_permission_denied">We need the location permission to continue.</string>
   <string name="proximity_error_location_denied">We need the location services to be active to continue.</string>
