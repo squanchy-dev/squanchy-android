@@ -12,6 +12,7 @@ import net.squanchy.eventdetails.EventDetailsService.FavoriteResult;
 import net.squanchy.eventdetails.widget.EventDetailsCoordinatorLayout;
 import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.navigation.Navigator;
+import net.squanchy.notification.NotificationsIntentService;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.speaker.domain.view.Speaker;
 
@@ -96,6 +97,8 @@ public class EventDetailsActivity extends TypefaceStyleableActivity {
                 subscriptions.add(service.toggleFavorite(event).subscribe(result -> {
                     if (result == FavoriteResult.MUST_AUTHENTICATE) {
                         requestSignIn();
+                    } else {
+                        triggerNotificationService();
                     }
                 }));
             }
@@ -105,6 +108,11 @@ public class EventDetailsActivity extends TypefaceStyleableActivity {
     private void requestSignIn() {
         navigate().toSignInForResult(REQUEST_CODE_SIGNIN);
         unsubscribeFromUpdates();
+    }
+
+    private void triggerNotificationService() {
+        Intent serviceIntent = new Intent(this, NotificationsIntentService.class);
+        startService(serviceIntent);
     }
 
     @Override
