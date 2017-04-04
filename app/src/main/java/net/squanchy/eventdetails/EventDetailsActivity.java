@@ -100,7 +100,6 @@ public class EventDetailsActivity extends TypefaceStyleableActivity {
                     } else {
                         triggerNotificationService();
                     }
-
                 }));
             }
         };
