@@ -5,6 +5,7 @@ import android.support.annotation.MainThread;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.FirebaseDatabase;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterCore;
@@ -28,7 +29,7 @@ public class SquanchyApplication extends Application {
 
         JodaTimeAndroid.init(this);
         setupTracking();
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        initializeFirebase();
         TypefaceManager.init();
         applicationComponent().service();
     }
@@ -61,6 +62,16 @@ public class SquanchyApplication extends Application {
                 new TwitterCore(authConfig),
                 new TweetUi()
         );
+    }
+
+    private void initializeFirebase() {
+        // Calling initializeApp() should not be necessary, because Firebase uses the ContentProvider hack
+        // (see FirebaseInitProvider). That means that, given we are not running multiple processes, we should
+        // not need this. Unfortunately that's not the case; as of Firebase 10.2.0, the app sometimes crashes.
+        if (FirebaseApp.initializeApp(this) == null) {
+            Timber.e(new IllegalStateException("Initializing Firebase failed"));
+        }
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
     }
 
     @MainThread
