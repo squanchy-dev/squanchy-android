@@ -82,9 +82,16 @@ public class NotificationCreator {
                 new NotificationCompat.Builder(context)
                         .setContentIntent(createPendingIntentForProximityNotification(proximityId))
                         .setContentTitle(getApplicationName(context))
-                        .setSmallIcon(R.drawable.ic_notificationdroid)
+                        .setSmallIcon(R.drawable.ic_place_white_24dp)
+                        .setLights(
+                                ContextCompat.getColor(context, R.color.notification_led_color),
+                                NOTIFICATION_LED_ON_MS,
+                                NOTIFICATION_LED_OFF_MS
+                        )
+                        .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.ic_notificationdroid))
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(text))
+                        .setPriority(Notification.PRIORITY_MAX)
                         .setAutoCancel(true);
         return builder.build();
     }
