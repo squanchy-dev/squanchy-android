@@ -8,6 +8,7 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -115,28 +116,28 @@ public class SettingsFragment extends PreferenceFragment {
             @Override
             public void notOptedIn() {
                 Timber.e(new IllegalStateException("Trying to enable Proximity when the user is not opted in"));
-                showProximityEnablingError(Snackbar.make(getViewOrThrow(), R.string.proximity_error_not_opted_in, Snackbar.LENGTH_LONG));
+                showProximityEnablingError(R.string.proximity_error_not_opted_in);
             }
 
             @Override
             public void featureDisabled() {
                 Timber.e(new IllegalStateException("Trying to enable Proximity when the feature is disabled"));
-                showProximityEnablingError(Snackbar.make(getViewOrThrow(), R.string.proximity_error_remote_config_kill_switch, Snackbar.LENGTH_LONG));
+                showProximityEnablingError(R.string.proximity_error_remote_config_kill_switch);
             }
 
             @Override
             public void permissionDenied() {
-                showProximityEnablingError(Snackbar.make(getViewOrThrow(), R.string.proximity_error_permission_denied, Snackbar.LENGTH_LONG));
+                showProximityEnablingError(R.string.proximity_error_permission_denied);
             }
 
             @Override
             public void locationProviderDenied() {
-                showProximityEnablingError(Snackbar.make(getViewOrThrow(), R.string.proximity_error_location_denied, Snackbar.LENGTH_LONG));
+                showProximityEnablingError(R.string.proximity_error_location_denied);
             }
 
             @Override
             public void bluetoothDenied() {
-                showProximityEnablingError(Snackbar.make(getViewOrThrow(), R.string.proximity_error_bluetooth_denied, Snackbar.LENGTH_LONG));
+                showProximityEnablingError(R.string.proximity_error_bluetooth_denied);
             }
 
             @Override
@@ -148,7 +149,7 @@ public class SettingsFragment extends PreferenceFragment {
             @Override
             public void exceptionWhileSatisfying(Throwable throwable) {
                 Timber.e(throwable, "Exception occurred while checking");
-                showProximityEnablingError(Snackbar.make(getViewOrThrow(), R.string.proximity_error_bluetooth_denied, Snackbar.LENGTH_LONG));
+                showProximityEnablingError(R.string.proximity_error_bluetooth_denied);
             }
 
             @Override
@@ -158,9 +159,10 @@ public class SettingsFragment extends PreferenceFragment {
         };
     }
 
-    private void showProximityEnablingError(Snackbar snackbar) {
+    private void showProximityEnablingError(@StringRes int snackbarMessageResId) {
         enableUi();
-        snackbar.show();
+        Snackbar.make(getViewOrThrow(), snackbarMessageResId, Snackbar.LENGTH_LONG)
+                .show();
         proximityOptInPreference.setChecked(false);
     }
 

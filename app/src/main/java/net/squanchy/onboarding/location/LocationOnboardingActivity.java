@@ -105,17 +105,17 @@ public class LocationOnboardingActivity extends TypefaceStyleableActivity {
 
             @Override
             public void permissionDenied() {
-                showNonFatalProximityError(Snackbar.make(contentRoot, R.string.proximity_error_permission_denied, Snackbar.LENGTH_LONG));
+                showNonFatalProximityError(R.string.proximity_error_permission_denied);
             }
 
             @Override
             public void locationProviderDenied() {
-                showNonFatalProximityError(Snackbar.make(contentRoot, R.string.proximity_error_location_denied, Snackbar.LENGTH_LONG));
+                showNonFatalProximityError(R.string.proximity_error_location_denied);
             }
 
             @Override
             public void bluetoothDenied() {
-                showNonFatalProximityError(Snackbar.make(contentRoot, R.string.proximity_error_bluetooth_denied, Snackbar.LENGTH_LONG));
+                showNonFatalProximityError(R.string.proximity_error_bluetooth_denied);
             }
 
             @Override
@@ -126,7 +126,7 @@ public class LocationOnboardingActivity extends TypefaceStyleableActivity {
             @Override
             public void exceptionWhileSatisfying(Throwable throwable) {
                 Timber.e(throwable, "Exception occurred while checking");
-                showNonFatalProximityError(Snackbar.make(contentRoot, R.string.proximity_error_bluetooth_denied, Snackbar.LENGTH_LONG));
+                showNonFatalProximityError(R.string.proximity_error_bluetooth_denied);
             }
 
             @Override
@@ -136,8 +136,8 @@ public class LocationOnboardingActivity extends TypefaceStyleableActivity {
         };
     }
 
-    private void showFatalProximityError(@StringRes int snackbarText) {
-        Snackbar.make(contentRoot, snackbarText, Snackbar.LENGTH_LONG)
+    private void showFatalProximityError(@StringRes int snackbarMessageResId) {
+        Snackbar.make(contentRoot, snackbarMessageResId, Snackbar.LENGTH_LONG)
                 .addCallback(closeAfterFatalErrorIsDisplayed())
                 .show();
     }
@@ -151,9 +151,10 @@ public class LocationOnboardingActivity extends TypefaceStyleableActivity {
         };
     }
 
-    private void showNonFatalProximityError(Snackbar snackbar) {
+    private void showNonFatalProximityError(@StringRes int snackbarMessageResId) {
         enableUi();
-        snackbar.show();
+        Snackbar.make(contentRoot, snackbarMessageResId, Snackbar.LENGTH_LONG)
+                .show();
     }
 
     private void enableUi() {
