@@ -8,6 +8,7 @@ import net.squanchy.proximity.ProximityFeatureModule;
 import net.squanchy.proximity.preconditions.ProximityOptInPersister;
 import net.squanchy.proximity.preconditions.ProximityPreconditions;
 import net.squanchy.proximity.preconditions.ProximityPreconditionsModule;
+import net.squanchy.proximity.preconditions.TaskLauncherActivityModule;
 import net.squanchy.service.proximity.injection.ProximityService;
 
 import dagger.Component;
@@ -16,7 +17,8 @@ import dagger.Component;
 @Component(modules = {
         OnboardingModule.class,
         ProximityPreconditionsModule.class,
-        ProximityFeatureModule.class
+        ProximityFeatureModule.class,
+        TaskLauncherActivityModule.class
 }, dependencies = ApplicationComponent.class)
 public interface LocationOnboardingComponent {
 

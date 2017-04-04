@@ -8,17 +8,22 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 
+import dagger.Module;
+import dagger.Provides;
 import timber.log.Timber;
 
-public final class TaskLauncherFactory {
+@Module
+public class TaskLauncherFragmentModule {
 
-    private TaskLauncherFactory() {
-        // Not instantiable
+    private final Fragment fragment;
+
+    public TaskLauncherFragmentModule(Fragment fragment) {
+        this.fragment = fragment;
     }
 
-    public static TaskLauncher forFragment(Fragment fragment, Activity activity) {
+    @Provides
+    public TaskLauncher taskLauncher(Activity activity) {
         return new TaskLauncher() {
             @Override
             public void startActivityForResult(Intent intent, int requestCode) {
@@ -46,30 +51,6 @@ public final class TaskLauncherFactory {
                 } else {
                     ActivityCompat.startIntentSenderForResult(activity, intentSender, requestCode, null, 0, 0, 0, Bundle.EMPTY);
                 }
-            }
-        };
-    }
-
-    public static TaskLauncher forActivity(AppCompatActivity activity) {
-        return new TaskLauncher() {
-            @Override
-            public void startActivityForResult(Intent intent, int requestCode) {
-                activity.startActivityForResult(intent, requestCode);
-            }
-
-            @Override
-            public boolean permissionGranted(String permission) {
-                return ActivityCompat.checkSelfPermission(activity, permission) == PackageManager.PERMISSION_GRANTED;
-            }
-
-            @Override
-            public void requestPermissions(String[] permissions, int requestCode) {
-                ActivityCompat.requestPermissions(activity, permissions, requestCode);
-            }
-
-            @Override
-            public void startIntentSenderForResult(IntentSender intentSender, int requestCode) throws IntentSender.SendIntentException {
-                activity.startIntentSenderForResult(intentSender, requestCode, null, 0, 0, 0);
             }
         };
     }

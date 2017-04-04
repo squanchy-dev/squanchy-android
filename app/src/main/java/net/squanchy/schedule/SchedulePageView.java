@@ -1,12 +1,12 @@
 package net.squanchy.schedule;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spanned;
 import android.util.AttributeSet;
@@ -38,7 +38,6 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
     private final ScheduleService service;
     private final Navigator navigate;
     private final Analytics analytics;
-    private final Activity activity;
 
     public SchedulePageView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -47,11 +46,13 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
     public SchedulePageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        activity = unwrapToActivityContext(getContext());
+        AppCompatActivity activity = unwrapToActivityContext(getContext());
         ScheduleComponent component = ScheduleInjector.obtain(activity);
         service = component.service();
         navigate = component.navigator();
         analytics = component.analytics();
+
+        viewPagerAdapter = new ScheduleViewPagerAdapter(activity);
     }
 
     @Override
@@ -65,7 +66,6 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
         tabLayout.setupWithViewPager(viewPager);
         hackToApplyTypefaces(tabLayout);
 
-        viewPagerAdapter = new ScheduleViewPagerAdapter(activity);
         viewPager.setAdapter(viewPagerAdapter);
 
         tabLayout.addOnTabSelectedListener(new TrackingOnTabSelectedListener(analytics, viewPagerAdapter));

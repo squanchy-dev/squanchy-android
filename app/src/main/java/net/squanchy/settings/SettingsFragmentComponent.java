@@ -10,6 +10,7 @@ import net.squanchy.proximity.preconditions.OptInPreferencePersisterModule;
 import net.squanchy.proximity.preconditions.ProximityOptInPersister;
 import net.squanchy.proximity.preconditions.ProximityPreconditions;
 import net.squanchy.proximity.preconditions.ProximityPreconditionsModule;
+import net.squanchy.proximity.preconditions.TaskLauncherFragmentModule;
 import net.squanchy.remoteconfig.RemoteConfig;
 import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.signin.SignInModule;
@@ -24,7 +25,8 @@ import dagger.Component;
         NavigationModule.class,
         OptInPreferencePersisterModule.class,
         ProximityPreconditionsModule.class,
-        ProximityFeatureModule.class
+        ProximityFeatureModule.class,
+        TaskLauncherFragmentModule.class
 },
         dependencies = ApplicationComponent.class)
 public interface SettingsFragmentComponent {

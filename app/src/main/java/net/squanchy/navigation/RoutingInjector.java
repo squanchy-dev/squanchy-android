@@ -1,6 +1,6 @@
 package net.squanchy.navigation;
 
-import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 
 import net.squanchy.injection.ActivityContextModule;
 import net.squanchy.injection.ApplicationInjector;
@@ -15,7 +15,7 @@ final class RoutingInjector {
         // no instances
     }
 
-    public static RoutingComponent obtain(Activity activity) {
+    public static RoutingComponent obtain(AppCompatActivity activity) {
         return DaggerRoutingComponent.builder()
                 .activityContextModule(new ActivityContextModule(activity))
                 .applicationComponent(ApplicationInjector.obtain(activity))

@@ -1,10 +1,10 @@
 package net.squanchy.venue;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
-import android.support.design.widget.CoordinatorLayout;
 import android.os.Build;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.Spanned;
@@ -41,7 +41,7 @@ public class VenueInfoPageView extends CoordinatorLayout implements Loadable {
 
     public VenueInfoPageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        Activity activity = unwrapToActivityContext(getContext());
+        AppCompatActivity activity = unwrapToActivityContext(getContext());
         VenueInfoComponent component = VenueInfoInjector.obtain(activity);
         navigate = component.navigator();
         service = component.service();

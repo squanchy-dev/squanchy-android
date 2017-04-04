@@ -1,6 +1,6 @@
 package net.squanchy.imageloader;
 
-import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 
 import net.squanchy.injection.ActivityContextModule;
 
@@ -10,7 +10,7 @@ public final class ImageLoaderInjector {
         // no instances
     }
 
-    public static ImageLoaderComponent obtain(Activity activity) {
+    public static ImageLoaderComponent obtain(AppCompatActivity activity) {
         return DaggerImageLoaderComponent.builder()
                 .activityContextModule(new ActivityContextModule(activity))
                 .imageLoaderModule(new ImageLoaderModule())
