@@ -28,8 +28,6 @@ interface HomeComponent {
 
     CurrentEventService currentEvent();
 
-    RemoteConfig remoteConfig();
-
     ProximityPreconditions proximityPreconditions();
 
     ProximityOptInPersister proximityOptInPersister();

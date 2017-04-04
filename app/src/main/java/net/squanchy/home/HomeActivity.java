@@ -77,7 +77,6 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private Analytics analytics;
     private Navigator navigator;
     private CurrentEventService currentEventService;
-    private RemoteConfig remoteConfig;
     private ProximityPreconditions proximityPreconditions;
     private ProximityOptInPersister proximityOptInPersister;
     private ProximityFeature proximityFeature;
@@ -148,7 +147,6 @@ public class HomeActivity extends TypefaceStyleableActivity {
         analytics = homeComponent.analytics();
         proximityService = homeComponent.proximityService();
         currentEventService = homeComponent.currentEvent();
-        remoteConfig = homeComponent.remoteConfig();
         proximityPreconditions = homeComponent.proximityPreconditions();
         proximityOptInPersister = homeComponent.proximityOptInPersister();
         proximityFeature = homeComponent.proximityFeature();
