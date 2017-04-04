@@ -1,7 +1,5 @@
 package net.squanchy.tweets.service;
 
-import android.support.annotation.Nullable;
-
 import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.models.Search;
 import com.twitter.sdk.android.core.services.SearchService;
@@ -46,7 +44,7 @@ public class TwitterRepository {
         }
 
         @Override
-        public void onFailure(@Nullable Call<Search> call, Throwable throwable) {
+        public void onFailure(Call<Search> call, Throwable throwable) {
             searchEmitter.onError(throwable);
         }
     }
