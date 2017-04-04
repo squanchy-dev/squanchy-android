@@ -37,7 +37,7 @@ final class SettingsInjector {
                 .build();
     }
 
-    static SettingsActivityComponent obtainForFragment(Activity activity) {
+    static SettingsActivityComponent obtainForActivity(Activity activity) {
         return DaggerSettingsActivityComponent.builder()
                 .applicationComponent(ApplicationInjector.obtain(activity))
                 .signInModule(new SignInModule())
