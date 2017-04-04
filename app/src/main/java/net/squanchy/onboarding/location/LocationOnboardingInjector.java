@@ -5,11 +5,13 @@ import android.app.Activity;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import net.squanchy.injection.ActivityContextModule;
+import net.squanchy.injection.ApplicationContextModule;
 import net.squanchy.injection.ApplicationInjector;
 import net.squanchy.proximity.preconditions.PreconditionsRegistryModule;
 import net.squanchy.proximity.preconditions.ProximityPreconditions;
 import net.squanchy.proximity.preconditions.ProximityPreconditionsModule;
 import net.squanchy.proximity.preconditions.TaskLauncher;
+import net.squanchy.support.debug.DebugPreferencesModule;
 
 final class LocationOnboardingInjector {
 
@@ -28,6 +30,8 @@ final class LocationOnboardingInjector {
                 .applicationComponent(ApplicationInjector.obtain(activity))
                 .preconditionsRegistryModule(new PreconditionsRegistryModule(googleApiClient, taskLauncher))
                 .proximityPreconditionsModule(new ProximityPreconditionsModule(callback))
+                .debugPreferencesModule(new DebugPreferencesModule())
+                .applicationContextModule(new ApplicationContextModule(activity.getApplication()))      // This shouldn't be necessary
                 .build();
     }
 }

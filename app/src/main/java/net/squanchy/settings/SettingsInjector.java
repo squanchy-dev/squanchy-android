@@ -5,6 +5,7 @@ import android.app.Activity;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import net.squanchy.injection.ActivityContextModule;
+import net.squanchy.injection.ApplicationContextModule;
 import net.squanchy.injection.ApplicationInjector;
 import net.squanchy.navigation.NavigationModule;
 import net.squanchy.proximity.preconditions.OptInPreferencePersisterModule;
@@ -34,6 +35,7 @@ final class SettingsInjector {
                 .optInPreferencePersisterModule(new OptInPreferencePersisterModule())
                 .preconditionsRegistryModule(new PreconditionsRegistryModule(googleApiClient, taskLauncher))
                 .proximityPreconditionsModule(new ProximityPreconditionsModule(callback))
+                .applicationContextModule(new ApplicationContextModule(activity.getApplication()))      // This shouldn't be necessary
                 .build();
     }
 

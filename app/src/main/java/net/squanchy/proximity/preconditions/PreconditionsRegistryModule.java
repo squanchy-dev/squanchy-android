@@ -1,6 +1,5 @@
 package net.squanchy.proximity.preconditions;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothManager;
 
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -12,11 +11,12 @@ import net.squanchy.injection.ActivityContextModule;
 import net.squanchy.proximity.BluetoothModule;
 import net.squanchy.remoteconfig.RemoteConfig;
 import net.squanchy.support.debug.DebugPreferences;
+import net.squanchy.support.debug.DebugPreferencesModule;
 
 import dagger.Module;
 import dagger.Provides;
 
-@Module(includes = {ActivityContextModule.class, OptInPreferencePersisterModule.class, BluetoothModule.class})
+@Module(includes = {ActivityContextModule.class, OptInPreferencePersisterModule.class, BluetoothModule.class, DebugPreferencesModule.class})
 public class PreconditionsRegistryModule {
 
     private final GoogleApiClient googleApiClient;
@@ -30,11 +30,6 @@ public class PreconditionsRegistryModule {
     @Provides
     OptInPrecondition optInPrecondition(ProximityOptInPersister proximityOptInPersister) {
         return new OptInPrecondition(proximityOptInPersister);
-    }
-
-    @Provides
-    DebugPreferences debugPreferences(Activity activity) {
-        return new DebugPreferences(activity);
     }
 
     @Provides
