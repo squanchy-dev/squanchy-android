@@ -37,18 +37,13 @@ import net.squanchy.home.deeplink.HomeActivityIntentParser;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.proximity.ProximityEvent;
 import net.squanchy.proximity.ProximityFeature;
-import net.squanchy.proximity.preconditions.LocationProviderPrecondition;
 import net.squanchy.proximity.preconditions.ProximityOptInPersister;
 import net.squanchy.proximity.preconditions.ProximityPreconditions;
 import net.squanchy.proximity.preconditions.TaskLauncherFactory;
-import net.squanchy.remoteconfig.RemoteConfig;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.support.lang.Optional;
 import net.squanchy.support.widget.InterceptingBottomNavigationView;
-
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import io.reactivex.Maybe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -457,11 +452,6 @@ public class HomeActivity extends TypefaceStyleableActivity {
             public void notOptedIn() {
                 Timber.i("user didn't opt-in");
                 showPrerequisitesSnackbar();
-            }
-
-            @Override
-            public void featureDisabled() {
-                Timber.i("Feature is disabled");
             }
 
             @Override
