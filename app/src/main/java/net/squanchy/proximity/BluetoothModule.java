@@ -1,6 +1,6 @@
 package net.squanchy.proximity;
 
-import android.app.Activity;
+import android.app.Application;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 
@@ -11,7 +11,7 @@ import dagger.Provides;
 public class BluetoothModule {
 
     @Provides
-    BluetoothManager bluetoothManager(Activity activity) {
-        return (BluetoothManager) activity.getSystemService(Context.BLUETOOTH_SERVICE);
+    BluetoothManager bluetoothManager(Application application) {
+        return (BluetoothManager) application.getSystemService(Context.BLUETOOTH_SERVICE);
     }
 }

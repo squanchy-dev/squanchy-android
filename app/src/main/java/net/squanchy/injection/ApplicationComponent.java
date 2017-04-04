@@ -4,6 +4,7 @@ import android.app.Application;
 
 import net.squanchy.analytics.Analytics;
 import net.squanchy.analytics.AnalyticsModule;
+import net.squanchy.proximity.BluetoothModule;
 import net.squanchy.remoteconfig.RemoteConfig;
 import net.squanchy.remoteconfig.RemoteConfigModule;
 import net.squanchy.service.firebase.FirebaseAuthService;
@@ -29,7 +30,8 @@ import dagger.Component;
         ProximityModule.class,
         AnalyticsModule.class,
         RemoteConfigModule.class,
-        CurrentTimeModule.class})
+        CurrentTimeModule.class,
+        BluetoothModule.class})
 public interface ApplicationComponent {
 
     FirebaseDbService firebaseDbService();
