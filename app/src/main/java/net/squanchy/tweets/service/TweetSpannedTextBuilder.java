@@ -8,6 +8,7 @@ import com.twitter.sdk.android.core.models.HashtagEntity;
 import com.twitter.sdk.android.core.models.MentionEntity;
 import com.twitter.sdk.android.core.models.UrlEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
@@ -31,6 +32,7 @@ public class TweetSpannedTextBuilder {
 
     Spanned applySpans(String text, int startIndex, List<HashtagEntity> hashtags, List<MentionEntity> mentions, List<UrlEntity> urls) {
         SpannableStringBuilder builder = new SpannableStringBuilder(text);
+
         for (HashtagEntity hashtag : hashtags) {
             hashtag = offsetStart(hashtag, startIndex);
             builder.setSpan(createUrlSpanFor(hashtag), hashtag.getStart(), hashtag.getEnd(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
