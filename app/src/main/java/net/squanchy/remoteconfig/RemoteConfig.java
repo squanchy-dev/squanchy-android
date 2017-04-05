@@ -6,7 +6,9 @@ import java.util.concurrent.TimeUnit;
 
 import net.squanchy.support.lang.Func0;
 
+import io.reactivex.Completable;
 import io.reactivex.Single;
+import io.reactivex.SingleSource;
 import io.reactivex.schedulers.Schedulers;
 
 public class RemoteConfig {
@@ -36,12 +38,27 @@ public class RemoteConfig {
     }
 
     private <T> Single<T> getConfigValue(Func0<T> action) {
-        return Single.create(emitter ->
-                remoteConfig.fetch(cacheExpiryInSeconds())
-                        .addOnCompleteListener(task -> {
-                            remoteConfig.activateFetched();
-                            emitter.onSuccess(action.call());
-                        })
+        return fetchAndActivate(cacheExpiryInSeconds())
+                .andThen((SingleSource<T>) emitter -> emitter.onSuccess(action.call()));
+    }
+
+    public Completable fetchNow() {
+        return fetchAndActivate(EXPIRY_IMMEDIATELY)
+                .subscribeOn(Schedulers.io());
+    }
+
+    private Completable fetchAndActivate(long cacheExpiryInSeconds) {
+        return Completable.create(emitter -> remoteConfig.fetch(cacheExpiryInSeconds)
+                .addOnCompleteListener(task -> {
+                    remoteConfig.activateFetched();
+                    emitter.onComplete();
+                })
+                .addOnFailureListener(exception -> {
+                    if (emitter.isDisposed()) {
+                        return;
+                    }
+                    emitter.onError(exception);
+                })
         );
     }
 

@@ -1,38 +1,54 @@
 package net.squanchy.settings;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
+import android.preference.SwitchPreference;
+import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ListView;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.firebase.auth.FirebaseUser;
 
 import net.squanchy.BuildConfig;
 import net.squanchy.R;
 import net.squanchy.navigation.Navigator;
-import net.squanchy.remoteconfig.RemoteConfig;
+import net.squanchy.proximity.ProximityFeature;
+import net.squanchy.proximity.preconditions.ProximityOptInPersister;
+import net.squanchy.proximity.preconditions.ProximityPreconditions;
+import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.signin.SignInService;
+import net.squanchy.support.debug.DebugPreferences;
 import net.squanchy.support.lang.Optional;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import timber.log.Timber;
 
 public class SettingsFragment extends PreferenceFragment {
 
     private final CompositeDisposable subscriptions = new CompositeDisposable();
 
     private SignInService signInService;
-    private RemoteConfig remoteConfig;
+    private ProximityFeature proximityFeature;
     private Navigator navigator;
+    private ProximityService proximityService;
+    private ProximityPreconditions proximityPreconditions;
+    private ProximityOptInPersister proximityOptInPersister;
+    private DebugPreferences debugPreferences;
 
     private PreferenceCategory accountCategory;
     private Preference accountEmailPreference;
     private Preference accountSignInSignOutPreference;
 
-    private PreferenceCategory settingsCategory;
-    private Preference proximityOptInPreference;
+    private SwitchPreference proximityOptInPreference;
     private Preference contestStandingsPreference;
 
     @Override
@@ -48,18 +64,33 @@ public class SettingsFragment extends PreferenceFragment {
             removeDebugCategory();
         }
 
-        SettingsComponent component = SettingsInjector.obtain(getActivity());
+        AppCompatActivity activity = (AppCompatActivity) getActivity(); // TODO UNYOLO
+        GoogleApiClient googleApiClient = new GoogleApiClient.Builder(activity)
+                .enableAutoManage(activity, connectionResult -> onGoogleConnectionFailed())
+                .addApi(LocationServices.API)
+                .build();
+
+        SettingsFragmentComponent component = SettingsInjector.obtainForFragment(
+                this,
+                activity,
+                googleApiClient,
+                proximityPreconditionsCallback()
+        );
         signInService = component.signInService();
-        remoteConfig = component.remoteConfig();
         navigator = component.navigator();
+        proximityService = component.proximityService();
+        proximityOptInPersister = component.proximityOptInPersister();
+        proximityPreconditions = component.proximityPreconditions();
+        proximityFeature = component.proximityFeature();
+        debugPreferences = component.debugPreferences();
 
         accountCategory = (PreferenceCategory) findPreference(getString(R.string.account_category_key));
         accountEmailPreference = findPreference(getString(R.string.account_email_preference_key));
         accountCategory.removePreference(accountEmailPreference);
         accountSignInSignOutPreference = findPreference(getString(R.string.account_signin_signout_preference_key));
+        proximityOptInPreference = (SwitchPreference) findPreference(getString(R.string.proximity_opt_in_preference_key));
+        proximityOptInPreference.setOnPreferenceChangeListener((preference, isEnabling) -> handleProximityPreferenceChange((boolean) isEnabling));
 
-        settingsCategory = (PreferenceCategory) findPreference(getString(R.string.settings_category_key));
-        proximityOptInPreference = findPreference(getString(R.string.location_preference_key));
         contestStandingsPreference = findPreference(getString(R.string.contest_standings_preference_key));
         contestStandingsPreference.setOnPreferenceClickListener(preference -> {
             navigator.toContest();
@@ -71,6 +102,70 @@ public class SettingsFragment extends PreferenceFragment {
             navigator.toAboutSquanchy();
             return true;
         });
+    }
+
+    private void onGoogleConnectionFailed() {
+        Timber.e("Google Client connection failed");
+        Snackbar.make(getViewOrThrow(), R.string.proximity_error_google_client_connection, Snackbar.LENGTH_LONG).show();
+    }
+
+    private ProximityPreconditions.Callback proximityPreconditionsCallback() {
+        return new ProximityPreconditions.Callback() {
+            @Override
+            public void notOptedIn() {
+                Timber.e(new IllegalStateException("Trying to enable Proximity when the user is not opted in"));
+                showProximityEnablingError(R.string.proximity_error_not_opted_in);
+            }
+
+            @Override
+            public void permissionDenied() {
+                showProximityEnablingError(R.string.proximity_error_permission_denied);
+            }
+
+            @Override
+            public void locationProviderDenied() {
+                showProximityEnablingError(R.string.proximity_error_location_denied);
+            }
+
+            @Override
+            public void bluetoothDenied() {
+                showProximityEnablingError(R.string.proximity_error_bluetooth_denied);
+            }
+
+            @Override
+            public void allChecksPassed() {
+                enableUi();
+            }
+
+            @Override
+            public void exceptionWhileSatisfying(Throwable throwable) {
+                Timber.e(throwable, "Exception occurred while checking");
+                showProximityEnablingError(R.string.proximity_error_bluetooth_denied);
+            }
+
+            @Override
+            public void recheckAfterActivityResult() {
+                tryOptingInAgain();
+            }
+        };
+    }
+
+    private void showProximityEnablingError(@StringRes int snackbarMessageResId) {
+        enableUi();
+        Snackbar.make(getViewOrThrow(), snackbarMessageResId, Snackbar.LENGTH_LONG)
+                .show();
+        proximityOptInPreference.setChecked(false);
+    }
+
+    private void tryOptingInAgain() {
+        enableUi();
+        if (proximityOptInPreference.isChecked()) {
+            optInAndEnableProximity();
+        }
+    }
+
+    private void enableUi() {
+        getViewOrThrow().setEnabled(true);
     }
 
     private void displayBuildVersion() {
@@ -90,9 +185,11 @@ public class SettingsFragment extends PreferenceFragment {
     public void onStart() {
         super.onStart();
 
+        proximityOptInPreference.setChecked(proximityOptInPersister.userOptedIn());
+
         hideDividers();
 
-        hideProximityAndContestBasedOnRemoteConfig();
+        disableProximityAndContestBasedOnFeature();
 
         subscriptions.add(
                 signInService.currentUser()
@@ -102,34 +199,28 @@ public class SettingsFragment extends PreferenceFragment {
     }
 
     private void hideDividers() {
-        ListView list = (ListView) getView().findViewById(android.R.id.list);
+        ListView list = (ListView) getViewOrThrow().findViewById(android.R.id.list);
         list.setDivider(null);
         list.setDividerHeight(0);
     }
 
-    private void hideProximityAndContestBasedOnRemoteConfig() {
+    private void disableProximityAndContestBasedOnFeature() {
+        if (debugPreferences.contestTestingEnabled()) {
+            // We always show the location and contest settings when testing is enabled.
+            setProximityAndContestUiEnabled(true);
+            return;
+        }
+
         subscriptions.add(
-                remoteConfig.proximityServicesEnabled()
+                proximityFeature.enabled()
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(this::setProximityAndContestUiStatus)
+                        .subscribe(this::setProximityAndContestUiEnabled)
         );
     }
 
-    private void setProximityAndContestUiStatus(boolean enabled) {
-        if (enabled) {
-            showIfNotAlreadyShown(proximityOptInPreference);
-            showIfNotAlreadyShown(contestStandingsPreference);
-            proximityOptInPreference.setSelectable(true);
-        } else {
-            settingsCategory.removePreference(proximityOptInPreference);
-            settingsCategory.removePreference(contestStandingsPreference);
-        }
-    }
-
-    private void showIfNotAlreadyShown(Preference preference) {
-        if (settingsCategory.findPreference(preference.getKey()) == null) {
-            settingsCategory.addPreference(preference);
-        }
+    private void setProximityAndContestUiEnabled(boolean enabled) {
+        proximityOptInPreference.setSelectable(enabled);
+        contestStandingsPreference.setSelectable(enabled);
     }
 
     private void onUserChanged(Optional<FirebaseUser> user) {
@@ -149,7 +240,7 @@ public class SettingsFragment extends PreferenceFragment {
                 preference -> {
                     signInService.signOut()
                             .subscribe(() ->
-                                    Snackbar.make(getView(), R.string.settings_message_signed_out, Snackbar.LENGTH_SHORT).show()
+                                    Snackbar.make(getViewOrThrow(), R.string.settings_message_signed_out, Snackbar.LENGTH_SHORT).show()
                             );
                     return true;
                 }
@@ -166,6 +257,58 @@ public class SettingsFragment extends PreferenceFragment {
                     return true;
                 }
         );
+    }
+
+    private boolean handleProximityPreferenceChange(boolean enableProximity) {
+        if (enableProximity) {
+            optInAndEnableProximity();
+        } else {
+            disableAndOptOutFromProximity();
+        }
+        return true;
+    }
+
+    private void optInAndEnableProximity() {
+        proximityOptInPersister.storeUserOptedIn();
+        if (proximityPreconditions.needsActionToSatisfyPreconditions()) {
+            disableUi();
+            proximityPreconditions.startSatisfyingPreconditions();
+        } else {
+            proximityService.startRadar();
+        }
+    }
+
+    private void disableUi() {
+        getViewOrThrow().setEnabled(false);
+    }
+
+    private View getViewOrThrow() {
+        View view = getView();
+        if (view == null) {
+            throw new IllegalStateException("You cannot access the fragment's view when it doesn't exist yet");
+        }
+        return view;
+    }
+
+    private void disableAndOptOutFromProximity() {
+        proximityService.stopRadar();
+        proximityOptInPersister.storeUserOptedOut();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        boolean handled = proximityPreconditions.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (!handled) {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        boolean handled = proximityPreconditions.onActivityResult(requestCode, resultCode, data);
+        if (!handled) {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     @Override

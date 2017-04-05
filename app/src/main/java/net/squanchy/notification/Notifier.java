@@ -1,7 +1,6 @@
 package net.squanchy.notification;
 
 import android.app.Notification;
-import android.content.Context;
 import android.support.v4.app.NotificationManagerCompat;
 
 import java.util.List;

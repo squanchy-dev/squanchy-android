@@ -1,8 +1,8 @@
 package net.squanchy.speaker.widget;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,7 +37,7 @@ public class SpeakerHeaderView extends LinearLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
 
         if (!isInEditMode()) {
-            Activity activity = unwrapToActivityContext(context);
+            AppCompatActivity activity = unwrapToActivityContext(context);
             imageLoader = ImageLoaderInjector.obtain(activity).imageLoader();
         }
 

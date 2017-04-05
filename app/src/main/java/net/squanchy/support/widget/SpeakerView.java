@@ -1,8 +1,8 @@
 package net.squanchy.support.widget;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -47,7 +47,7 @@ public abstract class SpeakerView extends LinearLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
 
         if (!isInEditMode()) {
-            Activity activity = unwrapToActivityContext(context);
+            AppCompatActivity activity = unwrapToActivityContext(context);
             imageLoader = ImageLoaderInjector.obtain(activity).imageLoader();
         }
         super.setOrientation(VERTICAL);

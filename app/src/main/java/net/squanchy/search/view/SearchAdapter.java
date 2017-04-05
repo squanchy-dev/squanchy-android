@@ -3,6 +3,7 @@ package net.squanchy.search.view;
 import android.app.Activity;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -40,7 +41,7 @@ class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private SearchResults searchResults = SearchResults.Companion.create(Collections.emptyList(), Collections.emptyList());
     private ItemsAdapter itemsAdapter = new ItemsAdapter(searchResults);
 
-    SearchAdapter(Activity activity) {
+    SearchAdapter(AppCompatActivity activity) {
         this.activity = activity;
 
         imageLoader = ImageLoaderInjector.obtain(activity).imageLoader();

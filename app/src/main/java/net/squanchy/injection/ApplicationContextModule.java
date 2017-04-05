@@ -10,7 +10,7 @@ public class ApplicationContextModule {
 
     private final Application application;
 
-    public ApplicationContextModule(Application application) {
+    ApplicationContextModule(Application application) {
         this.application = application;
     }
 

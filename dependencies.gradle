@@ -1,6 +1,7 @@
+
 ext {
     supportLibVersion = '25.3.1'
-    playServicesVersion = '10.2.0'
+    playServicesVersion = '10.2.1'
     daggerVersion = '2.9'
     kotlinVersion = '1.1.1'
 
@@ -28,7 +29,7 @@ ext {
                     googleSignIn     : "com.google.android.gms:play-services-auth:${playServicesVersion}",
                     jodaTimeAndroid  : 'net.danlew:android.joda:2.9.7',
                     kotlin           : "org.jetbrains.kotlin:kotlin-stdlib-jre7:${kotlinVersion}",
-                    nearit           : 'it.near.sdk.core:nearitsdk:2.1.7',
+                    nearit           : 'it.near.sdk.core:nearitsdk:2.1.8',
                     retrolambda      : 'net.orfjackal.retrolambda:retrolambda:2.5.0',
                     rx               : 'io.reactivex.rxjava2:rxjava:2.0.5',
                     rxAndroid        : 'io.reactivex.rxjava2:rxandroid:2.0.1',

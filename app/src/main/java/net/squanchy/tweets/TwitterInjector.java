@@ -1,6 +1,6 @@
 package net.squanchy.tweets;
 
-import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 
 import net.squanchy.injection.ActivityContextModule;
 import net.squanchy.injection.ApplicationInjector;
@@ -12,7 +12,7 @@ final class TwitterInjector {
         // no instances
     }
 
-    public static TwitterComponent obtain(Activity activity) {
+    public static TwitterComponent obtain(AppCompatActivity activity) {
         return DaggerTwitterComponent.builder()
                 .applicationComponent(ApplicationInjector.obtain(activity))
                 .activityContextModule(new ActivityContextModule(activity))

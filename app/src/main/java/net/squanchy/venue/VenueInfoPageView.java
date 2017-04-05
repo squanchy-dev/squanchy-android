@@ -1,15 +1,15 @@
 package net.squanchy.venue;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.AttributeSet;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.squanchy.R;
@@ -24,11 +24,11 @@ import io.reactivex.disposables.Disposable;
 
 import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 
-public class VenueInfoPageView extends LinearLayout implements Loadable {
+public class VenueInfoPageView extends CoordinatorLayout implements Loadable {
 
     private Disposable subscription;
-    private Navigator navigate;
-    private VenueInfoService service;
+    private final Navigator navigate;
+    private final VenueInfoService service;
     private TextView nameText;
     private TextView addressText;
     private TextView descriptionText;
@@ -40,33 +40,20 @@ public class VenueInfoPageView extends LinearLayout implements Loadable {
     }
 
     public VenueInfoPageView(Context context, AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
-    }
-
-    public VenueInfoPageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+        super(context, attrs, defStyleAttr);
+        AppCompatActivity activity = unwrapToActivityContext(getContext());
+        VenueInfoComponent component = VenueInfoInjector.obtain(activity);
+        navigate = component.navigator();
+        service = component.service();
 
         if (!isInEditMode()) {
-            Activity activity = unwrapToActivityContext(context);
             imageLoader = ImageLoaderInjector.obtain(activity).imageLoader();
         }
-        
-        super.setOrientation(VERTICAL);
-    }
-
-    @Override
-    public void setOrientation(int orientation) {
-        throw new UnsupportedOperationException(VenueInfoPageView.class.getSimpleName() + " doesn't support changing orientation");
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
-        Activity activity = unwrapToActivityContext(getContext());
-        VenueInfoComponent component = VenueInfoInjector.obtain(activity);
-        navigate = component.navigator();
-        service = component.service();
 
         nameText = (TextView) findViewById(R.id.venue_name);
         addressText = (TextView) findViewById(R.id.venue_address);

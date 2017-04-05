@@ -4,6 +4,8 @@
   <string name="activity_social_feed">@string/social_query</string>
   <string name="activity_schedule">Schedule</string>
   <string name="activity_favorites">Favorites</string>
+  <string name="event_details">Details</string>
+  <string name="missing_prerequisites_action">Fix it</string>
 
   <string name="experience_level_beginner">beginner</string>
   <string name="experience_level_intermediate">intermediate</string>
@@ -56,8 +58,8 @@
   <string name="settings_location_summary_off">You cannot participate to the contest.</string>
   <string name="settings_contest_standings_title">Contest progress</string>
   <string name="settings_notifications_about_to_start_title">Upcoming events notification</string>
-  <string name="settings_notifications_about_to_start_summary_on">Show notifications for favourite events starting soon</string>
-  <string name="settings_notifications_about_to_start_summary_off">Do not show notifications for favourite events starting soon</string>
+  <string name="settings_notifications_about_to_start_summary_on">Show notifications for favorite events starting soon</string>
+  <string name="settings_notifications_about_to_start_summary_off">Do not show notifications for favorite events starting soon</string>
   <string name="settings_message_signed_out">You have been signed out.</string>
   <string name="about_title">About</string>
   <string name="settings_account_not_signed_in">Not signed in</string>
@@ -70,10 +72,15 @@
   <string name="venue_about_label">About the venue</string>
   <string name="venue_map_content_description">Map to the venue</string>
 
+  <string name="prompt_to_sign_in_for_favorites">Get notified about upcoming talks. Your favorite talks are also get synced across all your devices.\n\nTap to sign in.</string>
+  <string name="prompt_to_favorite">You have no favorite talks, yet. Find some talk, touch the ♥ button and you are good to go.</string>
+  <string name="achievement_unlocked">Achievement Unlocked: The Fast Learner!</string>
+  <string name="missing_prerequisites_for_location">Uh oh! Location features will not work with the current devices settings</string>
+
   <string name="favorites_empty_state_signed_out_blurb">Pick your favorite talks, synced across devices, and get notifications when they’re about to start.</string>
   <string name="favorites_empty_state_signed_out_cta">SIGN IN</string>
   <string name="favorites_empty_state_signed_in_blurb">You haven’t picked any favorites yet.\n\n1️⃣ Find a talk you like.\n2️⃣ Aim for the big ♥ button.\n3️⃣ That’s it. Really.</string>
-  <string name="favorites_achievement_fast_learner"><![CDATA[Achievement Unlocked: <b>The Fast Learner</b> 🤓]]></string>
+  <string name="favorites_achievement_fast_learner"><![CDATA[Achievement Unlocked: <b>The Fast Learner</b>]]></string>
   <string name="favorites_achievement_persevering"><![CDATA[Achievement Unlocked: <b>The harder you try, the luckier you get.</b> Now give it a rest.]]></string>
 
   <string name="about_label">About</string>
@@ -91,10 +98,26 @@
   <string name="sign_in_label">Please sign in with your Google account to proceed.</string>
   <string name="sign_in_error_please_retry">Unable to sign you in. Please try again shortly.</string>
 
+  <string name="onboarding_skip_button">SKIP</string>
+
+  <string name="onboarding_location_label">Location</string>
+  <string name="onboarding_location_title">Win swag with our sponsors</string>
+  <string name="onboarding_location_blurb">Allow the app your location and visit all our sponsors’ booths to win swag</string>
+  <string name="onboarding_location_explanation">We’ll need to ask for access to the device location, and to have the Bluetooth turned on</string>
+  <string name="onboarding_location_cta">I like swag!</string>
+
+  <string name="proximity_error_not_opted_in">Sorry, unable to opt in because… you’ve not opted in? If that makes any sense.</string>
+  <string name="proximity_error_remote_config_kill_switch">Sorry, the feature has been disabled remotely.</string>
+  <string name="proximity_error_permission_denied">We need the location permission to continue.</string>
+  <string name="proximity_error_location_denied">We need the location services to be active to continue.</string>
+  <string name="proximity_error_bluetooth_denied">We need the Bluetooth to be active to continue.</string>
+  <string name="proximity_error_location_failed">Unable to verify location settings for the device.</string>
+  <string name="proximity_error_google_client_connection">Unable to verify location settings for the device. Please try again shortly.</string>
+
   <string name="routing_sign_in_unexpected_error">Something went very wrong while starting Squanchy, sorry.</string>
 
   <string name="first_start_with_no_network_label">Not so fast!</string>
-  <string name="first_start_with_no_network_network_connected">Yay network is back! 🎉</string>
+  <string name="first_start_with_no_network_network_connected">Yay network is back!</string>
   <string name="first_start_with_no_network_title">Not so fast!</string>
   <string name="first_start_with_no_network_blurb">Unfortunately, the first time you open this app you will need to be connected to the internet.</string>
   <string name="first_start_with_no_network_cta">Go ahead, connect to a network. I’ll be waiting.</string>
@@ -107,6 +130,6 @@
     <item quantity="one">Just one sponsor left to visit!</item>
     <item quantity="other">%1$d sponsors left to visit</item>
   </plurals>
-  <string name="contest_completed">You got all the sponsors!\nVisit the Synesthesia booth to claim your swag 🎁</string>
+  <string name="contest_completed">You got all the sponsors!\nVisit the Synesthesia booth to claim your swag</string>
 
 </resources>
