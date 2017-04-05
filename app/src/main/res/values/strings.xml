@@ -80,7 +80,7 @@
   <string name="favorites_empty_state_signed_out_blurb">Pick your favorite talks, synced across devices, and get notifications when they’re about to start.</string>
   <string name="favorites_empty_state_signed_out_cta">SIGN IN</string>
   <string name="favorites_empty_state_signed_in_blurb">You haven’t picked any favorites yet.\n\n1️⃣ Find a talk you like.\n2️⃣ Aim for the big ♥ button.\n3️⃣ That’s it. Really.</string>
-  <string name="favorites_achievement_fast_learner"><![CDATA[Achievement Unlocked: <b>The Fast Learner</b> 🤓]]></string>
+  <string name="favorites_achievement_fast_learner"><![CDATA[Achievement Unlocked: <b>The Fast Learner</b>]]></string>
   <string name="favorites_achievement_persevering"><![CDATA[Achievement Unlocked: <b>The harder you try, the luckier you get.</b> Now give it a rest.]]></string>
 
   <string name="about_label">About</string>
@@ -102,9 +102,9 @@
 
   <string name="onboarding_location_label">Location</string>
   <string name="onboarding_location_title">Win swag with our sponsors</string>
-  <string name="onboarding_location_blurb">Allow the app your location and visit all our sponsors’ booths to win swag 🎁</string>
+  <string name="onboarding_location_blurb">Allow the app your location and visit all our sponsors’ booths to win swag</string>
   <string name="onboarding_location_explanation">We’ll need to ask for access to the device location, and to have the Bluetooth turned on</string>
-  <string name="onboarding_location_cta">✨ I like swag! ✨</string>
+  <string name="onboarding_location_cta">I like swag!</string>
 
   <string name="proximity_error_not_opted_in">Sorry, unable to opt in because… you’ve not opted in? If that makes any sense.</string>
   <string name="proximity_error_remote_config_kill_switch">Sorry, the feature has been disabled remotely.</string>
@@ -117,7 +117,7 @@
   <string name="routing_sign_in_unexpected_error">Something went very wrong while starting Squanchy, sorry.</string>
 
   <string name="first_start_with_no_network_label">Not so fast!</string>
-  <string name="first_start_with_no_network_network_connected">Yay network is back! 🎉</string>
+  <string name="first_start_with_no_network_network_connected">Yay network is back!</string>
   <string name="first_start_with_no_network_title">Not so fast!</string>
   <string name="first_start_with_no_network_blurb">Unfortunately, the first time you open this app you will need to be connected to the internet.</string>
   <string name="first_start_with_no_network_cta">Go ahead, connect to a network. I’ll be waiting.</string>
@@ -130,6 +130,6 @@
     <item quantity="one">Just one sponsor left to visit!</item>
     <item quantity="other">%1$d sponsors left to visit</item>
   </plurals>
-  <string name="contest_completed">You got all the sponsors!\nVisit the Synesthesia booth to claim your swag 🎁</string>
+  <string name="contest_completed">You got all the sponsors!\nVisit the Synesthesia booth to claim your swag</string>
 
 </resources>
