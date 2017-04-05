@@ -35,7 +35,8 @@ public class TweetModelConverter {
         List<MentionEntity> mentions = adjustMentions(onlyMentionsInRange(tweet.entities.userMentions, displayTextRange), emojiIndices);
         List<UrlEntity> urls = adjustUrls(onlyUrlsInRange(tweet.entities.urls, displayTextRange), emojiIndices);
         List<String> photoUrls = onlyPhotoUrls(tweet.entities.media);
-        String displayableText = displayableTextFor(tweet, displayTextRange, tweet.entities.media);
+        List<String> unresolvedPhotoUrl = Lists.map(tweet.entities.media, media -> media.url);
+        String displayableText = displayableTextFor(tweet, displayTextRange, unresolvedPhotoUrl);
 
         return TweetViewModel.builder()
                 .id(tweet.id)
@@ -114,21 +115,20 @@ public class TweetModelConverter {
         return Lists.map(photos, mediaEntity -> mediaEntity.mediaUrlHttps);
     }
 
-    private String displayableTextFor(Tweet tweet, Range displayTextRange, List<MediaEntity> photoUrls) {
+    private String displayableTextFor(Tweet tweet, Range displayTextRange, List<String> photoUrls) {
         Integer beginIndex = displayTextRange.start();
         Integer endIndex = displayTextRange.end();
         String displayableText = tweet.text.substring(beginIndex, endIndex);
-        if (photoUrls != null) {
-            displayableText = removePhotoUrl(displayableText, photoUrls);
-        }
-        return displayableText;
+        return removeLastPhotoUrl(displayableText, photoUrls);
     }
 
-    private String removePhotoUrl(String content, List<MediaEntity> photoUrls) {
-        for (MediaEntity url : photoUrls) {
-            if (content.contains(url.url)) {
-                content = content.replace(url.url, "");
-            }
+    private String removeLastPhotoUrl(String content, List<String> photoUrls) {
+        if (photoUrls.isEmpty()){
+            return content;
+        }
+        String lastUrl = photoUrls.get(photoUrls.size() - 1);
+        if (content.endsWith(lastUrl)) {
+            content = content.replace(lastUrl, "");
         }
         return content;
     }
