@@ -67,4 +67,14 @@ public final class Lists {
 
         return false;
     }
+
+    public static <T> boolean all(T[] array, Predicate<T> predicate) {
+        for (T t : array){
+            if (!predicate.call(t)){
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
