@@ -28,12 +28,12 @@ public class TweetModelConverter {
     TweetViewModel toViewModel(Tweet tweet) {
         User user = User.create(tweet.user.name, tweet.user.screenName, tweet.user.profileImageUrlHttps);
 
-        List<Integer> specialCharacters = findSpecialCharacterIndecesFor(tweet.text);
-        Range displayTextRange = Range.from(tweet.displayTextRange, tweet.text.length(), specialCharacters.size());
+        List<Integer> emojiIndices = findEmojiIndices(tweet.text);
+        Range displayTextRange = Range.from(tweet.displayTextRange, tweet.text.length(), emojiIndices.size());
 
-        List<HashtagEntity> hashtags = adjustHashtag(onlyHashtagsInRange(tweet.entities.hashtags, displayTextRange), specialCharacters);
-        List<MentionEntity> mentions = adjustMentions(onlyMentionsInRange(tweet.entities.userMentions, displayTextRange), specialCharacters);
-        List<UrlEntity> urls = adjustUrls(onlyUrlsInRange(tweet.entities.urls, displayTextRange), specialCharacters);
+        List<HashtagEntity> hashtags = adjustHashtag(onlyHashtagsInRange(tweet.entities.hashtags, displayTextRange), emojiIndices);
+        List<MentionEntity> mentions = adjustMentions(onlyMentionsInRange(tweet.entities.userMentions, displayTextRange), emojiIndices);
+        List<UrlEntity> urls = adjustUrls(onlyUrlsInRange(tweet.entities.urls, displayTextRange), emojiIndices);
         List<String> photoUrls = onlyPhotoUrls(tweet.entities.media);
         String displayableText = displayableTextFor(tweet, displayTextRange);
 
@@ -48,15 +48,14 @@ public class TweetModelConverter {
                 .build();
     }
 
-    private List<Integer> findSpecialCharacterIndecesFor(String text) {
-        StringBuilder builder = new StringBuilder(text);
-        List<Integer> highSurrogateIndices = new ArrayList<>();
-        for (int i = 0; i < builder.length() - 1; ++i) {
-            if (Character.isHighSurrogate(builder.charAt(i)) && Character.isLowSurrogate(builder.charAt(i + 1))) {
-                highSurrogateIndices.add(i);
+    private List<Integer> findEmojiIndices(String text) {
+        List<Integer> emojiIndices = new ArrayList<>();
+        for (int i = 0; i < text.length() - 1; ++i) {
+            if (Character.isHighSurrogate(text.charAt(i)) && Character.isLowSurrogate(text.charAt(i + 1))) {
+                emojiIndices.add(i);
             }
         }
-        return highSurrogateIndices;
+        return emojiIndices;
     }
 
     private String displayableTextFor(Tweet tweet, Range displayTextRange) {
@@ -80,15 +79,7 @@ public class TweetModelConverter {
     private List<HashtagEntity> adjustHashtag(List<HashtagEntity> entities, List<Integer> indices) {
         List<HashtagEntity> hashtags = new ArrayList<>(entities.size());
         for (HashtagEntity hashtag : entities) {
-            int start = hashtag.getStart();
-            int offset = 0;
-            for (Integer index : indices) {
-                if (index - offset <= start) {
-                    offset += 1;
-                } else {
-                    break;
-                }
-            }
+            int offset = offsetFrom(hashtag.getStart(), indices);
             hashtags.add(new HashtagEntity(hashtag.text, hashtag.getStart() + offset, hashtag.getEnd() + offset));
         }
         return hashtags;
@@ -97,15 +88,7 @@ public class TweetModelConverter {
     private List<MentionEntity> adjustMentions(List<MentionEntity> entities, List<Integer> indices) {
         List<MentionEntity> mentions = new ArrayList<>(entities.size());
         for (MentionEntity mention : entities) {
-            int start = mention.getStart();
-            int offset = 0;
-            for (Integer index : indices) {
-                if (index - offset <= start) {
-                    offset += 1;
-                } else {
-                    break;
-                }
-            }
+            int offset = offsetFrom(mention.getStart(), indices);
             mentions.add(new MentionEntity(mention.id, mention.idStr, mention.name, mention.screenName, mention.getStart() + offset, mention.getEnd() + offset));
         }
         return mentions;
@@ -114,18 +97,22 @@ public class TweetModelConverter {
     private List<UrlEntity> adjustUrls(List<UrlEntity> entities, List<Integer> indices) {
         List<UrlEntity> urls = new ArrayList<>(entities.size());
         for (UrlEntity url : entities) {
-            int start = url.getStart();
-            int offset = 0;
-            for (Integer index : indices) {
-                if (index - offset <= start) {
-                    offset += 1;
-                } else {
-                    break;
-                }
-            }
+            int offset = offsetFrom(url.getStart(), indices);
             urls.add(new UrlEntity(url.url, url.expandedUrl, url.displayUrl, url.getStart() + offset, url.getEnd() + offset));
         }
         return urls;
+    }
+
+    private int offsetFrom(int start, List<Integer> indices) {
+        int offset = 0;
+        for (Integer index : indices) {
+            if (index - offset <= start) {
+                offset += 1;
+            } else {
+                break;
+            }
+        }
+        return offset;
     }
 
     private List<String> onlyPhotoUrls(List<MediaEntity> media) {
