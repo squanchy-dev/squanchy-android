@@ -55,16 +55,10 @@ public final class Lists {
     }
 
     public static <T> boolean any(T[] array, Predicate<T> predicate) {
-        if (array == null) {
-            return false;
-        }
         return any(Arrays.asList(array), predicate);
     }
 
     public static <T> boolean any(List<T> list, Predicate<T> predicate) {
-        if (list == null) {
-            return false;
-        }
         for (T t : list) {
             if (predicate.call(t)) {
                 return true;
