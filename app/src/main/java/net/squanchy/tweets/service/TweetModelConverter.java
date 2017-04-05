@@ -30,6 +30,7 @@ public class TweetModelConverter {
 
         List<Integer> specialCharacters = findSpecialCharacterIndecesFor(tweet.text);
         Range displayTextRange = Range.from(tweet.displayTextRange, tweet.text.length(), specialCharacters.size());
+
         List<HashtagEntity> hashtags = adjustHashtag(onlyHashtagsInRange(tweet.entities.hashtags, displayTextRange), specialCharacters);
         List<MentionEntity> mentions = adjustMentions(onlyMentionsInRange(tweet.entities.userMentions, displayTextRange), specialCharacters);
         List<UrlEntity> urls = adjustUrls(onlyUrlsInRange(tweet.entities.urls, displayTextRange), specialCharacters);
@@ -76,7 +77,7 @@ public class TweetModelConverter {
         return Lists.filter(entities, entity -> displayTextRange.contains(entity.getStart(), entity.getEnd()));
     }
 
-    private static List<HashtagEntity> adjustHashtag(List<HashtagEntity> entities, List<Integer> indices) {
+    private List<HashtagEntity> adjustHashtag(List<HashtagEntity> entities, List<Integer> indices) {
         List<HashtagEntity> hashtags = new ArrayList<>(entities.size());
         for (HashtagEntity hashtag : entities) {
             int start = hashtag.getStart();
@@ -93,7 +94,7 @@ public class TweetModelConverter {
         return hashtags;
     }
 
-    private static List<MentionEntity> adjustMentions(List<MentionEntity> entities, List<Integer> indices) {
+    private List<MentionEntity> adjustMentions(List<MentionEntity> entities, List<Integer> indices) {
         List<MentionEntity> mentions = new ArrayList<>(entities.size());
         for (MentionEntity mention : entities) {
             int start = mention.getStart();
@@ -110,7 +111,7 @@ public class TweetModelConverter {
         return mentions;
     }
 
-    private static List<UrlEntity> adjustUrls(List<UrlEntity> entities, List<Integer> indices) {
+    private List<UrlEntity> adjustUrls(List<UrlEntity> entities, List<Integer> indices) {
         List<UrlEntity> urls = new ArrayList<>(entities.size());
         for (UrlEntity url : entities) {
             int start = url.getStart();
