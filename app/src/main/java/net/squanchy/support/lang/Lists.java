@@ -1,6 +1,7 @@
 package net.squanchy.support.lang;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -51,6 +52,13 @@ public final class Lists {
         }
 
         return reducedValue;
+    }
+
+    public static <T> boolean any(T[] array, Predicate<T> predicate) {
+        if (array == null) {
+            return false;
+        }
+        return any(Arrays.asList(array), predicate);
     }
 
     public static <T> boolean any(List<T> list, Predicate<T> predicate) {
