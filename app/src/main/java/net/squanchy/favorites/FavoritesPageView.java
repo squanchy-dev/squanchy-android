@@ -1,8 +1,8 @@
 package net.squanchy.favorites;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.View;
@@ -43,6 +43,14 @@ public class FavoritesPageView extends CoordinatorLayout implements Loadable {
 
     public FavoritesPageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+
+        if (!isInEditMode()) {
+            AppCompatActivity activity = unwrapToActivityContext(getContext());
+            FavoritesComponent component = FavoritesInjector.obtain(activity);
+            service = component.service();
+            navigate = component.navigator();
+            analytics = component.analytics();
+        }
     }
 
     @Override
@@ -57,14 +65,6 @@ public class FavoritesPageView extends CoordinatorLayout implements Loadable {
         findViewById(R.id.empty_view_signed_out_button).setOnClickListener(view -> requestSignIn());
 
         setupToolbar();
-
-        if (!isInEditMode()) {
-            Activity activity = unwrapToActivityContext(getContext());
-            FavoritesComponent component = FavoritesInjector.obtain(activity);
-            service = component.service();
-            navigate = component.navigator();
-            analytics = component.analytics();
-        }
     }
 
     private void requestSignIn() {

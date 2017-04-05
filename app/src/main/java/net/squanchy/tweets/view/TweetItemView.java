@@ -1,8 +1,8 @@
 package net.squanchy.tweets.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.text.method.LinkMovementMethod;
 import android.util.AttributeSet;
 import android.widget.ImageView;
@@ -36,7 +36,7 @@ public class TweetItemView extends CardLayout {
         super(context, attrs, defStyleAttr);
 
         if (!isInEditMode()) {
-            Activity activity = ContextUnwrapper.unwrapToActivityContext(context);
+            AppCompatActivity activity = ContextUnwrapper.unwrapToActivityContext(context);
             imageLoader = ImageLoaderInjector.obtain(activity)
                     .imageLoader();
         }

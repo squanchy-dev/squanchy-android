@@ -1,6 +1,6 @@
 package net.squanchy.favorites;
 
-import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 
 import net.squanchy.injection.ActivityContextModule;
 import net.squanchy.injection.ApplicationInjector;
@@ -13,7 +13,7 @@ final class FavoritesInjector {
         // no instances
     }
 
-    public static FavoritesComponent obtain(Activity activity) {
+    public static FavoritesComponent obtain(AppCompatActivity activity) {
         return DaggerFavoritesComponent.builder()
                 .applicationComponent(ApplicationInjector.obtain(activity))
                 .scheduleModule(new ScheduleModule())

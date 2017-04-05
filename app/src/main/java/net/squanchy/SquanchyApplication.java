@@ -17,6 +17,7 @@ import net.squanchy.fonts.TypefaceManager;
 import net.squanchy.injection.ApplicationComponent;
 
 import io.fabric.sdk.android.Fabric;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import timber.log.Timber;
 
 public class SquanchyApplication extends Application {
@@ -31,7 +32,19 @@ public class SquanchyApplication extends Application {
         setupTracking();
         initializeFirebase();
         TypefaceManager.init();
-        applicationComponent().service();
+
+        preloadProximityServiceToAllowForWarmingUp();
+        preloadRemoteConfig();
+    }
+
+    private void preloadRemoteConfig() {
+        applicationComponent().remoteConfig()
+                .fetchNow()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        () -> Timber.i("Remote config prefetched"),
+                        throwable -> Timber.e(throwable, "Unable to preload the remote config")
+                );
     }
 
     private void setupTracking() {
@@ -72,6 +85,10 @@ public class SquanchyApplication extends Application {
             Timber.e(new IllegalStateException("Initializing Firebase failed"));
         }
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+    }
+
+    private void preloadProximityServiceToAllowForWarmingUp() {
+        applicationComponent().service();
     }
 
     @MainThread

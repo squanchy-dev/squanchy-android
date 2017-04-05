@@ -20,9 +20,9 @@ class ContestTester {
     private final DebugPreferences debugPreferences;
     private final Random random;
 
-    ContestTester(Activity activity) {
+    ContestTester(Activity activity, DebugPreferences debugPreferences) {
         this.activity = activity;
-        this.debugPreferences = new DebugPreferences(this.activity);
+        this.debugPreferences = debugPreferences;
         this.random = new Random();
     }
 
