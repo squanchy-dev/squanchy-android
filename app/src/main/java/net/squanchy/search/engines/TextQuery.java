@@ -3,7 +3,7 @@ package net.squanchy.search.engines;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.support.lang.Lists;
 
-class TextQuery implements Query{
+class TextQuery implements Query {
 
     @Override
     public boolean matches(Event event, String query) {
