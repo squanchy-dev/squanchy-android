@@ -54,10 +54,6 @@ public final class Lists {
         return reducedValue;
     }
 
-    public static <T> boolean any(T[] array, Predicate<T> predicate) {
-        return any(Arrays.asList(array), predicate);
-    }
-
     public static <T> boolean any(List<T> list, Predicate<T> predicate) {
         for (T t : list) {
             if (predicate.call(t)) {
@@ -68,8 +64,8 @@ public final class Lists {
         return false;
     }
 
-    public static <T> boolean all(T[] array, Predicate<T> predicate) {
-        for (T t : array){
+    public static <T> boolean all(List<T> list, Predicate<T> predicate) {
+        for (T t : list){
             if (!predicate.call(t)){
                 return false;
             }

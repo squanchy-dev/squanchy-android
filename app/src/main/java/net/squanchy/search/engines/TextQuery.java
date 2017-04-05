@@ -1,5 +1,7 @@
 package net.squanchy.search.engines;
 
+import java.util.Arrays;
+
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.support.lang.Lists;
 
@@ -14,6 +16,6 @@ class TextQuery implements Query {
         String[] normalizedQueries = StringNormalizer.normalize(query).split("\\s");
         String normalizedText = StringNormalizer.normalize(event.description().get());
 
-        return Lists.all(normalizedQueries, normalizedText::contains);
+        return Lists.all(Arrays.asList(normalizedQueries), normalizedText::contains);
     }
 }
