@@ -5,6 +5,14 @@ import net.squanchy.schedule.domain.view.Event;
 class EventSearchEngine implements SearchEngine<Event> {
 
     private static final int MIN_QUERY_LENGTH = 2;
+    private final Query queryEngine;
+
+    EventSearchEngine() {
+        queryEngine = new QueryEngine.Builder()
+                .withQuery(new TitleQuery())
+                .withQuery(new TextQuery())
+                .build();
+    }
 
     @Override
     public boolean matches(Event event, String query) {
@@ -22,9 +30,7 @@ class EventSearchEngine implements SearchEngine<Event> {
     }
 
     private boolean matchesQuery(Event event, String query) {
-        String normalizedQuery = StringNormalizer.normalize(query);
-        String normalizedTitle = StringNormalizer.normalize(event.title());
 
-        return normalizedTitle.contains(normalizedQuery);
+        return queryEngine.matches(event, query);
     }
 }
