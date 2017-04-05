@@ -35,7 +35,7 @@ public class TweetModelConverter {
         List<MentionEntity> mentions = adjustMentions(onlyMentionsInRange(tweet.entities.userMentions, displayTextRange), emojiIndices);
         List<UrlEntity> urls = adjustUrls(onlyUrlsInRange(tweet.entities.urls, displayTextRange), emojiIndices);
         List<String> photoUrls = onlyPhotoUrls(tweet.entities.media);
-        String displayableText = displayableTextFor(tweet, displayTextRange);
+        String displayableText = displayableTextFor(tweet, displayTextRange, tweet.entities.media);
 
         return TweetViewModel.builder()
                 .id(tweet.id)
@@ -56,12 +56,6 @@ public class TweetModelConverter {
             }
         }
         return emojiIndices;
-    }
-
-    private String displayableTextFor(Tweet tweet, Range displayTextRange) {
-        Integer beginIndex = displayTextRange.start();
-        Integer endIndex = displayTextRange.end();
-        return tweet.text.substring(beginIndex, endIndex);
     }
 
     private List<HashtagEntity> onlyHashtagsInRange(List<HashtagEntity> entities, Range displayTextRange) {
@@ -118,6 +112,25 @@ public class TweetModelConverter {
     private List<String> onlyPhotoUrls(List<MediaEntity> media) {
         List<MediaEntity> photos = Lists.filter(media, mediaEntity -> MEDIA_TYPE_PHOTO.equals(mediaEntity.type));
         return Lists.map(photos, mediaEntity -> mediaEntity.mediaUrlHttps);
+    }
+
+    private String displayableTextFor(Tweet tweet, Range displayTextRange, List<MediaEntity> photoUrls) {
+        Integer beginIndex = displayTextRange.start();
+        Integer endIndex = displayTextRange.end();
+        String displayableText = tweet.text.substring(beginIndex, endIndex);
+        return removePhotoUrl(displayableText, photoUrls);
+    }
+
+    private String removePhotoUrl(String text, List<MediaEntity> photoUrls) {
+        if (photoUrls == null) {
+            return text;
+        }
+        for (MediaEntity url : photoUrls) {
+            if (text.contains(url.url)) {
+                text = text.replace(url.url, "");
+            }
+        }
+        return text;
     }
 
     private Optional<String> photoUrlMaybeFrom(List<String> urls) {
