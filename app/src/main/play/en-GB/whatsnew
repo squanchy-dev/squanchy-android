@@ -1,6 +1,4 @@
-Version 1.0.1
+Version 1.1.0
 
-* Fixes crashes with the Twitter SDK #226
-* Fixes potential issues with Firebase #259 (one crash in the wild)
-* Fixes notifications not being properly scheduled
-* Update Firebase to the latest version for peace of mind
+* Add proximity features 🗺️ (not available yet)
+* Fix bugs #267, #268, #271
