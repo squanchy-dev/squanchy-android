@@ -118,19 +118,19 @@ public class TweetModelConverter {
         Integer beginIndex = displayTextRange.start();
         Integer endIndex = displayTextRange.end();
         String displayableText = tweet.text.substring(beginIndex, endIndex);
-        return removePhotoUrl(displayableText, photoUrls);
+        if (photoUrls != null) {
+            displayableText = removePhotoUrl(displayableText, photoUrls);
+        }
+        return displayableText;
     }
 
-    private String removePhotoUrl(String text, List<MediaEntity> photoUrls) {
-        if (photoUrls == null) {
-            return text;
-        }
+    private String removePhotoUrl(String content, List<MediaEntity> photoUrls) {
         for (MediaEntity url : photoUrls) {
-            if (text.contains(url.url)) {
-                text = text.replace(url.url, "");
+            if (content.contains(url.url)) {
+                content = content.replace(url.url, "");
             }
         }
-        return text;
+        return content;
     }
 
     private Optional<String> photoUrlMaybeFrom(List<String> urls) {
