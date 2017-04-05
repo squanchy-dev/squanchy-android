@@ -123,12 +123,13 @@ public class TweetModelConverter {
     }
 
     private String removeLastPhotoUrl(String content, List<String> photoUrls) {
-        if (photoUrls.isEmpty()){
+        if (photoUrls.isEmpty()) {
             return content;
         }
         String lastUrl = photoUrls.get(photoUrls.size() - 1);
         if (content.endsWith(lastUrl)) {
-            content = content.replace(lastUrl, "");
+            content = content.replace(lastUrl, "")
+                    .trim();
         }
         return content;
     }
