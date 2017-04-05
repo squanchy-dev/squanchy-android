@@ -101,8 +101,8 @@ public class ScheduleService {
     }
 
     private Optional<String> findDate(FirebaseDays apiDays, String dayId) {
-        return find(apiDays.days, firebaseDay -> firebaseDay.id.equals(String.valueOf(dayId)))
-                .map(firebaseDay -> firebaseDay.date);
+        return find(apiDays.getDays(), firebaseDay -> firebaseDay.getId().equals(String.valueOf(dayId)))
+                .map(firebaseDay -> firebaseDay.getDate());
     }
 
     private Function<Schedule, Schedule> sortPagesByDate() {

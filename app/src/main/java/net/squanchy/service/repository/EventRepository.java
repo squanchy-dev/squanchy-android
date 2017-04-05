@@ -64,44 +64,44 @@ public class EventRepository {
     }
 
     private Function<FirebaseVenue, DateTimeZone> toTimeZone() {
-        return firebaseVenue -> DateTimeZone.forID(firebaseVenue.timezone);
+        return firebaseVenue -> DateTimeZone.forID(firebaseVenue.getTimezone());
     }
 
     private Function<FirebasePlaces, List<Place>> toPlaces() {
         return firebasePlaces -> Lists.map(
-                firebasePlaces.places,
-                firebasePlace -> Place.Companion.create(firebasePlace.id, firebasePlace.name, Optional.fromNullable(firebasePlace.floor))
+                firebasePlaces.getPlaces(),
+                firebasePlace -> Place.Companion.create(firebasePlace.getId(), firebasePlace.getName(), Optional.fromNullable(firebasePlace.getFloor()))
         );
     }
 
     private Function<FirebaseTracks, List<Track>> toTracks() {
         return firebaseTracks -> Lists.map(
-                firebaseTracks.tracks,
+                firebaseTracks.getTracks(),
                 firebaseTrack -> Track.Companion.create(
-                        firebaseTrack.id,
-                        firebaseTrack.name,
-                        Optional.fromNullable(firebaseTrack.accent_color),
-                        Optional.fromNullable(firebaseTrack.text_color),
-                        Optional.fromNullable(firebaseTrack.icon_url)
+                        firebaseTrack.getId(),
+                        firebaseTrack.getName(),
+                        Optional.fromNullable(firebaseTrack.getAccent_color()),
+                        Optional.fromNullable(firebaseTrack.getText_color()),
+                        Optional.fromNullable(firebaseTrack.getIcon_url())
                 )
         );
     }
 
     private Function6<FirebaseEvent, List<Speaker>, FirebaseFavorites, List<Place>, List<Track>, DateTimeZone, Event> combineIntoEvent() {
         return (apiEvent, speakers, favorites, places, tracks, timeZone) -> Event.Companion.create(
-                apiEvent.id,
-                checksum.getChecksumOf(apiEvent.id),
-                apiEvent.day_id,
-                new LocalDateTime(apiEvent.start_time),
-                new LocalDateTime(apiEvent.end_time),
-                apiEvent.name,
-                placeById(places, apiEvent.place_id),
-                Optional.fromNullable(apiEvent.experience_level).flatMap(ExperienceLevel::fromNullableRawLevel),
-                speakersByIds(speakers, apiEvent.speaker_ids),
-                Event.Type.Companion.fromRawType(apiEvent.type),
-                favorites.hasFavorite(apiEvent.id),
-                Optional.fromNullable(apiEvent.description),
-                trackById(tracks, apiEvent.track_id),
+                apiEvent.getId(),
+                checksum.getChecksumOf(apiEvent.getId()),
+                apiEvent.getDay_id(),
+                new LocalDateTime(apiEvent.getStart_time()),
+                new LocalDateTime(apiEvent.getEnd_time()),
+                apiEvent.getName(),
+                placeById(places, apiEvent.getPlace_id()),
+                Optional.fromNullable(apiEvent.getExperience_level()).flatMap(ExperienceLevel::fromNullableRawLevel),
+                speakersByIds(speakers, apiEvent.getSpeaker_ids()),
+                Event.Type.Companion.fromRawType(apiEvent.getType()),
+                favorites.hasFavorite(apiEvent.getId()),
+                Optional.fromNullable(apiEvent.getDescription()),
+                trackById(tracks, apiEvent.getTrack_id()),
                 timeZone
         );
     }
@@ -135,7 +135,7 @@ public class EventRepository {
 
     private Function6<FirebaseEvents, List<Speaker>, FirebaseFavorites, List<Place>, List<Track>, DateTimeZone, List<Event>> combineIntoEvents() {
         return (firebaseEvents, speakers, favorites, places, tracks, timeZone) ->
-                Lists.map(new ArrayList<>(firebaseEvents.events.values()), combineEventWith(speakers, favorites, places, tracks, timeZone));
+                Lists.map(new ArrayList<>(firebaseEvents.getEvents().values()), combineEventWith(speakers, favorites, places, tracks, timeZone));
     }
 
     private Func1<FirebaseEvent, Event> combineEventWith(
@@ -146,19 +146,19 @@ public class EventRepository {
             DateTimeZone timeZone
     ) {
         return apiEvent -> Event.Companion.create(
-                apiEvent.id,
-                checksum.getChecksumOf(apiEvent.id),
-                apiEvent.day_id,
-                new LocalDateTime(apiEvent.start_time),
-                new LocalDateTime(apiEvent.end_time),
-                apiEvent.name,
-                placeById(places, apiEvent.place_id),
-                Optional.fromNullable(apiEvent.experience_level).flatMap(ExperienceLevel::fromNullableRawLevel),
-                speakersByIds(speakers, apiEvent.speaker_ids),
-                Event.Type.Companion.fromRawType(apiEvent.type),
-                favorites.hasFavorite(apiEvent.id),
-                Optional.fromNullable(apiEvent.description),
-                trackById(tracks, apiEvent.track_id),
+                apiEvent.getId(),
+                checksum.getChecksumOf(apiEvent.getId()),
+                apiEvent.getDay_id(),
+                new LocalDateTime(apiEvent.getStart_time()),
+                new LocalDateTime(apiEvent.getEnd_time()),
+                apiEvent.getName(),
+                placeById(places, apiEvent.getPlace_id()),
+                Optional.fromNullable(apiEvent.getExperience_level()).flatMap(ExperienceLevel::fromNullableRawLevel),
+                speakersByIds(speakers, apiEvent.getSpeaker_ids()),
+                Event.Type.Companion.fromRawType(apiEvent.getType()),
+                favorites.hasFavorite(apiEvent.getId()),
+                Optional.fromNullable(apiEvent.getDescription()),
+                trackById(tracks, apiEvent.getTrack_id()),
                 timeZone
         );
     }
