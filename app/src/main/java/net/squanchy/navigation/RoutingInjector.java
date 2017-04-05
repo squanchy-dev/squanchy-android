@@ -1,11 +1,13 @@
 package net.squanchy.navigation;
 
-import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 
 import net.squanchy.injection.ActivityContextModule;
 import net.squanchy.injection.ApplicationInjector;
 import net.squanchy.navigation.deeplink.DeepLinkModule;
+import net.squanchy.proximity.ProximityFeatureModule;
 import net.squanchy.signin.SignInModule;
+import net.squanchy.support.debug.DebugPreferencesModule;
 
 final class RoutingInjector {
 
@@ -13,7 +15,7 @@ final class RoutingInjector {
         // no instances
     }
 
-    public static RoutingComponent obtain(Activity activity) {
+    public static RoutingComponent obtain(AppCompatActivity activity) {
         return DaggerRoutingComponent.builder()
                 .activityContextModule(new ActivityContextModule(activity))
                 .applicationComponent(ApplicationInjector.obtain(activity))
@@ -21,6 +23,8 @@ final class RoutingInjector {
                 .navigationModule(new NavigationModule())
                 .signInModule(new SignInModule())
                 .routingModule(new RoutingModule())
+                .proximityFeatureModule(new ProximityFeatureModule())
+                .debugPreferencesModule(new DebugPreferencesModule())
                 .build();
     }
 }

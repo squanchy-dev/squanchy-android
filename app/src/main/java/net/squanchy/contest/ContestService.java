@@ -13,14 +13,14 @@ import io.reactivex.schedulers.Schedulers;
 
 import static io.reactivex.Observable.combineLatest;
 
-public class ContestService {
+class ContestService {
 
     private final RemoteConfig remoteConfig;
     private final FirebaseDbService dbService;
     private final FirebaseAuthService authService;
     private final CurrentTime currentTime;
 
-    public ContestService(RemoteConfig remoteConfig, FirebaseDbService dbService, FirebaseAuthService authService, CurrentTime currentTime) {
+    ContestService(RemoteConfig remoteConfig, FirebaseDbService dbService, FirebaseAuthService authService, CurrentTime currentTime) {
         this.remoteConfig = remoteConfig;
         this.dbService = dbService;
         this.authService = authService;
@@ -40,7 +40,7 @@ public class ContestService {
     }
 
     Completable addAchievement(String achievementId) {
-        return authService.ifUserSignedInThenCompletableFrom(userId -> dbService.addAchievement(userId, achievementId, currentTime.getCurrentTimestamp()))
+        return authService.ifUserSignedInThenCompletableFrom(userId -> dbService.addAchievement(userId, achievementId, currentTime.currentTimestamp()))
                 .subscribeOn(Schedulers.io());
     }
 }

@@ -10,6 +10,7 @@ import com.crashlytics.android.answers.CustomEvent;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import net.squanchy.BuildConfig;
+import net.squanchy.proximity.ProximityEvent;
 
 import timber.log.Timber;
 
@@ -17,10 +18,12 @@ public class Analytics {
 
     private final FirebaseAnalytics firebaseAnalytics;
     private final Crashlytics crashlytics;
+    private final ProximityAnalytics proximityAnalytics;
 
-    Analytics(FirebaseAnalytics firebaseAnalytics, Crashlytics crashlytics) {
+    Analytics(FirebaseAnalytics firebaseAnalytics, Crashlytics crashlytics, ProximityAnalytics proximityAnalitics) {
         this.firebaseAnalytics = firebaseAnalytics;
         this.crashlytics = crashlytics;
+        this.proximityAnalytics = proximityAnalitics;
     }
 
     public void initializeStaticUserProperties() {
@@ -65,6 +68,14 @@ public class Analytics {
         event.putCustomAttribute("content_type", contentType.rawContentType());
         event.putCustomAttribute("item_id", itemId);
         crashlytics.answers.logCustom(event);
+    }
+
+    public void trackProximityEventShown(ProximityEvent event) {
+        proximityAnalytics.trackProximityEvent(event, ProximityTrackingType.NOTIFIED);
+    }
+
+    public void trackProximityEventEngaged(ProximityEvent event) {
+        proximityAnalytics.trackProximityEvent(event, ProximityTrackingType.ENGAGED);
     }
 
     public void enableExceptionLogging() {

@@ -3,6 +3,7 @@ package net.squanchy.navigation;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.provider.Settings;
 
 import net.squanchy.BuildConfig;
 import net.squanchy.about.AboutActivity;
@@ -10,6 +11,7 @@ import net.squanchy.about.licenses.LicensesActivity;
 import net.squanchy.contest.ContestActivity;
 import net.squanchy.eventdetails.EventDetailsActivity;
 import net.squanchy.home.HomeActivity;
+import net.squanchy.onboarding.OnboardingPage;
 import net.squanchy.navigation.firststart.FirstStartWithNoNetworkActivity;
 import net.squanchy.search.SearchActivity;
 import net.squanchy.settings.SettingsActivity;
@@ -28,6 +30,8 @@ import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
 
 public class Navigator {
 
+    private static final int NO_FLAGS = 0;
+
     private static final String TWITTER_PROFILE_URL_TEMPLATE = "twitter://user?screen_name=%s";
     private static final String TWITTER_PROFILE_FALLBACK_URL_TEMPLATE = "https://twitter.com/%s";
     private static final String TWITTER_STATUS_URL_TEMPLATE = "twitter://status?status_id=%s";
@@ -44,15 +48,6 @@ public class Navigator {
 
     public void toEventDetails(String eventId) {
         start(EventDetailsActivity.createIntent(activity, eventId));
-    }
-
-    public void toSignIn() {
-        start(new Intent(activity, SignInActivity.class));
-    }
-
-    public void toSignInForResult(int requestCode) {
-        Intent intent = new Intent(activity, SignInActivity.class);
-        activity.startActivityForResult(intent, requestCode);
     }
 
     public void toSpeakerDetails(String speakerId) {
@@ -164,6 +159,10 @@ public class Navigator {
         start(new Intent(activity, LicensesActivity.class));
     }
 
+    public void toSignIn() {
+        start(new Intent(activity, SignInActivity.class));
+    }
+
     void toFirstStartWithNoNetwork(Intent continuationIntent) {
         start(
                 FirstStartWithNoNetworkActivity.createIntentContinuingTo(activity, continuationIntent),
@@ -172,13 +171,32 @@ public class Navigator {
     }
 
     private void start(Intent intent) {
-        start(intent, 0);
+        start(intent, NO_FLAGS);
     }
 
     private void start(Intent intent, int flags) {
-        if (flags != 0) {
+        if (flags != NO_FLAGS) {
             intent.addFlags(flags);
         }
         activity.startActivity(intent);
+    }
+
+    public void toSignInForResult(int requestCode) {
+        Intent intent = new Intent(activity, SignInActivity.class);
+        startForResult(intent, requestCode);
+    }
+
+    public void toOnboardingForResult(OnboardingPage page, int requestCode) {
+        Intent intent = new Intent(activity, page.activityClass());
+        startForResult(intent, requestCode);
+    }
+
+    public void toLocationSettingsForResult(int requestCode) {
+        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        startForResult(intent, requestCode);
+    }
+
+    private void startForResult(Intent intent, int requestCode) {
+        activity.startActivityForResult(intent, requestCode);
     }
 }

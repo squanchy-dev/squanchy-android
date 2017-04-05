@@ -1,8 +1,8 @@
 package net.squanchy.support;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.support.v7.app.AppCompatActivity;
 
 public final class ContextUnwrapper {
 
@@ -10,11 +10,11 @@ public final class ContextUnwrapper {
         // Non-instantiable utility class
     }
 
-    public static Activity unwrapToActivityContext(Context context) {
+    public static AppCompatActivity unwrapToActivityContext(Context context) {
         if (context == null) {
             throw new NullPointerException("Context cannot be null");
-        } else if (context instanceof Activity) {
-            return (Activity) context;
+        } else if (context instanceof AppCompatActivity) {
+            return (AppCompatActivity) context;
         } else if (context instanceof ContextWrapper) {
             ContextWrapper contextWrapper = (ContextWrapper) context;
             return unwrapToActivityContext(contextWrapper.getBaseContext());

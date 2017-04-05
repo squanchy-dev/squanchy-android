@@ -75,6 +75,10 @@ public abstract class Event {
 
     public abstract DateTimeZone timeZone();
 
+    public boolean isHappeningAt(LocalDateTime time) {
+        return time.isAfter(startTime()) && time.isBefore(endTime());
+    }
+
     @AutoValue.Builder
     public abstract static class Builder {
 

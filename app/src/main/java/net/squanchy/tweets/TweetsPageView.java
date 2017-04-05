@@ -1,12 +1,12 @@
 package net.squanchy.tweets;
 
-import android.app.Activity;
 import android.content.Context;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -23,7 +23,7 @@ import timber.log.Timber;
 
 import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 
-public class TweetsPageView extends LinearLayout implements Loadable {
+public class TweetsPageView extends CoordinatorLayout implements Loadable {
 
     private final TwitterService twitterService;
     private final Navigator navigator;
@@ -41,23 +41,11 @@ public class TweetsPageView extends LinearLayout implements Loadable {
     }
 
     public TweetsPageView(Context context, AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
-    }
-
-    public TweetsPageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-
-        super.setOrientation(VERTICAL);
-
-        Activity activity = unwrapToActivityContext(context);
+        super(context, attrs, defStyleAttr);
+        AppCompatActivity activity = unwrapToActivityContext(getContext());
         TwitterComponent component = TwitterInjector.obtain(activity);
         twitterService = component.service();
         navigator = component.navigator();
-    }
-
-    @Override
-    public void setOrientation(int orientation) {
-        throw new UnsupportedOperationException(TweetsPageView.class.getSimpleName() + " doesn't support changing orientation");
     }
 
     @Override
