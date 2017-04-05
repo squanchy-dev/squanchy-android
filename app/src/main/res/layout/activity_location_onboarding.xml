@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
+  android:layout_height="match_parent"
+  android:fillViewport="true">
 
   <LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/onboarding_content_root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:gravity="center_horizontal|fill_vertical"
     android:orientation="vertical">
 
@@ -69,7 +72,6 @@
       style="@style/Onboarding.Cta"
       android:layout_width="match_parent"
       android:layout_height="@dimen/onboarding_cta_height"
-      android:layout_gravity="fill_horizontal"
       android:layout_marginStart="@dimen/onboarding_content_margin_horizontal"
       android:layout_marginTop="@dimen/onboarding_cta_margin_top"
       android:layout_marginEnd="@dimen/onboarding_content_margin_horizontal"
@@ -78,4 +80,4 @@
 
   </LinearLayout>
   
-</android.support.design.widget.CoordinatorLayout>
+</ScrollView>
