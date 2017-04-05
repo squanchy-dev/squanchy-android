@@ -1,6 +1,6 @@
 package net.squanchy.search.engines;
 
-interface SearchEngine<T> {
+public interface SearchEngine<T> {
 
     boolean matches(T element, String query);
 }
