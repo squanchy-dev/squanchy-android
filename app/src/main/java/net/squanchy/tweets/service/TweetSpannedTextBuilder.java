@@ -32,16 +32,13 @@ public class TweetSpannedTextBuilder {
 
     Spanned applySpans(String text, int startIndex, List<HashtagEntity> hashtags, List<MentionEntity> mentions, List<UrlEntity> urls) {
         SpannableStringBuilder builder = new SpannableStringBuilder(text);
-        List<Integer> highSurrogateIndices = findHighSurrogateIndecesFor(text);
 
         for (HashtagEntity hashtag : hashtags) {
             hashtag = offsetStart(hashtag, startIndex);
-            hashtag = adjustHashtag(hashtag, highSurrogateIndices);
             builder.setSpan(createUrlSpanFor(hashtag), hashtag.getStart(), hashtag.getEnd(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         for (MentionEntity mention : mentions) {
             mention = offsetStart(mention, startIndex);
-            mention = adjustMentions(mention, highSurrogateIndices);
             builder.setSpan(createUrlSpanFor(mention), mention.getStart(), mention.getEnd(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         for (UrlEntity url : urls) {
@@ -51,62 +48,6 @@ public class TweetSpannedTextBuilder {
 
         unescapeEntities(builder);
         return builder;
-    }
-
-    private static List<Integer> findHighSurrogateIndecesFor(String text) {
-        StringBuilder builder = new StringBuilder(text);
-        List<Integer> highSurrogateIndices = new ArrayList<>();
-        for (int i = 0; i < builder.length() - 1; ++i) {
-            if (Character.isHighSurrogate(builder.charAt(i)) && Character.isLowSurrogate(builder.charAt(i + 1))) {
-                highSurrogateIndices.add(i);
-            }
-        }
-        return highSurrogateIndices;
-    }
-
-    private static HashtagEntity adjustHashtag(HashtagEntity entity, List<Integer> indices) {
-        int start = entity.getStart();
-        int offset = 0;
-        for (Integer index : indices) {
-            if (index - offset <= start) {
-                offset += 1;
-            } else {
-                break;
-            }
-        }
-        return new HashtagEntity(entity.text, entity.getStart() + offset, entity.getEnd() + offset);
-    }
-
-    private static MentionEntity adjustMentions(MentionEntity entity, List<Integer> indices) {
-        int start = entity.getStart();
-        int offset = 0;
-        for (Integer index : indices) {
-            if (index - offset <= start) {
-                offset += 1;
-            } else {
-                break;
-            }
-        }
-        return new MentionEntity(entity.id, entity.idStr, entity.name, entity.screenName, entity.getStart() + offset, entity.getEnd() + offset);
-    }
-
-    private static void adjustUrls(List<UrlEntity> entities, List<Integer> indices) {
-        if (entities == null || indices == null) {
-            return;
-        }
-        for (UrlEntity entity : entities) {
-            // find all indices <= start and update offsets by that much
-            final int start = entity.getStart();
-            int offset = 0;
-            for (Integer index : indices) {
-                if (index - offset <= start) {
-                    offset += 1;
-                } else {
-                    break;
-                }
-            }
-            entities.set(entities.indexOf(entity), new UrlEntity(entity.url, entity.expandedUrl, entity.displayUrl, entity.getStart() + offset, entity.getEnd() + offset));
-        }
     }
 
     private HashtagEntity offsetStart(HashtagEntity hashtag, int startIndex) {
