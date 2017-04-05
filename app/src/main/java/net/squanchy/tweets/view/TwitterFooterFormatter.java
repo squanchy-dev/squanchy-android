@@ -52,13 +52,13 @@ class TwitterFooterFormatter {
     }
 
     private boolean isToday(DateTime instant) {
-        Duration duration = new Duration(instant, new DateTime());
-        return duration.toStandardDays().isLessThan(Days.ONE);
+        DateTime today = new DateTime().withTimeAtStartOfDay();
+        return today.isEqual(instant.withTimeAtStartOfDay());
     }
 
     private boolean isYesterday(DateTime instant) {
-        Duration duration = new Duration(instant, new DateTime());
-        return duration.toStandardDays().isLessThan(Days.TWO);
+        DateTime today = new DateTime().minusDays(1).withTimeAtStartOfDay();
+        return today.isEqual(instant.withTimeAtStartOfDay());
     }
 
     private String formatRecentDay(Context context, @StringRes int dayRes, String formattedTime) {
