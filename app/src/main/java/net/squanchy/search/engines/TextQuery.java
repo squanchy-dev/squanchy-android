@@ -14,6 +14,6 @@ class TextQuery implements Query{
         String[] normalizedQueries = StringNormalizer.normalize(query).split("\\s");
         String normalizedText = StringNormalizer.normalize(event.description().get());
 
-        return Lists.any(normalizedQueries, normalizedText::contains);
+        return Lists.all(normalizedQueries, normalizedText::contains);
     }
 }
