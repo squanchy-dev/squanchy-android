@@ -52,4 +52,17 @@ public final class Lists {
 
         return reducedValue;
     }
+
+    public static <T> boolean any(List<T> list, Predicate<T> predicate) {
+        if (list == null) {
+            return false;
+        }
+        for (T t : list) {
+            if (predicate.call(t)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
