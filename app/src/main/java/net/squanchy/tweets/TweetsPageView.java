@@ -18,6 +18,7 @@ import net.squanchy.tweets.domain.view.TweetViewModel;
 import net.squanchy.tweets.service.TwitterService;
 import net.squanchy.tweets.view.TweetsAdapter;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
 
@@ -103,6 +104,7 @@ public class TweetsPageView extends CoordinatorLayout implements Loadable {
         swipeLayout.setRefreshing(true);
         refreshingData = true;
         subscription = twitterService.refresh(query)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onSuccess, e -> onError());
     }
 
