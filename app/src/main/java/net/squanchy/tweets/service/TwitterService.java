@@ -5,6 +5,7 @@ import java.util.List;
 import net.squanchy.tweets.domain.view.TweetViewModel;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 
 import static net.squanchy.support.lang.Lists.filter;
 import static net.squanchy.support.lang.Lists.map;
@@ -19,7 +20,7 @@ public class TwitterService {
         this.modelConverter = modelConverter;
     }
 
-    public Observable<List<TweetViewModel>> refresh(String query) {
+    public Single<List<TweetViewModel>> refresh(String query) {
         return repository.load(query)
                 .map(search -> search.tweets)
                 .map(list -> filter(list, tweet -> tweet.retweetedStatus == null))
