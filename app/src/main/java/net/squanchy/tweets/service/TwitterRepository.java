@@ -5,6 +5,7 @@ import com.twitter.sdk.android.core.models.Search;
 import com.twitter.sdk.android.core.services.SearchService;
 
 import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 
 public class TwitterRepository {
@@ -14,7 +15,8 @@ public class TwitterRepository {
     private final SearchService searchService = TwitterCore.getInstance().getApiClient().getSearchService();
 
     Single<Search> load(String query) {
-        return Single.fromCallable(() -> createSearchRequest(query).execute().body());
+        return Single.fromCallable(() -> createSearchRequest(query).execute().body())
+                .subscribeOn(Schedulers.io());
     }
 
     private Call<Search> createSearchRequest(String query) throws Exception {
