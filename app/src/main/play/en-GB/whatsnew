@@ -1,4 +1,4 @@
 Version 1.1.0
 
-* Add proximity features 🗺️ (not available yet)
-* Fix bugs #267, #268, #271
+(Hopefully) fixed a crash related to the Tweets page (we hear you guys! 😁), and a few bugs related to speakers and...
+You can search will now return matches within talks' descriptions too!
