@@ -35,11 +35,9 @@ public class TwitterRepository {
 
         @Override
         public void onResponse(Call<Search> call, Response<Search> response) {
-            if (response.isSuccessful()) {
-                Search result = response.body();
-                if (result != null) {
-                    searchEmitter.onNext(result);
-                }
+            Search result = response.body();
+            if (response.isSuccessful() && result != null) {
+                searchEmitter.onNext(result);
                 searchEmitter.onComplete();
             } else {
                 onFailure(null, new RuntimeException("Unable to load tweets"));
