@@ -36,8 +36,8 @@
       android:order="0"/>
 
     <SwitchPreference
-      android:key="@string/location_preference_key"
-      android:defaultValue="true"
+      android:key="@string/proximity_opt_in_preference_key"
+      android:defaultValue="false"
       android:icon="@drawable/ic_location"
       android:shouldDisableView="true"
       android:title="@string/settings_location_title"
@@ -47,7 +47,7 @@
 
     <Preference
       android:key="@string/contest_standings_preference_key"
-      android:dependency="@string/location_preference_key"
+      android:dependency="@string/proximity_opt_in_preference_key"
       android:shouldDisableView="true"
       android:icon="@drawable/ic_trophy"
       android:title="@string/settings_contest_standings_title"

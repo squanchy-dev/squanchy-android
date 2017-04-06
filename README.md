@@ -4,7 +4,7 @@ Squanchy is an open source schedule platform for conferences.
 
 It was born as a fork of [Connfa](http://connfa.com), but later diverged to embrace different design decision and user needs.
  
-Documentation is available on [http://squanchy.com/](http://squanchy.com/). The project is maintained by independent contributors (see CONTRIBUTORS.md).
+Documentation is available on [http://squanchy.net/](http://squanchy.net/). The project is maintained by independent contributors (see CONTRIBUTORS.md).
 
 # Setting up the app
 

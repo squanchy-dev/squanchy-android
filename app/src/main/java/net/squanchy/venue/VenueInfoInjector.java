@@ -1,6 +1,6 @@
 package net.squanchy.venue;
 
-import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 
 import net.squanchy.injection.ActivityContextModule;
 import net.squanchy.injection.ApplicationInjector;
@@ -12,7 +12,7 @@ final class VenueInfoInjector {
         // no instances
     }
 
-    public static VenueInfoComponent obtain(Activity activity) {
+    public static VenueInfoComponent obtain(AppCompatActivity activity) {
         return DaggerVenueInfoComponent.builder()
                 .applicationComponent(ApplicationInjector.obtain(activity))
                 .navigationModule(new NavigationModule())

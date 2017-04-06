@@ -1,6 +1,6 @@
 package net.squanchy.schedule
 
-import android.app.Activity
+import android.support.v7.app.AppCompatActivity
 import dagger.Component
 import net.squanchy.analytics.Analytics
 import net.squanchy.injection.ActivityContextModule
@@ -21,7 +21,7 @@ internal interface ScheduleComponent {
     fun analytics(): Analytics
 }
 
-internal fun obtain(activity: Activity): ScheduleComponent = DaggerScheduleComponent.builder()
+internal fun obtain(activity: AppCompatActivity): ScheduleComponent = DaggerScheduleComponent.builder()
         .applicationComponent(ApplicationInjector.obtain(activity))
         .scheduleModule(ScheduleModule())
         .navigationModule(NavigationModule())

@@ -30,6 +30,7 @@ class NotificationService {
                     Collections.sort(events, byStartDate());
                     return events;
                 })
+                .take(1)
                 .subscribeOn(Schedulers.io()));
     }
 

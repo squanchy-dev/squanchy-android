@@ -22,6 +22,9 @@ data class Event(
         val description: Optional<String>,
         val timeZone: DateTimeZone
 ) {
+
+    fun isHappeningAt(time: LocalDateTime) = time.isAfter(startTime) && time.isBefore(endTime)
+
     enum class Type constructor(private val rawType: String) {
         REGISTRATION("registration"),
         TALK("talk"),

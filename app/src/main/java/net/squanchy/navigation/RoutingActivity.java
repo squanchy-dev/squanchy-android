@@ -8,15 +8,21 @@ import android.widget.Toast;
 import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.navigation.deeplink.DeepLinkRouter;
+import net.squanchy.onboarding.Onboarding;
 import net.squanchy.signin.SignInService;
+import net.squanchy.support.lang.Optional;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
 
 public class RoutingActivity extends TypefaceStyleableActivity {
 
+    private static final int ONBOARDING_REQUEST_CODE = 2453;
+
     private DeepLinkRouter deepLinkRouter;
     private Navigator navigator;
+    private Onboarding onboarding;
     private SignInService signInService;
     private FirstStartPersister firstStartPersister;
 
@@ -29,6 +35,7 @@ public class RoutingActivity extends TypefaceStyleableActivity {
         RoutingComponent component = RoutingInjector.obtain(this);
         deepLinkRouter = component.deepLinkRouter();
         navigator = component.navigator();
+        onboarding = component.onboarding();
         signInService = component.signInService();
         firstStartPersister = component.firstStartPersister();
     }
@@ -38,21 +45,7 @@ public class RoutingActivity extends TypefaceStyleableActivity {
         super.onStart();
 
         subscription = signInService.signInAnonymouslyIfNecessary()
-                .subscribe(this::proceedToRouting, this::handleSignInError);
-    }
-
-    private void proceedToRouting() {
-        Intent intent = getIntent();
-        if (deepLinkRouter.hasDeepLink(intent)) {
-            String intentUriString = intent.getDataString();
-            Timber.i("Deeplink detected, navigating to \"%s\"", intentUriString);
-            deepLinkRouter.navigateTo(intentUriString);
-        } else {
-            navigator.toHomePage();
-        }
-
-        firstStartPersister.storeHasBeenStarted();
-        finish();
+                .subscribe(this::onboardOrProceedToRouting, this::handleSignInError);
     }
 
     private void handleSignInError(Throwable throwable) {
@@ -78,6 +71,50 @@ public class RoutingActivity extends TypefaceStyleableActivity {
 
     private boolean isFirstStart() {
         return !firstStartPersister.hasBeenStartedAlready();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ONBOARDING_REQUEST_CODE) {
+            handleOnboardingResult(resultCode);
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private void handleOnboardingResult(int resultCode) {
+        if (resultCode == RESULT_OK) {
+            onboardOrProceedToRouting();
+        } else {
+            finish();
+        }
+    }
+
+    private void onboardOrProceedToRouting() {
+        onboarding.nextPageToShow()
+                .map(Optional::of)
+                .defaultIfEmpty(Optional.absent())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(page -> {
+                    if (page.isPresent()) {
+                        navigator.toOnboardingForResult(page.get(), ONBOARDING_REQUEST_CODE);
+                    } else {
+                        proceedTo(getIntent());
+                    }
+                });
+    }
+
+    private void proceedTo(Intent intent) {
+        if (deepLinkRouter.hasDeepLink(intent)) {
+            String intentUriString = intent.getDataString();
+            Timber.i("Deeplink detected, navigating to \"%s\"", intentUriString);
+            deepLinkRouter.navigateTo(intentUriString);
+        } else {
+            navigator.toHomePage();
+        }
+
+        firstStartPersister.storeHasBeenStarted();
+        finish();
     }
 
     @Override

@@ -3,30 +3,36 @@ package net.squanchy.support.debug;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import net.squanchy.BuildConfig;
+
 public class DebugPreferences {
 
     private static final String PREFERENCES_NAME_DEBUG = "debug";
     private static final String KEY_CONTEST_TESTING_ENABLED = "contest.testing_enabled";
+    private static final boolean IS_DEBUG = BuildConfig.DEBUG;
 
     private final SharedPreferences preferences;
 
-    public DebugPreferences(Context context) {
+    DebugPreferences(Context context) {
         this.preferences = context.getSharedPreferences(DebugPreferences.PREFERENCES_NAME_DEBUG, Context.MODE_PRIVATE);
     }
 
     public boolean contestTestingEnabled() {
-        return preferences.getBoolean(KEY_CONTEST_TESTING_ENABLED, false);
+        return IS_DEBUG && preferences.getBoolean(KEY_CONTEST_TESTING_ENABLED, false);
     }
 
-    public void enableContestTesting() {
-        storePreference(KEY_CONTEST_TESTING_ENABLED, true);
+    void enableContestTesting() {
+        storeDebugPreference(KEY_CONTEST_TESTING_ENABLED, true);
     }
 
-    public void disableContestTesting() {
-        storePreference(KEY_CONTEST_TESTING_ENABLED, false);
+    void disableContestTesting() {
+        storeDebugPreference(KEY_CONTEST_TESTING_ENABLED, false);
     }
 
-    private void storePreference(String key, boolean value) {
+    private void storeDebugPreference(String key, boolean value) {
+        if (!IS_DEBUG) {
+            return;
+        }
         preferences.edit()
                 .putBoolean(key, value)
                 .apply();
