@@ -105,7 +105,7 @@ public class TweetsPageView extends CoordinatorLayout implements Loadable {
         refreshingData = true;
         subscription = twitterService.refresh(query)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onSuccess, e -> onError());
+                .subscribe(this::onSuccess, this::onError);
     }
 
     private void onSuccess(List<TweetViewModel> tweet) {
@@ -113,8 +113,8 @@ public class TweetsPageView extends CoordinatorLayout implements Loadable {
         onRefreshCompleted();
     }
 
-    private void onError() {
-        Timber.e("Error refreshing the Twitter timeline");
+    private void onError(Throwable e) {
+        Timber.e(e, "Error refreshing the Twitter timeline");
         onRefreshCompleted();
     }
 
