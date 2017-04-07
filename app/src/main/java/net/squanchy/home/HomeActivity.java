@@ -13,6 +13,7 @@ import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
 import android.support.transition.Fade;
 import android.support.transition.TransitionManager;
+import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -157,7 +158,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
                 BaseTransientBottomBar.LENGTH_INDEFINITE
         );
         snackbar.setAction(R.string.missing_prerequisites_action, view -> proximityPreconditions.startSatisfyingPreconditions());
-        snackbar.setActionTextColor(getResources().getColor(R.color.text_inverse));
+        snackbar.setActionTextColor(ContextCompat.getColor(this, R.color.text_inverse));
         return snackbar;
     }
 
@@ -225,7 +226,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
     public Snackbar toSnackbar(Event event, ProximityEvent proximityEvent) {
         Snackbar snackbar = Snackbar.make(pageViews.get(currentSection), buildString(event), BaseTransientBottomBar.LENGTH_INDEFINITE);
         snackbar.setAction(R.string.event_details, view -> tapOnSnackbarAction(event, proximityEvent));
-        snackbar.setActionTextColor(getResources().getColor(R.color.text_inverse));
+        snackbar.setActionTextColor(ContextCompat.getColor(this, R.color.text_inverse));
         return snackbar;
     }
 
