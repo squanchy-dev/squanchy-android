@@ -48,12 +48,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import timber.log.Timber;
 
+import static net.squanchy.google.GoogleClientId.HOME_ACTIVITY;
+
 public class HomeActivity extends TypefaceStyleableActivity {
 
     private static final String KEY_CONTEST_STAND = "stand";
     private static final String KEY_ROOM_EVENT = "room";
 
-    private static final int REQUEST_SETTINGS = 9375;
     private static final int REQUEST_SIGN_IN_MAY_GOD_HAVE_MERCY_OF_OUR_SOULS = 666;
     private static final String KEY_PROXIMITY_ID = "proximity_id";
 
@@ -144,7 +145,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
 
     private GoogleApiClient getGoogleApiClient() {
         return new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, connectionResult -> Timber.e("Google Client connection failed"))
+                .enableAutoManage(this, HOME_ACTIVITY.clientId(), connectionResult -> Timber.e("Google Client connection failed"))
                 .addApi(LocationServices.API)
                 .build();
     }
