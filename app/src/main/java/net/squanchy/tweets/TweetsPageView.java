@@ -18,6 +18,7 @@ import net.squanchy.tweets.domain.view.TweetViewModel;
 import net.squanchy.tweets.service.TwitterService;
 import net.squanchy.tweets.view.TweetsAdapter;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
 
@@ -103,7 +104,8 @@ public class TweetsPageView extends CoordinatorLayout implements Loadable {
         swipeLayout.setRefreshing(true);
         refreshingData = true;
         subscription = twitterService.refresh(query)
-                .subscribe(this::onSuccess, e -> onError());
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onSuccess, this::onError);
     }
 
     private void onSuccess(List<TweetViewModel> tweet) {
@@ -111,8 +113,8 @@ public class TweetsPageView extends CoordinatorLayout implements Loadable {
         onRefreshCompleted();
     }
 
-    private void onError() {
-        Timber.e("Error refreshing the Twitter timeline");
+    private void onError(Throwable e) {
+        Timber.e(e, "Error refreshing the Twitter timeline");
         onRefreshCompleted();
     }
 
