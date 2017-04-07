@@ -13,6 +13,7 @@ import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
 import android.support.transition.Fade;
 import android.support.transition.TransitionManager;
+import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,12 +49,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import timber.log.Timber;
 
+import static net.squanchy.google.GoogleClientId.HOME_ACTIVITY;
+
 public class HomeActivity extends TypefaceStyleableActivity {
 
     private static final String KEY_CONTEST_STAND = "stand";
     private static final String KEY_ROOM_EVENT = "room";
 
-    private static final int REQUEST_SETTINGS = 9375;
     private static final int REQUEST_SIGN_IN_MAY_GOD_HAVE_MERCY_OF_OUR_SOULS = 666;
     private static final String KEY_PROXIMITY_ID = "proximity_id";
 
@@ -144,7 +146,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
 
     private GoogleApiClient getGoogleApiClient() {
         return new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, connectionResult -> Timber.e("Google Client connection failed"))
+                .enableAutoManage(this, HOME_ACTIVITY.clientId(), connectionResult -> Timber.e("Google Client connection failed"))
                 .addApi(LocationServices.API)
                 .build();
     }
@@ -156,7 +158,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
                 BaseTransientBottomBar.LENGTH_INDEFINITE
         );
         snackbar.setAction(R.string.missing_prerequisites_action, view -> proximityPreconditions.startSatisfyingPreconditions());
-        snackbar.setActionTextColor(getResources().getColor(R.color.text_inverse));
+        snackbar.setActionTextColor(ContextCompat.getColor(this, R.color.text_inverse));
         return snackbar;
     }
 
@@ -224,7 +226,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
     public Snackbar toSnackbar(Event event, ProximityEvent proximityEvent) {
         Snackbar snackbar = Snackbar.make(pageViews.get(currentSection), buildString(event), BaseTransientBottomBar.LENGTH_INDEFINITE);
         snackbar.setAction(R.string.event_details, view -> tapOnSnackbarAction(event, proximityEvent));
-        snackbar.setActionTextColor(getResources().getColor(R.color.text_inverse));
+        snackbar.setActionTextColor(ContextCompat.getColor(this, R.color.text_inverse));
         return snackbar;
     }
 

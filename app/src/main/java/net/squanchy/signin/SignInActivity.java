@@ -22,6 +22,8 @@ import net.squanchy.support.config.DialogLayoutParameters;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Action;
 
+import static net.squanchy.google.GoogleClientId.SIGN_IN_ACTIVITY;
+
 public class SignInActivity extends TypefaceStyleableActivity {
 
     private static final int RC_SIGN_IN = 9001;
@@ -66,7 +68,7 @@ public class SignInActivity extends TypefaceStyleableActivity {
                 .build();
 
         return new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, e -> showSignInFailedError())
+                .enableAutoManage(this, SIGN_IN_ACTIVITY.clientId(), e -> showSignInFailedError())
                 .addApi(Auth.GOOGLE_SIGN_IN_API, signInOptions)
                 .build();
     }
