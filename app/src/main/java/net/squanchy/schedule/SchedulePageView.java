@@ -53,7 +53,6 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
         analytics = component.analytics();
 
         viewPagerAdapter = new ScheduleViewPagerAdapter(activity);
-
     }
 
     @Override
