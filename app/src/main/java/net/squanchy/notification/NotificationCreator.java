@@ -133,7 +133,6 @@ public class NotificationCreator {
 
         NotificationCompat.WearableExtender extender = new NotificationCompat.WearableExtender();
         extender.setBackground(BitmapFactory.decodeResource(resources, R.drawable.notification_background));
-        // TODO: update notification background
 
         return new NotificationCompat.Builder(context)
                 .setTicker(
