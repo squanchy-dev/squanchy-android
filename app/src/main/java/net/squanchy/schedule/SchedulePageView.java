@@ -47,7 +47,7 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
         super(context, attrs, defStyleAttr);
 
         AppCompatActivity activity = unwrapToActivityContext(getContext());
-        ScheduleComponent component = ScheduleInjector.obtain(activity);
+        ScheduleComponent component = ScheduleComponentKt.obtain(activity);
         service = component.service();
         navigate = component.navigator();
         analytics = component.analytics();

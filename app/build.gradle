@@ -64,11 +64,11 @@ android {
         ]
 
         resValueProperty 'app_name', (buildProperties.application['applicationName'] | "Squanchy")
-        
+
         resValueProperty 'api_value_twitter_api_key', (buildProperties.secrets['twitterApiKey'] | buildProperties.env['TWITTER_API_KEY'])
         resValueProperty 'api_value_twitter_secret', (buildProperties.secrets['twitterSecret'] | buildProperties.env['TWITTER_SECRET'])
         resValueProperty 'nearit_api_key', (buildProperties.secrets['nearITApiKey'] | buildProperties.env['NEARIT_API_KEY'])
-        
+
         resValueProperty 'social_query', (buildProperties.application['socialQuery'] | "#AndroidDev")
         resValueProperty 'deeplink_scheme', (buildProperties.application['deeplinkScheme'] | "squanchy")
     }
@@ -138,7 +138,7 @@ dependencies {
     compile libraries.app.dagger
 
     retrolambdaConfig libraries.app.retrolambda
-    
+
     testCompile libraries.test.fest
     testCompile libraries.test.jodaTime
     testCompile libraries.test.jUnit4
