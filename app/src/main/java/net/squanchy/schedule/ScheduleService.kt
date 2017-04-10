@@ -35,7 +35,7 @@ class ScheduleService internal constructor(
 
     private fun combineEventsById(): BiFunction<Map<String, List<Event>>, FirebaseDays, Schedule> {
         return BiFunction { eventsMap, (days) ->
-            val pages2 = eventsMap.keys
+            val pages = eventsMap.keys
                     .map { key ->
                         days!!.find {
                             (id) ->
@@ -51,7 +51,7 @@ class ScheduleService internal constructor(
                     }
                     .sortedBy { it.date }
 
-            Schedule.create(pages2)
+            Schedule.create(pages)
         }
     }
 
