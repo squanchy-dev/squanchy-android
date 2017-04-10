@@ -21,6 +21,8 @@ import net.squanchy.service.proximity.injection.ProximityService;
 
 import timber.log.Timber;
 
+import static net.squanchy.google.GoogleClientId.LOCATION_ONBOARDING_ACTIVITY;
+
 public class LocationOnboardingActivity extends TypefaceStyleableActivity {
 
     private Onboarding onboarding;
@@ -36,7 +38,7 @@ public class LocationOnboardingActivity extends TypefaceStyleableActivity {
         super.onCreate(savedInstanceState);
 
         GoogleApiClient googleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, connectionResult -> onGoogleConnectionFailed())
+                .enableAutoManage(this, LOCATION_ONBOARDING_ACTIVITY.clientId(), connectionResult -> onGoogleConnectionFailed())
                 .addApi(LocationServices.API)
                 .build();
 

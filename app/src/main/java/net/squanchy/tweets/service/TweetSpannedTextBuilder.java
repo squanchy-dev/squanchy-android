@@ -8,7 +8,6 @@ import com.twitter.sdk.android.core.models.HashtagEntity;
 import com.twitter.sdk.android.core.models.MentionEntity;
 import com.twitter.sdk.android.core.models.UrlEntity;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
@@ -99,10 +98,11 @@ public class TweetSpannedTextBuilder {
         String string = builder.toString();
         Matcher matcher = HTML_ENTITY_PATTERN.matcher(string);
 
-        while (matcher.find()) {
+        if (matcher.find()) {
             MatchResult matchResult = matcher.toMatchResult();
             Spanned unescapedEntity = Html.fromHtml(matchResult.group());
             builder.replace(matchResult.start(), matchResult.end(), unescapedEntity);
+            unescapeEntities(builder);
         }
     }
 }

@@ -32,6 +32,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import timber.log.Timber;
 
+import static net.squanchy.google.GoogleClientId.SETTINGS_FRAGMENT;
+
 public class SettingsFragment extends PreferenceFragment {
 
     private final CompositeDisposable subscriptions = new CompositeDisposable();
@@ -66,7 +68,7 @@ public class SettingsFragment extends PreferenceFragment {
 
         AppCompatActivity activity = (AppCompatActivity) getActivity(); // TODO UNYOLO
         GoogleApiClient googleApiClient = new GoogleApiClient.Builder(activity)
-                .enableAutoManage(activity, connectionResult -> onGoogleConnectionFailed())
+                .enableAutoManage(activity, SETTINGS_FRAGMENT.clientId(), connectionResult -> onGoogleConnectionFailed())
                 .addApi(LocationServices.API)
                 .build();
 
