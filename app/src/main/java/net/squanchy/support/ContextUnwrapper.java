@@ -12,7 +12,7 @@ public final class ContextUnwrapper {
 
     public static AppCompatActivity unwrapToActivityContext(Context context) {
         if (context == null) {
-            throw new NullPointerException("Context cannot be null");
+            throw new IllegalArgumentException("Context cannot be null");
         } else if (context instanceof AppCompatActivity) {
             return (AppCompatActivity) context;
         } else if (context instanceof ContextWrapper) {
