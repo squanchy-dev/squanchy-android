@@ -93,7 +93,7 @@ public class DebugActivity extends TypefaceStyleableActivity {
     private Event createTestEvent(int id) {
         LocalDateTime start = new LocalDateTime().plusMinutes(5);
         LocalDateTime end = new LocalDateTime().plusMinutes(45);
-        return Event.create(
+        return Event.Companion.create(
                 String.valueOf(id),
                 id,
                 "1",
@@ -112,13 +112,13 @@ public class DebugActivity extends TypefaceStyleableActivity {
     }
 
     private Optional<Place> createPlace() {
-        Place place = Place.create("1", "That room over there", Optional.absent());
+        Place place = Place.Companion.create("1", "That room over there", Optional.absent());
         return Optional.of(place);
     }
 
     private List<Speaker> createTalkSpeakers() {
         List<Speaker> speakers = new ArrayList<>(2);
-        speakers.add(Speaker.create(
+        speakers.add(Speaker.Companion.create(
                 "1",
                 101L,
                 "Ajeje Brazorf",
@@ -134,7 +134,7 @@ public class DebugActivity extends TypefaceStyleableActivity {
     }
 
     private Track createTrack() {
-        return Track.create(
+        return Track.Companion.create(
                 "0",
                 "UI",
                 Optional.of(generateColor()),

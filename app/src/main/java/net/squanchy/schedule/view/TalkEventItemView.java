@@ -40,27 +40,27 @@ public class TalkEventItemView extends EventItemView {
 
     @Override
     public void updateWith(Event event) {
-        ensureSupportedType(event.type());
+        ensureSupportedType(event.getType());
 
         timestampView.setText(startTimeAsFormattedString(event));
-        titleView.setText(event.title());
+        titleView.setText(event.getTitle());
 
-        if (event.experienceLevel().isPresent()) {
-            experienceLevelIconView.setExperienceLevel(event.experienceLevel().get());
+        if (event.getExperienceLevel().isPresent()) {
+            experienceLevelIconView.setExperienceLevel(event.getExperienceLevel().get());
             experienceLevelIconView.setVisibility(VISIBLE);
         } else {
             experienceLevelIconView.setVisibility(INVISIBLE);
         }
 
-        speakerView.setVisibility(event.speakers().isEmpty() ? GONE : VISIBLE);
-        speakerView.updateWith(event.speakers(), Optional.absent());
+        speakerView.setVisibility(event.getSpeakers().isEmpty() ? GONE : VISIBLE);
+        speakerView.updateWith(event.getSpeakers(), Optional.absent());
     }
 
     private String startTimeAsFormattedString(Event event) {
         DateTimeFormatter formatter = DateTimeFormat.shortTime()
-                .withZone(event.timeZone());
+                .withZone(event.getTimeZone());
 
-        return formatter.print(event.startTime().toDateTime());
+        return formatter.print(event.getStartTime().toDateTime());
     }
 
     private void ensureSupportedType(Event.Type type) {

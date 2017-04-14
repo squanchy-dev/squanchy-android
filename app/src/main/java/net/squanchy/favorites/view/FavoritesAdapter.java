@@ -33,7 +33,7 @@ class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         int TYPE_HEADER = 1;
     }
 
-    private Schedule schedule = Schedule.create(Collections.emptyList());
+    private Schedule schedule = Schedule.Companion.create(Collections.emptyList());
 
     @Nullable
     private ScheduleViewPagerAdapter.OnEventClickedListener listener;
@@ -48,9 +48,9 @@ class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return findFor(
                 0,
                 position,
-                schedule.pages(),
-                schedulePage -> (long) -schedulePage.dayId().hashCode(),
-                (schedulePage, positionInPage) -> schedulePage.events().get(positionInPage).numericId()
+                schedule.getPages(),
+                schedulePage -> (long) -schedulePage.getDayId().hashCode(),
+                (schedulePage, positionInPage) -> schedulePage.getEvents().get(positionInPage).getNumericId()
         );
     }
 
@@ -66,7 +66,7 @@ class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return findFor(
                 0,
                 position,
-                schedule.pages(),
+                schedule.getPages(),
                 schedulePage -> ItemViewType.TYPE_HEADER,
                 (schedulePage, positionInPage) -> ItemViewType.TYPE_TALK
         );
@@ -90,11 +90,11 @@ class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             Event event = findFor(
                     0,
                     position,
-                    schedule.pages(),
+                    schedule.getPages(),
                     schedulePage -> {
                         throw new IndexOutOfBoundsException();
                     },
-                    (schedulePage, positionInPage) -> schedulePage.events().get(positionInPage)
+                    (schedulePage, positionInPage) -> schedulePage.getEvents().get(positionInPage)
             );
 
             ((EventViewHolder) holder).updateWith(event, listener);
@@ -102,8 +102,8 @@ class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             LocalDateTime date = findFor(
                     0,
                     position,
-                    schedule.pages(),
-                    SchedulePage::date,
+                    schedule.getPages(),
+                    SchedulePage::getDate,
                     (schedulePage, positionInPage) -> {
                         throw new IndexOutOfBoundsException();
                     }
@@ -118,7 +118,7 @@ class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return Lists.reduce(0, schedule.pages(), (count, page) -> count + page.events().size() + 1);
+        return Lists.reduce(0, schedule.getPages(), (count, page) -> count + page.getEvents().size() + 1);
     }
 
     private <T> T findFor(int pagePosition, int position, List<SchedulePage> pages, Header<T> header, Row<T> row) {
@@ -134,7 +134,7 @@ class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         int adjustedPosition = position - 1;
 
-        int size = schedulePage.events().size();
+        int size = schedulePage.getEvents().size();
         if (adjustedPosition < size) {
             return row.get(schedulePage, adjustedPosition);
         }

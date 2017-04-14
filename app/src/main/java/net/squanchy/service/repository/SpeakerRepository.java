@@ -24,29 +24,29 @@ public class SpeakerRepository {
 
     public Observable<List<Speaker>> speakers() {
         return dbService.speakers()
-                .map(firebaseSpeaker -> firebaseSpeaker.speakers)
+                .map(firebaseSpeaker -> firebaseSpeaker.getSpeakers())
                 .map(speakers -> map(speakers, this::toSpeaker));
     }
 
     public Observable<Speaker> speaker(String speakerId) {
         return dbService.speakers()
-                .map(firebaseSpeakers -> firebaseSpeakers.speakers)
+                .map(firebaseSpeakers -> firebaseSpeakers.getSpeakers())
                 .flatMap(Observable::fromIterable)
-                .filter(firebaseSpeaker -> firebaseSpeaker.id.equals(speakerId))
+                .filter(firebaseSpeaker -> firebaseSpeaker.getId().equals(speakerId))
                 .map(this::toSpeaker);
     }
 
     private Speaker toSpeaker(FirebaseSpeaker firebaseSpeaker) {
-        return Speaker.create(
-                firebaseSpeaker.id,
-                checksum.getChecksumOf(firebaseSpeaker.id),
-                firebaseSpeaker.name,
-                firebaseSpeaker.bio,
-                Optional.fromNullable(firebaseSpeaker.company_name),
-                Optional.fromNullable(firebaseSpeaker.company_url),
-                Optional.fromNullable(firebaseSpeaker.personal_url),
-                Optional.fromNullable(firebaseSpeaker.photo_url),
-                Optional.fromNullable(firebaseSpeaker.twitter_username)
+        return Speaker.Companion.create(
+                firebaseSpeaker.getId(),
+                checksum.getChecksumOf(firebaseSpeaker.getId()),
+                firebaseSpeaker.getName(),
+                firebaseSpeaker.getBio(),
+                Optional.fromNullable(firebaseSpeaker.getCompany_name()),
+                Optional.fromNullable(firebaseSpeaker.getCompany_url()),
+                Optional.fromNullable(firebaseSpeaker.getPersonal_url()),
+                Optional.fromNullable(firebaseSpeaker.getPhoto_url()),
+                Optional.fromNullable(firebaseSpeaker.getTwitter_username())
         );
     }
 }

@@ -51,18 +51,18 @@ public class ScheduleViewPagerAdapter extends ViewPagerAdapter<ScheduleDayPageVi
 
     @Override
     protected void bindView(ScheduleDayPageView view, int position) {
-        List<Event> events = pages.get(position).events();
+        List<Event> events = pages.get(position).getEvents();
         view.updateWith(events, listener);
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        LocalDateTime date = pages.get(position).date();
+        LocalDateTime date = pages.get(position).getDate();
         return date.toString(TITLE_FORMAT_TEMPLATE).toUpperCase();
     }
 
     public String getPageDayId(int position) {
-        return pages.get(position).dayId();
+        return pages.get(position).getDayId();
     }
 
     @Override

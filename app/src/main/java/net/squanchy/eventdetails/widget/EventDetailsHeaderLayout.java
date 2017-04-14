@@ -28,10 +28,10 @@ public class EventDetailsHeaderLayout extends AppBarLayout {
     }
 
     void updateWith(Event event, SpeakerView.OnSpeakerClickListener listener) {
-        titleView.setText(event.title());
+        titleView.setText(event.getTitle());
         titleView.setVisibility(VISIBLE);
 
-        speakerView.setVisibility(event.speakers().isEmpty() ? GONE : VISIBLE);
-        speakerView.updateWith(event.speakers(), Optional.of(listener));
+        speakerView.setVisibility(event.getSpeakers().isEmpty() ? GONE : VISIBLE);
+        speakerView.updateWith(event.getSpeakers(), Optional.of(listener));
     }
 }

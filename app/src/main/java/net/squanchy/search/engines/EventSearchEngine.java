@@ -26,7 +26,7 @@ class EventSearchEngine implements SearchEngine<Event> {
     }
 
     private boolean eventIsSearchable(Event event) {
-        return event.type() == Event.Type.TALK || event.type() == Event.Type.KEYNOTE;
+        return event.getType() == Event.Type.TALK || event.getType() == Event.Type.KEYNOTE;
     }
 
     private boolean matchesQuery(Event event, String query) {

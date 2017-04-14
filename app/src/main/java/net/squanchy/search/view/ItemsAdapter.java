@@ -28,8 +28,8 @@ class ItemsAdapter {
             return 0;
         }
 
-        int totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResults.events());
-        int totalSpeakerItemsCount = totalCountForSectionIncludingHeaders(searchResults.speakers());
+        int totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResults.getEvents());
+        int totalSpeakerItemsCount = totalCountForSectionIncludingHeaders(searchResults.getSpeakers());
 
         return totalEventItemsCount + totalSpeakerItemsCount;
     }
@@ -42,7 +42,7 @@ class ItemsAdapter {
     int viewTypeAtAbsolutePosition(int position) {
         ensurePositionExists(position);
 
-        int totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResults.events());
+        int totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResults.getEvents());
 
         int adjustedPosition;
         if (position < totalEventItemsCount) {
@@ -63,12 +63,12 @@ class ItemsAdapter {
     long itemIdAtAbsolutePosition(int position) {
         ensurePositionExists(position);
 
-        int totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResults.events());
+        int totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResults.getEvents());
         if (totalEventItemsCount > 0 && position < totalEventItemsCount) {
             if (position == 0) {
                 return ITEM_ID_EVENTS_HEADER;
             } else {
-                return searchResults.events().get(position - 1).numericId();
+                return searchResults.getEvents().get(position - 1).getNumericId();
             }
         } else {
             int adjustedPosition = position - totalEventItemsCount;
@@ -76,7 +76,7 @@ class ItemsAdapter {
             if (adjustedPosition == 0) {
                 return ITEM_ID_SPEAKERS_HEADER;
             } else {
-                return searchResults.speakers().get(adjustedPosition - 1).numericId();
+                return searchResults.getSpeakers().get(adjustedPosition - 1).getNumericId();
             }
         }
     }
@@ -84,7 +84,7 @@ class ItemsAdapter {
     Speaker speakerAtAbsolutePosition(int position) {
         ensurePositionExists(position);
 
-        int totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResults.events());
+        int totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResults.getEvents());
         if (totalEventItemsCount > 0 && position < totalEventItemsCount) {
             throw new IndexOutOfBoundsException("No speaker at position " + position + ", that is supposed to be in the events sublist");
         }
@@ -92,7 +92,7 @@ class ItemsAdapter {
         int adjustedPosition = position - totalEventItemsCount;
         // We checked position is in range so it MUST be a speaker
         if (adjustedPosition > 0) {
-            return searchResults.speakers().get(adjustedPosition - 1);
+            return searchResults.getSpeakers().get(adjustedPosition - 1);
         } else {
             throw new IndexOutOfBoundsException("No speaker at position " + position + ", that is supposed to be the speakers header");
         }
@@ -101,20 +101,20 @@ class ItemsAdapter {
     Event eventAtAbsolutePosition(int position) {
         ensurePositionExists(position);
 
-        int totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResults.events());
+        int totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResults.getEvents());
         if (position == 0) {
             throw new IndexOutOfBoundsException("No event at position " + position + ", that is supposed to be the events header");
         } else if (position - 1 >= totalEventItemsCount) {
             throw new IndexOutOfBoundsException("No event at position " + position + ", that is supposed to be in the speakers sublist");
         }
 
-        return searchResults.events().get(position - 1);
+        return searchResults.getEvents().get(position - 1);
     }
 
     HeaderType headerTypeAtAbsolutePosition(int position) {
         ensurePositionExists(position);
 
-        int totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResults.events());
+        int totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResults.getEvents());
         if (totalEventItemsCount > 0) {
             if (position == 0) {
                 return HeaderType.EVENTS;

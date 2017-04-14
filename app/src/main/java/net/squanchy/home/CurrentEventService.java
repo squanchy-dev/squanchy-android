@@ -23,8 +23,8 @@ public class CurrentEventService {
     public Maybe<Event> eventIn(String placeId) {
         return authService.ifUserSignedInThenObservableFrom(eventRepository::events)
                 .flatMap(Observable::fromIterable)
-                .filter(event -> event.place().isPresent())
-                .filter(event -> event.place().get().id().equals(placeId))
+                .filter(event -> event.getPlace().isPresent())
+                .filter(event -> event.getPlace().get().getId().equals(placeId))
                 .filter(event -> event.isHappeningAt(currentTime.currentLocalDateTime()))
                 .firstElement();
     }

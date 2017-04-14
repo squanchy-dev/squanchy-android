@@ -34,7 +34,6 @@ public class NotificationCreator {
     private static final int NOTIFICATION_LED_OFF_MS = 1000;
     private static final String EMPTY_PLACE_NAME = "";
     private static final String ARGB_TRANSPARENT = "#00000000";
-    private static final String SPEAKER_NAMES_SEPARATOR = ", ";
 
     private final Context context;
 
@@ -58,10 +57,10 @@ public class NotificationCreator {
     private Notification createFrom(Event event) {
         NotificationCompat.Builder notificationBuilder = createDefaultBuilder(1);
         notificationBuilder
-                .setContentIntent(createPendingIntentForSingleEvent(event.id()))
-                .setContentTitle(event.title())
+                .setContentIntent(createPendingIntentForSingleEvent(event.getId()))
+                .setContentTitle(event.getTitle())
                 .setColor(getTrackColor(event))
-                .setWhen(event.startTime().toDateTime().getMillis())
+                .setWhen(event.getStartTime().toDateTime().getMillis())
                 .setShowWhen(true)
                 .setGroup(GROUP_KEY_NOTIFY_SESSION);
 
@@ -164,12 +163,12 @@ public class NotificationCreator {
     }
 
     private String getPlaceName(Event event) {
-        return event.place().map(Place::name).or(EMPTY_PLACE_NAME);
+        return event.getPlace().map(Place::getName).or(EMPTY_PLACE_NAME);
     }
 
     private int getTrackColor(Event event) {
-        return event.track()
-                .map(track -> Color.parseColor(track.accentColor().or(ARGB_TRANSPARENT)))
+        return event.getTrack()
+                .map(track -> Color.parseColor(track.getAccentColor().or(ARGB_TRANSPARENT)))
                 .or(Color.TRANSPARENT);
     }
 
@@ -187,7 +186,7 @@ public class NotificationCreator {
 
     private NotificationCompat.BigTextStyle createBigTextRichNotification(NotificationCompat.Builder notificationBuilder, Event event) {
         StringBuilder bigTextBuilder = new StringBuilder()
-                .append(getSpeakerNamesFrom(event.speakers()));
+                .append(getSpeakerNamesFrom(event.getSpeakers()));
 
         String placeName = getPlaceName(event);
         if (!placeName.isEmpty()) {
@@ -197,12 +196,12 @@ public class NotificationCreator {
         }
 
         return new NotificationCompat.BigTextStyle(notificationBuilder)
-                .setBigContentTitle(event.title())
+                .setBigContentTitle(event.getTitle())
                 .bigText(bigTextBuilder.toString());
     }
 
     private String getSpeakerNamesFrom(List<Speaker> speakers) {
-        String speakerNames = TextUtils.join(", ", map(speakers, Speaker::name));
+        String speakerNames = TextUtils.join(", ", map(speakers, Speaker::getName));
         return context.getString(R.string.event_notification_starting_by, speakerNames);
     }
 
@@ -212,16 +211,16 @@ public class NotificationCreator {
                 .setBigContentTitle(bigContentTitle);
 
         for (Event event : events) {
-            if (event.place().isPresent()) {
+            if (event.getPlace().isPresent()) {
                 richNotification.addLine(
                         context.getString(
                                 R.string.room_event_notification,
-                                event.place().get().name(),
-                                event.title()
+                                event.getPlace().get().getName(),
+                                event.getTitle()
                         )
                 );
             } else {
-                richNotification.addLine(event.title());
+                richNotification.addLine(event.getTitle());
             }
         }
 

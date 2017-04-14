@@ -7,7 +7,7 @@ class TitleQuery implements Query {
     @Override
     public boolean matches(Event event, String query) {
         String normalizedQuery = StringNormalizer.normalize(query);
-        String normalizedTitle = StringNormalizer.normalize(event.title());
+        String normalizedTitle = StringNormalizer.normalize(event.getTitle());
 
         return normalizedTitle.contains(normalizedQuery);
     }

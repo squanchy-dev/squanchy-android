@@ -25,7 +25,7 @@ class NotificationService {
 
     Observable<List<Event>> sortedFavourites() {
         return authService.ifUserSignedInThenObservableFrom(userId -> eventRepository.events(userId)
-                .map(events -> filter(events, Event::favorited))
+                .map(events -> filter(events, Event::getFavorited))
                 .map(events -> {
                     Collections.sort(events, byStartDate());
                     return events;
@@ -35,6 +35,6 @@ class NotificationService {
     }
 
     private Comparator<Event> byStartDate() {
-        return (event1, event2) -> event1.startTime().compareTo(event2.startTime());
+        return (event1, event2) -> event1.getStartTime().compareTo(event2.getStartTime());
     }
 }

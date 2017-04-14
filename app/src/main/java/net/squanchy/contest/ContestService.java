@@ -36,7 +36,7 @@ class ContestService {
     }
 
     private BiFunction<FirebaseAchievements, Long, ContestStandings> buildStandings() {
-        return (achievements, goal) -> ContestStandings.create(goal, achievements.achievements.size());
+        return (achievements, goal) -> ContestStandings.create(goal, achievements.getAchievements().size());
     }
 
     Completable addAchievement(String achievementId) {

@@ -2,7 +2,7 @@ package net.squanchy.schedule.domain.view;
 
 import net.squanchy.support.lang.Optional;
 
-public final class TrackFixtures {
+final class TrackFixtures {
 
     private String id = "batracknana";
     private String name = "Bananas";
@@ -10,7 +10,7 @@ public final class TrackFixtures {
     private Optional<String> textColor = Optional.of("#FFFFFFFF");
     private Optional<String> iconUrl = Optional.of("http://squanchy.net/tracks/batracknana.webp");
 
-    public static TrackFixtures aTrack() {
+    static TrackFixtures aTrack() {
         return new TrackFixtures();
     }
 
@@ -43,7 +43,7 @@ public final class TrackFixtures {
         return this;
     }
 
-    public Track build() {
-        return Track.create(id, name, accentColor, textColor, iconUrl);
+    Track build() {
+        return Track.Companion.create(id, name, accentColor, textColor, iconUrl);
     }
 }

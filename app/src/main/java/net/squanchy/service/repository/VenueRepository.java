@@ -15,14 +15,14 @@ public class VenueRepository {
 
     public Observable<Venue> venue() {
         return dbService.venueInfo()
-                .map(firebaseVenue -> Venue.create(
-                        firebaseVenue.name,
-                        firebaseVenue.address,
-                        firebaseVenue.lat,
-                        firebaseVenue.lon,
-                        firebaseVenue.description,
-                        firebaseVenue.map_url,
-                        firebaseVenue.timezone
+                .map(firebaseVenue -> Venue.Companion.create(
+                        firebaseVenue.getName(),
+                        firebaseVenue.getAddress(),
+                        firebaseVenue.getLat(),
+                        firebaseVenue.getLon(),
+                        firebaseVenue.getDescription(),
+                        firebaseVenue.getMap_url(),
+                        firebaseVenue.getTimezone()
                 ));
     }
 }

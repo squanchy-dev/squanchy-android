@@ -89,7 +89,7 @@ public class EventDetailsActivity extends TypefaceStyleableActivity {
         return new EventDetailsCoordinatorLayout.OnEventDetailsClickListener() {
             @Override
             public void onSpeakerClicked(Speaker speaker) {
-                navigate().toSpeakerDetails(speaker.id());
+                navigate().toSpeakerDetails(speaker.getId());
             }
 
             @Override

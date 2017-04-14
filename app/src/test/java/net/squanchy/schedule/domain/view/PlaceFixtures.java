@@ -2,13 +2,13 @@ package net.squanchy.schedule.domain.view;
 
 import net.squanchy.support.lang.Optional;
 
-public final class PlaceFixtures {
+final class PlaceFixtures {
 
     private String id = "banana-room";
     private String name = "The banana room™";
     private Optional<String> floor = Optional.of("Banana floor");
 
-    public static PlaceFixtures aPlace() {
+    static PlaceFixtures aPlace() {
         return new PlaceFixtures();
     }
 
@@ -31,7 +31,7 @@ public final class PlaceFixtures {
         return this;
     }
 
-    public Place build() {
-        return Place.create(id, name, floor);
+    Place build() {
+        return Place.Companion.create(id, name, floor);
     }
 }

@@ -38,7 +38,7 @@ public class SpeakerDetailsLayout extends LinearLayout {
 
     public void updateWith(Speaker speaker) {
         headerView.updateWith(speaker);
-        bioView.setText(parseHtml(speaker.bio()));
+        bioView.setText(parseHtml(speaker.getBio()));
     }
 
     @TargetApi(Build.VERSION_CODES.N)

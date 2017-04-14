@@ -7,6 +7,7 @@ buildscript {
     dependencies {
         classpath gradlePlugins.fabric
         classpath gradlePlugins.buildProperties
+        classpath gradlePlugins.kotlin
     }
 }
 
@@ -15,12 +16,15 @@ plugins {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'io.fabric'
 apply plugin: 'com.novoda.build-properties'
 apply plugin: 'com.github.triplet.play'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
+    mavenCentral()
 }
 
 buildProperties {
@@ -60,11 +64,11 @@ android {
         ]
 
         resValueProperty 'app_name', (buildProperties.application['applicationName'] | "Squanchy")
-        
+
         resValueProperty 'api_value_twitter_api_key', (buildProperties.secrets['twitterApiKey'] | buildProperties.env['TWITTER_API_KEY'])
         resValueProperty 'api_value_twitter_secret', (buildProperties.secrets['twitterSecret'] | buildProperties.env['TWITTER_SECRET'])
         resValueProperty 'nearit_api_key', (buildProperties.secrets['nearITApiKey'] | buildProperties.env['NEARIT_API_KEY'])
-        
+
         resValueProperty 'social_query', (buildProperties.application['socialQuery'] | "#AndroidDev")
         resValueProperty 'deeplink_scheme', (buildProperties.application['deeplinkScheme'] | "squanchy")
     }
@@ -125,15 +129,16 @@ dependencies {
     compile libraries.app.timber
     compile libraries.app.tweetUi
     compile libraries.app.viewPagerAdapter
+    compile libraries.app.kotlin
 
-    annotationProcessor libraries.app.autoValue
+    kapt libraries.app.autoValue
     provided libraries.app.autoValue
 
-    annotationProcessor libraries.app.daggerCompiler
+    kapt libraries.app.daggerCompiler
     compile libraries.app.dagger
 
     retrolambdaConfig libraries.app.retrolambda
-    
+
     testCompile libraries.test.fest
     testCompile libraries.test.jodaTime
     testCompile libraries.test.jUnit4

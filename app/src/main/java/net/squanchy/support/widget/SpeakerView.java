@@ -74,7 +74,7 @@ public abstract class SpeakerView extends LinearLayout {
     }
 
     private String toCommaSeparatedNames(List<Speaker> speakers) {
-        return TextUtils.join(", ", map(speakers, Speaker::name));
+        return TextUtils.join(", ", map(speakers, Speaker::getName));
     }
 
     private void updateSpeakerPhotos(List<Speaker> speakers, Optional<OnSpeakerClickListener> listener) {
@@ -91,11 +91,11 @@ public abstract class SpeakerView extends LinearLayout {
         }
 
         for (Speaker speaker : speakers) {
-            if (speaker.photoUrl().isPresent()) {
+            if (speaker.getPhotoUrl().isPresent()) {
                 ImageView photoView = recycleOrInflatePhotoView(photoViews);
                 speakerPhotoContainer.addView(photoView);
                 setClickListenerOrNotClickable(photoView, listener, speaker);
-                loadSpeakerPhoto(photoView, speaker.photoUrl().get(), imageLoader);
+                loadSpeakerPhoto(photoView, speaker.getPhotoUrl().get(), imageLoader);
             }
         }
     }

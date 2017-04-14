@@ -82,8 +82,8 @@ public class Navigator {
     }
 
     public void toTweet(TweetLinkInfo linkInfo) {
-        String deeplinkStatusUrl = String.format(TWITTER_STATUS_URL_TEMPLATE, linkInfo.statusId());
-        String fallbackStatusUrl = String.format(TWITTER_STATUS_FALLBACK_URL_TEMPLATE, linkInfo.screenName(), linkInfo.statusId());
+        String deeplinkStatusUrl = String.format(TWITTER_STATUS_URL_TEMPLATE, linkInfo.getStatusId());
+        String fallbackStatusUrl = String.format(TWITTER_STATUS_FALLBACK_URL_TEMPLATE, linkInfo.getScreenName(), linkInfo.getStatusId());
         attemptDeeplinkOrFallback(deeplinkStatusUrl, fallbackStatusUrl);
     }
 
@@ -103,7 +103,7 @@ public class Navigator {
     }
 
     public void toMapsFor(Venue venue) {
-        String mapsUrl = String.format(MAPS_VENUE_URL_TEMPLATE, Uri.encode(venue.name()), Uri.encode(venue.address()));
+        String mapsUrl = String.format(MAPS_VENUE_URL_TEMPLATE, Uri.encode(venue.getName()), Uri.encode(venue.getAddress()));
         toExternalUrl(mapsUrl);
     }
 

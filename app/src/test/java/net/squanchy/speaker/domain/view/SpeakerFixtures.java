@@ -68,7 +68,7 @@ public final class SpeakerFixtures {
     }
 
     public Speaker build() {
-        return Speaker.create(
+        return Speaker.Companion.create(
                 id,
                 numericId,
                 name,

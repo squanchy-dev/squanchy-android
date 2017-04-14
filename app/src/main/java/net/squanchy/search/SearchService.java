@@ -39,7 +39,7 @@ class SearchService {
         return authService.ifUserSignedInThenObservableFrom(userId -> Observable.combineLatest(
                 findEvents(query, userId),
                 findSpeakers(query),
-                SearchResults::create
+                SearchResults.Companion::create
         ));
     }
 
@@ -69,7 +69,7 @@ class SearchService {
     private Function<List<Speaker>, List<Speaker>> sortedByName() {
         return speakers -> {
             ArrayList<Speaker> sortedSpeakers = new ArrayList<>(speakers);
-            Collections.sort(sortedSpeakers, (speaker1, speaker2) -> speaker1.name().compareToIgnoreCase(speaker2.name()));
+            Collections.sort(sortedSpeakers, (speaker1, speaker2) -> speaker1.getName().compareToIgnoreCase(speaker2.getName()));
             return sortedSpeakers;
         };
     }

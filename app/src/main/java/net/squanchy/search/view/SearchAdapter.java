@@ -38,7 +38,7 @@ class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Nullable
     private SearchRecyclerView.OnSearchResultClickListener listener;
 
-    private SearchResults searchResults = SearchResults.create(Collections.emptyList(), Collections.emptyList());
+    private SearchResults searchResults = SearchResults.Companion.create(Collections.emptyList(), Collections.emptyList());
     private ItemsAdapter itemsAdapter = new ItemsAdapter(searchResults);
 
     SearchAdapter(AppCompatActivity activity) {

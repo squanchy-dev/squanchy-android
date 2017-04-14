@@ -232,15 +232,15 @@ public class HomeActivity extends TypefaceStyleableActivity {
 
     private void tapOnSnackbarAction(Event event, ProximityEvent proximityEvent) {
         analytics.trackProximityEventEngaged(proximityEvent);
-        navigator.toEventDetails(event.id());
+        navigator.toEventDetails(event.getId());
     }
 
     private String buildString(Event event) {
         return String.format(
                 Locale.US,
                 "Now in %1$s: %2$s",
-                event.place().get().name(),
-                event.title()
+                event.getPlace().get().getName(),
+                event.getTitle()
         );
     }
 

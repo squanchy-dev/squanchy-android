@@ -47,7 +47,7 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
         super(context, attrs, defStyleAttr);
 
         AppCompatActivity activity = unwrapToActivityContext(getContext());
-        ScheduleComponent component = ScheduleInjector.obtain(activity);
+        ScheduleComponent component = ScheduleComponentKt.obtain(activity);
         service = component.service();
         navigate = component.navigator();
         analytics = component.analytics();
@@ -99,8 +99,8 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
     }
 
     private void onEventClicked(Event event) {
-        analytics.trackItemSelected(ContentType.SCHEDULE_ITEM, event.id());
-        navigate.toEventDetails(event.id());
+        analytics.trackItemSelected(ContentType.SCHEDULE_ITEM, event.getId());
+        navigate.toEventDetails(event.getId());
     }
 
     @Override
@@ -149,7 +149,7 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
     }
 
     public void updateWith(Schedule schedule, ScheduleViewPagerAdapter.OnEventClickedListener listener) {
-        viewPagerAdapter.updateWith(schedule.pages(), listener);
+        viewPagerAdapter.updateWith(schedule.getPages(), listener);
         progressBar.setVisibility(GONE);
     }
 

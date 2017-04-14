@@ -59,11 +59,11 @@ public class SpeakerHeaderView extends LinearLayout {
     }
 
     public void updateWith(Speaker speaker) {
-        updatePhoto(speaker.photoUrl());
+        updatePhoto(speaker.getPhotoUrl());
 
-        nameView.setText(speaker.name());
+        nameView.setText(speaker.getName());
 
-        Optional<String> companyName = speaker.companyName();
+        Optional<String> companyName = speaker.getCompanyName();
         if (companyName.isPresent()) {
             // TODO support navigating to company website
             companyView.setText(companyName.get());

@@ -15,6 +15,8 @@ import net.squanchy.tweets.domain.TweetLinkInfo;
 import net.squanchy.tweets.domain.view.TweetViewModel;
 import net.squanchy.tweets.domain.view.User;
 
+import static android.R.attr.id;
+
 public class TweetModelConverter {
 
     private static final String MEDIA_TYPE_PHOTO = "photo";
@@ -26,7 +28,7 @@ public class TweetModelConverter {
     }
 
     TweetViewModel toViewModel(Tweet tweet) {
-        User user = User.create(tweet.user.name, tweet.user.screenName, tweet.user.profileImageUrlHttps);
+        User user = User.Companion.create(tweet.user.name, tweet.user.screenName, tweet.user.profileImageUrlHttps);
 
         List<Integer> emojiIndices = findEmojiIndices(tweet.text);
         Range displayTextRange = Range.from(tweet.displayTextRange, tweet.text.length(), emojiIndices.size());
@@ -38,15 +40,15 @@ public class TweetModelConverter {
         List<String> unresolvedPhotoUrl = Lists.map(tweet.entities.media, media -> media.url);
         String displayableText = displayableTextFor(tweet, displayTextRange, unresolvedPhotoUrl);
 
-        return TweetViewModel.builder()
-                .id(tweet.id)
-                .text(displayableText)
-                .spannedText(tweetSpannedTextBuilder.applySpans(displayableText, displayTextRange.start(), hashtags, mentions, urls))
-                .createdAt(tweet.createdAt)
-                .user(user)
-                .photoUrl(photoUrlMaybeFrom(photoUrls))
-                .linkInfo(TweetLinkInfo.from(tweet))
-                .build();
+        return TweetViewModel.Companion.create(
+                id,
+                displayableText,
+                tweetSpannedTextBuilder.applySpans(displayableText, displayTextRange.start(), hashtags, mentions, urls),
+                user,
+                tweet.createdAt,
+                photoUrlMaybeFrom(photoUrls),
+                TweetLinkInfo.Companion.create(tweet)
+        );
     }
 
     private List<Integer> findEmojiIndices(String text) {
