@@ -24,15 +24,18 @@ subprojects {
         repositories {
             jcenter()
             maven { url 'https://maven.fabric.io/public' }
-            maven { url "http://dl.bintray.com/arturbosch/code-analysis" }
+            maven { url 'http://dl.bintray.com/arturbosch/code-analysis' }
         }
     }
 
     repositories {
         jcenter()
         maven { url 'https://maven.google.com' }
-        maven { url "https://jitpack.io" }
+        maven { url 'https://jitpack.io' }
     }
 
     apply plugin: 'com.github.ben-manes.versions'
+    apply from: "$rootProject.rootDir.path/team-props/static-analysis.gradle"
 }
+
+apply from: 'team-props/android-code-quality.gradle'

@@ -2,20 +2,28 @@
 <lint>
 
   <!-- Loads of false positives :( -->
-  <issue id="StringFormatInvalid" severity="ignore" />
+  <issue id="StringFormatInvalid"
+    severity="ignore" />
 
-  <issue id="MissingTranslation" severity="ignore" />
-  <issue id="GoogleAppIndexingWarning" severity="ignore" />
+  <issue id="MissingTranslation"
+    severity="ignore" />
+  <issue id="GoogleAppIndexingWarning"
+    severity="ignore" />
 
-  <issue id="OldTargetApi" severity="informational" />
+  <issue id="OldTargetApi"
+    severity="informational" />
 
   <!-- Ignore RtL warnings since the app doesn't support RtL -->
-  <issue id="RtlSymmetry" severity="ignore" />
-  <issue id="RtlHardcoded" severity="ignore" />
-  <issue id="RtlEnabled" severity="ignore" />
+  <issue id="RtlSymmetry"
+    severity="ignore" />
+  <issue id="RtlHardcoded"
+    severity="ignore" />
+  <issue id="RtlEnabled"
+    severity="ignore" />
 
   <!-- Lint only flags only missing content descriptions in XML ImageViews but we rarely put content descriptions here  -->
-  <issue id="ContentDescription" severity="ignore" />
+  <issue id="ContentDescription"
+    severity="ignore" />
 
   <!-- Ignore OkIO's usages of java.nio.file -->
   <issue id="InvalidPackage">

@@ -40,4 +40,4 @@ before_script:
   - ./team-props/scripts/ci-mock-google-services-setup.sh
 
 script:
-  - ./gradlew clean check -PdisablePreDex --continue --stacktrace
+  - ./gradlew clean check --continue --stacktrace

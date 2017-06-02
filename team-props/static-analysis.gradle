@@ -1,0 +1,34 @@
+apply plugin: 'com.novoda.static-analysis'
+
+staticAnalysis {
+    penalty {
+        maxErrors = 0
+        maxWarnings = 0
+    }
+
+    checkstyle {
+        toolVersion checkstyleVersion
+        exclude project.fileTree('src/test/java')
+        exclude project.fileTree('src/testDebug/java')
+        configFile rootProject.file('team-props/static-analysis/checkstyle-modules.xml')
+        includeVariants { variant -> excludeTestAndDebug(variant) }
+    }
+
+    pmd {
+        toolVersion pmdVersion
+        exclude project.fileTree('src/test/java')
+        exclude project.fileTree('src/testDebug/java')
+        ruleSetFiles = rootProject.files('team-props/static-analysis/pmd-rules.xml')
+        includeVariants { variant -> excludeTestAndDebug(variant) }
+    }
+
+    findbugs {
+        toolVersion findbugsVersion
+        excludeFilter rootProject.file('team-props/static-analysis/findbugs-excludes.xml')
+        includeVariants { variant -> (variant.name == 'fastPlayServicesDebug') }
+    }
+}
+
+static boolean excludeTestAndDebug(variant) {
+    return !variant.name.toLowerCase().endsWith('test') && !variant.name.toLowerCase().endsWith('debug')
+}

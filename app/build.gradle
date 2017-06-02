@@ -7,8 +7,8 @@ buildscript {
 }
 
 plugins {
-    id "me.tatarka.retrolambda" version "3.5.0"
-    id "io.gitlab.arturbosch.detekt" version "1.0.0.M10.2"
+    id 'me.tatarka.retrolambda' version '3.5.0'
+    id 'io.gitlab.arturbosch.detekt' version '1.0.0.M10.2'
 }
 
 apply plugin: 'com.android.application'
@@ -25,13 +25,13 @@ repositories {
 
 buildProperties {
     application {
-        file project.file('../team-props/application.properties')
+        file project.file("$rootProject.projectDir/team-props/application.properties")
     }
     secrets {
-        file project.file('../team-props/secrets.properties')
+        file project.file("$rootProject.projectDir/team-props/secrets.properties")
     }
     releaseSigningConfig {
-        file project.file('../team-props/releaseSigningConfig.properties')
+        file project.file("$rootProject.projectDir/team-props/releaseSigningConfig.properties")
     }
 }
 
@@ -95,18 +95,18 @@ android {
     }
 
     lintOptions {
-        lintConfig file("$rootProject.projectDir/team-props/lint.xml")
+        lintConfig file("$rootProject.projectDir/team-props/static-analysis/lint-config.xml")
         abortOnError false
     }
 }
 
 play {
-    jsonFile = file('../team-props/play-store-keys.json')
+    jsonFile = file("$rootProject.projectDir/team-props/play-store-keys.json")
 }
 
 detekt {
     input = "./src/main/java"
-    config = "../team-props/detekt.yml"
+    config = "$rootProject.projectDir/team-props/static-analysis/detekt-config.yml"
     filters = ".*test.*, .*/resources/.*"
 }
 
