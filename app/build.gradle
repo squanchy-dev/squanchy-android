@@ -1,7 +1,8 @@
 buildscript {
     repositories {
-        maven { url 'https://maven.fabric.io/public' }
         jcenter()
+        maven { url 'https://maven.fabric.io/public' }
+        maven { url "http://dl.bintray.com/arturbosch/code-analysis" }
     }
 
     dependencies {
@@ -13,6 +14,7 @@ buildscript {
 
 plugins {
     id "me.tatarka.retrolambda" version "3.5.0"
+    id "io.gitlab.arturbosch.detekt" version "1.0.0.M10.2"
 }
 
 apply plugin: 'com.android.application'
@@ -106,6 +108,12 @@ android {
 
 play {
     jsonFile = file('../team-props/play-store-keys.json')
+}
+
+detekt {
+    input = "./src/main/java"
+    config = "../team-props/detekt.yml"
+    filters = ".*test.*, .*/resources/.*"
 }
 
 dependencies {
