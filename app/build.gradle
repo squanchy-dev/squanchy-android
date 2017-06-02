@@ -110,6 +110,10 @@ detekt {
     filters = ".*test.*, .*/resources/.*"
 }
 
+project.afterEvaluate {
+    check.dependsOn tasks['detekt']
+}
+
 dependencies {
     compile libraries.app.calligraphy
     compile libraries.app.crashlytics
