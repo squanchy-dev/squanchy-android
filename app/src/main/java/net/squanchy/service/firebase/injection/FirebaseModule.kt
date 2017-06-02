@@ -13,7 +13,7 @@ import net.squanchy.service.firebase.FirebaseDbService
 class FirebaseModule {
 
     @Provides
-    internal fun databaseReference(): DatabaseReference=  FirebaseDatabase.getInstance().reference
+    internal fun databaseReference(): DatabaseReference = FirebaseDatabase.getInstance().reference
 
     @Provides
     internal fun firebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()

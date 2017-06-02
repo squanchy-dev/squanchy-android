@@ -45,7 +45,6 @@ class FirebaseAuthService(private val auth: FirebaseAuth) {
                 deleteUser(user).andThen(signInWithGoogleCredential(credential))
             }
 
-
         }
     }
 
