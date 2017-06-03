@@ -16,7 +16,8 @@ machine:
 
 dependencies:
     pre:
-        - echo y | $ANDROID_HOME/tools/bin/sdkmanager --verbose "tools" "platform-tools" "patcher;v4" "build-tools;25.0.2" "extras;google;m2repository"
+        - echo y | android update sdk --no-ui --all --filter tools
+        - echo y | $ANDROID_HOME/tools/bin/sdkmanager --verbose "platform-tools" "patcher;v4" "build-tools;25.0.2" "extras;google;m2repository"
         - ./gradlew dependencies --console=plain
     cache_directories:
         - /usr/local/android-sdk-linux/tools
