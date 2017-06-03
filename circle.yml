@@ -28,7 +28,7 @@ test:
     pre:
         - ./team-props/scripts/ci-mock-google-services-setup.sh
     override:
-        - ./gradlew assembleDebug check --console=plain --stacktrace --continue
+        - ./gradlew assembleRelease check --console=plain --stacktrace --continue
     post:
         - cp -R app/build/outputs/apk/* $CIRCLE_ARTIFACTS
         - mkdir -p $CIRCLE_TEST_REPORTS/reports/junit
