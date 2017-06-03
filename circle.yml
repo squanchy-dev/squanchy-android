@@ -15,7 +15,7 @@ dependencies:
         - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
         - if [ ! -e $ANDROID_HOME/tools/bin/sdkmanager ]; then echo y | android update sdk --no-ui --all --filter tools; fi
         - echo y | $ANDROID_HOME/tools/bin/sdkmanager --verbose "platform-tools" "patcher;v4" "build-tools;25.0.2" "extras;google;m2repository"
-        - if [ -f ./gradlew ]; then ./gradlew dependencies --console=plain;else gradle dependencies --console=plain;fi
+        - if [ -f ./gradlew ]; then ./gradlew app:dependencies --console=plain;else gradle app:dependencies --console=plain;fi
     cache_directories:
         - /usr/local/android-sdk-linux/tools
         - /usr/local/android-sdk-linux/platform-tools
