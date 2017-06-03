@@ -34,6 +34,12 @@ test:
     override:
         - ./gradlew assembleDebug check --console=plain --stacktrace --continue
     post:
-        - cp -R app/build/outputs/apk $CIRCLE_ARTIFACTS
-        - mkdir $CIRCLE_ARTIFACTS/reports
-        - cp -R app/build/reports $CIRCLE_ARTIFACTS/reports
+        - cp -R app/build/outputs/apk/* $CIRCLE_ARTIFACTS
+        - mkdir -p $CIRCLE_TEST_REPORTS/reports/junit
+        - cp -R app/build/outputs/test-results/* $CIRCLE_ARTIFACTS/reports/junit
+        - mkdir -p $CIRCLE_TEST_REPORTS/reports/lint
+        - cp -R app/build/outputs/reports/lint-results.xml $CIRCLE_ARTIFACTS/reports/lint
+        - cp -R app/build/outputs/reports/pmd $CIRCLE_ARTIFACTS/reports
+        - cp -R app/build/outputs/reports/checkstyle $CIRCLE_ARTIFACTS/reports
+        - cp -R app/build/outputs/reports/findbugs $CIRCLE_ARTIFACTS/reports
+        - cp -R app/build/outputs/reports/findbugs $CIRCLE_ARTIFACTS/reports
