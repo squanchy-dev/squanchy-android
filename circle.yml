@@ -15,13 +15,13 @@ dependencies:
     pre:
         - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
         - if [ ! -e $ANDROID_HOME/tools/bin/sdkmanager ]; then echo y | android update sdk --no-ui --all --filter tools; fi
-        - echo y | $ANDROID_HOME/tools/bin/sdkmanager --verbose "platform-tools" "patcher;v4" "build-tools;$ANDROID_BUILD_TOOLS" "extras;google;m2repository"
+        - echo y | $ANDROID_HOME/tools/bin/sdkmanager --verbose "platform-tools" "patcher;v4" "build-tools;"$ANDROID_BUILD_TOOLS "extras;google;m2repository"
     override:
-        - if [ -f ./gradlew ]; then ./gradlew app:dependencies --console=plain;else gradle app:dependencies --console=plain;fi
+        - if [ -f ./gradlew ]; then ./gradlew app:dependencies --console=plain --no-daemon;else gradle app:dependencies --console=plain --no-daemon;fi
     cache_directories:
         - /usr/local/android-sdk-linux/tools
         - /usr/local/android-sdk-linux/platform-tools
-        - /usr/local/android-sdk-linux/build-tools/$ANDROID_BUILD_TOOLS
+        - /usr/local/android-sdk-linux/build-tools
         - /usr/local/android-sdk-linux/licenses
         - /home/ubuntu/.gradle/caches/
         - /home/ubuntu/.gradle/wrapper/
@@ -30,14 +30,14 @@ test:
     pre:
         - ./team-props/scripts/ci-mock-google-services-setup.sh
     override:
-        - ./gradlew assembleRelease check --console=plain --stacktrace --continue
+        - ./gradlew check --no-daemon --console=plain --stacktrace --continue
     post:
         - cp -R app/build/outputs/apk/* $CIRCLE_ARTIFACTS
         - mkdir -p $CIRCLE_TEST_REPORTS/reports/junit
-        - if [ -fe app/build/test-results ]; then cp -R app/build/test-results/* $CIRCLE_TEST_REPORTS/reports/junit; fi
+        - if [ -fe app/build/test-results ]; then cp -R app/build/test-results/* $CIRCLE_TEST_REPORTS/reports/junit; else echo "No JUnit results found"; fi
         - mkdir -p $CIRCLE_TEST_REPORTS/reports/lint
         - find app/build/reports -maxdepth 1 -name "*.html" -exec cp {} $CIRCLE_TEST_REPORTS/reports/lint/ \;
         - find app/build/reports -maxdepth 1 -name "*.xml" -exec cp {} $CIRCLE_TEST_REPORTS/reports/lint/ \;
-        - if [ -f app/build/reports/pmd ]; then cp -R app/build/reports/pmd $CIRCLE_TEST_REPORTS/reports; fi
-        - if [ -f app/build/reports/checkstyle ]; then cp -R app/build/reports/checkstyle $CIRCLE_TEST_REPORTS/reports; fi
-        - if [ -f app/build/reports/findbugs ]; then cp -R app/build/reports/findbugs $CIRCLE_TEST_REPORTS/reports; fi
+        - if [ -f app/build/reports/pmd ]; then cp -R app/build/reports/pmd $CIRCLE_TEST_REPORTS/reports; else echo "No PMD reports found"; fi
+        - if [ -f app/build/reports/checkstyle ]; then cp -R app/build/reports/checkstyle $CIRCLE_TEST_REPORTS/reports; else echo "No Checkstyle reports found"; fi
+        - if [ -f app/build/reports/findbugs ]; then cp -R app/build/reports/findbugs $CIRCLE_TEST_REPORTS/reports; else echo "No Findbugs reports found"; fi
