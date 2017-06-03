@@ -3,6 +3,7 @@ machine:
         version: oraclejdk8
     environment:
         ANDROID_HOME: /usr/local/android-sdk-linux
+        ANDROID_BUILD_TOOLS: 25.0.2
         APPLICATION_ID: net.squanchy.example
         FABRIC_API_KEY: 0000000000000000000000000000000000000000 
         GOOGLE_MAPS_API_KEY: DUMMY_GOOGLE_MAPS_API_KEY
@@ -14,12 +15,13 @@ dependencies:
     pre:
         - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
         - if [ ! -e $ANDROID_HOME/tools/bin/sdkmanager ]; then echo y | android update sdk --no-ui --all --filter tools; fi
-        - echo y | $ANDROID_HOME/tools/bin/sdkmanager --verbose "platform-tools" "patcher;v4" "build-tools;25.0.2" "extras;google;m2repository"
+        - echo y | $ANDROID_HOME/tools/bin/sdkmanager --verbose "platform-tools" "patcher;v4" "build-tools;$ANDROID_BUILD_TOOLS" "extras;google;m2repository"
+    override:
         - if [ -f ./gradlew ]; then ./gradlew app:dependencies --console=plain;else gradle app:dependencies --console=plain;fi
     cache_directories:
         - /usr/local/android-sdk-linux/tools
         - /usr/local/android-sdk-linux/platform-tools
-        - /usr/local/android-sdk-linux/build-tools/25.0.2
+        - /usr/local/android-sdk-linux/build-tools/$ANDROID_BUILD_TOOLS
         - /usr/local/android-sdk-linux/licenses
         - /home/ubuntu/.gradle/caches/
         - /home/ubuntu/.gradle/wrapper/
@@ -34,7 +36,8 @@ test:
         - mkdir -p $CIRCLE_TEST_REPORTS/reports/junit
         - if [ -fe app/build/test-results ]; then cp -R app/build/test-results/* $CIRCLE_TEST_REPORTS/reports/junit; fi
         - mkdir -p $CIRCLE_TEST_REPORTS/reports/lint
-        - if [ -f app/build/reports/lint-results.xml ]; then cp -R app/build/reports/lint-results.xml $CIRCLE_TEST_REPORTS/reports/lint; fi
+        - find app/build/reports -maxdepth 1 -name "*.html" -exec cp {} $CIRCLE_TEST_REPORTS/reports/lint/ \;
+        - find app/build/reports -maxdepth 1 -name "*.xml" -exec cp {} $CIRCLE_TEST_REPORTS/reports/lint/ \;
         - if [ -f app/build/reports/pmd ]; then cp -R app/build/reports/pmd $CIRCLE_TEST_REPORTS/reports; fi
         - if [ -f app/build/reports/checkstyle ]; then cp -R app/build/reports/checkstyle $CIRCLE_TEST_REPORTS/reports; fi
         - if [ -f app/build/reports/findbugs ]; then cp -R app/build/reports/findbugs $CIRCLE_TEST_REPORTS/reports; fi
