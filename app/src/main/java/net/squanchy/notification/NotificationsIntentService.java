@@ -80,7 +80,7 @@ public class NotificationsIntentService extends IntentService {
         }
         Event firstEvent = events.get(0);
         LocalDateTime serviceAlarm = firstEvent.getStartTime().minusMinutes(NOTIFICATION_INTERVAL_MINUTES);
-        Timber.d("Next alarm scheduled for " + serviceAlarm.toString());
+        Timber.d("Next alarm scheduled for %s", serviceAlarm.toString());
 
         Intent serviceIntent = new Intent(this, NotificationsIntentService.class);
         PendingIntent pendingIntent = PendingIntent.getService(this, 0, serviceIntent, PendingIntent.FLAG_CANCEL_CURRENT);

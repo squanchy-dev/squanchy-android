@@ -1,5 +1,6 @@
 package net.squanchy.support.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -144,6 +145,7 @@ public class InterceptingBottomNavigationView extends BottomNavigationView {
         this.colorProvider = Optional.fromNullable(colorProvider);
     }
 
+    @SuppressLint("RestrictedApi")      // This is a hacky solution to BottomNavigationView's lack of APIs :(
     public void selectItemAt(@IntRange(from = 0) int position) {
         getMenu().getItem(position).setChecked(true);
         getBottomNavigationMenuView().updateMenuView();

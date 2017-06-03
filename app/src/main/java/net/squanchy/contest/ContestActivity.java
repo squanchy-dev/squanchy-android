@@ -1,5 +1,6 @@
 package net.squanchy.contest;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -102,6 +103,7 @@ public class ContestActivity extends TypefaceStyleableActivity {
         updateStatusTextWith(missingStands);
     }
 
+    @TargetApi(Build.VERSION_CODES.N)
     private void updateProgressBarWith(ContestStandings standings) {
         contestProgressView.setVisibility(View.VISIBLE);
         contestProgressView.setMax((int) standings.goal());
@@ -113,7 +115,7 @@ public class ContestActivity extends TypefaceStyleableActivity {
         }
     }
 
-    private boolean isAtLeastNougat() {
+    private static boolean isAtLeastNougat() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N;
     }
 

@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="net.squanchy">
 
-  <application>
+  <application
+    android:allowBackup="false"
+    android:fullBackupContent="false">
 
     <activity
       android:name="net.squanchy.support.debug.DebugActivity"

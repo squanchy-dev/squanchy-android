@@ -21,8 +21,12 @@
   <issue id="RtlEnabled"
     severity="ignore" />
 
-  <!-- Lint only flags only missing content descriptions in XML ImageViews but we rarely put content descriptions here  -->
+  <!-- Lint only flags only missing content descriptions in XML ImageViews but we rarely put content descriptions here -->
   <issue id="ContentDescription"
+    severity="ignore" />
+
+  <!-- We have duplicate IDs on pages in the homescreen, but those are never accessed from the activity, so it's safe -->
+  <issue id="DuplicateIncludedIds"
     severity="ignore" />
 
   <!-- Ignore OkIO's usages of java.nio.file -->
@@ -33,6 +37,18 @@
   <!-- Ignore Retrofit's usages of java.lang.invoke -->
   <issue id="InvalidPackage">
     <ignore regexp="retrofit-(.*?)\.jar" />
+  </issue>
+
+  <!-- One of NearIt dependencies is currently ignoring all certificate issues for SSL connections.
+       We can't do anything about it until they change that dependency in their SDK with one that
+       properly validates certificates. -->
+  <issue id="TrustAllX509TrustManager">
+    <ignore regexp="\bcom/loopj/android/http/MySSLSocketFactory.*" />
+  </issue>
+
+  <!-- The Google Services JSON plugin generates some API keys even if we don't actually use them -->
+  <issue id="UnusedResources">
+    <ignore regexp="google_crash_reporting_api_key" />
   </issue>
 
 </lint>

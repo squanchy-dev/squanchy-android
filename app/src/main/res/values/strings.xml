@@ -10,13 +10,15 @@
   <string name="experience_level_beginner">beginner</string>
   <string name="experience_level_intermediate">intermediate</string>
   <string name="experience_level_advanced">advanced</string>
-  <string name="action_open">Open</string>
 
   <string name="no_tweets_for_query">No Tweets for %s… yet</string>
 
   <string name="event_notification_starting_by">By %s</string>
   <string name="event_notification_starting_in">In %s</string>
-  <string name="event_notification_count_starting">%d sessions are starting</string>
+  <plurals name="event_notification_count_starting">
+    <item quantity="one">A session is starting</item>
+    <item quantity="other">%d sessions are starting</item>
+  </plurals>
   <string name="room_event_notification" translatable="false">%s: %s</string>
   <plurals name="event_notification_ticker">
     <item quantity="one">1 session is about to start.</item>
@@ -57,7 +59,6 @@
   <string name="settings_location_summary_on">You can participate to the contest.</string>
   <string name="settings_location_summary_off">You cannot participate to the contest.</string>
   <string name="settings_contest_standings_title">Contest progress</string>
-  <string name="settings_notifications_about_to_start_title">Upcoming events notification</string>
   <string name="settings_notifications_about_to_start_summary_on">Show notifications for favorite events starting soon</string>
   <string name="settings_notifications_about_to_start_summary_off">Do not show notifications for favorite events starting soon</string>
   <string name="settings_message_signed_out">You have been signed out.</string>
@@ -72,9 +73,6 @@
   <string name="venue_about_label">About the venue</string>
   <string name="venue_map_content_description">Map to the venue</string>
 
-  <string name="prompt_to_sign_in_for_favorites">Get notified about upcoming talks. Your favorite talks are also get synced across all your devices.\n\nTap to sign in.</string>
-  <string name="prompt_to_favorite">You have no favorite talks, yet. Find some talk, touch the ♥ button and you are good to go.</string>
-  <string name="achievement_unlocked">Achievement Unlocked: The Fast Learner!</string>
   <string name="missing_prerequisites_for_location">Uh oh! Location features will not work with the current devices settings</string>
 
   <string name="favorites_empty_state_signed_out_blurb">Pick your favorite talks, synced across devices, and get notifications when they’re about to start.</string>
@@ -107,11 +105,9 @@
   <string name="onboarding_location_cta">I like swag!</string>
 
   <string name="proximity_error_not_opted_in">Sorry, unable to opt in because… you’ve not opted in? If that makes any sense.</string>
-  <string name="proximity_error_remote_config_kill_switch">Sorry, the feature has been disabled remotely.</string>
   <string name="proximity_error_permission_denied">We need the location permission to continue.</string>
   <string name="proximity_error_location_denied">We need the location services to be active to continue.</string>
   <string name="proximity_error_bluetooth_denied">We need the Bluetooth to be active to continue.</string>
-  <string name="proximity_error_location_failed">Unable to verify location settings for the device.</string>
   <string name="proximity_error_google_client_connection">Unable to verify location settings for the device. Please try again shortly.</string>
 
   <string name="routing_sign_in_unexpected_error">Something went very wrong while starting Squanchy, sorry.</string>

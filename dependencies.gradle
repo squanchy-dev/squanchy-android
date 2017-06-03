@@ -1,6 +1,6 @@
 ext {
     supportLibVersion = '25.3.1'
-    playServicesVersion = '10.2.1'
+    playServicesVersion = '10.2.6'
     daggerVersion = '2.9'
     kotlinVersion = '1.1.1'
 
@@ -9,38 +9,40 @@ ext {
     pmdVersion = '5.5.2'
 
     gradlePlugins = [
-            buildProperties     : 'com.novoda:build-properties-plugin:1.2.1',
-            fabric              : 'io.fabric.tools:gradle:1.22.2',
-            kotlin              : "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
+            buildProperties: 'com.novoda:build-properties-plugin:1.2.1',
+            fabric         : 'io.fabric.tools:gradle:1.22.2',
+            kotlin         : "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
     ]
 
     libraries = [
             app : [
-                    autoValue        : 'com.google.auto.value:auto-value:1.3',
-                    calligraphy      : 'uk.co.chrisjenx:calligraphy:2.2.0',
-                    crashlytics      : 'com.crashlytics.sdk.android:crashlytics:2.6.6',
-                    dagger           : "com.google.dagger:dagger:${daggerVersion}",
-                    daggerCompiler   : "com.google.dagger:dagger-compiler:${daggerVersion}",
-                    firebase         : "com.google.firebase:firebase-core:${playServicesVersion}",
-                    firebaseAuth     : "com.google.firebase:firebase-auth:${playServicesVersion}",
-                    firebaseConfig   : "com.google.firebase:firebase-config:${playServicesVersion}",
-                    firebaseDb       : "com.google.firebase:firebase-database:${playServicesVersion}",
-                    firebaseMessaging: "com.google.firebase:firebase-messaging:${playServicesVersion}",
-                    firebaseUiStorage: "com.firebaseui:firebase-ui-storage:1.2.0",
-                    glide            : 'com.github.bumptech.glide:glide:3.7.0',
-                    glideOkHttp3     : 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar',
-                    googleSignIn     : "com.google.android.gms:play-services-auth:${playServicesVersion}",
-                    jodaTimeAndroid  : 'net.danlew:android.joda:2.9.7',
-                    kotlin           : "org.jetbrains.kotlin:kotlin-stdlib-jre7:${kotlinVersion}",
-                    nearit           : 'it.near.sdk.core:nearitsdk:2.1.8',
-                    retrolambda      : 'net.orfjackal.retrolambda:retrolambda:2.5.0',
-                    rx               : 'io.reactivex.rxjava2:rxjava:2.0.5',
-                    rxAndroid        : 'io.reactivex.rxjava2:rxandroid:2.0.1',
-                    supportAppCompat : "com.android.support:appcompat-v7:${supportLibVersion}",
-                    supportDesign    : "com.android.support:design:${supportLibVersion}",
-                    timber           : 'com.jakewharton.timber:timber:4.5.1',
-                    tweetUi          : 'com.twitter.sdk.android:tweet-ui:2.3.2',
-                    viewPagerAdapter : 'com.novoda:view-pager-adapter:0.9.1'
+                    autoValue           : 'com.google.auto.value:auto-value:1.3',
+                    calligraphy         : 'uk.co.chrisjenx:calligraphy:2.2.0',
+                    crashlytics         : 'com.crashlytics.sdk.android:crashlytics:2.6.6',
+                    dagger              : "com.google.dagger:dagger:${daggerVersion}",
+                    daggerCompiler      : "com.google.dagger:dagger-compiler:${daggerVersion}",
+                    firebase            : "com.google.firebase:firebase-core:${playServicesVersion}",
+                    firebaseAuth        : "com.google.firebase:firebase-auth:${playServicesVersion}",
+                    firebaseConfig      : "com.google.firebase:firebase-config:${playServicesVersion}",
+                    firebaseDb          : "com.google.firebase:firebase-database:${playServicesVersion}",
+                    firebaseMessaging   : "com.google.firebase:firebase-messaging:${playServicesVersion}",
+                    firebaseStorage     : "com.google.firebase:firebase-storage:${playServicesVersion}",
+                    firebaseUiStorage   : "com.firebaseui:firebase-ui-storage:1.2.0",
+                    glide               : 'com.github.bumptech.glide:glide:3.7.0',
+                    glideOkHttp3        : 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar',
+                    jodaTimeAndroid     : 'net.danlew:android.joda:2.9.7',
+                    kotlin              : "org.jetbrains.kotlin:kotlin-stdlib-jre7:${kotlinVersion}",
+                    nearit              : 'it.near.sdk.core:nearitsdk:2.1.8',
+                    playServicesAuth    : "com.google.android.gms:play-services-auth:${playServicesVersion}",
+                    playServicesLocation: "com.google.android.gms:play-services-location:${playServicesVersion}",
+                    retrolambda         : 'net.orfjackal.retrolambda:retrolambda:2.5.0',
+                    rx                  : 'io.reactivex.rxjava2:rxjava:2.0.5',
+                    rxAndroid           : 'io.reactivex.rxjava2:rxandroid:2.0.1',
+                    supportAppCompat    : "com.android.support:appcompat-v7:${supportLibVersion}",
+                    supportDesign       : "com.android.support:design:${supportLibVersion}",
+                    timber              : 'com.jakewharton.timber:timber:4.5.1',
+                    tweetUi             : 'com.twitter.sdk.android:tweet-ui:2.3.2',
+                    viewPagerAdapter    : 'com.novoda:view-pager-adapter:0.9.1'
             ],
 
             test: [

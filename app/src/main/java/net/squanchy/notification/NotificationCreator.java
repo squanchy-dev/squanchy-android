@@ -228,6 +228,8 @@ public class NotificationCreator {
     }
 
     private String createSummaryTitle(int talksCount) {
-        return context.getString(R.string.event_notification_count_starting, talksCount);
+        String quantityString = context.getResources()
+                .getQuantityString(R.plurals.event_notification_count_starting, talksCount);
+        return String.format(quantityString, talksCount);
     }
 }

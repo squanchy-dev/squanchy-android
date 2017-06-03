@@ -7,18 +7,16 @@ import android.os.Build;
 import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import net.squanchy.BuildConfig;
-
 import me.eugeniomarletti.renderthread.typeannotation.CanvasProperty;
 import me.eugeniomarletti.renderthread.typeannotation.DisplayListCanvas;
 import me.eugeniomarletti.renderthread.typeannotation.RenderNodeAnimator;
+import timber.log.Timber;
 
 final class RenderThreadMethods {
 
@@ -102,9 +100,8 @@ final class RenderThreadMethods {
                     renderNodeAnimator_setTarget,
                     renderNodeAnimator_paintField_strokeWidth,
                     renderNodeAnimator_paintField_alpha);
-
         } catch (Exception e) {
-            logW("Error while getting render thread methods.", e);
+            Timber.w(e, "Error while getting render thread methods.");
             return null;
         }
     }
@@ -246,12 +243,6 @@ final class RenderThreadMethods {
         Field constant = klass.getDeclaredField(fieldName);
         constant.setAccessible(true);
         return constant.getInt(null);
-    }
-
-    private static void logW(@NonNull String message, @NonNull Exception e) {
-        if (BuildConfig.DEBUG) {
-            Log.w(RenderThreadMethods.class.getSimpleName(), message, e);
-        }
     }
 
     @NonNull
