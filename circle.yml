@@ -15,6 +15,7 @@ dependencies:
         - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
         - if [ ! -e $ANDROID_HOME/tools/bin/sdkmanager ]; then echo y | android update sdk --no-ui --all --filter tools; fi
         - echo y | $ANDROID_HOME/tools/bin/sdkmanager --verbose "platform-tools" "patcher;v4" "build-tools;25.0.2" "extras;google;m2repository"
+        - if [ -f ./gradlew ]; then ./gradlew dependencies --console=plain;else gradle dependencies --console=plain;fi
     cache_directories:
         - /usr/local/android-sdk-linux/tools
         - /usr/local/android-sdk-linux/platform-tools
@@ -22,7 +23,6 @@ dependencies:
         - /usr/local/android-sdk-linux/licenses
         - /home/ubuntu/.gradle/caches/
         - /home/ubuntu/.gradle/wrapper/
-        - /home/ubuntu/.m2/repository
 
 test:
     pre:
@@ -32,10 +32,9 @@ test:
     post:
         - cp -R app/build/outputs/apk/* $CIRCLE_ARTIFACTS
         - mkdir -p $CIRCLE_TEST_REPORTS/reports/junit
-        - cp -R app/build/test-results/* $CIRCLE_TEST_REPORTS/reports/junit
+        - if [ -fe app/build/test-results ]; then cp -R app/build/test-results/* $CIRCLE_TEST_REPORTS/reports/junit; fi
         - mkdir -p $CIRCLE_TEST_REPORTS/reports/lint
-        - cp -R app/build/reports/lint-results.xml $CIRCLE_TEST_REPORTS/reports/lint
-        - cp -R app/build/reports/pmd $CIRCLE_TEST_REPORTS/reports
-        - cp -R app/build/reports/checkstyle $CIRCLE_TEST_REPORTS/reports
-        - cp -R app/build/reports/findbugs $CIRCLE_TEST_REPORTS/reports
-        - cp -R app/build/reports/findbugs $CIRCLE_TEST_REPORTS/reports
+        - if [ -f app/build/reports/lint-results.xml ]; then cp -R app/build/reports/lint-results.xml $CIRCLE_TEST_REPORTS/reports/lint; fi
+        - if [ -f app/build/reports/pmd ]; then cp -R app/build/reports/pmd $CIRCLE_TEST_REPORTS/reports; fi
+        - if [ -f app/build/reports/checkstyle ]; then cp -R app/build/reports/checkstyle $CIRCLE_TEST_REPORTS/reports; fi
+        - if [ -f app/build/reports/findbugs ]; then cp -R app/build/reports/findbugs $CIRCLE_TEST_REPORTS/reports; fi
