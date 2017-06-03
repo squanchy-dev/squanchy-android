@@ -188,7 +188,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
     protected void onStart() {
         super.onStart();
 
-        startAllSubscriptions();
+        startProximitySubscriptions();
     }
 
     @Override
@@ -368,7 +368,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
         }
 
         if (requestCode == REQUEST_SIGN_IN_MAY_GOD_HAVE_MERCY_OF_OUR_SOULS) {
-            startAllSubscriptions();
+            startProximitySubscriptions();
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
@@ -382,21 +382,23 @@ public class HomeActivity extends TypefaceStyleableActivity {
         }
     }
 
-    private void startAllSubscriptions() {
-        subscriptions.add(
-                proximityService.observeProximityEvents()
-                        .distinctUntilChanged()
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(this::handleProximityEvent));
+    private void startProximitySubscriptions() {
+        if (proximityOptInPersister.userOptedIn()) {
+            subscriptions.add(
+                    proximityService.observeProximityEvents()
+                            .distinctUntilChanged()
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(this::handleProximityEvent));
 
-        subscriptions.add(
-                proximityFeature.enabled()
-                        .doOnSuccess(enabled -> {
-                            if (enabled) {
-                                checkPrerequisiteForProximity();
-                            }
-                        }).subscribe()
-        );
+            subscriptions.add(
+                    proximityFeature.enabled()
+                            .doOnSuccess(enabled -> {
+                                if (enabled) {
+                                    checkPrerequisiteForProximity();
+                                }
+                            }).subscribe()
+            );
+        }
 
         for (Loadable loadable : loadables) {
             loadable.startLoading();
@@ -414,10 +416,6 @@ public class HomeActivity extends TypefaceStyleableActivity {
 
     private void showPrerequisitesSnackbar() {
         prerequisitesSnackbar.show();
-    }
-
-    private void dismissPrerequisitesSnackbar() {
-        prerequisitesSnackbar.dismiss();
     }
 
     @Override
@@ -485,5 +483,9 @@ public class HomeActivity extends TypefaceStyleableActivity {
                 proximityPreconditions.needsActionToSatisfyPreconditions();
             }
         };
+    }
+
+    private void dismissPrerequisitesSnackbar() {
+        prerequisitesSnackbar.dismiss();
     }
 }
