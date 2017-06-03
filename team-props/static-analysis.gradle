@@ -3,8 +3,8 @@ apply plugin: 'com.novoda.static-analysis'
 staticAnalysis {
     penalty {
         // We don't ever want to break the build; instead, we let the CI deal with these numbers.
-        maxErrors = Integer.MAX_INT
-        maxWarnings = Integer.MAX_INT
+        maxErrors = Integer.MAX_VALUE
+        maxWarnings = Integer.MAX_VALUE
     }
 
     checkstyle {
