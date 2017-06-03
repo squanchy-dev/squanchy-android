@@ -1,0 +1,26 @@
+general:
+    artifacts:
+        - /home/ubuntu/squanchy-android/app/build/outputs/apk/
+
+machine:
+    java:
+        version: oraclejdk8
+    environment:
+        ANDROID_HOME: /usr/local/android-sdk-linux
+
+
+dependencies:
+    pre:
+        - echo y | android update sdk --no-ui --all --filter tools,platform-tools
+        - echo y | android update sdk --no-ui --all --filter build-tools-25.0.2
+        - ./gradlew dependencies
+    cache_directories:
+        - /usr/local/android-sdk-linux/tools
+        - /usr/local/android-sdk-linux/platform-tools
+        - /usr/local/android-sdk-linux/build-tools/25.0.2
+
+test:
+    override:
+        - ./gradlew assembleDebug check
+        - cp -r app/build/outputs/apk $CIRCLE_ARTIFACTS
+        - cp -r app/build/reports $CIRCLE_ARTIFACTS/reports
