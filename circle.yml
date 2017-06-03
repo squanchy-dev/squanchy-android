@@ -34,7 +34,6 @@ test:
     override:
         - ./gradlew check --no-daemon --console=plain --stacktrace --continue
     post:
-        - cp -R app/build/outputs/apk/* $CIRCLE_ARTIFACTS
         - mkdir -p $CIRCLE_TEST_REPORTS/reports/junit
         - if [ -fe app/build/test-results ]; then cp -R app/build/test-results/* $CIRCLE_TEST_REPORTS/reports/junit; else echo "No JUnit results found"; fi
         - mkdir -p $CIRCLE_TEST_REPORTS/reports/lint
