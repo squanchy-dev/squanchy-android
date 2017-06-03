@@ -23,6 +23,8 @@ dependencies:
         - /usr/local/android-sdk-linux/platform-tools
         - /usr/local/android-sdk-linux/build-tools
         - /usr/local/android-sdk-linux/licenses
+        - /usr/local/android-sdk-linux/platforms/android-25
+        - /usr/local/android-sdk-linux/extras/google/m2repository
         - /home/ubuntu/.gradle/caches/
         - /home/ubuntu/.gradle/wrapper/
 
