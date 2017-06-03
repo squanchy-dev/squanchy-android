@@ -16,9 +16,9 @@ machine:
 
 dependencies:
     pre:
+        - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
         - echo y | android update sdk --no-ui --all --filter tools
         - echo y | $ANDROID_HOME/tools/bin/sdkmanager --verbose "platform-tools" "patcher;v4" "build-tools;25.0.2" "extras;google;m2repository"
-        - ./gradlew dependencies --console=plain
     cache_directories:
         - /usr/local/android-sdk-linux/tools
         - /usr/local/android-sdk-linux/platform-tools
@@ -29,7 +29,11 @@ dependencies:
         - $HOME/.m2/repository
 
 test:
+    pre:
+        - ./team-props/scripts/ci-mock-google-services-setup.sh
     override:
         - ./gradlew assembleDebug check --console=plain --stacktrace --continue
-        - cp -r app/build/outputs/apk $CIRCLE_ARTIFACTS
-        - cp -r app/build/reports $CIRCLE_ARTIFACTS/reports
+    post:
+        - cp -R app/build/outputs/apk $CIRCLE_ARTIFACTS
+        - mkdir $CIRCLE_ARTIFACTS/reports
+        - cp -R app/build/reports $CIRCLE_ARTIFACTS/reports
