@@ -7,13 +7,18 @@ machine:
         version: oraclejdk8
     environment:
         ANDROID_HOME: /usr/local/android-sdk-linux
-
+        APPLICATION_ID: net.squanchy.example
+        FABRIC_API_KEY: 0000000000000000000000000000000000000000 
+        GOOGLE_MAPS_API_KEY: DUMMY_GOOGLE_MAPS_API_KEY
+        NEARIT_API_KEY: DUMMY_NEARIT_API_KEY
+        TWITTER_API_KEY: DUMMY_TWITTER_API_KEY
+        TWITTER_SECRET: DUMMY_TWITTER_SECRET
 
 dependencies:
     pre:
         - echo y | android update sdk --no-ui --all --filter tools,platform-tools
         - echo y | android update sdk --no-ui --all --filter build-tools-25.0.2
-        - ./gradlew dependencies
+        - ./gradlew dependencies --console=plain
     cache_directories:
         - /usr/local/android-sdk-linux/tools
         - /usr/local/android-sdk-linux/platform-tools
@@ -21,6 +26,6 @@ dependencies:
 
 test:
     override:
-        - ./gradlew assembleDebug check
+        - ./gradlew assembleDebug check --console=plain --stacktrace --continue
         - cp -r app/build/outputs/apk $CIRCLE_ARTIFACTS
         - cp -r app/build/reports $CIRCLE_ARTIFACTS/reports
