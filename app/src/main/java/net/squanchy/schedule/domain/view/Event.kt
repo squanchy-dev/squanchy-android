@@ -6,6 +6,7 @@ import net.squanchy.support.lang.Optional
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDateTime
 
+@Suppress("LongParameterList") // This is just a big model - TODO refactor this to split it up
 data class Event(
         val id: String,
         val numericId: Long,

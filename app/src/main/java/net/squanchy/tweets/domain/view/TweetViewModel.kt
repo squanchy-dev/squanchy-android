@@ -3,6 +3,7 @@ package net.squanchy.tweets.domain.view
 import net.squanchy.support.lang.Optional
 import net.squanchy.tweets.domain.TweetLinkInfo
 
+@Suppress("LongParameterList") // This is just a big model - TODO refactor this to split it up
 data class TweetViewModel(
         val id: Long,
         val text: String,
