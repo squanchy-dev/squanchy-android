@@ -37,7 +37,7 @@ complexity:
     threshold: 10
   TooManyFunctions:
     active: false
-    threshold: 20
+    threshold: 10
   ComplexCondition:
     threshold: 3
 
