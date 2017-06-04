@@ -11,7 +11,7 @@ staticAnalysis {
         exclude project.fileTree('src/test/java')
         exclude project.fileTree('src/testDebug/java')
         configFile rootProject.file('team-props/static-analysis/checkstyle-modules.xml')
-        includeVariants { variant -> excludeTestAndDebug(variant) }
+        includeVariants { variant -> excludeTestAndRelease(variant) }
     }
 
     pmd {
@@ -19,16 +19,16 @@ staticAnalysis {
         exclude project.fileTree('src/test/java')
         exclude project.fileTree('src/testDebug/java')
         ruleSetFiles = rootProject.files('team-props/static-analysis/pmd-rules.xml')
-        includeVariants { variant -> excludeTestAndDebug(variant) }
+        includeVariants { variant -> excludeTestAndRelease(variant) }
     }
 
     findbugs {
         toolVersion findbugsVersion
         excludeFilter rootProject.file('team-props/static-analysis/findbugs-excludes.xml')
-        includeVariants { variant -> (variant.name == 'fastPlayServicesDebug') }
+        includeVariants { variant -> excludeTestAndRelease(variant) }
     }
 }
 
-static boolean excludeTestAndDebug(variant) {
-    return !variant.name.toLowerCase().endsWith('test') && !variant.name.toLowerCase().endsWith('debug')
+static boolean excludeTestAndRelease(variant) {
+    return !variant.name.toLowerCase().endsWith('test') && !variant.name.toLowerCase().endsWith('release')
 }
