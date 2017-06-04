@@ -34,12 +34,30 @@ test:
     override:
         - ./gradlew check --no-daemon --console=plain --stacktrace
     post:
+        # Collect the JUnit reports
         - mkdir -p $CIRCLE_TEST_REPORTS/reports/junit
-        - if [ -fe app/build/test-results ]; then cp -R app/build/test-results/* $CIRCLE_TEST_REPORTS/reports/junit; else echo "No JUnit results found"; fi
+        - find app/build/test-results/ -name "*.xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
+
+        # Collect the Android Lint reports
         - mkdir -p $CIRCLE_TEST_REPORTS/reports/lint
-        - find app/build/reports -maxdepth 1 -name "*.html" -exec cp {} $CIRCLE_TEST_REPORTS/reports/lint/ \;
-        - find app/build/reports -maxdepth 1 -name "*.xml" -exec cp {} $CIRCLE_TEST_REPORTS/reports/lint/ \;
-        - if [ -f app/build/reports/pmd ]; then cp -R app/build/reports/pmd $CIRCLE_TEST_REPORTS/reports; else echo "No PMD reports found"; fi
-        - if [ -f app/build/reports/checkstyle ]; then cp -R app/build/reports/checkstyle $CIRCLE_TEST_REPORTS/reports; else echo "No Checkstyle reports found"; fi
-        - if [ -f app/build/reports/findbugs ]; then cp -R app/build/reports/findbugs $CIRCLE_TEST_REPORTS/reports; else echo "No Findbugs reports found"; fi
-        - if [ -f app/build/reports/report.detekt ]; then cp -R app/build/reports/report.detekt $CIRCLE_TEST_REPORTS/reports/detekt/report.detekt; else echo "No Detekt reports found"; fi
+        - find app/build/reports -name "lint*.html" -exec cp {} $CIRCLE_TEST_REPORTS/reports/lint/ \;
+        - find app/build/reports -name "lint*.xml" -exec cp {} $CIRCLE_TEST_REPORTS/reports/lint/ \;
+
+        # Collect the Checkstyle reports
+        - mkdir -p $CIRCLE_TEST_REPORTS/reports/checkstyle
+        - find app/build/reports/checkstyle -name "*.html" -exec cp {} $CIRCLE_TEST_REPORTS/reports/checkstyle/ \;
+        - find app/build/reports/checkstyle -name "*.xml" -exec cp {} $CIRCLE_TEST_REPORTS/reports/checkstyle/ \;
+
+        # Collect the Findbugs reports
+        - mkdir -p $CIRCLE_TEST_REPORTS/reports/findbugs
+        - find app/build/reports/findbugs -name "*.html" -exec cp {} $CIRCLE_TEST_REPORTS/reports/findbugs/ \;
+        - find app/build/reports/findbugs -name "*.xml" -exec cp {} $CIRCLE_TEST_REPORTS/reports/findbugs/ \;
+
+        # Collect the PMD reports
+        - mkdir -p $CIRCLE_TEST_REPORTS/reports/pmd
+        - find app/build/reports/pmd -name "*.html" -exec cp {} $CIRCLE_TEST_REPORTS/reports/pmd/ \;
+        - find app/build/reports/pmd -name "*.xml" -exec cp {} $CIRCLE_TEST_REPORTS/reports/pmd/ \;
+
+        # Collect the Detekt reports
+        - mkdir -p $CIRCLE_TEST_REPORTS/reports/detekt
+        - find app/build/reports/ -name "report.detekt" -exec cp {} $CIRCLE_TEST_REPORTS/reports/detekt/ \;
