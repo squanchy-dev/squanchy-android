@@ -42,3 +42,4 @@ test:
         - if [ -f app/build/reports/pmd ]; then cp -R app/build/reports/pmd $CIRCLE_TEST_REPORTS/reports; else echo "No PMD reports found"; fi
         - if [ -f app/build/reports/checkstyle ]; then cp -R app/build/reports/checkstyle $CIRCLE_TEST_REPORTS/reports; else echo "No Checkstyle reports found"; fi
         - if [ -f app/build/reports/findbugs ]; then cp -R app/build/reports/findbugs $CIRCLE_TEST_REPORTS/reports; else echo "No Findbugs reports found"; fi
+        - if [ -f app/build/reports/report.detekt ]; then cp -R app/build/reports/report.detekt $CIRCLE_TEST_REPORTS/reports/detekt/report.detekt; else echo "No Detekt reports found"; fi
