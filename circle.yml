@@ -13,26 +13,39 @@ machine:
 
 dependencies:
     pre:
+        # Remove any leftover lock from previous builds
         - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+
+        # Make sure we have the sdkmanager available, and update the Android SDK tools if not
         - if [ ! -e $ANDROID_HOME/tools/bin/sdkmanager ]; then echo y | android update sdk --no-ui --all --filter tools; fi
-        - echo y | $ANDROID_HOME/tools/bin/sdkmanager --verbose "platform-tools" "patcher;v4" "build-tools;"$ANDROID_BUILD_TOOLS "extras;google;m2repository"
+
+        # Install all the required SDK components
+        - echo y | $ANDROID_HOME/tools/bin/sdkmanager --verbose "platform-tools" "build-tools;"$ANDROID_BUILD_TOOLS "extras;google;m2repository"
+
     override:
+        # Force Gradle to pre-download dependencies for the app module (the default would only be for the root, which is useless)
         - if [ -f ./gradlew ]; then ./gradlew app:dependencies --console=plain --no-daemon;else gradle app:dependencies --console=plain --no-daemon;fi
+
     cache_directories:
+        # Android SDK
         - /usr/local/android-sdk-linux/tools
         - /usr/local/android-sdk-linux/platform-tools
         - /usr/local/android-sdk-linux/build-tools
         - /usr/local/android-sdk-linux/licenses
-        - /usr/local/android-sdk-linux/platforms/android-25
         - /usr/local/android-sdk-linux/extras/google/m2repository
+
+        # Gradle caches
         - /home/ubuntu/.gradle/caches/
         - /home/ubuntu/.gradle/wrapper/
 
 test:
     pre:
+        # Create mock Play Services JSON
         - ./team-props/scripts/ci-mock-google-services-setup.sh
+
     override:
-        - ./gradlew check --no-daemon --console=plain --stacktrace
+        - ./gradlew check --no-daemon --console=plain --continue
+
     post:
         # Collect the JUnit reports
         - mkdir -p $CIRCLE_TEST_REPORTS/reports/junit
