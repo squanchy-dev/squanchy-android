@@ -32,7 +32,7 @@ test:
     pre:
         - ./team-props/scripts/ci-mock-google-services-setup.sh
     override:
-        - ./gradlew check --no-daemon --console=plain --stacktrace --continue
+        - ./gradlew check --no-daemon --console=plain --stacktrace
     post:
         - mkdir -p $CIRCLE_TEST_REPORTS/reports/junit
         - if [ -fe app/build/test-results ]; then cp -R app/build/test-results/* $CIRCLE_TEST_REPORTS/reports/junit; else echo "No JUnit results found"; fi
