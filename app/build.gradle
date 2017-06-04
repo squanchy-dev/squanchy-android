@@ -25,13 +25,13 @@ repositories {
 
 buildProperties {
     application {
-        file project.file("$rootProject.projectDir/team-props/application.properties")
+        file project.file("$rootDir/team-props/application.properties")
     }
     secrets {
-        file project.file("$rootProject.projectDir/team-props/secrets.properties")
+        file project.file("$rootDir/team-props/secrets.properties")
     }
     releaseSigningConfig {
-        file project.file("$rootProject.projectDir/team-props/releaseSigningConfig.properties")
+        file project.file("$rootDir/team-props/releaseSigningConfig.properties")
     }
 }
 
@@ -95,19 +95,21 @@ android {
     }
 
     lintOptions {
-        lintConfig file("$rootProject.projectDir/team-props/static-analysis/lint-config.xml")
+        lintConfig file("$rootDir/team-props/static-analysis/lint-config.xml")
         abortOnError false
     }
 }
 
 play {
-    jsonFile = file("$rootProject.projectDir/team-props/play-store-keys.json")
+    jsonFile = file("$rootDir/team-props/play-store-keys.json")
 }
 
 detekt {
     input = "./src/main/java"
-    config = "$rootProject.projectDir/team-props/static-analysis/detekt-config.yml"
+    config = "$rootDir/team-props/static-analysis/detekt-config.yml"
     filters = ".*test.*, .*/resources/.*"
+    output = true
+    report = "$project.projectDir/build/reports"
 }
 
 project.afterEvaluate {
