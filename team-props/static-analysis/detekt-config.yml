@@ -1,8 +1,9 @@
 autoCorrect: true
 
 build:
-  warningThreshold: 5
-  failThreshold: 10
+  warningThreshold: 1
+  failThreshold: 1
+
   weights:
     complexity: 2
     formatting: 0
@@ -29,13 +30,14 @@ complexity:
   LongMethod:
     threshold: 20
   LongParameterList:
-    threshold: 5
+    threshold: 7
   LargeClass:
     threshold: 150
   ComplexMethod:
     threshold: 10
   TooManyFunctions:
-    threshold: 10
+    active: false
+    threshold: 20
   ComplexCondition:
     threshold: 3
 
@@ -48,10 +50,10 @@ code-smell:
 
 formatting:
   active: true
-  useTabs: true
+  useTabs: false
   Indentation:
-    active: false
-    autoCorrect: false
+    active: true
+    autoCorrect: true
   ConsecutiveBlankLines:
     active: true
     autoCorrect: true
