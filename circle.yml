@@ -49,7 +49,7 @@ test:
     post:
         # Collect the JUnit reports
         - mkdir -p $CIRCLE_TEST_REPORTS/reports/junit
-        - find app/build/test-results/ -name "*.xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
+        - find app/build/test-results/ -name "*.xml" -exec cp {} $CIRCLE_TEST_REPORTS/reports/junit/ \;
 
         # Collect the Android Lint reports
         - mkdir -p $CIRCLE_TEST_REPORTS/reports/lint
