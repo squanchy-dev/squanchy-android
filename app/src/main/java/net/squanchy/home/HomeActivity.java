@@ -213,11 +213,13 @@ public class HomeActivity extends TypefaceStyleableActivity {
     }
 
     private void showCurrentEvent(ProximityEvent proximityEvent) {
-        currentEventService.eventIn(proximityEvent.subject())
-                .flatMap(event -> trackShownMessage(event, proximityEvent))
-                .map(event -> toSnackbar(event, proximityEvent))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(Snackbar::show);
+        subscriptions.add(
+                currentEventService.eventIn(proximityEvent.subject())
+                        .flatMap(event -> trackShownMessage(event, proximityEvent))
+                        .map(event -> toSnackbar(event, proximityEvent))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(Snackbar::show)
+        );
     }
 
     private Maybe<Event> trackShownMessage(Event event, ProximityEvent proximityEvent) {

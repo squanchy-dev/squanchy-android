@@ -6,6 +6,7 @@ import android.support.annotation.MainThread;
 
 import net.squanchy.support.lang.Optional;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import timber.log.Timber;
 
 import static android.content.pm.PackageManager.PERMISSION_DENIED;
@@ -79,6 +80,7 @@ public class ModularProximityPreconditions implements ProximityPreconditions {
         }
     }
 
+    @SuppressFBWarnings("RV_RETURN_VALUE_IGNORED") // Cannot handle the subscription here
     private void startCheckingFrom(Precondition precondition) {
         if (precondition.satisfied()) {
             continueAfterSucceedingCheck(precondition);

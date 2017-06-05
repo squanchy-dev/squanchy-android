@@ -13,7 +13,7 @@ import net.squanchy.signin.SignInService;
 import net.squanchy.support.lang.Optional;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.disposables.CompositeDisposable;
 import timber.log.Timber;
 
 public class RoutingActivity extends TypefaceStyleableActivity {
@@ -26,7 +26,7 @@ public class RoutingActivity extends TypefaceStyleableActivity {
     private SignInService signInService;
     private FirstStartPersister firstStartPersister;
 
-    private Disposable subscription;
+    private CompositeDisposable subscriptions;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,8 +44,11 @@ public class RoutingActivity extends TypefaceStyleableActivity {
     protected void onStart() {
         super.onStart();
 
-        subscription = signInService.signInAnonymouslyIfNecessary()
-                .subscribe(this::onboardOrProceedToRouting, this::handleSignInError);
+        subscriptions = new CompositeDisposable();
+        subscriptions.add(
+                signInService.signInAnonymouslyIfNecessary()
+                        .subscribe(this::onboardOrProceedToRouting, this::handleSignInError)
+        );
     }
 
     private void handleSignInError(Throwable throwable) {
@@ -91,17 +94,19 @@ public class RoutingActivity extends TypefaceStyleableActivity {
     }
 
     private void onboardOrProceedToRouting() {
-        onboarding.nextPageToShow()
-                .map(Optional::of)
-                .defaultIfEmpty(Optional.absent())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(page -> {
-                    if (page.isPresent()) {
-                        navigator.toOnboardingForResult(page.get(), ONBOARDING_REQUEST_CODE);
-                    } else {
-                        proceedTo(getIntent());
-                    }
-                });
+        subscriptions.add(
+                onboarding.nextPageToShow()
+                        .map(Optional::of)
+                        .defaultIfEmpty(Optional.absent())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(page -> {
+                            if (page.isPresent()) {
+                                navigator.toOnboardingForResult(page.get(), ONBOARDING_REQUEST_CODE);
+                            } else {
+                                proceedTo(getIntent());
+                            }
+                        })
+        );
     }
 
     private void proceedTo(Intent intent) {
@@ -120,6 +125,6 @@ public class RoutingActivity extends TypefaceStyleableActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        subscription.dispose();
+        subscriptions.dispose();
     }
 }

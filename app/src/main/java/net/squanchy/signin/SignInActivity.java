@@ -20,6 +20,8 @@ import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.support.config.DialogLayoutParameters;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.disposables.Disposables;
 import io.reactivex.functions.Action;
 
 import static net.squanchy.google.GoogleClientId.SIGN_IN_ACTIVITY;
@@ -35,6 +37,7 @@ public class SignInActivity extends TypefaceStyleableActivity {
 
     private View progressView;
     private View signInContent;
+    private Disposable subscription = Disposables.disposed();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +122,7 @@ public class SignInActivity extends TypefaceStyleableActivity {
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
         showProgress();
 
-        service.signInWithGoogle(account)
+        subscription = service.signInWithGoogle(account)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(onSignInSuccessful());
     }
@@ -151,5 +154,11 @@ public class SignInActivity extends TypefaceStyleableActivity {
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        subscription.dispose();
     }
 }

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import net.squanchy.schedule.domain.view.Event;
 import org.joda.time.LocalDateTime;
 
 import io.reactivex.Observable;
+import io.reactivex.disposables.CompositeDisposable;
 import timber.log.Timber;
 
 import static net.squanchy.support.lang.Lists.filter;
@@ -29,6 +31,8 @@ public class NotificationsIntentService extends IntentService {
     private NotificationCreator notificationCreator;
     private Notifier notifier;
     private SharedPreferences preferences;
+
+    private CompositeDisposable subscriptions;
 
     public NotificationsIntentService() {
         super(NotificationsIntentService.class.getSimpleName());
@@ -45,6 +49,12 @@ public class NotificationsIntentService extends IntentService {
     }
 
     @Override
+    public void onStart(@Nullable Intent intent, int startId) {
+        super.onStart(intent, startId);
+        subscriptions = new CompositeDisposable();
+    }
+
+    @Override
     protected void onHandleIntent(Intent intent) {
         LocalDateTime notificationIntervalEnd = new LocalDateTime().plusMinutes(NOTIFICATION_INTERVAL_MINUTES);
 
@@ -52,16 +62,20 @@ public class NotificationsIntentService extends IntentService {
 
         LocalDateTime now = new LocalDateTime();
         if (shouldShowNotifications()) {
-            sortedFavourites
-                    .map(events -> filter(events, event -> event.getStartTime().isAfter(now)))
-                    .map(events -> filter(events, event -> isBeforeOrEqualTo(event.getStartTime(), notificationIntervalEnd)))
-                    .map(notificationCreator::createFrom)
-                    .subscribe(notifier::showNotifications);
+            subscriptions.add(
+                    sortedFavourites
+                            .map(events -> filter(events, event -> event.getStartTime().isAfter(now)))
+                            .map(events -> filter(events, event -> isBeforeOrEqualTo(event.getStartTime(), notificationIntervalEnd)))
+                            .map(notificationCreator::createFrom)
+                            .subscribe(notifier::showNotifications)
+            );
         }
 
-        sortedFavourites
-                .map(events -> filter(events, event -> event.getStartTime().isAfter(notificationIntervalEnd)))
-                .subscribe(this::scheduleNextAlarm);
+        subscriptions.add(
+                sortedFavourites
+                        .map(events -> filter(events, event -> event.getStartTime().isAfter(notificationIntervalEnd)))
+                        .subscribe(this::scheduleNextAlarm)
+        );
     }
 
     private boolean shouldShowNotifications() {

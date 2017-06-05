@@ -119,6 +119,7 @@ project.afterEvaluate {
 dependencies {
     compile libraries.app.calligraphy
     compile libraries.app.crashlytics
+    compile libraries.app.findbugsAnnotations
     compile libraries.app.firebase
     compile libraries.app.firebaseAuth
     compile libraries.app.firebaseConfig
