@@ -14,7 +14,7 @@ final class NotificationInjector {
     public static NotificationComponent obtain(Service service) {
         return DaggerNotificationComponent.builder()
                 .applicationComponent(ApplicationInjector.obtain(service))
-                .serviceContextModule( new ServiceContextModule(service))
+                .serviceContextModule(new ServiceContextModule(service))
                 .build();
     }
 }

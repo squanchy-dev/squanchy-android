@@ -12,7 +12,7 @@ import dagger.Provides;
 public class RemoteConfigModule {
 
     @Provides
-    FirebaseRemoteConfig FirebaseRemoteConfig() {
+    FirebaseRemoteConfig firebaseRemoteConfig() {
         return FirebaseRemoteConfig.getInstance();
     }
 

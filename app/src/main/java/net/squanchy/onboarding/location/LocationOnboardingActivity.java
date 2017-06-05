@@ -25,6 +25,8 @@ import static net.squanchy.google.GoogleClientId.LOCATION_ONBOARDING_ACTIVITY;
 
 public class LocationOnboardingActivity extends TypefaceStyleableActivity {
 
+    private static final float DISABLED_UI_ALPHA = .54f;
+
     private Onboarding onboarding;
     private ProximityService service;
     private ProximityOptInPersister proximityOptInPersister;
@@ -80,7 +82,7 @@ public class LocationOnboardingActivity extends TypefaceStyleableActivity {
 
     private void disableUi() {
         contentRoot.setEnabled(false);
-        contentRoot.setAlpha(.54f);
+        contentRoot.setAlpha(DISABLED_UI_ALPHA);
     }
 
     private void onGoogleConnectionFailed() {

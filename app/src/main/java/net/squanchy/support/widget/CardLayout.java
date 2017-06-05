@@ -75,7 +75,7 @@ public class CardLayout extends FrameLayout {
         throw new UnsupportedOperationException("Cannot set clipping to outline on a CardLayout");
     }
 
-    private static class NarrowerOutlineProvider extends ViewOutlineProvider {
+    private static final class NarrowerOutlineProvider extends ViewOutlineProvider {
 
         @Px
         private final int insetHorizontal;

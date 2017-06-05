@@ -207,6 +207,8 @@ public class HomeActivity extends TypefaceStyleableActivity {
             case KEY_ROOM_EVENT:
                 showCurrentEvent(proximityEvent);
                 break;
+            default:
+                Timber.e("Unsupported proximity event: %s", proximityEvent);
         }
     }
 

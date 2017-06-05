@@ -5,9 +5,8 @@ import java.util.List;
 
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.support.lang.Lists;
-import net.squanchy.support.lang.Predicate;
 
-class QueryEngine implements Query {
+final class QueryEngine implements Query {
 
     private final List<Query> queries;
 

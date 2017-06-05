@@ -66,7 +66,7 @@ public class SearchRecyclerView extends RecyclerView {
         void onSpeakerClicked(Speaker speaker);
     }
 
-    private static class CardOnlySpacingItemDecorator extends ItemDecoration {
+    private static final class CardOnlySpacingItemDecorator extends ItemDecoration {
 
         @Px
         private final int horizontalSpacing;

@@ -15,7 +15,6 @@ import it.near.sdk.NearItManager;
 import it.near.sdk.geopolis.beacons.ranging.ProximityListener;
 import it.near.sdk.reactions.customjson.CustomJSON;
 import it.near.sdk.recipes.RecipesManager;
-import it.near.sdk.recipes.models.Recipe;
 import timber.log.Timber;
 
 public class NearITProximityProvider implements ProximityProvider {
@@ -59,7 +58,7 @@ public class NearITProximityProvider implements ProximityProvider {
     }
 
     @Override
-    public void trackProximityEvent(Context context, ProximityEvent proximityEvent, ProximityTrackingType trackingType){
+    public void trackProximityEvent(Context context, ProximityEvent proximityEvent, ProximityTrackingType trackingType) {
         try {
             RecipesManager.sendTracking(context, proximityEvent.id(), trackingType.rawTrackingType());
         } catch (JSONException e) {

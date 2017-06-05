@@ -35,8 +35,8 @@ public class LocationProviderPrecondition implements Precondition {
 
     @Override
     public boolean satisfied() {
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
-                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+                || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
     @Override
@@ -63,6 +63,8 @@ public class LocationProviderPrecondition implements Precondition {
                     case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
                         emitter.onSuccess(SatisfyResult.ABORT);
                         break;
+                    default:
+                        emitter.onError(new IllegalArgumentException("Unexpected status code: " + status.getStatusCode()));
                 }
             });
         });

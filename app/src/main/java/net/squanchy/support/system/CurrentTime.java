@@ -1,6 +1,5 @@
 package net.squanchy.support.system;
 
-import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 
 public class CurrentTime {

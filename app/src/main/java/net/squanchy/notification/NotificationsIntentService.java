@@ -26,9 +26,9 @@ public class NotificationsIntentService extends IntentService {
     private static final boolean SHOW_NOTIFICATIONS_DEFAULT = true;
 
     private NotificationService service;
-    protected NotificationCreator notificationCreator;
-    protected Notifier notifier;
-    protected SharedPreferences preferences;
+    private NotificationCreator notificationCreator;
+    private Notifier notifier;
+    private SharedPreferences preferences;
 
     public NotificationsIntentService() {
         super(NotificationsIntentService.class.getSimpleName());
@@ -87,5 +87,13 @@ public class NotificationsIntentService extends IntentService {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, serviceAlarm.toDateTime().getMillis(), pendingIntent);
+    }
+
+    protected NotificationCreator notificationCreator() {
+        return notificationCreator;
+    }
+
+    protected Notifier notifier() {
+        return notifier;
     }
 }

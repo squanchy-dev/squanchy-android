@@ -33,7 +33,7 @@ public abstract class SpeakerView extends LinearLayout {
     private ViewGroup speakerPhotoContainer;
     private TextView speakerNameView;
 
-    protected final LayoutInflater layoutInflater;
+    private final LayoutInflater layoutInflater;
 
     public SpeakerView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -134,6 +134,10 @@ public abstract class SpeakerView extends LinearLayout {
             children.add((ImageView) child);
         }
         return children;
+    }
+
+    protected LayoutInflater layoutInflater() {
+        return layoutInflater;
     }
 
     public interface OnSpeakerClickListener {

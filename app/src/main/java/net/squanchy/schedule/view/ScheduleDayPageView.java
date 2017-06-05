@@ -50,7 +50,7 @@ public class ScheduleDayPageView extends RecyclerView {
         diffResult.dispatchUpdatesTo(adapter);
     }
 
-    private static class EventsDiffCallback extends DiffUtil.Callback {
+    private static final class EventsDiffCallback extends DiffUtil.Callback {
 
         private final List<Event> oldEvents;
         private final List<Event> newEvents;

@@ -31,9 +31,9 @@ public class ExperienceLevelIconView extends AppCompatImageView {
         drawable.setLevel(getLevelOf(experienceLevel));
     }
 
-    @IntRange(from = 0, to  = 2)
+    @IntRange(from = 0, to = 2)
     private int getLevelOf(ExperienceLevel experienceLevel) {
-        switch(experienceLevel) {
+        switch (experienceLevel) {
             case BEGINNER:
                 return 0;
             case INTERMEDIATE:

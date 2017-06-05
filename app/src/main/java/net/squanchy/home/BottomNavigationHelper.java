@@ -9,7 +9,11 @@ import java.lang.reflect.Field;
 
 import timber.log.Timber;
 
-class BottomNavigationHelper {
+final class BottomNavigationHelper {
+
+    private BottomNavigationHelper() {
+        // Not instantiable
+    }
 
     @SuppressLint("RestrictedApi")      // This is a hacky solution to BottomNavigationView's lack of APIs :(
     static void disableShiftMode(BottomNavigationView view) {

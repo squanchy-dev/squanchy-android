@@ -82,6 +82,8 @@ public class SignInActivity extends TypefaceStyleableActivity {
                             case BottomSheetBehavior.STATE_HIDDEN:
                                 finish();
                                 break;
+                            default:
+                                // Do nothing
                         }
                     }
 

@@ -9,7 +9,11 @@ import net.squanchy.R;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class TypefaceManager {
+public final class TypefaceManager {
+
+    private TypefaceManager() {
+        // Not instantiable
+    }
 
     public static void init() {
         CalligraphyConfig.initDefault(createConfiguration());
