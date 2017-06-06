@@ -18,7 +18,9 @@ staticAnalysis {
         toolVersion pmdVersion
         exclude project.fileTree('src/test/java')
         exclude project.fileTree('src/testDebug/java')
+
         ruleSetFiles = rootProject.files('team-props/static-analysis/pmd-rules.xml')
+        ruleSets = []   // Note: this is a workaround to make the <exclude-pattern>s in pmd-rules.xml actually work
         includeVariants { variant -> excludeTestAndRelease(variant) }
     }
 
