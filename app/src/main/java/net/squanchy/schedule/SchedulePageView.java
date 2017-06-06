@@ -158,7 +158,7 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
         private final Analytics analytics;
         private final ScheduleViewPagerAdapter viewPagerAdapter;
 
-        private TrackingOnTabSelectedListener(Analytics analytics, ScheduleViewPagerAdapter viewPagerAdapter) {
+        TrackingOnTabSelectedListener(Analytics analytics, ScheduleViewPagerAdapter viewPagerAdapter) {
             this.analytics = analytics;
             this.viewPagerAdapter = viewPagerAdapter;
         }

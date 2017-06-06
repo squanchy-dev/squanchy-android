@@ -89,7 +89,7 @@ public class CardLayout extends FrameLayout {
         @Px
         private final int radius;
 
-        private NarrowerOutlineProvider(@Px int insetHorizontal, @Px int insetTop, @Px int insetBottom, @Px int radius) {
+        NarrowerOutlineProvider(@Px int insetHorizontal, @Px int insetTop, @Px int insetBottom, @Px int radius) {
             this.insetHorizontal = insetHorizontal;
             this.insetTop = insetTop;
             this.insetBottom = insetBottom;

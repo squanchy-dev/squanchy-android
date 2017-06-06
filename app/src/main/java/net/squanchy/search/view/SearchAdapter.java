@@ -27,9 +27,9 @@ class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Retention(RetentionPolicy.SOURCE)
     @interface ViewTypeId {
 
-        int HEADER = 0;
-        int SPEAKER = 1;
-        int EVENT = 2;
+        int HEADER = 1;
+        int SPEAKER = 2;
+        int EVENT = 3;
     }
 
     private final ImageLoader imageLoader;

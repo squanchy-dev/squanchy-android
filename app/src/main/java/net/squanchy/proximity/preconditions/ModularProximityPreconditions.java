@@ -47,6 +47,7 @@ public class ModularProximityPreconditions implements ProximityPreconditions {
         }
     }
 
+    @SuppressWarnings("PMD.UseVarargs") // This array is passed to the Android APIs and is kept for consistency
     private void handlePermissionsRequestResult(Precondition precondition, int[] grantResults) {
         if (deniedAnyPermissions(grantResults)) {
             callback.permissionDenied();
@@ -55,6 +56,7 @@ public class ModularProximityPreconditions implements ProximityPreconditions {
         }
     }
 
+    @SuppressWarnings("PMD.UseVarargs") // This array is passed to the Android APIs and is kept for consistency
     private boolean deniedAnyPermissions(int[] grantResults) {
         for (int grantResult : grantResults) {
             if (grantResult == PERMISSION_DENIED) {

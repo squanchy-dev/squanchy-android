@@ -67,6 +67,7 @@ public class ScheduleViewPagerAdapter extends ViewPagerAdapter<ScheduleDayPageVi
     }
 
     @Override
+    @SuppressWarnings("PMD.CompareObjectsWithEquals") // We actually want the instance check here
     public boolean isViewFromObject(View view, Object object) {
         return view == object;
     }

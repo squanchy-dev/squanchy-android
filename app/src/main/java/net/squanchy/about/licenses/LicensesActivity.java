@@ -13,8 +13,6 @@ import net.squanchy.support.view.CardSpacingItemDecorator;
 
 public class LicensesActivity extends TypefaceStyleableActivity {
 
-    private RecyclerView licensesList;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,8 +20,7 @@ public class LicensesActivity extends TypefaceStyleableActivity {
         setContentView(R.layout.activity_licenses);
         setupToolbar();
 
-        licensesList = (RecyclerView) findViewById(R.id.libraries_list);
-
+        RecyclerView licensesList = (RecyclerView) findViewById(R.id.libraries_list);
         licensesList.setAdapter(new LibrariesAdapter(this));
         licensesList.setLayoutManager(new LinearLayoutManager(this));
 
@@ -32,6 +29,7 @@ public class LicensesActivity extends TypefaceStyleableActivity {
         licensesList.addItemDecoration(new CardSpacingItemDecorator(horizontalSpacing, verticalSpacing));
     }
 
+    @SuppressWarnings("ConstantConditions")     // We set the actionbar up ourselves in here, won't be null
     private void setupToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

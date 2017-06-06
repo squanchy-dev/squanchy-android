@@ -65,6 +65,7 @@ public class LocationProviderPrecondition implements Precondition {
                         break;
                     default:
                         emitter.onError(new IllegalArgumentException("Unexpected status code: " + status.getStatusCode()));
+                        break;
                 }
             });
         });

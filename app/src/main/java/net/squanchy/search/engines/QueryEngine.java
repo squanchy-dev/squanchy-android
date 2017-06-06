@@ -10,7 +10,7 @@ final class QueryEngine implements Query {
 
     private final List<Query> queries;
 
-    private QueryEngine(List<Query> queries) {
+    QueryEngine(List<Query> queries) {
         this.queries = queries;
     }
 
@@ -30,7 +30,7 @@ final class QueryEngine implements Query {
             return this;
         }
 
-        public QueryEngine build() {
+        QueryEngine build() {
             return new QueryEngine(queries);
         }
     }

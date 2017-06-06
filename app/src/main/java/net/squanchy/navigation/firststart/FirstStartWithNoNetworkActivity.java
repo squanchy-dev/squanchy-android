@@ -33,6 +33,7 @@ import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import timber.log.Timber;
 
+@SuppressWarnings("PMD.ExcessiveImports")           // Might use some refactoring later on to extract some collaborator
 public class FirstStartWithNoNetworkActivity extends TypefaceStyleableActivity {
 
     private static final String EXTRA_CONTINUATION_INTENT = FirstStartWithNoNetworkActivity.class.getCanonicalName() + ".continuation_intent";
@@ -95,6 +96,7 @@ public class FirstStartWithNoNetworkActivity extends TypefaceStyleableActivity {
         doMaybeOnAnimatedVector(ctaProgressView.getDrawable(), AnimatedVectorDrawable::stop);
     }
 
+    @SuppressWarnings("PMD.AvoidCatchingGenericException") // The Consumer signature has a throws Exception, we have to catch it
     private void doMaybeOnAnimatedVector(Drawable drawable, Consumer<AnimatedVectorDrawable> action) {
         if (drawable instanceof AnimatedVectorDrawable) {
             try {
@@ -170,6 +172,7 @@ public class FirstStartWithNoNetworkActivity extends TypefaceStyleableActivity {
         Animator animator = animationProducer.call(view);
         animator.addListener(new AnimationEndListener() {
             @Override
+            @SuppressWarnings("PMD.AvoidCatchingGenericException") // The Action signature has a throws Exception, we have to catch it
             public void onAnimationEnd(Animator animation) {
                 try {
                     endAction.run();
@@ -190,7 +193,7 @@ public class FirstStartWithNoNetworkActivity extends TypefaceStyleableActivity {
 
     private class NetworkConnectedCallback extends ConnectivityManager.NetworkCallback {
 
-        private boolean receivedOnAvailable = false;
+        private boolean receivedOnAvailable;
 
         @Override
         public void onAvailable(Network network) {
@@ -204,20 +207,25 @@ public class FirstStartWithNoNetworkActivity extends TypefaceStyleableActivity {
         }
     }
 
-    private abstract class AnimationEndListener implements Animator.AnimatorListener {
+    private static class AnimationEndListener implements Animator.AnimatorListener {
 
         @Override
-        public void onAnimationStart(Animator animation) {
+        public final void onAnimationStart(Animator animation) {
             // No-op
         }
 
         @Override
-        public void onAnimationCancel(Animator animation) {
+        public void onAnimationEnd(Animator animation) {
+            // To override
+        }
+
+        @Override
+        public final void onAnimationCancel(Animator animation) {
             // No-op
         }
 
         @Override
-        public void onAnimationRepeat(Animator animation) {
+        public final void onAnimationRepeat(Animator animation) {
             // No-op
         }
     }

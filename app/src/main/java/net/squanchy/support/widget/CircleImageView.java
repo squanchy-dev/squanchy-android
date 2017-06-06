@@ -130,7 +130,7 @@ public class CircleImageView extends ImageViewWithForeground {
             drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
             drawable.draw(canvas);
             return Optional.of(bitmap);
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             Timber.e(e);
             return Optional.absent();
         }

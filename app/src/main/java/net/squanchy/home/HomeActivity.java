@@ -51,6 +51,7 @@ import timber.log.Timber;
 
 import static net.squanchy.google.GoogleClientId.HOME_ACTIVITY;
 
+@SuppressWarnings({"PMD.ExcessiveImports", "PMD.GodClass"})           // Unfortunately this activity has got a lot to do
 public class HomeActivity extends TypefaceStyleableActivity {
 
     private static final String KEY_CONTEST_STAND = "stand";
@@ -209,6 +210,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
                 break;
             default:
                 Timber.e("Unsupported proximity event: %s", proximityEvent);
+                break;
         }
     }
 
@@ -302,7 +304,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
     }
 
     private void selectPage(BottomNavigationSection section) {
-        if (section == currentSection) {
+        if (section.equals(currentSection)) {
             return;
         }
 

@@ -37,6 +37,7 @@ import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.PublishSubject;
 import timber.log.Timber;
 
+@SuppressWarnings("PMD.ExcessiveImports")           // Might use some refactoring later on to extract some collaborator
 public class SearchActivity extends TypefaceStyleableActivity implements SearchRecyclerView.OnSearchResultClickListener {
 
     private static final int SPEECH_REQUEST_CODE = 100;
@@ -75,6 +76,7 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
         navigator = component.navigator();
     }
 
+    @SuppressWarnings("ConstantConditions") // We set up the ActionBar ourselves, so it's not null
     private void setupToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.search_toolbar);
         setSupportActionBar(toolbar);

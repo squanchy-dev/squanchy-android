@@ -55,7 +55,7 @@ public class ScheduleDayPageView extends RecyclerView {
         private final List<Event> oldEvents;
         private final List<Event> newEvents;
 
-        private EventsDiffCallback(List<Event> oldEvents, List<Event> newEvents) {
+        EventsDiffCallback(List<Event> oldEvents, List<Event> newEvents) {
             this.oldEvents = oldEvents;
             this.newEvents = newEvents;
         }

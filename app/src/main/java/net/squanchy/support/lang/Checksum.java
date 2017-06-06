@@ -5,16 +5,16 @@ import java.util.zip.CRC32;
 
 public class Checksum {
 
-    private final CRC32 checksum = new CRC32();
+    private final CRC32 crc32 = new CRC32();
 
     public long getChecksumOf(String data) {
         try {
-            checksum.update(data.getBytes("UTF-8"));
-            return checksum.getValue();
+            crc32.update(data.getBytes("UTF-8"));
+            return crc32.getValue();
         } catch (UnsupportedEncodingException e) {
             throw new UnsupportedOperationException("Unable to retrieve UTF-8 encoding, something fishy is going on", e);
         } finally {
-            checksum.reset();
+            crc32.reset();
         }
     }
 }

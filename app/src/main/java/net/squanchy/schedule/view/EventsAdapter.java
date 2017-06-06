@@ -20,8 +20,8 @@ class EventsAdapter extends RecyclerView.Adapter<EventViewHolder> {
     @IntDef(value = {ItemViewType.TYPE_TALK, ItemViewType.TYPE_OTHER})
     @interface ItemViewType {
 
-        int TYPE_TALK = 0;
-        int TYPE_OTHER = 1;
+        int TYPE_TALK = 1;
+        int TYPE_OTHER = 2;
     }
 
     private List<Event> events = Collections.emptyList();

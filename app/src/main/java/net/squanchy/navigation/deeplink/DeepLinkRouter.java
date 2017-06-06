@@ -40,7 +40,7 @@ public class DeepLinkRouter {
         try {
             return URI.create(url)
                     .normalize();
-        } catch (IllegalArgumentException | NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             throw RoutingException.malformedUrl(url, e);
         }
     }

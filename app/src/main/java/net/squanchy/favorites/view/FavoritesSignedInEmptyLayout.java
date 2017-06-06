@@ -44,7 +44,7 @@ public class FavoritesSignedInEmptyLayout extends LinearLayout {
     private OnClickListener achievementAwardingClickListener() {
         return new OnClickListener() {
 
-            private int counter = 0;
+            private int counter;
 
             @Override
             public void onClick(View view) {

@@ -73,7 +73,7 @@ public class SearchRecyclerView extends RecyclerView {
         @Px
         private final int verticalSpacing;
 
-        private CardOnlySpacingItemDecorator(@Px int horizontalSpacing, @Px int verticalSpacing) {
+        CardOnlySpacingItemDecorator(@Px int horizontalSpacing, @Px int verticalSpacing) {
             this.horizontalSpacing = horizontalSpacing;
             this.verticalSpacing = verticalSpacing;
         }

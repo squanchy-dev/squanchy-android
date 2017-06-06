@@ -19,21 +19,21 @@ public class RemoteConfig {
     private static final String KEY_PROXIMITY_ENABLED = "proximity_enabled";
     private static final String KEY_CONTEST_GOAL = "contest_goal";
 
-    private final FirebaseRemoteConfig remoteConfig;
+    private final FirebaseRemoteConfig firebaseRemoteConfig;
     private final boolean debugMode;
 
-    RemoteConfig(FirebaseRemoteConfig remoteConfig, boolean debugMode) {
-        this.remoteConfig = remoteConfig;
+    RemoteConfig(FirebaseRemoteConfig firebaseRemoteConfig, boolean debugMode) {
+        this.firebaseRemoteConfig = firebaseRemoteConfig;
         this.debugMode = debugMode;
     }
 
     public Single<Boolean> proximityServicesEnabled() {
-        return getConfigValue(() -> remoteConfig.getBoolean(KEY_PROXIMITY_ENABLED))
+        return getConfigValue(() -> firebaseRemoteConfig.getBoolean(KEY_PROXIMITY_ENABLED))
                 .subscribeOn(Schedulers.io());
     }
 
     public Single<Long> contestGoal() {
-        return getConfigValue(() -> remoteConfig.getLong(KEY_CONTEST_GOAL))
+        return getConfigValue(() -> firebaseRemoteConfig.getLong(KEY_CONTEST_GOAL))
                 .subscribeOn(Schedulers.io());
     }
 
@@ -48,9 +48,9 @@ public class RemoteConfig {
     }
 
     private Completable fetchAndActivate(long cacheExpiryInSeconds) {
-        return Completable.create(emitter -> remoteConfig.fetch(cacheExpiryInSeconds)
+        return Completable.create(emitter -> firebaseRemoteConfig.fetch(cacheExpiryInSeconds)
                 .addOnCompleteListener(task -> {
-                    remoteConfig.activateFetched();
+                    firebaseRemoteConfig.activateFetched();
                     emitter.onComplete();
                 })
                 .addOnFailureListener(exception -> {
