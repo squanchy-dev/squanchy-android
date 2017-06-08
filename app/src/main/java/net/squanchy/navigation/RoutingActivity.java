@@ -32,6 +32,8 @@ public class RoutingActivity extends TypefaceStyleableActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        subscriptions = new CompositeDisposable();
+
         RoutingComponent component = RoutingInjector.obtain(this);
         deepLinkRouter = component.deepLinkRouter();
         navigator = component.navigator();
@@ -44,7 +46,6 @@ public class RoutingActivity extends TypefaceStyleableActivity {
     protected void onStart() {
         super.onStart();
 
-        subscriptions = new CompositeDisposable();
         subscriptions.add(
                 signInService.signInAnonymouslyIfNecessary()
                         .subscribe(this::onboardOrProceedToRouting, this::handleSignInError)
@@ -125,6 +126,6 @@ public class RoutingActivity extends TypefaceStyleableActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        subscriptions.dispose();
+        subscriptions.clear();
     }
 }
