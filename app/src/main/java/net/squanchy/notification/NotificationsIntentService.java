@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
 
 import java.util.List;
 
@@ -41,17 +40,14 @@ public class NotificationsIntentService extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        subscriptions = new CompositeDisposable();
+
         NotificationComponent component = NotificationInjector.obtain(this);
         service = component.service();
         notificationCreator = component.notificationCreator();
         notifier = component.notifier();
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
-    }
-
-    @Override
-    public void onStart(@Nullable Intent intent, int startId) {
-        super.onStart(intent, startId);
-        subscriptions = new CompositeDisposable();
     }
 
     @Override
@@ -109,5 +105,11 @@ public class NotificationsIntentService extends IntentService {
 
     protected Notifier notifier() {
         return notifier;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        subscriptions.dispose();
     }
 }
