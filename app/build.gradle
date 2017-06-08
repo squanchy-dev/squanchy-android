@@ -8,7 +8,7 @@ buildscript {
 
 plugins {
     id 'me.tatarka.retrolambda' version '3.5.0'
-    id 'io.gitlab.arturbosch.detekt' version '1.0.0.M10.3'
+    id "io.gitlab.arturbosch.detekt" version "1.0.0.M11"
 }
 
 apply plugin: 'com.android.application'
@@ -113,7 +113,7 @@ detekt {
 }
 
 project.afterEvaluate {
-    check.dependsOn tasks['detekt']
+    check.dependsOn tasks['detektCheck']
 }
 
 dependencies {
