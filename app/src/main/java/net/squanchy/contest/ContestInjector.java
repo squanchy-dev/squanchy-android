@@ -3,9 +3,10 @@ package net.squanchy.contest;
 import net.squanchy.injection.ApplicationInjector;
 import net.squanchy.support.injection.CurrentTimeModule;
 
-public class ContestInjector {
+public final class ContestInjector {
 
     private ContestInjector() {
+        // Not instantiable
     }
 
     public static ContestComponent obtain(ContestActivity activity) {

@@ -7,7 +7,6 @@ import android.util.AttributeSet;
 
 import net.squanchy.R;
 import net.squanchy.schedule.domain.view.Event;
-
 import net.squanchy.schedule.domain.view.Event.Type;
 import net.squanchy.support.widget.SpeakerView;
 
@@ -40,9 +39,9 @@ public class EventDetailsCoordinatorLayout extends CoordinatorLayout {
 
         if (canBeFavorited(event)) {
             floatingActionButton.setImageResource(
-                    event.getFavorited() ?
-                            R.drawable.ic_favorite_filled :
-                            R.drawable.ic_favorite_empty
+                    event.getFavorited()
+                            ? R.drawable.ic_favorite_filled
+                            : R.drawable.ic_favorite_empty
             );
             floatingActionButton.setOnClickListener(v -> listener.onFavoriteClick());
             floatingActionButton.setVisibility(VISIBLE);
@@ -61,6 +60,7 @@ public class EventDetailsCoordinatorLayout extends CoordinatorLayout {
     }
 
     interface OnFavoriteClickListener {
+
         void onFavoriteClick();
     }
 }

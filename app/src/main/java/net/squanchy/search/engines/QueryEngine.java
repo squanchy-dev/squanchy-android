@@ -5,13 +5,12 @@ import java.util.List;
 
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.support.lang.Lists;
-import net.squanchy.support.lang.Predicate;
 
-class QueryEngine implements Query {
+final class QueryEngine implements Query {
 
     private final List<Query> queries;
 
-    private QueryEngine(List<Query> queries) {
+    QueryEngine(List<Query> queries) {
         this.queries = queries;
     }
 
@@ -31,7 +30,7 @@ class QueryEngine implements Query {
             return this;
         }
 
-        public QueryEngine build() {
+        QueryEngine build() {
             return new QueryEngine(queries);
         }
     }

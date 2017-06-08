@@ -5,7 +5,6 @@
 
   <dimen name="toolbar_elevation">6dp</dimen>
   <dimen name="tab_text">14sp</dimen>
-  <dimen name="speaker_name_padding">16dp</dimen>
 
   <dimen name="card_corner_radius">4dp</dimen>
   <dimen name="card_inset_horizontal">4dp</dimen>
@@ -24,7 +23,6 @@
   <dimen name="card_experience_icon">24dp</dimen>
   <dimen name="card_title">16sp</dimen>
   <dimen name="card_title_margin_top">4dp</dimen>
-  <dimen name="card_speaker_container_height">36dp</dimen>
   <dimen name="card_speaker">14sp</dimen>
   <dimen name="card_speaker_line_spacing_extra">4sp</dimen>
   <dimen name="card_speaker_photo">24dp</dimen>
@@ -32,7 +30,7 @@
   <dimen name="card_other_illustration_width">132dp</dimen>
   <dimen name="card_other_illustration_height">62dp</dimen>
 
-  <dimen name="tweet_text">14sp</dimen>
+  <dimen name="tweet_text">@dimen/card_title</dimen>
   <dimen name="tweet_line_spacing_extra">4sp</dimen>
   <dimen name="tweet_photo_max_height">200dp</dimen>
   <dimen name="tweet_photo_margin_top">16dp</dimen>
@@ -49,7 +47,6 @@
   <dimen name="favorites_empty_cta_height">56dp</dimen>
   <dimen name="favorites_empty_cta_padding_horizontal">24dp</dimen>
 
-  <dimen name="search_title_margin">16dp</dimen>
   <dimen name="search_card_item_padding">8dp</dimen>
   <dimen name="search_card_item_photo_margin_bottom">4dp</dimen>
   <dimen name="search_header_padding">16dp</dimen>
@@ -61,7 +58,6 @@
   <dimen name="event_details_header_padding_bottom">16dp</dimen>
   <dimen name="event_details_speaker_photo">40dp</dimen>
   <dimen name="event_details_speaker_photo_margin_end">6dp</dimen>
-  <dimen name="event_details_speaker_photo_margin_bottom">8dp</dimen>
   <dimen name="event_details_speaker">14sp</dimen>
   <dimen name="event_details_speaker_line_spacing_extra">10sp</dimen>
   <dimen name="event_details_speaker_margin_bottom">8dp</dimen>
@@ -118,7 +114,6 @@
   <dimen name="about_attribution_label_text">12sp</dimen>
   <dimen name="about_powered_by_margin_top">16dp</dimen>
   <dimen name="about_squanchy_text">32sp</dimen>
-  <dimen name="about_squanchy_website_margin_bottom">32dp</dimen>
   <dimen name="about_squanchy_website_text">12sp</dimen>
   <dimen name="about_location_powered_by_margin_top">32dp</dimen>
   <dimen name="about_nearit_logo_width">100dp</dimen>
@@ -136,7 +131,6 @@
   <dimen name="licenses_notice_padding">8dp</dimen>
   <dimen name="licenses_notice_text">12sp</dimen>
 
-  <dimen name="onboarding_skip_button_height">32dp</dimen>
   <dimen name="onboarding_skip_button_min_size">0dp</dimen>
   <dimen name="onboarding_skip_button_text">14sp</dimen>
   <dimen name="onboarding_skip_button_padding_vertical">8dp</dimen>

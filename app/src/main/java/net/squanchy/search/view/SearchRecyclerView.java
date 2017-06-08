@@ -66,14 +66,14 @@ public class SearchRecyclerView extends RecyclerView {
         void onSpeakerClicked(Speaker speaker);
     }
 
-    private static class CardOnlySpacingItemDecorator extends ItemDecoration {
+    private static final class CardOnlySpacingItemDecorator extends ItemDecoration {
 
         @Px
         private final int horizontalSpacing;
         @Px
         private final int verticalSpacing;
 
-        private CardOnlySpacingItemDecorator(@Px int horizontalSpacing, @Px int verticalSpacing) {
+        CardOnlySpacingItemDecorator(@Px int horizontalSpacing, @Px int verticalSpacing) {
             this.horizontalSpacing = horizontalSpacing;
             this.verticalSpacing = verticalSpacing;
         }

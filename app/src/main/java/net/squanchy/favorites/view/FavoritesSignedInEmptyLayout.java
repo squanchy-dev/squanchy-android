@@ -43,14 +43,15 @@ public class FavoritesSignedInEmptyLayout extends LinearLayout {
 
     private OnClickListener achievementAwardingClickListener() {
         return new OnClickListener() {
-            int counter = 0;
+
+            private int counter;
 
             @Override
             public void onClick(View view) {
                 favoriteButton.setImageResource(
-                        counter % 2 == 0 ?
-                                R.drawable.ic_favorite_filled :
-                                R.drawable.ic_favorite_empty
+                        counter % 2 == 0
+                                ? R.drawable.ic_favorite_filled
+                                : R.drawable.ic_favorite_empty
                 );
 
                 counter++;

@@ -24,6 +24,6 @@ public class ScheduleSpeakerView extends SpeakerView {
 
     @Override
     protected ImageView inflatePhotoView(ViewGroup speakerPhotoContainer) {
-        return (ImageView) layoutInflater.inflate(R.layout.view_speaker_photo_schedule, speakerPhotoContainer, false);
+        return (ImageView) layoutInflater().inflate(R.layout.view_speaker_photo_schedule, speakerPhotoContainer, false);
     }
 }

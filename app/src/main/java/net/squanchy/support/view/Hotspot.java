@@ -20,8 +20,10 @@ public abstract class Hotspot {
         return new AutoValue_Hotspot(x, y);
     }
 
+    @SuppressWarnings("PMD.ShortMethodName") // Cannot really do much, this is a coordinate value
     public abstract float x();
 
+    @SuppressWarnings("PMD.ShortMethodName") // Cannot really do much, this is a coordinate value
     public abstract float y();
 
     public Hotspot offsetToParent(View parent) {

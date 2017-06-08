@@ -2,6 +2,8 @@ package net.squanchy.eventdetails.domain.view;
 
 import android.support.annotation.StringRes;
 
+import java.util.Locale;
+
 import net.squanchy.R;
 import net.squanchy.support.lang.Optional;
 
@@ -40,7 +42,7 @@ public enum ExperienceLevel {
     }
 
     public static ExperienceLevel fromRawLevel(String rawLevel) {
-        switch (rawLevel.toLowerCase()) {
+        switch (rawLevel.toLowerCase(Locale.US)) {
             case "beginner":
                 return ExperienceLevel.BEGINNER;
             case "intermediate":

@@ -49,12 +49,6 @@ echo '{
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 2,
-          "analytics_property": {
-            "tracking_id": "UA-123456-78"
-          }
-        },
         "appinvite_service": {
           "status": 1,
           "other_platform_oauth_client": []

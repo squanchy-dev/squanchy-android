@@ -70,7 +70,11 @@ public class EventRepository {
     private Function<FirebasePlaces, List<Place>> toPlaces() {
         return firebasePlaces -> Lists.map(
                 firebasePlaces.getPlaces(),
-                firebasePlace -> Place.Companion.create(firebasePlace.getId(), firebasePlace.getName(), Optional.fromNullable(firebasePlace.getFloor()))
+                firebasePlace -> Place.Companion.create(
+                        firebasePlace.getId(),
+                        firebasePlace.getName(),
+                        Optional.fromNullable(firebasePlace.getFloor())
+                )
         );
     }
 
@@ -163,12 +167,12 @@ public class EventRepository {
         );
     }
 
-    private List<Speaker> speakersByIds(List<Speaker> speakers, List<String> speaker_ids) {
-        if (speaker_ids == null || speaker_ids.isEmpty()) {
+    private List<Speaker> speakersByIds(List<Speaker> speakers, List<String> speakerIds) {
+        if (speakerIds == null || speakerIds.isEmpty()) {
             return Collections.emptyList();
         }
 
-        return filter(speakers, speaker -> speaker_ids.contains(speaker.getId()));
+        return filter(speakers, speaker -> speakerIds.contains(speaker.getId()));
     }
 
     public Completable addFavorite(String eventId, String userId) {

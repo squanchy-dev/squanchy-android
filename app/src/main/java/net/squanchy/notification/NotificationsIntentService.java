@@ -16,6 +16,7 @@ import net.squanchy.schedule.domain.view.Event;
 import org.joda.time.LocalDateTime;
 
 import io.reactivex.Observable;
+import io.reactivex.disposables.CompositeDisposable;
 import timber.log.Timber;
 
 import static net.squanchy.support.lang.Lists.filter;
@@ -26,9 +27,11 @@ public class NotificationsIntentService extends IntentService {
     private static final boolean SHOW_NOTIFICATIONS_DEFAULT = true;
 
     private NotificationService service;
-    protected NotificationCreator notificationCreator;
-    protected Notifier notifier;
-    protected SharedPreferences preferences;
+    private NotificationCreator notificationCreator;
+    private Notifier notifier;
+    private SharedPreferences preferences;
+
+    private CompositeDisposable subscriptions;
 
     public NotificationsIntentService() {
         super(NotificationsIntentService.class.getSimpleName());
@@ -37,6 +40,9 @@ public class NotificationsIntentService extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        subscriptions = new CompositeDisposable();
+
         NotificationComponent component = NotificationInjector.obtain(this);
         service = component.service();
         notificationCreator = component.notificationCreator();
@@ -52,16 +58,20 @@ public class NotificationsIntentService extends IntentService {
 
         LocalDateTime now = new LocalDateTime();
         if (shouldShowNotifications()) {
-            sortedFavourites
-                    .map(events -> filter(events, event -> event.getStartTime().isAfter(now)))
-                    .map(events -> filter(events, event -> isBeforeOrEqualTo(event.getStartTime(), notificationIntervalEnd)))
-                    .map(notificationCreator::createFrom)
-                    .subscribe(notifier::showNotifications);
+            subscriptions.add(
+                    sortedFavourites
+                            .map(events -> filter(events, event -> event.getStartTime().isAfter(now)))
+                            .map(events -> filter(events, event -> isBeforeOrEqualTo(event.getStartTime(), notificationIntervalEnd)))
+                            .map(notificationCreator::createFrom)
+                            .subscribe(notifier::showNotifications)
+            );
         }
 
-        sortedFavourites
-                .map(events -> filter(events, event -> event.getStartTime().isAfter(notificationIntervalEnd)))
-                .subscribe(this::scheduleNextAlarm);
+        subscriptions.add(
+                sortedFavourites
+                        .map(events -> filter(events, event -> event.getStartTime().isAfter(notificationIntervalEnd)))
+                        .subscribe(this::scheduleNextAlarm)
+        );
     }
 
     private boolean shouldShowNotifications() {
@@ -80,12 +90,26 @@ public class NotificationsIntentService extends IntentService {
         }
         Event firstEvent = events.get(0);
         LocalDateTime serviceAlarm = firstEvent.getStartTime().minusMinutes(NOTIFICATION_INTERVAL_MINUTES);
-        Timber.d("Next alarm scheduled for " + serviceAlarm.toString());
+        Timber.d("Next alarm scheduled for %s", serviceAlarm.toString());
 
         Intent serviceIntent = new Intent(this, NotificationsIntentService.class);
         PendingIntent pendingIntent = PendingIntent.getService(this, 0, serviceIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, serviceAlarm.toDateTime().getMillis(), pendingIntent);
+    }
+
+    protected NotificationCreator notificationCreator() {
+        return notificationCreator;
+    }
+
+    protected Notifier notifier() {
+        return notifier;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        subscriptions.dispose();
     }
 }

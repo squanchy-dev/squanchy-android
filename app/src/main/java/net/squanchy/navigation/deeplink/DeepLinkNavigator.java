@@ -34,7 +34,7 @@ class DeepLinkNavigator {
         if (pathSegments.isEmpty()) {
             throw DeepLinkParsingException.eventDetailsMissingEventId(path);
         }
-        
+
         String eventId = pathSegments.get(0);
         navigator.toEventDetails(eventId);
     }

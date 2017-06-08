@@ -9,6 +9,8 @@ import com.crashlytics.android.answers.ContentViewEvent;
 import com.crashlytics.android.answers.CustomEvent;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import java.util.Locale;
+
 import net.squanchy.BuildConfig;
 import net.squanchy.proximity.ProximityEvent;
 
@@ -45,7 +47,7 @@ public class Analytics {
 
     private void trackPageViewOnCrashlytics(String screenName) {
         ContentViewEvent viewEvent = new ContentViewEvent();
-        viewEvent.putContentName(screenName.toLowerCase());
+        viewEvent.putContentName(screenName.toLowerCase(Locale.US));
         viewEvent.putContentId(screenName);
         viewEvent.putContentType("screen");
         crashlytics.answers.logContentView(viewEvent);

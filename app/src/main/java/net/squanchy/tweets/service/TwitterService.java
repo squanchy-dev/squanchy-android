@@ -4,7 +4,6 @@ import java.util.List;
 
 import net.squanchy.tweets.domain.view.TweetViewModel;
 
-import io.reactivex.Observable;
 import io.reactivex.Single;
 
 import static net.squanchy.support.lang.Lists.filter;

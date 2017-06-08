@@ -8,7 +8,7 @@ import dagger.Provides;
 
 @Module
 class SpeakerDetailsModule {
-    
+
     @Provides
     SpeakerDetailsService scheduleService(SpeakerRepository speakerRepository, FirebaseAuthService authService) {
         return new SpeakerDetailsService(speakerRepository, authService);

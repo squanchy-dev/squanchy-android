@@ -17,11 +17,13 @@
       android:layout_width="match_parent"
       android:layout_height="?attr/actionBarSize">
 
+      <!-- We don't need a label for this text field -->
       <EditText
         android:id="@+id/search_field"
         style="@style/Search.EditText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        tools:ignore="LabelFor" />
 
     </android.support.v7.widget.Toolbar>
 

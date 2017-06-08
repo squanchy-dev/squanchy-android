@@ -153,12 +153,12 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
         progressBar.setVisibility(GONE);
     }
 
-    private static class TrackingOnTabSelectedListener implements TabLayout.OnTabSelectedListener {
+    private static final class TrackingOnTabSelectedListener implements TabLayout.OnTabSelectedListener {
 
         private final Analytics analytics;
         private final ScheduleViewPagerAdapter viewPagerAdapter;
 
-        private TrackingOnTabSelectedListener(Analytics analytics, ScheduleViewPagerAdapter viewPagerAdapter) {
+        TrackingOnTabSelectedListener(Analytics analytics, ScheduleViewPagerAdapter viewPagerAdapter) {
             this.analytics = analytics;
             this.viewPagerAdapter = viewPagerAdapter;
         }

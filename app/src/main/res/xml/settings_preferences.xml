@@ -33,6 +33,8 @@
       android:defaultValue="true"
       android:icon="@drawable/ic_notifications"
       android:title="@string/settings_notifications_title"
+      android:summaryOn="@string/settings_notifications_about_to_start_summary_on"
+      android:summaryOff="@string/settings_notifications_about_to_start_summary_off"
       android:order="0"/>
 
     <SwitchPreference

@@ -10,6 +10,7 @@ import com.novoda.viewpageradapter.ViewPagerAdapter;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import net.squanchy.R;
 import net.squanchy.schedule.domain.view.Event;
@@ -58,7 +59,7 @@ public class ScheduleViewPagerAdapter extends ViewPagerAdapter<ScheduleDayPageVi
     @Override
     public CharSequence getPageTitle(int position) {
         LocalDateTime date = pages.get(position).getDate();
-        return date.toString(TITLE_FORMAT_TEMPLATE).toUpperCase();
+        return date.toString(TITLE_FORMAT_TEMPLATE).toUpperCase(Locale.getDefault());
     }
 
     public String getPageDayId(int position) {
@@ -66,6 +67,7 @@ public class ScheduleViewPagerAdapter extends ViewPagerAdapter<ScheduleDayPageVi
     }
 
     @Override
+    @SuppressWarnings("PMD.CompareObjectsWithEquals") // We actually want the instance check here
     public boolean isViewFromObject(View view, Object object) {
         return view == object;
     }

@@ -5,7 +5,6 @@ import android.app.Application;
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-import net.squanchy.proximity.ProximityEvent;
 import net.squanchy.proximity.ProximityProvider;
 import net.squanchy.service.proximity.injection.ProximityModule;
 

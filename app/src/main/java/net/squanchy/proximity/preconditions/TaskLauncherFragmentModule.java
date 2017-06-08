@@ -1,5 +1,6 @@
 package net.squanchy.proximity.preconditions;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
@@ -36,6 +37,7 @@ public class TaskLauncherFragmentModule {
             }
 
             @Override
+            @TargetApi(Build.VERSION_CODES.M)
             public void requestPermissions(String[] permissions, int requestCode) {
                 if (isMarshmallowOrLater()) {
                     fragment.requestPermissions(permissions, requestCode);
@@ -45,6 +47,7 @@ public class TaskLauncherFragmentModule {
             }
 
             @Override
+            @TargetApi(Build.VERSION_CODES.N)
             public void startIntentSenderForResult(IntentSender intentSender, int requestCode) throws IntentSender.SendIntentException {
                 if (isNougatOrLater()) {
                     fragment.startIntentSenderForResult(intentSender, requestCode, null, 0, 0, 0, Bundle.EMPTY);

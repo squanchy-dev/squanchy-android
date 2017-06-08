@@ -24,6 +24,6 @@ public class EventDetailsSpeakerView extends SpeakerView {
 
     @Override
     protected ImageView inflatePhotoView(ViewGroup speakerPhotoContainer) {
-        return (ImageView) layoutInflater.inflate(R.layout.view_speaker_photo_event_details, speakerPhotoContainer, false);
+        return (ImageView) layoutInflater().inflate(R.layout.view_speaker_photo_event_details, speakerPhotoContainer, false);
     }
 }

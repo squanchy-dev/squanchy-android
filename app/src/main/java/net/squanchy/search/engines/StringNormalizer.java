@@ -10,6 +10,10 @@ final class StringNormalizer {
     private static final Pattern ACCENTS_PATTERN = Pattern.compile(ACCENTS_PATTERN_STRING);
     private static final String EMPTY_STRING = "";
 
+    private StringNormalizer() {
+        // Not instantiable
+    }
+
     static String normalize(String text) {
         String lowercasedText = lowercase(text);
         return removeDiacritics(lowercasedText);

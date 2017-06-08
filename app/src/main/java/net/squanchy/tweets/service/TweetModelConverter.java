@@ -86,7 +86,14 @@ public class TweetModelConverter {
         List<MentionEntity> mentions = new ArrayList<>(entities.size());
         for (MentionEntity mention : entities) {
             int offset = offsetFrom(mention.getStart(), indices);
-            mentions.add(new MentionEntity(mention.id, mention.idStr, mention.name, mention.screenName, mention.getStart() + offset, mention.getEnd() + offset));
+            mentions.add(new MentionEntity(
+                    mention.id,
+                    mention.idStr,
+                    mention.name,
+                    mention.screenName,
+                    mention.getStart() + offset,
+                    mention.getEnd() + offset
+            ));
         }
         return mentions;
     }
@@ -130,10 +137,11 @@ public class TweetModelConverter {
         }
         String lastUrl = photoUrls.get(photoUrls.size() - 1);
         if (content.endsWith(lastUrl)) {
-            content = content.replace(lastUrl, "")
+            return content.replace(lastUrl, "")
                     .trim();
+        } else {
+            return content;
         }
-        return content;
     }
 
     private Optional<String> photoUrlMaybeFrom(List<String> urls) {
@@ -143,7 +151,7 @@ public class TweetModelConverter {
         return Optional.of(urls.get(0));
     }
 
-    private static class Range {
+    private static final class Range {
 
         private final int start;
         private final int end;

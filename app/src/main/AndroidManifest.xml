@@ -13,12 +13,11 @@
   <application
     android:name="net.squanchy.SquanchyApplication"
     android:theme="@style/Theme.Squanchy"
-    android:allowBackup="true"
+    android:allowBackup="false"
     android:fullBackupContent="false"
     android:icon="@mipmap/ic_launcher"
     android:label="@string/app_name"
-    android:supportsRtl="true"
-    tools:ignore="GoogleAppIndexingWarning">
+    android:supportsRtl="true">
 
     <activity
       android:name="net.squanchy.navigation.RoutingActivity"

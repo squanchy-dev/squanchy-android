@@ -16,6 +16,7 @@ import net.squanchy.analytics.Analytics;
 import net.squanchy.fonts.TypefaceManager;
 import net.squanchy.injection.ApplicationComponent;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.fabric.sdk.android.Fabric;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import timber.log.Timber;
@@ -37,6 +38,7 @@ public class SquanchyApplication extends Application {
         preloadRemoteConfig();
     }
 
+    @SuppressFBWarnings("RV_RETURN_VALUE_IGNORED") // Cannot handle the subscription here
     private void preloadRemoteConfig() {
         applicationComponent().remoteConfig()
                 .fetchNow()

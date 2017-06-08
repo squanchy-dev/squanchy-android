@@ -1,20 +1,14 @@
 buildscript {
-    repositories {
-        jcenter()
-        maven { url 'https://maven.fabric.io/public' }
-        maven { url "http://dl.bintray.com/arturbosch/code-analysis" }
-    }
-
     dependencies {
-        classpath gradlePlugins.fabric
         classpath gradlePlugins.buildProperties
+        classpath gradlePlugins.fabric
         classpath gradlePlugins.kotlin
     }
 }
 
 plugins {
-    id "me.tatarka.retrolambda" version "3.5.0"
-    id "io.gitlab.arturbosch.detekt" version "1.0.0.M10.2"
+    id 'me.tatarka.retrolambda' version '3.5.0'
+    id "io.gitlab.arturbosch.detekt" version "1.0.0.M11"
 }
 
 apply plugin: 'com.android.application'
@@ -31,13 +25,13 @@ repositories {
 
 buildProperties {
     application {
-        file project.file('../team-props/application.properties')
+        file project.file("$rootDir/team-props/application.properties")
     }
     secrets {
-        file project.file('../team-props/secrets.properties')
+        file project.file("$rootDir/team-props/secrets.properties")
     }
     releaseSigningConfig {
-        file project.file('../team-props/releaseSigningConfig.properties')
+        file project.file("$rootDir/team-props/releaseSigningConfig.properties")
     }
 }
 
@@ -101,35 +95,49 @@ android {
     }
 
     lintOptions {
-        lintConfig file("$rootProject.projectDir/team-props/lint.xml")
+        lintConfig file("$rootDir/team-props/static-analysis/lint-config.xml")
         abortOnError false
     }
 }
 
 play {
-    jsonFile = file('../team-props/play-store-keys.json')
+    jsonFile = file("$rootDir/team-props/play-store-keys.json")
 }
 
 detekt {
     input = "./src/main/java"
-    config = "../team-props/detekt.yml"
+    config = "$rootDir/team-props/static-analysis/detekt-config.yml"
     filters = ".*test.*, .*/resources/.*"
+    output = true
+    report = "$project.projectDir/build/reports"
+}
+
+project.afterEvaluate {
+    check.dependsOn tasks['detektCheck']
 }
 
 dependencies {
     compile libraries.app.calligraphy
     compile libraries.app.crashlytics
+    compile libraries.app.findbugsAnnotations
     compile libraries.app.firebase
     compile libraries.app.firebaseAuth
     compile libraries.app.firebaseConfig
     compile libraries.app.firebaseDb
     compile libraries.app.firebaseMessaging
-    compile libraries.app.firebaseUiStorage
+    compile libraries.app.firebaseStorage
+    compile(libraries.app.firebaseUiStorage) {
+        exclude group: 'com.android.support'
+        exclude group: 'com.google.firebase'
+    }
     compile libraries.app.glide
     compile libraries.app.glideOkHttp3
-    compile libraries.app.googleSignIn
     compile libraries.app.jodaTimeAndroid
-    compile libraries.app.nearit
+    compile(libraries.app.nearit) {
+        exclude group: 'com.google.android.gms'
+    }
+    compile libraries.app.playServicesAuth
+    compile libraries.app.playServicesLocation
     compile libraries.app.rx
     compile libraries.app.rxAndroid
     compile libraries.app.supportAppCompat

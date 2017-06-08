@@ -15,7 +15,7 @@ import org.joda.time.format.DateTimeFormatter;
 public class OtherEventItemView extends EventItemView {
 
     private static final int NO_DRAWABLE = 0;
-    
+
     private TextView titleView;
     private TextView timestampView;
     private ImageView illustrationView;

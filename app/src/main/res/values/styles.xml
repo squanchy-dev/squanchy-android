@@ -205,7 +205,7 @@
   </style>
 
   <style name="EventDetails.Body.Value" parent="None">
-    <item name="android:lineSpacingExtra">@dimen/event_details_speaker_line_spacing_extra</item>
+    <item name="android:lineSpacingExtra">@dimen/event_details_body_value_line_spacing_extra</item>
     <item name="android:lineSpacingMultiplier">1</item>
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.EventDetails.Body.Value</item>
   </style>
@@ -231,7 +231,7 @@
 
   <style name="TextAppearance.Squanchy.Tweet.Title" parent="None">
     <item name="android:textColor">@color/tweet_text</item>
-    <item name="android:textSize">@dimen/card_title</item>
+    <item name="android:textSize">@dimen/tweet_text</item>
     <item name="fontPath">?titleTypeface</item>
   </style>
 

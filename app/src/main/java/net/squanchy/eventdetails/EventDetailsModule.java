@@ -8,7 +8,7 @@ import dagger.Provides;
 
 @Module
 class EventDetailsModule {
-    
+
     @Provides
     EventDetailsService eventDetailsService(EventRepository eventRepository, FirebaseAuthService authService) {
         return new EventDetailsService(eventRepository, authService);

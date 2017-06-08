@@ -33,6 +33,8 @@ import android.view.Gravity;
 
 import net.squanchy.R;
 
+import org.jetbrains.annotations.NotNull;
+
 public class ImageViewWithForeground extends AppCompatImageView implements ViewWithForeground {
 
     @Nullable
@@ -41,7 +43,7 @@ public class ImageViewWithForeground extends AppCompatImageView implements ViewW
     private int foregroundGravity = Gravity.FILL;
 
     private boolean foregroundInPadding = true;
-    private boolean foregroundBoundsChanged = false;
+    private boolean foregroundBoundsChanged;
 
     private final Rect bounds = new Rect();
     private final Rect overlayBounds = new Rect();
@@ -101,8 +103,9 @@ public class ImageViewWithForeground extends AppCompatImageView implements ViewW
     }
 
     @Override
-    protected boolean verifyDrawable(Drawable who) {
-        return super.verifyDrawable(who) || (who == foregroundDrawable);
+    @SuppressWarnings("PMD.CompareObjectsWithEquals") // We actually want the instance comparison here
+    protected boolean verifyDrawable(@NotNull Drawable drawable) {
+        return super.verifyDrawable(drawable) || (drawable == foregroundDrawable);
     }
 
     @Override
@@ -130,7 +133,8 @@ public class ImageViewWithForeground extends AppCompatImageView implements ViewW
      * @param drawable The Drawable to be drawn on top of the children.
      */
     @Override
-    public void setForeground(Drawable drawable) {
+    @SuppressWarnings("PMD.CompareObjectsWithEquals") // We actually want the instance comparison here
+    public final void setForeground(Drawable drawable) {
         if (foregroundDrawable == drawable) {
             return;
         }
@@ -226,10 +230,10 @@ public class ImageViewWithForeground extends AppCompatImageView implements ViewW
     @Override
     public void drawableHotspotChanged(float x, float y) {
         super.drawableHotspotChanged(x, y);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            if (foregroundDrawable != null) {
-                foregroundDrawable.setHotspot(x, y);
-            }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+                && foregroundDrawable != null) {
+            foregroundDrawable.setHotspot(x, y);
         }
     }
 }

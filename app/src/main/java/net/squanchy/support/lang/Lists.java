@@ -1,11 +1,14 @@
 package net.squanchy.support.lang;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public final class Lists {
+
+    private Lists() {
+        // Not instantiable
+    }
 
     public static <T, R> List<R> map(List<T> list, Func1<T, R> function) {
         if (list == null || list.isEmpty()) {
@@ -65,8 +68,8 @@ public final class Lists {
     }
 
     public static <T> boolean all(List<T> list, Predicate<T> predicate) {
-        for (T t : list){
-            if (!predicate.call(t)){
+        for (T t : list) {
+            if (!predicate.call(t)) {
                 return false;
             }
         }

@@ -3,13 +3,13 @@ package net.squanchy.eventdetails.widget;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.IntRange;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 
 import net.squanchy.R;
 import net.squanchy.eventdetails.domain.view.ExperienceLevel;
 
-public class ExperienceLevelIconView extends ImageView {
+public class ExperienceLevelIconView extends AppCompatImageView {
 
     public ExperienceLevelIconView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -31,9 +31,9 @@ public class ExperienceLevelIconView extends ImageView {
         drawable.setLevel(getLevelOf(experienceLevel));
     }
 
-    @IntRange(from = 0, to  = 2)
+    @IntRange(from = 0, to = 2)
     private int getLevelOf(ExperienceLevel experienceLevel) {
-        switch(experienceLevel) {
+        switch (experienceLevel) {
             case BEGINNER:
                 return 0;
             case INTERMEDIATE:

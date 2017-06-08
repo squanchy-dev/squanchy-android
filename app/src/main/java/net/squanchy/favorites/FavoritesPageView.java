@@ -116,9 +116,9 @@ public class FavoritesPageView extends CoordinatorLayout implements Loadable {
 
     private void updateWith(ScheduledAndSignedIn scheduledAndSignedIn, ScheduleViewPagerAdapter.OnEventClickedListener listener) {
         if (scheduledAndSignedIn.hasFavorites()) {
-            updateWith(scheduledAndSignedIn.schedule, listener);
+            updateWith(scheduledAndSignedIn.schedule(), listener);
         } else {
-            if (scheduledAndSignedIn.signedIn) {
+            if (scheduledAndSignedIn.signedIn()) {
                 promptToFavorite();
             } else {
                 promptToSign();
@@ -153,10 +153,10 @@ public class FavoritesPageView extends CoordinatorLayout implements Loadable {
         emptyViewSignedIn.setVisibility(GONE);
     }
 
-    private static class ScheduledAndSignedIn {
+    private static final class ScheduledAndSignedIn {
 
-        final Schedule schedule;
-        final boolean signedIn;
+        private final Schedule schedule;
+        private final boolean signedIn;
 
         private ScheduledAndSignedIn(Schedule schedule, boolean signedIn) {
             this.schedule = schedule;
@@ -165,6 +165,14 @@ public class FavoritesPageView extends CoordinatorLayout implements Loadable {
 
         boolean hasFavorites() {
             return !schedule.isEmpty();
+        }
+
+        public Schedule schedule() {
+            return schedule;
+        }
+
+        public boolean signedIn() {
+            return signedIn;
         }
     }
 }

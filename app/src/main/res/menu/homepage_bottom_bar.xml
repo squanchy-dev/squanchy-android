@@ -6,7 +6,7 @@
     android:id="@+id/action_schedule"
     android:enabled="true"
     android:icon="@drawable/ic_schedule"
-    android:title="@string/activity_schedule"
+    android:title="@string/bottom_bar_schedule_label"
     app:showAsAction="ifRoom" />
 
   <item

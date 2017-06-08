@@ -29,8 +29,8 @@ class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @IntDef(value = {ItemViewType.TYPE_TALK, ItemViewType.TYPE_HEADER})
     @interface ItemViewType {
 
-        int TYPE_TALK = 0;
-        int TYPE_HEADER = 1;
+        int TYPE_TALK = 1;
+        int TYPE_HEADER = 2;
     }
 
     private Schedule schedule = Schedule.Companion.create(Collections.emptyList());

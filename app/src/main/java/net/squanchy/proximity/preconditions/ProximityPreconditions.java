@@ -8,6 +8,7 @@ public interface ProximityPreconditions {
 
     void startSatisfyingPreconditions();
 
+    @SuppressWarnings("PMD.UseVarargs") // This array is passed to the Android APIs and is kept for consistency
     boolean onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults);
 
     boolean onActivityResult(int requestCode, int resultCode, Intent data);

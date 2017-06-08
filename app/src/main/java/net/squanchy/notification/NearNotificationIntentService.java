@@ -28,6 +28,7 @@ public class NearNotificationIntentService extends NotificationsIntentService {
         if (intent == null) {
             return;
         }
+
         String proximityId = intent.getStringExtra(NearItIntentConstants.RECIPE_ID);
         String bigText = intent.getStringExtra(NearItIntentConstants.NOTIF_BODY);
         String smallText = intent.getStringExtra(NearItIntentConstants.NOTIF_TITLE);
@@ -35,9 +36,9 @@ public class NearNotificationIntentService extends NotificationsIntentService {
 
         List<Notification> notifications = new ArrayList<>();
         notifications.add(
-                notificationCreator.createFromProximity(proximityId, bigText, smallText)
+                notificationCreator().createFromProximity(proximityId, bigText, smallText)
         );
-        notifier.showNotifications(notifications);
+        notifier().showNotifications(notifications);
         NearNotificationReceiver.completeWakefulIntent(intent);
     }
 }

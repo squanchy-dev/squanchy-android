@@ -51,6 +51,7 @@ import timber.log.Timber;
 
 import static net.squanchy.google.GoogleClientId.HOME_ACTIVITY;
 
+@SuppressWarnings({"PMD.ExcessiveImports", "PMD.GodClass"})           // Unfortunately this activity has got a lot to do
 public class HomeActivity extends TypefaceStyleableActivity {
 
     private static final String KEY_CONTEST_STAND = "stand";
@@ -188,7 +189,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
     protected void onStart() {
         super.onStart();
 
-        startAllSubscriptions();
+        startProximitySubscriptions();
     }
 
     @Override
@@ -207,15 +208,20 @@ public class HomeActivity extends TypefaceStyleableActivity {
             case KEY_ROOM_EVENT:
                 showCurrentEvent(proximityEvent);
                 break;
+            default:
+                Timber.e("Unsupported proximity event: %s", proximityEvent);
+                break;
         }
     }
 
     private void showCurrentEvent(ProximityEvent proximityEvent) {
-        currentEventService.eventIn(proximityEvent.subject())
-                .flatMap(event -> trackShownMessage(event, proximityEvent))
-                .map(event -> toSnackbar(event, proximityEvent))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(Snackbar::show);
+        subscriptions.add(
+                currentEventService.eventIn(proximityEvent.subject())
+                        .flatMap(event -> trackShownMessage(event, proximityEvent))
+                        .map(event -> toSnackbar(event, proximityEvent))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(Snackbar::show)
+        );
     }
 
     private Maybe<Event> trackShownMessage(Event event, ProximityEvent proximityEvent) {
@@ -298,7 +304,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
     }
 
     private void selectPage(BottomNavigationSection section) {
-        if (section == currentSection) {
+        if (section.equals(currentSection)) {
             return;
         }
 
@@ -368,7 +374,7 @@ public class HomeActivity extends TypefaceStyleableActivity {
         }
 
         if (requestCode == REQUEST_SIGN_IN_MAY_GOD_HAVE_MERCY_OF_OUR_SOULS) {
-            startAllSubscriptions();
+            startProximitySubscriptions();
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
@@ -382,21 +388,23 @@ public class HomeActivity extends TypefaceStyleableActivity {
         }
     }
 
-    private void startAllSubscriptions() {
-        subscriptions.add(
-                proximityService.observeProximityEvents()
-                        .distinctUntilChanged()
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(this::handleProximityEvent));
+    private void startProximitySubscriptions() {
+        if (proximityOptInPersister.userOptedIn()) {
+            subscriptions.add(
+                    proximityService.observeProximityEvents()
+                            .distinctUntilChanged()
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(this::handleProximityEvent));
 
-        subscriptions.add(
-                proximityFeature.enabled()
-                        .doOnSuccess(enabled -> {
-                            if (enabled) {
-                                checkPrerequisiteForProximity();
-                            }
-                        }).subscribe()
-        );
+            subscriptions.add(
+                    proximityFeature.enabled()
+                            .doOnSuccess(enabled -> {
+                                if (enabled) {
+                                    checkPrerequisiteForProximity();
+                                }
+                            }).subscribe()
+            );
+        }
 
         for (Loadable loadable : loadables) {
             loadable.startLoading();
@@ -414,10 +422,6 @@ public class HomeActivity extends TypefaceStyleableActivity {
 
     private void showPrerequisitesSnackbar() {
         prerequisitesSnackbar.show();
-    }
-
-    private void dismissPrerequisitesSnackbar() {
-        prerequisitesSnackbar.dismiss();
     }
 
     @Override
@@ -485,5 +489,9 @@ public class HomeActivity extends TypefaceStyleableActivity {
                 proximityPreconditions.needsActionToSatisfyPreconditions();
             }
         };
+    }
+
+    private void dismissPrerequisitesSnackbar() {
+        prerequisitesSnackbar.dismiss();
     }
 }
