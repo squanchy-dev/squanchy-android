@@ -136,7 +136,7 @@ public abstract class SpeakerView extends LinearLayout {
         return children;
     }
 
-    protected LayoutInflater layoutInflater() {
+    protected final LayoutInflater layoutInflater() {
         return layoutInflater;
     }
 
