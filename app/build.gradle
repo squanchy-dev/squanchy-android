@@ -153,8 +153,6 @@ dependencies {
     kapt libraries.app.daggerCompiler
     compile libraries.app.dagger
 
-    retrolambdaConfig libraries.app.retrolambda
-
     testCompile libraries.test.fest
     testCompile libraries.test.jodaTime
     testCompile libraries.test.jUnit4
