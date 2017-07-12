@@ -6,7 +6,7 @@ ext {
 
     checkstyleVersion = '8.0'
     findbugsVersion = '3.0.0'
-    pmdVersion = '5.5.2'
+    pmdVersion = '5.8.1'
 
     gradlePlugins = [
             buildProperties: 'com.novoda:build-properties-plugin:1.2.1',
