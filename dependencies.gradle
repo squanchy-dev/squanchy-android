@@ -50,7 +50,7 @@ ext {
                     fest    : 'org.easytesting:fest-assert-core:2.0M10',
                     jodaTime: 'joda-time:joda-time:2.9.9',
                     jUnit4  : 'junit:junit:4.12',
-                    mockito : 'org.mockito:mockito-core:2.7.15'
+                    mockito : 'org.mockito:mockito-core:2.8.47'
             ]
     ]
 }
