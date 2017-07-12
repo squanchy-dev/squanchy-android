@@ -43,7 +43,7 @@ ext {
                     supportDesign       : "com.android.support:design:${supportLibVersion}",
                     timber              : 'com.jakewharton.timber:timber:4.5.1',
                     tweetUi             : 'com.twitter.sdk.android:tweet-ui:3.0.0',
-                    viewPagerAdapter    : 'com.novoda:view-pager-adapter:0.9.1'
+                    viewPagerAdapter    : 'com.novoda:view-pager-adapter:1.0.0'
             ],
 
             test: [
