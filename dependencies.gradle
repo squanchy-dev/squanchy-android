@@ -1,6 +1,6 @@
 ext {
     supportLibVersion = '25.4.0'
-    playServicesVersion = '10.2.6'
+    playServicesVersion = '11.0.2'
     daggerVersion = '2.9'
     kotlinVersion = '1.1.3-2'
 
