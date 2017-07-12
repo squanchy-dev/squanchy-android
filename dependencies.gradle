@@ -18,7 +18,7 @@ ext {
             app : [
                     autoValue           : 'com.google.auto.value:auto-value:1.4.1',
                     calligraphy         : 'uk.co.chrisjenx:calligraphy:2.3.0',
-                    crashlytics         : 'com.crashlytics.sdk.android:crashlytics:2.6.6',
+                    crashlytics         : 'com.crashlytics.sdk.android:crashlytics:2.6.8',
                     dagger              : "com.google.dagger:dagger:${daggerVersion}",
                     daggerCompiler      : "com.google.dagger:dagger-compiler:${daggerVersion}",
                     findbugsAnnotations : "com.google.code.findbugs:annotations:3.0.1u2",
