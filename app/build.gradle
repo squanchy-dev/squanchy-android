@@ -7,8 +7,7 @@ buildscript {
 }
 
 plugins {
-    id 'me.tatarka.retrolambda' version '3.5.0'
-    id "io.gitlab.arturbosch.detekt" version "1.0.0.M11"
+    id "io.gitlab.arturbosch.detekt" version "1.0.0.M13"
 }
 
 apply plugin: 'com.android.application'
@@ -105,11 +104,14 @@ play {
 }
 
 detekt {
-    input = "./src/main/java"
-    config = "$rootDir/team-props/static-analysis/detekt-config.yml"
-    filters = ".*test.*, .*/resources/.*"
-    output = true
-    report = "$project.projectDir/build/reports"
+    version = "1.0.0.M13"
+    
+    profile("main") {
+        input = "$projectDir/src/main/java"
+        config = "$rootDir/team-props/static-analysis/detekt-config.yml"
+        filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
+        output = "$project.projectDir/build/reports/detekt.xml"
+    }
 }
 
 project.afterEvaluate {
