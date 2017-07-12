@@ -3,6 +3,7 @@ apply from: 'dependencies.gradle'
 buildscript {
     repositories {
         jcenter()
+        google()
     }
 
     ext {
@@ -15,7 +16,7 @@ buildscript {
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.14.0'
         classpath 'com.google.gms:google-services:3.0.0'
         classpath 'com.github.triplet.gradle:play-publisher:1.1.5'
-        classpath 'com.android.tools.build:gradle:2.3.2'
+        classpath 'com.android.tools.build:gradle:3.0.0-alpha6'
     }
 }
 
@@ -23,6 +24,7 @@ subprojects {
     buildscript {
         repositories {
             jcenter()
+            google()
             maven { url 'https://maven.fabric.io/public' }
             maven { url 'http://dl.bintray.com/arturbosch/code-analysis' }
         }
@@ -30,7 +32,7 @@ subprojects {
 
     repositories {
         jcenter()
-        maven { url 'https://maven.google.com' }
+        google()
         maven { url 'https://jitpack.io' }
     }
 
