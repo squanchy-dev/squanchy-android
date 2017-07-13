@@ -31,8 +31,8 @@
 
   <declare-styleable name="ImageViewWithForeground">
     <attr name="android:foreground" />
-    <attr name="android:foregroundInsidePadding" />
     <attr name="android:foregroundGravity" />
+    <attr name="foregroundInsidePadding" />
   </declare-styleable>
 
   <declare-styleable name="MaxSizeFrameLayout">

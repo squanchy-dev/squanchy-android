@@ -105,7 +105,7 @@ play {
 
 detekt {
     version = "1.0.0.M13"
-    
+
     profile("main") {
         input = "$projectDir/src/main/java"
         config = "$rootDir/team-props/static-analysis/detekt-config.yml"
@@ -145,10 +145,11 @@ dependencies {
     compile libraries.app.supportAppCompat
     compile libraries.app.supportDesign
     compile libraries.app.timber
-    compile libraries.app.tweetUi
+    compile libraries.app.twitterCore
     compile libraries.app.viewPagerAdapter
     compile libraries.app.kotlin
 
+    annotationProcessor libraries.app.autoValue
     kapt libraries.app.autoValue
     provided libraries.app.autoValue
 

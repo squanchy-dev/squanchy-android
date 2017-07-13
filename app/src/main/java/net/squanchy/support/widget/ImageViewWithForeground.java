@@ -67,7 +67,7 @@ public class ImageViewWithForeground extends AppCompatImageView implements ViewW
         }
 
         foregroundInPadding = a.getBoolean(
-                R.styleable.ImageViewWithForeground_android_foregroundInsidePadding, true);
+                R.styleable.ImageViewWithForeground_foregroundInsidePadding, true);
 
         a.recycle();
     }
