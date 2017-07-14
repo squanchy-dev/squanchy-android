@@ -110,7 +110,7 @@ detekt {
         input = "$projectDir/src/main/java"
         config = "$rootDir/team-props/static-analysis/detekt-config.yml"
         filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
-        output = "$project.projectDir/build/reports/detekt.xml"
+        output = "$projectDir/build/reports/detekt.xml"
     }
 }
 
