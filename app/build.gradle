@@ -119,47 +119,51 @@ project.afterEvaluate {
 }
 
 dependencies {
-    compile libraries.app.calligraphy
-    compile libraries.app.crashlytics
-    compile libraries.app.findbugsAnnotations
-    compile libraries.app.firebase
-    compile libraries.app.firebaseAuth
-    compile libraries.app.firebaseConfig
-    compile libraries.app.firebaseDb
-    compile libraries.app.firebaseMessaging
-    compile libraries.app.firebaseStorage
-    compile(libraries.app.firebaseUiStorage) {
+    implementation libraries.app.calligraphy
+    implementation libraries.app.crashlytics
+    implementation(libraries.app.findbugsAnnotations) {
+        exclude group: 'net.jcip'
+        exclude group: 'com.google.code.findbugs'
+    }
+    implementation libraries.app.firebase
+    implementation libraries.app.firebaseAuth
+    implementation libraries.app.firebaseConfig
+    implementation libraries.app.firebaseDb
+    implementation libraries.app.firebaseMessaging
+    implementation libraries.app.firebaseStorage
+    implementation(libraries.app.firebaseUiStorage) {
         exclude group: 'com.android.support'
         exclude group: 'com.google.firebase'
     }
-    compile libraries.app.glide
-    compile libraries.app.glideOkHttp3
-    compile libraries.app.jodaTimeAndroid
-    compile(libraries.app.nearit) {
+    implementation libraries.app.glide
+    implementation libraries.app.glideOkHttp3
+    implementation libraries.app.jodaTimeAndroid
+    implementation libraries.app.kotlin
+    implementation(libraries.app.nearit) {
         exclude group: 'com.google.android.gms'
     }
-    compile libraries.app.playServicesAuth
-    compile libraries.app.playServicesLocation
-    compile libraries.app.rx
-    compile libraries.app.rxAndroid
-    compile libraries.app.supportAppCompat
-    compile libraries.app.supportDesign
-    compile libraries.app.timber
-    compile libraries.app.twitterCore
-    compile libraries.app.viewPagerAdapter
-    compile libraries.app.kotlin
+    implementation libraries.app.playServicesAuth
+    implementation libraries.app.playServicesLocation
+    implementation libraries.app.rx
+    implementation libraries.app.rxAndroid
+    implementation libraries.app.supportAppCompat
+    implementation libraries.app.supportDesign
+    implementation libraries.app.timber
+    implementation libraries.app.twitterCore
+    implementation libraries.app.viewPagerAdapter
 
     annotationProcessor libraries.app.autoValue
     kapt libraries.app.autoValue
-    provided libraries.app.autoValue
+    compileOnly libraries.app.autoValue
 
+    annotationProcessor libraries.app.daggerCompiler
     kapt libraries.app.daggerCompiler
-    compile libraries.app.dagger
+    implementation libraries.app.dagger
 
-    testCompile libraries.test.fest
-    testCompile libraries.test.jodaTime
-    testCompile libraries.test.jUnit4
-    testCompile libraries.test.mockito
+    testImplementation libraries.test.fest
+    testImplementation libraries.test.jodaTime
+    testImplementation libraries.test.jUnit4
+    testImplementation libraries.test.mockito
 }
 
 apply plugin: 'com.google.gms.google-services'
