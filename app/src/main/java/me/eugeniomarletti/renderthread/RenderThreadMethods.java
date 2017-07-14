@@ -1,6 +1,7 @@
 package me.eugeniomarletti.renderthread;
 
 import android.animation.Animator;
+import android.annotation.SuppressLint;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Build;
@@ -18,6 +19,7 @@ import me.eugeniomarletti.renderthread.typeannotation.DisplayListCanvas;
 import me.eugeniomarletti.renderthread.typeannotation.RenderNodeAnimator;
 import timber.log.Timber;
 
+@SuppressLint("PrivateApi")     // This class wraps the private APIs we rely on
 final class RenderThreadMethods {
 
     private static final int MAX_SUPPORTED_ANDROID_VERSION = 25;
