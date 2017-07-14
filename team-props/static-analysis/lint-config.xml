@@ -48,7 +48,7 @@
 
   <!-- The Google Services JSON plugin generates some API keys even if we don't actually use them -->
   <issue id="UnusedResources">
-    <ignore regexp="google_crash_reporting_api_key" />
+    <ignore path="*generated/res/google-services/*" />
   </issue>
 
 </lint>
