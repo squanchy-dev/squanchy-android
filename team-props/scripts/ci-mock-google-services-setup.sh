@@ -4,7 +4,7 @@
 
 echo '{
   "project_info": {
-    "project_number": "1234567894652",
+    "project_number": "012345678912",
     "firebase_url": "https://squanchy-mock.firebaseio.com",
     "project_id": "squanchy-mock",
     "storage_bucket": "squanchy-mock.appspot.com"
@@ -12,7 +12,7 @@ echo '{
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "0",
+        "mobilesdk_app_id": "1:012345678912:android:1337deadbeef",
         "android_client_info": {
           "package_name": "net.squanchy.example"
         }
