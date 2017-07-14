@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
 export APP_MODULE_PATH="app"
-export JSON_PATH="${APP_MODULE_PATH}/google-services.json"
+export JSON_PATH="$APP_MODULE_PATH/google-services.json"
 
 if [ ! -e ${JSON_PATH} ]; then
-    echo "Writing mock google-services.json file to ${JSON_PATH}..."
+    echo "Writing mock google-services.json file to $JSON_PATH..."
+
     echo '{
       "project_info": {
         "project_number": "012345678912",
@@ -67,5 +68,5 @@ if [ ! -e ${JSON_PATH} ]; then
 
     echo "Done."
 else
-    echo "The ${JSON_PATH} file already exists, skipping..."
+    echo "The $JSON_PATH file already exists, skipping..."
 fi

@@ -26,6 +26,9 @@ jobs:
 
       # Prepare the container for the build
       - run:
+          name: Accept Android SDK license
+          command: .circleci/ci-scripts/accept-android-licenses.sh
+      - run:
           name: Ensure Android SDK install is up-to-date
           command: .circleci/ci-scripts/ensure-sdkmanager.sh
       - run:
