@@ -1,4 +1,5 @@
 autoCorrect: true
+failFast: false
 
 build:
   warningThreshold: 1
@@ -17,6 +18,19 @@ potential-bugs:
   EqualsWithHashCodeExist:
     active: true
   ExplicitGarbageCollectionCall:
+    active: true
+  LateinitUsage:
+    active: false
+  UnsafeCallOnNullableType:
+    active: false
+  UnsafeCast:
+    active: false
+
+performance:
+  active: true
+  ForEachOnRange:
+    active: true
+  SpreadOperator:
     active: true
 
 exceptions:
@@ -40,6 +54,8 @@ complexity:
     threshold: 20
   ComplexCondition:
     threshold: 3
+  LabeledExpression:
+    active: false
 
 code-smell:
   active: true
@@ -53,6 +69,7 @@ formatting:
   useTabs: false
   Indentation:
     active: true
+    indentSize: 4
     autoCorrect: true
   ConsecutiveBlankLines:
     active: true
@@ -89,15 +106,25 @@ formatting:
     autoCorrect: true
   ExpressionBodySyntax:
     active: false
-    autoCorrect: true
+    autoCorrect: false
   ExpressionBodySyntaxLineBreaks:
     active: false
-    autoCorrect: true
+    autoCorrect: false
+  OptionalReturnKeyword:
+    active: true
+    autoCorrect: false
 
 style:
   active: true
+  NewLineAtEndOfFile:
+    active: true
   WildcardImport:
     active: true
+  MaxLineLength:
+    active: true
+    maxLineLength: 150
+    excludePackageStatements: false
+    excludeImportStatements: false
   NamingConventionViolation:
     active: true
     variablePattern: '^(_)?[a-z$][a-zA-Z$0-9]*$'
@@ -112,7 +139,7 @@ comments:
     active: true
   CommentOverPrivateProperty:
     active: true
-  NoDocOverPublicClass:
+  UndocumentedPublicClass:
     active: false
-  NoDocOverPublicMethod:
+  UndocumentedPublicFunction:
     active: false
