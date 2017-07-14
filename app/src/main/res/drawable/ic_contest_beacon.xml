@@ -1,13 +1,17 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
   android:width="150dp"
   android:height="166dp"
   android:viewportWidth="150"
   android:viewportHeight="166">
+
+  <!-- This is a slightly too long vector path but we're ok with it -->
   <path
     android:name="path"
     android:pathData="M 47.165 144.665 C 19.526 133.612 0 106.586 0 75 C 0 33.579 33.579 0 75 0 C 116.421 0 150 33.579 150 75 C 150 106.073 131.103 132.733 104.175 144.114 L 101.485 138.734 C 126.448 128.349 144 103.724 144 75 C 144 36.892 113.108 6 75 6 C 36.892 6 6 36.892 6 75 C 6 104.237 24.184 129.227 49.859 139.277 L 47.165 144.665 Z M 58.858 121.279 C 39.727 114.607 26 96.406 26 75 C 26 47.938 47.938 26 75 26 C 102.062 26 124 47.938 124 75 C 124 95.893 110.923 113.733 92.508 120.78 L 89.809 115.382 C 106.261 109.347 118 93.544 118 75 C 118 51.252 98.748 32 75 32 C 51.252 32 32 51.252 32 75 C 32 94.057 44.398 110.219 61.568 115.86 L 58.858 121.279 Z M 75 98 C 62.297 98 52 87.703 52 75 C 52 62.297 62.297 52 75 52 C 87.703 52 98 62.297 98 75 C 98 87.703 87.703 98 75 98 Z M 75 92 C 84.389 92 92 84.389 92 75 C 92 65.611 84.389 58 75 58 C 65.611 58 58 65.611 58 75 C 58 84.389 65.611 92 75 92 Z M 73.764 110.473 C 74.999 108.003 76.998 107.996 78.236 110.473 L 103.764 161.527 C 104.999 163.997 103.757 166 101 166 L 51 166 C 48.238 166 46.998 164.004 48.236 161.527 L 73.764 110.473 Z"
     android:fillColor="?colorPrimary"
     android:strokeWidth="1"
     android:strokeLineJoin="round"
-    android:strokeMiterLimit="1.41421" />
+    android:strokeMiterLimit="1.41421"
+    tools:ignore="VectorPath" />
 </vector>

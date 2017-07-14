@@ -73,4 +73,4 @@ test:
 
         # Collect the Detekt reports
         - mkdir -p $CIRCLE_TEST_REPORTS/reports/detekt
-        - find app/build/reports/ -name "report.detekt" -exec cp {} $CIRCLE_TEST_REPORTS/reports/detekt/ \;
+        - find app/build/reports/ -name "detekt.xml" -exec cp {} $CIRCLE_TEST_REPORTS/reports/detekt/ \;

@@ -44,8 +44,6 @@
     <item name="fontPath">?titleTypeface</item>
   </style>
 
-  <style name="Squanchy.Tabs" parent="Widget.Design.TabLayout" />
-
   <style name="Squanchy.Tabs.Schedule" parent="None">
     <item name="tabIndicatorColor">?colorControlNormal</item>
     <item name="tabGravity">fill</item>
@@ -59,8 +57,6 @@
     <item name="textAllCaps">false</item>
     <item name="fontPath">?titleTypeface</item>
   </style>
-
-  <style name="Squanchy.Tabs.SpeakerList" parent="None" />
 
   <style name="TextAppearance.Squanchy.Card.Speaker" parent="None">
     <item name="android:textColor">?android:textColorSecondary</item>
@@ -544,8 +540,6 @@
   </style>
 
   <style name="TextAppearance.Squanchy.Favorite.Empty.Cta" parent="TextAppearance.Squanchy.Button.Colored" />
-
-  <style name="Favorite.Empty.Fab" parent="EventDetails.Fab" />
 
   <style name="SignIn.BottomSheet" parent="Widget.Design.BottomSheet.Modal">
     <item name="android:maxWidth">@dimen/sign_in_bottom_sheet_max_width</item>

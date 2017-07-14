@@ -2,6 +2,7 @@ package net.squanchy.service.firebase
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
+import com.google.firebase.FirebaseException
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -66,7 +67,7 @@ class FirebaseAuthService(private val auth: FirebaseAuth) {
                 if (result.isSuccessful) {
                     completableObserver.onComplete()
                 } else {
-                    completableObserver.onError(result.exception)
+                    completableObserver.onError(result.exception ?: FirebaseException("Unknown exception in Firebase Auth"))
                 }
             }
         }

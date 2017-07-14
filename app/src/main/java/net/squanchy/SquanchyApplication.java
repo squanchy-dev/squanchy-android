@@ -3,13 +3,12 @@ package net.squanchy;
 import android.app.Application;
 import android.support.annotation.MainThread;
 
-import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.FirebaseDatabase;
+import com.twitter.sdk.android.core.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
-import com.twitter.sdk.android.core.TwitterCore;
-import com.twitter.sdk.android.tweetui.TweetUi;
+import com.twitter.sdk.android.core.TwitterConfig;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 import net.squanchy.analytics.Analytics;
@@ -31,6 +30,7 @@ public class SquanchyApplication extends Application {
 
         JodaTimeAndroid.init(this);
         setupTracking();
+        initializeTwitter();
         initializeFirebase();
         TypefaceManager.init();
 
@@ -50,7 +50,7 @@ public class SquanchyApplication extends Application {
     }
 
     private void setupTracking() {
-        setupFabric();
+        initializeFabric();
 
         Analytics analytics = applicationComponent().analytics();
         analytics.enableExceptionLogging();
@@ -61,22 +61,27 @@ public class SquanchyApplication extends Application {
         }
     }
 
-    private void setupFabric() {
+    private void initializeFabric() {
+        CrashlyticsCore crashlyticsCore = new CrashlyticsCore.Builder()
+                .disabled(BuildConfig.DEBUG)
+                .build();
+
+        Fabric.with(this, crashlyticsCore);
+    }
+
+    private void initializeTwitter() {
         TwitterAuthConfig authConfig = new TwitterAuthConfig(
                 getString(R.string.api_value_twitter_api_key),
                 getString(R.string.api_value_twitter_secret)
         );
 
-        CrashlyticsCore crashlyticsCore = new CrashlyticsCore.Builder()
-                .disabled(BuildConfig.DEBUG)
+        TwitterConfig twitterConfig = new TwitterConfig.Builder(this)
+                .twitterAuthConfig(authConfig)
+                // TODO .logger(new TimberLogger())
+                .debug(BuildConfig.DEBUG)
                 .build();
 
-        Fabric.with(
-                this,
-                new Crashlytics.Builder().core(crashlyticsCore).build(),
-                new TwitterCore(authConfig),
-                new TweetUi()
-        );
+        Twitter.initialize(twitterConfig);
     }
 
     private void initializeFirebase() {

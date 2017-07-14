@@ -37,6 +37,7 @@
     <exclude name="EmptyMethodInAbstractClassShouldBeAbstract" />
     <exclude name="FieldDeclarationsShouldBeAtStartOfClass" />
     <exclude name="ConfusingTernary" />
+    <exclude name="AccessorMethodGeneration" />
   </rule>
 
   <rule ref="rulesets/java/design.xml/EmptyMethodInAbstractClassShouldBeAbstract">

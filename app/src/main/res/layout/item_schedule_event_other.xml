@@ -42,7 +42,7 @@
       android:layout_width="@dimen/card_other_illustration_width"
       android:layout_height="@dimen/card_other_illustration_height"
       android:scaleType="centerInside"
-      tools:src="@drawable/illustration_lunch" />
+      tools:src="@drawable/lunch" />
 
   </LinearLayout>
 
