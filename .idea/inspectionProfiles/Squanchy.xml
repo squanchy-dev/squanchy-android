@@ -118,6 +118,7 @@
       <option name="ignoreTransformationOfOriginalParameter" value="false" />
     </inspection_tool>
     <inspection_tool class="AssignmentUsedAsCondition" enabled="true" level="INFO" enabled_by_default="true" />
+    <inspection_tool class="BashGloballyRegisteredVariable" enabled="true" level="Info" enabled_by_default="true" />
     <inspection_tool class="CStyleArrayDeclaration" enabled="true" level="INFO" enabled_by_default="true" />
     <inspection_tool class="CallToStringConcatCanBeReplacedByOperator" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="ClassNameDiffersFromFileName" enabled="true" level="WARNING" enabled_by_default="true" />

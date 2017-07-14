@@ -1,0 +1,61 @@
+version: 2
+
+jobs:
+  build:
+    working_directory: ~/squanchy
+
+    docker:
+      - image: circleci/android:api-25-alpha
+
+    environment:
+      ANDROID_HOME: /opt/android/sdk
+      ANDROID_BUILD_TOOLS: 25.0.2
+      APPLICATION_ID: net.squanchy.example
+      FABRIC_API_KEY: 0000000000000000000000000000000000000000
+      GOOGLE_MAPS_API_KEY: DUMMY_GOOGLE_MAPS_API_KEY
+      NEARIT_API_KEY: DUMMY_NEARIT_API_KEY
+      TWITTER_API_KEY: DUMMY_TWITTER_API_KEY
+      TWITTER_SECRET: DUMMY_TWITTER_SECRET
+
+    steps:
+      - checkout
+
+      # Restore cached dependencies (if any)
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+
+      # Prepare the container for the build
+      - run:
+          name: Ensure Android SDK install is up-to-date
+          command: .circleci/ci-scripts/ensure-sdkmanager.sh
+      - run:
+          name: Create mock Play Services JSON
+          command: .circleci/ci-scripts/ci-mock-google-services-setup.sh
+
+      # Run the main job command, delegating to Gradle
+      - run:
+          name: Run Gradle :check command
+          command: ./gradlew check --continue
+
+      # Store all the downloaded dependencies in the CI cache
+      - save_cache:
+          paths:
+            # Android SDK
+            - /usr/local/android-sdk-linux/tools
+            - /usr/local/android-sdk-linux/platform-tools
+            - /usr/local/android-sdk-linux/build-tools
+            - /usr/local/android-sdk-linux/licenses
+            - /usr/local/android-sdk-linux/extras/google/m2repository
+
+            # Gradle dependencies
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+
+      # Collect static analysis reports as build artifacts
+      - store_artifacts:
+          path: app/build/reports
+          destination: reports
+
+      # Collect JUnit test results
+      - store_test_results:
+          path: app/build/test-results
