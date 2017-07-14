@@ -1,5 +1,4 @@
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-  android:width="48dp"
+<vector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" android:width="48dp"
   android:height="39dp"
   android:viewportWidth="48"
   android:viewportHeight="39">
@@ -11,6 +10,8 @@ L48,37.002 C48,38.105,47.105,39,45.999,39 L2.001,39 C0.896,39,0,38.106,0,37.002
 L0,9.998 Z M2,10.993 L2,36.007 C2,36.554,2.448,37,3.002,37 L44.998,37
 C45.55,37,46,36.555,46,36.007 L46,10.993 C46,10.446,45.552,10,44.998,10
 L3.002,10 C2.45,10,2,10.445,2,10.993 Z" />
+
+  <!-- This is a slightly too long vector path but we're ok with it -->
   <path
     android:fillColor="#898989" android:pathData="M21.132,23 L37.868,23 C37.553,21.229,36.689,19.648,35.458,18.438
 C35.377,18.393,35.301,18.337,35.232,18.268
@@ -25,7 +26,7 @@ C24.867,14.813,27.088,14,29.5,14 C31.912,14,34.133,14.813,35.906,16.18
 L37.354,14.732 C37.747,14.339,38.377,14.342,38.768,14.732
 C39.161,15.125,39.158,15.756,38.768,16.146 L37.368,17.546
 C39.006,19.398,40,21.833,40,24.5 C40,24.668,39.996,24.834,39.988,25 L38.493,25
-L20.507,25 Z" />
+L20.507,25 Z" tools:ignore="VectorPath" />
   <path
     android:fillColor="#6b6b6b" android:pathData="M30,8 L18,8 C18,8,20,8.013,20,6.007 L20,4 C20,1.791,21.791,0,24,0
 C26.209,0,28,1.791,28,4 L28,6.007 C28,8.013,30,8,30,8 Z M24,6

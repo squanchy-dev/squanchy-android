@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
   android:width="56dp"
   android:height="56dp"
   android:viewportWidth="56"
   android:viewportHeight="56">
 
-  <group>
+  <!-- This has slightly too long vector paths but we're ok with it -->
+  <group tools:ignore="VectorPath">
     <clip-path android:pathData="M56,0 L56,56 L0,56 L0,0 L56,0 Z M27.209,15.611 L35.828,15.611
 C35.877,15.814,35.918,16.06,35.951,16.348 C35.984,16.635,36,16.923,36,17.211
 C36,18.38,35.828,19.48,35.484,20.513 C35.141,21.546,34.6,22.469,33.864,23.282
@@ -28,6 +30,7 @@ C25.719,22.6,26.488,22.749,27.307,22.749 C28.24,22.749,29.03,22.609,29.677,22.33
 C30.323,22.05,30.876,21.69,31.334,21.25
 C31.662,20.945,31.944,20.56,32.181,20.094
 C32.419,19.629,32.603,19.108,32.734,18.532 L27.209,18.532 L27.209,15.611 Z" />
+
     <path
       android:fillColor="?colorControlNormal" android:pathData="M19,54.52 L19,42 L36,42 L36,54.839 C33.465,55.594,30.779,56,28,56
 C24.852,56,21.825,55.479,19,54.52 Z M17,53.753 C7.008,49.475,0,39.55,0,28

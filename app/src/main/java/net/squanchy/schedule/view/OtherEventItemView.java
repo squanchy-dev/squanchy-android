@@ -71,7 +71,7 @@ public class OtherEventItemView extends EventItemView {
             case COFFEE_BREAK:
                 return R.drawable.coffee_break;
             case LUNCH:
-                return R.drawable.illustration_lunch;
+                return R.drawable.lunch;
             case REGISTRATION:
                 return R.drawable.registration;
             case OTHER:
