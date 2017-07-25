@@ -118,6 +118,9 @@ style:
   active: true
   NewLineAtEndOfFile:
     active: true
+  ForbiddenComment:
+    active: true
+    values: 'STOPSHIP'
   WildcardImport:
     active: true
   MaxLineLength:
@@ -141,5 +144,17 @@ comments:
     active: true
   UndocumentedPublicClass:
     active: false
+    searchInNestedClass: true
+    searchInInnerClass: true
+    searchInInnerInterface: true
   UndocumentedPublicFunction:
     active: false
+
+# *experimental feature*
+# Migration rules can be defined in the same config file or a new one
+migration:
+  active: true
+  imports:
+    # your.package.Class: new.package.or.Class
+    # for example:
+    # io.gitlab.arturbosch.detekt.api.Rule: io.gitlab.arturbosch.detekt.rule.Rule
