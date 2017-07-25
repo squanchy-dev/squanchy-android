@@ -3,6 +3,7 @@ package net.squanchy;
 import android.app.Application;
 import android.support.annotation.MainThread;
 
+import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.FirebaseDatabase;
@@ -66,7 +67,11 @@ public class SquanchyApplication extends Application {
                 .disabled(BuildConfig.DEBUG)
                 .build();
 
-        Fabric.with(this, crashlyticsCore);
+        Crashlytics crashlytics = new Crashlytics.Builder()
+                .core(crashlyticsCore)
+                .build();
+
+        Fabric.with(this, crashlytics);
     }
 
     private void initializeTwitter() {
