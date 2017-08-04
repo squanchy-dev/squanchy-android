@@ -53,4 +53,13 @@ ext {
                     mockito : 'org.mockito:mockito-core:2.8.47'
             ]
     ]
+
+    buildScript = [
+            jaCoCo                      : 'org.jacoco:org.jacoco.core:0.7.9',
+            gradleStaticAnalysisPlugin  : 'com.novoda:gradle-static-analysis-plugin:0.4.1',
+            gradleVersionsPlugin        : 'com.github.ben-manes:gradle-versions-plugin:0.15.0',
+            googleServices              : 'com.google.gms:google-services:3.1.0',
+            playPublisher               : 'com.github.triplet.gradle:play-publisher:1.1.5',
+            android                     : 'com.android.tools.build:gradle:3.0.0-alpha9'
+    ]
 }
