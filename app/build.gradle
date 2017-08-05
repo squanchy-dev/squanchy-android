@@ -7,7 +7,7 @@ buildscript {
 }
 
 plugins {
-    id "io.gitlab.arturbosch.detekt" version "1.0.0.M13.2"
+    id 'io.gitlab.arturbosch.detekt' version '1.0.0.RC1'
 }
 
 apply plugin: 'com.android.application'
@@ -104,12 +104,12 @@ play {
 }
 
 detekt {
-    version = "1.0.0.M13.2"
+    version = '1.0.0.RC1'
 
-    profile("main") {
+    profile('main') {
         input = "$projectDir/src/main/java"
         config = "$rootDir/team-props/static-analysis/detekt-config.yml"
-        filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
+        filters = '.*test.*,.*/resources/.*,.*/tmp/.*'
         output = "$projectDir/build/reports/detekt.xml"
     }
 }
