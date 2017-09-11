@@ -42,7 +42,7 @@ ext {
                     supportAppCompat    : "com.android.support:appcompat-v7:${supportLibVersion}",
                     supportDesign       : "com.android.support:design:${supportLibVersion}",
                     timber              : 'com.jakewharton.timber:timber:4.5.1',
-                    twitterCore         : 'com.twitter.sdk.android:twitter-core:3.0.0',
+                    twitterCore         : 'com.twitter.sdk.android:twitter-core:3.1.1',
                     viewPagerAdapter    : 'com.novoda:view-pager-adapter:1.0.0'
             ],
 
