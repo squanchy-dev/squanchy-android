@@ -7,7 +7,7 @@ buildscript {
 }
 
 plugins {
-    id 'io.gitlab.arturbosch.detekt' version '1.0.0.RC1'
+    id 'io.gitlab.arturbosch.detekt' version '1.0.0.RC3'
 }
 
 apply plugin: 'com.android.application'
@@ -104,7 +104,7 @@ play {
 }
 
 detekt {
-    version = '1.0.0.RC1'
+    version = '1.0.0.RC3'
 
     profile('main') {
         input = "$projectDir/src/main/java"
@@ -125,7 +125,7 @@ dependencies {
         exclude group: 'net.jcip'
         exclude group: 'com.google.code.findbugs'
     }
-    implementation libraries.app.firebase
+    implementation(libraries.app.firebase) {
         exclude group: 'com.android.support'
     }
     implementation libraries.app.firebaseAuth
