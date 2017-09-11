@@ -7,7 +7,7 @@ buildscript {
 }
 
 plugins {
-    id 'io.gitlab.arturbosch.detekt' version '1.0.0.RC3'
+    id 'io.gitlab.arturbosch.detekt' version '1.0.0.RC4-3'
 }
 
 apply plugin: 'com.android.application'
@@ -104,7 +104,7 @@ play {
 }
 
 detekt {
-    version = '1.0.0.RC3'
+    version = '1.0.0.RC4-3'
 
     profile('main') {
         input = "$projectDir/src/main/java"
