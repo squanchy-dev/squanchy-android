@@ -51,4 +51,9 @@
     <ignore path="*generated/res/google-services/*" />
   </issue>
 
+  <!-- Timber is not using UAST for its Lint checks as of 4.5.1 -->
+  <issue id="ObsoleteLintCustomCheck">
+    <ignore regexp="timber.lint" />
+  </issue>
+
 </lint>
