@@ -146,7 +146,7 @@ dependencies {
     }
     implementation libraries.app.playServicesAuth
     implementation libraries.app.playServicesLocation
-    implementation libraries.app.rx
+    implementation libraries.app.rxJava
     implementation libraries.app.rxAndroid
     implementation libraries.app.supportAppCompat
     implementation libraries.app.supportDesign
