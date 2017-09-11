@@ -5,11 +5,10 @@ jobs:
     working_directory: ~/squanchy
 
     docker:
-      - image: circleci/android:api-25-alpha
+      - image: circleci/android:api-26-alpha
 
     environment:
       ANDROID_HOME: /opt/android/sdk
-      ANDROID_BUILD_TOOLS: 25.0.2
       APPLICATION_ID: net.squanchy.example
       FABRIC_API_KEY: 0000000000000000000000000000000000000000
       GOOGLE_MAPS_API_KEY: DUMMY_GOOGLE_MAPS_API_KEY
