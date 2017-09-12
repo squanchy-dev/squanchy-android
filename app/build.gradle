@@ -137,8 +137,12 @@ dependencies {
         exclude group: 'com.android.support'
         exclude group: 'com.google.firebase'
     }
+
+    annotationProcessor libraries.app.glideCompiler
+    kapt libraries.app.glideCompiler
     implementation libraries.app.glide
     implementation libraries.app.glideOkHttp3
+
     implementation libraries.app.jodaTimeAndroid
     implementation libraries.app.kotlin
     implementation(libraries.app.nearit) {
