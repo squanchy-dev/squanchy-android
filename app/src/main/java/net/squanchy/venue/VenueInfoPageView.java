@@ -55,16 +55,16 @@ public class VenueInfoPageView extends CoordinatorLayout implements Loadable {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        nameText = (TextView) findViewById(R.id.venue_name);
-        addressText = (TextView) findViewById(R.id.venue_address);
-        descriptionText = (TextView) findViewById(R.id.venue_description);
-        mapView = (ImageView) findViewById(R.id.venue_map);
+        nameText = findViewById(R.id.venue_name);
+        addressText = findViewById(R.id.venue_address);
+        descriptionText = findViewById(R.id.venue_description);
+        mapView = findViewById(R.id.venue_map);
 
         setupToolbar();
     }
 
     private void setupToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.venue_info_label);
         toolbar.inflateMenu(R.menu.homepage);
         toolbar.setOnMenuItemClickListener(item -> {
