@@ -21,7 +21,6 @@ import java.io.InputStream
 import java.nio.charset.Charset
 import java.security.MessageDigest
 
-
 @GlideModule
 internal class SquanchyGlideModule : AppGlideModule() {
 
