@@ -4,40 +4,12 @@
 
 <module name="Checker">
 
-  <!-- Suppressions -->
-
-  <module name="SuppressionCommentFilter">
-    <property name="offCommentFormat"
-      value="CHECKSTYLE IGNORE\s+(\S+)" />
-    <property name="onCommentFormat"
-      value="CHECKSTYLE END IGNORE\s+(\S+)" />
-    <property name="checkFormat"
-      value="$1" />
-  </module>
-
-  <module name="SuppressWithNearbyCommentFilter">
-    <!-- Syntax is "SUPPRESS CHECKSTYLE name" -->
-    <property name="commentFormat"
-      value="SUPPRESS CHECKSTYLE (\w+)" />
-    <property name="checkFormat"
-      value="$1" />
-    <property name="influenceFormat"
-      value="1" />
-  </module>
-
   <module name="SuppressionFilter">
     <property name="file"
       value="team-props/static-analysis/checkstyle-suppressions.xml" />
   </module>
 
   <module name="SuppressWarningsFilter" />
-
-  <!-- Modules configuration -->
-
-  <module name="TreeWalker">
-    <module name="FileContentsHolder" />
-    <module name="SuppressWarningsHolder" />
-  </module>
 
   <!-- Checks whether files end with a new line.                        -->
   <!-- See http://checkstyle.sf.net/config_misc.html#NewlineAtEndOfFile -->
@@ -66,6 +38,28 @@
   </module>
 
   <module name="TreeWalker">
+
+    <module name="SuppressWarningsHolder" />
+
+    <!-- Suppressions -->
+    <module name="SuppressionCommentFilter">
+      <property name="offCommentFormat"
+        value="CHECKSTYLE IGNORE\s+(\S+)" />
+      <property name="onCommentFormat"
+        value="CHECKSTYLE END IGNORE\s+(\S+)" />
+      <property name="checkFormat"
+        value="$1" />
+    </module>
+
+    <module name="SuppressWithNearbyCommentFilter">
+      <!-- Syntax is "SUPPRESS CHECKSTYLE name" -->
+      <property name="commentFormat"
+        value="SUPPRESS CHECKSTYLE (\w+)" />
+      <property name="checkFormat"
+        value="$1" />
+      <property name="influenceFormat"
+        value="1" />
+    </module>
 
     <!-- Checks for Naming Conventions.                  -->
     <!-- See http://checkstyle.sf.net/config_naming.html -->
@@ -165,9 +159,6 @@
     <!-- See http://checkstyle.sf.net/config_misc.html -->
     <module name="ArrayTypeStyle" />
     <module name="UpperEll" />
-
-    <module name="FileContentsHolder" />
-    <!-- Required by comment suppression filters -->
 
   </module>
 
