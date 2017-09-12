@@ -9,12 +9,12 @@ buildscript {
     apply from: 'dependencies.gradle'
 
     dependencies {
-        classpath buildScript.jaCoCo
+        classpath buildScript.android
         classpath buildScript.gradleStaticAnalysisPlugin
         classpath buildScript.gradleVersionsPlugin
         classpath buildScript.googleServices
+        classpath buildScript.jaCoCo
         classpath buildScript.playPublisher
-        classpath buildScript.android
     }
 }
 
