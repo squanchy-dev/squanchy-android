@@ -1,5 +1,8 @@
 package net.squanchy.schedule;
 
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.LifecycleObserver;
+import android.arch.lifecycle.OnLifecycleEvent;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
@@ -15,7 +18,6 @@ import android.view.View;
 import net.squanchy.R;
 import net.squanchy.analytics.Analytics;
 import net.squanchy.analytics.ContentType;
-import net.squanchy.home.Loadable;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Schedule;
@@ -30,7 +32,7 @@ import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
 import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 
-public class SchedulePageView extends CoordinatorLayout implements Loadable {
+public class SchedulePageView extends CoordinatorLayout implements LifecycleObserver {
 
     private ScheduleViewPagerAdapter viewPagerAdapter;
     private View progressBar;
@@ -61,8 +63,8 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
 
         progressBar = findViewById(R.id.progressbar);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabstrip);
+        ViewPager viewPager = findViewById(R.id.viewpager);
+        TabLayout tabLayout = findViewById(R.id.tabstrip);
         tabLayout.setupWithViewPager(viewPager);
         hackToApplyTypefaces(tabLayout);
 
@@ -74,7 +76,7 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
     }
 
     private void setupToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.activity_schedule);
         toolbar.inflateMenu(R.menu.homepage);
         toolbar.setOnMenuItemClickListener(item -> {
@@ -91,8 +93,8 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
         });
     }
 
-    @Override
-    public void startLoading() {
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    protected void startLoading() {
         subscription = service.schedule(false)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(schedule -> updateWith(schedule, this::onEventClicked), Timber::e);
@@ -103,8 +105,8 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
         navigate.toEventDetails(event.getId());
     }
 
-    @Override
-    public void stopLoading() {
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+    protected void stopLoading() {
         subscription.dispose();
     }
 

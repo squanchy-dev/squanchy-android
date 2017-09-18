@@ -1,12 +1,14 @@
 package net.squanchy.home;
 
 import android.animation.ValueAnimator;
+import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BaseTransientBottomBar;
@@ -22,9 +24,7 @@ import android.view.Window;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -61,7 +61,6 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private static final String KEY_PROXIMITY_ID = "proximity_id";
 
     private final Map<BottomNavigationSection, View> pageViews = new HashMap<>(4);
-    private final List<Loadable> loadables = new ArrayList<>(4);
     private Snackbar prerequisitesSnackbar;
 
     private int pageFadeDurationMillis;
@@ -117,11 +116,11 @@ public class HomeActivity extends TypefaceStyleableActivity {
 
         pageFadeDurationMillis = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-        pageContainer = (ViewGroup) findViewById(R.id.page_container);
+        pageContainer = findViewById(R.id.page_container);
         collectPageViewsInto(pageViews);
-        collectLoadablesInto(loadables);
+        makeBottombarViewsLifecycleAware();
 
-        bottomNavigationView = (InterceptingBottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
         setupBottomNavigation(bottomNavigationView);
 
         Intent intent = getIntent();
@@ -257,11 +256,12 @@ public class HomeActivity extends TypefaceStyleableActivity {
         pageViews.put(BottomNavigationSection.VENUE_INFO, pageContainer.findViewById(R.id.venue_content_root));
     }
 
-    private void collectLoadablesInto(List<Loadable> loadables) {
-        loadables.add((Loadable) pageContainer.findViewById(R.id.schedule_content_root));
-        loadables.add((Loadable) pageContainer.findViewById(R.id.favorites_content_root));
-        loadables.add((Loadable) pageContainer.findViewById(R.id.tweets_content_root));
-        loadables.add((Loadable) pageContainer.findViewById(R.id.venue_content_root));
+    private void makeBottombarViewsLifecycleAware() {
+        Lifecycle lifecycle = getLifecycle();
+        lifecycle.addObserver(pageContainer.findViewById(R.id.schedule_content_root));
+        lifecycle.addObserver(pageContainer.findViewById(R.id.favorites_content_root));
+        lifecycle.addObserver(pageContainer.findViewById(R.id.tweets_content_root));
+        lifecycle.addObserver(pageContainer.findViewById(R.id.venue_content_root));
     }
 
     private void setupBottomNavigation(InterceptingBottomNavigationView bottomNavigationView) {
@@ -405,10 +405,6 @@ public class HomeActivity extends TypefaceStyleableActivity {
                             }).subscribe()
             );
         }
-
-        for (Loadable loadable : loadables) {
-            loadable.startLoading();
-        }
     }
 
     private void checkPrerequisiteForProximity() {
@@ -440,10 +436,6 @@ public class HomeActivity extends TypefaceStyleableActivity {
 
     private void disposeAllSubscriptions() {
         subscriptions.clear();
-
-        for (Loadable loadable : loadables) {
-            loadable.stopLoading();
-        }
     }
 
     private ProximityPreconditions.Callback proximityPreconditionsCallback() {

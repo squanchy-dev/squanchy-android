@@ -1,5 +1,8 @@
 package net.squanchy.tweets;
 
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.LifecycleObserver;
+import android.arch.lifecycle.OnLifecycleEvent;
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,7 +15,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import net.squanchy.R;
-import net.squanchy.home.Loadable;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.tweets.domain.view.TweetViewModel;
 import net.squanchy.tweets.service.TwitterService;
@@ -24,7 +26,7 @@ import timber.log.Timber;
 
 import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 
-public class TweetsPageView extends CoordinatorLayout implements Loadable {
+public class TweetsPageView extends CoordinatorLayout implements LifecycleObserver {
 
     private final TwitterService twitterService;
     private final Navigator navigator;
@@ -87,16 +89,16 @@ public class TweetsPageView extends CoordinatorLayout implements Loadable {
         });
     }
 
-    @Override
-    public void startLoading() {
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    protected void startLoading() {
         Context context = getContext();
         query = context.getString(R.string.social_query);
         emptyView.setText(context.getString(R.string.no_tweets_for_query, query));
         refreshTimeline();
     }
 
-    @Override
-    public void stopLoading() {
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+    protected void stopLoading() {
         subscription.dispose();
     }
 
