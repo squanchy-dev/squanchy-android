@@ -1,6 +1,9 @@
 package net.squanchy.venue;
 
 import android.annotation.TargetApi;
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.LifecycleObserver;
+import android.arch.lifecycle.OnLifecycleEvent;
 import android.content.Context;
 import android.os.Build;
 import android.support.design.widget.CoordinatorLayout;
@@ -13,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.squanchy.R;
-import net.squanchy.home.Loadable;
 import net.squanchy.imageloader.ImageLoader;
 import net.squanchy.imageloader.ImageLoaderInjector;
 import net.squanchy.navigation.Navigator;
@@ -24,7 +26,7 @@ import io.reactivex.disposables.Disposable;
 
 import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 
-public class VenueInfoPageView extends CoordinatorLayout implements Loadable {
+public class VenueInfoPageView extends CoordinatorLayout implements LifecycleObserver {
 
     private Disposable subscription;
     private final Navigator navigate;
@@ -81,7 +83,7 @@ public class VenueInfoPageView extends CoordinatorLayout implements Loadable {
         });
     }
 
-    @Override
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
     public void startLoading() {
         subscription = service.venue()
                 .observeOn(AndroidSchedulers.mainThread())
@@ -117,7 +119,7 @@ public class VenueInfoPageView extends CoordinatorLayout implements Loadable {
         });
     }
 
-    @Override
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     public void stopLoading() {
         subscription.dispose();
     }

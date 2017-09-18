@@ -1,5 +1,8 @@
 package net.squanchy.favorites;
 
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.LifecycleObserver;
+import android.arch.lifecycle.OnLifecycleEvent;
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +15,6 @@ import net.squanchy.analytics.Analytics;
 import net.squanchy.analytics.ContentType;
 import net.squanchy.favorites.view.FavoritesListView;
 import net.squanchy.home.HomeActivity;
-import net.squanchy.home.Loadable;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.schedule.ScheduleService;
 import net.squanchy.schedule.domain.view.Event;
@@ -26,7 +28,7 @@ import io.reactivex.functions.BiFunction;
 
 import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 
-public class FavoritesPageView extends CoordinatorLayout implements Loadable {
+public class FavoritesPageView extends CoordinatorLayout implements LifecycleObserver {
 
     private View progressBar;
     private Disposable subscription;
@@ -93,8 +95,8 @@ public class FavoritesPageView extends CoordinatorLayout implements Loadable {
         });
     }
 
-    @Override
-    public void startLoading() {
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    protected void startLoading() {
         subscription = Observable.combineLatest(service.schedule(true), service.currentUserIsSignedIn(), toScheduleAndLoggedIn())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(schedule -> updateWith(schedule, this::onEventClicked));
@@ -109,8 +111,8 @@ public class FavoritesPageView extends CoordinatorLayout implements Loadable {
         navigate.toEventDetails(event.getId());
     }
 
-    @Override
-    public void stopLoading() {
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+    protected void stopLoading() {
         subscription.dispose();
     }
 
