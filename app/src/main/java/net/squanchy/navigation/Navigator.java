@@ -3,16 +3,14 @@ package net.squanchy.navigation;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.provider.Settings;
 
 import net.squanchy.BuildConfig;
 import net.squanchy.about.AboutActivity;
 import net.squanchy.about.licenses.LicensesActivity;
-import net.squanchy.contest.ContestActivity;
 import net.squanchy.eventdetails.EventDetailsActivity;
 import net.squanchy.home.HomeActivity;
-import net.squanchy.onboarding.OnboardingPage;
 import net.squanchy.navigation.firststart.FirstStartWithNoNetworkActivity;
+import net.squanchy.onboarding.OnboardingPage;
 import net.squanchy.search.SearchActivity;
 import net.squanchy.settings.SettingsActivity;
 import net.squanchy.signin.SignInActivity;
@@ -59,16 +57,6 @@ public class Navigator {
 
     public void toSearch() {
         start(new Intent(activity, SearchActivity.class));
-    }
-
-    public void toContest() {
-        Intent intent = ContestActivity.createIntent(activity);
-        start(intent, FLAG_ACTIVITY_SINGLE_TOP);
-    }
-
-    public void toContestUnlockingAchievement(String achievementId) {
-        Intent intent = ContestActivity.createIntent(activity, achievementId);
-        start(intent, FLAG_ACTIVITY_SINGLE_TOP);
     }
 
     public void toSettings() {
@@ -188,11 +176,6 @@ public class Navigator {
 
     public void toOnboardingForResult(OnboardingPage page, int requestCode) {
         Intent intent = new Intent(activity, page.activityClass());
-        startForResult(intent, requestCode);
-    }
-
-    public void toLocationSettingsForResult(int requestCode) {
-        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
         startForResult(intent, requestCode);
     }
 

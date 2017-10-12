@@ -62,7 +62,6 @@ android {
 
         resValueProperty 'api_value_twitter_api_key', (buildProperties.secrets['twitterApiKey'] | buildProperties.env['TWITTER_API_KEY'])
         resValueProperty 'api_value_twitter_secret', (buildProperties.secrets['twitterSecret'] | buildProperties.env['TWITTER_SECRET'])
-        resValueProperty 'nearit_api_key', (buildProperties.secrets['nearITApiKey'] | buildProperties.env['NEARIT_API_KEY'])
 
         resValueProperty 'social_query', (buildProperties.application['socialQuery'] | "#AndroidDev")
         resValueProperty 'deeplink_scheme', (buildProperties.application['deeplinkScheme'] | "squanchy")
@@ -145,9 +144,7 @@ dependencies {
 
     implementation libraries.app.jodaTimeAndroid
     implementation libraries.app.kotlin
-    implementation(libraries.app.nearit) {
-        exclude group: 'com.google.android.gms'
-    }
+
     implementation libraries.app.playServicesAuth
     implementation libraries.app.playServicesLocation
     implementation libraries.app.rxJava

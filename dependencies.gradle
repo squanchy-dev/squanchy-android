@@ -35,7 +35,6 @@ ext {
                     glideOkHttp3        : "com.github.bumptech.glide:okhttp3-integration:${glideVersion}",
                     jodaTimeAndroid     : 'net.danlew:android.joda:2.9.9',
                     kotlin              : "org.jetbrains.kotlin:kotlin-stdlib-jre7:${kotlinVersion}",
-                    nearit              : 'it.near.sdk.core:nearitsdk:2.1.9',
                     playServicesAuth    : "com.google.android.gms:play-services-auth:${playServicesVersion}",
                     playServicesLocation: "com.google.android.gms:play-services-location:${playServicesVersion}",
                     retrolambda         : 'net.orfjackal.retrolambda:retrolambda:2.5.0',

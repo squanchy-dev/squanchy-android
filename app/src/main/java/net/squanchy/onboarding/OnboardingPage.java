@@ -2,10 +2,8 @@ package net.squanchy.onboarding;
 
 import android.app.Activity;
 
-import net.squanchy.onboarding.location.LocationOnboardingActivity;
-
 public enum OnboardingPage {
-    LOCATION(LocationOnboardingActivity.class);
+    ;
 
     private final Class<? extends Activity> activityClass;
 
