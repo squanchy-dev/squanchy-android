@@ -13,7 +13,7 @@
     android:layout_height="@dimen/search_photo"
     android:layout_gravity="center_horizontal"
     android:layout_marginBottom="@dimen/search_card_item_photo_margin_bottom"
-    tools:src="@mipmap/ic_launcher" />
+    tools:src="@mipmap/ic_launcher_round" />
 
   <TextView
     android:id="@+id/speaker_name"

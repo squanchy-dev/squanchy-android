@@ -91,7 +91,7 @@ public class NotificationCreator {
                                 NOTIFICATION_LED_ON_MS,
                                 NOTIFICATION_LED_OFF_MS
                         )
-                        .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
+                        .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher_round))
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(bigText))
                         .setPriority(Notification.PRIORITY_MAX)
