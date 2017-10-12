@@ -6,7 +6,6 @@ import net.squanchy.injection.ActivityContextModule;
 import net.squanchy.injection.ApplicationInjector;
 import net.squanchy.navigation.deeplink.DeepLinkModule;
 import net.squanchy.signin.SignInModule;
-import net.squanchy.support.debug.DebugPreferencesModule;
 
 final class RoutingInjector {
 

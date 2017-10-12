@@ -12,7 +12,6 @@ import dagger.Component;
 @ActivityLifecycle
 @Component(modules = {
         NavigationModule.class,
-        CurrentEventModule.class,
         CurrentTimeModule.class
 }, dependencies = ApplicationComponent.class)
 interface HomeComponent {
@@ -20,6 +19,4 @@ interface HomeComponent {
     Analytics analytics();
 
     Navigator navigator();
-
-    CurrentEventService currentEvent();
 }

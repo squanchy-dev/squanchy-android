@@ -15,9 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,15 +33,11 @@ import net.squanchy.support.lang.Optional;
 import net.squanchy.support.widget.InterceptingBottomNavigationView;
 
 import io.reactivex.disposables.CompositeDisposable;
-import timber.log.Timber;
-
-import static net.squanchy.google.GoogleClientId.HOME_ACTIVITY;
 
 @SuppressWarnings({"PMD.ExcessiveImports", "PMD.GodClass"})           // Unfortunately this activity has got a lot to do
 public class HomeActivity extends TypefaceStyleableActivity {
 
     private static final int REQUEST_SIGN_IN_MAY_GOD_HAVE_MERCY_OF_OUR_SOULS = 666;
-    private static final String KEY_PROXIMITY_ID = "proximity_id";
 
     private final Map<BottomNavigationSection, View> pageViews = new HashMap<>(4);
     private final List<Loadable> loadables = new ArrayList<>(4);
@@ -56,7 +49,6 @@ public class HomeActivity extends TypefaceStyleableActivity {
     private ViewGroup pageContainer;
     private Analytics analytics;
     private Navigator navigator;
-    private CurrentEventService currentEventService;
 
     private CompositeDisposable subscriptions;
 
@@ -86,11 +78,6 @@ public class HomeActivity extends TypefaceStyleableActivity {
                 .build();
     }
 
-    public static Intent createProximityIntent(Context context, String proximityId) {
-        return new Intent(context, HomeActivity.class)
-                .putExtra(KEY_PROXIMITY_ID, proximityId);
-    }
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,17 +98,9 @@ public class HomeActivity extends TypefaceStyleableActivity {
         HomeComponent homeComponent = HomeInjector.obtain(this);
 
         analytics = homeComponent.analytics();
-        currentEventService = homeComponent.currentEvent();
 
         navigator = homeComponent.navigator();
         subscriptions = new CompositeDisposable();
-    }
-
-    private GoogleApiClient getGoogleApiClient() {
-        return new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, HOME_ACTIVITY.clientId(), connectionResult -> Timber.e("Google Client connection failed"))
-                .addApi(LocationServices.API)
-                .build();
     }
 
     @Override
@@ -135,22 +114,6 @@ public class HomeActivity extends TypefaceStyleableActivity {
         HomeActivityIntentParser intentParser = new HomeActivityIntentParser(savedState, intent);
         BottomNavigationSection selectedPage = intentParser.getInitialSelectedPage();
         selectInitialPage(selectedPage);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        selectInitialPage(currentSection);
-    }
-
-    private String buildString(Event event) {
-        return String.format(
-                Locale.US,
-                "Now in %1$s: %2$s",
-                event.getPlace().get().getName(),
-                event.getTitle()
-        );
     }
 
     private void collectPageViewsInto(Map<BottomNavigationSection, View> pageViews) {
@@ -273,6 +236,8 @@ public class HomeActivity extends TypefaceStyleableActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        selectInitialPage(currentSection);
 
         for (Loadable loadable : loadables) {
             loadable.startLoading();

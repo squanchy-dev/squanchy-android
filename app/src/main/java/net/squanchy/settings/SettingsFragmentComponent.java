@@ -7,16 +7,13 @@ import net.squanchy.navigation.Navigator;
 import net.squanchy.remoteconfig.RemoteConfig;
 import net.squanchy.signin.SignInModule;
 import net.squanchy.signin.SignInService;
-import net.squanchy.support.debug.DebugPreferences;
-import net.squanchy.support.debug.DebugPreferencesModule;
 
 import dagger.Component;
 
 @ActivityLifecycle
 @Component(modules = {
         SignInModule.class,
-        NavigationModule.class,
-        DebugPreferencesModule.class
+        NavigationModule.class
 },
         dependencies = ApplicationComponent.class)
 public interface SettingsFragmentComponent {
@@ -26,6 +23,4 @@ public interface SettingsFragmentComponent {
     SignInService signInService();
 
     RemoteConfig remoteConfig();
-
-    DebugPreferences debugPreferences();
 }

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationManagerCompat;
 import android.widget.Button;
-import android.widget.Switch;
 
 import java.util.ArrayList;
 import java.util.List;
