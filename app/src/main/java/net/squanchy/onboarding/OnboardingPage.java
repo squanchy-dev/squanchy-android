@@ -2,8 +2,7 @@ package net.squanchy.onboarding;
 
 import android.app.Activity;
 
-public enum OnboardingPage {
-    ;
+public enum OnboardingPage {;
 
     private final Class<? extends Activity> activityClass;
 

@@ -18,7 +18,6 @@ import android.view.Window;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import net.squanchy.R;
@@ -28,13 +27,11 @@ import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.home.deeplink.HomeActivityDeepLinkCreator;
 import net.squanchy.home.deeplink.HomeActivityIntentParser;
 import net.squanchy.navigation.Navigator;
-import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.support.lang.Optional;
 import net.squanchy.support.widget.InterceptingBottomNavigationView;
 
 import io.reactivex.disposables.CompositeDisposable;
 
-@SuppressWarnings({"PMD.ExcessiveImports", "PMD.GodClass"})           // Unfortunately this activity has got a lot to do
 public class HomeActivity extends TypefaceStyleableActivity {
 
     private static final int REQUEST_SIGN_IN_MAY_GOD_HAVE_MERCY_OF_OUR_SOULS = 666;
