@@ -52,7 +52,7 @@ public class CircularRevealDrawable extends ColorDrawable {
         revealDuration = durationMillis;
         pendingTargetColor = newColor;
         startAnimationOnNextDraw = true;
-        setColor(targetColor);
+        setColor(pendingTargetColor);
     }
 
     @Override
