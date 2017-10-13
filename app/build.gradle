@@ -118,7 +118,6 @@ project.afterEvaluate {
 }
 
 dependencies {
-    implementation libraries.app.calligraphy
     implementation libraries.app.crashlytics
     implementation(libraries.app.findbugsAnnotations) {
         exclude group: 'net.jcip'
