@@ -24,13 +24,13 @@ repositories {
 
 buildProperties {
     application {
-        file project.file("$rootDir/team-props/application.properties")
+        file teamPropsFile('application.properties')
     }
     secrets {
-        file project.file("$rootDir/team-props/secrets.properties")
+        file teamPropsFile('secrets.properties')
     }
     releaseSigningConfig {
-        file project.file("$rootDir/team-props/releaseSigningConfig.properties")
+        file teamPropsFile('releaseSigningConfig.properties')
     }
 }
 
