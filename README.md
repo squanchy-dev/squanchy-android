@@ -13,7 +13,6 @@ Starting your own conference app is easy and requires very little effort. See [`
 Please note that this app uses some third party services:
  * Firebase (Realtime DB, Push messages, etc)
  * Fabric: Crashlytics and Twitter
- * NearIt (proximity/location services)
  
 While not all of them are strictly necessary for the app to work (with the exception of Firebase's RTDB), it is currently not possible for the code to work without them.
 We plan on eventually abstracting away the implementations so that they would simply be disabled if there is no API configured, but we haven't done it yet.

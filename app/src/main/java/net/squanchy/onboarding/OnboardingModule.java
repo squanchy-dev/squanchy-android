@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import net.squanchy.injection.ActivityContextModule;
-import net.squanchy.proximity.ProximityFeature;
 
 import dagger.Module;
 import dagger.Provides;
@@ -24,7 +23,7 @@ public class OnboardingModule {
     }
 
     @Provides
-    public Onboarding onboarding(OnboardingPersister persister, ProximityFeature proximityFeature) {
-        return new Onboarding(persister, proximityFeature);
+    public Onboarding onboarding(OnboardingPersister persister) {
+        return new Onboarding(persister);
     }
 }

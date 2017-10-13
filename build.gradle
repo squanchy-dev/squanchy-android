@@ -1,3 +1,8 @@
+def teamPropsFile(propsFile) {
+    def teamPropsDir = file('team-props')
+    return new File(teamPropsDir, propsFile)
+}
+
 apply from: 'dependencies.gradle'
 
 buildscript {
@@ -35,7 +40,7 @@ subprojects {
     }
 
     apply plugin: 'com.github.ben-manes.versions'
-    apply from: "$rootProject.rootDir.path/team-props/static-analysis.gradle"
+    apply from: teamPropsFile('static-analysis.gradle')
 }
 
-apply from: 'team-props/android-code-quality.gradle'
+apply from: teamPropsFile('android-code-quality.gradle')

@@ -2,10 +2,9 @@ package net.squanchy.onboarding;
 
 import android.app.Activity;
 
-import net.squanchy.onboarding.location.LocationOnboardingActivity;
-
+@SuppressWarnings("NoWhitespaceBefore")     // TODO we need to fill in the pages for the onboarding
 public enum OnboardingPage {
-    LOCATION(LocationOnboardingActivity.class);
+    ;
 
     private final Class<? extends Activity> activityClass;
 

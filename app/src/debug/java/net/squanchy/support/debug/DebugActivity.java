@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationManagerCompat;
 import android.widget.Button;
-import android.widget.Switch;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,28 +45,10 @@ public class DebugActivity extends TypefaceStyleableActivity {
         Button buttonService = (Button) findViewById(R.id.button_test_service);
         buttonService.setOnClickListener(view -> testService());
 
-        Button buttonGeofenceNotification = (Button) findViewById(R.id.button_test_geofence_service);
-        buttonGeofenceNotification.setOnClickListener(view -> testGeofenceNotification());
-
-        DebugPreferences debugPreferences = new DebugPreferences(this);
-        Switch switchView = (Switch) findViewById(R.id.debug_contest_testing_switch);
-        setupContestTestingSwitch(switchView, debugPreferences);
-
         Button buttonResetOnboarding = (Button) findViewById(R.id.button_reset_onboarding);
         buttonResetOnboarding.setOnClickListener(view -> resetOnboarding());
 
         notificationCreator = new NotificationCreator(this);
-    }
-
-    private void setupContestTestingSwitch(Switch switchView, DebugPreferences debugPreferences) {
-        switchView.setChecked(debugPreferences.contestTestingEnabled());
-        switchView.setOnCheckedChangeListener((view, checked) -> {
-            if (checked) {
-                debugPreferences.enableContestTesting();
-            } else {
-                debugPreferences.disableContestTesting();
-            }
-        });
     }
 
     private void testSingleNotification() {
@@ -167,19 +148,5 @@ public class DebugActivity extends TypefaceStyleableActivity {
         new OnboardingResetter(this)
                 .resetOnboarding();
         Snackbar.make(findViewById(R.id.debug_root), "It's daaaawnnnn", Snackbar.LENGTH_SHORT).show();
-    }
-
-    private void testGeofenceNotification() {
-        List<Notification> notifications = new ArrayList<>();
-        notifications.add(
-                notificationCreator.createFromProximity(
-                        "ayy lmao",
-                        "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Dam.",
-                        "Small message, swipe to open up"
-                )
-        );
-        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
-        Notifier notifier = new Notifier(notificationManagerCompat);
-        notifier.showNotifications(notifications);
     }
 }

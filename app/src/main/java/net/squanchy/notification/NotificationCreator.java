@@ -4,7 +4,6 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -74,38 +73,6 @@ public class NotificationCreator {
         return richNotification.build();
     }
 
-    public Notification createFromProximity(String proximityId, String bigText, String smallText) {
-        Resources resources = context.getResources();
-
-        NotificationCompat.WearableExtender extender = new NotificationCompat.WearableExtender();
-        extender.setBackground(BitmapFactory.decodeResource(resources, R.drawable.notification_background));
-
-        NotificationCompat.Builder builder =
-                new NotificationCompat.Builder(context)
-                        .setContentIntent(createPendingIntentForProximityNotification(proximityId))
-                        .setContentTitle(getApplicationName(context))
-                        .setContentText(smallText)
-                        .setSmallIcon(R.drawable.ic_place_white_24dp)
-                        .setLights(
-                                ContextCompat.getColor(context, R.color.notification_led_color),
-                                NOTIFICATION_LED_ON_MS,
-                                NOTIFICATION_LED_OFF_MS
-                        )
-                        .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher_round))
-                        .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText(bigText))
-                        .setPriority(Notification.PRIORITY_MAX)
-                        .setAutoCancel(true)
-                        .extend(extender);
-        return builder.build();
-    }
-
-    private String getApplicationName(Context context) {
-        ApplicationInfo applicationInfo = context.getApplicationInfo();
-        int stringId = applicationInfo.labelRes;
-        return stringId == 0 ? applicationInfo.nonLocalizedLabel.toString() : context.getString(stringId);
-    }
-
     private Notification createSummaryNotification(List<Event> events) {
         NotificationCompat.Builder summaryBuilder = createDefaultBuilder(events.size());
         summaryBuilder
@@ -118,14 +85,6 @@ public class NotificationCreator {
         NotificationCompat.InboxStyle richNotification = createInboxStyleRichNotification(summaryBuilder, events);
 
         return richNotification.build();
-    }
-
-    private PendingIntent createPendingIntentForProximityNotification(String proximityId) {
-        TaskStackBuilder taskBuilder = createBaseTaskStackBuilder();
-        Intent homeIntent = HomeActivity.createProximityIntent(context, proximityId);
-        taskBuilder.addNextIntent(homeIntent);
-
-        return taskBuilder.getPendingIntent(0, PendingIntent.FLAG_CANCEL_CURRENT);
     }
 
     private NotificationCompat.Builder createDefaultBuilder(int talksCount) {

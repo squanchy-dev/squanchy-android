@@ -6,7 +6,6 @@ import net.squanchy.navigation.deeplink.DeepLinkModule;
 import net.squanchy.navigation.deeplink.DeepLinkRouter;
 import net.squanchy.onboarding.Onboarding;
 import net.squanchy.onboarding.OnboardingModule;
-import net.squanchy.proximity.ProximityFeatureModule;
 import net.squanchy.signin.SignInModule;
 import net.squanchy.signin.SignInService;
 
@@ -17,8 +16,7 @@ import dagger.Component;
         DeepLinkModule.class,
         SignInModule.class,
         OnboardingModule.class,
-        RoutingModule.class,
-        ProximityFeatureModule.class
+        RoutingModule.class
 }, dependencies = ApplicationComponent.class)
 public interface RoutingComponent {
 
