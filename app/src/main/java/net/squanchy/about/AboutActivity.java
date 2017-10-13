@@ -2,14 +2,14 @@ package net.squanchy.about;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import net.squanchy.R;
-import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.navigation.Navigator;
 
-public class AboutActivity extends TypefaceStyleableActivity {
+public class AboutActivity extends AppCompatActivity {
 
     private static final String SQUANCHY_WEBSITE = "https://squanchy.net";
     private static final String SQUANCHY_GITHUB = "https://github.com/rock3r/squanchy";

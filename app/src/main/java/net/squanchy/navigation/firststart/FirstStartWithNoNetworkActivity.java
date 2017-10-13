@@ -16,6 +16,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.view.animation.FastOutLinearInInterpolator;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Property;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
@@ -25,7 +26,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.squanchy.R;
-import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.support.config.DialogLayoutParameters;
 import net.squanchy.support.lang.Func1;
 
@@ -34,7 +34,7 @@ import io.reactivex.functions.Consumer;
 import timber.log.Timber;
 
 @SuppressWarnings("PMD.ExcessiveImports")           // Might use some refactoring later on to extract some collaborator
-public class FirstStartWithNoNetworkActivity extends TypefaceStyleableActivity {
+public class FirstStartWithNoNetworkActivity extends AppCompatActivity {
 
     private static final String EXTRA_CONTINUATION_INTENT = FirstStartWithNoNetworkActivity.class.getCanonicalName() + ".continuation_intent";
     private static final long DELAY_AFTER_ANIMATIONS_MILLIS = 700;

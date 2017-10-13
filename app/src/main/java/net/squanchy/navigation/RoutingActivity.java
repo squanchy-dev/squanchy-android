@@ -3,10 +3,10 @@ package net.squanchy.navigation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import net.squanchy.R;
-import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.navigation.deeplink.DeepLinkRouter;
 import net.squanchy.onboarding.Onboarding;
 import net.squanchy.signin.SignInService;
@@ -16,7 +16,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import timber.log.Timber;
 
-public class RoutingActivity extends TypefaceStyleableActivity {
+public class RoutingActivity extends AppCompatActivity {
 
     private static final int ONBOARDING_REQUEST_CODE = 2453;
 

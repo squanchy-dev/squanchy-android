@@ -5,6 +5,10 @@ import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.graphics.TypefaceCompat;
+import android.support.v4.graphics.TypefaceCompatUtil;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -116,24 +120,25 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
         // intercept that either. Sad panda.
         tabLayout.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
             Context context = tabLayout.getContext();
-            String fontPath = getFontPathFor(context);
+            int chosenFont = getFontPathFor(context);
 
-            Typeface typeface = TypefaceUtils.load(context.getAssets(), fontPath);
+            Typeface typeface = ResourcesCompat.getFont(context, chosenFont);
             int tabCount = tabLayout.getTabCount();
             for (int i = 0; i < tabCount; i++) {
                 TabLayout.Tab tab = tabLayout.getTabAt(i);
                 if (tab == null || hasSpan(tab.getText())) {
                     continue;
                 }
+
                 tab.setText(CalligraphyUtils.applyTypefaceSpan(tab.getText(), typeface));
             }
         });
     }
 
-    private String getFontPathFor(Context context) {
-        TypedArray a = context.obtainStyledAttributes(R.style.TextAppearance_Squanchy_Tab, new int[]{R.attr.fontPath});
+    private int getFontPathFor(Context context) {
+        TypedArray a = context.obtainStyledAttributes(R.style.TextAppearance_Squanchy_Tab, new int[]{R.attr.fontFamily});
         try {
-            return a.getString(0);
+            return a.getInt(0, -1);
         } finally {
             a.recycle();
         }

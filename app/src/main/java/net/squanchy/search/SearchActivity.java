@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.ResultReceiver;
 import android.speech.RecognizerIntent;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -24,7 +25,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import net.squanchy.R;
-import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.search.view.SearchRecyclerView;
@@ -38,7 +38,7 @@ import io.reactivex.subjects.PublishSubject;
 import timber.log.Timber;
 
 @SuppressWarnings("PMD.ExcessiveImports")           // Might use some refactoring later on to extract some collaborator
-public class SearchActivity extends TypefaceStyleableActivity implements SearchRecyclerView.OnSearchResultClickListener {
+public class SearchActivity extends AppCompatActivity implements SearchRecyclerView.OnSearchResultClickListener {
 
     private static final int SPEECH_REQUEST_CODE = 100;
     private static final int QUERY_DEBOUNCE_TIMEOUT = 250;

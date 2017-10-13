@@ -4,12 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import net.squanchy.R;
-import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.speaker.domain.view.Speaker;
 import net.squanchy.speaker.widget.SpeakerDetailsLayout;
@@ -19,7 +19,7 @@ import net.squanchy.support.lang.Optional;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class SpeakerDetailsActivity extends TypefaceStyleableActivity {
+public class SpeakerDetailsActivity extends AppCompatActivity {
 
     private static final String EXTRA_SPEAKER_ID = SpeakerDetailsActivity.class.getCanonicalName() + ".speaker_id";
 
