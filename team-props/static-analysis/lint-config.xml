@@ -39,13 +39,6 @@
     <ignore regexp="retrofit-(.*?)\.jar" />
   </issue>
 
-  <!-- One of NearIt dependencies is currently ignoring all certificate issues for SSL connections.
-       We can't do anything about it until they change that dependency in their SDK with one that
-       properly validates certificates. -->
-  <issue id="TrustAllX509TrustManager">
-    <ignore regexp="\bcom/loopj/android/http/MySSLSocketFactory.*" />
-  </issue>
-
   <!-- The Google Services JSON plugin generates some API keys even if we don't actually use them -->
   <issue id="UnusedResources">
     <ignore path="*generated/res/google-services/*" />

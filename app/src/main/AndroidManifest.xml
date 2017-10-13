@@ -65,11 +65,6 @@
       android:label="@string/settings_label" />
 
     <activity
-      android:name="net.squanchy.contest.ContestActivity"
-      android:theme="@style/Theme.Squanchy.Contest"
-      android:label="@string/contest_label" />
-
-    <activity
       android:name="net.squanchy.about.AboutActivity"
       android:theme="@style/Theme.Squanchy.About"
       android:label="@string/about_label" />
@@ -78,11 +73,6 @@
       android:name="net.squanchy.about.licenses.LicensesActivity"
       android:theme="@style/Theme.Squanchy.Licenses"
       android:label="@string/licenses_label" />
-
-    <activity
-      android:name="net.squanchy.onboarding.location.LocationOnboardingActivity"
-      android:theme="@style/Theme.Squanchy.Onboarding"
-      android:label="@string/onboarding_location_label" />
 
     <activity
       android:name="net.squanchy.navigation.firststart.FirstStartWithNoNetworkActivity"
@@ -122,19 +112,6 @@
     <service
       android:name="net.squanchy.notification.NotificationsIntentService"
       android:exported="false" />
-
-    <service
-      android:name="net.squanchy.notification.NearNotificationIntentService"
-      android:exported="false" />
-
-    <receiver
-      android:name="net.squanchy.notification.NearNotificationReceiver"
-      android:exported="false">
-      <intent-filter>
-        <action android:name="it.near.sdk.permission.GEO_MESSAGE" />
-        <category android:name="android.intent.category.DEFAULT" />
-      </intent-filter>
-    </receiver>
 
     <meta-data
       android:name="com.google.android.gms.version"

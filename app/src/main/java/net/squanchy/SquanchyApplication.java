@@ -35,7 +35,6 @@ public class SquanchyApplication extends Application {
         initializeFirebase();
         TypefaceManager.init();
 
-        preloadProximityServiceToAllowForWarmingUp();
         preloadRemoteConfig();
     }
 
@@ -97,10 +96,6 @@ public class SquanchyApplication extends Application {
             Timber.e(new IllegalStateException("Initializing Firebase failed"));
         }
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-    }
-
-    private void preloadProximityServiceToAllowForWarmingUp() {
-        applicationComponent().service();
     }
 
     @MainThread

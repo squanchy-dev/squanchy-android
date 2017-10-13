@@ -37,29 +37,11 @@
       android:summaryOff="@string/settings_notifications_about_to_start_summary_off"
       android:order="0"/>
 
-    <SwitchPreference
-      android:key="@string/proximity_opt_in_preference_key"
-      android:defaultValue="false"
-      android:icon="@drawable/ic_location"
-      android:shouldDisableView="true"
-      android:title="@string/settings_location_title"
-      android:summaryOn="@string/settings_location_summary_on"
-      android:summaryOff="@string/settings_location_summary_off"
-      android:order="1" />
-
-    <Preference
-      android:key="@string/contest_standings_preference_key"
-      android:dependency="@string/proximity_opt_in_preference_key"
-      android:shouldDisableView="true"
-      android:icon="@drawable/ic_trophy"
-      android:title="@string/settings_contest_standings_title"
-      android:order="2" />
-
     <Preference
       android:key="@string/about_preference_key"
       android:title="@string/about_title"
       android:icon="@drawable/ic_about"
-      android:order="3" />
+      android:order="1" />
 
     <Preference
       android:key="@string/build_version_preference_key"

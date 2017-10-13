@@ -39,7 +39,6 @@ This file contains a bunch of private configuration details that are not needed 
  * `fabricApiKey` is the API key to use for Fabric (and thus, Crashlytics). To obtain this, enable the app for Fabric from the [Fabric plugin](https://fabric.io/downloads/android-studio), let it change stuff, get the API key it generates, and put it into the properties file. Then revert whatever changes the Fabric wizard might have applied to the code
  * `googleMapsApiKey` is the API key for [Google Maps](https://developers.google.com/maps/documentation/android-api/signup). This is used for the venue map and directions
  * `twitterApiKey` and `twitterSecret` are used by the Twitter SDK. You can obtain them by enabling the Twitter Kit in Fabric; just click the corresponding button in the Fabric plugin UI in Android Studio, grab the keys from wherever it adds them, move them to the properties file, and revert whatever other changes the wizard might have done to the code
- * `nearITApiKey` is the API key to use for the NearIT SDK (used for location-awareness and beacons, will be optional in the future but it is mandatory at the time of writing; you can use some dummy value if you don't want NearIT integration)
 
 ### Google Play Store keys
 

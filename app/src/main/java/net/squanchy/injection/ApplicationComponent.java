@@ -4,14 +4,11 @@ import android.app.Application;
 
 import net.squanchy.analytics.Analytics;
 import net.squanchy.analytics.AnalyticsModule;
-import net.squanchy.proximity.BluetoothModule;
 import net.squanchy.remoteconfig.RemoteConfig;
 import net.squanchy.remoteconfig.RemoteConfigModule;
 import net.squanchy.service.firebase.FirebaseAuthService;
 import net.squanchy.service.firebase.FirebaseDbService;
 import net.squanchy.service.firebase.injection.FirebaseModule;
-import net.squanchy.service.proximity.injection.ProximityModule;
-import net.squanchy.service.proximity.injection.ProximityService;
 import net.squanchy.service.repository.EventRepository;
 import net.squanchy.service.repository.SpeakerRepository;
 import net.squanchy.service.repository.VenueRepository;
@@ -27,11 +24,9 @@ import dagger.Component;
         FirebaseModule.class,
         ChecksumModule.class,
         RepositoryModule.class,
-        ProximityModule.class,
         AnalyticsModule.class,
         RemoteConfigModule.class,
-        CurrentTimeModule.class,
-        BluetoothModule.class})
+        CurrentTimeModule.class})
 public interface ApplicationComponent {
 
     FirebaseDbService firebaseDbService();
@@ -48,8 +43,6 @@ public interface ApplicationComponent {
 
     RemoteConfig remoteConfig();
 
-    ProximityService service();
-
     Application application();
 
     class Factory {
@@ -64,7 +57,6 @@ public interface ApplicationComponent {
                     .repositoryModule(new RepositoryModule())
                     .checksumModule(new ChecksumModule())
                     .applicationContextModule(new ApplicationContextModule(application))
-                    .proximityModule(new ProximityModule())
                     .analyticsModule(new AnalyticsModule(application))
                     .remoteConfigModule(new RemoteConfigModule())
                     .build();
