@@ -175,7 +175,7 @@ public class Navigator {
     }
 
     public void toOnboardingForResult(OnboardingPage page, int requestCode) {
-        Intent intent = new Intent(activity, page.activityClass());
+        Intent intent = new Intent(activity, page.getActivityClass());
         startForResult(intent, requestCode);
     }
 
