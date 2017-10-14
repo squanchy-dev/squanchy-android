@@ -4,7 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import io.reactivex.android.schedulers.AndroidSchedulers
-import kotlinx.android.synthetic.main.activity_onboarding_account.*
+import kotlinx.android.synthetic.main.activity_onboarding_account.onboardingContentRoot
+import kotlinx.android.synthetic.main.activity_onboarding_account.onboardingSignInButton
+import kotlinx.android.synthetic.main.activity_onboarding_account.onboardingSkip
 import net.squanchy.R
 import net.squanchy.fonts.TypefaceStyleableActivity
 import net.squanchy.navigation.Navigator
@@ -60,8 +62,8 @@ class AccountOnboardingActivity : TypefaceStyleableActivity() {
     }
 
     private fun disableUi() {
-        onboarding_content_root.isEnabled = false
-        onboarding_content_root.alpha = DISABLED_UI_ALPHA
+        onboardingContentRoot.isEnabled = false
+        onboardingContentRoot.alpha = DISABLED_UI_ALPHA
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
@@ -84,8 +86,8 @@ class AccountOnboardingActivity : TypefaceStyleableActivity() {
     }
 
     private fun enableUi() {
-        onboarding_content_root.isEnabled = true
-        onboarding_content_root.alpha = ENABLED_UI_ALPHA
+        onboardingContentRoot.isEnabled = true
+        onboardingContentRoot.alpha = ENABLED_UI_ALPHA
     }
 
     companion object {
