@@ -150,6 +150,7 @@ dependencies {
     implementation libraries.app.rxJava
     implementation libraries.app.rxAndroid
     implementation libraries.app.supportAppCompat
+    implementation libraries.app.supportConstraint
     implementation libraries.app.supportDesign
     implementation libraries.app.timber
     implementation libraries.app.twitterCore

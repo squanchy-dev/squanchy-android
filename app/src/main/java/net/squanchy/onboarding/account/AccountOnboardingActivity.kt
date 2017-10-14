@@ -29,8 +29,8 @@ class AccountOnboardingActivity : TypefaceStyleableActivity() {
 
         setContentView(R.layout.activity_onboarding_account)
 
-        skip_button.setOnClickListener { _ -> markPageAsSeenAndFinish() }
-        location_opt_in_button.setOnClickListener { _ -> signInToGoogle() }
+        onboardingSkip.setOnClickListener { _ -> markPageAsSeenAndFinish() }
+        onboardingSignInButton.setOnClickListener { _ -> signInToGoogle() }
 
         setResult(Activity.RESULT_CANCELED)
     }
