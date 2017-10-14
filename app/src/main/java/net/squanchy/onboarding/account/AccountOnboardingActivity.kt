@@ -40,7 +40,7 @@ class AccountOnboardingActivity : TypefaceStyleableActivity() {
 
         disableUi()
         signInService.isSignedInToGoogle
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .timeout(SIGNIN_STATE_CHECK_TIMEOUT_SECONDS, TimeUnit.SECONDS)
                 .subscribe(
                         { signedIn ->
