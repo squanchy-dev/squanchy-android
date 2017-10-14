@@ -21,7 +21,6 @@ class RoutingActivity : TypefaceStyleableActivity() {
     private lateinit var firstStartPersister: FirstStartPersister
 
     private val subscriptions = CompositeDisposable()
-    private val isFirstStart = !firstStartPersister.hasBeenStartedAlready()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +44,7 @@ class RoutingActivity : TypefaceStyleableActivity() {
 
     private fun handleSignInError(throwable: Throwable) {
         Timber.e(throwable, "Error while signing in on routing")
-        if (isFirstStart) {
+        if (!firstStartPersister.hasBeenStartedAlready()) {
             // We likely have no data here and it'd be a horrible UX, so we show a warning instead
             // to let people know it won't work.
             val continuationIntent = createContinueIntentFrom(intent)
