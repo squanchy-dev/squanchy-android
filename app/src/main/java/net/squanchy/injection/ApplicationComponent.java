@@ -26,7 +26,8 @@ import dagger.Component;
         RepositoryModule.class,
         AnalyticsModule.class,
         RemoteConfigModule.class,
-        CurrentTimeModule.class})
+        CurrentTimeModule.class
+})
 public interface ApplicationComponent {
 
     FirebaseDbService firebaseDbService();

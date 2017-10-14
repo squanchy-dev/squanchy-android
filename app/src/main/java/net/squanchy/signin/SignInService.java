@@ -7,6 +7,7 @@ import net.squanchy.service.firebase.FirebaseAuthService;
 import net.squanchy.support.lang.Optional;
 
 import io.reactivex.Completable;
+import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -28,6 +29,14 @@ public class SignInService {
 
                     return authService.signInAnonymously();
                 });
+    }
+
+    public Maybe<Boolean> isSignedInToGoogle() {
+        return currentUser()
+                .first(Optional.absent())
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .map(firebaseUser -> !firebaseUser.isAnonymous());
     }
 
     public Observable<Optional<FirebaseUser>> currentUser() {

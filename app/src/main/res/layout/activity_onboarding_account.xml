@@ -40,7 +40,7 @@
       android:layout_marginStart="@dimen/onboarding_content_margin_horizontal"
       android:layout_marginTop="@dimen/onboarding_title_margin_top"
       android:layout_marginEnd="@dimen/onboarding_content_margin_horizontal"
-      android:text="@string/onboarding_location_title" />
+      android:text="@string/onboarding_account_title" />
 
     <TextView
       style="@style/Onboarding.Blurb"
@@ -49,7 +49,7 @@
       android:layout_marginStart="@dimen/onboarding_content_margin_horizontal"
       android:layout_marginTop="@dimen/onboarding_blurb_margin_top"
       android:layout_marginEnd="@dimen/onboarding_content_margin_horizontal"
-      android:text="@string/onboarding_location_blurb" />
+      android:text="@string/onboarding_account_blurb" />
 
     <Space
       android:layout_width="0dp"
@@ -63,7 +63,7 @@
       android:layout_marginStart="@dimen/onboarding_location_explanation_margin_horizontal"
       android:layout_marginTop="@dimen/onboarding_location_explanation_margin_top"
       android:layout_marginEnd="@dimen/onboarding_location_explanation_margin_horizontal"
-      android:text="@string/onboarding_location_explanation" />
+      android:text="@string/onboarding_account_explanation" />
 
     <Button
       android:id="@+id/location_opt_in_button"
@@ -74,8 +74,8 @@
       android:layout_marginTop="@dimen/onboarding_cta_margin_top"
       android:layout_marginEnd="@dimen/onboarding_content_margin_horizontal"
       android:layout_marginBottom="@dimen/onboarding_cta_margin_bottom"
-      android:text="@string/onboarding_location_cta" />
+      android:text="@string/onboarding_account_cta" />
 
   </LinearLayout>
-  
+
 </ScrollView>
