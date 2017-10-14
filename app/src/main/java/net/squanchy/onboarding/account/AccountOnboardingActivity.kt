@@ -31,8 +31,8 @@ class AccountOnboardingActivity : TypefaceStyleableActivity() {
 
         setContentView(R.layout.activity_onboarding_account)
 
-        onboardingSkip.setOnClickListener { _ -> markPageAsSeenAndFinish() }
-        onboardingSignInButton.setOnClickListener { _ -> signInToGoogle() }
+        onboardingSkip.setOnClickListener { markPageAsSeenAndFinish() }
+        onboardingSignInButton.setOnClickListener { signInToGoogle() }
 
         setResult(Activity.RESULT_CANCELED)
     }
@@ -52,7 +52,7 @@ class AccountOnboardingActivity : TypefaceStyleableActivity() {
                                 enableUi()
                             }
                         },
-                        { _ -> enableUi() }
+                        { enableUi() }
                 )
     }
 
