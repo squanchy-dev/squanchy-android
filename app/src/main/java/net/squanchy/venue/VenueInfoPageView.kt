@@ -11,10 +11,10 @@ import android.util.AttributeSet
 import android.widget.ImageView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.merge_venue_info_layout.view.venue_address
-import kotlinx.android.synthetic.main.merge_venue_info_layout.view.venue_description
-import kotlinx.android.synthetic.main.merge_venue_info_layout.view.venue_map
-import kotlinx.android.synthetic.main.merge_venue_info_layout.view.venue_name
+import kotlinx.android.synthetic.main.merge_venue_info_layout.view.venueAddress
+import kotlinx.android.synthetic.main.merge_venue_info_layout.view.venueDescription
+import kotlinx.android.synthetic.main.merge_venue_info_layout.view.venueMap
+import kotlinx.android.synthetic.main.merge_venue_info_layout.view.venueName
 import net.squanchy.R
 import net.squanchy.home.Loadable
 import net.squanchy.imageloader.ImageLoader
@@ -77,10 +77,10 @@ class VenueInfoPageView : CoordinatorLayout, Loadable {
     }
 
     private fun updateWith(venue: Venue) {
-        venue_name.text = venue.name
-        venue_address.text = venue.address
-        venue_description.text = parseHtml(venue.description)
-        loadMap(venue_map, venue.mapUrl, imageLoader)
+        venueName.text = venue.name
+        venueAddress.text = venue.address
+        venueDescription.text = parseHtml(venue.description)
+        loadMap(venueMap, venue.mapUrl, imageLoader)
         updateMapClickListenerWith(venue)
     }
 
@@ -99,7 +99,7 @@ class VenueInfoPageView : CoordinatorLayout, Loadable {
     }
 
     private fun updateMapClickListenerWith(venue: Venue) {
-        venue_map.setOnClickListener { v -> navigator.toMapsFor(venue) }
+        venueMap.setOnClickListener { v -> navigator.toMapsFor(venue) }
     }
 
     override fun stopLoading() {
