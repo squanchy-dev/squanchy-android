@@ -5,12 +5,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import java.util.concurrent.TimeUnit;
+
 import net.squanchy.R;
 import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.onboarding.Onboarding;
 import net.squanchy.onboarding.OnboardingPage;
 import net.squanchy.signin.SignInService;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class AccountOnboardingActivity extends TypefaceStyleableActivity {
 
@@ -43,13 +47,29 @@ public class AccountOnboardingActivity extends TypefaceStyleableActivity {
         setResult(RESULT_CANCELED);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        disableUi();
+        signInService.isSignedInToGoogle()
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .timeout(3, TimeUnit.SECONDS)
+                .subscribe(
+                        signedIn -> {
+                            if (signedIn) {
+                                markPageAsSeenAndFinish();
+                            } else {
+                                enableUi();
+                            }
+                        },
+                        throwable -> enableUi()
+                );
+    }
+
     private void signInToGoogle() {
         disableUi();
-        if (false /*signInService.isSignedInToGoogle()*/) {         // STOPSHIP
-            markPageAsSeenAndFinish();
-        } else {
-            navigator.toSignInForResult(REQUEST_CODE_SIGNIN);
-        }
+        navigator.toSignInForResult(REQUEST_CODE_SIGNIN);
     }
 
     private void disableUi() {
