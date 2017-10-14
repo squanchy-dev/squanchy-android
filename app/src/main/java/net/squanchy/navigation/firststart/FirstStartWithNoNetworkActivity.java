@@ -65,8 +65,8 @@ public class FirstStartWithNoNetworkActivity extends TypefaceStyleableActivity {
                 .applyTo(getWindow());
 
         findViewById(R.id.first_start_nevermind_button).setOnClickListener(view -> finish());
-        ctaProgressView = (ImageView) findViewById(R.id.cta_progressbar);
-        ctaTextView = (TextView) findViewById(R.id.cta_text);
+        ctaProgressView = findViewById(R.id.cta_progressbar);
+        ctaTextView = findViewById(R.id.cta_text);
 
         continuationIntent = getIntent().getParcelableExtra(EXTRA_CONTINUATION_INTENT);
 

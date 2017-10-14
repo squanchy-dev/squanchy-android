@@ -15,7 +15,7 @@ import net.squanchy.signin.SignInService
         modules = arrayOf(OnboardingModule::class, SignInModule::class, NavigationModule::class),
         dependencies = arrayOf(ApplicationComponent::class)
 )
-interface AccountOnboardingComponent {
+internal interface AccountOnboardingComponent {
 
     fun onboarding(): Onboarding
 
