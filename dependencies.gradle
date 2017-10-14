@@ -61,6 +61,6 @@ ext {
             gradleVersionsPlugin      : 'com.github.ben-manes:gradle-versions-plugin:0.15.0',
             googleServices            : 'com.google.gms:google-services:3.1.0',
             playPublisher             : 'com.github.triplet.gradle:play-publisher:1.1.5',
-            android                   : 'com.android.tools.build:gradle:3.0.0-beta6'
+            android                   : 'com.android.tools.build:gradle:3.0.0-rc1'
     ]
 }
