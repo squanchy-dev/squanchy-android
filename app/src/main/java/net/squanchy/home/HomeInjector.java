@@ -11,9 +11,7 @@ final class HomeInjector {
         // no instances
     }
 
-    public static HomeComponent obtain(
-            AppCompatActivity activity
-    ) {
+    public static HomeComponent obtain(AppCompatActivity activity) {
         return DaggerHomeComponent.builder()
                 .applicationComponent(ApplicationInjector.obtain(activity))
                 .activityContextModule(new ActivityContextModule(activity))

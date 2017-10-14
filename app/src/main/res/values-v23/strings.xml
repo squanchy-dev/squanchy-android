@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
   <string name="favorites_achievement_fast_learner"><![CDATA[Achievement Unlocked: <b>The Fast Learner</b> 🤓]]></string>
 
-  <string name="onboarding_location_blurb">Allow the app your location and visit all our sponsors’ booths to win swag 🎁</string>
-  <string name="onboarding_location_cta">✨ I like swag! ✨</string>
-  <string name="first_start_with_no_network_network_connected">Yay network is back! 🎉</string>
-  <string name="contest_completed">You got all the sponsors!\nVisit the Synesthesia booth to claim your swag 🎁</string>
+  <string name="first_start_with_no_network_network_connected">Yay, network is back! 🎉</string>
 
 </resources>
