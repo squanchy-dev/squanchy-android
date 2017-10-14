@@ -12,6 +12,7 @@ plugins {
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'io.fabric'
 apply plugin: 'com.novoda.build-properties'
@@ -36,7 +37,6 @@ buildProperties {
 
 android {
     compileSdkVersion Integer.parseInt(project.COMPILE_SDK_VERSION)
-    buildToolsVersion project.BUILD_TOOLS_VERSION
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -79,7 +79,8 @@ android {
                 minifyEnabled false
             }
             release {
-                minifyEnabled false
+                minifyEnabled true
+                shrinkResources true
                 proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
                 signingConfig signingConfigs.config
             }
@@ -93,13 +94,13 @@ android {
     }
 
     lintOptions {
-        lintConfig file("$rootDir/team-props/static-analysis/lint-config.xml")
+        lintConfig teamPropsFile('static-analysis/lint-config.xml')
         abortOnError false
     }
 }
 
 play {
-    jsonFile = file("$rootDir/team-props/play-store-keys.json")
+    jsonFile = teamPropsFile('play-store-keys.json')
 }
 
 detekt {
@@ -107,7 +108,7 @@ detekt {
 
     profile('main') {
         input = "$projectDir/src/main/java"
-        config = "$rootDir/team-props/static-analysis/detekt-config.yml"
+        config = teamPropsFile('static-analysis/detekt-config.yml')
         filters = '.*test.*,.*/resources/.*,.*/tmp/.*'
         output = "$projectDir/build/reports/detekt"
     }
@@ -150,6 +151,7 @@ dependencies {
     implementation libraries.app.rxJava
     implementation libraries.app.rxAndroid
     implementation libraries.app.supportAppCompat
+    implementation libraries.app.supportConstraint
     implementation libraries.app.supportDesign
     implementation libraries.app.timber
     implementation libraries.app.twitterCore
