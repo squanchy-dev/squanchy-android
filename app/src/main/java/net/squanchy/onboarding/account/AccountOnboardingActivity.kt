@@ -66,7 +66,7 @@ class AccountOnboardingActivity : TypefaceStyleableActivity() {
         onboardingContentRoot.alpha = DISABLED_UI_ALPHA
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode != REQUEST_CODE_SIGNIN) {
             super.onActivityResult(requestCode, resultCode, data)
             return
