@@ -1,7 +1,6 @@
 package net.squanchy.support.debug
 
 import android.content.Context
-import android.content.SharedPreferences
 
 internal class OnboardingResetter(context: Context) {
 
@@ -10,7 +9,7 @@ internal class OnboardingResetter(context: Context) {
         private const val ONBOARDING_PREFERENCES_NAME = "onboarding"
     }
 
-    private val preferences: SharedPreferences = context.getSharedPreferences(ONBOARDING_PREFERENCES_NAME, Context.MODE_PRIVATE)
+    private val preferences = context.getSharedPreferences(ONBOARDING_PREFERENCES_NAME, Context.MODE_PRIVATE)
 
     fun resetOnboarding() {
         preferences.edit()
