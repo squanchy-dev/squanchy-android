@@ -98,7 +98,7 @@
 
   <string name="onboarding_account_label">Sign in</string>
   <string name="onboarding_account_title">Sign in with Google</string>
-  <string name="onboarding_account_blurb">Get your favourites synced across devices and installs</string>
+  <string name="onboarding_account_blurb">Get&#160;your&#160;favourites&#160;synced&#32;across&#160;devices&#32;in&#160;one&#160;tap&#32;by&#160;signing&#160;in&#32;with&#160;your&#160;Google&#160;account</string>
   <string name="onboarding_account_cta">Sure, let’s!</string>
 
   <string name="routing_sign_in_unexpected_error">Something went very wrong while starting Squanchy, sorry.</string>
