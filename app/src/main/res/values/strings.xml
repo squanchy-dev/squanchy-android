@@ -97,15 +97,14 @@
   <string name="onboarding_skip_button">SKIP</string>
 
   <string name="onboarding_account_label">Sign in</string>
-  <string name="onboarding_account_title">Win swag with our sponsors</string>
-  <string name="onboarding_account_blurb">Allow the app your location and visit all our sponsors’ booths to win swag</string>
-  <string name="onboarding_account_explanation">We’ll need to ask for access to the device location, and to have the Bluetooth turned on</string>
-  <string name="onboarding_account_cta">I like swag!</string>
+  <string name="onboarding_account_title">Sign in with Google</string>
+  <string name="onboarding_account_blurb">Get your favourites synced across devices and installs</string>
+  <string name="onboarding_account_cta">Sure, let’s!</string>
 
   <string name="routing_sign_in_unexpected_error">Something went very wrong while starting Squanchy, sorry.</string>
 
   <string name="first_start_with_no_network_label">Not so fast!</string>
-  <string name="first_start_with_no_network_network_connected">Yay network is back!</string>
+  <string name="first_start_with_no_network_network_connected">Yay, network is back!</string>
   <string name="first_start_with_no_network_title">Not so fast!</string>
   <string name="first_start_with_no_network_blurb">Unfortunately, the first time you open this app you will need to be connected to the internet.</string>
   <string name="first_start_with_no_network_cta">Go ahead, connect to a network. I’ll be waiting.</string>
