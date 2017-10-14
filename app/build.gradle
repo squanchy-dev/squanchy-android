@@ -92,13 +92,13 @@ android {
     }
 
     lintOptions {
-        lintConfig file("$rootDir/team-props/static-analysis/lint-config.xml")
+        lintConfig teamPropsFile('static-analysis/lint-config.xml')
         abortOnError false
     }
 }
 
 play {
-    jsonFile = file("$rootDir/team-props/play-store-keys.json")
+    jsonFile = teamPropsFile('play-store-keys.json')
 }
 
 detekt {
@@ -106,7 +106,7 @@ detekt {
 
     profile('main') {
         input = "$projectDir/src/main/java"
-        config = "$rootDir/team-props/static-analysis/detekt-config.yml"
+        config = teamPropsFile('static-analysis/detekt-config.yml')
         filters = '.*test.*,.*/resources/.*,.*/tmp/.*'
         output = "$projectDir/build/reports/detekt"
     }
