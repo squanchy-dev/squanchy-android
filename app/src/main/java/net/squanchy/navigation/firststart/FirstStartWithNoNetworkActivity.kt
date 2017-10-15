@@ -22,9 +22,9 @@ import android.view.animation.Interpolator
 import android.view.animation.LinearInterpolator
 import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.activity_first_start_with_no_network.cta_progressbar
-import kotlinx.android.synthetic.main.activity_first_start_with_no_network.cta_text
-import kotlinx.android.synthetic.main.activity_first_start_with_no_network.first_start_nevermind_button
+import kotlinx.android.synthetic.main.activity_first_start_with_no_network.firstStartCta
+import kotlinx.android.synthetic.main.activity_first_start_with_no_network.firstStartNevermind
+import kotlinx.android.synthetic.main.activity_first_start_with_no_network.firstStartProgress
 import net.squanchy.R
 import net.squanchy.fonts.TypefaceStyleableActivity
 import net.squanchy.support.config.DialogLayoutParameters
@@ -49,7 +49,7 @@ class FirstStartWithNoNetworkActivity : TypefaceStyleableActivity() {
         DialogLayoutParameters.wrapHeight(this)
                 .applyTo(window)
 
-        first_start_nevermind_button.setOnClickListener { finish() }
+        firstStartNevermind.setOnClickListener { finish() }
 
         continuationIntent = intent.getParcelableExtra(EXTRA_CONTINUATION_INTENT)
 
@@ -66,31 +66,29 @@ class FirstStartWithNoNetworkActivity : TypefaceStyleableActivity() {
                 .build()
         connectivityManager.registerNetworkCallback(networkRequest, networkCallback)
 
-        doMaybeOnAnimatedVector(cta_progressbar.drawable, Consumer { it.start() })
+        doMaybeOnAnimatedVector(firstStartProgress.drawable, Consumer { it.start() })
     }
 
     override fun onStop() {
         super.onStop()
         connectivityManager.unregisterNetworkCallback(networkCallback)
-        doMaybeOnAnimatedVector(cta_progressbar.drawable, Consumer { it.stop() })
+        doMaybeOnAnimatedVector(firstStartProgress.drawable, Consumer { it.stop() })
     }
 
-    private// The Consumer signature has a throws Exception, we have to catch it
-    fun doMaybeOnAnimatedVector(drawable: Drawable, action: Consumer<AnimatedVectorDrawable>) {
+    private fun doMaybeOnAnimatedVector(drawable: Drawable, action: Consumer<AnimatedVectorDrawable>) {
         if (drawable is AnimatedVectorDrawable) {
             try {
                 action.accept(drawable)
             } catch (e: Exception) {
                 Timber.e(e)
             }
-
         }
     }
 
     private fun showNetworkAcquiredAndFinish() {
-        cta_text.setText(R.string.first_start_with_no_network_network_connected)
+        firstStartCta.setText(R.string.first_start_with_no_network_network_connected)
 
-        animate(cta_progressbar, popOut(), Action { this.swapProgressWithSuccessAndContinue() })
+        animate(firstStartProgress, popOut(), Action { this.swapProgressWithSuccessAndContinue() })
                 .start()
     }
 
@@ -104,9 +102,9 @@ class FirstStartWithNoNetworkActivity : TypefaceStyleableActivity() {
     }
 
     private fun swapProgressWithSuccessAndContinue() {
-        cta_progressbar.setImageResource(R.drawable.ic_circle_tick)
+        firstStartProgress.setImageResource(R.drawable.ic_circle_tick)
 
-        animate(cta_progressbar, popBackIn(), Action { this.continueToScheduleAfterDelay() })
+        animate(firstStartProgress, popBackIn(), Action { this.continueToScheduleAfterDelay() })
                 .start()
     }
 
@@ -152,7 +150,7 @@ class FirstStartWithNoNetworkActivity : TypefaceStyleableActivity() {
     }
 
     private fun continueToScheduleAfterDelay() {
-        cta_progressbar.postDelayed({
+        firstStartProgress.postDelayed({
             startActivity(continuationIntent)      // We don't use the navigator here, we basically want to restart the whole flow
             finish()
         }, DELAY_AFTER_ANIMATIONS_MILLIS)
