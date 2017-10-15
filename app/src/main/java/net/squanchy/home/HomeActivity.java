@@ -117,14 +117,14 @@ public class HomeActivity extends TypefaceStyleableActivity {
         pageViews.put(BottomNavigationSection.SCHEDULE, pageContainer.findViewById(R.id.schedule_content_root));
         pageViews.put(BottomNavigationSection.FAVORITES, pageContainer.findViewById(R.id.favorites_content_root));
         pageViews.put(BottomNavigationSection.TWEETS, pageContainer.findViewById(R.id.tweets_content_root));
-        pageViews.put(BottomNavigationSection.VENUE_INFO, pageContainer.findViewById(R.id.venue_content_root));
+        pageViews.put(BottomNavigationSection.VENUE_INFO, pageContainer.findViewById(R.id.venueContentRoot));
     }
 
     private void collectLoadablesInto(List<Loadable> loadables) {
         loadables.add((Loadable) pageContainer.findViewById(R.id.schedule_content_root));
         loadables.add((Loadable) pageContainer.findViewById(R.id.favorites_content_root));
         loadables.add((Loadable) pageContainer.findViewById(R.id.tweets_content_root));
-        loadables.add((Loadable) pageContainer.findViewById(R.id.venue_content_root));
+        loadables.add((Loadable) pageContainer.findViewById(R.id.venueContentRoot));
     }
 
     private void setupBottomNavigation(InterceptingBottomNavigationView bottomNavigationView) {
