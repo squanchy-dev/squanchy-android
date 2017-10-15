@@ -42,6 +42,11 @@
       android:label="@string/onboarding_account_label" />
 
     <activity
+      android:name="net.squanchy.onboarding.loldon.LoldonOnboardingActivity"
+      android:theme="@style/Theme.Squanchy.Onboarding"
+      android:label="@string/onboarding_loldon_label" />
+
+    <activity
       android:name="net.squanchy.home.HomeActivity"
       android:theme="@style/Theme.Squanchy.Home"
       android:launchMode="singleTask" />
