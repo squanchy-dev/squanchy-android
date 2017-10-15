@@ -200,6 +200,10 @@
     <item name="android:text">@string/event_details_body_label_where_text</item>
   </style>
 
+  <style name="EventDetails.Body.Label.Level" parent="EventDetails.Body.Label">
+    <item name="android:text">@string/event_details_body_label_level_text</item>
+  </style>
+
   <style name="EventDetails.Body.Label.About" parent="EventDetails.Body.Label">
     <item name="android:gravity">start|center_vertical</item>
     <item name="android:minHeight">@dimen/event_details_body_row_height</item>

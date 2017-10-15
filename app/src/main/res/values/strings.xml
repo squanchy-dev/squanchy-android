@@ -44,6 +44,7 @@
 
   <string name="event_details_body_label_when_text">When</string>
   <string name="event_details_body_label_where_text">Where</string>
+  <string name="event_details_body_label_level_text">Level</string>
   <string name="event_details_body_label_about_text">About</string>
 
   <string name="menu_speaker_twitter">Twitter profile</string>

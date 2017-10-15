@@ -3,7 +3,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   tools:layout_width="match_parent"
   tools:layout_height="match_parent"
-  tools:parentTag="LinearLayout"
+  tools:parentTag="android.widget.LinearLayout"
   tools:orientation="vertical">
 
   <LinearLayout
@@ -44,6 +44,29 @@
 
     <TextView
       android:id="@+id/where_text"
+      style="@style/EventDetails.Body.Value"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="@dimen/event_details_body_value_margin_end"
+      tools:text="Beyond the wall" />
+
+  </LinearLayout>
+
+  <LinearLayout
+    android:id="@+id/level_container"
+    style="@style/EventDetails.Body.RowContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:visibility="gone"
+    tools:visibility="visible">
+
+    <TextView
+      style="@style/EventDetails.Body.Label.Level"
+      android:layout_width="@dimen/event_details_body_label_width"
+      android:layout_height="wrap_content" />
+
+    <TextView
+      android:id="@+id/level_text"
       style="@style/EventDetails.Body.Value"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
