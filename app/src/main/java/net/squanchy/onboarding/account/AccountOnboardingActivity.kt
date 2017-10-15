@@ -3,19 +3,19 @@ package net.squanchy.onboarding.account
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_onboarding_account.onboardingContentRoot
 import kotlinx.android.synthetic.main.activity_onboarding_account.onboardingSignInButton
 import kotlinx.android.synthetic.main.activity_onboarding_account.onboardingSkip
 import net.squanchy.R
-import net.squanchy.fonts.TypefaceStyleableActivity
 import net.squanchy.navigation.Navigator
 import net.squanchy.onboarding.Onboarding
 import net.squanchy.onboarding.OnboardingPage
 import net.squanchy.signin.SignInService
 import java.util.concurrent.TimeUnit
 
-class AccountOnboardingActivity : TypefaceStyleableActivity() {
+class AccountOnboardingActivity : AppCompatActivity() {
 
     private lateinit var onboarding: Onboarding
     private lateinit var navigator: Navigator
