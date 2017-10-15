@@ -16,9 +16,6 @@ public class RemoteConfig {
     private static final long EXPIRY_IMMEDIATELY = TimeUnit.HOURS.toSeconds(0);
     private static final long EXPIRY_ONE_HOUR = TimeUnit.HOURS.toSeconds(1);
 
-    private static final String KEY_PROXIMITY_ENABLED = "proximity_enabled";
-    private static final String KEY_CONTEST_GOAL = "contest_goal";
-
     private final FirebaseRemoteConfig firebaseRemoteConfig;
     private final boolean debugMode;
 
@@ -27,15 +24,7 @@ public class RemoteConfig {
         this.debugMode = debugMode;
     }
 
-    public Single<Boolean> proximityServicesEnabled() {
-        return getConfigValue(() -> firebaseRemoteConfig.getBoolean(KEY_PROXIMITY_ENABLED))
-                .subscribeOn(Schedulers.io());
-    }
-
-    public Single<Long> contestGoal() {
-        return getConfigValue(() -> firebaseRemoteConfig.getLong(KEY_CONTEST_GOAL))
-                .subscribeOn(Schedulers.io());
-    }
+    // TODO put something here :D
 
     private <T> Single<T> getConfigValue(Func0<T> action) {
         return fetchAndActivate(cacheExpiryInSeconds())

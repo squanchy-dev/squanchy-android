@@ -127,6 +127,4 @@
     <item name="android:backgroundDimEnabled">false</item>
   </style>
 
-  <style name="Theme.Squanchy.Contest" parent="Theme.Squanchy.Dialog" />
-
 </resources>
