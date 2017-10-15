@@ -11,7 +11,10 @@ import net.squanchy.R
 
 import net.squanchy.eventdetails.domain.view.ExperienceLevel
 
-class ExperienceLevelView @JvmOverloads constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int = 0) : AppCompatTextView(context, attrs, defStyleAttr) {
+class ExperienceLevelView : AppCompatTextView {
+
+    @JvmOverloads
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int = 0) : super(context, attrs, defStyleAttr)
 
     override fun onFinishInflate() {
         super.onFinishInflate()
