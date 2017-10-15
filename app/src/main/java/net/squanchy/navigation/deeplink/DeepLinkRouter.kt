@@ -3,10 +3,7 @@ package net.squanchy.navigation.deeplink
 import android.content.Intent
 import java.net.URI
 
-internal class DeepLinkRouter(
-        private val scheme: String,
-        private val navigator: DeepLinkNavigator
-) {
+internal class DeepLinkRouter(private val scheme: String, private val navigator: DeepLinkNavigator) {
 
     init {
         if ("[^\\w]".toRegex().containsMatchIn(scheme)) {

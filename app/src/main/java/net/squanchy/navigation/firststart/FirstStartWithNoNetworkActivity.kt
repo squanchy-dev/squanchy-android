@@ -191,7 +191,7 @@ class FirstStartWithNoNetworkActivity : TypefaceStyleableActivity() {
     companion object {
 
         private val EXTRA_CONTINUATION_INTENT = FirstStartWithNoNetworkActivity::class.java.canonicalName + ".continuation_intent"
-        private val DELAY_AFTER_ANIMATIONS_MILLIS: Long = 700
+        private const val DELAY_AFTER_ANIMATIONS_MILLIS: Long = 700
 
         fun createIntentContinuingTo(context: Context, continuationIntent: Intent) =
                 Intent(context, FirstStartWithNoNetworkActivity::class.java).apply {

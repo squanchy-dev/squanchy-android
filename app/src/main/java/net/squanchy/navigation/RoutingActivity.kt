@@ -102,6 +102,6 @@ class RoutingActivity : TypefaceStyleableActivity() {
 
     companion object {
 
-        private val ONBOARDING_REQUEST_CODE = 2453
+        private const val ONBOARDING_REQUEST_CODE = 2453
     }
 }

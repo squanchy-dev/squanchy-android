@@ -160,6 +160,6 @@ internal class Navigator(private val activity: Activity, private val debugActivi
 
     companion object {
 
-        private val NO_FLAGS = 0
+        private const val NO_FLAGS = 0
     }
 }

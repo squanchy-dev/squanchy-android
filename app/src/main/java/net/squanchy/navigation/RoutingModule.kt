@@ -19,6 +19,6 @@ internal class RoutingModule {
 
     companion object {
 
-        private val FIRST_START_SHARED_PREFERENCES_NAME = "first_start"
+        private const val FIRST_START_SHARED_PREFERENCES_NAME = "first_start"
     }
 }

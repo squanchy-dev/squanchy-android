@@ -14,6 +14,6 @@ internal class FirstStartPersister(private val preferences: SharedPreferences) {
 
     companion object {
 
-        private val KEY_HAS_BEEN_STARTED_ALREADY = "FirstStart.has_been_started_already"
+        private const val KEY_HAS_BEEN_STARTED_ALREADY = "FirstStart.has_been_started_already"
     }
 }
