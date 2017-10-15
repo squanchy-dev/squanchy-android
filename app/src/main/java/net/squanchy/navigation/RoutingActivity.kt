@@ -25,7 +25,7 @@ class RoutingActivity : TypefaceStyleableActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val component = RoutingInjector.obtain(this)
+        val component = routingComponent(this)
         deepLinkRouter = component.deepLinkRouter()
         navigator = component.navigator()
         onboarding = component.onboarding()
