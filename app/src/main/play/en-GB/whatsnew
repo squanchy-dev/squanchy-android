@@ -1,5 +1,4 @@
-Version 0.0.3
+Version 0.1.0
 
- * Improve the talks' experience level display
- * Minor UI improvements
- * Lots of under-the-hood changes
+ * Added a disclaimer that this is not an official app
+ * Some tweaks under the hood
