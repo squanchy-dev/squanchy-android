@@ -20,7 +20,10 @@
   <dimen name="card_padding_bottom">8dp</dimen>
   <dimen name="card_timestamp">14sp</dimen>
   <dimen name="card_timestamp_margin_top">4dp</dimen>
-  <dimen name="card_experience_icon">24dp</dimen>
+  <dimen name="card_experience">12sp</dimen>
+  <dimen name="card_experience_corner_radius">2dp</dimen>
+  <dimen name="card_experience_padding_horizontal">4dp</dimen>
+  <dimen name="card_experience_padding_bottom">1dp</dimen>
   <dimen name="card_title">16sp</dimen>
   <dimen name="card_title_margin_top">4dp</dimen>
   <dimen name="card_speaker">14sp</dimen>
@@ -73,6 +76,9 @@
   <dimen name="event_details_body_label_text">14sp</dimen>
   <dimen name="event_details_body_value_line_spacing_extra">4sp</dimen>
   <dimen name="event_details_body_value_text">14sp</dimen>
+
+  <dimen name="experience_level_dot_size">16dp</dimen>
+  <dimen name="experience_level_dot_margin">8dp</dimen>
 
   <dimen name="speaker_details_speaker_height">56dp</dimen>
   <dimen name="speaker_details_speaker_photo">40dp</dimen>
@@ -141,10 +147,6 @@
   <dimen name="onboarding_blurb_margin_top">8dp</dimen>
   <dimen name="onboarding_blurb_text">16sp</dimen>
   <dimen name="onboarding_blurb_line_spacing_extra">4dp</dimen>
-  <dimen name="onboarding_location_explanation_margin_top">8dp</dimen>
-  <dimen name="onboarding_location_explanation_text">12sp</dimen>
-  <dimen name="onboarding_location_explanation_line_spacing_extra">2dp</dimen>
-  <dimen name="onboarding_location_explanation_margin_horizontal">56dp</dimen>
   <dimen name="onboarding_cta_height">56dp</dimen>
   <dimen name="onboarding_cta_margin_top">8dp</dimen>
   <dimen name="onboarding_cta_margin_bottom">40dp</dimen>
@@ -181,24 +183,6 @@
   <dimen name="first_start_with_no_network_cancel_min_height">56dp</dimen>
   <dimen name="first_start_with_no_network_cancel_padding_horizontal">24dp</dimen>
   <dimen name="first_start_with_no_network_progress_size">48dp</dimen>
-
-  <dimen name="contest_content_padding_horizontal">32dp</dimen>
-  <dimen name="contest_content_padding_vertical">36dp</dimen>
-  <dimen name="contest_title_text">20sp</dimen>
-  <dimen name="contest_title_margin_bottom">16dp</dimen>
-  <dimen name="contest_blurb_text">16sp</dimen>
-  <dimen name="contest_blurb_line_spacing_extra">4dp</dimen>
-  <dimen name="contest_blurb_margin_horizontal">8dp</dimen>
-  <dimen name="contest_blurb_margin_bottom">24dp</dimen>
-  <dimen name="contest_icon_width">150dp</dimen>
-  <dimen name="contest_progress_height">12dp</dimen>
-  <dimen name="contest_progress_margin_horizontal">16dp</dimen>
-  <dimen name="contest_progress_margin_top">40dp</dimen>
-  <dimen name="contest_progress_margin_bottom">8dp</dimen>
-  <dimen name="contest_progress_corners">1dp</dimen>
-  <dimen name="contest_status_margin_horizontal">16dp</dimen>
-  <dimen name="contest_status_text">16sp</dimen>
-  <dimen name="contest_status_line_spacing_extra">2dp</dimen>
 
   <dimen name="match_constraint">0dp</dimen>
 

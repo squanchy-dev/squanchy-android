@@ -7,6 +7,11 @@
   <color name="venue_info_name">#2e676e</color>
   <color name="venue_info_address">#38828a</color>
   <color name="venue_info_label">#38828a</color>
-  <color name="contest_progress_background">#26e55b77</color>
+
+  <color name="experience_level_beginner">#A1D450</color>
+  <color name="experience_level_intermediate">#EEA53A</color>
+  <color name="experience_level_advanced">#EE6227</color>
+
+  <color name="navigation_bar_light">#EEEEEE</color>
 
 </resources>

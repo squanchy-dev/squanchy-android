@@ -23,7 +23,6 @@
     android:text="@string/first_start_with_no_network_blurb" />
 
   <LinearLayout
-    android:id="@+id/first_start_with_no_network_cta"
     style="@style/FirstStartWithNoNetwork.Cta"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -32,7 +31,7 @@
     android:layout_marginBottom="@dimen/first_start_with_no_network_cta_margin_bottom">
 
     <ImageView
-      android:id="@+id/cta_progressbar"
+      android:id="@+id/firstStartProgress"
       android:layout_width="@dimen/first_start_with_no_network_progress_size"
       android:layout_height="@dimen/first_start_with_no_network_progress_size"
       android:layout_marginEnd="@dimen/first_start_with_no_network_progress_margin_end"
@@ -40,7 +39,7 @@
       app:srcCompat="@drawable/indeterminate_progress_animated" />
 
     <TextView
-      android:id="@+id/cta_text"
+      android:id="@+id/firstStartCta"
       style="@style/FirstStartWithNoNetwork.Cta.Text"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -49,7 +48,7 @@
   </LinearLayout>
 
   <Button
-    android:id="@+id/first_start_nevermind_button"
+    android:id="@+id/firstStartNevermind"
     style="@style/FirstStartWithNoNetwork.Cancel"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
