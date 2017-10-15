@@ -61,7 +61,7 @@
   <style name="TextAppearance.Squanchy.Card.Speaker" parent="None">
     <item name="android:textColor">?android:textColorSecondary</item>
     <item name="android:textSize">@dimen/card_speaker</item>
-    <item name="fontFamily">?defaultMediumTypeface</item>
+    <item name="android:fontFamily">@font/default_typeface_medium</item>
   </style>
 
   <style name="Schedule.Card.Timestamp" parent="None">
@@ -209,7 +209,7 @@
   <style name="TextAppearance.Squanchy.EventDetails.Body.Value" parent="None">
     <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">@dimen/event_details_body_value_text</item>
-    <item name="fontFamily">?defaultMediumTypeface</item>
+    <item name="android:fontFamily">@font/default_typeface_medium</item>
   </style>
 
   <style name="EventDetails.Fab" parent="None">
@@ -247,7 +247,7 @@
   <style name="TextAppearance.Squanchy.Tweet.Footer.Text" parent="None">
     <item name="android:textColor">?android:textColorSecondary</item>
     <item name="android:textSize">@dimen/tweet_footer_text</item>
-    <item name="fontFamily">?defaultMediumTypeface</item>
+    <item name="android:fontFamily">@font/default_typeface_medium</item>
   </style>
 
   <style name="SpeakerDetails.Header.Speaker.Photo" parent="None" />
@@ -288,7 +288,7 @@
   <style name="TextAppearance.Squanchy.SpeakerDetails.Bio" parent="None">
     <item name="android:textColor">?android:textColorSecondary</item>
     <item name="android:textSize">@dimen/speaker_details_bio</item>
-    <item name="fontFamily">?defaultMediumTypeface</item>
+    <item name="android:fontFamily">@font/default_typeface_medium</item>
   </style>
 
   <style name="VenueInfo.Label" parent="None">
@@ -321,7 +321,7 @@
   <style name="TextAppearance.Squanchy.VenueInfo.Address" parent="None">
     <item name="android:textColor">@color/venue_info_address</item>
     <item name="android:textSize">@dimen/venue_info_address_text</item>
-    <item name="fontFamily">?defaultMediumTypeface</item>
+    <item name="android:fontFamily">@font/default_typeface_medium</item>
   </style>
 
   <style name="VenueInfo.Description.Text" parent="None">
@@ -333,7 +333,7 @@
   <style name="TextAppearance.Squanchy.VenueInfo.Description" parent="None">
     <item name="android:textColor">?android:textColorSecondary</item>
     <item name="android:textSize">@dimen/venue_info_description_text</item>
-    <item name="fontFamily">?defaultMediumTypeface</item>
+    <item name="android:fontFamily">@font/default_typeface_medium</item>
   </style>
 
   <style name="VenueInfo.Description.Map" parent="None">
@@ -396,7 +396,7 @@
   <style name="TextAppearance.Squanchy.About.AttributionLabel" parent="None">
     <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">@dimen/about_attribution_label_text</item>
-    <item name="fontFamily">?defaultRegularTypeface</item>
+    <item name="android:fontFamily">@font/default_typeface_regular</item>
   </style>
 
   <style name="About.Squanchy" parent="None">
@@ -421,7 +421,7 @@
   <style name="TextAppearance.Squanchy.About.SquanchyWebsite" parent="None">
     <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">@dimen/about_squanchy_website_text</item>
-    <item name="fontFamily">?defaultMediumTypeface</item>
+    <item name="android:fontFamily">@font/default_typeface_medium</item>
   </style>
 
   <style name="About.Opensource" parent="None">
@@ -435,7 +435,7 @@
   <style name="TextAppearance.Squanchy.About.Opensource.Blurb" parent="None">
     <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">@dimen/about_opensource_blurb_text</item>
-    <item name="fontFamily">?defaultRegularTypeface</item>
+    <item name="android:fontFamily">@font/default_typeface_regular</item>
   </style>
 
   <style name="About.Button" parent="Button.Colored">
@@ -508,13 +508,13 @@
   <style name="TextAppearance.Squanchy.Onboarding.Blurb" parent="None">
     <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">@dimen/onboarding_blurb_text</item>
-    <item name="fontFamily">?defaultMediumTypeface</item>
+    <item name="android:fontFamily">@font/default_typeface_medium</item>
   </style>
 
   <style name="TextAppearance.Squanchy.Onboarding.Location.Explanation" parent="None">
     <item name="android:textColor">?android:textColorSecondary</item>
     <item name="android:textSize">@dimen/onboarding_location_explanation_text</item>
-    <item name="fontFamily">?defaultRegularTypeface</item>
+    <item name="android:fontFamily">@font/default_typeface_regular</item>
   </style>
 
   <style name="Onboarding.Cta" parent="Button.Colored" />
@@ -522,7 +522,7 @@
   <style name="TextAppearance.Squanchy.Favorite.Empty.Blurb" parent="None">
     <item name="android:textSize">@dimen/favorites_empty_blurb_text</item>
     <item name="android:textColor">?android:textColorSecondary</item>
-    <item name="fontFamily">?defaultMediumTypeface</item>
+    <item name="android:fontFamily">@font/default_typeface_medium</item>
   </style>
 
   <style name="Favorite.Empty.Cta" parent="Button.Colored">
@@ -548,7 +548,7 @@
   <style name="TextAppearance.Squanchy.SignIn.BottomSheet.Label" parent="None">
     <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">@dimen/sign_in_label_text</item>
-    <item name="fontFamily">?defaultMediumTypeface</item>
+    <item name="android:fontFamily">@font/default_typeface_medium</item>
   </style>
 
   <style name="FirstStartWithNoNetwork.Title" parent="None">
@@ -568,7 +568,7 @@
   <style name="TextAppearance.Squanchy.FirstStartWithNoNetwork.Blurb" parent="None">
     <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">@dimen/first_start_with_no_network_blurb_text</item>
-    <item name="fontFamily">?defaultRegularTypeface</item>
+    <item name="android:fontFamily">@font/default_typeface_regular</item>
   </style>
 
   <style name="FirstStartWithNoNetwork.Cta" parent="None">
@@ -582,7 +582,7 @@
 
   <style name="TextAppearance.Squanchy.FirstStartWithNoNetwork.Cta" parent="TextAppearance.Squanchy.FirstStartWithNoNetwork.Blurb">
     <item name="android:textSize">@dimen/first_start_with_no_network_cta_text</item>
-    <item name="fontFamily">?defaultMediumTypeface</item>
+    <item name="android:fontFamily">@font/default_typeface_medium</item>
   </style>
 
   <style name="FirstStartWithNoNetwork.Cancel" parent="Button.Colored">
@@ -616,7 +616,7 @@
   <style name="TextAppearance.Squanchy.Contest.Blurb" parent="None">
     <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">@dimen/contest_blurb_text</item>
-    <item name="fontFamily">?defaultRegularTypeface</item>
+    <item name="android:fontFamily">@font/default_typeface_regular</item>
   </style>
 
   <style name="Contest.Container" parent="None">
@@ -649,7 +649,7 @@
   <style name="TextAppearance.Squanchy.Contest.Status" parent="None">
     <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">@dimen/contest_status_text</item>
-    <item name="fontFamily">?defaultMediumTypeface</item>
+    <item name="android:fontFamily">@font/default_typeface_medium</item>
   </style>
 
 </resources>

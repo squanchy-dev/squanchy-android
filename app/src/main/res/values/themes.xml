@@ -78,8 +78,8 @@
     <item name="android:windowAnimationStyle">@style/Animation.Design.BottomSheetDialog</item>
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item>
-    <item name="defaultRegularTypeface">@string/default_typeface_regular</item>
-    <item name="defaultMediumTypeface">@string/default_typeface_medium</item>
+    <item name="defaultRegularTypeface">@font/default_typeface_regular</item>
+    <item name="defaultMediumTypeface">@font/default_typeface_medium</item>
     <item name="defaultBoldTypeface">@string/default_typeface_bold</item>
     <item name="defaultLightTypeface">@string/default_typeface_light</item>
     <item name="titleTypeface">@string/title_typeface</item>
