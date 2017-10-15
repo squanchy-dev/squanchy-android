@@ -96,6 +96,11 @@
   <string name="onboarding_account_blurb">Get&#160;your&#160;favourites&#160;synced&#32;across&#160;devices&#32;in&#160;one&#160;tap&#32;by&#160;signing&#160;in&#32;with&#160;your&#160;Google&#160;account</string>
   <string name="onboarding_account_cta">Sure, let’s!</string>
 
+  <string name="onboarding_loldon_label">London Disclaimer</string>
+  <string name="onboarding_loldon_title">First, a disclaimer</string>
+  <string name="onboarding_loldon_blurb">Squanchy&#160;Goes&#160;to&#160;London&#160;2017&#32;is&#160;an&#160;absolutely&#32;unofficial&#160;app&#32;for&#160;your&#32;favourite&#32;Android&#160;conference&#32;in&#160;London.&#32;Don’t&#160;bother&#32;the&#32;conference&#160;organisers,&#32;they&#160;have&#32;nothing&#160;to&#160;do&#32;with&#32;this&#160;app.&#32;Contact&#160;us&#32;at&#32;squanchydev+london17@gmail.com&#32;instead.</string>
+  <string name="onboarding_loldon_cta">Gotcha</string>
+
   <string name="routing_sign_in_unexpected_error">Something went very wrong while starting Squanchy, sorry.</string>
 
   <string name="first_start_with_no_network_label">Not so fast!</string>
