@@ -24,8 +24,7 @@ public class RemoteConfig {
         this.debugMode = debugMode;
     }
 
-    // TODO put something here :D
-
+    @SuppressWarnings("PMD.UnusedPrivateMethod")  // TODO use this :P
     private <T> Single<T> getConfigValue(Func0<T> action) {
         return fetchAndActivate(cacheExpiryInSeconds())
                 .andThen((SingleSource<T>) emitter -> emitter.onSuccess(action.call()));
