@@ -6,6 +6,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.AppCompatTextView
 import android.util.AttributeSet
 import net.squanchy.eventdetails.domain.view.ExperienceLevel
+import java.util.Locale
 
 class ExperienceLevelView : AppCompatTextView {
 
@@ -18,7 +19,7 @@ class ExperienceLevelView : AppCompatTextView {
     }
 
     fun setExperienceLevel(experienceLevel: ExperienceLevel) {
-        text = context.getText(experienceLevel.labelStringResId)
+        text = context.getString(experienceLevel.labelStringResId).toLowerCase(Locale.getDefault())
         backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, experienceLevel.colorResId))
     }
 }
