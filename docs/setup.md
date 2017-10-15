@@ -10,7 +10,6 @@ These are all the properties and API keys you'll need to set up Squanchy correct
  * A query for the social feed, which is used to populate the Twitter feed (e.g., `#AndroidDev`)
  * A signing keystore with the associated password, alias and alias password
  * A base URL to use to compose the address of the RESTful endpoints exposed by the backend
- * A Google Maps API key (you can obtain it [here](https://developers.google.com/maps/documentation/android-api/signup))
  * A Fabric API key (you'll obtain it by adding the app to Fabric through the [Android Studio plugin](https://fabric.io/downloads/android-studio))
  * A Twitter API key and secret, which you can get by adding the Twitter kit to Fabric (you can add it through the [Android Studio plugin](https://fabric.io/downloads/android-studio))
 
@@ -37,7 +36,6 @@ This file will tell Gradle which keystore to use (`storeFile`) and its password 
 This file contains a bunch of private configuration details that are not needed for signing an app, but are needed to make it work.
 
  * `fabricApiKey` is the API key to use for Fabric (and thus, Crashlytics). To obtain this, enable the app for Fabric from the [Fabric plugin](https://fabric.io/downloads/android-studio), let it change stuff, get the API key it generates, and put it into the properties file. Then revert whatever changes the Fabric wizard might have applied to the code
- * `googleMapsApiKey` is the API key for [Google Maps](https://developers.google.com/maps/documentation/android-api/signup). This is used for the venue map and directions
  * `twitterApiKey` and `twitterSecret` are used by the Twitter SDK. You can obtain them by enabling the Twitter Kit in Fabric; just click the corresponding button in the Fabric plugin UI in Android Studio, grab the keys from wherever it adds them, move them to the properties file, and revert whatever other changes the wizard might have done to the code
 
 ### Google Play Store keys
