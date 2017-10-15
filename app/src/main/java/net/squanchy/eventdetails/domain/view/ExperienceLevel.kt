@@ -18,13 +18,15 @@ enum class ExperienceLevel(
 
     companion object {
 
-        fun fromNullableRawLevel(rawLevel: String): Optional<ExperienceLevel> =
-                try {
-                    Optional.fromNullable(rawLevel).map({ fromRawLevel(it) })
-                } catch (e: IllegalArgumentException) {
-                    Timber.d(e)
-                    Optional.absent()
-                }
+        fun tryParsingFrom(rawLevel: String?): Optional<ExperienceLevel> =
+                rawLevel?.let {
+                    try {
+                        Optional.of(fromRawLevel(it))
+                    } catch (e: IllegalArgumentException) {
+                        Timber.d(e)
+                        Optional.absent<ExperienceLevel>()
+                    }
+                } ?: Optional.absent()
 
         private fun fromRawLevel(rawLevel: String) =
                 when (rawLevel.toLowerCase(Locale.US)) {
