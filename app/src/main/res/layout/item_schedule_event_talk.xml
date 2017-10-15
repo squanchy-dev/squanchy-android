@@ -36,12 +36,15 @@
 
     </net.squanchy.schedule.view.ScheduleSpeakerView>
 
-    <net.squanchy.eventdetails.widget.ExperienceLevelIconView
-      android:id="@+id/experience_level_icon"
-      android:layout_width="@dimen/card_experience_icon"
-      android:layout_height="@dimen/card_experience_icon"
+    <net.squanchy.eventdetails.widget.ExperienceLevelView
+      style="@style/Schedule.Card.ExperienceLevel"
+      android:id="@+id/experience_level"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
       android:layout_alignParentEnd="true"
-      android:layout_alignParentTop="true" />
+      android:layout_alignParentTop="true"
+      tools:text="@string/experience_level_beginner"
+      tools:backgroundTint="@color/experience_level_beginner" />
 
     <TextView
       android:id="@+id/title"
