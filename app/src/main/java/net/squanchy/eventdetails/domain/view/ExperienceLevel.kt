@@ -1,20 +1,20 @@
 package net.squanchy.eventdetails.domain.view
 
+import android.support.annotation.ColorRes
 import android.support.annotation.StringRes
 import net.squanchy.R
 import net.squanchy.support.lang.Optional
 import timber.log.Timber
 import java.util.Locale
 
-enum class ExperienceLevel(private val rawLevel: String, @StringRes private val labelStringResId: Int) {
-    BEGINNER("beginner", R.string.experience_level_beginner),
-    INTERMEDIATE("intermediate", R.string.experience_level_intermediate),
-    ADVANCED("advanced", R.string.experience_level_advanced);
-
-    @StringRes
-    fun labelStringResId(): Int {
-        return labelStringResId
-    }
+enum class ExperienceLevel(
+        private val rawLevel: String,
+        @StringRes val labelStringResId: Int,
+        @ColorRes val colorResId: Int
+) {
+    BEGINNER("beginner", R.string.experience_level_beginner, R.color.experience_level_beginner),
+    INTERMEDIATE("intermediate", R.string.experience_level_intermediate, R.color.experience_level_intermediate),
+    ADVANCED("advanced", R.string.experience_level_advanced, R.color.experience_level_advanced);
 
     companion object {
 
