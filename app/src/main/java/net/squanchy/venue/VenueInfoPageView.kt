@@ -25,8 +25,7 @@ import net.squanchy.venue.domain.view.Venue
 
 class VenueInfoPageView : CoordinatorLayout, Loadable {
 
-    constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
-
+    @JvmOverloads
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int = 0) : super(context, attrs, defStyleAttr) {
         if (isInEditMode) {
             return
