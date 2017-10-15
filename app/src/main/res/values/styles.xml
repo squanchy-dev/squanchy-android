@@ -523,12 +523,6 @@
     <item name="fontPath">?defaultMediumTypeface</item>
   </style>
 
-  <style name="TextAppearance.Squanchy.Onboarding.Location.Explanation" parent="None">
-    <item name="android:textColor">?android:textColorSecondary</item>
-    <item name="android:textSize">@dimen/onboarding_location_explanation_text</item>
-    <item name="fontPath">?defaultRegularTypeface</item>
-  </style>
-
   <style name="Onboarding.Cta" parent="Button.Colored" />
 
   <style name="TextAppearance.Squanchy.Favorite.Empty.Blurb" parent="None">

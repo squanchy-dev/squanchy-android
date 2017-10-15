@@ -55,10 +55,6 @@
   <string name="sign_in_title">Sign in</string>
   <string name="settings_and_help_title">Settings and help</string>
   <string name="settings_notifications_title">Notifications</string>
-  <string name="settings_location_title">Geo-location and beacons</string>
-  <string name="settings_location_summary_on">You can participate to the contest.</string>
-  <string name="settings_location_summary_off">You cannot participate to the contest.</string>
-  <string name="settings_contest_standings_title">Contest progress</string>
   <string name="settings_notifications_about_to_start_summary_on">Show notifications for favorite events starting soon</string>
   <string name="settings_notifications_about_to_start_summary_off">Do not show notifications for favorite events starting soon</string>
   <string name="settings_message_signed_out">You have been signed out.</string>
@@ -72,8 +68,6 @@
   <string name="venue_info_label">Information</string>
   <string name="venue_about_label">About the venue</string>
   <string name="venue_map_content_description">Map to the venue</string>
-
-  <string name="missing_prerequisites_for_location">Uh oh! Location features will not work with the current devices settings</string>
 
   <string name="favorites_empty_state_signed_out_blurb">Pick your favorite talks, synced across devices, and get notifications when they’re about to start.</string>
   <string name="favorites_empty_state_signed_out_cta">SIGN IN</string>

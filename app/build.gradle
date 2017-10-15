@@ -95,7 +95,8 @@ android {
 
     lintOptions {
         lintConfig teamPropsFile('static-analysis/lint-config.xml')
-        abortOnError false
+        abortOnError true
+        warningsAsErrors true
     }
 }
 
@@ -147,7 +148,6 @@ dependencies {
     implementation libraries.app.kotlin
 
     implementation libraries.app.playServicesAuth
-    implementation libraries.app.playServicesLocation
     implementation libraries.app.rxJava
     implementation libraries.app.rxAndroid
     implementation libraries.app.supportAppCompat
