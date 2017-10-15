@@ -151,6 +151,9 @@
   <dimen name="onboarding_cta_margin_top">8dp</dimen>
   <dimen name="onboarding_cta_margin_bottom">40dp</dimen>
 
+  <dimen name="onboarding_loldon_logo_margin_top">24dp</dimen>
+  <dimen name="onboarding_loldon_title_margin_top">32dp</dimen>
+
   <dimen name="normally_resting_elevation">0dp</dimen>
   <dimen name="normally_resting_elevation_active">4dp</dimen>
   <dimen name="normally_resting_pressed_z_translation">2dp</dimen>

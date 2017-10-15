@@ -31,10 +31,6 @@ class RoutingActivity : TypefaceStyleableActivity() {
         onboarding = component.onboarding()
         signInService = component.signInService()
         firstStartPersister = component.firstStartPersister()
-    }
-
-    override fun onStart() {
-        super.onStart()
 
         subscriptions.add(
                 signInService.signInAnonymouslyIfNecessary()
@@ -95,8 +91,8 @@ class RoutingActivity : TypefaceStyleableActivity() {
         finish()
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
+        super.onDestroy()
         subscriptions.clear()
     }
 

@@ -39,10 +39,9 @@
     <ignore regexp="retrofit-(.*?)\.jar" />
   </issue>
 
-  <!-- The Google Services JSON plugin generates some API keys even if we don't actually use them -->
-  <issue id="UnusedResources" severity="informational">
-    <ignore path="*generated/res/google-services/*" />
-  </issue>
+  <!-- Everything that is used in Kotlin will not be picked up, and is marked as unused :( -->
+  <issue id="UnusedResources"
+    severity="ignore" />
 
   <!-- Timber is not using UAST for its Lint checks as of 4.5.1 -->
   <issue id="ObsoleteLintCustomCheck">
