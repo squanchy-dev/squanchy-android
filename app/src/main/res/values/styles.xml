@@ -200,6 +200,10 @@
     <item name="android:text">@string/event_details_body_label_where_text</item>
   </style>
 
+  <style name="EventDetails.Body.Label.Level" parent="EventDetails.Body.Label">
+    <item name="android:text">@string/event_details_body_label_level_text</item>
+  </style>
+
   <style name="EventDetails.Body.Label.About" parent="EventDetails.Body.Label">
     <item name="android:gravity">start|center_vertical</item>
     <item name="android:minHeight">@dimen/event_details_body_row_height</item>
@@ -216,6 +220,11 @@
     <item name="android:lineSpacingExtra">@dimen/event_details_body_value_line_spacing_extra</item>
     <item name="android:lineSpacingMultiplier">1</item>
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.EventDetails.Body.Value</item>
+  </style>
+
+  <style name="EventDetails.Body.Value.Level">
+    <item name="android:drawableEnd">@drawable/experience_level_dot</item>
+    <item name="android:drawablePadding">@dimen/experience_level_dot_margin</item>
   </style>
 
   <style name="TextAppearance.Squanchy.EventDetails.Body.Value" parent="None">

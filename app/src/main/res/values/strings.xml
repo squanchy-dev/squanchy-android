@@ -7,9 +7,9 @@
   <string name="event_details">Details</string>
   <string name="missing_prerequisites_action">Fix it</string>
 
-  <string name="experience_level_beginner">beginner</string>
-  <string name="experience_level_intermediate">intermediate</string>
-  <string name="experience_level_advanced">advanced</string>
+  <string name="experience_level_beginner">Beginner</string>
+  <string name="experience_level_intermediate">Intermediate</string>
+  <string name="experience_level_advanced">Advanced</string>
 
   <string name="no_tweets_for_query">No Tweets for %s… yet</string>
 
@@ -44,6 +44,7 @@
 
   <string name="event_details_body_label_when_text">When</string>
   <string name="event_details_body_label_where_text">Where</string>
+  <string name="event_details_body_label_level_text">Level</string>
   <string name="event_details_body_label_about_text">About</string>
 
   <string name="menu_speaker_twitter">Twitter profile</string>
