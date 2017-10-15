@@ -20,15 +20,12 @@ import android.view.View
 import android.view.animation.BounceInterpolator
 import android.view.animation.Interpolator
 import android.view.animation.LinearInterpolator
-import io.reactivex.functions.Action
-import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_first_start_with_no_network.firstStartCta
 import kotlinx.android.synthetic.main.activity_first_start_with_no_network.firstStartNevermind
 import kotlinx.android.synthetic.main.activity_first_start_with_no_network.firstStartProgress
 import net.squanchy.R
 import net.squanchy.fonts.TypefaceStyleableActivity
 import net.squanchy.support.config.DialogLayoutParameters
-import timber.log.Timber
 
 class FirstStartWithNoNetworkActivity : TypefaceStyleableActivity() {
 
@@ -66,29 +63,25 @@ class FirstStartWithNoNetworkActivity : TypefaceStyleableActivity() {
                 .build()
         connectivityManager.registerNetworkCallback(networkRequest, networkCallback)
 
-        doMaybeOnAnimatedVector(firstStartProgress.drawable, Consumer { it.start() })
+        doIfAnimatedVectorDrawable(firstStartProgress.drawable) { it.start() }
     }
 
     override fun onStop() {
         super.onStop()
         connectivityManager.unregisterNetworkCallback(networkCallback)
-        doMaybeOnAnimatedVector(firstStartProgress.drawable, Consumer { it.stop() })
+        doIfAnimatedVectorDrawable(firstStartProgress.drawable) { it.stop() }
     }
 
-    private fun doMaybeOnAnimatedVector(drawable: Drawable, action: Consumer<AnimatedVectorDrawable>) {
+    private fun doIfAnimatedVectorDrawable(drawable: Drawable, action: (AnimatedVectorDrawable) -> Unit) {
         if (drawable is AnimatedVectorDrawable) {
-            try {
-                action.accept(drawable)
-            } catch (e: Exception) {
-                Timber.e(e)
-            }
+            action.invoke(drawable)
         }
     }
 
     private fun showNetworkAcquiredAndFinish() {
         firstStartCta.setText(R.string.first_start_with_no_network_network_connected)
 
-        animate(firstStartProgress, popOut(), Action { this.swapProgressWithSuccessAndContinue() })
+        animate(firstStartProgress, popOut()) { this.swapProgressWithSuccessAndContinue() }
                 .start()
     }
 
@@ -104,7 +97,7 @@ class FirstStartWithNoNetworkActivity : TypefaceStyleableActivity() {
     private fun swapProgressWithSuccessAndContinue() {
         firstStartProgress.setImageResource(R.drawable.ic_circle_tick)
 
-        animate(firstStartProgress, popBackIn(), Action { this.continueToScheduleAfterDelay() })
+        animate(firstStartProgress, popBackIn()) { this.continueToScheduleAfterDelay() }
                 .start()
     }
 
@@ -117,6 +110,7 @@ class FirstStartWithNoNetworkActivity : TypefaceStyleableActivity() {
         }
     }
 
+    @Suppress("SpreadOperator")   // We cannot avoid using the spread operator here, we use varargs APIs
     private fun createFadeAnimationFor(view: View, vararg values: Float): Animator {
         val property = Property.of(View::class.java, Float::class.java, "alpha")
         val animator = ObjectAnimator.ofFloat(view, property, *values)
@@ -124,6 +118,7 @@ class FirstStartWithNoNetworkActivity : TypefaceStyleableActivity() {
         return animator
     }
 
+    @Suppress("SpreadOperator")   // We cannot avoid using the spread operator here, we use varargs APIs
     private fun createScaleAnimationFor(view: View, interpolator: Interpolator, vararg values: Float): Animator {
         val scaleX = Property.of(View::class.java, Float::class.java, "scaleX")
         val scaleY = Property.of(View::class.java, Float::class.java, "scaleY")
@@ -136,15 +131,10 @@ class FirstStartWithNoNetworkActivity : TypefaceStyleableActivity() {
         return animator
     }
 
-    private fun animate(view: View, animationProducer: (View) -> Animator, endAction: Action): Animator {
+    private fun animate(view: View, animationProducer: (View) -> Animator, endAction: () -> Unit): Animator {
         val animator = animationProducer.invoke(view)
         animator.addListener(object : AnimationEndListener {
-            override fun onAnimationEnd(animation: Animator) =
-                    try {
-                        endAction.run()
-                    } catch (e: Exception) {
-                        Timber.e(e)
-                    }
+            override fun onAnimationEnd(animation: Animator) = endAction.invoke()
         })
         return animator
     }
