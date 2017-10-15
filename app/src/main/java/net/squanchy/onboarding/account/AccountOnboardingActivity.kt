@@ -13,6 +13,7 @@ import net.squanchy.navigation.Navigator
 import net.squanchy.onboarding.Onboarding
 import net.squanchy.onboarding.OnboardingPage
 import net.squanchy.signin.SignInService
+import net.squanchy.support.view.enableLightNavigationBar
 import java.util.concurrent.TimeUnit
 
 class AccountOnboardingActivity : TypefaceStyleableActivity() {
@@ -30,6 +31,7 @@ class AccountOnboardingActivity : TypefaceStyleableActivity() {
         signInService = component.signInService()
 
         setContentView(R.layout.activity_onboarding_account)
+        enableLightNavigationBar(this)
 
         onboardingSkip.setOnClickListener { markPageAsSeenAndFinish() }
         onboardingSignInButton.setOnClickListener { signInToGoogle() }

@@ -12,4 +12,6 @@
   <color name="experience_level_intermediate">#EEA53A</color>
   <color name="experience_level_advanced">#EE6227</color>
 
+  <color name="navigation_bar_light">#EEEEEE</color>
+
 </resources>
