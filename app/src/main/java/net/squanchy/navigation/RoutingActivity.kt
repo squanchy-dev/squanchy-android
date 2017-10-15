@@ -62,7 +62,7 @@ class RoutingActivity : TypefaceStyleableActivity() {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
             ONBOARDING_REQUEST_CODE -> handleOnboardingResult(resultCode)
             else -> super.onActivityResult(requestCode, resultCode, data)
