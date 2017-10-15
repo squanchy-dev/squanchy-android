@@ -1,3 +1,5 @@
-Version 0.0.2
+Version 0.0.3
 
-New onboarding, and a bunch of under the hood improvements.
+ * Improve the talks' experience level display
+ * Minor UI improvements
+ * Lots of under-the-hood changes
