@@ -72,7 +72,7 @@ class VenueInfoPageView : CoordinatorLayout, Loadable {
     override fun startLoading() {
         subscription = service.venue()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ this.updateWith(it) })
+                .subscribe { this.updateWith(it) }
     }
 
     private fun updateWith(venue: Venue) {
@@ -98,7 +98,7 @@ class VenueInfoPageView : CoordinatorLayout, Loadable {
     }
 
     private fun updateMapClickListenerWith(venue: Venue) {
-        venueMap.setOnClickListener { v -> navigator.toMapsFor(venue) }
+        venueMap.setOnClickListener { navigator.toMapsFor(venue) }
     }
 
     override fun stopLoading() {
