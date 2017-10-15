@@ -9,7 +9,7 @@ internal class DeepLinkNavigator(private val navigator: Navigator) {
         val pathSegments = extractSegments(path)
 
         var dayId = Optional.absent<String>()
-        if (!pathSegments.isEmpty()) {
+        if (pathSegments.isNotEmpty()) {
             dayId = Optional.of(pathSegments.first())
         }
 
