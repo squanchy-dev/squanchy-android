@@ -37,6 +37,8 @@ import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.PublishSubject;
 import timber.log.Timber;
 
+import static net.squanchy.support.view.SystemUiKt.enableLightNavigationBar;
+
 @SuppressWarnings("PMD.ExcessiveImports")           // Might use some refactoring later on to extract some collaborator
 public class SearchActivity extends TypefaceStyleableActivity implements SearchRecyclerView.OnSearchResultClickListener {
 
@@ -63,6 +65,7 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        enableLightNavigationBar(this);
 
         searchField = findViewById(R.id.search_field);
         emptyView = findViewById(R.id.empty_view);
