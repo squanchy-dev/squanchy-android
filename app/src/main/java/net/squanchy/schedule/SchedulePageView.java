@@ -6,9 +6,6 @@ import android.graphics.Typeface;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.res.ResourcesCompat;
-import android.support.v4.graphics.TypefaceCompat;
-import android.support.v4.graphics.TypefaceCompatUtil;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -24,13 +21,11 @@ import net.squanchy.navigation.Navigator;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Schedule;
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter;
+import net.squanchy.typeface.TypefaceController;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
-import uk.co.chrisjenx.calligraphy.CalligraphyTypefaceSpan;
-import uk.co.chrisjenx.calligraphy.CalligraphyUtils;
-import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
 import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 
@@ -42,6 +37,7 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
     private final ScheduleService service;
     private final Navigator navigate;
     private final Analytics analytics;
+    private final TypefaceController typefaceController;
 
     public SchedulePageView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -55,6 +51,7 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
         service = component.service();
         navigate = component.navigator();
         analytics = component.analytics();
+        typefaceController = component.typefaceController();
 
         viewPagerAdapter = new ScheduleViewPagerAdapter(activity);
     }
@@ -130,7 +127,7 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
                     continue;
                 }
 
-                tab.setText(CalligraphyUtils.applyTypefaceSpan(tab.getText(), typeface));
+                tab.setText(typefaceController.applyTypeface(tab.getText(), typeface));
             }
         });
     }
@@ -148,9 +145,7 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
         if (!(text instanceof Spanned)) {
             return false;
         }
-        Spanned spannable = (Spanned) text;
-        CalligraphyTypefaceSpan[] spans = spannable.getSpans(0, text.length(), CalligraphyTypefaceSpan.class);
-        return spans.length > 0;
+        return typefaceController.hasSpan((Spanned) text);
     }
 
     public void updateWith(Schedule schedule, ScheduleViewPagerAdapter.OnEventClickedListener listener) {
