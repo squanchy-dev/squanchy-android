@@ -37,6 +37,11 @@
     </activity>
 
     <activity
+      android:name="net.squanchy.onboarding.account.AccountOnboardingActivity"
+      android:theme="@style/Theme.Squanchy.Onboarding"
+      android:label="@string/onboarding_account_label" />
+
+    <activity
       android:name="net.squanchy.home.HomeActivity"
       android:theme="@style/Theme.Squanchy.Home"
       android:launchMode="singleTask" />

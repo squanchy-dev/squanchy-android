@@ -10,8 +10,8 @@ import net.squanchy.R;
 import net.squanchy.navigation.deeplink.DeepLinkRouter;
 import net.squanchy.onboarding.Onboarding;
 import net.squanchy.signin.SignInService;
-import net.squanchy.support.lang.Optional;
 
+import io.reactivex.Maybe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import timber.log.Timber;
@@ -96,9 +96,7 @@ public class RoutingActivity extends AppCompatActivity {
 
     private void onboardOrProceedToRouting() {
         subscriptions.add(
-                onboarding.nextPageToShow()
-                        .map(Optional::of)
-                        .defaultIfEmpty(Optional.absent())
+                Maybe.just(onboarding.nextPageToShow())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(page -> {
                             if (page.isPresent()) {

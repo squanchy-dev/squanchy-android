@@ -200,4 +200,6 @@
   <dimen name="contest_status_text">16sp</dimen>
   <dimen name="contest_status_line_spacing_extra">2dp</dimen>
 
+  <dimen name="match_constraint">0dp</dimen>
+
 </resources>

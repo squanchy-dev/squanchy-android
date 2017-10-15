@@ -511,13 +511,6 @@
     <item name="fontFamily">?defaultMediumTypeface</item>
   </style>
 
-  <style name="Onboarding.Location.Explanation" parent="None">
-    <item name="android:gravity">center</item>
-    <item name="android:lineSpacingExtra">@dimen/onboarding_location_explanation_line_spacing_extra</item>
-    <item name="android:lineSpacingMultiplier">1</item>
-    <item name="android:textAppearance">@style/TextAppearance.Squanchy.Onboarding.Location.Explanation</item>
-  </style>
-
   <style name="TextAppearance.Squanchy.Onboarding.Location.Explanation" parent="None">
     <item name="android:textColor">?android:textColorSecondary</item>
     <item name="android:textSize">@dimen/onboarding_location_explanation_text</item>

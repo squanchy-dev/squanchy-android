@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationManagerCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 
 import java.util.ArrayList;
@@ -14,6 +13,7 @@ import java.util.Random;
 
 import net.squanchy.R;
 import net.squanchy.eventdetails.domain.view.ExperienceLevel;
+import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.notification.NotificationCreator;
 import net.squanchy.notification.NotificationsIntentService;
 import net.squanchy.notification.Notifier;
@@ -26,8 +26,8 @@ import net.squanchy.support.lang.Optional;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
 
-@SuppressWarnings("MagicNumber")
-public class DebugActivity extends AppCompatActivity {
+@SuppressWarnings("MagicNumber")    // It's because there's a bunch of test data
+public class DebugActivity extends TypefaceStyleableActivity {
 
     private NotificationCreator notificationCreator;
 
@@ -36,16 +36,16 @@ public class DebugActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debug);
 
-        Button buttonSingleNotification = (Button) findViewById(R.id.button_test_single_notification);
+        Button buttonSingleNotification = findViewById(R.id.button_test_single_notification);
         buttonSingleNotification.setOnClickListener(view -> testSingleNotification());
 
-        Button buttonMultipleNotifications = (Button) findViewById(R.id.button_test_multiple_notifications);
+        Button buttonMultipleNotifications = findViewById(R.id.button_test_multiple_notifications);
         buttonMultipleNotifications.setOnClickListener(view -> testMultipleNotifications());
 
-        Button buttonService = (Button) findViewById(R.id.button_test_service);
+        Button buttonService = findViewById(R.id.button_test_service);
         buttonService.setOnClickListener(view -> testService());
 
-        Button buttonResetOnboarding = (Button) findViewById(R.id.button_reset_onboarding);
+        Button buttonResetOnboarding = findViewById(R.id.button_reset_onboarding);
         buttonResetOnboarding.setOnClickListener(view -> resetOnboarding());
 
         notificationCreator = new NotificationCreator(this);
@@ -126,8 +126,7 @@ public class DebugActivity extends AppCompatActivity {
 
     private String generateColor() {
         Random r = new Random();
-        final char[] hex = {'0', '1', '2', '3', '4', '5', '6', '7',
-                '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+        final char[] hex = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
         char[] s = new char[7];
         int n = r.nextInt(0x1000000);
 
@@ -145,8 +144,7 @@ public class DebugActivity extends AppCompatActivity {
     }
 
     private void resetOnboarding() {
-        new OnboardingResetter(this)
-                .resetOnboarding();
+        new OnboardingResetter(this).resetOnboarding();
         Snackbar.make(findViewById(R.id.debug_root), "It's daaaawnnnn", Snackbar.LENGTH_SHORT).show();
     }
 }
