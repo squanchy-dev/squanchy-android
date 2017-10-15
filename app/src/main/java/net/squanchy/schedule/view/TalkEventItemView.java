@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 import net.squanchy.R;
-import net.squanchy.eventdetails.widget.ExperienceLevelIconView;
+import net.squanchy.eventdetails.widget.ExperienceLevelView;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.support.lang.Optional;
 import net.squanchy.support.widget.SpeakerView;
@@ -17,7 +17,7 @@ public class TalkEventItemView extends EventItemView {
 
     private TextView titleView;
     private TextView timestampView;
-    private ExperienceLevelIconView experienceLevelIconView;
+    private ExperienceLevelView experienceLevelView;
     private SpeakerView speakerView;
 
     public TalkEventItemView(Context context, AttributeSet attrs) {
@@ -34,7 +34,7 @@ public class TalkEventItemView extends EventItemView {
 
         timestampView = (TextView) findViewById(R.id.timestamp);
         titleView = (TextView) findViewById(R.id.title);
-        experienceLevelIconView = (ExperienceLevelIconView) findViewById(R.id.experience_level_icon);
+        experienceLevelView = (ExperienceLevelView) findViewById(R.id.experience_level);
         speakerView = (SpeakerView) findViewById(R.id.speaker_container);
     }
 
@@ -46,10 +46,10 @@ public class TalkEventItemView extends EventItemView {
         titleView.setText(event.getTitle());
 
         if (event.getExperienceLevel().isPresent()) {
-            experienceLevelIconView.setExperienceLevel(event.getExperienceLevel().get());
-            experienceLevelIconView.setVisibility(VISIBLE);
+            experienceLevelView.setExperienceLevel(event.getExperienceLevel().get());
+            experienceLevelView.setVisibility(VISIBLE);
         } else {
-            experienceLevelIconView.setVisibility(INVISIBLE);
+            experienceLevelView.setVisibility(INVISIBLE);
         }
 
         speakerView.setVisibility(event.getSpeakers().isEmpty() ? GONE : VISIBLE);

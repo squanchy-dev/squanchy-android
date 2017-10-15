@@ -24,7 +24,7 @@ class AccountOnboardingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val component = AccountOnboardingInjector.obtain(this)
+        val component = accountOnboardingComponent(this)
         onboarding = component.onboarding()
         navigator = component.navigator()
         signInService = component.signInService()

@@ -32,7 +32,7 @@ class VenueInfoPageView : CoordinatorLayout, Loadable {
         }
 
         val activity = unwrapToActivityContext(getContext())
-        val component = VenueInfoInjector.obtain(activity)
+        val component = venueInfoComponent(activity)
 
         navigator = component.navigator()
         service = component.service()
