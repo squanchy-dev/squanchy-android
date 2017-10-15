@@ -64,11 +64,11 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        searchField = (EditText) findViewById(R.id.search_field);
+        searchField = findViewById(R.id.search_field);
         emptyView = findViewById(R.id.empty_view);
-        emptyViewMessage = (TextView) findViewById(R.id.empty_view_message);
+        emptyViewMessage = findViewById(R.id.empty_view_message);
 
-        searchRecyclerView = (SearchRecyclerView) findViewById(R.id.speakers_view);
+        searchRecyclerView = findViewById(R.id.speakers_view);
         setupToolbar();
 
         SearchComponent component = SearchInjector.obtain(this);
@@ -78,7 +78,7 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
 
     @SuppressWarnings("ConstantConditions") // We set up the ActionBar ourselves, so it's not null
     private void setupToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.search_toolbar);
+        Toolbar toolbar = findViewById(R.id.search_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -185,6 +185,7 @@ public class SearchActivity extends TypefaceStyleableActivity implements SearchR
             return true;
         } else if (item.getItemId() == android.R.id.home) {
             finish();
+            overridePendingTransition(0, android.R.anim.fade_out);
             return true;
         }
         return super.onOptionsItemSelected(item);
