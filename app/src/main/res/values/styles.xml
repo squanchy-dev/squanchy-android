@@ -222,6 +222,11 @@
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.EventDetails.Body.Value</item>
   </style>
 
+  <style name="EventDetails.Body.Value.Level">
+    <item name="android:drawableEnd">@drawable/experience_level_dot</item>
+    <item name="android:drawablePadding">@dimen/experience_level_dot_margin</item>
+  </style>
+
   <style name="TextAppearance.Squanchy.EventDetails.Body.Value" parent="None">
     <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">@dimen/event_details_body_value_text</item>

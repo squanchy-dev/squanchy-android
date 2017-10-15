@@ -3,6 +3,7 @@ package net.squanchy.eventdetails.widget;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
@@ -111,9 +112,20 @@ public class EventDetailsLayout extends LinearLayout {
     private void updateLevel(Optional<ExperienceLevel> level) {
         if (level.isPresent()) {
             levelContainer.setVisibility(VISIBLE);
-            levelTextView.setText(level.get().labelStringResId());
+
+            ExperienceLevel experienceLevel = level.get();
+            levelTextView.setText(experienceLevel.getLabelStringResId());
+            tintCompoundDrawableEnd(experienceLevel);
         } else {
             levelContainer.setVisibility(GONE);
+        }
+    }
+
+    private void tintCompoundDrawableEnd(ExperienceLevel experienceLevel) {
+        Drawable[] compoundDrawables = levelTextView.getCompoundDrawablesRelative();
+        Drawable endCompoundDrawable = compoundDrawables[2];
+        if (endCompoundDrawable != null) {
+            endCompoundDrawable.setTint(getResources().getColor(experienceLevel.getColorResId()));
         }
     }
 

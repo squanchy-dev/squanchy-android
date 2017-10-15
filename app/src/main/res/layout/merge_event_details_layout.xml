@@ -67,8 +67,8 @@
 
     <TextView
       android:id="@+id/level_text"
-      style="@style/EventDetails.Body.Value"
-      android:layout_width="match_parent"
+      style="@style/EventDetails.Body.Value.Level"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginEnd="@dimen/event_details_body_value_margin_end"
       tools:text="Beyond the wall" />

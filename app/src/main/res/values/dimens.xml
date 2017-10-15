@@ -77,6 +77,9 @@
   <dimen name="event_details_body_value_line_spacing_extra">4sp</dimen>
   <dimen name="event_details_body_value_text">14sp</dimen>
 
+  <dimen name="experience_level_dot_size">16dp</dimen>
+  <dimen name="experience_level_dot_margin">8dp</dimen>
+
   <dimen name="speaker_details_speaker_height">56dp</dimen>
   <dimen name="speaker_details_speaker_photo">40dp</dimen>
   <dimen name="speaker_details_speaker_photo_margin_end">8dp</dimen>
