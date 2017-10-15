@@ -9,7 +9,7 @@
 
   <style name="TextAppearance.Squanchy.MostlyWhite.Toolbar" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
     <item name="android:textColor">@color/primary</item>
-    <item name="fontFamily">?titleTypeface</item>
+    <item name="android:fontFamily">?titleTypeface</item>
   </style>
 
   <style name="Button.Colored" parent="Widget.AppCompat.Button.Colored">
@@ -23,7 +23,7 @@
   <style name="TextAppearance.Squanchy.Button.Colored" parent="None">
     <item name="android:textColor">@color/white</item>
     <item name="android:textSize">@dimen/color_button_text</item>
-    <item name="fontFamily">?titleTypeface</item>
+    <item name="android:fontFamily">?titleTypeface</item>
   </style>
 
   <style name="Button.Colored.NormallyResting" parent="Button.Colored">
@@ -41,7 +41,7 @@
   </style>
 
   <style name="TextAppearance.Squanchy.Toolbar" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
-    <item name="fontFamily">?titleTypeface</item>
+    <item name="android:fontFamily">?titleTypeface</item>
   </style>
 
   <style name="Squanchy.Tabs.Schedule" parent="None">
@@ -55,7 +55,7 @@
     <item name="android:textSize">@dimen/tab_text</item>
     <item name="android:textColor">@color/text_inverse_inactive</item>
     <item name="textAllCaps">false</item>
-    <item name="fontFamily">?titleTypeface</item>
+    <item name="android:fontFamily">?titleTypeface</item>
   </style>
 
   <style name="TextAppearance.Squanchy.Card.Speaker" parent="None">
@@ -72,7 +72,7 @@
   <style name="TextAppearance.Squanchy.Card.Timestamp" parent="None">
     <item name="android:textColor">?colorPrimary</item>
     <item name="android:textSize">@dimen/card_timestamp</item>
-    <item name="fontFamily">?defaultBoldTypeface</item>
+    <item name="android:fontFamily">?defaultBoldTypeface</item>
   </style>
 
   <style name="Schedule.Card.Title" parent="None">
@@ -82,7 +82,7 @@
   <style name="TextAppearance.Squanchy.Card.Title" parent="None">
     <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">@dimen/card_title</item>
-    <item name="fontFamily">?titleTypeface</item>
+    <item name="android:fontFamily">?titleTypeface</item>
   </style>
 
   <style name="Schedule.Card.Speaker.Photo" parent="None" />
@@ -113,7 +113,7 @@
 
   <style name="Search.SectionHeader" parent="TextAppearance.AppCompat.Body1">
     <item name="android:textColor">?android:colorPrimary</item>
-    <item name="fontFamily">?titleTypeface</item>
+    <item name="android:fontFamily">?titleTypeface</item>
   </style>
 
   <style name="Search.Caption" parent="TextAppearance.AppCompat.Caption">
@@ -138,7 +138,7 @@
     <item name="android:text">@string/start_typing_to_search</item>
     <item name="android:textColor">?android:textColorSecondary</item>
     <item name="android:textSize">@dimen/search_empty_state_text</item>
-    <item name="fontFamily">?defaultLightTypeface</item>
+    <item name="android:fontFamily">?defaultLightTypeface</item>
   </style>
 
   <style name="EventDetails.Header.Speaker.Names" parent="None">
@@ -151,7 +151,7 @@
   <style name="TextAppearance.Squanchy.EventDetails.Header.Speaker" parent="None">
     <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">@dimen/event_details_speaker</item>
-    <item name="fontFamily">?titleTypeface</item>
+    <item name="android:fontFamily">?titleTypeface</item>
   </style>
 
   <style name="EventDetails.Header.Title" parent="None">
@@ -161,7 +161,7 @@
   <style name="TextAppearance.Squanchy.EventDetails.Header.Title" parent="None">
     <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">@dimen/event_details_title</item>
-    <item name="fontFamily">?titleTypeface</item>
+    <item name="android:fontFamily">?titleTypeface</item>
   </style>
 
   <style name="EventDetails.Header.Speaker.Photo" parent="None">
@@ -197,7 +197,7 @@
   <style name="TextAppearance.Squanchy.EventDetails.Body.Label" parent="None">
     <item name="android:textColor">?colorPrimary</item>
     <item name="android:textSize">@dimen/event_details_body_label_text</item>
-    <item name="fontFamily">?titleTypeface</item>
+    <item name="android:fontFamily">?titleTypeface</item>
   </style>
 
   <style name="EventDetails.Body.Value" parent="None">
@@ -228,7 +228,7 @@
   <style name="TextAppearance.Squanchy.Tweet.Title" parent="None">
     <item name="android:textColor">@color/tweet_text</item>
     <item name="android:textSize">@dimen/tweet_text</item>
-    <item name="fontFamily">?titleTypeface</item>
+    <item name="android:fontFamily">?titleTypeface</item>
   </style>
 
   <style name="Tweet.Photo" parent="None">
@@ -259,7 +259,7 @@
   <style name="TextAppearance.Squanchy.SpeakerDetails.Header.Speaker.Name" parent="None">
     <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">@dimen/speaker_details_speaker_name</item>
-    <item name="fontFamily">?titleTypeface</item>
+    <item name="android:fontFamily">?titleTypeface</item>
   </style>
 
   <style name="SpeakerDetails.Header.Speaker.Company" parent="None">
@@ -269,7 +269,7 @@
   <style name="TextAppearance.Squanchy.SpeakerDetails.Header.Speaker.Company" parent="None">
     <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">@dimen/speaker_details_speaker_company</item>
-    <item name="fontFamily">?defaultBoldTypeface</item>
+    <item name="android:fontFamily">?defaultBoldTypeface</item>
   </style>
 
   <style name="SpeakerDetails.Bio" parent="None">
@@ -288,7 +288,7 @@
   <style name="TextAppearance.Squanchy.SpeakerDetails.Bio" parent="None">
     <item name="android:textColor">?android:textColorSecondary</item>
     <item name="android:textSize">@dimen/speaker_details_bio</item>
-    <item name="android:fontFamily">@font/default_typeface_medium</item>
+    <item name="android:fontFamily">?defaultMediumTypeface</item>
   </style>
 
   <style name="VenueInfo.Label" parent="None">
@@ -299,7 +299,7 @@
   <style name="TextAppearance.Squanchy.VenueInfo.Label" parent="None">
     <item name="android:textColor">@color/venue_info_label</item>
     <item name="android:textSize">@dimen/venue_info_label_text</item>
-    <item name="fontFamily">?titleTypeface</item>
+    <item name="android:fontFamily">?titleTypeface</item>
   </style>
 
   <style name="VenueInfo.Name" parent="None">
@@ -309,7 +309,7 @@
   <style name="TextAppearance.Squanchy.VenueInfo.Name" parent="None">
     <item name="android:textColor">@color/venue_info_name</item>
     <item name="android:textSize">@dimen/venue_info_name_text</item>
-    <item name="fontFamily">?titleTypeface</item>
+    <item name="android:fontFamily">?titleTypeface</item>
   </style>
 
   <style name="VenueInfo.Address" parent="None">
@@ -321,7 +321,7 @@
   <style name="TextAppearance.Squanchy.VenueInfo.Address" parent="None">
     <item name="android:textColor">@color/venue_info_address</item>
     <item name="android:textSize">@dimen/venue_info_address_text</item>
-    <item name="android:fontFamily">@font/default_typeface_medium</item>
+    <item name="android:fontFamily">?defaultMediumTypeface</item>
   </style>
 
   <style name="VenueInfo.Description.Text" parent="None">
@@ -333,7 +333,7 @@
   <style name="TextAppearance.Squanchy.VenueInfo.Description" parent="None">
     <item name="android:textColor">?android:textColorSecondary</item>
     <item name="android:textSize">@dimen/venue_info_description_text</item>
-    <item name="android:fontFamily">@font/default_typeface_medium</item>
+    <item name="android:fontFamily">?defaultMediumTypeface</item>
   </style>
 
   <style name="VenueInfo.Description.Map" parent="None">
@@ -360,7 +360,7 @@
   <style name="TextAppearance.Squanchy.Settings.Header.User.Name" parent="None">
     <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">@dimen/settings_header_user_name_text</item>
-    <item name="fontFamily">?titleTypeface</item>
+    <item name="android:fontFamily">?titleTypeface</item>
   </style>
 
   <style name="ThemeOverlay.About.AppBar" parent="ThemeOverlay.AppCompat.Light">
@@ -386,7 +386,7 @@
   <style name="TextAppearance.Squanchy.About.AppName" parent="None">
     <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">@dimen/about_app_name_text</item>
-    <item name="fontFamily">?titleTypeface</item>
+    <item name="android:fontFamily">?titleTypeface</item>
   </style>
 
   <style name="About.AttributionLabel" parent="None">
@@ -396,7 +396,7 @@
   <style name="TextAppearance.Squanchy.About.AttributionLabel" parent="None">
     <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">@dimen/about_attribution_label_text</item>
-    <item name="android:fontFamily">@font/default_typeface_regular</item>
+    <item name="android:fontFamily">?defaultRegularTypeface</item>
   </style>
 
   <style name="About.Squanchy" parent="None">
@@ -406,7 +406,7 @@
   <style name="TextAppearance.Squanchy.About.Squanchy" parent="None">
     <item name="android:textColor">@color/primary_dark_text_blue</item>
     <item name="android:textSize">@dimen/about_squanchy_text</item>
-    <item name="fontFamily">?titleTypeface</item>
+    <item name="android:fontFamily">?titleTypeface</item>
   </style>
 
   <style name="About.BorderlessButton" parent="Widget.AppCompat.Button.Borderless">
@@ -421,7 +421,7 @@
   <style name="TextAppearance.Squanchy.About.SquanchyWebsite" parent="None">
     <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">@dimen/about_squanchy_website_text</item>
-    <item name="android:fontFamily">@font/default_typeface_medium</item>
+    <item name="android:fontFamily">?defaultMediumTypeface</item>
   </style>
 
   <style name="About.Opensource" parent="None">
@@ -435,7 +435,7 @@
   <style name="TextAppearance.Squanchy.About.Opensource.Blurb" parent="None">
     <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">@dimen/about_opensource_blurb_text</item>
-    <item name="android:fontFamily">@font/default_typeface_regular</item>
+    <item name="android:fontFamily">?defaultRegularTypeface</item>
   </style>
 
   <style name="About.Button" parent="Button.Colored">
@@ -459,7 +459,7 @@
   <style name="TextAppearance.Squanchy.Licenses.Notice" parent="None">
     <item name="android:textSize">@dimen/licenses_notice_text</item>
     <item name="android:textColor">?android:textColorSecondary</item>
-    <item name="fontFamily">@string/license_notice_typeface</item>
+    <item name="android:fontFamily">@font/license_notice_typeface</item>
   </style>
 
   <style name="Favorite.Empty.Blurb" parent="None">
@@ -479,7 +479,7 @@
 
   <style name="TextAppearance.Squanchy.Onboarding.Skip" parent="TextAppearance.Squanchy.Button.Colored">
     <item name="android:textSize">@dimen/onboarding_skip_button_text</item>
-    <item name="fontFamily">?defaultBoldTypeface</item>
+    <item name="android:fontFamily">?defaultBoldTypeface</item>
   </style>
 
   <style name="Onboarding.Logo" parent="None">
@@ -495,7 +495,7 @@
   <style name="TextAppearance.Squanchy.Onboarding.Title" parent="None">
     <item name="android:textColor">?colorPrimary</item>
     <item name="android:textSize">@dimen/onboarding_title_text</item>
-    <item name="fontFamily">?titleTypeface</item>
+    <item name="android:fontFamily">?titleTypeface</item>
   </style>
 
   <style name="Onboarding.Blurb" parent="None">
@@ -508,13 +508,13 @@
   <style name="TextAppearance.Squanchy.Onboarding.Blurb" parent="None">
     <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">@dimen/onboarding_blurb_text</item>
-    <item name="android:fontFamily">@font/default_typeface_medium</item>
+    <item name="android:fontFamily">?defaultMediumTypeface</item>
   </style>
 
   <style name="TextAppearance.Squanchy.Onboarding.Location.Explanation" parent="None">
     <item name="android:textColor">?android:textColorSecondary</item>
     <item name="android:textSize">@dimen/onboarding_location_explanation_text</item>
-    <item name="android:fontFamily">@font/default_typeface_regular</item>
+    <item name="android:fontFamily">?defaultRegularTypeface</item>
   </style>
 
   <style name="Onboarding.Cta" parent="Button.Colored" />
@@ -522,7 +522,7 @@
   <style name="TextAppearance.Squanchy.Favorite.Empty.Blurb" parent="None">
     <item name="android:textSize">@dimen/favorites_empty_blurb_text</item>
     <item name="android:textColor">?android:textColorSecondary</item>
-    <item name="android:fontFamily">@font/default_typeface_medium</item>
+    <item name="android:fontFamily">?defaultMediumTypeface</item>
   </style>
 
   <style name="Favorite.Empty.Cta" parent="Button.Colored">
@@ -548,7 +548,7 @@
   <style name="TextAppearance.Squanchy.SignIn.BottomSheet.Label" parent="None">
     <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">@dimen/sign_in_label_text</item>
-    <item name="android:fontFamily">@font/default_typeface_medium</item>
+    <item name="android:fontFamily">?defaultMediumTypeface</item>
   </style>
 
   <style name="FirstStartWithNoNetwork.Title" parent="None">
@@ -558,7 +558,7 @@
   <style name="TextAppearance.Squanchy.FirstStartWithNoNetwork.Title" parent="None">
     <item name="android:textColor">?colorPrimary</item>
     <item name="android:textSize">@dimen/first_start_with_no_network_title_text</item>
-    <item name="fontFamily">?titleTypeface</item>
+    <item name="android:fontFamily">?titleTypeface</item>
   </style>
 
   <style name="FirstStartWithNoNetwork.Blurb" parent="None">
@@ -603,7 +603,7 @@
   <style name="TextAppearance.Squanchy.Contest.Title" parent="None">
     <item name="android:textColor">?colorPrimary</item>
     <item name="android:textSize">@dimen/contest_title_text</item>
-    <item name="fontFamily">?titleTypeface</item>
+    <item name="android:fontFamily">?titleTypeface</item>
   </style>
 
   <style name="Contest.Blurb" parent="None">

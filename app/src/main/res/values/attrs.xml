@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <attr name="titleTypeface" format="string" />
-  <attr name="defaultRegularTypeface" format="string" />
-  <attr name="defaultMediumTypeface" format="string" />
-  <attr name="defaultBoldTypeface" format="string" />
-  <attr name="defaultLightTypeface" format="string" />
+  <attr name="titleTypeface" format="reference" />
+  <attr name="defaultRegularTypeface" format="reference" />
+  <attr name="defaultMediumTypeface" format="reference" />
+  <attr name="defaultBoldTypeface" format="reference" />
+  <attr name="defaultLightTypeface" format="reference" />
 
   <attr name="tweetLinkTextColor" format="color" />
 
