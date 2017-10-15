@@ -21,11 +21,14 @@
 
     <activity
       android:name="net.squanchy.navigation.RoutingActivity"
-      android:theme="@style/Theme.Squanchy.Transparent">
+      android:theme="@style/Theme.Squanchy.Transparent"
+      android:launchMode="singleInstance">
+
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
+
       <intent-filter>
         <action android:name="android.intent.action.VIEW" />
 
@@ -39,11 +42,13 @@
     <activity
       android:name="net.squanchy.onboarding.account.AccountOnboardingActivity"
       android:theme="@style/Theme.Squanchy.Onboarding"
+      android:launchMode="singleInstance"
       android:label="@string/onboarding_account_label" />
 
     <activity
       android:name="net.squanchy.onboarding.loldon.LoldonOnboardingActivity"
       android:theme="@style/Theme.Squanchy.Onboarding"
+      android:launchMode="singleInstance"
       android:label="@string/onboarding_loldon_label" />
 
     <activity
