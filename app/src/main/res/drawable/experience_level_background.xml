@@ -4,6 +4,7 @@
   <corners android:radius="@dimen/card_experience_corner_radius" />
   <solid android:color="@color/white" />
   <padding android:left="@dimen/card_experience_padding_horizontal"
-    android:right="@dimen/card_experience_padding_horizontal" />
+    android:right="@dimen/card_experience_padding_horizontal"
+    android:bottom="@dimen/card_experience_padding_bottom"/>
 
 </shape>

@@ -21,8 +21,9 @@
   <dimen name="card_timestamp">14sp</dimen>
   <dimen name="card_timestamp_margin_top">4dp</dimen>
   <dimen name="card_experience">12sp</dimen>
-  <dimen name="card_experience_padding_horizontal">4dp</dimen>
   <dimen name="card_experience_corner_radius">2dp</dimen>
+  <dimen name="card_experience_padding_horizontal">4dp</dimen>
+  <dimen name="card_experience_padding_bottom">1dp</dimen>
   <dimen name="card_title">16sp</dimen>
   <dimen name="card_title_margin_top">4dp</dimen>
   <dimen name="card_speaker">14sp</dimen>
