@@ -7,7 +7,5 @@ import net.squanchy.venue.domain.view.Venue
 
 internal class VenueInfoService(private val venueRepository: VenueRepository, private val authService: FirebaseAuthService) {
 
-    fun venue(): Observable<Venue> {
-        return authService.ifUserSignedInThenObservableFrom { venueRepository.venue() }
-    }
+    fun venue(): Observable<Venue> = authService.ifUserSignedInThenObservableFrom { venueRepository.venue() }
 }

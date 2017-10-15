@@ -9,7 +9,6 @@ import net.squanchy.service.repository.VenueRepository
 internal class VenueInfoModule {
 
     @Provides
-    fun favoritesService(venueRepository: VenueRepository, authService: FirebaseAuthService): VenueInfoService {
-        return VenueInfoService(venueRepository, authService)
-    }
+    fun favoritesService(venueRepository: VenueRepository, authService: FirebaseAuthService) =
+            VenueInfoService(venueRepository, authService)
 }
