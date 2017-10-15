@@ -63,16 +63,16 @@ class FirstStartWithNoNetworkActivity : TypefaceStyleableActivity() {
                 .build()
         connectivityManager.registerNetworkCallback(networkRequest, networkCallback)
 
-        doIfAnimatedVectorDrawable(firstStartProgress.drawable) { it.start() }
+        doIfAnimatedVectorDrawable(firstStartProgress.drawable) { start() }
     }
 
     override fun onStop() {
         super.onStop()
         connectivityManager.unregisterNetworkCallback(networkCallback)
-        doIfAnimatedVectorDrawable(firstStartProgress.drawable) { it.stop() }
+        doIfAnimatedVectorDrawable(firstStartProgress.drawable) { stop() }
     }
 
-    private fun doIfAnimatedVectorDrawable(drawable: Drawable, action: (AnimatedVectorDrawable) -> Unit) {
+    private fun doIfAnimatedVectorDrawable(drawable: Drawable, action: AnimatedVectorDrawable.() -> Unit) {
         if (drawable is AnimatedVectorDrawable) {
             action.invoke(drawable)
         }
