@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <attr name="titleTypeface" format="reference" />
-  <attr name="defaultRegularTypeface" format="reference" />
-  <attr name="defaultMediumTypeface" format="reference" />
-  <attr name="defaultBoldTypeface" format="reference" />
-  <attr name="defaultLightTypeface" format="reference" />
-
   <attr name="tweetLinkTextColor" format="color" />
 
   <declare-styleable name="CardLayout">

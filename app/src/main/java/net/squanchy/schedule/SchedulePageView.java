@@ -31,7 +31,7 @@ import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 
 public class SchedulePageView extends CoordinatorLayout implements Loadable {
 
-    private ScheduleViewPagerAdapter viewPagerAdapter;
+    private final ScheduleViewPagerAdapter viewPagerAdapter;
     private View progressBar;
     private Disposable subscription;
     private final ScheduleService service;
@@ -62,8 +62,8 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
 
         progressBar = findViewById(R.id.progressbar);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabstrip);
+        ViewPager viewPager = findViewById(R.id.viewpager);
+        TabLayout tabLayout = findViewById(R.id.tabstrip);
         tabLayout.setupWithViewPager(viewPager);
         hackToApplyTypefaces(tabLayout);
 
@@ -75,7 +75,7 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
     }
 
     private void setupToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.activity_schedule);
         toolbar.inflateMenu(R.menu.homepage);
         toolbar.setOnMenuItemClickListener(item -> {

@@ -15,11 +15,6 @@
     <item name="android:textColorHint">@color/hint_text</item>
     <item name="android:windowBackground">@color/window_background</item>
     <item name="android:actionBarStyle">@style/Squanchy.Toolbar</item>
-    <item name="defaultRegularTypeface">@font/default_typeface_regular</item>
-    <item name="defaultMediumTypeface">@font/default_typeface_medium</item>
-    <item name="defaultBoldTypeface">@font/default_typeface_bold</item>
-    <item name="defaultLightTypeface">@font/default_typeface_light</item>
-    <item name="titleTypeface">@font/title_typeface</item>
     <item name="cardViewDefaultStyle">@style/Widget.Squanchy.CardLayout</item>
   </style>
 
@@ -78,11 +73,6 @@
     <item name="android:windowAnimationStyle">@style/Animation.Design.BottomSheetDialog</item>
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item>
-    <item name="defaultRegularTypeface">@font/default_typeface_regular</item>
-    <item name="defaultMediumTypeface">@font/default_typeface_medium</item>
-    <item name="defaultBoldTypeface">@font/default_typeface_bold</item>
-    <item name="defaultLightTypeface">@font/default_typeface_light</item>
-    <item name="titleTypeface">@font/title_typeface</item>
   </style>
 
   <style name="Theme.Squanchy.Home" parent="Theme.Squanchy.PrimaryStatusBar" />
