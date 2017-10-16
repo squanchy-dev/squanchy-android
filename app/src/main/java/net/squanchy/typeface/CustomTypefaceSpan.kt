@@ -15,5 +15,4 @@ class CustomTypefaceSpan(typeface: Typeface) : MetricAffectingSpan() {
     override fun updateDrawState(tp: TextPaint) {
         delegate.applyStyleTo(tp)
     }
-
 }
