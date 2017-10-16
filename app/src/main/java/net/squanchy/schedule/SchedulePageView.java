@@ -30,9 +30,9 @@ import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 
 public class SchedulePageView extends CoordinatorLayout implements Loadable {
 
-    private final ScheduleViewPagerAdapter viewPagerAdapter;
     private View progressBar;
     private Disposable subscription;
+    private final ScheduleViewPagerAdapter viewPagerAdapter;
     private final ScheduleService service;
     private final Navigator navigate;
     private final Analytics analytics;
