@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +19,7 @@ import net.squanchy.navigation.Navigator;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Schedule;
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter;
+import net.squanchy.support.font.FontCompat;
 import net.squanchy.support.font.TypefaceCompat;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -114,10 +114,7 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
         // intercept that either. Sad panda.
         tabLayout.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
             Context context = tabLayout.getContext();
-
-            // So far, there is no way to reliably access a font from attributes;
-            // there is a bug filed with Google so that they make an API available
-            Typeface typeface = ResourcesCompat.getFont(context, R.font.title_typeface);
+            Typeface typeface = FontCompat.getFontFor(context, R.style.TextAppearance_Squanchy_Tab);
 
             int tabCount = tabLayout.getTabCount();
             for (int i = 0; i < tabCount; i++) {
