@@ -3,6 +3,7 @@ package net.squanchy.eventdetails.widget;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
@@ -18,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.squanchy.R;
+import net.squanchy.eventdetails.domain.view.ExperienceLevel;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Place;
 import net.squanchy.support.lang.Optional;
@@ -33,6 +35,8 @@ public class EventDetailsLayout extends LinearLayout {
     private TextView whenTextView;
     private View whereContainer;
     private TextView whereTextView;
+    private View levelContainer;
+    private TextView levelTextView;
     private View descriptionHeader;
     private TextView descriptionTextView;
 
@@ -56,17 +60,20 @@ public class EventDetailsLayout extends LinearLayout {
 
         View.inflate(getContext(), R.layout.merge_event_details_layout, this);
 
-        whenTextView = (TextView) findViewById(R.id.when_text);
+        whenTextView = findViewById(R.id.when_text);
         whenContainer = findViewById(R.id.when_container);
-        whereTextView = (TextView) findViewById(R.id.where_text);
+        whereTextView = findViewById(R.id.where_text);
         whereContainer = findViewById(R.id.where_container);
+        levelTextView = findViewById(R.id.level_text);
+        levelContainer = findViewById(R.id.level_container);
         descriptionHeader = findViewById(R.id.description_header);
-        descriptionTextView = (TextView) findViewById(R.id.description_text);
+        descriptionTextView = findViewById(R.id.description_text);
     }
 
     public void updateWith(Event event) {
         updateWhen(event);
         updateWhere(event);
+        updateLevel(event.getExperienceLevel());
         updateDescription(event.getDescription());
     }
 
@@ -100,6 +107,26 @@ public class EventDetailsLayout extends LinearLayout {
                     );
         }
         return builder;
+    }
+
+    private void updateLevel(Optional<ExperienceLevel> level) {
+        if (level.isPresent()) {
+            levelContainer.setVisibility(VISIBLE);
+
+            ExperienceLevel experienceLevel = level.get();
+            levelTextView.setText(experienceLevel.getLabelStringResId());
+            tintCompoundDrawableEnd(experienceLevel);
+        } else {
+            levelContainer.setVisibility(GONE);
+        }
+    }
+
+    private void tintCompoundDrawableEnd(ExperienceLevel experienceLevel) {
+        Drawable[] compoundDrawables = levelTextView.getCompoundDrawablesRelative();
+        Drawable endCompoundDrawable = compoundDrawables[2];
+        if (endCompoundDrawable != null) {
+            endCompoundDrawable.setTint(getResources().getColor(experienceLevel.getColorResId()));
+        }
     }
 
     private ForegroundColorSpan createColorSpan(View targetView, @AttrRes int attributeResId) {

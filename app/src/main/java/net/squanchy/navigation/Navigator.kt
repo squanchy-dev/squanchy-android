@@ -38,6 +38,7 @@ internal class Navigator(private val activity: Activity, private val debugActivi
 
     fun toSearch() {
         start(Intent(activity, SearchActivity::class.java))
+        activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 
     fun toSettings() {

@@ -82,11 +82,11 @@ public class HomeActivity extends AppCompatActivity {
 
         pageFadeDurationMillis = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-        pageContainer = (ViewGroup) findViewById(R.id.page_container);
+        pageContainer = findViewById(R.id.page_container);
         collectPageViewsInto(pageViews);
         collectLoadablesInto(loadables);
 
-        bottomNavigationView = (InterceptingBottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
         setupBottomNavigation(bottomNavigationView);
 
         Intent intent = getIntent();
@@ -121,10 +121,10 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void collectLoadablesInto(List<Loadable> loadables) {
-        loadables.add((Loadable) pageContainer.findViewById(R.id.schedule_content_root));
-        loadables.add((Loadable) pageContainer.findViewById(R.id.favorites_content_root));
-        loadables.add((Loadable) pageContainer.findViewById(R.id.tweets_content_root));
-        loadables.add((Loadable) pageContainer.findViewById(R.id.venueContentRoot));
+        loadables.add(pageContainer.findViewById(R.id.schedule_content_root));
+        loadables.add(pageContainer.findViewById(R.id.favorites_content_root));
+        loadables.add(pageContainer.findViewById(R.id.tweets_content_root));
+        loadables.add(pageContainer.findViewById(R.id.venueContentRoot));
     }
 
     private void setupBottomNavigation(InterceptingBottomNavigationView bottomNavigationView) {

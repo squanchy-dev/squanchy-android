@@ -6,10 +6,7 @@
   <string name="debug_activity_button_multiple_notifications">Multiple notifications</string>
   <string name="debug_activity_button_service">Service</string>
   <string name="debug_test_notifications">Test Notifications</string>
-  <string name="debug_test_contest">Test contest</string>
   <string name="debug_reset_onboarding">Reset onboarding</string>
   <string name="debug_reset_onboarding_button">DEWWEEETTT</string>
-  <string name="debug_activity_button_geofence_notification">Geofence notification</string>
-  <string name="debug_add_achievement">Add achievement</string>
 
 </resources>

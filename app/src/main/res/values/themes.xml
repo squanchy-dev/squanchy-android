@@ -101,7 +101,7 @@
 
   <style name="Theme.Squanchy.SignIn" parent="Theme.Squanchy.BottomSheet" />
 
-  <style name="Theme.Squanchy.Search" parent="Theme.Squanchy.PrimaryStatusBar" />
+  <style name="Theme.Squanchy.Search" parent="Theme.Squanchy.MostlyWhite" />
 
   <style name="Theme.Squanchy.Settings" parent="Theme.Squanchy.PrimaryStatusBar">
     <item name="colorAccent">?colorPrimary</item>
@@ -116,7 +116,5 @@
   <style name="Theme.Squanchy.FirstStartWithNoNetwork" parent="Theme.Squanchy.Dialog">
     <item name="android:backgroundDimEnabled">false</item>
   </style>
-
-  <style name="Theme.Squanchy.Contest" parent="Theme.Squanchy.Dialog" />
 
 </resources>
