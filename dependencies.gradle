@@ -18,7 +18,6 @@ ext {
     libraries = [
             app : [
                     autoValue           : 'com.google.auto.value:auto-value:1.5.1',
-
                     crashlytics         : 'com.crashlytics.sdk.android:crashlytics:2.6.8',
                     dagger              : "com.google.dagger:dagger:${daggerVersion}",
                     daggerCompiler      : "com.google.dagger:dagger-compiler:${daggerVersion}",
