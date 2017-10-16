@@ -1,11 +1,15 @@
 package net.squanchy.notification
 
+import android.annotation.TargetApi
 import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.TaskStackBuilder
 import android.support.v4.content.ContextCompat
@@ -15,18 +19,36 @@ import net.squanchy.eventdetails.EventDetailsActivity
 import net.squanchy.home.HomeActivity
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.speaker.domain.view.Speaker
+import net.squanchy.support.android
 import net.squanchy.support.lang.Lists.map
 import java.util.ArrayList
 
 class NotificationCreator(private val context: Context) {
 
     fun createFrom(events: List<Event>): List<Notification> {
+        if (android.isAtLeastOreo) {
+            createChannel()
+        }
+
         val notifications = events.mapTo(ArrayList()) { createFrom(it) }
 
         if (events.size > 1) {
             notifications.add(createSummaryNotification(events))
         }
         return notifications
+    }
+
+    @TargetApi(Build.VERSION_CODES.O)
+    private fun createChannel() {
+        val channel = NotificationChannel(EVENTS_ABOUT_TO_START_CHANNEL_ID,
+                context.getString(R.string.event_notification_starting_channel_name),
+                NotificationManager.IMPORTANCE_HIGH)
+        channel.description = context.getString(R.string.event_notification_starting_channel_description)
+        channel.enableLights(true)
+        channel.lightColor = context.getColor(R.color.notification_led_color)
+
+        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
     }
 
     private fun createFrom(event: Event): Notification {
@@ -69,7 +91,7 @@ class NotificationCreator(private val context: Context) {
         val extender = NotificationCompat.WearableExtender()
         extender.background = BitmapFactory.decodeResource(resources, R.drawable.notification_background)
 
-        return NotificationCompat.Builder(context)
+        return NotificationCompat.Builder(context, EVENTS_ABOUT_TO_START_CHANNEL_ID)
                 .setTicker(
                         context.resources.getQuantityString(
                                 R.plurals.event_notification_ticker,
@@ -84,7 +106,6 @@ class NotificationCreator(private val context: Context) {
                         NOTIFICATION_LED_OFF_MS
                 )
                 .setSmallIcon(R.drawable.ic_stat_notification)
-                .setPriority(Notification.PRIORITY_MAX)
                 .setAutoCancel(true)
                 .extend(extender)
     }
@@ -171,6 +192,7 @@ class NotificationCreator(private val context: Context) {
 }
 
 private val GROUP_KEY_NOTIFY_SESSION = "group_key_notify_session"
+private val EVENTS_ABOUT_TO_START_CHANNEL_ID = "events_about_to_start"
 
 // pulsate every 1 second, indicating a relatively high degree of urgency
 private val NOTIFICATION_LED_ON_MS = 100
