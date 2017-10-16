@@ -19,4 +19,5 @@ class Notifier(private val notificationManagerCompat: NotificationManagerCompat)
     }
 }
 
+@SuppressWarnings("MagicNumber")
 private val SINGLE_NOTIFICATION_ID = 42

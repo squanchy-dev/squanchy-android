@@ -161,7 +161,8 @@ class NotificationCreator(private val context: Context) {
         return context.getString(R.string.event_notification_starting_by, speakerNames)
     }
 
-    private fun createInboxStyleRichNotification(notificationBuilder: NotificationCompat.Builder, events: List<Event>): NotificationCompat.InboxStyle {
+    private fun createInboxStyleRichNotification(notificationBuilder: NotificationCompat.Builder,
+                                                 events: List<Event>): NotificationCompat.InboxStyle {
         val bigContentTitle = createSummaryTitle(events.size)
         val richNotification = NotificationCompat.InboxStyle(notificationBuilder)
                 .setBigContentTitle(bigContentTitle)
@@ -195,6 +196,8 @@ private val GROUP_KEY_NOTIFY_SESSION = "group_key_notify_session"
 private val EVENTS_ABOUT_TO_START_CHANNEL_ID = "events_about_to_start"
 
 // pulsate every 1 second, indicating a relatively high degree of urgency
+@SuppressWarnings("MagicNumber")
 private val NOTIFICATION_LED_ON_MS = 100
+@SuppressWarnings("MagicNumber")
 private val NOTIFICATION_LED_OFF_MS = 1000
 private val ARGB_TRANSPARENT = "#00000000"

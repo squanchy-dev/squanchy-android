@@ -88,9 +88,8 @@ class NotificationsIntentService : IntentService(NotificationsIntentService::cla
         subscriptions.dispose()
     }
 
-    companion object {
-
-        private val NOTIFICATION_INTERVAL_MINUTES = 10
-        private val SHOW_NOTIFICATIONS_DEFAULT = true
-    }
 }
+
+@SuppressWarnings("MagicNumber")
+private val NOTIFICATION_INTERVAL_MINUTES = 10
+private val SHOW_NOTIFICATIONS_DEFAULT = true
