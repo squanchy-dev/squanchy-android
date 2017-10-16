@@ -84,7 +84,7 @@
   <style name="TextAppearance.Squanchy.Card.ExperienceLevel" parent="None">
     <item name="android:textColor">?android:textColorPrimaryInverse</item>
     <item name="android:textSize">@dimen/card_experience</item>
-    <item name="fontPath">@font/default_typeface_medium</item>
+    <item name="android:fontFamily">@font/default_typeface_medium</item>
   </style>
 
   <style name="Schedule.Card.Title" parent="None">

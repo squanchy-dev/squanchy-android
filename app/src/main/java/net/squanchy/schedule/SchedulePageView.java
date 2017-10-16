@@ -1,11 +1,9 @@
 package net.squanchy.schedule;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -21,6 +19,7 @@ import net.squanchy.navigation.Navigator;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Schedule;
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter;
+import net.squanchy.typeface.TypedArrayHelper;
 import net.squanchy.typeface.TypefaceController;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -117,9 +116,8 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
         // intercept that either. Sad panda.
         tabLayout.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
             Context context = tabLayout.getContext();
-            int chosenFont = getFontPathFor(context);
+            Typeface typeface = new TypedArrayHelper(context).getFont();
 
-            Typeface typeface = ResourcesCompat.getFont(context, chosenFont);
             int tabCount = tabLayout.getTabCount();
             for (int i = 0; i < tabCount; i++) {
                 TabLayout.Tab tab = tabLayout.getTabAt(i);
@@ -130,15 +128,6 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
                 tab.setText(typefaceController.applyTypeface(tab.getText(), typeface));
             }
         });
-    }
-
-    private int getFontPathFor(Context context) {
-        TypedArray a = context.obtainStyledAttributes(R.style.TextAppearance_Squanchy_Tab, new int[]{R.attr.fontFamily});
-        try {
-            return a.getInt(0, -1);
-        } finally {
-            a.recycle();
-        }
     }
 
     private boolean hasSpan(CharSequence text) {
