@@ -12,7 +12,7 @@ class TypefaceDelegate(private val newTypeface: Typeface) {
         const val FALSE_FLAG = 0
     }
 
-    fun applyStyleTo(paint: Paint) {
+    fun applyTypefaceTo(paint: Paint) {
         val fakeStyle = fakeStyle(paint)
         bold(fakeStyle).whenTrue { paint.isFakeBoldText = true }
         italic(fakeStyle).whenTrue { paint.textSkewX = TEXT_SKEW_X }

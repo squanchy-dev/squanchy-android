@@ -9,10 +9,10 @@ class CustomTypefaceSpan(typeface: Typeface) : MetricAffectingSpan() {
     private val delegate = TypefaceDelegate(typeface)
 
     override fun updateMeasureState(p: TextPaint) {
-        delegate.applyStyleTo(p)
+        delegate.applyTypefaceTo(p)
     }
 
     override fun updateDrawState(tp: TextPaint) {
-        delegate.applyStyleTo(tp)
+        delegate.applyTypefaceTo(tp)
     }
 }

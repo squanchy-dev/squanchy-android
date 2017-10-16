@@ -121,7 +121,7 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
             int tabCount = tabLayout.getTabCount();
             for (int i = 0; i < tabCount; i++) {
                 TabLayout.Tab tab = tabLayout.getTabAt(i);
-                if (tab == null || hasSpan(tab.getText())) {
+                if (tab == null || hasTypefaceSpan(tab.getText())) {
                     continue;
                 }
 
@@ -130,7 +130,7 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
         });
     }
 
-    private boolean hasSpan(CharSequence text) {
+    private boolean hasTypefaceSpan(CharSequence text) {
         if (!(text instanceof Spanned)) {
             return false;
         }
