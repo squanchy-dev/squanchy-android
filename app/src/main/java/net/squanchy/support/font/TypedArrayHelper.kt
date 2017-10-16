@@ -1,4 +1,4 @@
-package net.squanchy.typeface
+package net.squanchy.support.font
 
 import android.content.Context
 import android.content.res.TypedArray

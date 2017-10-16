@@ -5,7 +5,7 @@ import dagger.Provides
 import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.firebase.FirebaseDbService
 import net.squanchy.service.repository.EventRepository
-import net.squanchy.typeface.TypefaceController
+import net.squanchy.support.font.TypefaceController
 
 @Module
 class ScheduleModule {

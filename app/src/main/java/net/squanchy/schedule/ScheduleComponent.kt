@@ -9,7 +9,7 @@ import net.squanchy.injection.ApplicationComponent
 import net.squanchy.injection.ApplicationInjector
 import net.squanchy.navigation.NavigationModule
 import net.squanchy.navigation.Navigator
-import net.squanchy.typeface.TypefaceController
+import net.squanchy.support.font.TypefaceController
 
 @ActivityLifecycle
 @Component(modules = arrayOf(ScheduleModule::class, NavigationModule::class), dependencies = arrayOf(ApplicationComponent::class))

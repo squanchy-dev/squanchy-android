@@ -19,8 +19,8 @@ import net.squanchy.navigation.Navigator;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Schedule;
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter;
-import net.squanchy.typeface.TypedArrayHelper;
-import net.squanchy.typeface.TypefaceController;
+import net.squanchy.support.font.TypedArrayHelper;
+import net.squanchy.support.font.TypefaceController;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;

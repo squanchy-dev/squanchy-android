@@ -1,4 +1,4 @@
-package net.squanchy.typeface
+package net.squanchy.support.font
 
 import android.graphics.Typeface
 import android.text.TextPaint
