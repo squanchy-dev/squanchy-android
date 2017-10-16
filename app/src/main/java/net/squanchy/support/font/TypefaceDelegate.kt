@@ -12,23 +12,23 @@ class TypefaceDelegate(private val newTypeface: Typeface) {
     }
 
     fun applyTypefaceTo(paint: Paint) {
-        val fakeStyle = fakeStyle(paint)
+        val previousStyle = computePreviousStyle(paint)
 
-        if (bold(fakeStyle)) {
+        if (isBold(previousStyle)) {
             paint.isFakeBoldText = true
         }
-        if (italic(fakeStyle)) {
+        if (isItalic(previousStyle)) {
             paint.textSkewX = TEXT_SKEW_X
         }
 
         paint.typeface = newTypeface
     }
 
-    private fun bold(fakeStyle: Int) = fakeStyle.and(Typeface.BOLD) != FALSE_FLAG
+    private fun isBold(fakeStyle: Int) = fakeStyle.and(Typeface.BOLD) != FALSE_FLAG
 
-    private fun italic(fakeStyle: Int) = fakeStyle.and(Typeface.ITALIC) != FALSE_FLAG
+    private fun isItalic(fakeStyle: Int) = fakeStyle.and(Typeface.ITALIC) != FALSE_FLAG
 
-    private fun fakeStyle(paint: Paint): Int {
+    private fun computePreviousStyle(paint: Paint): Int {
         val oldStyle = paint.typeface?.style ?: 0
         return oldStyle.and(newTypeface.style.inv())
     }
