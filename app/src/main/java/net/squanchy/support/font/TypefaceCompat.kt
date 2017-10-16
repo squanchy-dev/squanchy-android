@@ -6,12 +6,27 @@ import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.Spanned
+import android.text.TextPaint
+import android.text.style.MetricAffectingSpan
 
-
-fun CharSequence.applyTypeface(typeface: Typeface) =
+fun CharSequence.applyTypeface(typeface: Typeface) {
+    if (this is Spannable)
+        apply { setSpan(TypefaceSpan(typeface), 0, length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE) }
+    else
         SpannableString(this).applyTypeface(typeface)
+}
 
-fun Spannable.applyTypeface(typeface: Typeface) =
-        apply { setSpan(CustomTypefaceSpan(typeface), 0, length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE) }
+fun Spanned.hasTypefaceSpan() = getSpans(0, length, TypefaceSpan::class.java).isNotEmpty()
 
-fun Spanned.hasTypefaceSpan() = getSpans(0, length, CustomTypefaceSpan::class.java).isNotEmpty()
+private class TypefaceSpan(typeface: Typeface) : MetricAffectingSpan() {
+
+    private val delegate = TypefaceDelegate(typeface)
+
+    override fun updateMeasureState(p: TextPaint) {
+        delegate.applyTypefaceTo(p)
+    }
+
+    override fun updateDrawState(tp: TextPaint) {
+        delegate.applyTypefaceTo(tp)
+    }
+}
