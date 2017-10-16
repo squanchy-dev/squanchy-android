@@ -5,7 +5,6 @@ import dagger.Provides
 import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.firebase.FirebaseDbService
 import net.squanchy.service.repository.EventRepository
-import net.squanchy.support.font.TypefaceController
 
 @Module
 class ScheduleModule {
@@ -16,7 +15,4 @@ class ScheduleModule {
             authService: FirebaseAuthService,
             eventRepository: EventRepository
     ): ScheduleService = ScheduleService(dbService, authService, eventRepository)
-
-    @Provides
-    internal fun typefaceController() : TypefaceController = TypefaceController()
 }

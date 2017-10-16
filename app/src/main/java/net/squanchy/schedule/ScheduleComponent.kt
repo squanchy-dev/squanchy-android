@@ -9,7 +9,6 @@ import net.squanchy.injection.ApplicationComponent
 import net.squanchy.injection.ApplicationInjector
 import net.squanchy.navigation.NavigationModule
 import net.squanchy.navigation.Navigator
-import net.squanchy.support.font.TypefaceController
 
 @ActivityLifecycle
 @Component(modules = arrayOf(ScheduleModule::class, NavigationModule::class), dependencies = arrayOf(ApplicationComponent::class))
@@ -20,8 +19,6 @@ internal interface ScheduleComponent {
     fun navigator(): Navigator
 
     fun analytics(): Analytics
-
-    fun typefaceController(): TypefaceController
 }
 
 internal fun obtain(activity: AppCompatActivity): ScheduleComponent = DaggerScheduleComponent.builder()

@@ -20,7 +20,7 @@ import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Schedule;
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter;
 import net.squanchy.support.font.FontCompat;
-import net.squanchy.support.font.TypefaceController;
+import net.squanchy.support.font.TypefaceCompat;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -36,7 +36,6 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
     private final ScheduleService service;
     private final Navigator navigate;
     private final Analytics analytics;
-    private final TypefaceController typefaceController;
 
     public SchedulePageView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -50,7 +49,6 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
         service = component.service();
         navigate = component.navigator();
         analytics = component.analytics();
-        typefaceController = component.typefaceController();
 
         viewPagerAdapter = new ScheduleViewPagerAdapter(activity);
     }
@@ -125,7 +123,7 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
                     continue;
                 }
 
-                tab.setText(typefaceController.applyTypeface(tab.getText(), typeface));
+                tab.setText(TypefaceCompat.applyTypeface(tab.getText(), typeface));
             }
         });
     }
@@ -134,7 +132,7 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
         if (!(text instanceof Spanned)) {
             return false;
         }
-        return typefaceController.hasSpan((Spanned) text);
+        return TypefaceCompat.hasTypefaceSpan((Spanned) text);
     }
 
     public void updateWith(Schedule schedule, ScheduleViewPagerAdapter.OnEventClickedListener listener) {
