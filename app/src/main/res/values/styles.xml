@@ -2,14 +2,14 @@
 
   <style name="None" />
 
-  <style name="MostlyWhite.Toolbar" parent="Widget.AppCompat.Light.ActionBar">
-    <item name="android:titleTextStyle">@style/TextAppearance.Squanchy.MostlyWhite.Toolbar</item>
-    <item name="android:subtitleTextStyle">@style/TextAppearance.Squanchy.MostlyWhite.Toolbar</item>
+  <style name="MostlyWhite.Toolbar" parent="Widget.AppCompat.Toolbar">
+    <item name="titleTextAppearance">@style/TextAppearance.Squanchy.MostlyWhite.Toolbar</item>
+    <item name="subtitleTextAppearance">@style/TextAppearance.Squanchy.MostlyWhite.Toolbar</item>
   </style>
 
-  <style name="TextAppearance.Squanchy.MostlyWhite.Toolbar" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+  <style name="TextAppearance.Squanchy.MostlyWhite.Toolbar" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
     <item name="android:textColor">@color/primary</item>
-    <item name="fontFamily">@font/title_typeface</item>
+    <item name="android:fontFamily">@font/title_typeface</item>
   </style>
 
   <style name="Button.Colored" parent="Widget.AppCompat.Button.Colored">
@@ -35,13 +35,13 @@
     <item name="android:elevation">@dimen/toolbar_elevation</item>
   </style>
 
-  <style name="Squanchy.Toolbar" parent="Widget.AppCompat.Light.ActionBar">
-    <item name="android:titleTextStyle">@style/TextAppearance.Squanchy.Toolbar</item>
-    <item name="android:subtitleTextStyle">@style/TextAppearance.Squanchy.Toolbar</item>
+  <style name="Squanchy.Toolbar" parent="Widget.AppCompat.Toolbar">
+    <item name="titleTextAppearance">@style/TextAppearance.Squanchy.Toolbar</item>
+    <item name="subtitleTextAppearance">@style/TextAppearance.Squanchy.Toolbar</item>
   </style>
 
-  <style name="TextAppearance.Squanchy.Toolbar" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
-    <item name="fontFamily">@font/title_typeface</item>
+  <style name="TextAppearance.Squanchy.Toolbar" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+    <item name="android:fontFamily">@font/title_typeface</item>
   </style>
 
   <style name="Squanchy.Tabs.Schedule" parent="None">
