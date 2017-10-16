@@ -7,6 +7,7 @@ import net.squanchy.extensions.whenTrue
 class TypefaceDelegate(private val newTypeface: Typeface) {
 
     private companion object {
+        @SuppressWarnings("MagicNumber")
         const val TEXT_SKEW_X = -.25f
         const val FALSE_FLAG = 0
     }
