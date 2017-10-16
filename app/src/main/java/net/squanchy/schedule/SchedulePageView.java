@@ -19,7 +19,7 @@ import net.squanchy.navigation.Navigator;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Schedule;
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter;
-import net.squanchy.support.font.TypedArrayHelper;
+import net.squanchy.support.font.FontCompat;
 import net.squanchy.support.font.TypefaceController;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -116,7 +116,7 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
         // intercept that either. Sad panda.
         tabLayout.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
             Context context = tabLayout.getContext();
-            Typeface typeface = new TypedArrayHelper(context).getFont();
+            Typeface typeface = FontCompat.getFontFor(context, R.style.TextAppearance_Squanchy_Tab);
 
             int tabCount = tabLayout.getTabCount();
             for (int i = 0; i < tabCount; i++) {
