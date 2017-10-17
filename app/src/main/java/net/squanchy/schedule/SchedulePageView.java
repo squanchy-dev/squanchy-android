@@ -122,7 +122,6 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
                 if (tab == null || hasTypefaceSpan(tab.getText())) {
                     continue;
                 }
-
                 tab.setText(TypefaceCompat.applyTypeface(tab.getText(), typeface));
             }
         });
