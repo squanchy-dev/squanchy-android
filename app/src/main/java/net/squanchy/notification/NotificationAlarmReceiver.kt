@@ -10,7 +10,7 @@ class NotificationAlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         if (Intent.ACTION_BOOT_COMPLETED != intent.action) {
-            Timber.d("Intercepted spoofed intent directed to NotificationAlarmReceiver: %s", intent)
+            Timber.d("Intercepted spoofed intent directed to NotificationAlarmReceiver: $intent")
             return
         }
 
