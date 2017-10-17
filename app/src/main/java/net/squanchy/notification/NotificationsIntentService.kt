@@ -10,7 +10,6 @@ import android.preference.PreferenceManager
 import io.reactivex.disposables.CompositeDisposable
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Event
-import net.squanchy.support.lang.Lists.filter
 import org.joda.time.LocalDateTime
 import timber.log.Timber
 
@@ -44,8 +43,8 @@ class NotificationsIntentService : IntentService(NotificationsIntentService::cla
         if (shouldShowNotifications()) {
             subscriptions.add(
                     sortedFavourites
-                            .map { events -> filter(events) { it.startTime.isAfter(now) } }
-                            .map { events -> filter(events) { isBeforeOrEqualTo(it.startTime, notificationIntervalEnd) } }
+                            .map { events -> events.filter { it.startTime.isAfter(now) } }
+                            .map { events -> events.filter { isBeforeOrEqualTo(it.startTime, notificationIntervalEnd) } }
                             .map { notificationCreator.createFrom(it) }
                             .subscribe(notifier::showNotifications)
             )
@@ -53,7 +52,7 @@ class NotificationsIntentService : IntentService(NotificationsIntentService::cla
 
         subscriptions.add(
                 sortedFavourites
-                        .map { events -> filter(events) { it.startTime.isAfter(notificationIntervalEnd) } }
+                        .map { events -> events.filter { it.startTime.isAfter(notificationIntervalEnd) } }
                         .subscribe(this::scheduleNextAlarm)
         )
     }

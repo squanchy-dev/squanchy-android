@@ -5,7 +5,6 @@ import io.reactivex.schedulers.Schedulers
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.repository.EventRepository
-import net.squanchy.support.lang.Lists.filter
 import java.util.Collections
 import java.util.Comparator
 
@@ -14,7 +13,7 @@ internal class NotificationService(private val authService: FirebaseAuthService,
     fun sortedFavourites(): Observable<List<Event>> {
         return authService.ifUserSignedInThenObservableFrom { userId ->
             eventRepository.events(userId)
-                    .map { events -> filter(events, { it.favorited }) }
+                    .map { events -> events.filter { it.favorited } }
                     .map { events ->
                         Collections.sort(events, byStartDate())
                         events
