@@ -55,7 +55,7 @@ private class FirebaseImageLoader : ModelLoader<StorageReference, InputStream> {
         }
     }
 
-    private inner class FirebaseStorageFetcher internal constructor(private val reference: StorageReference) : DataFetcher<InputStream> {
+    private class FirebaseStorageFetcher internal constructor(private val reference: StorageReference) : DataFetcher<InputStream> {
 
         private lateinit var streamTask: StreamDownloadTask
         private var inputStream: InputStream? = null
