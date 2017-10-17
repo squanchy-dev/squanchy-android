@@ -22,7 +22,7 @@ private fun Context.getFontIdFrom(@StyleRes styleResId: Int) =
             }
         }
 
-inline fun <R> TypedArray.use(block: TypedArray.() -> R): R {
+private inline fun <R> TypedArray.use(block: TypedArray.() -> R): R {
     try {
         return block()
     } finally {
