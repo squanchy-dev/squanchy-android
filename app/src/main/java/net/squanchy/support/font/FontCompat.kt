@@ -3,6 +3,7 @@
 package net.squanchy.support.font
 
 import android.content.Context
+import android.content.res.TypedArray
 import android.support.annotation.FontRes
 import android.support.annotation.StyleRes
 import android.support.v4.content.res.ResourcesCompat
@@ -12,15 +13,19 @@ fun Context.getFontFor(@StyleRes styleResId: Int) =
         ResourcesCompat.getFont(this, getFontIdFrom(styleResId))!!
 
 @FontRes
-private fun Context.getFontIdFrom(@StyleRes styleResId: Int): Int {
-    @FontRes val fontId: Int
+private fun Context.getFontIdFrom(@StyleRes styleResId: Int) =
+        obtainStyledAttributes(styleResId, kotlin.intArrayOf(R.attr.fontFamily)).use {
+            if (hasValue(0)) {
+                getResourceId(0, -1)
+            } else {
+                error("TypedArray does not contain any fontFamily attribute!")
+            }
+        }
 
-    val typedArray = obtainStyledAttributes(styleResId, kotlin.intArrayOf(R.attr.fontFamily))
-    if (typedArray.hasValue(0)) {
-        fontId = typedArray.getResourceId(0, -1)
-    } else {
-        error("TypedArray does not contain any fontFamily attribute!")
+inline fun <R> TypedArray.use(block: TypedArray.() -> R): R {
+    try {
+        return block()
+    } finally {
+        recycle()
     }
-    typedArray.recycle()
-    return fontId
 }
