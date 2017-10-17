@@ -3,6 +3,7 @@ package net.squanchy.eventdetails;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,7 +11,6 @@ import android.view.MenuItem;
 import net.squanchy.R;
 import net.squanchy.eventdetails.EventDetailsService.FavoriteResult;
 import net.squanchy.eventdetails.widget.EventDetailsCoordinatorLayout;
-import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.notification.NotificationsIntentService;
 import net.squanchy.schedule.domain.view.Event;
@@ -19,7 +19,7 @@ import net.squanchy.speaker.domain.view.Speaker;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class EventDetailsActivity extends TypefaceStyleableActivity {
+public class EventDetailsActivity extends AppCompatActivity {
 
     private static final String EXTRA_EVENT_ID = EventDetailsActivity.class.getCanonicalName() + ".event_id";
     private static final int REQUEST_CODE_SIGNIN = 1235;

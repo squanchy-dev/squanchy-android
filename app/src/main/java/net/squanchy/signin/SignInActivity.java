@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -16,7 +17,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import net.squanchy.R;
-import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.support.config.DialogLayoutParameters;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -26,7 +26,7 @@ import io.reactivex.functions.Action;
 
 import static net.squanchy.google.GoogleClientId.SIGN_IN_ACTIVITY;
 
-public class SignInActivity extends TypefaceStyleableActivity {
+public class SignInActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 9001;
     private static final float ALPHA_DISABLED = .54f;

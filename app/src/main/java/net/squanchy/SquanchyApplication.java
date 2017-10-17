@@ -13,7 +13,6 @@ import com.twitter.sdk.android.core.TwitterConfig;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 import net.squanchy.analytics.Analytics;
-import net.squanchy.fonts.TypefaceManager;
 import net.squanchy.injection.ApplicationComponent;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -33,7 +32,6 @@ public class SquanchyApplication extends Application {
         setupTracking();
         initializeTwitter();
         initializeFirebase();
-        TypefaceManager.init();
 
         preloadRemoteConfig();
     }
