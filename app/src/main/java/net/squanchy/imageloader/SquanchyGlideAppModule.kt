@@ -55,10 +55,10 @@ private class FirebaseImageLoader : ModelLoader<StorageReference, InputStream> {
         }
     }
 
-    private inner class FirebaseStorageFetcher internal constructor(private val reference: StorageReference) : DataFetcher<InputStream> {
+    private class FirebaseStorageFetcher internal constructor(private val reference: StorageReference) : DataFetcher<InputStream> {
 
         private lateinit var streamTask: StreamDownloadTask
-        private lateinit var inputStream: InputStream
+        private var inputStream: InputStream? = null
 
         override fun loadData(priority: Priority?, callback: DataFetcher.DataCallback<in InputStream>?) {
             streamTask = reference.stream
@@ -84,7 +84,7 @@ private class FirebaseImageLoader : ModelLoader<StorageReference, InputStream> {
 
         override fun cleanup() {
             try {
-                inputStream.close()
+                inputStream?.close()
             } catch (e: IOException) {
                 Timber.w("Could not close stream", e)
             }
