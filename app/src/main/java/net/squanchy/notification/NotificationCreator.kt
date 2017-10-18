@@ -21,7 +21,6 @@ import net.squanchy.schedule.domain.view.Event
 import net.squanchy.speaker.domain.view.Speaker
 import net.squanchy.support.android
 import net.squanchy.support.lang.Lists.map
-import java.util.ArrayList
 
 class NotificationCreator(private val context: Context) {
 
@@ -30,7 +29,9 @@ class NotificationCreator(private val context: Context) {
             createChannel()
         }
 
-        val notifications = events.mapTo(ArrayList()) { createFrom(it) }
+        val notifications = events
+                .map({ createFrom(it) })
+                .toMutableList()
 
         if (events.size > 1) {
             notifications.add(createSummaryNotification(events))
