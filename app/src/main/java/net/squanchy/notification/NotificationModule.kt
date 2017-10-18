@@ -12,10 +12,7 @@ import net.squanchy.service.repository.EventRepository
 internal class NotificationModule {
 
     @Provides
-    fun favoritesService(
-            authService: FirebaseAuthService,
-            eventRepository: EventRepository
-    ): NotificationService {
+    fun favoritesService(authService: FirebaseAuthService, eventRepository: EventRepository): NotificationService {
         return NotificationService(authService, eventRepository)
     }
 
