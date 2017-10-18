@@ -17,7 +17,10 @@ class Notifier(private val notificationManagerCompat: NotificationManagerCompat)
     private fun showNotification(singleNotification: Notification, notificationId: Int) {
         notificationManagerCompat.notify(notificationId, singleNotification)
     }
-}
 
-@SuppressWarnings("MagicNumber")
-private val SINGLE_NOTIFICATION_ID = 42
+    companion object {
+        @SuppressWarnings("MagicNumber")
+        private val SINGLE_NOTIFICATION_ID = 42
+
+    }
+}
