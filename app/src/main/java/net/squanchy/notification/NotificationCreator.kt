@@ -28,7 +28,7 @@ class NotificationCreator(private val context: Context) {
         }
 
         val notifications = events
-                .map({ createFrom(it) })
+                .map { createFrom(it) }
                 .toMutableList()
 
         if (events.size > 1) {
