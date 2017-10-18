@@ -27,7 +27,7 @@ class NotificationsIntentService : IntentService(NotificationsIntentService::cla
 
         subscriptions = CompositeDisposable()
 
-        val component = NotificationInjector.obtain(this)
+        val component = notificationComponent(this)
         service = component.service()
         notificationCreator = component.notificationCreator()
         notifier = component.notifier()
