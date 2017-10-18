@@ -13,14 +13,12 @@ import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.TaskStackBuilder
 import android.support.v4.content.ContextCompat
-import android.text.TextUtils
 import net.squanchy.R
 import net.squanchy.eventdetails.EventDetailsActivity
 import net.squanchy.home.HomeActivity
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.speaker.domain.view.Speaker
 import net.squanchy.support.android
-import net.squanchy.support.lang.Lists.map
 
 class NotificationCreator(private val context: Context) {
 
@@ -41,9 +39,11 @@ class NotificationCreator(private val context: Context) {
 
     @TargetApi(Build.VERSION_CODES.O)
     private fun createChannel() {
-        val channel = NotificationChannel(EVENTS_ABOUT_TO_START_CHANNEL_ID,
+        val channel = NotificationChannel(
+                EVENTS_ABOUT_TO_START_CHANNEL_ID,
                 context.getString(R.string.event_notification_starting_channel_name),
-                NotificationManager.IMPORTANCE_HIGH)
+                NotificationManager.IMPORTANCE_HIGH
+        )
         channel.description = context.getString(R.string.event_notification_starting_channel_description)
         channel.enableLights(true)
         channel.lightColor = context.getColor(R.color.notification_led_color)
@@ -158,7 +158,8 @@ class NotificationCreator(private val context: Context) {
     }
 
     private fun getSpeakerNamesFrom(speakers: List<Speaker>): String {
-        val speakerNames = TextUtils.join(", ", map<Speaker, String>(speakers, { it.name }))
+        val speakerNames = speakers.joinToString(prefix = ", ", transform = { it.name })
+
         return context.getString(R.string.event_notification_starting_by, speakerNames)
     }
 
@@ -191,14 +192,16 @@ class NotificationCreator(private val context: Context) {
         return String.format(quantityString, talksCount)
     }
 
+    companion object {
+        private val GROUP_KEY_NOTIFY_SESSION = "group_key_notify_session"
+        private val EVENTS_ABOUT_TO_START_CHANNEL_ID = "events_about_to_start"
+
+        // pulsate every 1 second, indicating a relatively high degree of urgency
+        @SuppressWarnings("MagicNumber")
+        private val NOTIFICATION_LED_ON_MS = 100
+        @SuppressWarnings("MagicNumber")
+        private val NOTIFICATION_LED_OFF_MS = 1000
+        private val ARGB_TRANSPARENT = "#00000000"
+    }
+
 }
-
-private val GROUP_KEY_NOTIFY_SESSION = "group_key_notify_session"
-private val EVENTS_ABOUT_TO_START_CHANNEL_ID = "events_about_to_start"
-
-// pulsate every 1 second, indicating a relatively high degree of urgency
-@SuppressWarnings("MagicNumber")
-private val NOTIFICATION_LED_ON_MS = 100
-@SuppressWarnings("MagicNumber")
-private val NOTIFICATION_LED_OFF_MS = 1000
-private val ARGB_TRANSPARENT = "#00000000"
