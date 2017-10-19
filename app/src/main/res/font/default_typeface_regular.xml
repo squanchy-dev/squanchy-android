@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<font-family xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools">
-
-  <font
-    android:fontStyle="normal"
-    android:fontWeight="400"
-    android:font="@font/quicksand_regular"
-    app:fontStyle="normal"
-    app:fontWeight="400"
-    app:font="@font/quicksand_regular"
-    tools:ignore="UnusedAttribute" />
-
-</font-family>
+<font-family xmlns:app="http://schemas.android.com/apk/res-auto"
+  app:fontProviderAuthority="com.google.android.gms.fonts"
+  app:fontProviderPackage="com.google.android.gms"
+  app:fontProviderQuery="name=Quicksand&amp;weight=400"
+  app:fontProviderCerts="@array/com_google_android_gms_fonts_certs" />
