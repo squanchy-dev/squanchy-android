@@ -2,15 +2,15 @@ package net.squanchy.onboarding.loldon
 
 import android.app.Activity
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_onboarding_loldon.onboardingSignInButton
+import android.support.v7.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_onboarding_loldon.*
 import net.squanchy.R
-import net.squanchy.fonts.TypefaceStyleableActivity
 import net.squanchy.navigation.Navigator
 import net.squanchy.onboarding.Onboarding
 import net.squanchy.onboarding.OnboardingPage
 import net.squanchy.support.view.enableLightNavigationBar
 
-class LoldonOnboardingActivity : TypefaceStyleableActivity() {
+class LoldonOnboardingActivity : AppCompatActivity() {
 
     private lateinit var onboarding: Onboarding
     private lateinit var navigator: Navigator

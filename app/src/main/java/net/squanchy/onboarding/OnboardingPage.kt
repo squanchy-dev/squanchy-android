@@ -8,6 +8,6 @@ import net.squanchy.onboarding.loldon.LoldonOnboardingActivity
 enum class OnboardingPage(val activityClass: Class<out Activity>) {
 
     DISCLAIMER(LoldonOnboardingActivity::class.java),
-    ACCOUNT(AccountOnboardingActivity::class.java);
+    ACCOUNT(AccountOnboardingActivity::class.java)
 
 }
