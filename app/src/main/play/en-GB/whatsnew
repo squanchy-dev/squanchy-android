@@ -1,4 +1,5 @@
-Version 0.1.0
+Version 0.2.0
 
- * Added a disclaimer that this is not an official app
- * Some tweaks under the hood
+ * Modernise fonts handling and use downloadable fonts
+ * Lots of fuzzy warm feelings all around
+ * Other stuff but it's late and I'm tired and this is all open source so go on and check the commits on GitHub yourself
