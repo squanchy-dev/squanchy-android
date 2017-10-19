@@ -1,18 +1,18 @@
 package net.squanchy.settings;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import net.squanchy.R;
-import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.settings.view.SettingsHeaderLayout;
 import net.squanchy.signin.SignInService;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
-public class SettingsActivity extends TypefaceStyleableActivity {
+public class SettingsActivity extends AppCompatActivity {
 
     private SignInService signInService;
     private SettingsHeaderLayout headerLayout;

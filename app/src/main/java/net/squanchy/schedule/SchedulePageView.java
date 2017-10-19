@@ -1,7 +1,6 @@
 package net.squanchy.schedule;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
@@ -20,21 +19,20 @@ import net.squanchy.navigation.Navigator;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Schedule;
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter;
+import net.squanchy.support.font.FontCompat;
+import net.squanchy.support.font.TypefaceCompat;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
-import uk.co.chrisjenx.calligraphy.CalligraphyTypefaceSpan;
-import uk.co.chrisjenx.calligraphy.CalligraphyUtils;
-import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
 import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 
 public class SchedulePageView extends CoordinatorLayout implements Loadable {
 
-    private ScheduleViewPagerAdapter viewPagerAdapter;
     private View progressBar;
     private Disposable subscription;
+    private final ScheduleViewPagerAdapter viewPagerAdapter;
     private final ScheduleService service;
     private final Navigator navigate;
     private final Analytics analytics;
@@ -61,8 +59,8 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
 
         progressBar = findViewById(R.id.progressbar);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabstrip);
+        ViewPager viewPager = findViewById(R.id.viewpager);
+        TabLayout tabLayout = findViewById(R.id.tabstrip);
         tabLayout.setupWithViewPager(viewPager);
         hackToApplyTypefaces(tabLayout);
 
@@ -74,7 +72,7 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
     }
 
     private void setupToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.activity_schedule);
         toolbar.inflateMenu(R.menu.homepage);
         toolbar.setOnMenuItemClickListener(item -> {
@@ -116,36 +114,24 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
         // intercept that either. Sad panda.
         tabLayout.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
             Context context = tabLayout.getContext();
-            String fontPath = getFontPathFor(context);
+            Typeface typeface = FontCompat.getFontFor(context, R.style.TextAppearance_Squanchy_Tab);
 
-            Typeface typeface = TypefaceUtils.load(context.getAssets(), fontPath);
             int tabCount = tabLayout.getTabCount();
             for (int i = 0; i < tabCount; i++) {
                 TabLayout.Tab tab = tabLayout.getTabAt(i);
-                if (tab == null || hasSpan(tab.getText())) {
+                if (tab == null || hasTypefaceSpan(tab.getText())) {
                     continue;
                 }
-                tab.setText(CalligraphyUtils.applyTypefaceSpan(tab.getText(), typeface));
+                tab.setText(TypefaceCompat.applyTypeface(tab.getText(), typeface));
             }
         });
     }
 
-    private String getFontPathFor(Context context) {
-        TypedArray a = context.obtainStyledAttributes(R.style.TextAppearance_Squanchy_Tab, new int[]{R.attr.fontPath});
-        try {
-            return a.getString(0);
-        } finally {
-            a.recycle();
-        }
-    }
-
-    private boolean hasSpan(CharSequence text) {
+    private boolean hasTypefaceSpan(CharSequence text) {
         if (!(text instanceof Spanned)) {
             return false;
         }
-        Spanned spannable = (Spanned) text;
-        CalligraphyTypefaceSpan[] spans = spannable.getSpans(0, text.length(), CalligraphyTypefaceSpan.class);
-        return spans.length > 0;
+        return TypefaceCompat.hasTypefaceSpan((Spanned) text);
     }
 
     public void updateWith(Schedule schedule, ScheduleViewPagerAdapter.OnEventClickedListener listener) {

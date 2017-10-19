@@ -15,6 +15,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.support.v4.view.animation.FastOutLinearInInterpolator
+import android.support.v7.app.AppCompatActivity
 import android.util.Property
 import android.view.View
 import android.view.animation.BounceInterpolator
@@ -24,10 +25,9 @@ import kotlinx.android.synthetic.main.activity_first_start_with_no_network.first
 import kotlinx.android.synthetic.main.activity_first_start_with_no_network.firstStartNevermind
 import kotlinx.android.synthetic.main.activity_first_start_with_no_network.firstStartProgress
 import net.squanchy.R
-import net.squanchy.fonts.TypefaceStyleableActivity
 import net.squanchy.support.config.DialogLayoutParameters
 
-class FirstStartWithNoNetworkActivity : TypefaceStyleableActivity() {
+class FirstStartWithNoNetworkActivity : AppCompatActivity() {
 
     private lateinit var continuationIntent: Intent
 

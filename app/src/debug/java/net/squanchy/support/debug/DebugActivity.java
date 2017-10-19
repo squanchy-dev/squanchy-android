@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationManagerCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 
 import java.util.ArrayList;
@@ -13,7 +14,6 @@ import java.util.Random;
 
 import net.squanchy.R;
 import net.squanchy.eventdetails.domain.view.ExperienceLevel;
-import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.notification.NotificationCreator;
 import net.squanchy.notification.NotificationsIntentService;
 import net.squanchy.notification.Notifier;
@@ -27,7 +27,7 @@ import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
 
 @SuppressWarnings("MagicNumber")    // It's because there's a bunch of test data
-public class DebugActivity extends TypefaceStyleableActivity {
+public class DebugActivity extends AppCompatActivity {
 
     private NotificationCreator notificationCreator;
 

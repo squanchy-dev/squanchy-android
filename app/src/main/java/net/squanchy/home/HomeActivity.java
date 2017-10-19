@@ -10,6 +10,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.transition.Fade;
 import android.support.transition.TransitionManager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,6 @@ import java.util.Map;
 import net.squanchy.R;
 import net.squanchy.analytics.Analytics;
 import net.squanchy.analytics.ContentType;
-import net.squanchy.fonts.TypefaceStyleableActivity;
 import net.squanchy.home.deeplink.HomeActivityDeepLinkCreator;
 import net.squanchy.home.deeplink.HomeActivityIntentParser;
 import net.squanchy.navigation.Navigator;
@@ -32,7 +32,7 @@ import net.squanchy.support.widget.InterceptingBottomNavigationView;
 
 import io.reactivex.disposables.CompositeDisposable;
 
-public class HomeActivity extends TypefaceStyleableActivity {
+public class HomeActivity extends AppCompatActivity {
 
     private static final int REQUEST_SIGN_IN_MAY_GOD_HAVE_MERCY_OF_OUR_SOULS = 666;
 

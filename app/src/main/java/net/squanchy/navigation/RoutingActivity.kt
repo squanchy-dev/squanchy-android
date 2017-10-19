@@ -3,16 +3,16 @@ package net.squanchy.navigation
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import io.reactivex.disposables.CompositeDisposable
 import net.squanchy.R
-import net.squanchy.fonts.TypefaceStyleableActivity
 import net.squanchy.navigation.deeplink.DeepLinkRouter
 import net.squanchy.onboarding.Onboarding
 import net.squanchy.signin.SignInService
 import timber.log.Timber
 
-class RoutingActivity : TypefaceStyleableActivity() {
+class RoutingActivity : AppCompatActivity() {
 
     private lateinit var deepLinkRouter: DeepLinkRouter
     private lateinit var navigator: Navigator
