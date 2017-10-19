@@ -9,7 +9,6 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
 import io.reactivex.schedulers.Schedulers
-import net.squanchy.service.firebase.model.FirebaseAchievements
 import net.squanchy.service.firebase.model.FirebaseDays
 import net.squanchy.service.firebase.model.FirebaseEvent
 import net.squanchy.service.firebase.model.FirebaseEvents
@@ -55,12 +54,6 @@ class FirebaseDbService(private val database: DatabaseReference) {
         return userData(userId)
                 .map { (favorites) -> favorites ?: emptyMap() }
                 .map(::FirebaseFavorites)
-    }
-
-    fun achievements(userId: String): Observable<FirebaseAchievements> {
-        return userData(userId)
-                .map { (_, achievements) -> achievements ?: emptyMap() }
-                .map(::FirebaseAchievements)
     }
 
     private fun userData(userId: String): Observable<FirebaseUserData> {

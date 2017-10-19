@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <array name="preloaded_fonts" translatable="false">
+    <item>@font/default_typeface_bold</item>
+    <item>@font/default_typeface_light</item>
+    <item>@font/default_typeface_medium</item>
+    <item>@font/default_typeface_regular</item>
+    <item>@font/license_notice_typeface</item>
+  </array>
+
+</resources>
