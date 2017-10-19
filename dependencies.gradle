@@ -56,7 +56,7 @@ ext {
     ]
 
     buildScript = [
-            android                   : 'com.android.tools.build:gradle:3.0.0-rc1',
+            android                   : 'com.android.tools.build:gradle:3.0.0-rc2',
             gradleStaticAnalysisPlugin: 'com.novoda:gradle-static-analysis-plugin:0.4.1',
             gradleVersionsPlugin      : 'com.github.ben-manes:gradle-versions-plugin:0.15.0',
             googleServices            : 'com.google.gms:google-services:3.1.0',
