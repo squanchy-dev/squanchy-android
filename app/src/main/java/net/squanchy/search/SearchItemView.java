@@ -39,8 +39,8 @@ public class SearchItemView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        image = (ImageView) findViewById(R.id.speaker_photo);
-        name = (TextView) findViewById(R.id.speaker_name);
+        image = findViewById(R.id.speaker_photo);
+        name = findViewById(R.id.speaker_name);
     }
 
     public void updateWith(Speaker speaker, ImageLoader imageLoader, OnSearchResultClickListener listener) {
@@ -58,7 +58,7 @@ public class SearchItemView extends LinearLayout {
         if (avatarImageURL.isPresent()) {
             imageLoader.load(avatarImageURL.get()).into(image);
         } else {
-            image.setImageDrawable(null);
+            image.setImageResource(R.drawable.ic_speaker_no_avatar);
         }
     }
 }

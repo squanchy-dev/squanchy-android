@@ -64,8 +64,8 @@ public abstract class SpeakerView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        speakerPhotoContainer = (ViewGroup) findViewById(R.id.speaker_photos_container);
-        speakerNameView = (TextView) findViewById(R.id.speaker_name);
+        speakerPhotoContainer = findViewById(R.id.speaker_photos_container);
+        speakerNameView = findViewById(R.id.speaker_name);
     }
 
     public void updateWith(List<Speaker> speakers, Optional<OnSpeakerClickListener> listener) {
@@ -91,11 +91,14 @@ public abstract class SpeakerView extends LinearLayout {
         }
 
         for (Speaker speaker : speakers) {
+            ImageView photoView = recycleOrInflatePhotoView(photoViews);
+            speakerPhotoContainer.addView(photoView);
+            setClickListenerOrNotClickable(photoView, listener, speaker);
+
             if (speaker.getPhotoUrl().isPresent()) {
-                ImageView photoView = recycleOrInflatePhotoView(photoViews);
-                speakerPhotoContainer.addView(photoView);
-                setClickListenerOrNotClickable(photoView, listener, speaker);
                 loadSpeakerPhoto(photoView, speaker.getPhotoUrl().get(), imageLoader);
+            } else {
+                photoView.setImageResource(R.drawable.ic_speaker_no_avatar);
             }
         }
     }
