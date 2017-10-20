@@ -57,6 +57,8 @@ public class SearchItemView extends LinearLayout {
         Optional<String> avatarImageURL = speaker.getPhotoUrl();
         if (avatarImageURL.isPresent()) {
             imageLoader.load(avatarImageURL.get()).into(image);
+        } else {
+            image.setImageDrawable(null);
         }
     }
 }
