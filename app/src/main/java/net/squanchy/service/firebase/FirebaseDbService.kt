@@ -76,6 +76,7 @@ class FirebaseDbService(private val database: DatabaseReference) {
     private fun <T, V> observeChildAndEmit(path: String, clazz: Class<V>, map: (V?) -> T): Observable<T> {
         return Observable.create { emitter: ObservableEmitter<T> ->
             val listener = object : ValueEventListener {
+                @Suppress("TooGenericExceptionCaught") // We want to add info to *any* problems
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     if (emitter.isDisposed) {
                         return
