@@ -85,7 +85,7 @@ class FirebaseDbService(private val database: DatabaseReference) {
                         val value = dataSnapshot.getValue(clazz)
                         emitter.onNext(map(value))
                     } catch (e: Exception) {
-                        throw DatabaseException("Problem in DB at path $path, class $clazz", e)
+                        emitter.onError(DatabaseException("Problem in DB at path $path, class $clazz", e))
                     }
                 }
 
