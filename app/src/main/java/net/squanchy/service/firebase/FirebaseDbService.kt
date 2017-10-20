@@ -3,6 +3,7 @@ package net.squanchy.service.firebase
 import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseException
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import io.reactivex.Completable
@@ -79,8 +80,12 @@ class FirebaseDbService(private val database: DatabaseReference) {
                     if (emitter.isDisposed) {
                         return
                     }
-                    val value = dataSnapshot.getValue(clazz)
-                    emitter.onNext(map(value))
+                    try {
+                        val value = dataSnapshot.getValue(clazz)
+                        emitter.onNext(map(value))
+                    } catch (e: Exception) {
+                        throw DatabaseException("Problem in DB at path $path, class $clazz", e)
+                    }
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
