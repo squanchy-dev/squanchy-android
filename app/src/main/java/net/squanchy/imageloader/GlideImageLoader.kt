@@ -1,9 +1,11 @@
 package net.squanchy.imageloader
 
 import android.graphics.drawable.Drawable
+import android.support.annotation.DrawableRes
 import android.widget.ImageView
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.RequestManager
+import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 
@@ -23,12 +25,11 @@ class GlideImageLoader(private val requestManager: RequestManager, private val f
     override fun load(storageReference: StorageReference): ImageRequest = GlideImageRequest(requestManager.load(storageReference))
 }
 
-interface ImageRequest {
-
-    fun into(target: ImageView)
-}
-
 private class GlideImageRequest(private val request: RequestBuilder<Drawable>) : ImageRequest {
+
+    override fun error(@DrawableRes errorImageResId: Int) = apply {
+        request.apply(RequestOptions.errorOf(errorImageResId))
+    }
 
     override fun into(target: ImageView) {
         request.into(target)

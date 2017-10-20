@@ -53,9 +53,9 @@ public class SpeakerHeaderView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        photoView = (ImageView) findViewById(R.id.speaker_photo);
-        nameView = (TextView) findViewById(R.id.speaker_name);
-        companyView = (TextView) findViewById(R.id.speaker_company);
+        photoView = findViewById(R.id.speaker_photo);
+        nameView = findViewById(R.id.speaker_name);
+        companyView = findViewById(R.id.speaker_company);
     }
 
     public void updateWith(Speaker speaker) {
@@ -80,9 +80,11 @@ public class SpeakerHeaderView extends LinearLayout {
 
         if (photoUrl.isPresent()) {
             photoView.setVisibility(VISIBLE);
-            imageLoader.load(photoUrl.get()).into(photoView);
+            imageLoader.load(photoUrl.get())
+                    .error(R.drawable.ic_no_avatar)
+                    .into(photoView);
         } else {
-            photoView.setVisibility(GONE);
+            photoView.setImageResource(R.drawable.ic_no_avatar);
         }
     }
 }
