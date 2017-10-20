@@ -58,7 +58,7 @@ public class SearchItemView extends LinearLayout {
         if (avatarImageURL.isPresent()) {
             imageLoader.load(avatarImageURL.get()).into(image);
         } else {
-            image.setImageResource(R.drawable.ic_speaker_no_avatar);
+            image.setImageResource(R.drawable.ic_no_avatar);
         }
     }
 }

@@ -50,8 +50,8 @@ public class TweetFooterView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        photoView = (ImageView) findViewById(R.id.tweet_user_photo);
-        textView = (TextView) findViewById(R.id.tweet_footer_text);
+        photoView = findViewById(R.id.tweet_user_photo);
+        textView = findViewById(R.id.tweet_footer_text);
     }
 
     public void updateWith(String url, String formattedRecap) {
@@ -65,6 +65,8 @@ public class TweetFooterView extends LinearLayout {
         }
 
         photoView.setImageDrawable(null);
-        imageLoader.load(url).into(photoView);
+        imageLoader.load(url)
+                .error(R.drawable.ic_no_avatar)
+                .into(photoView);
     }
 }

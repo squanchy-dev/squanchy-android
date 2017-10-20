@@ -98,7 +98,7 @@ public abstract class SpeakerView extends LinearLayout {
             if (speaker.getPhotoUrl().isPresent()) {
                 loadSpeakerPhoto(photoView, speaker.getPhotoUrl().get(), imageLoader);
             } else {
-                photoView.setImageResource(R.drawable.ic_speaker_no_avatar);
+                photoView.setImageResource(R.drawable.ic_no_avatar);
             }
         }
     }
