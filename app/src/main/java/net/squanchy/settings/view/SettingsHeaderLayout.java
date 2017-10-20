@@ -47,8 +47,8 @@ public class SettingsHeaderLayout extends AppBarLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        userPhotoView = (ImageView) findViewById(R.id.user_photo);
-        userNameView = (TextView) findViewById(R.id.user_name);
+        userPhotoView = findViewById(R.id.user_photo);
+        userNameView = findViewById(R.id.user_name);
     }
 
     public void updateWith(Optional<FirebaseUser> user) {
@@ -85,7 +85,10 @@ public class SettingsHeaderLayout extends AppBarLayout {
         Optional<String> photoUrl = photoUrlFor(userInfo);
         if (photoUrl.isPresent()) {
             imageLoader.load(photoUrl.get())
+                    .error(R.drawable.ic_no_avatar)
                     .into(userPhotoView);
+        } else {
+            userPhotoView.setImageResource(R.drawable.ic_no_avatar);
         }
     }
 

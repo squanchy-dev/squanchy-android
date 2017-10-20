@@ -48,9 +48,9 @@ public class TweetItemView extends CardLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        tweetTextView = (TextView) findViewById(R.id.tweet_text);
-        tweetFooterView = (TweetFooterView) findViewById(R.id.tweet_footer);
-        tweetPhotoView = (ImageView) findViewById(R.id.tweet_photo);
+        tweetTextView = findViewById(R.id.tweet_text);
+        tweetFooterView = findViewById(R.id.tweet_footer);
+        tweetPhotoView = findViewById(R.id.tweet_photo);
 
         tweetTextView.setMovementMethod(LinkMovementMethod.getInstance());
     }
