@@ -8,7 +8,6 @@ import kotlinx.android.synthetic.main.item_tweet.view.*
 import net.squanchy.R
 import net.squanchy.imageloader.ImageLoader
 import net.squanchy.imageloader.ImageLoaderInjector
-import net.squanchy.support.lang.Optional
 import net.squanchy.support.unwrapToActivityContext
 import net.squanchy.support.widget.CardLayout
 import net.squanchy.tweets.domain.TweetLinkInfo
@@ -39,11 +38,11 @@ class TweetItemView @JvmOverloads constructor(
         setOnClickListener { listener(tweet.linkInfo) }
     }
 
-    private fun updatePhotoWith(photoUrl: Optional<String>) {
+    private fun updatePhotoWith(photoUrl: String?) {
         tweetPhoto.setImageDrawable(null)
-        if (photoUrl.isPresent) {
+        if (photoUrl != null) {
             tweetPhoto.visibility = View.VISIBLE
-            imageLoader.load(photoUrl.get()).into(tweetPhoto)
+            imageLoader.load(photoUrl).into(tweetPhoto)
         } else {
             tweetPhoto.visibility = View.GONE
         }

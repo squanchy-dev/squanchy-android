@@ -5,10 +5,6 @@ import com.twitter.sdk.android.core.models.MediaEntity
 import com.twitter.sdk.android.core.models.MentionEntity
 import com.twitter.sdk.android.core.models.Tweet
 import com.twitter.sdk.android.core.models.UrlEntity
-
-import java.util.ArrayList
-
-import net.squanchy.support.lang.Optional
 import net.squanchy.tweets.domain.TweetLinkInfo
 import net.squanchy.tweets.domain.view.TweetViewModel
 import net.squanchy.tweets.domain.view.User
@@ -132,13 +128,8 @@ class TweetModelConverter(private val tweetSpannedTextBuilder: TweetSpannedTextB
         }
     }
 
-    private fun photoUrlMaybeFrom(urls: List<String>): Optional<String> {
-        return if (urls.isEmpty()) {
-            Optional.absent()
-        } else {
-            Optional.of(urls[0])
-        }
-    }
+    private fun photoUrlMaybeFrom(urls: List<String>): String? =
+        if (urls.isEmpty()) null else urls[0]
 
     private class Range private constructor(private val start: Int, private val end: Int) {
 
