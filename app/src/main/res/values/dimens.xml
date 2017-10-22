@@ -118,9 +118,12 @@
   <dimen name="about_content_padding_vertical">24dp</dimen>
   <dimen name="about_app_name_text">26sp</dimen>
   <dimen name="about_attribution_label_text">12sp</dimen>
-  <dimen name="about_powered_by_margin_top">16dp</dimen>
-  <dimen name="about_squanchy_text">32sp</dimen>
+  <dimen name="about_powered_by_margin_top">8dp</dimen>
+  <dimen name="about_powered_by_margin_bottom">16dp</dimen>
+  <dimen name="about_squanchy_text">48sp</dimen>
   <dimen name="about_squanchy_website_text">12sp</dimen>
+  <dimen name="about_squanchy_website_padding">2dp</dimen>
+  <dimen name="about_squanchy_website_margin_bottom">16dp</dimen>
   <dimen name="about_opensource_margin_bottom">32dp</dimen>
   <dimen name="about_opensource_logo_size">80dp</dimen>
   <dimen name="about_opensource_logo_margin_end">16dp</dimen>
@@ -185,5 +188,6 @@
   <dimen name="first_start_with_no_network_progress_size">48dp</dimen>
 
   <dimen name="match_constraint">0dp</dimen>
+  <dimen name="preference_header_margin_vertical">16dp</dimen>
 
 </resources>

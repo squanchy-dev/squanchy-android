@@ -116,6 +116,10 @@ public class SearchActivity extends AppCompatActivity implements SearchRecyclerV
 
     private void requestShowKeyboard(View view) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm == null) {
+            return;
+        }
+
         imm.showSoftInput(view, 0, new ResultReceiver(new Handler()) {
             @Override
             protected void onReceiveResult(int resultCode, Bundle resultData) {

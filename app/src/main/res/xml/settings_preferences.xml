@@ -6,6 +6,7 @@
   <PreferenceCategory
     android:key="@string/account_category_key"
     android:title="@string/account_category_label"
+    android:layout="@layout/preference_category_header"
     android:orderingFromXml="true">
 
     <Preference
@@ -26,6 +27,7 @@
   <PreferenceCategory
     android:key="@string/settings_category_key"
     android:title="@string/settings_and_help_title"
+    android:layout="@layout/preference_category_header"
     android:orderingFromXml="true">
 
     <SwitchPreference
@@ -54,7 +56,8 @@
 
   <PreferenceCategory
     android:key="@string/debug_category_preference_key"
-    android:title="@string/settings_debug_category">
+    android:title="@string/settings_debug_category"
+    android:layout="@layout/preference_category_header">
 
     <Preference
       android:key="@string/open_debug_preference_key"

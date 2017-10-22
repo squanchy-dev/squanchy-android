@@ -106,6 +106,7 @@
 
   <style name="Theme.Squanchy.Settings" parent="Theme.Squanchy.PrimaryStatusBar">
     <item name="colorAccent">?colorPrimary</item>
+    <item name="fontFamily">@font/default_typeface_regular</item>
   </style>
 
   <style name="Theme.Squanchy.About" parent="Theme.Squanchy.MostlyWhite" />
