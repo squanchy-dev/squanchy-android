@@ -41,15 +41,16 @@
         style="@style/Tweet.Photo"
         android:layout_width="@dimen/tweet_footer_user_photo_size"
         android:layout_height="@dimen/tweet_footer_user_photo_size"
-        android:layout_margin="@dimen/tweet_footer_user_photo_margin" />
+        android:layout_margin="@dimen/tweet_footer_user_photo_margin"
+        tools:src="@drawable/avatar_not_signed_in" />
 
       <TextView
         android:id="@+id/tweetFooterText"
         style="@style/Tweet.Footer.Text"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        tools:text="Posted today at 16:54 PM" />
 
     </net.squanchy.tweets.view.TweetFooterView>
-
   </LinearLayout>
 </net.squanchy.tweets.view.TweetItemView>

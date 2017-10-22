@@ -41,6 +41,7 @@
   <dimen name="tweet_footer_user_photo_size">24dp</dimen>
   <dimen name="tweet_footer_user_photo_margin">4dp</dimen>
   <dimen name="tweet_footer_margin_top">8dp</dimen>
+  <dimen name="tweet_empty_view_margin">64dp</dimen>
 
   <dimen name="favorites_empty_margin_horizontal">32dp</dimen>
   <dimen name="favorites_empty_image_size">80dp</dimen>
