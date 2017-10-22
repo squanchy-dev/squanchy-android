@@ -185,5 +185,6 @@
   <dimen name="first_start_with_no_network_progress_size">48dp</dimen>
 
   <dimen name="match_constraint">0dp</dimen>
+  <dimen name="preference_header_margin_vertical">16dp</dimen>
 
 </resources>

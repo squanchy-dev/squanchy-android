@@ -387,12 +387,12 @@
   <style name="Settings.Header.User.Name" parent="None">
     <item name="android:maxLines">2</item>
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.Settings.Header.User.Name</item>
+    <item name="fontFamily">@font/title_typeface</item>
   </style>
 
   <style name="TextAppearance.Squanchy.Settings.Header.User.Name" parent="None">
     <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">@dimen/settings_header_user_name_text</item>
-    <item name="fontFamily">@font/title_typeface</item>
   </style>
 
   <style name="ThemeOverlay.About.AppBar" parent="ThemeOverlay.AppCompat.Light">
@@ -620,5 +620,15 @@
   </style>
 
   <style name="TextAppearance.Squanchy.FirstStartWithNoNetwork.Cancel" parent="TextAppearance.Squanchy.Button.Colored" />
+
+  <style name="Squanchy.PreferenceListHeader" parent="None">
+    <item name="android:fontFamily">@font/title_typeface</item>
+    <item name="fontFamily">@font/title_typeface</item>
+    <item name="android:textAppearance">@android:style/TextAppearance.Material.Body2</item>
+    <item name="android:textColor">?android:attr/colorAccent</item>
+    <item name="android:paddingStart">?android:attr/listPreferredItemPaddingStart</item>
+    <item name="android:paddingEnd">?android:attr/listPreferredItemPaddingEnd</item>
+    <item name="android:paddingTop">@dimen/preference_header_margin_vertical</item>
+  </style>
 
 </resources>
