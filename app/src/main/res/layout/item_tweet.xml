@@ -15,7 +15,7 @@
     android:orientation="vertical">
 
     <TextView
-      android:id="@+id/tweet_text"
+      android:id="@+id/tweetText"
       style="@style/Tweet.Title"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -23,28 +23,28 @@
       tools:text="This is a tweet I wrote to show how it looks" />
 
     <ImageView
-      android:id="@+id/tweet_photo"
+      android:id="@+id/tweetPhoto"
       style="@style/Tweet.Photo"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/tweet_photo_margin_top" />
 
     <net.squanchy.tweets.view.TweetFooterView
-      android:id="@+id/tweet_footer"
+      android:id="@+id/tweetFooter"
       style="@style/Tweet.Footer"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/tweet_footer_margin_top">
 
       <net.squanchy.support.widget.CircleImageView
-        android:id="@+id/tweet_user_photo"
+        android:id="@+id/tweetUserPhoto"
         style="@style/Tweet.Photo"
         android:layout_width="@dimen/tweet_footer_user_photo_size"
         android:layout_height="@dimen/tweet_footer_user_photo_size"
         android:layout_margin="@dimen/tweet_footer_user_photo_margin" />
 
       <TextView
-        android:id="@+id/tweet_footer_text"
+        android:id="@+id/tweetFooterText"
         style="@style/Tweet.Footer.Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
