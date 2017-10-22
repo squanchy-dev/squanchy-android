@@ -58,10 +58,9 @@
     <item name="fontFamily">@font/title_typeface</item>
   </style>
 
-  <style name="TextAppearance.Squanchy.Card.Speaker" parent="None">
-    <item name="android:textColor">?android:textColorSecondary</item>
-    <item name="android:textSize">@dimen/card_speaker</item>
-    <item name="fontFamily">@font/default_typeface_medium</item>
+  <style name="ThemeOverlay.Squanchy.Home.BottomNavigationBar" parent="None">
+    <item name="android:fontFamily">@font/default_typeface_regular</item>
+    <item name="fontFamily">@font/default_typeface_regular</item>
   </style>
 
   <style name="Schedule.Card.Timestamp" parent="None">
@@ -106,6 +105,12 @@
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.Card.Speaker</item>
   </style>
 
+  <style name="TextAppearance.Squanchy.Card.Speaker" parent="None">
+    <item name="android:textColor">?android:textColorSecondary</item>
+    <item name="android:textSize">@dimen/card_speaker</item>
+    <item name="fontFamily">@font/default_typeface_medium</item>
+  </style>
+
   <style name="Search.Appbar" parent="Widget.Design.AppBarLayout">
     <item name="android:elevation">@dimen/toolbar_elevation</item>
   </style>
@@ -125,12 +130,15 @@
 
   <style name="Search.SectionHeader" parent="TextAppearance.AppCompat.Body1">
     <item name="android:textColor">?android:colorPrimary</item>
+    <item name="android:fontFamily">@font/title_typeface</item>
     <item name="fontFamily">@font/title_typeface</item>
   </style>
 
   <style name="Search.Caption" parent="TextAppearance.AppCompat.Caption">
     <item name="android:maxLines">2</item>
     <item name="android:textColor">?android:textColorSecondary</item>
+    <item name="android:fontFamily">@font/default_typeface_regular</item>
+    <item name="fontFamily">@font/default_typeface_regular</item>
   </style>
 
   <style name="Search.EditText" parent="None">
@@ -139,6 +147,8 @@
     <item name="android:imeOptions">actionSearch</item>
     <item name="android:inputType">text</item>
     <item name="android:maxLines">1</item>
+    <item name="android:fontFamily">@font/default_typeface_medium</item>
+    <item name="fontFamily">@font/default_typeface_medium</item>
   </style>
 
   <style name="Search.GenericItem" parent="None">
@@ -151,6 +161,7 @@
     <item name="android:textColor">?android:textColorSecondary</item>
     <item name="android:textSize">@dimen/search_empty_state_text</item>
     <item name="fontFamily">@font/default_typeface_light</item>
+    <item name="android:fontFamily">@font/default_typeface_light</item>
   </style>
 
   <style name="EventDetails.Header.Speaker.Names" parent="None">
@@ -376,12 +387,12 @@
   <style name="Settings.Header.User.Name" parent="None">
     <item name="android:maxLines">2</item>
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.Settings.Header.User.Name</item>
+    <item name="fontFamily">@font/title_typeface</item>
   </style>
 
   <style name="TextAppearance.Squanchy.Settings.Header.User.Name" parent="None">
     <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">@dimen/settings_header_user_name_text</item>
-    <item name="fontFamily">@font/title_typeface</item>
   </style>
 
   <style name="ThemeOverlay.About.AppBar" parent="ThemeOverlay.AppCompat.Light">
@@ -425,7 +436,7 @@
   </style>
 
   <style name="TextAppearance.Squanchy.About.Squanchy" parent="None">
-    <item name="android:textColor">@color/primary_dark_text_blue</item>
+    <item name="android:textColor">@color/primary_dark_azure</item>
     <item name="android:textSize">@dimen/about_squanchy_text</item>
     <item name="fontFamily">@font/title_typeface</item>
   </style>
@@ -437,6 +448,7 @@
 
   <style name="About.SquanchyWebsite" parent="About.BorderlessButton">
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.About.SquanchyWebsite</item>
+    <item name="android:padding">@dimen/about_squanchy_website_padding</item>
   </style>
 
   <style name="TextAppearance.Squanchy.About.SquanchyWebsite" parent="None">
@@ -609,5 +621,15 @@
   </style>
 
   <style name="TextAppearance.Squanchy.FirstStartWithNoNetwork.Cancel" parent="TextAppearance.Squanchy.Button.Colored" />
+
+  <style name="Squanchy.PreferenceListHeader" parent="None">
+    <item name="android:fontFamily">@font/title_typeface</item>
+    <item name="fontFamily">@font/title_typeface</item>
+    <item name="android:textAppearance">@android:style/TextAppearance.Material.Body2</item>
+    <item name="android:textColor">?android:attr/colorAccent</item>
+    <item name="android:paddingStart">?android:attr/listPreferredItemPaddingStart</item>
+    <item name="android:paddingEnd">?android:attr/listPreferredItemPaddingEnd</item>
+    <item name="android:paddingTop">@dimen/preference_header_margin_vertical</item>
+  </style>
 
 </resources>
