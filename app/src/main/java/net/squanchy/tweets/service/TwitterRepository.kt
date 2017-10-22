@@ -2,8 +2,6 @@ package net.squanchy.tweets.service
 
 import com.twitter.sdk.android.core.TwitterCore
 import com.twitter.sdk.android.core.models.Search
-import com.twitter.sdk.android.core.services.SearchService
-
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Call
@@ -17,7 +15,6 @@ class TwitterRepository {
             .subscribeOn(Schedulers.io())
     }
 
-    @Throws(Exception::class)
     private fun createSearchRequest(query: String): Call<Search> =
         searchService.tweets(query, null, null, null, "recent", MAX_ITEM_PER_REQUEST, null, null, null, true)
 

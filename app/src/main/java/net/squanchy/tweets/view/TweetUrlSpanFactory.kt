@@ -10,7 +10,7 @@ import net.squanchy.R
 
 class TweetUrlSpanFactory(private val context: Context) {
 
-    fun createFor(url: String): TweetUrlSpan {
+    internal fun createFor(url: String): TweetUrlSpan {
         val linkColor = getColorFromTheme(context.theme, R.attr.tweetLinkTextColor)
         return TweetUrlSpan(url, linkColor)
     }
