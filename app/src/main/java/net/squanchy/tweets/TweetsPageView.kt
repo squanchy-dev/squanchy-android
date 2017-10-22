@@ -23,23 +23,17 @@ class TweetsPageView @JvmOverloads constructor(
         defStyleAttr: Int = 0
 ) : CoordinatorLayout(context, attrs, defStyleAttr), Loadable {
 
-    private val twitterService: TwitterService
-    private val navigator: Navigator
+    private val component = twitterComponent(unwrapToActivityContext(context))
+    private val twitterService: TwitterService = component.service()
+    private val navigator: Navigator = component.navigator()
 
-    private val tweetClickListener: ((TweetLinkInfo) -> Unit)
+    private val tweetClickListener: ((TweetLinkInfo) -> Unit) = { navigator.toTweet(it) }
 
     private val tweetsAdapter = TweetsAdapter(context)
 
     private lateinit var query: String
     private lateinit var subscription: Disposable
     private var refreshingData: Boolean = false
-
-    init {
-        val component = twitterComponent(unwrapToActivityContext(context))
-        twitterService = component.service()
-        navigator = component.navigator()
-        tweetClickListener = { navigator.toTweet(it) }
-    }
 
     override fun onFinishInflate() {
         super.onFinishInflate()
