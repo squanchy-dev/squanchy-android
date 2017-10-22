@@ -58,10 +58,9 @@
     <item name="fontFamily">@font/title_typeface</item>
   </style>
 
-  <style name="TextAppearance.Squanchy.Card.Speaker" parent="None">
-    <item name="android:textColor">?android:textColorSecondary</item>
-    <item name="android:textSize">@dimen/card_speaker</item>
-    <item name="fontFamily">@font/default_typeface_medium</item>
+  <style name="ThemeOverlay.Squanchy.Home.BottomNavigationBar" parent="None">
+    <item name="android:fontFamily">@font/default_typeface_regular</item>
+    <item name="fontFamily">@font/default_typeface_regular</item>
   </style>
 
   <style name="Schedule.Card.Timestamp" parent="None">
@@ -104,6 +103,12 @@
     <item name="android:lineSpacingExtra">@dimen/card_speaker_line_spacing_extra</item>
     <item name="android:lineSpacingMultiplier">1</item>
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.Card.Speaker</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.Card.Speaker" parent="None">
+    <item name="android:textColor">?android:textColorSecondary</item>
+    <item name="android:textSize">@dimen/card_speaker</item>
+    <item name="fontFamily">@font/default_typeface_medium</item>
   </style>
 
   <style name="Search.Appbar" parent="Widget.Design.AppBarLayout">
