@@ -8,6 +8,8 @@
     <item name="colorControlNormal">@color/white</item>
     <item name="tweetLinkTextColor">@color/tweet_link</item>
     <item name="toolbarStyle">@style/Squanchy.Toolbar</item>
+    <item name="android:fontFamily">@font/default_typeface_regular</item>
+    <item name="fontFamily">@font/default_typeface_regular</item>
     <item name="android:statusBarColor">@color/status_bar</item>
     <item name="android:textColorPrimary">@color/selector_text_color_primary</item>
     <item name="android:textColorPrimaryInverse">@color/text_inverse</item>
