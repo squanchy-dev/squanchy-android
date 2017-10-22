@@ -14,7 +14,7 @@ import net.squanchy.tweets.domain.view.TweetViewModel
 
 class TweetsAdapter(private val context: Context) : RecyclerView.Adapter<TweetViewHolder>() {
 
-    private var tweets: List<TweetViewModel> = listOf()
+    private var tweets: List<TweetViewModel> = emptyList()
     private lateinit var listener: TweetItemView.OnTweetClickedListener
 
     val isEmpty: Boolean
