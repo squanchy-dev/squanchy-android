@@ -35,7 +35,7 @@ class TweetsPageView @JvmOverloads constructor(
     private var refreshingData: Boolean = false
 
     init {
-        val component = TwitterInjector.obtain(unwrapToActivityContext(getContext()))
+        val component = twitterComponent(unwrapToActivityContext(context))
         twitterService = component.service()
         navigator = component.navigator()
         tweetClickListener = { navigator.toTweet(it) }
@@ -59,14 +59,8 @@ class TweetsPageView @JvmOverloads constructor(
         toolbar.inflateMenu(R.menu.homepage)
         toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
-                R.id.action_search -> {
-                    navigator.toSearch()
-                    true
-                }
-                R.id.action_settings -> {
-                    navigator.toSettings()
-                    true
-                }
+                R.id.action_search -> { navigator.toSearch(); true }
+                R.id.action_settings -> { navigator.toSettings(); true }
                 else -> false
             }
         }
