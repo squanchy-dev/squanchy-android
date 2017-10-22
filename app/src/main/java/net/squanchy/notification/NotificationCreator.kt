@@ -197,9 +197,7 @@ class NotificationCreator(private val context: Context) {
         private val EVENTS_ABOUT_TO_START_CHANNEL_ID = "events_about_to_start"
 
         // pulsate every 1 second, indicating a relatively high degree of urgency
-        @SuppressWarnings("MagicNumber")
         private val NOTIFICATION_LED_ON_MS = 100
-        @SuppressWarnings("MagicNumber")
         private val NOTIFICATION_LED_OFF_MS = 1000
         private val ARGB_TRANSPARENT = "#00000000"
     }
