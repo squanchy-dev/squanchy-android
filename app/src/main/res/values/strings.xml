@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE resources [
+  <!ENTITY nbsp "&#160;">
+  <!ENTITY thinsp "&#8201;">
+  ]>
+
 <resources>
 
   <string name="activity_social_feed">@string/social_query</string>
@@ -76,13 +81,14 @@
   <string name="favorites_empty_state_signed_out_cta">SIGN IN</string>
   <string name="favorites_empty_state_signed_in_blurb">You haven’t picked any favorites yet.\n\n1️⃣ Find a talk you like.\n2️⃣ Aim for the big ♥ button.\n3️⃣ That’s it. Really.</string>
   <string name="favorites_achievement_fast_learner"><![CDATA[Achievement Unlocked: <b>The Fast Learner</b>]]></string>
-  <string name="favorites_achievement_persevering"><![CDATA[Achievement Unlocked: <b>The harder you try, the luckier you get.</b> Now give it a rest.]]></string>
+  <string
+    name="favorites_achievement_persevering"><![CDATA[Achievement Unlocked: <b>The harder you try, the luckier you get.</b> Now give it a rest.]]></string>
 
   <string name="about_label">About</string>
   <string name="about_powered_by">is powered by</string>
-  <string name="squanchy" translatable="false">&#8201;Squanchy&#8201;</string>
+  <string name="squanchy" translatable="false">&thinsp;Squanchy&thinsp;</string>
   <string name="squanchy_website" translatable="false">https://squanchy.net</string>
-  <string name="about_opensource_blurb">This&#160;app&#32;is&#160;proudly&#32;open&#160;source&#32;and&#32;any&#32;contribution&#32;is&#160;welcome.</string>
+  <string name="about_opensource_blurb">This&nbsp;app is&nbsp;proudly open&nbsp;source and any contribution is&nbsp;welcome.</string>
   <string name="about_fork_me">Fork me on GitHub</string>
   <string name="about_licenses">Open source licenses</string>
 
@@ -95,7 +101,8 @@
 
   <string name="onboarding_account_label">Sign in</string>
   <string name="onboarding_account_title">Sign in with Google</string>
-  <string name="onboarding_account_blurb">Get&#160;your&#160;favourites&#160;synced&#32;across&#160;devices&#32;in&#160;one&#160;tap&#32;by&#160;signing&#160;in&#32;with&#160;your&#160;Google&#160;account</string>
+  <string name="onboarding_account_blurb">Get&nbsp;your&nbsp;favourites&nbsp;synced across&nbsp;devices in&nbsp;one&nbsp;tap
+    by&nbsp;signing&nbsp;in with&nbsp;your&nbsp;Google&nbsp;account</string>
   <string name="onboarding_account_cta">Sure, let’s!</string>
 
   <string name="routing_sign_in_unexpected_error">Something went very wrong while starting Squanchy, sorry.</string>
@@ -103,7 +110,8 @@
   <string name="first_start_with_no_network_label">Not so fast!</string>
   <string name="first_start_with_no_network_network_connected">Yay, network is back!</string>
   <string name="first_start_with_no_network_title">Not so fast!</string>
-  <string name="first_start_with_no_network_blurb">Unfortunately, the first time you open this app you will need to be connected to the internet.</string>
+  <string
+    name="first_start_with_no_network_blurb">Unfortunately, the first time you open this app you will need to be connected to the internet.</string>
   <string name="first_start_with_no_network_cta">Go ahead, connect to a network. I’ll be waiting.</string>
   <string name="first_start_with_no_network_cancel_button">You know what, nevermind</string>
 
