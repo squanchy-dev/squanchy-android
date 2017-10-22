@@ -3,10 +3,11 @@ package net.squanchy.tweets.view
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
-import kotlinx.android.synthetic.main.item_tweet.view.*
 import net.squanchy.R
 import net.squanchy.imageloader.ImageLoaderInjector
 import net.squanchy.support.unwrapToActivityContext
+import kotlinx.android.synthetic.main.item_tweet.view.tweetUserPhoto
+import kotlinx.android.synthetic.main.item_tweet.view.tweetFooterText
 
 class TweetFooterView @JvmOverloads constructor(
         context: Context,
