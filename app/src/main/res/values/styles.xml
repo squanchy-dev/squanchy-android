@@ -436,7 +436,7 @@
   </style>
 
   <style name="TextAppearance.Squanchy.About.Squanchy" parent="None">
-    <item name="android:textColor">@color/primary_dark_text_blue</item>
+    <item name="android:textColor">@color/primary_dark_azure</item>
     <item name="android:textSize">@dimen/about_squanchy_text</item>
     <item name="fontFamily">@font/title_typeface</item>
   </style>
@@ -448,6 +448,7 @@
 
   <style name="About.SquanchyWebsite" parent="About.BorderlessButton">
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.About.SquanchyWebsite</item>
+    <item name="android:padding">@dimen/about_squanchy_website_padding</item>
   </style>
 
   <style name="TextAppearance.Squanchy.About.SquanchyWebsite" parent="None">
