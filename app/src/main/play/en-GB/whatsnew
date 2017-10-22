@@ -1,6 +1,4 @@
-Version 1.0.0
+Version 1.0.1
 
- * First release 💃
- * Data from your favourite Android conference in London
-   ⚠️ All this stuff is absolutely not affiliated with said conference! ⚠️
- * Minor UI and code improvements here and there
+ * Fix: some UI elements weren't being styled properly
+ * Fix: minor bugfixes
