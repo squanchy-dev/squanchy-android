@@ -125,12 +125,15 @@
 
   <style name="Search.SectionHeader" parent="TextAppearance.AppCompat.Body1">
     <item name="android:textColor">?android:colorPrimary</item>
+    <item name="android:fontFamily">@font/title_typeface</item>
     <item name="fontFamily">@font/title_typeface</item>
   </style>
 
   <style name="Search.Caption" parent="TextAppearance.AppCompat.Caption">
     <item name="android:maxLines">2</item>
     <item name="android:textColor">?android:textColorSecondary</item>
+    <item name="android:fontFamily">@font/default_typeface_regular</item>
+    <item name="fontFamily">@font/default_typeface_regular</item>
   </style>
 
   <style name="Search.EditText" parent="None">
@@ -139,6 +142,8 @@
     <item name="android:imeOptions">actionSearch</item>
     <item name="android:inputType">text</item>
     <item name="android:maxLines">1</item>
+    <item name="android:fontFamily">@font/default_typeface_medium</item>
+    <item name="fontFamily">@font/default_typeface_medium</item>
   </style>
 
   <style name="Search.GenericItem" parent="None">
@@ -151,6 +156,7 @@
     <item name="android:textColor">?android:textColorSecondary</item>
     <item name="android:textSize">@dimen/search_empty_state_text</item>
     <item name="fontFamily">@font/default_typeface_light</item>
+    <item name="android:fontFamily">@font/default_typeface_light</item>
   </style>
 
   <style name="EventDetails.Header.Speaker.Names" parent="None">
