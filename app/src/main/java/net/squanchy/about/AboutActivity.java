@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import net.squanchy.R;
 import net.squanchy.navigation.Navigator;
 
+import static net.squanchy.support.view.SystemUiKt.enableLightNavigationBar;
+
 public class AboutActivity extends AppCompatActivity {
 
     private static final String SQUANCHY_WEBSITE = "https://squanchy.net";
@@ -19,6 +21,7 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_about);
+        enableLightNavigationBar(this);
 
         setupToolbar();
 
