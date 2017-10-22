@@ -1,18 +1,12 @@
 package net.squanchy.tweets.view
 
 import android.content.Context
-import android.support.v7.app.AppCompatActivity
 import android.util.AttributeSet
-import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.TextView
 import kotlinx.android.synthetic.main.item_tweet.view.*
-
 import net.squanchy.R
-import net.squanchy.imageloader.ImageLoader
 import net.squanchy.imageloader.ImageLoaderInjector
-
-import net.squanchy.support.ContextUnwrapper.unwrapToActivityContext
+import net.squanchy.support.unwrapToActivityContext
 
 class TweetFooterView @JvmOverloads constructor(
         context: Context,

@@ -2,7 +2,6 @@ package net.squanchy.tweets
 
 import android.content.Context
 import android.support.design.widget.CoordinatorLayout
-import android.support.v7.widget.Toolbar
 import android.util.AttributeSet
 import android.view.View
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -11,7 +10,7 @@ import kotlinx.android.synthetic.main.view_page_tweets.view.*
 import net.squanchy.R
 import net.squanchy.home.Loadable
 import net.squanchy.navigation.Navigator
-import net.squanchy.support.ContextUnwrapper.*
+import net.squanchy.support.unwrapToActivityContext
 import net.squanchy.tweets.domain.TweetLinkInfo
 import net.squanchy.tweets.domain.view.TweetViewModel
 import net.squanchy.tweets.service.TwitterService
@@ -36,8 +35,7 @@ class TweetsPageView @JvmOverloads constructor(
     private var refreshingData: Boolean = false
 
     init {
-        val activity = unwrapToActivityContext(getContext())
-        val component = TwitterInjector.obtain(activity)
+        val component = TwitterInjector.obtain(unwrapToActivityContext(getContext()))
         twitterService = component.service()
         navigator = component.navigator()
         tweetClickListener = { navigator.toTweet(it) }
