@@ -1,15 +1,11 @@
 package net.squanchy.tweets
 
 import android.app.Activity
-
-import net.squanchy.tweets.service.TweetModelConverter
-import net.squanchy.tweets.service.TweetSpannedTextBuilder
+import dagger.Module
+import dagger.Provides
 import net.squanchy.tweets.service.TwitterRepository
 import net.squanchy.tweets.service.TwitterService
 import net.squanchy.tweets.view.TweetUrlSpanFactory
-
-import dagger.Module
-import dagger.Provides
 
 @Module
 internal class TwitterModule {
@@ -18,16 +14,10 @@ internal class TwitterModule {
     fun twitterRepository() = TwitterRepository()
 
     @Provides
-    fun tweetSpannedTextBuilder(activity: Activity): TweetSpannedTextBuilder {
-        val spanFactory = TweetUrlSpanFactory(activity)
-        return TweetSpannedTextBuilder(spanFactory)
-    }
+    fun provideUrlSpanFactory(activity: Activity): TweetUrlSpanFactory =
+        TweetUrlSpanFactory(activity)
 
     @Provides
-    fun tweetModelConverter(tweetSpannedTextBuilder: TweetSpannedTextBuilder) =
-        TweetModelConverter(tweetSpannedTextBuilder)
-
-    @Provides
-    fun twitterService(repository: TwitterRepository, modelConverter: TweetModelConverter) =
-        TwitterService(repository, modelConverter)
+    fun twitterService(repository: TwitterRepository, factory: TweetUrlSpanFactory) =
+        TwitterService(repository, factory)
 }

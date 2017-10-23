@@ -116,14 +116,14 @@ public class HomeActivity extends AppCompatActivity {
     private void collectPageViewsInto(Map<BottomNavigationSection, View> pageViews) {
         pageViews.put(BottomNavigationSection.SCHEDULE, pageContainer.findViewById(R.id.schedule_content_root));
         pageViews.put(BottomNavigationSection.FAVORITES, pageContainer.findViewById(R.id.favorites_content_root));
-        pageViews.put(BottomNavigationSection.TWEETS, pageContainer.findViewById(R.id.tweets_content_root));
+        pageViews.put(BottomNavigationSection.TWEETS, pageContainer.findViewById(R.id.tweetsContentRoot));
         pageViews.put(BottomNavigationSection.VENUE_INFO, pageContainer.findViewById(R.id.venueContentRoot));
     }
 
     private void collectLoadablesInto(List<Loadable> loadables) {
         loadables.add(pageContainer.findViewById(R.id.schedule_content_root));
         loadables.add(pageContainer.findViewById(R.id.favorites_content_root));
-        loadables.add(pageContainer.findViewById(R.id.tweets_content_root));
+        loadables.add(pageContainer.findViewById(R.id.tweetsContentRoot));
         loadables.add(pageContainer.findViewById(R.id.venueContentRoot));
     }
 

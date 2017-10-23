@@ -10,12 +10,13 @@ import java.util.ArrayList
 import java.util.Collections
 
 import net.squanchy.R
+import net.squanchy.tweets.domain.TweetLinkInfo
 import net.squanchy.tweets.domain.view.TweetViewModel
 
 class TweetsAdapter(private val context: Context) : RecyclerView.Adapter<TweetViewHolder>() {
 
     private var tweets: List<TweetViewModel> = emptyList()
-    private lateinit var listener: TweetItemView.OnTweetClickedListener
+    private lateinit var listener: (TweetLinkInfo) -> Unit
 
     val isEmpty: Boolean
         get() = tweets.isEmpty()
@@ -31,7 +32,7 @@ class TweetsAdapter(private val context: Context) : RecyclerView.Adapter<TweetVi
 
     override fun getItemCount() = tweets.size
 
-    fun updateWith(tweets: List<TweetViewModel>, listener: TweetItemView.OnTweetClickedListener) {
+    fun updateWith(tweets: List<TweetViewModel>, listener: (TweetLinkInfo) -> Unit) {
         this.tweets = tweets
         this.listener = listener
         notifyDataSetChanged()

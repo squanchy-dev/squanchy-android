@@ -11,7 +11,7 @@ import android.view.View
 
 import timber.log.Timber
 
-class TweetUrlSpan internal constructor(
+internal class TweetUrlSpan(
         private val url: String,
         private val linkColor: Int
 ) : ClickableSpan() {

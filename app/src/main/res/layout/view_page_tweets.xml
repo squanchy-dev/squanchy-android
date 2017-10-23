@@ -2,7 +2,7 @@
 <net.squanchy.tweets.TweetsPageView xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/tweets_content_root"
+  android:id="@+id/tweetsContentRoot"
   android:theme="@style/Theme.Squanchy.Tweets"
   android:layout_width="match_parent"
   android:layout_height="match_parent">
@@ -27,11 +27,11 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <TextView
-      android:id="@+id/empty_view"
+      android:id="@+id/tweetEmptyView"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
-      android:layout_margin="64dp"
+      android:layout_margin="@dimen/tweet_empty_view_margin"
       android:gravity="center"
       android:text="@string/no_tweets_for_query"
       android:textAppearance="@style/TextAppearance.AppCompat.Display1"
@@ -39,12 +39,12 @@
       tools:visibility="visible" />
 
     <android.support.v4.widget.SwipeRefreshLayout
-      android:id="@+id/swipe_refresh_container"
+      android:id="@+id/swipeRefreshContainer"
       android:layout_width="match_parent"
       android:layout_height="match_parent">
 
       <net.squanchy.tweets.view.TweetFeedView
-        android:id="@+id/tweet_feed"
+        android:id="@+id/tweetFeed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
