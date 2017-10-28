@@ -11,6 +11,8 @@ import android.text.Spanned;
 import android.util.AttributeSet;
 import android.view.View;
 
+import java.util.List;
+
 import net.squanchy.R;
 import net.squanchy.analytics.Analytics;
 import net.squanchy.analytics.ContentType;
@@ -18,9 +20,12 @@ import net.squanchy.home.Loadable;
 import net.squanchy.navigation.Navigator;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.schedule.domain.view.Schedule;
+import net.squanchy.schedule.domain.view.SchedulePage;
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter;
 import net.squanchy.support.font.FontCompat;
 import net.squanchy.support.font.TypefaceCompat;
+
+import org.joda.time.LocalDate;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -30,12 +35,17 @@ import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 
 public class SchedulePageView extends CoordinatorLayout implements Loadable {
 
+    private static final int NO_PAGE = -1;
+
     private View progressBar;
+    private ViewPager viewPager;
     private Disposable subscription;
     private final ScheduleViewPagerAdapter viewPagerAdapter;
     private final ScheduleService service;
     private final Navigator navigate;
     private final Analytics analytics;
+
+    private int currentPage = NO_PAGE;
 
     public SchedulePageView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -59,12 +69,28 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
 
         progressBar = findViewById(R.id.progressbar);
 
-        ViewPager viewPager = findViewById(R.id.viewpager);
+        viewPager = findViewById(R.id.viewpager);
         TabLayout tabLayout = findViewById(R.id.tabstrip);
         tabLayout.setupWithViewPager(viewPager);
         hackToApplyTypefaces(tabLayout);
 
         viewPager.setAdapter(viewPagerAdapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                //nothing to do
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                currentPage = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                //nothing to do
+            }
+        });
 
         tabLayout.addOnTabSelectedListener(new TrackingOnTabSelectedListener(analytics, viewPagerAdapter));
 
@@ -135,8 +161,23 @@ public class SchedulePageView extends CoordinatorLayout implements Loadable {
     }
 
     public void updateWith(Schedule schedule, ScheduleViewPagerAdapter.OnEventClickedListener listener) {
-        viewPagerAdapter.updateWith(schedule.getPages(), listener);
+        List<SchedulePage> pages = schedule.getPages();
+        viewPagerAdapter.updateWith(pages, listener);
+        if (currentPage == NO_PAGE) {
+            viewPager.setCurrentItem(findTodayIndexOrDefault(pages));
+        }
         progressBar.setVisibility(GONE);
+    }
+
+    private int findTodayIndexOrDefault(List<SchedulePage> pages) {
+        LocalDate now = LocalDate.now();
+        for (int i = 0; i < pages.size(); i++) {
+            SchedulePage page = pages.get(i);
+            if (page.getDate().toLocalDate().equals(now)) {
+                return i;
+            }
+        }
+        return 0;
     }
 
     private static final class TrackingOnTabSelectedListener implements TabLayout.OnTabSelectedListener {
