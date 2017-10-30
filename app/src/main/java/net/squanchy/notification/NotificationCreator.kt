@@ -116,7 +116,7 @@ class NotificationCreator(private val context: Context) {
         val eventDetailIntent = EventDetailsActivity.createIntent(context, eventId)
         taskBuilder.addNextIntent(eventDetailIntent)
 
-        return taskBuilder.getPendingIntent(0, PendingIntent.FLAG_CANCEL_CURRENT)
+        return taskBuilder.getPendingIntent(0, PendingIntent.FLAG_CANCEL_CURRENT)!!
     }
 
     private fun getPlaceName(event: Event): String? {
@@ -131,7 +131,7 @@ class NotificationCreator(private val context: Context) {
 
     private fun createPendingIntentForMultipleEvents(): PendingIntent {
         val taskBuilder = createBaseTaskStackBuilder()
-        return taskBuilder.getPendingIntent(0, PendingIntent.FLAG_CANCEL_CURRENT)
+        return taskBuilder.getPendingIntent(0, PendingIntent.FLAG_CANCEL_CURRENT)!!
     }
 
     private fun createBaseTaskStackBuilder(): TaskStackBuilder {
