@@ -7,8 +7,8 @@ apply from: 'dependencies.gradle'
 
 buildscript {
     repositories {
-        jcenter()
         google()
+        jcenter()
     }
 
     apply from: 'dependencies.gradle'
@@ -26,16 +26,16 @@ buildscript {
 subprojects {
     buildscript {
         repositories {
-            jcenter()
             google()
+            jcenter()
             maven { url 'https://maven.fabric.io/public' }
             maven { url 'http://dl.bintray.com/arturbosch/code-analysis' }
         }
     }
 
     repositories {
-        jcenter()
         google()
+        jcenter()
         maven { url 'https://jitpack.io' }
     }
 
