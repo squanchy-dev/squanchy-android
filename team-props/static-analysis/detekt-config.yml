@@ -14,7 +14,7 @@ test-pattern: # Configure exclusions for test sources
     - 'WildcardImport'
     - 'MagicNumber'
     - 'MaxLineLength'
-    - 'LateInitUsage'
+    - 'LateinitUsage'
     - 'StringLiteralDuplication'
 
 build:
@@ -197,7 +197,7 @@ complexity:
     threshold: 5
   TooManyFunctions:
     active: false
-    threshold: 20
+    threshold: 10
   ComplexCondition:
     active: true
     threshold: 3
@@ -263,7 +263,7 @@ style:
     ignoreEnums: false
   WildcardImport:
     active: true
-    excludeImports: ''
+    excludeImports: 'java.util.*,kotlinx.android.synthetic.*'
   SafeCast:
     active: true
   MaxLineLength:
@@ -335,6 +335,8 @@ style:
     active: false
   FunctionOnlyReturningConstant:
     active: false
+    ignoreOverridableFunction: true
+    excludedFunctions: 'describeContents'
 
 comments:
   active: true

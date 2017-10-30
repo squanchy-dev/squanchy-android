@@ -1,14 +1,7 @@
-def teamPropsFile(propsFile) {
-    def teamPropsDir = file('team-props')
-    return new File(teamPropsDir, propsFile)
-}
-
-apply from: 'dependencies.gradle'
-
 buildscript {
     repositories {
-        jcenter()
         google()
+        jcenter()
     }
 
     apply from: 'dependencies.gradle'
@@ -23,19 +16,36 @@ buildscript {
     }
 }
 
+plugins {
+    id 'io.gitlab.arturbosch.detekt' version '1.0.0.RC5-3'
+}
+
+def teamPropsFile(propsFile) {
+    def teamPropsDir = file('team-props')
+    return new File(teamPropsDir, propsFile)
+}
+
+apply from: 'dependencies.gradle'
+
+detekt {
+    profile('main') {
+        filters = '.*'        // Nothing to check in the root project
+    }
+}
+
 subprojects {
     buildscript {
         repositories {
-            jcenter()
             google()
+            jcenter()
             maven { url 'https://maven.fabric.io/public' }
             maven { url 'http://dl.bintray.com/arturbosch/code-analysis' }
         }
     }
 
     repositories {
-        jcenter()
         google()
+        jcenter()
         maven { url 'https://jitpack.io' }
     }
 

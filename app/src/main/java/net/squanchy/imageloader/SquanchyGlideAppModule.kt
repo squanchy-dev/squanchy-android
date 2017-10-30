@@ -86,7 +86,7 @@ private class FirebaseImageLoader : ModelLoader<StorageReference, InputStream> {
             try {
                 inputStream?.close()
             } catch (e: IOException) {
-                Timber.w("Could not close stream", e)
+                Timber.w(e, "Could not close stream")
             }
         }
     }

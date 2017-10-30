@@ -7,7 +7,7 @@ buildscript {
 }
 
 plugins {
-    id 'io.gitlab.arturbosch.detekt' version '1.0.0.RC5'
+    id 'io.gitlab.arturbosch.detekt'
 }
 
 apply plugin: 'com.android.application'
@@ -67,7 +67,7 @@ android {
         resValueProperty 'deeplink_scheme', (buildProperties.application['deeplinkScheme'] | "squanchy")
     }
 
-    if (System.getenv('CI') == null) {
+    if (isNotRunningOnCI()) {
         signingConfigs {
             config {
                 signingConfigProperties buildProperties.releaseSigningConfig
@@ -100,18 +100,30 @@ android {
     }
 }
 
+private static boolean isNotRunningOnCI() {
+    System.getenv('CI') == null
+}
+
 play {
     jsonFile = teamPropsFile('play-store-keys.json')
 }
 
 detekt {
-    version = '1.0.0.RC5'
+    profile = 'main'
 
     profile('main') {
         input = "$projectDir/src/main/java"
         config = teamPropsFile('static-analysis/detekt-config.yml')
         filters = '.*test.*,.*/resources/.*,.*/tmp/.*'
         output = "$projectDir/build/reports/detekt"
+    }
+
+    idea {
+        path = "$rootDir/.idea"
+        codeStyleScheme = "$rootDir/.idea/codeStyleSettings.xml"
+        inspectionsProfile = "$rootDir/.idea/inspectionProfiles/Squanchy.xml"
+        report = "$projectDir/build/reports/detekt-idea"
+        mask = "*.kt,"
     }
 }
 
