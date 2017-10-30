@@ -36,7 +36,7 @@ ext {
                     kotlin             : "org.jetbrains.kotlin:kotlin-stdlib-jre7:${kotlinVersion}",
                     playServicesAuth   : "com.google.android.gms:play-services-auth:${playServicesVersion}",
                     retrolambda        : 'net.orfjackal.retrolambda:retrolambda:2.5.0',
-                    rxJava             : 'io.reactivex.rxjava2:rxjava:2.1.5',
+                    rxJava             : 'io.reactivex.rxjava2:rxjava:2.1.6',
                     rxAndroid          : 'io.reactivex.rxjava2:rxandroid:2.0.1',
                     supportAppCompat   : "com.android.support:appcompat-v7:${supportLibVersion}",
                     supportConstraint  : 'com.android.support.constraint:constraint-layout:1.1.0-beta3',
