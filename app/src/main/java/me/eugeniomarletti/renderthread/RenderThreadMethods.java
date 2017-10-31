@@ -22,7 +22,7 @@ import timber.log.Timber;
 @SuppressLint("PrivateApi")     // This class wraps the private APIs we rely on
 final class RenderThreadMethods {
 
-    private static final int MAX_SUPPORTED_ANDROID_VERSION = 25;
+    private static final int MAX_SUPPORTED_ANDROID_VERSION = 27;
     private static final int MIN_SUPPORTED_ANDROID_VERSION = 21;
 
     @NonNull
