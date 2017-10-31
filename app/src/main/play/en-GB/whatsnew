@@ -1,4 +1,4 @@
-Version 1.0.1
+Version 1.0.2
 
- * Fix: some UI elements weren't being styled properly
- * Fix: minor bugfixes
+ * Fix: missing circular reveals in the bottom navigation bar
+ * Some under the hood fixes and improvements
