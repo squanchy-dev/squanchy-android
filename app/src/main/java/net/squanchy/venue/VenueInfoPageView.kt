@@ -20,7 +20,7 @@ import net.squanchy.home.Loadable
 import net.squanchy.imageloader.ImageLoader
 import net.squanchy.imageloader.ImageLoaderInjector
 import net.squanchy.navigation.Navigator
-import net.squanchy.support.ContextUnwrapper.unwrapToActivityContext
+import net.squanchy.support.unwrapToActivityContext
 import net.squanchy.venue.domain.view.Venue
 
 class VenueInfoPageView : CoordinatorLayout, Loadable {
