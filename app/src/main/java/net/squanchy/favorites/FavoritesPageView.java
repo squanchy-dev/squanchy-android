@@ -46,7 +46,7 @@ public class FavoritesPageView extends CoordinatorLayout implements Loadable {
 
         if (!isInEditMode()) {
             AppCompatActivity activity = unwrapToActivityContext(getContext());
-            FavoritesComponent component = FavoritesInjector.obtain(activity);
+            FavoritesComponent component = FavoritesComponentKt.favoritesComponent(activity);
             service = component.service();
             navigate = component.navigator();
             analytics = component.analytics();
