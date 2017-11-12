@@ -46,15 +46,15 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         setupToolbar();
 
-        EventDetailsComponent component = EventDetailsInjector.obtain(this);
+        EventDetailsComponent component = EventDetailsInjectorKt.eventDetailsComponent(this);
         service = component.service();
         navigator = component.navigator();
 
-        coordinatorLayout = (EventDetailsCoordinatorLayout) findViewById(R.id.event_details_root);
+        coordinatorLayout = findViewById(R.id.event_details_root);
     }
 
     private void setupToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
