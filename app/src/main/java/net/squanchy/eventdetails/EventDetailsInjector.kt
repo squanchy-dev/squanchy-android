@@ -4,7 +4,7 @@ import net.squanchy.injection.ActivityContextModule
 import net.squanchy.injection.ApplicationInjector
 import net.squanchy.navigation.NavigationModule
 
-internal fun eventDetailsComponent(activity: EventDetailsActivity) : EventDetailsComponent {
+internal fun eventDetailsComponent(activity: EventDetailsActivity): EventDetailsComponent {
     return DaggerEventDetailsComponent.builder()
         .applicationComponent(ApplicationInjector.obtain(activity))
         .eventDetailsModule(EventDetailsModule())

@@ -10,7 +10,6 @@ import android.view.MenuItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import net.squanchy.R
-import net.squanchy.eventdetails.EventDetailsService.*
 import net.squanchy.eventdetails.widget.EventDetailsCoordinatorLayout
 import net.squanchy.navigation.Navigator
 import net.squanchy.notification.NotificationsIntentService
@@ -82,7 +81,7 @@ class EventDetailsActivity : AppCompatActivity() {
             override fun onFavoriteClick() {
                 subscriptions.add(
                         service.toggleFavorite(event).subscribe { result ->
-                            if (result === FavoriteResult.MUST_AUTHENTICATE) {
+                            if (result === EventDetailsService.FavoriteResult.MUST_AUTHENTICATE) {
                                 requestSignIn()
                             } else {
                                 triggerNotificationService()
