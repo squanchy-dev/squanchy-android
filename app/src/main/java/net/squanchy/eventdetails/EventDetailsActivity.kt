@@ -109,14 +109,11 @@ class EventDetailsActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_search) {
-            navigate().toSearch()
-            return true
-        } else if (item.itemId == android.R.id.home) {
-            finish()
-            return true
+        return when(item.itemId) {
+            R.id.action_search -> { navigate().toSearch(); true }
+            android.R.id.home -> { finish(); true }
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun navigate(): Navigator = navigator
@@ -134,12 +131,12 @@ class EventDetailsActivity : AppCompatActivity() {
     companion object {
 
         private val EXTRA_EVENT_ID = EventDetailsActivity::class.java.canonicalName + ".event_id"
-        private val REQUEST_CODE_SIGNIN = 1235
+        private const val REQUEST_CODE_SIGNIN = 1235
 
         fun createIntent(context: Context, eventId: String): Intent {
-            val intent = Intent(context, EventDetailsActivity::class.java)
-            intent.putExtra(EXTRA_EVENT_ID, eventId)
-            return intent
+            return Intent(context, EventDetailsActivity::class.java).apply {
+                putExtra(EXTRA_EVENT_ID, eventId)
+            }
         }
     }
 }

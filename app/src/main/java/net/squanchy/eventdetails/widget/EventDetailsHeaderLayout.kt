@@ -28,6 +28,6 @@ class EventDetailsHeaderLayout(context: Context, attrs: AttributeSet) : AppBarLa
         titleView.visibility = View.VISIBLE
 
         speakerView.visibility = if (event.speakers.isEmpty()) View.GONE else View.VISIBLE
-        speakerView.updateWith(event.speakers, Optional.of<SpeakerView.OnSpeakerClickListener>(listener))
+        speakerView.updateWith(event.speakers, Optional.of(listener))
     }
 }

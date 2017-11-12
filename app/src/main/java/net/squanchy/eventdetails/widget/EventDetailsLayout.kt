@@ -6,6 +6,7 @@ import android.content.res.Resources
 import android.os.Build
 import android.support.annotation.AttrRes
 import android.support.annotation.ColorInt
+import android.support.v4.content.ContextCompat
 import android.text.Html
 import android.text.SpannableStringBuilder
 import android.text.Spanned
@@ -113,11 +114,11 @@ class EventDetailsLayout @JvmOverloads constructor(
     private fun tintCompoundDrawableEnd(experienceLevel: ExperienceLevel) {
         val compoundDrawables = levelTextView.compoundDrawablesRelative
         val endCompoundDrawable = compoundDrawables[2]
-        endCompoundDrawable?.setTint(resources.getColor(experienceLevel.colorResId))
+        endCompoundDrawable?.setTint(ContextCompat.getColor(context, experienceLevel.colorResId))
     }
 
-    private fun createColorSpan(targetView: View?, @AttrRes attributeResId: Int): ForegroundColorSpan {
-        val color = getColorFromTheme(targetView!!.context.theme, attributeResId)
+    private fun createColorSpan(targetView: View, @AttrRes attributeResId: Int): ForegroundColorSpan {
+        val color = getColorFromTheme(targetView.context.theme, attributeResId)
         return ForegroundColorSpan(color)
     }
 
