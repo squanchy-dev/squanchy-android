@@ -1,13 +1,13 @@
-package net.squanchy.eventdetails
+package net.squanchy.search
 
 import net.squanchy.injection.ActivityContextModule
 import net.squanchy.injection.applicationComponent
 import net.squanchy.navigation.NavigationModule
 
-internal fun eventDetailsComponent(activity: EventDetailsActivity) : EventDetailsComponent {
-    return DaggerEventDetailsComponent.builder()
+internal fun searchComponent(activity: SearchActivity): SearchComponent {
+    return DaggerSearchComponent.builder()
         .applicationComponent(activity.applicationComponent)
-        .eventDetailsModule(EventDetailsModule())
+        .searchModule(SearchModule())
         .activityContextModule(ActivityContextModule(activity))
         .navigationModule(NavigationModule())
         .build()

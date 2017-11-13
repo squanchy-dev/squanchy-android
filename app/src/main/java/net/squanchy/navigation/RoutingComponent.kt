@@ -5,7 +5,7 @@ import dagger.Component
 import net.squanchy.injection.ActivityContextModule
 import net.squanchy.injection.ActivityLifecycle
 import net.squanchy.injection.ApplicationComponent
-import net.squanchy.injection.ApplicationInjector
+import net.squanchy.injection.applicationComponent
 import net.squanchy.navigation.deeplink.DeepLinkModule
 import net.squanchy.navigation.deeplink.DeepLinkRouter
 import net.squanchy.onboarding.Onboarding
@@ -16,7 +16,7 @@ import net.squanchy.signin.SignInService
 internal fun routingComponent(activity: AppCompatActivity): RoutingComponent {
     return DaggerRoutingComponent.builder()
             .activityContextModule(ActivityContextModule(activity))
-            .applicationComponent(ApplicationInjector.obtain(activity))
+            .applicationComponent(activity.applicationComponent)
             .deepLinkModule(DeepLinkModule())
             .navigationModule(NavigationModule())
             .signInModule(SignInModule())

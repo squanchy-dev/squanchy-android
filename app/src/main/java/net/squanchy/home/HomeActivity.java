@@ -92,7 +92,7 @@ public class HomeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         selectPageFrom(intent, Optional.fromNullable(savedInstanceState));
 
-        HomeComponent homeComponent = HomeInjector.obtain(this);
+        HomeComponent homeComponent = HomeInjectorKt.homeComponent(this);
 
         analytics = homeComponent.analytics();
 

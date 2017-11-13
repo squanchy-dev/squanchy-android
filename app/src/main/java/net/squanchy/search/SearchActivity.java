@@ -74,7 +74,7 @@ public class SearchActivity extends AppCompatActivity implements SearchRecyclerV
         searchRecyclerView = findViewById(R.id.speakers_view);
         setupToolbar();
 
-        SearchComponent component = SearchInjector.obtain(this);
+        SearchComponent component = SearchInjectorKt.searchComponent(this);
         searchService = component.service();
         navigator = component.navigator();
     }

@@ -46,7 +46,7 @@ public class FavoritesPageView extends CoordinatorLayout implements Loadable {
 
         if (!isInEditMode()) {
             AppCompatActivity activity = unwrapToActivityContext(getContext());
-            FavoritesComponent component = FavoritesInjector.obtain(activity);
+            FavoritesComponent component = FavoritesInjectorKt.favouritesComponent(activity);
             service = component.service();
             navigate = component.navigator();
             analytics = component.analytics();
@@ -58,7 +58,7 @@ public class FavoritesPageView extends CoordinatorLayout implements Loadable {
         super.onFinishInflate();
 
         progressBar = findViewById(R.id.progressbar);
-        favoritesListView = (FavoritesListView) findViewById(R.id.favorites_list);
+        favoritesListView = findViewById(R.id.favorites_list);
         emptyViewSignedIn = findViewById(R.id.empty_view_signed_in);
         emptyViewSignedOut = findViewById(R.id.empty_view_signed_out);
 
@@ -76,7 +76,7 @@ public class FavoritesPageView extends CoordinatorLayout implements Loadable {
     }
 
     private void setupToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.activity_favorites);
         toolbar.inflateMenu(R.menu.homepage);
         toolbar.setOnMenuItemClickListener(item -> {

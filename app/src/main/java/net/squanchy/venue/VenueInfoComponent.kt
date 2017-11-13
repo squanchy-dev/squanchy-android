@@ -5,13 +5,13 @@ import dagger.Component
 import net.squanchy.injection.ActivityContextModule
 import net.squanchy.injection.ActivityLifecycle
 import net.squanchy.injection.ApplicationComponent
-import net.squanchy.injection.ApplicationInjector
+import net.squanchy.injection.applicationComponent
 import net.squanchy.navigation.NavigationModule
 import net.squanchy.navigation.Navigator
 
 internal fun venueInfoComponent(activity: AppCompatActivity): VenueInfoComponent {
     return DaggerVenueInfoComponent.builder()
-            .applicationComponent(ApplicationInjector.obtain(activity))
+            .applicationComponent(activity.applicationComponent)
             .navigationModule(NavigationModule())
             .venueInfoModule(VenueInfoModule())
             .activityContextModule(ActivityContextModule(activity))
