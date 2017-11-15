@@ -53,7 +53,7 @@ class EventDetailsActivity : AppCompatActivity() {
         subscribeToEvent(eventId)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_SIGNIN) {
             subscribeToEvent(eventId)
         } else {
