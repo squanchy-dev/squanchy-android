@@ -2,9 +2,11 @@ package net.squanchy.about
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.MenuItem
-import android.view.View
+import kotlinx.android.synthetic.main.activity_about.fossButton
+import kotlinx.android.synthetic.main.activity_about.githubButton
+import kotlinx.android.synthetic.main.activity_about.websiteButton
+import kotlinx.android.synthetic.main.activity_about.toolbar
 import net.squanchy.R
 import net.squanchy.support.view.enableLightNavigationBar
 
@@ -20,13 +22,12 @@ class AboutActivity : AppCompatActivity() {
 
         val navigator = aboutComponent(this).navigator()
 
-        findViewById<View>(R.id.website_button).setOnClickListener { navigator.toExternalUrl(SQUANCHY_WEBSITE) }
-        findViewById<View>(R.id.github_button).setOnClickListener { navigator.toExternalUrl(SQUANCHY_GITHUB) }
-        findViewById<View>(R.id.foss_button).setOnClickListener { navigator.toFossLicenses() }
+        websiteButton.setOnClickListener { navigator.toExternalUrl(SQUANCHY_WEBSITE) }
+        githubButton.setOnClickListener { navigator.toExternalUrl(SQUANCHY_GITHUB) }
+        fossButton.setOnClickListener { navigator.toFossLicenses() }
     }
 
     private fun setupToolbar() {
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }

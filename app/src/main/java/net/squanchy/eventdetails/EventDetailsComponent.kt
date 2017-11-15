@@ -7,11 +7,11 @@ import net.squanchy.navigation.Navigator
 
 import dagger.Component
 import net.squanchy.injection.ActivityContextModule
-import net.squanchy.injection.ApplicationInjector
+import net.squanchy.injection.applicationComponent
 
 internal fun eventDetailsComponent(activity: EventDetailsActivity): EventDetailsComponent {
     return DaggerEventDetailsComponent.builder()
-        .applicationComponent(ApplicationInjector.obtain(activity))
+        .applicationComponent(activity.applicationComponent)
         .eventDetailsModule(EventDetailsModule())
         .activityContextModule(ActivityContextModule(activity))
         .navigationModule(NavigationModule())
