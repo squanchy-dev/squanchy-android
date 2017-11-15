@@ -4,27 +4,21 @@ import android.content.Context
 import android.net.Uri
 import android.support.design.widget.AppBarLayout
 import android.util.AttributeSet
-import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.TextView
-
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserInfo
-
+import kotlinx.android.synthetic.main.activity_settings.view.userCirclePhotoView
+import kotlinx.android.synthetic.main.activity_settings.view.usernameTextView
 import net.squanchy.R
 import net.squanchy.imageloader.ImageLoader
 import net.squanchy.imageloader.ImageLoaderInjector
 import net.squanchy.support.lang.Lists
 import net.squanchy.support.lang.Optional
-
 import net.squanchy.support.unwrapToActivityContext
 
 class SettingsHeaderLayout(context: Context, attrs: AttributeSet?) : AppBarLayout(context, attrs) {
 
     private var imageLoader: ImageLoader? = null
-
-    private lateinit var userPhotoView: ImageView
-    private lateinit var userNameView: TextView
 
     init {
 
@@ -34,13 +28,6 @@ class SettingsHeaderLayout(context: Context, attrs: AttributeSet?) : AppBarLayou
         }
 
         super.setOrientation(LinearLayout.VERTICAL)
-    }
-
-    override fun onFinishInflate() {
-        super.onFinishInflate()
-
-        userPhotoView = findViewById(R.id.user_photo)
-        userNameView = findViewById(R.id.user_name)
     }
 
     fun updateWith(user: Optional<FirebaseUser>) {
@@ -56,7 +43,7 @@ class SettingsHeaderLayout(context: Context, attrs: AttributeSet?) : AppBarLayou
         if (googleUserInfo.isPresent) {
             val userInfo = googleUserInfo.get()
             updateUserPhotoFrom(userInfo)
-            userNameView.text = userInfo.displayName
+            usernameTextView.text = userInfo.displayName
         }
     }
 
@@ -77,9 +64,9 @@ class SettingsHeaderLayout(context: Context, attrs: AttributeSet?) : AppBarLayou
         if (photoUrl.isPresent) {
             imageLoader!!.load(photoUrl.get())
                 .error(R.drawable.ic_no_avatar)
-                .into(userPhotoView)
+                .into(userCirclePhotoView)
         } else {
-            userPhotoView.setImageResource(R.drawable.ic_no_avatar)
+            userCirclePhotoView.setImageResource(R.drawable.ic_no_avatar)
         }
     }
 
@@ -89,8 +76,8 @@ class SettingsHeaderLayout(context: Context, attrs: AttributeSet?) : AppBarLayou
     }
 
     private fun updateWithNoOrAnonymousUser() {
-        userPhotoView.setImageResource(R.drawable.avatar_not_signed_in)
-        userNameView.setText(R.string.settings_header_not_signed_in)
+        userCirclePhotoView.setImageResource(R.drawable.avatar_not_signed_in)
+        usernameTextView.setText(R.string.settings_header_not_signed_in)
     }
 
     companion object {

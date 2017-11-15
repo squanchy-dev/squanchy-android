@@ -2,27 +2,23 @@ package net.squanchy.settings
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.MenuItem
-
-import net.squanchy.R
-import net.squanchy.settings.view.SettingsHeaderLayout
-import net.squanchy.signin.SignInService
-
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import kotlinx.android.synthetic.main.activity_settings.settingsHeaderLayout
+import kotlinx.android.synthetic.main.activity_settings.toolbar
+import net.squanchy.R
+import net.squanchy.signin.SignInService
 
 class SettingsActivity : AppCompatActivity() {
 
     private lateinit var signInService: SignInService
-    private lateinit var headerLayout: SettingsHeaderLayout
     private lateinit var subscription: Disposable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_settings)
-        headerLayout = findViewById(R.id.settings_header)
 
         setupToolbar()
 
@@ -35,7 +31,6 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun setupToolbar() {
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
@@ -46,7 +41,7 @@ class SettingsActivity : AppCompatActivity() {
 
         subscription = signInService.currentUser()
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(headerLayout::updateWith)
+            .subscribe(settingsHeaderLayout::updateWith)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
