@@ -4,13 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import kotlinx.android.synthetic.main.activity_event_details.eventDetailsRoot
+import kotlinx.android.synthetic.main.activity_event_details.toolbar
 import net.squanchy.R
-import net.squanchy.eventdetails.EventDetailsService.*
 import net.squanchy.eventdetails.widget.EventDetailsCoordinatorLayout
 import net.squanchy.navigation.Navigator
 import net.squanchy.notification.NotificationsIntentService
@@ -22,7 +22,6 @@ class EventDetailsActivity : AppCompatActivity() {
     private val subscriptions = CompositeDisposable()
 
     private lateinit var service: EventDetailsService
-    private lateinit var coordinatorLayout: EventDetailsCoordinatorLayout
 
     private lateinit var navigator: Navigator
     private lateinit var eventId: String
@@ -38,12 +37,9 @@ class EventDetailsActivity : AppCompatActivity() {
             service = service()
             navigator = navigator()
         }
-
-        coordinatorLayout = findViewById(R.id.event_details_root)
     }
 
     private fun setupToolbar() {
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -57,7 +53,7 @@ class EventDetailsActivity : AppCompatActivity() {
         subscribeToEvent(eventId)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_SIGNIN) {
             subscribeToEvent(eventId)
         } else {
@@ -69,32 +65,32 @@ class EventDetailsActivity : AppCompatActivity() {
         subscriptions.add(
                 service.event(eventId)
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe { event -> coordinatorLayout.updateWith(event, onEventDetailsClickListener(event)) }
+                    .subscribe { event -> eventDetailsRoot.updateWith(event, onEventDetailsClickListener(event)) }
         )
     }
 
-    private fun onEventDetailsClickListener(event: Event): EventDetailsCoordinatorLayout.OnEventDetailsClickListener {
-        return object : EventDetailsCoordinatorLayout.OnEventDetailsClickListener {
+    private fun onEventDetailsClickListener(event: Event): EventDetailsCoordinatorLayout.OnEventDetailsClickListener =
+        object : EventDetailsCoordinatorLayout.OnEventDetailsClickListener {
             override fun onSpeakerClicked(speaker: Speaker) {
-                navigate().toSpeakerDetails(speaker.id)
+                navigator.toSpeakerDetails(speaker.id)
             }
 
             override fun onFavoriteClick() {
                 subscriptions.add(
-                        service.toggleFavorite(event).subscribe { result ->
-                            if (result === FavoriteResult.MUST_AUTHENTICATE) {
-                                requestSignIn()
-                            } else {
-                                triggerNotificationService()
+                        service.toggleFavorite(event)
+                            .subscribe { result ->
+                                if (result === EventDetailsService.FavoriteResult.MUST_AUTHENTICATE) {
+                                    requestSignIn()
+                                } else {
+                                    triggerNotificationService()
+                                }
                             }
-                        }
                 )
             }
         }
-    }
 
     private fun requestSignIn() {
-        navigate().toSignInForResult(REQUEST_CODE_SIGNIN)
+        navigator.toSignInForResult(REQUEST_CODE_SIGNIN)
         unsubscribeFromUpdates()
     }
 
@@ -109,14 +105,16 @@ class EventDetailsActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
-            R.id.action_search -> { navigate().toSearch(); true }
-            android.R.id.home -> { finish(); true }
+        return when (item.itemId) {
+            R.id.action_search -> {
+                navigator.toSearch(); true
+            }
+            android.R.id.home -> {
+                finish(); true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
-
-    private fun navigate(): Navigator = navigator
 
     override fun onStop() {
         super.onStop()
