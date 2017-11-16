@@ -50,12 +50,6 @@
           <option name="ANNOTATION_PARAMETER_WRAP" value="5" />
         </JavaCodeStyleSettings>
         <JetCodeStyleSettings>
-          <option name="PACKAGES_TO_USE_STAR_IMPORTS">
-            <value>
-              <package name="java.util" withSubpackages="false" static="false" />
-              <package name="kotlinx.android.synthetic" withSubpackages="false" static="false" />
-            </value>
-          </option>
           <option name="NAME_COUNT_TO_USE_STAR_IMPORT" value="2147483647" />
           <option name="NAME_COUNT_TO_USE_STAR_IMPORT_FOR_MEMBERS" value="1" />
           <option name="CONTINUATION_INDENT_FOR_EXPRESSION_BODIES" value="false" />
