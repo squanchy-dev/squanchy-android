@@ -11,7 +11,6 @@ import net.squanchy.schedule.domain.view.Schedule
 import net.squanchy.schedule.domain.view.SchedulePage
 import net.squanchy.schedule.view.EventItemView
 import net.squanchy.schedule.view.EventViewHolder
-import net.squanchy.schedule.view.ScheduleViewPagerAdapter
 import net.squanchy.search.view.HeaderViewHolder
 import net.squanchy.support.lang.Lists
 
@@ -27,7 +26,7 @@ internal class FavoritesAdapter(context: Context) : RecyclerView.Adapter<Recycle
 
     private var schedule = Schedule.create(emptyList())
 
-    private var listener: ScheduleViewPagerAdapter.OnEventClickedListener? = null
+    private var listener: ((Event) -> Unit)? = null
 
     init {
         setHasStableIds(true)
@@ -44,7 +43,7 @@ internal class FavoritesAdapter(context: Context) : RecyclerView.Adapter<Recycle
         )
     }
 
-    fun updateWith(schedule: Schedule, listener: ScheduleViewPagerAdapter.OnEventClickedListener) {
+    fun updateWith(schedule: Schedule, listener: (Event) -> Unit) {
         this.schedule = schedule
         this.listener = listener
         notifyDataSetChanged()

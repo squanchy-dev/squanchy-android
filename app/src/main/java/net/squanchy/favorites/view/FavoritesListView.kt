@@ -5,8 +5,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import net.squanchy.R
+import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Schedule
-import net.squanchy.schedule.view.ScheduleViewPagerAdapter
 import net.squanchy.support.view.CardSpacingItemDecorator
 
 internal class FavoritesListView @JvmOverloads constructor
@@ -28,8 +28,7 @@ internal class FavoritesListView @JvmOverloads constructor
         addItemDecoration(CardSpacingItemDecorator(horizontalSpacing, verticalSpacing))
     }
 
-    // TODO #333 convert second parameter to a lambda after converting FavoritesPageView to kotlin
-    fun updateWith(newData: Schedule, listener: ScheduleViewPagerAdapter.OnEventClickedListener) {
+    fun updateWith(newData: Schedule, listener: (Event) -> Unit) {
         adapter.updateWith(newData, listener)
     }
 }
