@@ -16,6 +16,17 @@ import net.squanchy.service.repository.injection.RepositoryModule
 import net.squanchy.support.injection.ChecksumModule
 import net.squanchy.support.injection.CurrentTimeModule
 
+fun createApplicationComponent(application: Application): ApplicationComponent {
+    return DaggerApplicationComponent.builder()
+        .firebaseModule(FirebaseModule())
+        .repositoryModule(RepositoryModule())
+        .checksumModule(ChecksumModule())
+        .applicationContextModule(ApplicationContextModule(application))
+        .analyticsModule(AnalyticsModule(application))
+        .remoteConfigModule(RemoteConfigModule())
+        .build()
+}
+
 @ApplicationLifecycle
 @Component(
         modules = arrayOf(
@@ -45,15 +56,4 @@ interface ApplicationComponent {
     fun remoteConfig(): RemoteConfig
 
     fun application(): Application
-}
-
-fun createApplicationComponent(application: Application): ApplicationComponent {
-    return DaggerApplicationComponent.builder()
-        .firebaseModule(FirebaseModule())
-        .repositoryModule(RepositoryModule())
-        .checksumModule(ChecksumModule())
-        .applicationContextModule(ApplicationContextModule(application))
-        .analyticsModule(AnalyticsModule(application))
-        .remoteConfigModule(RemoteConfigModule())
-        .build()
 }
