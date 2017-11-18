@@ -25,7 +25,7 @@ class LibrariesAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.Vie
 
     override fun getItemCount(): Int = LIBRARIES.size
 
-    private class LibraryViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    private class LibraryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val libraryNameView: TextView = itemView.findViewById(R.id.library_name)
         private val libraryLicenseLabelView: TextView = itemView.findViewById(R.id.library_license_label)

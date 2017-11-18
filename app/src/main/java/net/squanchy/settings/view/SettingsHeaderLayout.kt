@@ -21,7 +21,6 @@ class SettingsHeaderLayout(context: Context, attrs: AttributeSet?) : AppBarLayou
     private var imageLoader: ImageLoader? = null
 
     init {
-
         if (!isInEditMode) {
             imageLoader = ImageLoaderInjector.obtain(unwrapToActivityContext(context))
                 .imageLoader()
