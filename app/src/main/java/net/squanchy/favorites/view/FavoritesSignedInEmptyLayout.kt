@@ -13,7 +13,6 @@ import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
 import io.reactivex.disposables.CompositeDisposable
 import net.squanchy.R
-import net.squanchy.favorites.favoritesSignedInEmptyLayoutPresenter
 
 class FavoritesSignedInEmptyLayout @JvmOverloads constructor(
         context: Context?, attrs: AttributeSet? = null, defStyleAttr: Int = 0, defStyleRes: Int = 0) : LinearLayout(

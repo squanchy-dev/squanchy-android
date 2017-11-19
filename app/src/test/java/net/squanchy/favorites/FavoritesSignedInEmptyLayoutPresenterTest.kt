@@ -2,7 +2,9 @@ package net.squanchy.favorites
 
 import io.reactivex.Observable
 import io.reactivex.observers.TestObserver
+import net.squanchy.favorites.view.FavoritesEmptyViewState
 import net.squanchy.favorites.view.FavoritesSignedInEmptyLayout
+import net.squanchy.favorites.view.favoritesSignedInEmptyLayoutPresenter
 import org.junit.Test
 
 class FavoritesSignedInEmptyLayoutPresenterTest {

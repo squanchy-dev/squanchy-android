@@ -1,7 +1,6 @@
-package net.squanchy.favorites
+package net.squanchy.favorites.view
 
 import io.reactivex.Observable
-import net.squanchy.favorites.view.FavoritesSignedInEmptyLayout
 
 private const val TAPS_TO_TRIGGER_INITIAL_ACHIEVEMENT = 5
 private const val TAPS_TO_TRIGGER_PERSEVERANCE_ACHIEVEMENT = 15
