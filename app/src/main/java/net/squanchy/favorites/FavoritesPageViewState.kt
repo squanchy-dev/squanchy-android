@@ -23,6 +23,6 @@ internal sealed class FavoritesPageViewState {
 
     data class ShowEventDetails(val event: Event) : FavoritesPageViewState()
 
-    data class UpdateSchedule(val schedule: Schedule) : FavoritesPageViewState()
+    data class ShowSchedule(val schedule: Schedule) : FavoritesPageViewState()
 
 }

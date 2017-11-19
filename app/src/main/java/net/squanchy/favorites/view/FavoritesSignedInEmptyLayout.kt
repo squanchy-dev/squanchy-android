@@ -43,21 +43,21 @@ class FavoritesSignedInEmptyLayout @JvmOverloads constructor(
 
         val viewState = favoritesSignedInEmptyLayoutPresenter(clickEvent)
 
-        disposable.add(viewState.subscribe { viewState ->
+        disposable.add(viewState.subscribe { displayState ->
 
-            counter = viewState.counter
+            counter = displayState.counter
 
-            if (viewState.filledIcon) {
+            if (displayState.filledIcon) {
                 favoriteButton.setImageResource(R.drawable.ic_favorite_filled)
             } else {
                 favoriteButton.setImageResource(R.drawable.ic_favorite_empty)
             }
 
-            if (viewState.fastLearner) {
+            if (displayState.fastLearner) {
                 showAchievement(R.string.favorites_achievement_fast_learner)
             }
 
-            if (viewState.perseverant) {
+            if (displayState.perseverant) {
                 showAchievement(R.string.favorites_achievement_persevering)
                 favoriteButton.setEnabled(false)
             }
