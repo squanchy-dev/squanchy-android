@@ -1,9 +1,9 @@
 ext {
     daggerVersion = '2.12'
     glideVersion = '4.2.0'
-    supportLibVersion = '27.0.0'
+    supportLibVersion = '27.0.1'
     playServicesVersion = '11.4.2'
-    kotlinVersion = '1.1.51'
+    kotlinVersion = '1.1.60'
 
     checkstyleVersion = '8.3'
     findbugsVersion = '3.0.1'
@@ -55,7 +55,7 @@ ext {
     ]
 
     buildScript = [
-            android                   : 'com.android.tools.build:gradle:3.0.0',
+            android                   : 'com.android.tools.build:gradle:3.0.1',
             gradleStaticAnalysisPlugin: 'com.novoda:gradle-static-analysis-plugin:0.4.1',
             gradleVersionsPlugin      : 'com.github.ben-manes:gradle-versions-plugin:0.15.0',
             googleServices            : 'com.google.gms:google-services:3.1.0',
