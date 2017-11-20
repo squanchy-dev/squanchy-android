@@ -3,13 +3,12 @@ package net.squanchy.schedule
 import android.content.Context
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.TabLayout
-import android.support.v4.view.ViewPager
-import android.support.v7.widget.Toolbar
 import android.text.Spanned
 import android.util.AttributeSet
 import android.view.View
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import kotlinx.android.synthetic.main.view_page_schedule.view.*
 import net.squanchy.R
 import net.squanchy.analytics.Analytics
 import net.squanchy.analytics.ContentType
@@ -42,28 +41,22 @@ class SchedulePageView : CoordinatorLayout, Loadable {
     private val service: ScheduleService
     private val navigate: Navigator
     private val analytics: Analytics
-    private lateinit var progressBar: View
     private var subscriptions = CompositeDisposable()
 
     override fun onFinishInflate() {
         super.onFinishInflate()
 
-        progressBar = findViewById(R.id.progressbar)
+        tabstrip.setupWithViewPager(viewpager)
+        hackToApplyTypefaces(tabstrip)
 
-        val viewPager = findViewById<ViewPager>(R.id.viewpager)
-        val tabLayout = findViewById<TabLayout>(R.id.tabstrip)
-        tabLayout.setupWithViewPager(viewPager)
-        hackToApplyTypefaces(tabLayout)
+        viewpager.adapter = viewPagerAdapter
 
-        viewPager.adapter = viewPagerAdapter
-
-        tabLayout.addOnTabSelectedListener(TrackingOnTabSelectedListener(analytics, viewPagerAdapter))
+        tabstrip.addOnTabSelectedListener(TrackingOnTabSelectedListener(analytics, viewPagerAdapter))
 
         setupToolbar()
     }
 
     private fun setupToolbar() {
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         toolbar.setTitle(R.string.activity_schedule)
         toolbar.inflateMenu(R.menu.homepage)
         toolbar.setOnMenuItemClickListener { item ->
@@ -137,7 +130,7 @@ class SchedulePageView : CoordinatorLayout, Loadable {
 
     fun updateWith(schedule: Schedule, listener: ScheduleViewPagerAdapter.OnEventClickedListener) {
         viewPagerAdapter.updateWith(schedule.pages, listener)
-        progressBar.visibility = View.GONE
+        progressbar.visibility = View.GONE
     }
 
     private class TrackingOnTabSelectedListener internal constructor(
