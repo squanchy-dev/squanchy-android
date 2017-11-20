@@ -8,8 +8,6 @@ class EventViewHolder(itemView: EventItemView) : RecyclerView.ViewHolder(itemVie
 
     fun updateWith(event: Event, listener: ScheduleViewPagerAdapter.OnEventClickedListener?) {
         (itemView as EventItemView).updateWith(event)
-        itemView.setOnClickListener {
-            listener?.onEventClicked(event)
-        }
+        itemView.setOnClickListener { listener?.onEventClicked(event) }
     }
 }
