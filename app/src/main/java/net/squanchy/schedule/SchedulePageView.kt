@@ -115,10 +115,10 @@ class SchedulePageView : CoordinatorLayout, Loadable {
         }
     }
 
-    private fun hasTypefaceSpan(text: CharSequence?): Boolean {
-        return if (text !is Spanned) {
-            false
-        } else text.hasTypefaceSpan()
+    private fun hasTypefaceSpan(text: CharSequence?) = if (text !is Spanned) {
+        false
+    } else {
+        text.hasTypefaceSpan()
     }
 
     fun updateWith(schedule: Schedule, onEventClicked: (Event) -> Unit) {
