@@ -25,20 +25,10 @@ import net.squanchy.support.unwrapToActivityContext
 import timber.log.Timber
 
 
-class SchedulePageView @JvmOverloads constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int = 0) : CoordinatorLayout(
-        context,
-        attrs,
-        defStyleAttr
-), Loadable {
+class SchedulePageView : CoordinatorLayout, Loadable {
 
-    private val viewPagerAdapter: ScheduleViewPagerAdapter
-    private val service: ScheduleService
-    private val navigate: Navigator
-    private val analytics: Analytics
-    private lateinit var progressBar: View
-    private var subscriptions = CompositeDisposable()
-
-    init {
+    @JvmOverloads
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int = 0) : super(context, attrs, defStyleAttr) {
         val activity = unwrapToActivityContext(getContext())
         val component = obtain(activity)
         service = component.service()
@@ -47,6 +37,13 @@ class SchedulePageView @JvmOverloads constructor(context: Context, attrs: Attrib
 
         viewPagerAdapter = ScheduleViewPagerAdapter(activity)
     }
+
+    private val viewPagerAdapter: ScheduleViewPagerAdapter
+    private val service: ScheduleService
+    private val navigate: Navigator
+    private val analytics: Analytics
+    private lateinit var progressBar: View
+    private var subscriptions = CompositeDisposable()
 
     override fun onFinishInflate() {
         super.onFinishInflate()
