@@ -98,6 +98,10 @@ android {
         abortOnError true
         warningsAsErrors true
     }
+
+    sourceSets {
+        test.java.srcDirs += 'src/test/kotlin'
+    }
 }
 
 private static boolean isNotRunningOnCI() {
