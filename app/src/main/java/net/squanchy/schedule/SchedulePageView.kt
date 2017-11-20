@@ -9,7 +9,7 @@ import android.text.Spanned
 import android.util.AttributeSet
 import android.view.View
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
+import io.reactivex.disposables.CompositeDisposable
 import net.squanchy.R
 import net.squanchy.analytics.Analytics
 import net.squanchy.analytics.ContentType
@@ -36,7 +36,7 @@ class SchedulePageView @JvmOverloads constructor(context: Context, attrs: Attrib
     private val navigate: Navigator
     private val analytics: Analytics
     private lateinit var progressBar: View
-    private var subscription: Disposable? = null
+    private var subscriptions = CompositeDisposable()
 
     init {
         val activity = unwrapToActivityContext(getContext())
@@ -85,19 +85,21 @@ class SchedulePageView @JvmOverloads constructor(context: Context, attrs: Attrib
     }
 
     override fun startLoading() {
-        subscription = service.schedule(false)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                    {
-                        updateWith(
-                                it,
-                                object : ScheduleViewPagerAdapter.OnEventClickedListener {
-                                    override fun onEventClicked(event: Event) = onEventClickeds(event)
-                                }
-                        )
-                    },
-                    { Timber.e(it) }
-            )
+        subscriptions.add(
+                service.schedule(false)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            {
+                                updateWith(
+                                        it,
+                                        object : ScheduleViewPagerAdapter.OnEventClickedListener {
+                                            override fun onEventClicked(event: Event) = onEventClickeds(event)
+                                        }
+                                )
+                            },
+                            { Timber.e(it) }
+                    )
+        )
     }
 
     private fun onEventClickeds(event: Event) {
@@ -106,7 +108,7 @@ class SchedulePageView @JvmOverloads constructor(context: Context, attrs: Attrib
     }
 
     override fun stopLoading() {
-        subscription!!.dispose()
+        subscriptions.dispose()
     }
 
     private fun hackToApplyTypefaces(tabLayout: TabLayout) {
