@@ -15,7 +15,14 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
 import android.widget.LinearLayout
-import android.widget.TextView
+import kotlinx.android.synthetic.main.merge_event_details_layout.view.whenContainer
+import kotlinx.android.synthetic.main.merge_event_details_layout.view.whenTextView
+import kotlinx.android.synthetic.main.merge_event_details_layout.view.whereContainer
+import kotlinx.android.synthetic.main.merge_event_details_layout.view.whereTextView
+import kotlinx.android.synthetic.main.merge_event_details_layout.view.levelContainer
+import kotlinx.android.synthetic.main.merge_event_details_layout.view.levelTextView
+import kotlinx.android.synthetic.main.merge_event_details_layout.view.descriptionHeader
+import kotlinx.android.synthetic.main.merge_event_details_layout.view.descriptionTextView
 import net.squanchy.R
 import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.schedule.domain.view.Event
@@ -29,15 +36,6 @@ class EventDetailsLayout @JvmOverloads constructor(
         defStyle: Int = 0
 ) : LinearLayout(context, attrs, defStyle) {
 
-    private lateinit var whenContainer: View
-    private lateinit var whenTextView: TextView
-    private lateinit var whereContainer: View
-    private lateinit var whereTextView: TextView
-    private lateinit var levelContainer: View
-    private lateinit var levelTextView: TextView
-    private lateinit var descriptionHeader: View
-    private lateinit var descriptionTextView: TextView
-
     init {
         super.setOrientation(LinearLayout.VERTICAL)
     }
@@ -50,15 +48,6 @@ class EventDetailsLayout @JvmOverloads constructor(
         super.onFinishInflate()
 
         View.inflate(context, R.layout.merge_event_details_layout, this)
-
-        whenTextView = findViewById(R.id.when_text)
-        whenContainer = findViewById(R.id.when_container)
-        whereTextView = findViewById(R.id.where_text)
-        whereContainer = findViewById(R.id.where_container)
-        levelTextView = findViewById(R.id.level_text)
-        levelContainer = findViewById(R.id.level_container)
-        descriptionHeader = findViewById(R.id.description_header)
-        descriptionTextView = findViewById(R.id.description_text)
     }
 
     fun updateWith(event: Event) {

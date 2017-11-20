@@ -6,6 +6,17 @@ import net.squanchy.navigation.NavigationModule
 import net.squanchy.navigation.Navigator
 
 import dagger.Component
+import net.squanchy.injection.ActivityContextModule
+import net.squanchy.injection.ApplicationInjector
+
+internal fun eventDetailsComponent(activity: EventDetailsActivity): EventDetailsComponent {
+    return DaggerEventDetailsComponent.builder()
+        .applicationComponent(ApplicationInjector.obtain(activity))
+        .eventDetailsModule(EventDetailsModule())
+        .activityContextModule(ActivityContextModule(activity))
+        .navigationModule(NavigationModule())
+        .build()
+}
 
 @ActivityLifecycle
 @Component(modules = arrayOf(EventDetailsModule::class, NavigationModule::class), dependencies = arrayOf(ApplicationComponent::class))

@@ -2,12 +2,12 @@
 <net.squanchy.eventdetails.widget.EventDetailsCoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/event_details_root"
+  android:id="@+id/eventDetailsRoot"
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
   <net.squanchy.eventdetails.widget.EventDetailsHeaderLayout
-    android:id="@+id/event_details_header"
+    android:id="@+id/eventDetailsHeaderLayout"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -20,7 +20,7 @@
       app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <net.squanchy.eventdetails.widget.EventDetailsSpeakerView
-      android:id="@+id/speaker_container"
+      android:id="@+id/speakerDetailsView"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginStart="@dimen/event_details_header_padding_start"
@@ -48,7 +48,7 @@
     </net.squanchy.eventdetails.widget.EventDetailsSpeakerView>
 
     <TextView
-      android:id="@+id/title"
+      android:id="@+id/titleTextView"
       style="@style/EventDetails.Header.Title"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -65,14 +65,14 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <net.squanchy.eventdetails.widget.EventDetailsLayout
-      android:id="@+id/event_details"
+      android:id="@+id/eventDetailsLayout"
       android:layout_width="match_parent"
       android:layout_height="wrap_content" />
 
   </android.support.v4.widget.NestedScrollView>
 
   <android.support.design.widget.FloatingActionButton
-    android:id="@+id/favorite_fab"
+    android:id="@+id/favoriteFab"
     style="@style/EventDetails.Fab"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
