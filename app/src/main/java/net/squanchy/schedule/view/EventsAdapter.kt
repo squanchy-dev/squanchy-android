@@ -15,8 +15,8 @@ internal class EventsAdapter(context: Context) : RecyclerView.Adapter<EventViewH
     }
 
     private val layoutInflater: LayoutInflater
+    private lateinit var listener: ScheduleViewPagerAdapter.OnEventClickedListener
     private var events = emptyList<Event>()
-    private var listener: ScheduleViewPagerAdapter.OnEventClickedListener? = null
 
     init {
         setHasStableIds(true)
