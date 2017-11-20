@@ -79,20 +79,13 @@ class SchedulePageView : CoordinatorLayout, Loadable {
                 service.schedule(false)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
-                            {
-                                updateWith(
-                                        it,
-                                        object : ScheduleViewPagerAdapter.OnEventClickedListener {
-                                            override fun onEventClicked(event: Event) = onEventClickeds(event)
-                                        }
-                                )
-                            },
+                            { updateWith(it, { event -> onEventClicked(event) }) },
                             { Timber.e(it) }
                     )
         )
     }
 
-    private fun onEventClickeds(event: Event) {
+    private fun onEventClicked(event: Event) {
         analytics.trackItemSelected(ContentType.SCHEDULE_ITEM, event.id)
         navigate.toEventDetails(event.id)
     }
@@ -128,8 +121,12 @@ class SchedulePageView : CoordinatorLayout, Loadable {
         } else text.hasTypefaceSpan()
     }
 
-    fun updateWith(schedule: Schedule, listener: ScheduleViewPagerAdapter.OnEventClickedListener) {
-        viewPagerAdapter.updateWith(schedule.pages, listener)
+    fun updateWith(schedule: Schedule, onEventClicked: (Event) -> Unit) {
+        viewPagerAdapter.updateWith(
+                schedule.pages, object : ScheduleViewPagerAdapter.OnEventClickedListener {
+            override fun onEventClicked(event: Event) = onEventClicked(event)
+        }
+        )
         progressbar.visibility = View.GONE
     }
 
