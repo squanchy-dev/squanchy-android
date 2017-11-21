@@ -1,88 +1,86 @@
 package net.squanchy.favorites
 
-import io.reactivex.Observable
-import io.reactivex.observers.TestObserver
-import net.squanchy.favorites.view.FavoritesEmptyViewState
-import net.squanchy.favorites.view.FavoritesSignedInEmptyLayout
-import net.squanchy.favorites.view.favoritesSignedInEmptyLayoutPresenter
+import net.squanchy.favorites.view.FavoritesSignedInEmptyLayoutView
+import net.squanchy.favorites.view.handleFavoriteButtonClick
+import org.junit.Before
 import org.junit.Test
+import org.mockito.Mock
+import org.mockito.Mockito.*
+import org.mockito.MockitoAnnotations
 
 class FavoritesSignedInEmptyLayoutPresenterTest {
 
-    @Test
-    fun `first time, return counter as 1, filled icon`() {
-        //given
-        val input = Observable.just(FavoritesSignedInEmptyLayout.FavoritesClickEvent(0))
+    @Mock
+    private lateinit var view: FavoritesSignedInEmptyLayoutView
 
-        //when
-        val viewState = favoritesSignedInEmptyLayoutPresenter(input)
-
-        val testObserver = TestObserver<FavoritesEmptyViewState>()
-
-        viewState.subscribe(testObserver)
-
-        //then
-        val expected = FavoritesEmptyViewState(1, true, false, false)
-
-        testObserver.assertValueCount(1)
-        testObserver.assertValue(expected)
+    @Before
+    fun setup() {
+        MockitoAnnotations.initMocks(this)
     }
 
     @Test
-    fun `when input counter is odd, empty icon`() {
-
+    fun `first time, return counter as 1, icon should be filled and no message displayed`() {
         //given
-        val input = Observable.just(FavoritesSignedInEmptyLayout.FavoritesClickEvent(3))
+        val counter = 0
+        val filledIconProvider = { 2 }
 
         //when
-        val viewState = favoritesSignedInEmptyLayoutPresenter(input)
-
-        val testObserver = TestObserver<FavoritesEmptyViewState>()
-
-        viewState.subscribe(testObserver)
+        handleFavoriteButtonClick(counter, view, filledIconProvider, {0}, {""}, {""})
 
         //then
-        val expected = FavoritesEmptyViewState(4, false, false, false)
-
-        testObserver.assertValueCount(1)
-        testObserver.assertValue(expected)
+        verify(view).setButtonImage(filledIconProvider())
+        verify(view).updateCounter(1)
+        verify(view, never()).showAchievement(anyString())
+        verifyNoMoreInteractions(view)
     }
 
     @Test
-    fun `when input counter is 4, filled icon, fast learner`() {
+    fun `when counter is odd, show empty icon`() {
         //given
-        val input = Observable.just(FavoritesSignedInEmptyLayout.FavoritesClickEvent(4))
+        val counter = 1
+        val emptyIconProvider = {4}
 
         //when
-        val viewState = favoritesSignedInEmptyLayoutPresenter(input)
-
-        val testObserver = TestObserver<FavoritesEmptyViewState>()
-
-        viewState.subscribe(testObserver)
+        handleFavoriteButtonClick(counter, view, {0}, emptyIconProvider, {""}, {""})
 
         //then
-        val expected = FavoritesEmptyViewState(5, true, true, false)
-
-        testObserver.assertValueCount(1)
-        testObserver.assertValue(expected)
+        verify(view).setButtonImage(emptyIconProvider())
+        verify(view).updateCounter(2)
+        verify(view, never()).showAchievement(anyString())
+        verifyNoMoreInteractions(view)
     }
 
     @Test
-    fun `when input counter is 14, filled icon, perseverant`() {
+    fun `when counter is 4, show filled icon, show initial achievement`() {
         //given
-        val input = Observable.just(FavoritesSignedInEmptyLayout.FavoritesClickEvent(14))
+        val counter = 4
+        val filledIconProvider = {1}
+        val initialMessageProvider = {"initial"}
 
         //when
-        val viewState = favoritesSignedInEmptyLayoutPresenter(input)
-
-        val testObserver = TestObserver<FavoritesEmptyViewState>()
-
-        viewState.subscribe(testObserver)
+        handleFavoriteButtonClick(counter, view, filledIconProvider, {0}, initialMessageProvider, {""})
 
         //then
-        val expected = FavoritesEmptyViewState(15, true, false, true)
+        verify(view).setButtonImage(filledIconProvider())
+        verify(view).updateCounter(5)
+        verify(view).showAchievement(initialMessageProvider())
+        verifyNoMoreInteractions(view)
+    }
 
-        testObserver.assertValueCount(1)
-        testObserver.assertValue(expected)
+    @Test
+    fun `when counter is 14, show filled icon, show perseverant achievement`() {
+        //given
+        val counter = 14
+        val filledIconProvider = {1}
+        val perseverantMessageProvider = {"perseverant"}
+
+        //when
+        handleFavoriteButtonClick(counter, view, filledIconProvider, {0}, {""}, perseverantMessageProvider)
+
+        //then
+        verify(view).setButtonImage(filledIconProvider())
+        verify(view).updateCounter(15)
+        verify(view).showAchievement(perseverantMessageProvider())
+        verifyNoMoreInteractions(view)
     }
 }

@@ -1,33 +1,21 @@
 package net.squanchy.favorites.view
 
-import io.reactivex.Observable
-
 private const val TAPS_TO_TRIGGER_INITIAL_ACHIEVEMENT = 5
 private const val TAPS_TO_TRIGGER_PERSEVERANCE_ACHIEVEMENT = 15
 
-internal fun favoritesSignedInEmptyLayoutPresenter(clickEvent: Observable<FavoritesSignedInEmptyLayout.FavoritesClickEvent>): Observable<FavoritesEmptyViewState> {
+private typealias AchievementMessageProvider = () -> String
+private typealias ResIdProvider = () -> Int
 
-    return clickEvent.map { clickEvent ->
+internal fun handleFavoriteButtonClick(counter: Int, view: FavoritesSignedInEmptyLayoutView, filledIconId: ResIdProvider,
+        emptyIconId: ResIdProvider, initialAchievementMessage: AchievementMessageProvider, perseveranceMessage: AchievementMessageProvider) {
 
-        var counter = clickEvent.counter
+    if (counter % 2 == 0) view.setButtonImage(filledIconId()) else view.setButtonImage(emptyIconId())
 
-        var filledIcon = false
+    val newCounter = counter + 1
 
-        if (counter % 2 == 0) filledIcon = true
+    view.updateCounter(newCounter)
 
-        counter++
-
-        var fastLearner = false
-
-        if (counter == TAPS_TO_TRIGGER_INITIAL_ACHIEVEMENT) fastLearner = true
-
-        var perseverant = false
-
-        if (counter == TAPS_TO_TRIGGER_PERSEVERANCE_ACHIEVEMENT) perseverant = true
-
-        FavoritesEmptyViewState(counter, filledIcon, fastLearner, perseverant)
-    }
+    if (newCounter == TAPS_TO_TRIGGER_INITIAL_ACHIEVEMENT) view.showAchievement(initialAchievementMessage())
+    else if (newCounter == TAPS_TO_TRIGGER_PERSEVERANCE_ACHIEVEMENT) view.showAchievement(perseveranceMessage())
 
 }
-
-internal data class FavoritesEmptyViewState(val counter: Int, val filledIcon: Boolean, val fastLearner: Boolean, val perseverant: Boolean)

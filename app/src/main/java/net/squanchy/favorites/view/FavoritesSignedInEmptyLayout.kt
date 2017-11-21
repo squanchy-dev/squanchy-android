@@ -9,20 +9,15 @@ import android.text.Html
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
-import io.reactivex.Observable
-import io.reactivex.ObservableEmitter
-import io.reactivex.disposables.CompositeDisposable
 import net.squanchy.R
 
 class FavoritesSignedInEmptyLayout @JvmOverloads constructor(
         context: Context?, attrs: AttributeSet? = null, defStyleAttr: Int = 0, defStyleRes: Int = 0) : LinearLayout(
-            context, attrs, defStyleAttr, defStyleRes) {
+            context, attrs, defStyleAttr, defStyleRes), FavoritesSignedInEmptyLayoutView {
 
     lateinit var favoriteButton: FloatingActionButton
 
     private var counter = 0
-
-    val disposable = CompositeDisposable()
 
     init {
         super.setOrientation(VERTICAL)
@@ -37,60 +32,35 @@ class FavoritesSignedInEmptyLayout @JvmOverloads constructor(
         super.onFinishInflate()
 
         favoriteButton = findViewById(R.id.favorite_fab_example)
-
-        val clickEvent = clickEventObservable(favoriteButton)
-
-        val viewState = favoritesSignedInEmptyLayoutPresenter(clickEvent)
-
-        disposable.add(viewState.subscribe { displayState ->
-
-            counter = displayState.counter
-
-            if (displayState.filledIcon) {
-                favoriteButton.setImageResource(R.drawable.ic_favorite_filled)
-            } else {
-                favoriteButton.setImageResource(R.drawable.ic_favorite_empty)
-            }
-
-            if (displayState.fastLearner) {
-                showAchievement(R.string.favorites_achievement_fast_learner)
-            }
-
-            if (displayState.perseverant) {
-                showAchievement(R.string.favorites_achievement_persevering)
-                favoriteButton.setEnabled(false)
-            }
-        })
-
+        favoriteButton.setOnClickListener(this::favoriteButtonClickListener)
     }
 
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        disposable.clear()
+    override fun updateCounter(counter: Int) {
+        this.counter = counter
     }
 
-    private fun clickEventObservable(favoriteButton: FloatingActionButton): Observable<FavoritesClickEvent> {
-        return Observable.create { emitter: ObservableEmitter<FavoritesClickEvent> ->
-
-            favoriteButton.setOnClickListener { view: View? ->
-                emitter.onNext(FavoritesClickEvent(counter))
-            }
-
-            emitter.setCancellable{ favoriteButton.setOnClickListener(null) }
-        }
-    }
+    override fun setButtonImage(resId: Int) = favoriteButton.setImageResource(resId)
 
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun showAchievement(stringResId: Int) {
-        Snackbar.make(this, readAsHtml(stringResId), Snackbar.LENGTH_LONG).show()
+    override fun showAchievement(message: String) = Snackbar.make(this, readAsHtml(message), Snackbar.LENGTH_LONG).show()
+
+
+    private fun favoriteButtonClickListener(view: View) {
+        handleFavoriteButtonClick(counter, this, this::favoritesFilledIconId, this::favoritesEmptyIconId,
+                this::initialAchieventMessage, this::perseveranceAchievementMessage)
     }
+
+    private fun favoritesFilledIconId() = R.drawable.ic_favorite_filled
+
+    private fun favoritesEmptyIconId() = R.drawable.ic_favorite_empty
+
+    private fun initialAchieventMessage() = resources.getString(R.string.favorites_achievement_fast_learner)
+
+    private fun perseveranceAchievementMessage() = resources.getString(R.string.favorites_achievement_persevering)
 
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun readAsHtml(stringResId: Int): CharSequence {
-        val text = resources.getString(stringResId)
-        return Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY)
+    private fun readAsHtml(message: String): CharSequence {
+        return Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY)
     }
-
-    internal data class FavoritesClickEvent(val counter: Int)
 
 }
