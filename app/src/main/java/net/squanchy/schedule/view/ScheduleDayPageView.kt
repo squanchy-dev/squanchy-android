@@ -48,10 +48,6 @@ class ScheduleDayPageView : RecyclerView {
 
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) = oldEvents[oldItemPosition].id == newEvents[newItemPosition].id
 
-        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            val oldEvent = oldEvents[oldItemPosition]
-            val newEvent = newEvents[newItemPosition]
-            return oldEvent == newEvent
-        }
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) = oldEvents[oldItemPosition] == newEvents[newItemPosition]
     }
 }
