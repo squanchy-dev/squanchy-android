@@ -49,6 +49,6 @@ class ScheduleViewPagerAdapter(private val context: Context) : ViewPagerAdapter<
     }
 
     companion object {
-        private val TITLE_FORMAT_TEMPLATE = "EEE d"
+        private const val TITLE_FORMAT_TEMPLATE = "EEE d"
     }
 }
