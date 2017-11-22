@@ -2,22 +2,23 @@ package net.squanchy.favorites
 
 import android.content.Context
 import android.support.design.widget.CoordinatorLayout
-import android.support.v7.widget.Toolbar
 import android.util.AttributeSet
 import android.view.MenuItem
 import android.view.View
-import android.widget.ProgressBar
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.functions.BiFunction
+import kotlinx.android.synthetic.main.view_page_favorites.view.*
 import net.squanchy.R
 import net.squanchy.analytics.Analytics
 import net.squanchy.analytics.ContentType
-import net.squanchy.favorites.view.FavoritesListView
 import net.squanchy.home.HomeActivity
 import net.squanchy.home.Loadable
 import net.squanchy.navigation.Navigator
 import net.squanchy.schedule.ScheduleService
+import net.squanchy.schedule.domain.view.Event
+import net.squanchy.schedule.domain.view.Schedule
 import net.squanchy.support.unwrapToActivityContext
 
 class FavoritesPageView @JvmOverloads constructor(context: Context?, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
@@ -31,61 +32,26 @@ class FavoritesPageView @JvmOverloads constructor(context: Context?, attrs: Attr
 
     private val analytics: Analytics by lazy { favoritesComponent.analytics() }
 
-    private lateinit var progressBar: ProgressBar
-
-    private lateinit var favoritesListView: FavoritesListView
-
-    private lateinit var emptyViewSignedIn: View
-
-    private lateinit var emptyViewSignedOut: View
-
-    private val actions = PublishSubject.create<FavoritesPageViewActions>()
-
-    val disposable = CompositeDisposable()
+    private val disposable = CompositeDisposable()
 
     override fun onFinishInflate() {
         super.onFinishInflate()
 
-        progressBar = findViewById(R.id.progressbar)
-        favoritesListView = findViewById(R.id.favorites_list)
-        emptyViewSignedIn = findViewById(R.id.empty_view_signed_in)
-        emptyViewSignedOut = findViewById(R.id.empty_view_signed_out)
-
-        findViewById<View>(R.id.empty_view_signed_out_button).setOnClickListener { requestSignIn() }
+        emptyViewSignedOutButton.setOnClickListener { showSignIn() }
 
         setupToolbar()
-
-        val viewState = favoritesPageViewPresenter(actions)
-
-        disposable.add(viewState.observeOn(AndroidSchedulers.mainThread()).subscribe { uiState ->
-
-            when (uiState) {
-
-                is FavoritesPageViewState.ShowSchedule -> showSchedule(uiState)
-
-                is FavoritesPageViewState.ShowEventDetails -> showEventDetails(uiState)
-
-                is FavoritesPageViewState.PromptToSign -> promptToSign()
-
-                is FavoritesPageViewState.PromptToFavorite -> promptToFavorite()
-
-                is FavoritesPageViewState.RequestSignIn -> showSignIn()
-
-                is FavoritesPageViewState.ShowSearch -> showSearch()
-
-                is FavoritesPageViewState.ShowSettings -> showSettings()
-
-                is FavoritesPageViewState.Idle -> Unit//do nothing
-            }
-        })
     }
 
-    override fun startLoading() = actions.onNext(FavoritesPageViewActions.LoadSchedule(true, service))
+    override fun startLoading() {
+        disposable.add(Observable.combineLatest(service.schedule(true), service.currentUserIsSignedIn(),
+                BiFunction<Schedule, Boolean, LoadScheduleResult> { schedule, signedIn ->  LoadScheduleResult(schedule, signedIn) })
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { handleLoadSchedule(it) })
+    }
 
     override fun stopLoading() = disposable.clear()
 
     private fun setupToolbar() {
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
         with(toolbar) {
             title = resources.getString(R.string.activity_favorites)
             inflateMenu(R.menu.homepage)
@@ -96,24 +62,33 @@ class FavoritesPageView @JvmOverloads constructor(context: Context?, attrs: Attr
     private fun onMenuItemClickListener(menuItem: MenuItem): Boolean {
 
         when (menuItem.itemId) {
-            R.id.action_search -> { actions.onNext(FavoritesPageViewActions.SearchClicked); return true }
-            R.id.action_settings -> { actions.onNext(FavoritesPageViewActions.SettingsClicked); return true }
+            R.id.action_search -> { showSearch(); return true }
+            R.id.action_settings -> { showSettings(); return true }
         }
 
         return false
     }
 
-    private fun requestSignIn() = actions.onNext(FavoritesPageViewActions.RequestSignIn)
+    private fun handleLoadSchedule(result: LoadScheduleResult) {
 
-    private fun showSchedule(uiState: FavoritesPageViewState.ShowSchedule) {
-        favoritesListView.updateWith(uiState.schedule) { actions.onNext(FavoritesPageViewActions.EventClicked(it))}
+        fun hasFavorites(schedule: Schedule) = !schedule.isEmpty
+
+        when {
+            hasFavorites(result.schedule) -> showSchedule(result.schedule)
+            result.signedIn -> promptToFavorite()
+            else -> promptToSign()
+        }
+    }
+
+    private fun showSchedule(schedule: Schedule) {
+        favoritesListView.updateWith(schedule, this::showEventDetails)
         favoritesListView.visibility = View.VISIBLE
         emptyViewSignedIn.visibility = View.GONE
     }
 
-    private fun showEventDetails(uiState: FavoritesPageViewState.ShowEventDetails) {
-        analytics.trackItemSelected(ContentType.FAVORITES_ITEM, uiState.event.id)
-        navigator.toEventDetails(uiState.event.id)
+    private fun showEventDetails(event: Event) {
+        analytics.trackItemSelected(ContentType.FAVORITES_ITEM, event.id)
+        navigator.toEventDetails(event.id)
     }
 
     private fun promptToSign() {
@@ -142,4 +117,5 @@ class FavoritesPageView @JvmOverloads constructor(context: Context?, attrs: Attr
 
     private fun showSettings() = navigator.toSettings()
 
+    private data class LoadScheduleResult(val schedule: Schedule, val signedIn: Boolean)
 }
