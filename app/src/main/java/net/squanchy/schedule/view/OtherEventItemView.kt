@@ -3,8 +3,7 @@ package net.squanchy.schedule.view
 import android.content.Context
 import android.support.annotation.DrawableRes
 import android.util.AttributeSet
-import android.widget.ImageView
-import android.widget.TextView
+import kotlinx.android.synthetic.main.item_schedule_event_other.view.*
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Event
 import org.joda.time.format.DateTimeFormat
@@ -15,25 +14,12 @@ class OtherEventItemView @JvmOverloads constructor(
         defStyleAttr: Int = R.attr.cardViewDefaultStyle
 ) : EventItemView(context, attrs, defStyleAttr) {
 
-    private lateinit var titleView: TextView
-    private lateinit var timestampView: TextView
-    private lateinit var illustrationView: ImageView
-
-    override fun onFinishInflate() {
-        super.onFinishInflate()
-
-        timestampView = findViewById(R.id.timestamp)
-        titleView = findViewById(R.id.title)
-        illustrationView = findViewById(R.id.illustration)
-    }
-
     override fun updateWith(event: Event) {
         ensureSupportedType(event.type)
 
-        timestampView.text = startTimeAsFormattedString(event)
-        titleView.text = event.title
-
-        illustrationView.setImageResource(illustrationFor(event.type))
+        timestamp.text = startTimeAsFormattedString(event)
+        title.text = event.title
+        illustration.setImageResource(illustrationFor(event.type))
     }
 
     private fun ensureSupportedType(type: Event.Type) {
