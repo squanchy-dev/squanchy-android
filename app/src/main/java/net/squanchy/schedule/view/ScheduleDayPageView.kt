@@ -37,7 +37,7 @@ class ScheduleDayPageView : RecyclerView {
         diffResult.dispatchUpdatesTo(adapter)
     }
 
-    private class EventsDiffCallback internal constructor(
+    private class EventsDiffCallback(
             private val oldEvents: List<Event>,
             private val newEvents: List<Event>
     ) : DiffUtil.Callback() {
