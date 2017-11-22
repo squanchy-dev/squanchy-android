@@ -3,19 +3,17 @@ package net.squanchy.favorites.view
 import android.content.Context
 import android.os.Build
 import android.support.annotation.RequiresApi
-import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.text.Html
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
+import kotlinx.android.synthetic.main.merge_no_favorites_view.view.*
 import net.squanchy.R
 
 class FavoritesSignedInEmptyLayout @JvmOverloads constructor(
         context: Context?, attrs: AttributeSet? = null, defStyleAttr: Int = 0, defStyleRes: Int = 0) : LinearLayout(
             context, attrs, defStyleAttr, defStyleRes), FavoritesSignedInEmptyLayoutView {
-
-    lateinit var favoriteButton: FloatingActionButton
 
     private var counter = 0
 
@@ -31,15 +29,14 @@ class FavoritesSignedInEmptyLayout @JvmOverloads constructor(
     override fun onFinishInflate() {
         super.onFinishInflate()
 
-        favoriteButton = findViewById(R.id.favorite_fab_example)
-        favoriteButton.setOnClickListener(this::favoriteButtonClickListener)
+        favoriteFab.setOnClickListener(this::favoriteButtonClickListener)
     }
 
     override fun updateCounter(counter: Int) {
         this.counter = counter
     }
 
-    override fun setButtonImage(resId: Int) = favoriteButton.setImageResource(resId)
+    override fun setButtonImage(resId: Int) = favoriteFab.setImageResource(resId)
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun showAchievement(message: String) = Snackbar.make(this, readAsHtml(message), Snackbar.LENGTH_LONG).show()
