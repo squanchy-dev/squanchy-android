@@ -16,22 +16,23 @@ internal class EventsAdapter(context: Context) : RecyclerView.Adapter<EventViewH
 
     private val layoutInflater: LayoutInflater
     private lateinit var listener: ScheduleViewPagerAdapter.OnEventClickedListener
-    private var events = emptyList<Event>()
+    private var _events = emptyList<Event>()
+    val events get() = _events
 
     init {
         setHasStableIds(true)
         layoutInflater = LayoutInflater.from(context)
     }
 
-    override fun getItemId(position: Int) = events[position].numericId
+    override fun getItemId(position: Int) = _events[position].numericId
 
     fun updateWith(events: List<Event>, listener: ScheduleViewPagerAdapter.OnEventClickedListener) {
-        this.events = events
+        this._events = events
         this.listener = listener
     }
 
     override fun getItemViewType(position: Int): Int {
-        val itemType = events[position].type
+        val itemType = _events[position].type
         return when (itemType) {
             Event.Type.KEYNOTE, Event.Type.TALK -> ItemViewType.TYPE_TALK.ordinal
             Event.Type.COFFEE_BREAK, Event.Type.LUNCH, Event.Type.OTHER, Event.Type.REGISTRATION, Event.Type.SOCIAL -> ItemViewType.TYPE_OTHER.ordinal
@@ -50,10 +51,9 @@ internal class EventsAdapter(context: Context) : RecyclerView.Adapter<EventViewH
     }
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
-        holder.updateWith(events[position], listener)
+        holder.updateWith(_events[position], listener)
     }
 
-    override fun getItemCount() = events.size
+    override fun getItemCount() = _events.size
 
-    fun events() = events
 }
