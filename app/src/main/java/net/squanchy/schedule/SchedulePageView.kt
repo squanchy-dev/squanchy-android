@@ -63,13 +63,13 @@ class SchedulePageView : CoordinatorLayout, Loadable {
             when (item.itemId) {
                 R.id.action_search -> {
                     navigate.toSearch()
-                    return@setOnMenuItemClickListener true
+                    true
                 }
                 R.id.action_settings -> {
                     navigate.toSettings()
-                    return@setOnMenuItemClickListener true
+                    true
                 }
-                else -> return@setOnMenuItemClickListener false
+                else -> false
             }
         }
     }
