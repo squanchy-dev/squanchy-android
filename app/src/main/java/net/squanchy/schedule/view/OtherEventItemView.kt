@@ -51,6 +51,6 @@ class OtherEventItemView @JvmOverloads constructor(
     }
 
     companion object {
-        private val NO_DRAWABLE = 0
+        private const val NO_DRAWABLE = 0
     }
 }
