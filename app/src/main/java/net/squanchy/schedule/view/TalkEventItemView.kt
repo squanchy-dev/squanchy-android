@@ -30,17 +30,17 @@ class TalkEventItemView @JvmOverloads constructor(context: Context, attrs: Attri
         speaker_container.updateWith(event.speakers, Optional.absent<SpeakerView.OnSpeakerClickListener>())
     }
 
-    private fun startTimeAsFormattedString(event: Event): String {
-        val formatter = DateTimeFormat.shortTime()
-            .withZone(event.timeZone)
-
-        return formatter.print(event.startTime.toDateTime())
-    }
-
     private fun ensureSupportedType(type: Event.Type) {
         if (type === Event.Type.TALK || type === Event.Type.KEYNOTE) {
             return
         }
         throw IllegalArgumentException("Event with type ${type.name} is not supported by this view")
+    }
+
+    private fun startTimeAsFormattedString(event: Event): String {
+        val formatter = DateTimeFormat.shortTime()
+            .withZone(event.timeZone)
+
+        return formatter.print(event.startTime.toDateTime())
     }
 }
