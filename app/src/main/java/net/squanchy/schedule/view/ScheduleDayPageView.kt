@@ -14,11 +14,8 @@ class ScheduleDayPageView : RecyclerView {
 
     private lateinit var adapter: EventsAdapter
 
-    constructor(context: Context) : super(context)
-
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-
-    constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
+    @JvmOverloads
+    constructor(context: Context, attrs: AttributeSet, defStyle: Int = 0) : super(context, attrs, defStyle)
 
     override fun onFinishInflate() {
         super.onFinishInflate()
