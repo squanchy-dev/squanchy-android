@@ -19,8 +19,8 @@ import org.joda.time.LocalDateTime
 // todo #333 too complicated logic. Need to refactor once sample data is available.
 internal class FavoritesAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val TYPE_TALK: Int = 1
-    private val TYPE_HEADER: Int = 2
+    private val viewTypeTalk: Int = 1
+    private val viewTypeHeader: Int = 2
 
     private val layoutInflater: LayoutInflater
 
@@ -54,16 +54,16 @@ internal class FavoritesAdapter(context: Context) : RecyclerView.Adapter<Recycle
                 0,
                 position,
                 schedule.pages,
-                { _ -> TYPE_HEADER },
-                { _, _ -> TYPE_TALK }
+                { _ -> viewTypeHeader },
+                { _, _ -> viewTypeTalk }
         )
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        if (viewType == TYPE_TALK) {
+        if (viewType == viewTypeTalk) {
             val itemView = layoutInflater.inflate(R.layout.item_schedule_event_talk, parent, false) as EventItemView
             return EventViewHolder(itemView)
-        } else return if (viewType == TYPE_HEADER) {
+        } else return if (viewType == viewTypeHeader) {
             HeaderViewHolder(layoutInflater.inflate(R.layout.item_search_header, parent, false))
         } else {
             throw IllegalArgumentException("View type not supported: " + viewType)
@@ -127,3 +127,4 @@ internal class FavoritesAdapter(context: Context) : RecyclerView.Adapter<Recycle
     }
 
 }
+
