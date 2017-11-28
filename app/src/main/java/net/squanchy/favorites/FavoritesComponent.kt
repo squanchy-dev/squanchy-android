@@ -23,7 +23,6 @@ internal interface FavoritesComponent {
     fun analytics(): Analytics
 }
 
-
 internal fun favoritesComponent(activity: AppCompatActivity): FavoritesComponent {
     return DaggerFavoritesComponent.builder()
             .applicationComponent(ApplicationInjector.obtain(activity))
@@ -33,4 +32,3 @@ internal fun favoritesComponent(activity: AppCompatActivity): FavoritesComponent
             .build()
 
 }
-

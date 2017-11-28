@@ -2,6 +2,7 @@ package net.squanchy.favorites.view
 
 import android.content.Context
 import android.os.Build
+import android.support.annotation.DrawableRes
 import android.support.annotation.RequiresApi
 import android.support.design.widget.Snackbar
 import android.text.Html
@@ -12,8 +13,8 @@ import kotlinx.android.synthetic.main.merge_no_favorites_view.view.*
 import net.squanchy.R
 
 class FavoritesSignedInEmptyLayout @JvmOverloads constructor(
-        context: Context?, attrs: AttributeSet? = null, defStyleAttr: Int = 0, defStyleRes: Int = 0) : LinearLayout(
-            context, attrs, defStyleAttr, defStyleRes), FavoritesSignedInEmptyLayoutView {
+        context: Context?, attrs: AttributeSet? = null, defStyleAttr: Int = 0, defStyleRes: Int = 0
+) : LinearLayout(context, attrs, defStyleAttr, defStyleRes), FavoritesSignedInEmptyLayoutView {
 
     private var counter = 0
 
@@ -25,7 +26,6 @@ class FavoritesSignedInEmptyLayout @JvmOverloads constructor(
         throw UnsupportedOperationException("Changing orientation is not supported for ${FavoritesSignedInEmptyLayout::class.java.simpleName}")
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun onFinishInflate() {
         super.onFinishInflate()
 
@@ -36,11 +36,10 @@ class FavoritesSignedInEmptyLayout @JvmOverloads constructor(
         this.counter = counter
     }
 
-    override fun setButtonImage(resId: Int) = favoriteFab.setImageResource(resId)
+    override fun setButtonImage(@DrawableRes resId: Int) = favoriteFab.setImageResource(resId)
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun showAchievement(message: String) = Snackbar.make(this, readAsHtml(message), Snackbar.LENGTH_LONG).show()
-
 
     private fun favoriteButtonClickListener(view: View) {
         presentButtonIcon(counter, this, this::favoritesFilledIconId, this::favoritesEmptyIconId)
@@ -59,5 +58,4 @@ class FavoritesSignedInEmptyLayout @JvmOverloads constructor(
     private fun readAsHtml(message: String): CharSequence {
         return Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY)
     }
-
 }

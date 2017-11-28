@@ -9,10 +9,11 @@ import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Schedule
 import net.squanchy.support.view.CardSpacingItemDecorator
 
-internal class FavoritesListView @JvmOverloads constructor
-    (context: Context?, attrs: AttributeSet? = null, defStyle: Int = 0) : RecyclerView(context, attrs, defStyle) {
+internal class FavoritesListView @JvmOverloads constructor(
+        context: Context?, attrs: AttributeSet? = null, defStyle: Int = 0
+) : RecyclerView(context, attrs, defStyle) {
 
-    private lateinit var adapter: FavoritesAdapter
+    private val adapter = FavoritesAdapter(context)
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -20,7 +21,6 @@ internal class FavoritesListView @JvmOverloads constructor
         val layoutManager = LinearLayoutManager(context)
         setLayoutManager(layoutManager)
 
-        adapter = FavoritesAdapter(context)
         setAdapter(adapter)
 
         val horizontalSpacing = getResources().getDimensionPixelSize(R.dimen.card_horizontal_margin)
@@ -31,6 +31,4 @@ internal class FavoritesListView @JvmOverloads constructor
     fun updateWith(newData: Schedule, listener: (Event) -> Unit) {
         adapter.updateWith(newData, listener)
     }
-
 }
-

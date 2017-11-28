@@ -11,6 +11,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.BiFunction
 import kotlinx.android.synthetic.main.view_page_favorites.view.*
 import net.squanchy.R
+import net.squanchy.R.id.*
 import net.squanchy.analytics.Analytics
 import net.squanchy.analytics.ContentType
 import net.squanchy.home.HomeActivity
@@ -21,16 +22,17 @@ import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Schedule
 import net.squanchy.support.unwrapToActivityContext
 
-class FavoritesPageView @JvmOverloads constructor(context: Context?, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
-        CoordinatorLayout(context, attrs, defStyleAttr), Loadable {
+class FavoritesPageView @JvmOverloads constructor(
+        context: Context?, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : CoordinatorLayout(context, attrs, defStyleAttr), Loadable {
 
     private val favoritesComponent = favoritesComponent(unwrapToActivityContext(context))
 
-    private val service: ScheduleService by lazy { favoritesComponent.service() }
+    private val service: ScheduleService = favoritesComponent.service()
 
-    private val navigator: Navigator by lazy { favoritesComponent.navigator() }
+    private val navigator: Navigator = favoritesComponent.navigator()
 
-    private val analytics: Analytics by lazy { favoritesComponent.analytics() }
+    private val analytics: Analytics = favoritesComponent.analytics()
 
     private val disposable = CompositeDisposable()
 
@@ -43,10 +45,11 @@ class FavoritesPageView @JvmOverloads constructor(context: Context?, attrs: Attr
     }
 
     override fun startLoading() {
-        disposable.add(Observable.combineLatest(service.schedule(true), service.currentUserIsSignedIn(),
+        disposable.add(
+                Observable.combineLatest(service.schedule(true), service.currentUserIsSignedIn(),
                 BiFunction<Schedule, Boolean, LoadScheduleResult> { schedule, signedIn ->  LoadScheduleResult(schedule, signedIn) })
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { handleLoadSchedule(it) })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { handleLoadSchedule(it) })
     }
 
     override fun stopLoading() = disposable.clear()
@@ -60,25 +63,23 @@ class FavoritesPageView @JvmOverloads constructor(context: Context?, attrs: Attr
     }
 
     private fun onMenuItemClickListener(menuItem: MenuItem): Boolean {
-
-        when (menuItem.itemId) {
+        return when (menuItem.itemId) {
             R.id.action_search -> { showSearch(); return true }
             R.id.action_settings -> { showSettings(); return true }
+            else -> false
         }
-
-        return false
     }
 
+
     private fun handleLoadSchedule(result: LoadScheduleResult) {
-
-        fun hasFavorites(schedule: Schedule) = !schedule.isEmpty
-
         when {
             hasFavorites(result.schedule) -> showSchedule(result.schedule)
             result.signedIn -> promptToFavorite()
             else -> promptToSign()
         }
     }
+
+    private fun hasFavorites(schedule: Schedule) = !schedule.isEmpty
 
     private fun showSchedule(schedule: Schedule) {
         favoritesListView.updateWith(schedule, this::showEventDetails)
@@ -118,6 +119,4 @@ class FavoritesPageView @JvmOverloads constructor(context: Context?, attrs: Attr
     private fun showSettings() = navigator.toSettings()
 
     private data class LoadScheduleResult(val schedule: Schedule, val signedIn: Boolean)
-
 }
-

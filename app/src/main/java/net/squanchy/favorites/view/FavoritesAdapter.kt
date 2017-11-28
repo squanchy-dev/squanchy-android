@@ -12,17 +12,18 @@ import net.squanchy.schedule.domain.view.SchedulePage
 import net.squanchy.schedule.view.EventItemView
 import net.squanchy.schedule.view.EventViewHolder
 import net.squanchy.search.view.HeaderViewHolder
-import net.squanchy.support.lang.Lists
 
 import org.joda.time.LocalDateTime
 
 // todo #333 too complicated logic. Need to refactor once sample data is available.
-internal class FavoritesAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val viewTypeTalk: Int = 1
-    private val viewTypeHeader: Int = 2
+    companion object {
+        private val viewTypeTalk: Int = 1
+        private val viewTypeHeader: Int = 2
+    }
 
-    private val layoutInflater: LayoutInflater
+    private val layoutInflater = LayoutInflater.from(context)
 
     private var schedule = Schedule.create(emptyList())
 
@@ -30,7 +31,6 @@ internal class FavoritesAdapter(context: Context) : RecyclerView.Adapter<Recycle
 
     init {
         setHasStableIds(true)
-        layoutInflater = LayoutInflater.from(context)
     }
 
     override fun getItemId(position: Int): Long {
@@ -60,13 +60,16 @@ internal class FavoritesAdapter(context: Context) : RecyclerView.Adapter<Recycle
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        if (viewType == viewTypeTalk) {
-            val itemView = layoutInflater.inflate(R.layout.item_schedule_event_talk, parent, false) as EventItemView
-            return EventViewHolder(itemView)
-        } else return if (viewType == viewTypeHeader) {
-            HeaderViewHolder(layoutInflater.inflate(R.layout.item_search_header, parent, false))
-        } else {
-            throw IllegalArgumentException("View type not supported: " + viewType)
+        return when (viewType) {
+            viewTypeTalk -> {
+                val itemView = layoutInflater.inflate(R.layout.item_schedule_event_talk, parent, false) as EventItemView
+                EventViewHolder(itemView)
+            }
+            else -> if (viewType == viewTypeHeader) {
+                HeaderViewHolder(layoutInflater.inflate(R.layout.item_search_header, parent, false))
+            } else {
+                throw IllegalArgumentException("View type not supported: " + viewType)
+            }
         }
     }
 
@@ -97,9 +100,8 @@ internal class FavoritesAdapter(context: Context) : RecyclerView.Adapter<Recycle
         return date.toString("EEEE d")
     }
 
-    override fun getItemCount(): Int {
-        return Lists.reduce(0, schedule.pages) { count, (_, _, events) -> count!! + events.size + 1 }
-    }
+    override fun getItemCount(): Int = schedule.pages.fold(0) { count, page -> count + page.events.size + 1 }
+
 
     private fun <T> findFor(pagePosition: Int, position: Int, pages: List<SchedulePage>,
             header: (SchedulePage) -> T, row: (SchedulePage, Int) -> T): T {
@@ -123,8 +125,5 @@ internal class FavoritesAdapter(context: Context) : RecyclerView.Adapter<Recycle
         }
 
         return findFor(pagePosition + 1, adjustedPosition - size, pages, header, row)
-
     }
-
 }
-
