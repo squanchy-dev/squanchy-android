@@ -1,7 +1,8 @@
 package net.squanchy.favorites
 
 import net.squanchy.favorites.view.FavoritesSignedInEmptyLayoutView
-import net.squanchy.favorites.view.handleFavoriteButtonClick
+import net.squanchy.favorites.view.presentAchievementMessage
+import net.squanchy.favorites.view.presentButtonIcon
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -25,7 +26,8 @@ class FavoritesSignedInEmptyLayoutPresenterTest {
         val filledIconProvider = { 2 }
 
         //when
-        handleFavoriteButtonClick(counter, view, filledIconProvider, {0}, {""}, {""})
+        presentButtonIcon(counter, view, filledIconProvider, {0})
+        presentAchievementMessage(counter, view,  {""}, {""})
 
         //then
         verify(view).setButtonImage(filledIconProvider())
@@ -41,7 +43,8 @@ class FavoritesSignedInEmptyLayoutPresenterTest {
         val emptyIconProvider = {4}
 
         //when
-        handleFavoriteButtonClick(counter, view, {0}, emptyIconProvider, {""}, {""})
+        presentButtonIcon(counter, view, {0}, emptyIconProvider)
+        presentAchievementMessage(counter, view,  {""}, {""})
 
         //then
         verify(view).setButtonImage(emptyIconProvider())
@@ -58,7 +61,8 @@ class FavoritesSignedInEmptyLayoutPresenterTest {
         val initialMessageProvider = {"initial"}
 
         //when
-        handleFavoriteButtonClick(counter, view, filledIconProvider, {0}, initialMessageProvider, {""})
+        presentButtonIcon(counter, view, filledIconProvider, {0})
+        presentAchievementMessage(counter, view,  initialMessageProvider, {""})
 
         //then
         verify(view).setButtonImage(filledIconProvider())
@@ -75,7 +79,8 @@ class FavoritesSignedInEmptyLayoutPresenterTest {
         val perseverantMessageProvider = {"perseverant"}
 
         //when
-        handleFavoriteButtonClick(counter, view, filledIconProvider, {0}, {""}, perseverantMessageProvider)
+        presentButtonIcon(counter, view, filledIconProvider, {0})
+        presentAchievementMessage(counter, view,  {""}, perseverantMessageProvider)
 
         //then
         verify(view).setButtonImage(filledIconProvider())

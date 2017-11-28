@@ -43,8 +43,8 @@ class FavoritesSignedInEmptyLayout @JvmOverloads constructor(
 
 
     private fun favoriteButtonClickListener(view: View) {
-        handleFavoriteButtonClick(counter, this, this::favoritesFilledIconId, this::favoritesEmptyIconId,
-                this::initialAchieventMessage, this::perseveranceAchievementMessage)
+        presentButtonIcon(counter, this, this::favoritesFilledIconId, this::favoritesEmptyIconId)
+        presentAchievementMessage(counter, this, this::initialAchieventMessage, this::perseveranceAchievementMessage)
     }
 
     private fun favoritesFilledIconId() = R.drawable.ic_favorite_filled

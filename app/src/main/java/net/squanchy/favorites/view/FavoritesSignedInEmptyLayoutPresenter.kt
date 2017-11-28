@@ -6,10 +6,14 @@ private const val TAPS_TO_TRIGGER_PERSEVERANCE_ACHIEVEMENT = 15
 private typealias AchievementMessageProvider = () -> String
 private typealias ResIdProvider = () -> Int
 
-internal fun handleFavoriteButtonClick(counter: Int, view: FavoritesSignedInEmptyLayoutView, filledIconId: ResIdProvider,
-        emptyIconId: ResIdProvider, initialAchievementMessage: AchievementMessageProvider, perseveranceMessage: AchievementMessageProvider) {
+internal fun presentButtonIcon(counter: Int, view: FavoritesSignedInEmptyLayoutView, filledIconId: ResIdProvider, emptyIconId: ResIdProvider) {
 
     if (counter % 2 == 0) view.setButtonImage(filledIconId()) else view.setButtonImage(emptyIconId())
+
+}
+
+internal fun presentAchievementMessage(counter: Int, view: FavoritesSignedInEmptyLayoutView, initialAchievementMessage: AchievementMessageProvider,
+        perseveranceMessage: AchievementMessageProvider) {
 
     val newCounter = counter + 1
 
