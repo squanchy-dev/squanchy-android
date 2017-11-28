@@ -11,7 +11,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.BiFunction
 import kotlinx.android.synthetic.main.view_page_favorites.view.*
 import net.squanchy.R
-import net.squanchy.R.id.*
 import net.squanchy.analytics.Analytics
 import net.squanchy.analytics.ContentType
 import net.squanchy.home.HomeActivity
