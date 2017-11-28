@@ -31,4 +31,6 @@ internal class FavoritesListView @JvmOverloads constructor
     fun updateWith(newData: Schedule, listener: (Event) -> Unit) {
         adapter.updateWith(newData, listener)
     }
+
 }
+

@@ -118,4 +118,6 @@ class FavoritesPageView @JvmOverloads constructor(context: Context?, attrs: Attr
     private fun showSettings() = navigator.toSettings()
 
     private data class LoadScheduleResult(val schedule: Schedule, val signedIn: Boolean)
+
 }
+

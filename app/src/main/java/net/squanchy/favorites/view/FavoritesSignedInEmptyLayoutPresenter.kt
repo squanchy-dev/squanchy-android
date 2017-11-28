@@ -19,3 +19,4 @@ internal fun handleFavoriteButtonClick(counter: Int, view: FavoritesSignedInEmpt
     else if (newCounter == TAPS_TO_TRIGGER_PERSEVERANCE_ACHIEVEMENT) view.showAchievement(perseveranceMessage())
 
 }
+

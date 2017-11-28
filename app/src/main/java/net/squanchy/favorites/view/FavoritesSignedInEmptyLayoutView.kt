@@ -7,4 +7,6 @@ interface FavoritesSignedInEmptyLayoutView {
     fun setButtonImage(resId: Int)
 
     fun showAchievement(message: String)
+
 }
+
