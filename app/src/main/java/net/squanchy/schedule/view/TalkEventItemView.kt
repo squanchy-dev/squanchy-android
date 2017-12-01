@@ -11,8 +11,8 @@ import net.squanchy.support.widget.SpeakerView
 import org.joda.time.format.DateTimeFormat
 
 class TalkEventItemView @JvmOverloads constructor(
-        context: Context
-        , attrs: AttributeSet,
+        context: Context,
+        attrs: AttributeSet,
         defStyleAttr: Int = R.attr.cardViewDefaultStyle
 ) : EventItemView(context, attrs, defStyleAttr) {
 
