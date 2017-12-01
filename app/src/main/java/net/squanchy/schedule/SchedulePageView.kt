@@ -126,7 +126,7 @@ class SchedulePageView : CoordinatorLayout, Loadable {
         progressbar.visibility = View.GONE
     }
 
-    private class TrackingOnTabSelectedListener internal constructor(
+    private class TrackingOnTabSelectedListener constructor(
             private val analytics: Analytics,
             private val viewPagerAdapter: ScheduleViewPagerAdapter
     ) : TabLayout.OnTabSelectedListener {
