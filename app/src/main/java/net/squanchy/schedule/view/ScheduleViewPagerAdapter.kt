@@ -41,8 +41,7 @@ class ScheduleViewPagerAdapter(private val context: Context) : ViewPagerAdapter<
 
     fun getPageDayId(position: Int) = pages[position].dayId
 
-    override
-    fun isViewFromObject(view: View, `object`: Any) = view === `object`
+    override fun isViewFromObject(view: View, `object`: Any) = view === `object`
 
     interface OnEventClickedListener {
         fun onEventClicked(event: Event)
