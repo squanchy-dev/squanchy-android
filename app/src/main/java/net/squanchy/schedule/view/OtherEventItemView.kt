@@ -22,6 +22,7 @@ class OtherEventItemView @JvmOverloads constructor(
         illustration.setImageResource(illustrationFor(event.type))
     }
 
+    @Suppress("ComplexCondition")
     private fun ensureSupportedType(type: Event.Type) {
         if (type === Event.Type.COFFEE_BREAK
                 || type === Event.Type.LUNCH
