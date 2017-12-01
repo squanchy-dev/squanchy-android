@@ -30,7 +30,7 @@ class ScheduleDayPageView : RecyclerView {
         addItemDecoration(CardSpacingItemDecorator(horizontalSpacing, verticalSpacing))
     }
 
-    fun updateWith(newData: List<Event>, listener: ScheduleViewPagerAdapter.OnEventClickedListener) {
+    fun updateWith(newData: List<Event>, listener: (Event) -> Unit) {
         val callback = EventsDiffCallback(adapter.events, newData)
         val diffResult = DiffUtil.calculateDiff(callback, true)    // TODO move off the UI thread
         adapter.updateWith(newData, listener)

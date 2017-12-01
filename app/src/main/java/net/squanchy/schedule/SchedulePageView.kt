@@ -122,11 +122,7 @@ class SchedulePageView : CoordinatorLayout, Loadable {
     }
 
     fun updateWith(schedule: Schedule, onEventClicked: (Event) -> Unit) {
-        viewPagerAdapter.updateWith(
-                schedule.pages, object : ScheduleViewPagerAdapter.OnEventClickedListener {
-            override fun onEventClicked(event: Event) = onEventClicked(event)
-        }
-        )
+        viewPagerAdapter.updateWith(schedule.pages, onEventClicked)
         progressbar.visibility = View.GONE
     }
 

@@ -12,11 +12,11 @@ import java.util.*
 
 class ScheduleViewPagerAdapter(private val context: Context) : ViewPagerAdapter<ScheduleDayPageView>() {
 
-    private lateinit var listener: OnEventClickedListener
+    private lateinit var listener: (Event) -> Unit
 
     private var pages = emptyList<SchedulePage>()
 
-    fun updateWith(pages: List<SchedulePage>, listener: OnEventClickedListener) {
+    fun updateWith(pages: List<SchedulePage>, listener: (Event) -> Unit) {
         this.pages = pages
         this.listener = listener
         notifyDataSetChanged()

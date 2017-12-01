@@ -97,7 +97,12 @@ class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     (schedulePage, positionInPage) -> schedulePage.getEvents().get(positionInPage)
             );
 
-            ((EventViewHolder) holder).updateWith(event, listener);
+            ((EventViewHolder) holder).updateWith(event, event1 -> {
+                if (listener != null) {
+                    listener.onEventClicked(event1);
+                }
+                return null;
+            });
         } else if (holder instanceof HeaderViewHolder) {
             LocalDateTime date = findFor(
                     0,

@@ -15,7 +15,7 @@ internal class EventsAdapter(context: Context) : RecyclerView.Adapter<EventViewH
     }
 
     private val layoutInflater: LayoutInflater
-    private lateinit var listener: ScheduleViewPagerAdapter.OnEventClickedListener
+    private lateinit var listener: (Event) -> Unit
     private var _events = emptyList<Event>()
     val events get() = _events
 
@@ -26,7 +26,7 @@ internal class EventsAdapter(context: Context) : RecyclerView.Adapter<EventViewH
 
     override fun getItemId(position: Int) = _events[position].numericId
 
-    fun updateWith(events: List<Event>, listener: ScheduleViewPagerAdapter.OnEventClickedListener) {
+    fun updateWith(events: List<Event>, listener: (Event) -> Unit) {
         this._events = events
         this.listener = listener
     }

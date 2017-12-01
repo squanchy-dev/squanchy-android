@@ -6,8 +6,8 @@ import net.squanchy.schedule.domain.view.Event
 
 class EventViewHolder(itemView: EventItemView) : RecyclerView.ViewHolder(itemView) {
 
-    fun updateWith(event: Event, listener: ScheduleViewPagerAdapter.OnEventClickedListener?) {
+    fun updateWith(event: Event, listener: (Event) -> Unit) {
         (itemView as EventItemView).updateWith(event)
-        itemView.setOnClickListener { listener?.onEventClicked(event) }
+        itemView.setOnClickListener { listener.invoke(event) }
     }
 }
