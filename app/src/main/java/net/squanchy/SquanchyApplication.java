@@ -20,6 +20,8 @@ import io.fabric.sdk.android.Fabric;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import timber.log.Timber;
 
+import static net.squanchy.injection.ApplicationComponentKt.createApplicationComponent;
+
 public class SquanchyApplication extends Application {
 
     private ApplicationComponent applicationComponent;
@@ -99,7 +101,7 @@ public class SquanchyApplication extends Application {
     @MainThread
     public ApplicationComponent applicationComponent() {
         if (applicationComponent == null) {
-            applicationComponent = ApplicationComponent.Factory.create(this);
+            applicationComponent = createApplicationComponent(this);
         }
 
         return applicationComponent;

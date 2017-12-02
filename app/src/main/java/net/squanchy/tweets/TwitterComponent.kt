@@ -10,11 +10,11 @@ import net.squanchy.tweets.service.TwitterService
 
 import dagger.Component
 import net.squanchy.injection.ActivityContextModule
-import net.squanchy.injection.ApplicationInjector
+import net.squanchy.injection.applicationComponent
 
 internal fun twitterComponent(activity: AppCompatActivity): TwitterComponent {
     return DaggerTwitterComponent.builder()
-        .applicationComponent(ApplicationInjector.obtain(activity))
+        .applicationComponent(activity.applicationComponent)
         .activityContextModule(ActivityContextModule(activity))
         .twitterModule(TwitterModule())
         .navigationModule(NavigationModule())
