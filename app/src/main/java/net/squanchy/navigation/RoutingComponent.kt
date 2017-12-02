@@ -13,8 +13,8 @@ import net.squanchy.onboarding.OnboardingModule
 import net.squanchy.signin.SignInModule
 import net.squanchy.signin.SignInService
 
-internal fun routingComponent(activity: AppCompatActivity): RoutingComponent {
-    return DaggerRoutingComponent.builder()
+internal fun routingComponent(activity: AppCompatActivity) =
+    DaggerRoutingComponent.builder()
             .activityContextModule(ActivityContextModule(activity))
             .applicationComponent(activity.applicationComponent)
             .deepLinkModule(DeepLinkModule())
@@ -22,12 +22,11 @@ internal fun routingComponent(activity: AppCompatActivity): RoutingComponent {
             .signInModule(SignInModule())
             .routingModule(RoutingModule())
             .build()
-}
 
 @ActivityLifecycle
 @Component(
-        modules = arrayOf(DeepLinkModule::class, SignInModule::class, OnboardingModule::class, RoutingModule::class),
-        dependencies = arrayOf(ApplicationComponent::class)
+        modules = [DeepLinkModule::class, SignInModule::class, OnboardingModule::class, RoutingModule::class],
+        dependencies = [ApplicationComponent::class]
 )
 internal interface RoutingComponent {
 

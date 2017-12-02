@@ -10,7 +10,7 @@ import net.squanchy.support.injection.CurrentTimeModule
 import dagger.Component
 
 @ActivityLifecycle
-@Component(modules = arrayOf(NavigationModule::class, CurrentTimeModule::class), dependencies = arrayOf(ApplicationComponent::class))
+@Component(modules = [NavigationModule::class, CurrentTimeModule::class], dependencies = [ApplicationComponent::class])
 internal interface HomeComponent {
 
     fun analytics(): Analytics

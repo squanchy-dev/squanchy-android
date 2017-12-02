@@ -11,7 +11,7 @@ import net.squanchy.navigation.NavigationModule
 import net.squanchy.navigation.Navigator
 
 @ActivityLifecycle
-@Component(modules = arrayOf(ScheduleModule::class, NavigationModule::class), dependencies = arrayOf(ApplicationComponent::class))
+@Component(modules = [ScheduleModule::class, NavigationModule::class], dependencies = [ApplicationComponent::class])
 internal interface ScheduleComponent {
 
     fun service(): ScheduleService

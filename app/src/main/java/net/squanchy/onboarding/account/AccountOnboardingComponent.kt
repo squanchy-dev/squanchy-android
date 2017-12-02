@@ -13,17 +13,16 @@ import net.squanchy.onboarding.OnboardingModule
 import net.squanchy.signin.SignInModule
 import net.squanchy.signin.SignInService
 
-internal fun accountOnboardingComponent(activity: AppCompatActivity): AccountOnboardingComponent {
-    return DaggerAccountOnboardingComponent.builder()
+internal fun accountOnboardingComponent(activity: AppCompatActivity) =
+    DaggerAccountOnboardingComponent.builder()
             .activityContextModule(ActivityContextModule(activity))
             .applicationComponent(activity.applicationComponent)
             .build()
-}
 
 @ActivityLifecycle
 @Component(
-        modules = arrayOf(OnboardingModule::class, SignInModule::class, NavigationModule::class),
-        dependencies = arrayOf(ApplicationComponent::class)
+        modules = [OnboardingModule::class, SignInModule::class, NavigationModule::class],
+        dependencies = [ApplicationComponent::class]
 )
 internal interface AccountOnboardingComponent {
 

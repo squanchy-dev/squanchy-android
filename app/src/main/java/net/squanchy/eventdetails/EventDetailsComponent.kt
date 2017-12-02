@@ -9,17 +9,16 @@ import dagger.Component
 import net.squanchy.injection.ActivityContextModule
 import net.squanchy.injection.applicationComponent
 
-internal fun eventDetailsComponent(activity: EventDetailsActivity): EventDetailsComponent {
-    return DaggerEventDetailsComponent.builder()
+internal fun eventDetailsComponent(activity: EventDetailsActivity) =
+    DaggerEventDetailsComponent.builder()
         .applicationComponent(activity.applicationComponent)
         .eventDetailsModule(EventDetailsModule())
         .activityContextModule(ActivityContextModule(activity))
         .navigationModule(NavigationModule())
         .build()
-}
 
 @ActivityLifecycle
-@Component(modules = arrayOf(EventDetailsModule::class, NavigationModule::class), dependencies = arrayOf(ApplicationComponent::class))
+@Component(modules = [EventDetailsModule::class, NavigationModule::class], dependencies = [ApplicationComponent::class])
 internal interface EventDetailsComponent {
 
     fun service(): EventDetailsService

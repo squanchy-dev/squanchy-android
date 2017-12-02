@@ -7,11 +7,10 @@ import net.squanchy.injection.applicationComponent
 import net.squanchy.navigation.NavigationModule
 import net.squanchy.schedule.ScheduleModule
 
-internal fun favouritesComponent(activity: AppCompatActivity): FavoritesComponent {
-    return DaggerFavoritesComponent.builder()
+internal fun favouritesComponent(activity: AppCompatActivity) =
+    DaggerFavoritesComponent.builder()
         .applicationComponent(activity.applicationComponent)
         .scheduleModule(ScheduleModule())
         .navigationModule(NavigationModule())
         .activityContextModule(ActivityContextModule(activity))
         .build()
-}

@@ -29,7 +29,7 @@ fun createApplicationComponent(application: Application): ApplicationComponent {
 
 @ApplicationLifecycle
 @Component(
-        modules = arrayOf(
+        modules = [
                 ApplicationContextModule::class,
                 FirebaseModule::class,
                 ChecksumModule::class,
@@ -37,7 +37,7 @@ fun createApplicationComponent(application: Application): ApplicationComponent {
                 AnalyticsModule::class,
                 RemoteConfigModule::class,
                 CurrentTimeModule::class
-        )
+        ]
 )
 interface ApplicationComponent {
 

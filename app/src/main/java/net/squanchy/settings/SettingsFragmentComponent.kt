@@ -13,17 +13,16 @@ import dagger.Component
 import net.squanchy.injection.ActivityContextModule
 import net.squanchy.injection.applicationComponent
 
-internal fun settingsFragmentComponent(activity: AppCompatActivity): SettingsFragmentComponent {
-    return DaggerSettingsFragmentComponent.builder()
+internal fun settingsFragmentComponent(activity: AppCompatActivity) =
+    DaggerSettingsFragmentComponent.builder()
         .activityContextModule(ActivityContextModule(activity))
         .applicationComponent(activity.applicationComponent)
         .navigationModule(NavigationModule())
         .signInModule(SignInModule())
         .build()
-}
 
 @ActivityLifecycle
-@Component(modules = arrayOf(SignInModule::class, NavigationModule::class), dependencies = arrayOf(ApplicationComponent::class))
+@Component(modules = [SignInModule::class, NavigationModule::class], dependencies = [ApplicationComponent::class])
 interface SettingsFragmentComponent {
 
     fun navigator(): Navigator

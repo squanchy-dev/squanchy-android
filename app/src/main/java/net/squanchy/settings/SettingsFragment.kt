@@ -108,7 +108,7 @@ class SettingsFragment : PreferenceFragment() {
         accountEmailPreference.title = firebaseUser.email
 
         accountSignInSignOutPreference.setTitle(R.string.sign_out_title)
-        accountSignInSignOutPreference.setOnPreferenceClickListener { preference ->
+        accountSignInSignOutPreference.setOnPreferenceClickListener {
             signInService.signOut()
                 .subscribe { Snackbar.make(viewOrThrow, R.string.settings_message_signed_out, Snackbar.LENGTH_SHORT).show() }
             true
@@ -119,7 +119,7 @@ class SettingsFragment : PreferenceFragment() {
         accountCategory.removePreference(accountEmailPreference)
 
         accountSignInSignOutPreference.setTitle(R.string.sign_in_title)
-        accountSignInSignOutPreference.setOnPreferenceClickListener { preference ->
+        accountSignInSignOutPreference.setOnPreferenceClickListener {
             navigator.toSignIn()
             true
         }

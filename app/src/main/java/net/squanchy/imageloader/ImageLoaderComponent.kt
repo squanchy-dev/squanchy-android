@@ -11,7 +11,7 @@ fun imageLoaderComponent(activity: AppCompatActivity): ImageLoaderComponent {
         .build()
 }
 
-@Component(modules = arrayOf(ImageLoaderModule::class))
+@Component(modules = [ImageLoaderModule::class])
 interface ImageLoaderComponent {
 
     fun imageLoader(): ImageLoader

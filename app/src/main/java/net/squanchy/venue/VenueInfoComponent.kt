@@ -9,17 +9,16 @@ import net.squanchy.injection.applicationComponent
 import net.squanchy.navigation.NavigationModule
 import net.squanchy.navigation.Navigator
 
-internal fun venueInfoComponent(activity: AppCompatActivity): VenueInfoComponent {
-    return DaggerVenueInfoComponent.builder()
+internal fun venueInfoComponent(activity: AppCompatActivity) =
+    DaggerVenueInfoComponent.builder()
             .applicationComponent(activity.applicationComponent)
             .navigationModule(NavigationModule())
             .venueInfoModule(VenueInfoModule())
             .activityContextModule(ActivityContextModule(activity))
             .build()
-}
 
 @ActivityLifecycle
-@Component(modules = arrayOf(VenueInfoModule::class, NavigationModule::class), dependencies = arrayOf(ApplicationComponent::class))
+@Component(modules = [VenueInfoModule::class, NavigationModule::class], dependencies = [ApplicationComponent::class])
 internal interface VenueInfoComponent {
 
     fun navigator(): Navigator

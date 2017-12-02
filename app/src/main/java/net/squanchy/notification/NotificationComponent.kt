@@ -17,7 +17,7 @@ internal fun notificationComponent(service: Service): NotificationComponent {
 }
 
 @ActivityLifecycle
-@Component(modules = arrayOf(NotificationModule::class), dependencies = arrayOf(ApplicationComponent::class))
+@Component(modules = [NotificationModule::class], dependencies = [ApplicationComponent::class])
 internal interface NotificationComponent {
 
     fun service(): NotificationService

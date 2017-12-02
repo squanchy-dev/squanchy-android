@@ -8,15 +8,14 @@ import net.squanchy.navigation.Navigator
 import dagger.Component
 import net.squanchy.injection.ActivityContextModule
 
-fun aboutComponent(activity: AppCompatActivity): AboutComponent {
-    return DaggerAboutComponent.builder()
+fun aboutComponent(activity: AppCompatActivity) =
+    DaggerAboutComponent.builder()
         .activityContextModule(ActivityContextModule(activity))
         .navigationModule(NavigationModule())
         .build()
-}
 
 @ActivityLifecycle
-@Component(modules = arrayOf(NavigationModule::class))
+@Component(modules = [NavigationModule::class])
 interface AboutComponent {
 
     fun navigator(): Navigator
