@@ -1,7 +1,6 @@
 package net.squanchy.home;
 
-public interface
-Loadable {
+public interface Loadable {
 
     void startLoading();
 
