@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_settings.view.userCirclePhotoView
 import kotlinx.android.synthetic.main.activity_settings.view.usernameTextView
 import net.squanchy.R
 import net.squanchy.imageloader.ImageLoader
-import net.squanchy.imageloader.ImageLoaderInjector
+import net.squanchy.imageloader.imageLoaderComponent
 import net.squanchy.support.lang.Lists
 import net.squanchy.support.lang.Optional
 import net.squanchy.support.unwrapToActivityContext
@@ -22,7 +22,7 @@ class SettingsHeaderLayout(context: Context, attrs: AttributeSet?) : AppBarLayou
 
     init {
         if (!isInEditMode) {
-            imageLoader = ImageLoaderInjector.obtain(unwrapToActivityContext(context))
+            imageLoader = imageLoaderComponent(unwrapToActivityContext(context))
                 .imageLoader()
         }
 
