@@ -6,7 +6,7 @@ import dagger.Module
 import dagger.Provides
 import net.squanchy.injection.ActivityContextModule
 
-@Module(includes = arrayOf(ActivityContextModule::class))
+@Module(includes = [ActivityContextModule::class])
 class OnboardingModule {
 
     @Provides

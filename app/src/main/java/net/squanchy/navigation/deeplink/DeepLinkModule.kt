@@ -8,7 +8,7 @@ import net.squanchy.injection.ActivityContextModule
 import net.squanchy.navigation.NavigationModule
 import net.squanchy.navigation.Navigator
 
-@Module(includes = arrayOf(ActivityContextModule::class, NavigationModule::class))
+@Module(includes = [ActivityContextModule::class, NavigationModule::class])
 class DeepLinkModule {
 
     @Provides
