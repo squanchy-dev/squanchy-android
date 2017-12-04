@@ -1,7 +1,6 @@
 package net.squanchy.favorites.view
 
 import android.content.Context
-import android.opengl.ETC1.*
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
