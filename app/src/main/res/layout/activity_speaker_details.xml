@@ -2,7 +2,7 @@
 <net.squanchy.speaker.widget.SpeakerDetailsLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/speaker_details_root"
+  android:id="@+id/speakerDetailsLayout"
   android:layout_width="match_parent"
   android:layout_height="wrap_content">
 
@@ -18,14 +18,14 @@
       app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <net.squanchy.speaker.widget.SpeakerHeaderView
-      android:id="@+id/speaker_details_header"
+      android:id="@+id/speakerDetailsHeader"
       android:layout_width="wrap_content"
       android:layout_height="@dimen/speaker_details_speaker_height"
       android:layout_marginStart="@dimen/speaker_details_speaker_margin_start"
       android:layout_marginBottom="@dimen/speaker_details_speaker_margin_bottom">
 
       <net.squanchy.support.widget.CircleImageView
-        android:id="@+id/speaker_photo"
+        android:id="@+id/speakerPhoto"
         style="@style/SpeakerDetails.Header.Speaker.Photo"
         android:layout_width="@dimen/speaker_details_speaker_photo"
         android:layout_height="@dimen/speaker_details_speaker_photo"
@@ -40,14 +40,14 @@
         android:orientation="vertical">
 
         <TextView
-          android:id="@+id/speaker_name"
+          android:id="@+id/speakerName"
           style="@style/SpeakerDetails.Header.Speaker.Name"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           tools:text="Qi Qu" />
 
         <TextView
-          android:id="@+id/speaker_company"
+          android:id="@+id/speakerCompany"
           style="@style/SpeakerDetails.Header.Speaker.Company"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
     android:layout_height="match_parent">
 
     <TextView
-      android:id="@+id/speaker_bio"
+      android:id="@+id/speakerBio"
       style="@style/SpeakerDetails.Bio.Text"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
