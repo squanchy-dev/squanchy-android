@@ -19,6 +19,8 @@ import net.squanchy.support.lang.Optional;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
+import static net.squanchy.speaker.SpeakerDetailsComponentKt.speakerDetailsComponent;
+
 public class SpeakerDetailsActivity extends AppCompatActivity {
 
     private static final String EXTRA_SPEAKER_ID = SpeakerDetailsActivity.class.getCanonicalName() + ".speaker_id";
@@ -46,7 +48,7 @@ public class SpeakerDetailsActivity extends AppCompatActivity {
         DialogLayoutParameters.fullHeight(this)
                 .applyTo(getWindow());
 
-        SpeakerDetailsComponent component = SpeakerDetailsInjectorKt.speakerDetailsComponent(this);
+        SpeakerDetailsComponent component = speakerDetailsComponent(this);
         service = component.service();
         navigator = component.navigator();
 
