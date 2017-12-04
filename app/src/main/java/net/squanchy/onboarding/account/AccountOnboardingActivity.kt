@@ -43,7 +43,7 @@ class AccountOnboardingActivity : AppCompatActivity() {
         super.onStart()
 
         disableUi()
-        signInService.isSignedInToGoogle
+        signInService.isSignedInToGoogle()
                 .observeOn(AndroidSchedulers.mainThread())
                 .timeout(SIGNIN_STATE_CHECK_TIMEOUT_SECONDS, TimeUnit.SECONDS)
                 .subscribe(
