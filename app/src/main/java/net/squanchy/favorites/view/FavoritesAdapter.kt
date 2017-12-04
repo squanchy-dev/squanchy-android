@@ -97,8 +97,11 @@ internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<Recycl
     override fun getItemCount(): Int = schedule.pages.fold(0) { count, page -> count + page.events.size + 1 }
 
     private fun <T> findFor(
-            pagePosition: Int, position: Int, pages: List<SchedulePage>,
-            header: (SchedulePage) -> T, row: (SchedulePage, Int) -> T
+            pagePosition: Int,
+            position: Int,
+            pages: List<SchedulePage>,
+            header: (SchedulePage) -> T,
+            row: (SchedulePage, Int) -> T
     ): T {
 
         if (pagePosition >= pages.size) {
