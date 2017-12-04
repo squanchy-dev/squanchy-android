@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <net.squanchy.support.widget.CircleImageView xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/speaker_photo"
+  android:id="@+id/speakerPhoto"
   style="@style/EventDetails.Header.Speaker.Photo"
   android:layout_width="@dimen/event_details_speaker_photo"
   android:layout_height="@dimen/event_details_speaker_photo"

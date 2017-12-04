@@ -9,7 +9,7 @@ import dagger.Component
 import net.squanchy.injection.ActivityContextModule
 import net.squanchy.injection.applicationComponent
 
-internal fun speakerDetailsComponent(activity: SpeakerDetailsActivity) =
+internal fun speakerDetailsComponent(activity: SpeakerDetailsActivity): SpeakerDetailsComponent =
     DaggerSpeakerDetailsComponent.builder()
         .applicationComponent(activity.applicationComponent)
         .speakerDetailsModule(SpeakerDetailsModule())
