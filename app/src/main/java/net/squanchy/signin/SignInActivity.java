@@ -45,7 +45,7 @@ public class SignInActivity extends AppCompatActivity {
 
         googleApiClient = connectToGoogleApis();
 
-        SignInComponent component = SignInInjector.obtain(this);
+        SignInComponent component = SignInInjectorKt.signInComponent(this);
         service = component.service();
 
         setContentView(R.layout.activity_signin);

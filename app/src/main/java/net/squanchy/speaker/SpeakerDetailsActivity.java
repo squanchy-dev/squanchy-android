@@ -46,14 +46,14 @@ public class SpeakerDetailsActivity extends AppCompatActivity {
         DialogLayoutParameters.fullHeight(this)
                 .applyTo(getWindow());
 
-        SpeakerDetailsComponent component = SpeakerDetailsInjector.obtain(this);
+        SpeakerDetailsComponent component = SpeakerDetailsInjectorKt.speakerDetailsComponent(this);
         service = component.service();
         navigator = component.navigator();
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setupToolbar(toolbar);
 
-        speakerDetailsLayout = (SpeakerDetailsLayout) findViewById(R.id.speaker_details_root);
+        speakerDetailsLayout = findViewById(R.id.speaker_details_root);
     }
 
     private void setupToolbar(Toolbar toolbar) {

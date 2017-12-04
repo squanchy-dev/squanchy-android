@@ -1,24 +1,24 @@
 ext {
-    daggerVersion = '2.12'
-    glideVersion = '4.2.0'
-    supportLibVersion = '27.0.0'
-    playServicesVersion = '11.4.2'
-    kotlinVersion = '1.1.51'
+    daggerVersion = '2.13'
+    glideVersion = '4.3.1'
+    supportLibVersion = '27.0.2'
+    playServicesVersion = '11.6.2'
+    kotlinVersion = '1.2.0'
 
-    checkstyleVersion = '8.3'
+    checkstyleVersion = '8.5'
     findbugsVersion = '3.0.1'
     pmdVersion = '5.8.1'
 
     gradlePlugins = [
             buildProperties: 'com.novoda:build-properties-plugin:1.2.1',
-            fabric         : 'io.fabric.tools:gradle:1.24.4',
+            fabric         : 'io.fabric.tools:gradle:1.25.0',
             kotlin         : "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
     ]
 
     libraries = [
             app : [
                     autoValue          : 'com.google.auto.value:auto-value:1.5.2',
-                    crashlytics        : 'com.crashlytics.sdk.android:crashlytics:2.7.1',
+                    crashlytics        : 'com.crashlytics.sdk.android:crashlytics:2.8.0',
                     dagger             : "com.google.dagger:dagger:${daggerVersion}",
                     daggerCompiler     : "com.google.dagger:dagger-compiler:${daggerVersion}",
                     findbugsAnnotations: "com.google.code.findbugs:annotations:3.0.1u2",
@@ -32,17 +32,16 @@ ext {
                     glide              : "com.github.bumptech.glide:glide:${glideVersion}",
                     glideCompiler      : "com.github.bumptech.glide:compiler:${glideVersion}",
                     glideOkHttp3       : "com.github.bumptech.glide:okhttp3-integration:${glideVersion}",
-                    jodaTimeAndroid    : 'net.danlew:android.joda:2.9.9',
+                    jodaTimeAndroid    : 'net.danlew:android.joda:2.9.9.1',
                     kotlin             : "org.jetbrains.kotlin:kotlin-stdlib-jre7:${kotlinVersion}",
                     playServicesAuth   : "com.google.android.gms:play-services-auth:${playServicesVersion}",
-                    retrolambda        : 'net.orfjackal.retrolambda:retrolambda:2.5.0',
-                    rxJava             : 'io.reactivex.rxjava2:rxjava:2.1.6',
+                    rxJava             : 'io.reactivex.rxjava2:rxjava:2.1.7',
                     rxAndroid          : 'io.reactivex.rxjava2:rxandroid:2.0.1',
                     supportAppCompat   : "com.android.support:appcompat-v7:${supportLibVersion}",
                     supportConstraint  : 'com.android.support.constraint:constraint-layout:1.1.0-beta3',
                     supportDesign      : "com.android.support:design:${supportLibVersion}",
                     timber             : 'com.jakewharton.timber:timber:4.6.0',
-                    twitterCore        : 'com.twitter.sdk.android:twitter-core:3.1.1',
+                    twitterCore        : 'com.twitter.sdk.android:twitter-core:3.2.0',
                     viewPagerAdapter   : 'com.novoda:view-pager-adapter:1.0.0'
             ],
 
@@ -50,12 +49,12 @@ ext {
                     fest    : 'org.easytesting:fest-assert-core:2.0M10',
                     jodaTime: 'joda-time:joda-time:2.9.9',
                     jUnit4  : 'junit:junit:4.12',
-                    mockito : 'org.mockito:mockito-inline:2.11.0'
+                    mockito : 'org.mockito:mockito-inline:2.12.0'
             ]
     ]
 
     buildScript = [
-            android                   : 'com.android.tools.build:gradle:3.0.0',
+            android                   : 'com.android.tools.build:gradle:3.0.1',
             gradleStaticAnalysisPlugin: 'com.novoda:gradle-static-analysis-plugin:0.4.1',
             gradleVersionsPlugin      : 'com.github.ben-manes:gradle-versions-plugin:0.15.0',
             googleServices            : 'com.google.gms:google-services:3.1.0',

@@ -6,7 +6,7 @@ import net.squanchy.analytics.Analytics
 import net.squanchy.injection.ActivityContextModule
 import net.squanchy.injection.ActivityLifecycle
 import net.squanchy.injection.ApplicationComponent
-import net.squanchy.injection.ApplicationInjector
+import net.squanchy.injection.createApplicationComponent
 import net.squanchy.navigation.NavigationModule
 import net.squanchy.navigation.Navigator
 import net.squanchy.schedule.ScheduleModule
@@ -25,7 +25,7 @@ internal interface FavoritesComponent {
 
 internal fun favoritesComponent(activity: AppCompatActivity): FavoritesComponent {
     return DaggerFavoritesComponent.builder()
-            .applicationComponent(ApplicationInjector.obtain(activity))
+            .applicationComponent(createApplicationComponent(activity.application))
             .scheduleModule(ScheduleModule())
             .navigationModule(NavigationModule())
             .activityContextModule(ActivityContextModule(activity))

@@ -6,7 +6,6 @@ import android.util.AttributeSet
 import android.view.View
 import net.squanchy.R
 import net.squanchy.imageloader.ImageLoader
-import net.squanchy.imageloader.ImageLoaderInjector
 import net.squanchy.support.unwrapToActivityContext
 import net.squanchy.support.widget.CardLayout
 import net.squanchy.tweets.domain.TweetLinkInfo
@@ -14,6 +13,7 @@ import net.squanchy.tweets.domain.view.TweetViewModel
 import kotlinx.android.synthetic.main.item_tweet.view.tweetPhoto
 import kotlinx.android.synthetic.main.item_tweet.view.tweetFooter
 import kotlinx.android.synthetic.main.item_tweet.view.tweetText
+import net.squanchy.imageloader.imageLoaderComponent
 
 class TweetItemView @JvmOverloads constructor(
         context: Context,
@@ -21,7 +21,7 @@ class TweetItemView @JvmOverloads constructor(
         defStyleAttr: Int = R.attr.cardViewDefaultStyle
 ) : CardLayout(context, attrs, defStyleAttr) {
 
-    private val component = ImageLoaderInjector.obtain(unwrapToActivityContext(context))
+    private val component = imageLoaderComponent(unwrapToActivityContext(context))
     private val imageLoader: ImageLoader = component.imageLoader()
 
     private val footerFormatter: TwitterFooterFormatter = TwitterFooterFormatter(context)

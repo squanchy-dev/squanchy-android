@@ -55,7 +55,7 @@
         android:text="@string/squanchy" />
 
       <Button
-        android:id="@+id/website_button"
+        android:id="@+id/websiteButton"
         style="@style/About.SquanchyWebsite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
       </LinearLayout>
 
       <Button
-        android:id="@+id/github_button"
+        android:id="@+id/githubButton"
         style="@style/About.Button"
         android:layout_width="match_parent"
         android:layout_height="@dimen/color_button_height"
@@ -96,7 +96,7 @@
         android:text="@string/about_fork_me" />
 
       <Button
-        android:id="@+id/foss_button"
+        android:id="@+id/fossButton"
         style="@style/About.Button"
         android:layout_width="match_parent"
         android:layout_height="@dimen/color_button_height"

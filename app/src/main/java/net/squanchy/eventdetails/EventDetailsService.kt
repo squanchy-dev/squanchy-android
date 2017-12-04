@@ -35,10 +35,10 @@ internal class EventDetailsService(
     }
 
     private fun toggleFavoriteOn(event: Event): Completable {
-        if (event.favorited) {
-            return removeFavorite(event.id)
+        return if (event.favorited) {
+            removeFavorite(event.id)
         } else {
-            return favorite(event.id)
+            favorite(event.id)
         }
     }
 
@@ -50,9 +50,7 @@ internal class EventDetailsService(
         return authService.ifUserSignedInThenCompletableFrom { userId -> eventRepository.addFavorite(eventId, userId) }
     }
 
-    private fun currentUser(): Single<Optional<FirebaseUser>> {
-        return authService.currentUser().firstOrError()
-    }
+    private fun currentUser(): Single<Optional<FirebaseUser>> = authService.currentUser().firstOrError()
 
     internal enum class FavoriteResult {
         SUCCESS,
