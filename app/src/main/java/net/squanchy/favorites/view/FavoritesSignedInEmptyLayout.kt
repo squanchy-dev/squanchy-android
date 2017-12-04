@@ -13,7 +13,10 @@ import kotlinx.android.synthetic.main.merge_no_favorites_view.view.*
 import net.squanchy.R
 
 class FavoritesSignedInEmptyLayout @JvmOverloads constructor(
-        context: Context?, attrs: AttributeSet? = null, defStyleAttr: Int = 0, defStyleRes: Int = 0
+        context: Context?,
+        attrs: AttributeSet? = null,
+        defStyleAttr: Int = 0,
+        defStyleRes: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr, defStyleRes), FavoritesSignedInEmptyLayoutView {
 
     private var counter = 0
@@ -55,7 +58,5 @@ class FavoritesSignedInEmptyLayout @JvmOverloads constructor(
     private fun perseveranceAchievementMessage() = resources.getString(R.string.favorites_achievement_persevering)
 
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun readAsHtml(message: String): CharSequence {
-        return Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY)
-    }
+    private fun readAsHtml(message: String): CharSequence = Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY)
 }

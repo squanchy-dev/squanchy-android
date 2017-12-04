@@ -30,5 +30,4 @@ internal fun favoritesComponent(activity: AppCompatActivity): FavoritesComponent
             .navigationModule(NavigationModule())
             .activityContextModule(ActivityContextModule(activity))
             .build()
-
 }

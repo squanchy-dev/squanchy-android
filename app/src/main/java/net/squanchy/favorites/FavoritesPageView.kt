@@ -22,7 +22,9 @@ import net.squanchy.schedule.domain.view.Schedule
 import net.squanchy.support.unwrapToActivityContext
 
 class FavoritesPageView @JvmOverloads constructor(
-        context: Context?, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+        context: Context?,
+        attrs: AttributeSet? = null,
+        defStyleAttr: Int = 0
 ) : CoordinatorLayout(context, attrs, defStyleAttr), Loadable {
 
     private val favoritesComponent = favoritesComponent(unwrapToActivityContext(context))
@@ -43,6 +45,14 @@ class FavoritesPageView @JvmOverloads constructor(
         setupToolbar()
     }
 
+    private fun setupToolbar() {
+        with(toolbar) {
+            title = resources.getString(R.string.activity_favorites)
+            inflateMenu(R.menu.homepage)
+            setOnMenuItemClickListener(this@FavoritesPageView::onMenuItemClickListener)
+        }
+    }
+
     override fun startLoading() {
         disposable.add(
                 Observable.combineLatest(service.schedule(true), service.currentUserIsSignedIn(),
@@ -53,14 +63,6 @@ class FavoritesPageView @JvmOverloads constructor(
 
     override fun stopLoading() = disposable.clear()
 
-    private fun setupToolbar() {
-        with(toolbar) {
-            title = resources.getString(R.string.activity_favorites)
-            inflateMenu(R.menu.homepage)
-            setOnMenuItemClickListener(this@FavoritesPageView::onMenuItemClickListener)
-        }
-    }
-
     private fun onMenuItemClickListener(menuItem: MenuItem): Boolean {
         return when (menuItem.itemId) {
             R.id.action_search -> { showSearch(); return true }
@@ -68,7 +70,6 @@ class FavoritesPageView @JvmOverloads constructor(
             else -> false
         }
     }
-
 
     private fun handleLoadSchedule(result: LoadScheduleResult) {
         when {

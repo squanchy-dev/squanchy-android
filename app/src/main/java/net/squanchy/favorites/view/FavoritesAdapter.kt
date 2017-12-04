@@ -1,6 +1,7 @@
 package net.squanchy.favorites.view
 
 import android.content.Context
+import android.opengl.ETC1.*
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -33,15 +34,13 @@ internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<Recycl
         setHasStableIds(true)
     }
 
-    override fun getItemId(position: Int): Long {
-        return findFor(
-                0,
-                position,
-                schedule.pages,
-                { schedulePage -> (-schedulePage.dayId.hashCode()).toLong() },
-                { schedulePage, positionInPage -> schedulePage.events[positionInPage].numericId }
-        )
-    }
+    override fun getItemId(position: Int): Long = findFor(
+            0,
+            position,
+            schedule.pages,
+            { schedulePage -> (-schedulePage.dayId.hashCode()).toLong() },
+            { schedulePage, positionInPage -> schedulePage.events[positionInPage].numericId }
+    )
 
     fun updateWith(schedule: Schedule, listener: (Event) -> Unit) {
         this.schedule = schedule
@@ -49,15 +48,13 @@ internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<Recycl
         notifyDataSetChanged()
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return findFor(
-                0,
-                position,
-                schedule.pages,
-                { _ -> viewTypeHeader },
-                { _, _ -> viewTypeTalk }
-        )
-    }
+    override fun getItemViewType(position: Int) = findFor(
+            0,
+            position,
+            schedule.pages,
+            { _ -> viewTypeHeader },
+            { _, _ -> viewTypeTalk }
+    )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -96,15 +93,14 @@ internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<Recycl
         }
     }
 
-    private fun formatHeader(date: LocalDateTime): CharSequence {
-        return date.toString("EEEE d")
-    }
+    private fun formatHeader(date: LocalDateTime): CharSequence = date.toString("EEEE d")
 
     override fun getItemCount(): Int = schedule.pages.fold(0) { count, page -> count + page.events.size + 1 }
 
-
-    private fun <T> findFor(pagePosition: Int, position: Int, pages: List<SchedulePage>,
-            header: (SchedulePage) -> T, row: (SchedulePage, Int) -> T): T {
+    private fun <T> findFor(
+            pagePosition: Int, position: Int, pages: List<SchedulePage>,
+            header: (SchedulePage) -> T, row: (SchedulePage, Int) -> T
+    ): T {
 
         if (pagePosition >= pages.size) {
             throw IndexOutOfBoundsException()
