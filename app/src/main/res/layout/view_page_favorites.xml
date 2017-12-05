@@ -27,7 +27,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <net.squanchy.favorites.view.FavoritesSignedInEmptyLayout
-      android:id="@+id/empty_view_signed_in"
+      android:id="@+id/emptyViewSignedIn"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
@@ -41,7 +41,7 @@
     </net.squanchy.favorites.view.FavoritesSignedInEmptyLayout>
 
     <LinearLayout
-      android:id="@+id/empty_view_signed_out"
+      android:id="@+id/emptyViewSignedOut"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
@@ -67,7 +67,7 @@
         android:text="@string/favorites_empty_state_signed_out_blurb" />
 
       <Button
-        android:id="@+id/empty_view_signed_out_button"
+        android:id="@+id/emptyViewSignedOutButton"
         style="@style/Favorite.Empty.Cta"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/favorites_empty_cta_height"
@@ -76,14 +76,14 @@
     </LinearLayout>
 
     <ProgressBar
-      android:id="@+id/progressbar"
+      android:id="@+id/progressBar"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
       android:visibility="gone" />
 
     <net.squanchy.favorites.view.FavoritesListView
-      android:id="@+id/favorites_list"
+      android:id="@+id/favoritesListView"
       android:layout_width="match_parent"
       android:layout_height="match_parent" />
 
