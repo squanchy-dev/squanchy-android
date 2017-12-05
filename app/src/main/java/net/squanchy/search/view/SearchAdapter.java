@@ -84,7 +84,15 @@ class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else if (viewType == ViewTypeId.HEADER) {
             ((HeaderViewHolder) holder).updateWith(itemsAdapter.headerTypeAtAbsolutePosition(position));
         } else if (viewType == ViewTypeId.EVENT) {
-            ((EventViewHolder) holder).updateWith(itemsAdapter.eventAtAbsolutePosition(position), listener);
+            ((EventViewHolder) holder).updateWith(
+                    itemsAdapter.eventAtAbsolutePosition(position),
+                    event1 -> {
+                        if (listener != null) {
+                            listener.onEventClicked(event1);
+                        }
+                        return null;
+                    }
+            );
         } else {
             throw new IllegalArgumentException("Item type " + viewType + " not supported");
         }
