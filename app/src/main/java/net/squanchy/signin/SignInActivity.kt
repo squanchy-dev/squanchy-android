@@ -66,9 +66,9 @@ class SignInActivity : AppCompatActivity() {
     private val bottomSheetCallback: BottomSheetBehavior.BottomSheetCallback
         get() = object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                when (newState) {
-                    BottomSheetBehavior.STATE_HIDDEN -> finish()
-                } // Do nothing
+                if (newState == BottomSheetBehavior.STATE_HIDDEN) {
+                    finish()
+                }
             }
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) = Unit // No op
