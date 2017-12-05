@@ -4,10 +4,10 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import net.squanchy.R
-import net.squanchy.imageloader.ImageLoaderInjector
 import net.squanchy.support.unwrapToActivityContext
 import kotlinx.android.synthetic.main.item_tweet.view.tweetUserPhoto
 import kotlinx.android.synthetic.main.item_tweet.view.tweetFooterText
+import net.squanchy.imageloader.imageLoaderComponent
 
 class TweetFooterView @JvmOverloads constructor(
         context: Context,
@@ -16,7 +16,7 @@ class TweetFooterView @JvmOverloads constructor(
         defStyleRes: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr, defStyleRes) {
 
-    private val imageLoader = ImageLoaderInjector.obtain(unwrapToActivityContext(context)).imageLoader()
+    private val imageLoader = imageLoaderComponent(unwrapToActivityContext(context)).imageLoader()
 
     init {
         super.setOrientation(LinearLayout.HORIZONTAL)

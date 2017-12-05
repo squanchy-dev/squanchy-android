@@ -10,10 +10,10 @@ import android.widget.TextView;
 
 import net.squanchy.R;
 import net.squanchy.imageloader.ImageLoader;
-import net.squanchy.imageloader.ImageLoaderInjector;
 import net.squanchy.speaker.domain.view.Speaker;
 import net.squanchy.support.lang.Optional;
 
+import static net.squanchy.imageloader.ImageLoaderComponentKt.imageLoaderComponent;
 import static net.squanchy.support.ContextUnwrapper.unwrapToActivityContext;
 
 public class SpeakerHeaderView extends LinearLayout {
@@ -38,7 +38,7 @@ public class SpeakerHeaderView extends LinearLayout {
 
         if (!isInEditMode()) {
             AppCompatActivity activity = unwrapToActivityContext(context);
-            imageLoader = ImageLoaderInjector.obtain(activity).imageLoader();
+            imageLoader = imageLoaderComponent(activity).imageLoader();
         }
 
         super.setOrientation(HORIZONTAL);

@@ -29,7 +29,7 @@ class SchedulePageView : CoordinatorLayout, Loadable {
     @JvmOverloads
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int = 0) : super(context, attrs, defStyleAttr) {
         val activity = unwrapToActivityContext(getContext())
-        val component = obtain(activity)
+        val component = scheduleComponent(activity)
         service = component.service()
         navigate = component.navigator()
         analytics = component.analytics()

@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.merge_venue_info_layout.view.venueName
 import net.squanchy.R
 import net.squanchy.home.Loadable
 import net.squanchy.imageloader.ImageLoader
-import net.squanchy.imageloader.ImageLoaderInjector
+import net.squanchy.imageloader.imageLoaderComponent
 import net.squanchy.navigation.Navigator
 import net.squanchy.support.unwrapToActivityContext
 import net.squanchy.venue.domain.view.Venue
@@ -36,7 +36,7 @@ class VenueInfoPageView : CoordinatorLayout, Loadable {
 
         navigator = component.navigator()
         service = component.service()
-        imageLoader = ImageLoaderInjector.obtain(activity).imageLoader()
+        imageLoader = imageLoaderComponent(activity).imageLoader()
     }
 
     private lateinit var navigator: Navigator

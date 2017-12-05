@@ -16,10 +16,11 @@ import java.util.Collections;
 
 import net.squanchy.R;
 import net.squanchy.imageloader.ImageLoader;
-import net.squanchy.imageloader.ImageLoaderInjector;
 import net.squanchy.schedule.view.EventItemView;
 import net.squanchy.schedule.view.EventViewHolder;
 import net.squanchy.search.SearchResults;
+
+import static net.squanchy.imageloader.ImageLoaderComponentKt.imageLoaderComponent;
 
 class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -44,7 +45,7 @@ class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     SearchAdapter(AppCompatActivity activity) {
         this.activity = activity;
 
-        imageLoader = ImageLoaderInjector.obtain(activity).imageLoader();
+        imageLoader = imageLoaderComponent(activity).imageLoader();
         setHasStableIds(true);
     }
 
