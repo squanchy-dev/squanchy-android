@@ -29,8 +29,8 @@ class SpeakerDetailsLayout(context: Context, attrs: AttributeSet) : LinearLayout
     }
 
     @TargetApi(Build.VERSION_CODES.N)
-    private// The older fromHtml() is only called pre-24
-    fun parseHtml(description: String): Spanned {
+    // The older fromHtml() is only called pre-24
+    private fun parseHtml(description: String): Spanned {
         // TODO handle this properly
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY)
