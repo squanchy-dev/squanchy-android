@@ -78,8 +78,9 @@ internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<Recycl
                     { _ -> throw IndexOutOfBoundsException() },
                     { schedulePage, positionInPage -> schedulePage.events[positionInPage] }
             )
-
-            holder.updateWith(event, listener)
+            if (listener != null) {
+                holder.updateWith(event, listener!!)
+            }
         } else if (holder is HeaderViewHolder) {
             val date = findFor<LocalDateTime>(
                     0,
