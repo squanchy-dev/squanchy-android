@@ -18,7 +18,7 @@ import net.squanchy.support.lang.Optional
 
 class SpeakerDetailsActivity : AppCompatActivity() {
 
-    private var subscriptions = CompositeDisposable()
+    private val subscriptions = CompositeDisposable()
     private lateinit var service: SpeakerDetailsService
     private lateinit var navigator: Navigator
 
@@ -50,7 +50,7 @@ class SpeakerDetailsActivity : AppCompatActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
 
-        subscriptions.dispose()
+        subscriptions.clear()
         observeSpeakerFrom(intent)
     }
 
@@ -63,7 +63,6 @@ class SpeakerDetailsActivity : AppCompatActivity() {
     private fun observeSpeakerFrom(intent: Intent) {
         val speakerId = intent.getStringExtra(EXTRA_SPEAKER_ID)
 
-        subscriptions = CompositeDisposable()
         subscriptions.add(
                 service.speaker(speakerId)
                     .observeOn(AndroidSchedulers.mainThread())
