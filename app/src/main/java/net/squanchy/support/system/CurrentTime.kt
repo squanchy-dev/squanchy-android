@@ -4,11 +4,7 @@ import org.joda.time.LocalDateTime
 
 class CurrentTime {
 
-    fun currentTimestamp(): Long {
-        return System.currentTimeMillis()
-    }
+    fun currentTimestamp(): Long = System.currentTimeMillis()
 
-    fun currentLocalDateTime(): LocalDateTime {
-        return LocalDateTime.now()
-    }
+    fun currentLocalDateTime(): LocalDateTime = LocalDateTime.now()
 }

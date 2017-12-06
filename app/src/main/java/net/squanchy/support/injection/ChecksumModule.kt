@@ -9,7 +9,5 @@ import dagger.Provides
 class ChecksumModule {
 
     @Provides
-    internal fun provideChecksum(): Checksum {
-        return Checksum()
-    }
+    internal fun provideChecksum() = Checksum()
 }

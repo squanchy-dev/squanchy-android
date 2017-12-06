@@ -9,7 +9,5 @@ import dagger.Provides
 class CurrentTimeModule {
 
     @Provides
-    internal fun provideCurrentTime(): CurrentTime {
-        return CurrentTime()
-    }
+    internal fun provideCurrentTime() = CurrentTime()
 }
