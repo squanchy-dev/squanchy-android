@@ -61,7 +61,7 @@ public class ImageViewWithForeground extends AppCompatImageView implements ViewW
         foregroundGravity = a.getInt(
                 R.styleable.ImageViewWithForeground_android_foregroundGravity, foregroundGravity);
 
-        final Drawable d = a.getDrawable(R.styleable.ImageViewWithForeground_android_foreground);
+        Drawable d = a.getDrawable(R.styleable.ImageViewWithForeground_android_foreground);
         if (d != null) {
             setForeground(d);
         }
