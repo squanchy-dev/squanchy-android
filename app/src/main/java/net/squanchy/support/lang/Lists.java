@@ -48,15 +48,6 @@ public final class Lists {
         return Optional.absent();
     }
 
-    public static <T, R> R reduce(R initial, List<T> list, Func2<R, T, R> reducer) {
-        R reducedValue = initial;
-        for (T t : list) {
-            reducedValue = reducer.call(reducedValue, t);
-        }
-
-        return reducedValue;
-    }
-
     public static <T> boolean any(List<T> list, Predicate<T> predicate) {
         for (T t : list) {
             if (predicate.call(t)) {
