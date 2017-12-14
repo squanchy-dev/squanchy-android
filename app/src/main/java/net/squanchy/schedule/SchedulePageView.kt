@@ -25,11 +25,11 @@ import timber.log.Timber
 
 
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
-class SchedulePageView @JvmOverloads constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int = 0) : CoordinatorLayout(
-        context,
-        attrs,
-        defStyleAttr
-), Loadable {
+class SchedulePageView @JvmOverloads constructor(
+        context: Context,
+        attrs: AttributeSet,
+        defStyleAttr: Int = 0
+) : CoordinatorLayout(context, attrs, defStyleAttr), Loadable {
 
     private val viewPagerAdapter: ScheduleViewPagerAdapter
     private val service: ScheduleService
