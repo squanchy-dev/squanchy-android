@@ -7,7 +7,7 @@ import android.support.annotation.RequiresApi
 import android.support.design.widget.Snackbar
 import android.text.Html
 import android.util.AttributeSet
-import android.view.View.*
+import android.view.View
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.merge_no_favorites_view.view.*
 import net.squanchy.R
@@ -44,7 +44,7 @@ class FavoritesSignedInEmptyLayout @JvmOverloads constructor(
     @RequiresApi(Build.VERSION_CODES.N)
     override fun showAchievement(message: String) = Snackbar.make(this, readAsHtml(message), Snackbar.LENGTH_LONG).show()
 
-    private val favoriteButtonClickListener = OnClickListener {
+    private val favoriteButtonClickListener = View.OnClickListener {
         presentButtonIcon(counter, this, this::favoritesFilledIconId, this::favoritesEmptyIconId)
         presentAchievementMessage(counter, this, this::initialAchieventMessage, this::perseveranceAchievementMessage)
     }
