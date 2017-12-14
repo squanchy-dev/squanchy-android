@@ -11,10 +11,7 @@ import android.util.AttributeSet
 import android.widget.ImageView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.merge_venue_info_layout.view.venueAddress
-import kotlinx.android.synthetic.main.merge_venue_info_layout.view.venueDescription
-import kotlinx.android.synthetic.main.merge_venue_info_layout.view.venueMap
-import kotlinx.android.synthetic.main.merge_venue_info_layout.view.venueName
+import kotlinx.android.synthetic.main.merge_venue_info_layout.view.*
 import net.squanchy.R
 import net.squanchy.home.Loadable
 import net.squanchy.imageloader.ImageLoader
@@ -23,27 +20,28 @@ import net.squanchy.navigation.Navigator
 import net.squanchy.support.unwrapToActivityContext
 import net.squanchy.venue.domain.view.Venue
 
-class VenueInfoPageView : CoordinatorLayout, Loadable {
-
-    @JvmOverloads
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int = 0) : super(context, attrs, defStyleAttr) {
-        if (isInEditMode) {
-            return
-        }
-
-        val activity = unwrapToActivityContext(getContext())
-        val component = venueInfoComponent(activity)
-
-        navigator = component.navigator()
-        service = component.service()
-        imageLoader = imageLoaderComponent(activity).imageLoader()
-    }
+class VenueInfoPageView @JvmOverloads constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int = 0) : CoordinatorLayout(
+        context,
+        attrs,
+        defStyleAttr
+), Loadable {
 
     private lateinit var navigator: Navigator
     private lateinit var service: VenueInfoService
     private lateinit var imageLoader: ImageLoader
 
     private var subscription: Disposable? = null
+
+    init {
+        if (!isInEditMode) {
+            val activity = unwrapToActivityContext(getContext())
+            val component = venueInfoComponent(activity)
+            navigator = component.navigator()
+            service = component.service()
+            imageLoader = imageLoaderComponent(activity).imageLoader()
+        }
+    }
+
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -71,8 +69,8 @@ class VenueInfoPageView : CoordinatorLayout, Loadable {
 
     override fun startLoading() {
         subscription = service.venue()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { this.updateWith(it) }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { this.updateWith(it) }
     }
 
     private fun updateWith(venue: Venue) {
@@ -83,12 +81,13 @@ class VenueInfoPageView : CoordinatorLayout, Loadable {
         updateMapClickListenerWith(venue)
     }
 
-    @TargetApi(Build.VERSION_CODES.N) // The older fromHtml() is only called pre-24
+    @TargetApi(Build.VERSION_CODES.N)     // The older fromHtml() is only called pre-24
     private fun parseHtml(description: String): Spanned {
         // TODO handle this properly
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY)
         } else {
+            @Suppress("DEPRECATION")    // This is a "compat" method call, we only use this on pre-N
             Html.fromHtml(description)
         }
     }

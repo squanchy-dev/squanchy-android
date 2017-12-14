@@ -15,14 +15,7 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
 import android.widget.LinearLayout
-import kotlinx.android.synthetic.main.merge_event_details_layout.view.whenContainer
-import kotlinx.android.synthetic.main.merge_event_details_layout.view.whenTextView
-import kotlinx.android.synthetic.main.merge_event_details_layout.view.whereContainer
-import kotlinx.android.synthetic.main.merge_event_details_layout.view.whereTextView
-import kotlinx.android.synthetic.main.merge_event_details_layout.view.levelContainer
-import kotlinx.android.synthetic.main.merge_event_details_layout.view.levelTextView
-import kotlinx.android.synthetic.main.merge_event_details_layout.view.descriptionHeader
-import kotlinx.android.synthetic.main.merge_event_details_layout.view.descriptionTextView
+import kotlinx.android.synthetic.main.merge_event_details_layout.view.*
 import net.squanchy.R
 import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.schedule.domain.view.Event
@@ -129,13 +122,13 @@ class EventDetailsLayout @JvmOverloads constructor(
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.N)
-    private// The older fromHtml() is only called pre-24
-    fun parseHtml(description: String): Spanned {
+    @TargetApi(Build.VERSION_CODES.N)     // The older fromHtml() is only called pre-24
+    private fun parseHtml(description: String): Spanned {
         // TODO handle this properly
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY)
         } else {
+            @Suppress("DEPRECATION")    // This is a "compat" method call, we only use this on pre-N
             Html.fromHtml(description)
         }
     }
