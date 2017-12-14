@@ -24,24 +24,27 @@ import net.squanchy.support.unwrapToActivityContext
 import timber.log.Timber
 
 
-class SchedulePageView : CoordinatorLayout, Loadable {
-
-    @JvmOverloads
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int = 0) : super(context, attrs, defStyleAttr) {
-        val activity = unwrapToActivityContext(getContext())
-        val component = scheduleComponent(activity)
-        service = component.service()
-        navigate = component.navigator()
-        analytics = component.analytics()
-
-        viewPagerAdapter = ScheduleViewPagerAdapter(activity)
-    }
+@Suppress("UNUSED_ANONYMOUS_PARAMETER")
+class SchedulePageView @JvmOverloads constructor(
+        context: Context,
+        attrs: AttributeSet,
+        defStyleAttr: Int = 0
+) : CoordinatorLayout(context, attrs, defStyleAttr), Loadable {
 
     private val viewPagerAdapter: ScheduleViewPagerAdapter
     private val service: ScheduleService
     private val navigate: Navigator
     private val analytics: Analytics
     private var subscriptions = CompositeDisposable()
+
+    init {
+        val activity = unwrapToActivityContext(getContext())
+        val component = scheduleComponent(activity)
+        service = component.service()
+        navigate = component.navigator()
+        analytics = component.analytics()
+        viewPagerAdapter = ScheduleViewPagerAdapter(activity)
+    }
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -100,18 +103,14 @@ class SchedulePageView : CoordinatorLayout, Loadable {
         // known to the Gods of Kobol. We can't theme things in the TabLayout either, as the
         // TextAppearance is applied _after_ inflating the tab views, which means Calligraphy can't
         // intercept that either. Sad panda.
-        tabLayout.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+        tabLayout.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
             val context = tabLayout.context
             val typeface = context.getFontFor(R.style.TextAppearance_Squanchy_Tab)
 
-            val tabCount = tabLayout.tabCount
-            for (i in 0 until tabCount) {
-                val tab = tabLayout.getTabAt(i)
-                if (tab == null || hasTypefaceSpan(tab.text)) {
-                    continue
-                }
-                tab.text = tab.text?.applyTypeface(typeface)
-            }
+            (0 until tabLayout.tabCount)
+                .mapNotNull { tabLayout.getTabAt(it) }
+                .filterNot { hasTypefaceSpan(it.text) }
+                .forEach { it.text = it.text?.applyTypeface(typeface) }
         }
     }
 
