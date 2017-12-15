@@ -32,7 +32,7 @@ class FavoritesSignedInEmptyLayout @JvmOverloads constructor(
     override fun onFinishInflate() {
         super.onFinishInflate()
 
-        favoriteFab.setOnClickListener(this::favoriteButtonClickListener)
+        favoriteFab.setOnClickListener(favoriteButtonClickListener)
     }
 
     override fun updateCounter(counter: Int) {
@@ -44,7 +44,7 @@ class FavoritesSignedInEmptyLayout @JvmOverloads constructor(
     @RequiresApi(Build.VERSION_CODES.N)
     override fun showAchievement(message: String) = Snackbar.make(this, readAsHtml(message), Snackbar.LENGTH_LONG).show()
 
-    private fun favoriteButtonClickListener(view: View) {
+    private val favoriteButtonClickListener = View.OnClickListener {
         presentButtonIcon(counter, this, this::favoritesFilledIconId, this::favoritesEmptyIconId)
         presentAchievementMessage(counter, this, this::initialAchieventMessage, this::perseveranceAchievementMessage)
     }

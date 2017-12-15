@@ -1,7 +1,9 @@
 package net.squanchy.tweets.view
 
+import android.annotation.TargetApi
 import android.content.Context
 import android.content.res.Resources
+import android.os.Build
 import android.support.annotation.AttrRes
 import android.support.annotation.ColorInt
 import android.text.Html
@@ -101,9 +103,20 @@ class TweetUrlSpanFactory(private val context: Context) {
 
         if (matcher.find()) {
             val matchResult = matcher.toMatchResult()
-            val unescapedEntity = Html.fromHtml(matchResult.group())
+            val unescapedEntity = parseHtml(matchResult.group())
             builder.replace(matchResult.start(), matchResult.end(), unescapedEntity)
             unescapeEntities(builder)
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.N)     // The older fromHtml() is only called pre-24
+    private fun parseHtml(description: String): Spanned {
+        // TODO handle this properly
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY)
+        } else {
+            @Suppress("DEPRECATION")    // This is a "compat" method call, we only use this on pre-N
+            Html.fromHtml(description)
         }
     }
 

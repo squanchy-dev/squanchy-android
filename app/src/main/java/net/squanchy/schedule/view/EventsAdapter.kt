@@ -36,7 +36,6 @@ internal class EventsAdapter(context: Context) : RecyclerView.Adapter<EventViewH
         return when (itemType) {
             Event.Type.KEYNOTE, Event.Type.TALK -> ItemViewType.TYPE_TALK.ordinal
             Event.Type.COFFEE_BREAK, Event.Type.LUNCH, Event.Type.OTHER, Event.Type.REGISTRATION, Event.Type.SOCIAL -> ItemViewType.TYPE_OTHER.ordinal
-            else -> throw IllegalArgumentException("Item of type $itemType is not supported")
         }
     }
 
@@ -45,7 +44,6 @@ internal class EventsAdapter(context: Context) : RecyclerView.Adapter<EventViewH
         val itemView: EventItemView = when (itemViewType) {
             ItemViewType.TYPE_TALK -> layoutInflater.inflate(R.layout.item_schedule_event_talk, parent, false) as EventItemView
             ItemViewType.TYPE_OTHER -> layoutInflater.inflate(R.layout.item_schedule_event_other, parent, false) as EventItemView
-            else -> throw IllegalArgumentException("View type not supported: $viewType")
         }
         return EventViewHolder(itemView)
     }
