@@ -107,7 +107,7 @@ class CircularRevealDrawable : ColorDrawable() {
     }
 
     fun cancelTransitions() {
-        if (::radiusAnimator.isInitialized || !radiusAnimator.isRunning) {
+        if (!::radiusAnimator.isInitialized || !radiusAnimator.isRunning) {
             return
         }
 
