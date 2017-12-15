@@ -61,7 +61,7 @@ public class InterceptingBottomNavigationView extends BottomNavigationView {
     private void setBackgroundHotspot(CircularRevealDrawable revealDrawable, MenuItem menuItem) {
         Hotspot hotspot = lastUpEvent.map(Hotspot::fromMotionEvent)
                 .or(getHotspotFor(menuItem));
-        revealDrawable.setHotspot(hotspot.x(), hotspot.y());
+        revealDrawable.setHotspot(hotspot.getX(), hotspot.getY());
     }
 
     private Hotspot getHotspotFor(MenuItem menuItem) {
@@ -115,7 +115,7 @@ public class InterceptingBottomNavigationView extends BottomNavigationView {
         if (drawable instanceof CircularRevealDrawable) {
             ((CircularRevealDrawable) drawable).setColor(newColor);
         } else {
-            super.setBackground(CircularRevealDrawable.from(newColor));
+            super.setBackground(CircularRevealDrawable.Companion.from(newColor));
         }
     }
 
