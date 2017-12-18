@@ -6,13 +6,11 @@ import android.view.View
 @Suppress("DataClassPrivateConstructor")
 data class Hotspot private constructor(val x: Float, val y: Float) {
 
-    fun offsetToParent(parent: View) =
-            Hotspot(x + parent.x, y + parent.y)
+    fun offsetToParent(parent: View) = Hotspot(x + parent.x, y + parent.y)
 
     companion object {
         @JvmStatic
-        fun fromMotionEvent(event: MotionEvent) =
-                Hotspot(event.x, event.y)
+        fun fromMotionEvent(event: MotionEvent) = Hotspot(event.x, event.y)
 
         @JvmStatic
         fun fromCenterOf(view: View) : Hotspot {
