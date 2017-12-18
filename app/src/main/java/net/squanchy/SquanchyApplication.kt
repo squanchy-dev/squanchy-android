@@ -30,7 +30,6 @@ class SquanchyApplication : Application() {
         preloadRemoteConfig()
     }
 
-    @SuppressFBWarnings("RV_RETURN_VALUE_IGNORED") // Cannot handle the subscription here
     private fun preloadRemoteConfig() {
         applicationComponent.remoteConfig()
             .fetchNow()
