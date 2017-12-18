@@ -81,12 +81,6 @@ class SquanchyApplication : Application() {
     }
 
     private fun initializeFirebase() {
-        // Calling initializeApp() should not be necessary, because Firebase uses the ContentProvider hack
-        // (see FirebaseInitProvider). That means that, given we are not running multiple processes, we should
-        // not need this. Unfortunately that's not the case; as of Firebase 10.2.0, the app sometimes crashes.
-        if (FirebaseApp.initializeApp(this) == null) {
-            Timber.e(IllegalStateException("Initializing Firebase failed"))
-        }
         FirebaseDatabase.getInstance().setPersistenceEnabled(true)
     }
 }
