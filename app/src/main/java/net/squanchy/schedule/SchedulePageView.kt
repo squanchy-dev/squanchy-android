@@ -23,7 +23,6 @@ import net.squanchy.support.font.hasTypefaceSpan
 import net.squanchy.support.unwrapToActivityContext
 import timber.log.Timber
 
-
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class SchedulePageView @JvmOverloads constructor(
         context: Context,

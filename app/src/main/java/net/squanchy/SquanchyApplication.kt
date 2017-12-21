@@ -3,12 +3,10 @@ package net.squanchy
 import android.app.Application
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
-import com.google.firebase.FirebaseApp
 import com.google.firebase.database.FirebaseDatabase
 import com.twitter.sdk.android.core.Twitter
 import com.twitter.sdk.android.core.TwitterAuthConfig
 import com.twitter.sdk.android.core.TwitterConfig
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 import io.fabric.sdk.android.Fabric
 import io.reactivex.android.schedulers.AndroidSchedulers
 import net.danlew.android.joda.JodaTimeAndroid

@@ -21,9 +21,7 @@ import android.view.View
 import android.view.animation.BounceInterpolator
 import android.view.animation.Interpolator
 import android.view.animation.LinearInterpolator
-import kotlinx.android.synthetic.main.activity_first_start_with_no_network.firstStartCta
-import kotlinx.android.synthetic.main.activity_first_start_with_no_network.firstStartNevermind
-import kotlinx.android.synthetic.main.activity_first_start_with_no_network.firstStartProgress
+import kotlinx.android.synthetic.main.activity_first_start_with_no_network.*
 import net.squanchy.R
 import net.squanchy.support.config.DialogLayoutParameters
 
@@ -110,7 +108,7 @@ class FirstStartWithNoNetworkActivity : AppCompatActivity() {
         }
     }
 
-    @Suppress("SpreadOperator")   // We cannot avoid using the spread operator here, we use varargs APIs
+    @Suppress("SpreadOperator") // We cannot avoid using the spread operator here, we use varargs APIs
     private fun createFadeAnimationFor(view: View, vararg values: Float): Animator {
         val property = Property.of(View::class.java, Float::class.java, "alpha")
         val animator = ObjectAnimator.ofFloat(view, property, *values)
@@ -118,7 +116,7 @@ class FirstStartWithNoNetworkActivity : AppCompatActivity() {
         return animator
     }
 
-    @Suppress("SpreadOperator")   // We cannot avoid using the spread operator here, we use varargs APIs
+    @Suppress("SpreadOperator") // We cannot avoid using the spread operator here, we use varargs APIs
     private fun createScaleAnimationFor(view: View, interpolator: Interpolator, vararg values: Float): Animator {
         val scaleX = Property.of(View::class.java, Float::class.java, "scaleX")
         val scaleY = Property.of(View::class.java, Float::class.java, "scaleY")
@@ -141,7 +139,7 @@ class FirstStartWithNoNetworkActivity : AppCompatActivity() {
 
     private fun continueToScheduleAfterDelay() {
         firstStartProgress.postDelayed({
-            startActivity(continuationIntent)      // We don't use the navigator here, we basically want to restart the whole flow
+            startActivity(continuationIntent) // We don't use the navigator here, we basically want to restart the whole flow
             finish()
         }, DELAY_AFTER_ANIMATIONS_MILLIS)
     }

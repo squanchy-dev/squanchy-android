@@ -11,7 +11,7 @@ data class Hotspot private constructor(val x: Float, val y: Float) {
     companion object {
         fun fromMotionEvent(event: MotionEvent) = Hotspot(event.x, event.y)
 
-        fun fromCenterOf(view: View) : Hotspot {
+        fun fromCenterOf(view: View): Hotspot {
             val x = view.x + view.width / 2f
             val y = view.y + view.height / 2f
             return Hotspot(x, y)

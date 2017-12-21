@@ -17,5 +17,4 @@ internal class NotificationService(private val authService: FirebaseAuthService,
                     .subscribeOn(Schedulers.io())
         }
     }
-
 }

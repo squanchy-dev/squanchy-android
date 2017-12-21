@@ -201,5 +201,4 @@ class NotificationCreator(private val context: Context) {
         private val NOTIFICATION_LED_OFF_MS = 1000
         private val ARGB_TRANSPARENT = "#00000000"
     }
-
 }

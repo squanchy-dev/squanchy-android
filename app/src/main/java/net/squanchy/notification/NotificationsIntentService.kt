@@ -91,5 +91,4 @@ class NotificationsIntentService : IntentService(NotificationsIntentService::cla
         private val NOTIFICATION_INTERVAL_MINUTES = 10
         private val SHOW_NOTIFICATIONS_DEFAULT = true
     }
-
 }

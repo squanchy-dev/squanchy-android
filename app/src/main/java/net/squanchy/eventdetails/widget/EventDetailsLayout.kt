@@ -122,13 +122,13 @@ class EventDetailsLayout @JvmOverloads constructor(
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.N)     // The older fromHtml() is only called pre-24
+    @TargetApi(Build.VERSION_CODES.N) // The older fromHtml() is only called pre-24
     private fun parseHtml(description: String): Spanned {
         // TODO handle this properly
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY)
         } else {
-            @Suppress("DEPRECATION")    // This is a "compat" method call, we only use this on pre-N
+            @Suppress("DEPRECATION") // This is a "compat" method call, we only use this on pre-N
             Html.fromHtml(description)
         }
     }
