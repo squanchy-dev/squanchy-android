@@ -18,6 +18,7 @@ buildscript {
 
 plugins {
     id 'io.gitlab.arturbosch.detekt' version '1.0.0.RC6'
+    id 'org.jmailen.kotlinter' version '1.6.0'
 }
 
 def teamPropsFile(propsFile) {
