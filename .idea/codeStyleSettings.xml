@@ -51,10 +51,12 @@
         </JavaCodeStyleSettings>
         <JetCodeStyleSettings>
           <option name="PACKAGES_TO_USE_STAR_IMPORTS">
-            <value />
+            <value>
+              <package name="kotlinx.android.synthetic" withSubpackages="true" static="false" />
+            </value>
           </option>
           <option name="NAME_COUNT_TO_USE_STAR_IMPORT" value="2147483647" />
-          <option name="NAME_COUNT_TO_USE_STAR_IMPORT_FOR_MEMBERS" value="2147483647" />
+          <option name="NAME_COUNT_TO_USE_STAR_IMPORT_FOR_MEMBERS" value="1" />
           <option name="CONTINUATION_INDENT_FOR_EXPRESSION_BODIES" value="false" />
           <option name="CONTINUATION_INDENT_FOR_CHAINED_CALLS" value="false" />
         </JetCodeStyleSettings>
