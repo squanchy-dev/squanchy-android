@@ -18,7 +18,6 @@ buildscript {
 
 plugins {
     id 'io.gitlab.arturbosch.detekt' version '1.0.0.RC6'
-    id 'org.jmailen.kotlinter' version '1.6.0'
 }
 
 def teamPropsFile(propsFile) {
@@ -48,6 +47,8 @@ subprojects {
         google()
         jcenter()
         maven { url 'https://jitpack.io' }
+        maven { url 'https://maven.fabric.io/public' }
+        mavenCentral()
     }
 
     apply plugin: 'com.github.ben-manes.versions'
