@@ -103,7 +103,7 @@ class SpeakerDetailsActivity : AppCompatActivity() {
         val itemId = item.itemId
         return when (itemId) {
             android.R.id.home -> {
-                finish();
+                finish()
                 true
             }
             R.id.action_speaker_twitter -> {

@@ -34,3 +34,5 @@ staticAnalysis {
 static boolean excludeTestAndRelease(variant) {
     return !variant.name.toLowerCase().endsWith('test') && !variant.name.toLowerCase().endsWith('release')
 }
+
+apply from: teamPropsFile('ktlint.gradle')

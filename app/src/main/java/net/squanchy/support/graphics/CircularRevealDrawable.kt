@@ -77,7 +77,7 @@ class CircularRevealDrawable : ColorDrawable() {
 
         cancelTransitions()
 
-        radiusAnimator = RenderThread.createFloatAnimator(this, canvas, radiusProperty!!, targetRadius)
+        radiusAnimator = RenderThread.createFloatAnimator(this, canvas, radiusProperty, targetRadius)
         radiusAnimator.interpolator = interpolator
         radiusAnimator.duration = revealDuration.toLong()
         targetColor = pendingTargetColor

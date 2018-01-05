@@ -53,5 +53,4 @@ internal class EventsAdapter(context: Context) : RecyclerView.Adapter<EventViewH
     }
 
     override fun getItemCount() = _events.size
-
 }

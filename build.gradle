@@ -47,6 +47,8 @@ subprojects {
         google()
         jcenter()
         maven { url 'https://jitpack.io' }
+        maven { url 'https://maven.fabric.io/public' }
+        mavenCentral()
     }
 
     apply plugin: 'com.github.ben-manes.versions'

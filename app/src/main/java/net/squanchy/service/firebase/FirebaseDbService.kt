@@ -150,5 +150,4 @@ class FirebaseDbService(private val database: DatabaseReference) {
     private fun userDataNode(userId: String) = "user/$userId"
     private fun favoriteByIdNode(userId: String, eventId: String) = "${userDataNode(userId)}/favorites/$eventId"
     private fun achievementByIdNode(userId: String, achievementId: String) = "${userDataNode(userId)}/achievements/$achievementId"
-
 }

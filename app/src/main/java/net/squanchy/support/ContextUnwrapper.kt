@@ -12,4 +12,3 @@ tailrec fun unwrapToActivityContext(context: Context?): AppCompatActivity =
         is ContextWrapper -> unwrapToActivityContext(context.baseContext)
         else -> throw IllegalArgumentException("Context type not supported: ${context.javaClass.canonicalName}")
     }
-

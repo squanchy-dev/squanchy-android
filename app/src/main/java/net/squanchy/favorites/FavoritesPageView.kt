@@ -56,7 +56,7 @@ class FavoritesPageView @JvmOverloads constructor(
     override fun startLoading() {
         disposable.add(
                 Observable.combineLatest(service.schedule(true), service.currentUserIsSignedIn(),
-                BiFunction<Schedule, Boolean, LoadScheduleResult> { schedule, signedIn ->  LoadScheduleResult(schedule, signedIn) })
+                BiFunction<Schedule, Boolean, LoadScheduleResult> { schedule, signedIn -> LoadScheduleResult(schedule, signedIn) })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { handleLoadSchedule(it) })
     }
@@ -110,7 +110,7 @@ class FavoritesPageView @JvmOverloads constructor(
         // ⚠️ HACK this is DIRTY and HORRIBLE but it's the only way we can ship this
         // without rewriting the whole data layer. Sorry. I swear, we know it sucks
         // and we want to fix this ASAP.
-        val activity : HomeActivity = unwrapToActivityContext(context) as HomeActivity
+        val activity: HomeActivity = unwrapToActivityContext(context) as HomeActivity
         activity.requestSignIn()
     }
 

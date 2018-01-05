@@ -9,6 +9,8 @@ ext {
     findbugsVersion = '3.0.1'
     pmdVersion = '5.8.1'
 
+    ktLintVersion = '0.14.0'
+
     gradlePlugins = [
             buildProperties: 'com.novoda:build-properties-plugin:1.2.1',
             fabric         : 'io.fabric.tools:gradle:1.25.0',

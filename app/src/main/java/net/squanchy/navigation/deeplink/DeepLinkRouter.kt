@@ -34,5 +34,4 @@ internal class DeepLinkRouter(private val scheme: String, private val navigator:
         val hasData = intent.data != null
         return hasViewAction && !hasLauncherCategory && hasData
     }
-
 }

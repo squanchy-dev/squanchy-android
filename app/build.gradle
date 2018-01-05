@@ -18,18 +18,15 @@ apply plugin: 'io.fabric'
 apply plugin: 'com.novoda.build-properties'
 apply plugin: 'com.github.triplet.play'
 
-repositories {
-    maven { url 'https://maven.fabric.io/public' }
-    mavenCentral()
-}
-
 buildProperties {
     application {
         file teamPropsFile('application.properties')
     }
+
     secrets {
         file teamPropsFile('secrets.properties')
     }
+
     releaseSigningConfig {
         file teamPropsFile('releaseSigningConfig.properties')
     }
