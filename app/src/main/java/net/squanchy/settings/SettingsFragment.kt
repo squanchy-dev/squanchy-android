@@ -81,8 +81,8 @@ class SettingsFragment : PreferenceFragment() {
 
         subscriptions.add(
                 signInService.currentUser()
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe { onUserChanged(it) }
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe { onUserChanged(it) }
         )
     }
 
