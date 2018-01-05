@@ -8,17 +8,14 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.ListView
-
 import com.google.firebase.auth.FirebaseUser
-
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import net.squanchy.BuildConfig
 import net.squanchy.R
 import net.squanchy.navigation.Navigator
 import net.squanchy.signin.SignInService
 import net.squanchy.support.lang.Optional
-
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 
 class SettingsFragment : PreferenceFragment() {
 
@@ -84,8 +81,8 @@ class SettingsFragment : PreferenceFragment() {
 
         subscriptions.add(
                 signInService.currentUser()
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe { onUserChanged(it) }
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe { onUserChanged(it) }
         )
     }
 

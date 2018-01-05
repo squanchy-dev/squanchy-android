@@ -5,8 +5,11 @@ import net.squanchy.favorites.view.presentAchievementMessage
 import net.squanchy.favorites.view.presentButtonIcon
 import org.junit.Before
 import org.junit.Test
+import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mock
-import org.mockito.Mockito.*
+import org.mockito.Mockito.never
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.verifyNoMoreInteractions
 import org.mockito.MockitoAnnotations
 
 class FavoritesSignedInEmptyLayoutPresenterTest {

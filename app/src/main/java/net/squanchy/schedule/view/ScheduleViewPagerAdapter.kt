@@ -8,7 +8,7 @@ import com.novoda.viewpageradapter.ViewPagerAdapter
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.SchedulePage
-import java.util.*
+import java.util.Locale
 
 class ScheduleViewPagerAdapter(private val context: Context) : ViewPagerAdapter<ScheduleDayPageView>() {
 
