@@ -4,7 +4,6 @@ import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Schedule
@@ -12,8 +11,7 @@ import net.squanchy.schedule.domain.view.SchedulePage
 import net.squanchy.schedule.view.EventItemView
 import net.squanchy.schedule.view.EventViewHolder
 import net.squanchy.search.view.HeaderViewHolder
-
-import org.joda.time.LocalDateTime
+import org.joda.time.LocalDate
 
 // todo #333 too complicated logic. Need to refactor once sample data is available.
 internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -82,7 +80,7 @@ internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<Recycl
                 holder.updateWith(event, listener!!)
             }
         } else if (holder is HeaderViewHolder) {
-            val date = findFor<LocalDateTime>(
+            val date = findFor(
                     0,
                     position,
                     schedule.pages,
@@ -93,7 +91,7 @@ internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<Recycl
         }
     }
 
-    private fun formatHeader(date: LocalDateTime): CharSequence = date.toString("EEEE d")
+    private fun formatHeader(date: LocalDate): CharSequence = date.toString("EEEE d")
 
     override fun getItemCount(): Int = schedule.pages.fold(0) { count, page -> count + page.events.size + 1 }
 
