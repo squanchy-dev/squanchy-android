@@ -40,7 +40,7 @@ public class SearchItemView extends LinearLayout {
         super.onFinishInflate();
 
         image = findViewById(R.id.speaker_photo);
-        name = findViewById(R.id.speaker_name);
+        name = findViewById(R.id.speakerName);
     }
 
     public void updateWith(Speaker speaker, ImageLoader imageLoader, OnSearchResultClickListener listener) {
