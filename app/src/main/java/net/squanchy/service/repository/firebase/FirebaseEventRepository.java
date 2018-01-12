@@ -34,13 +34,13 @@ import io.reactivex.schedulers.Schedulers;
 
 import static net.squanchy.support.lang.Lists.filter;
 
-public class EventRepositoryImpl implements EventRepository {
+public class FirebaseEventRepository implements EventRepository {
 
     private final FirebaseDbService dbService;
     private final Checksum checksum;
     private final SpeakerRepository speakerRepository;
 
-    public EventRepositoryImpl(FirebaseDbService dbService, Checksum checksum, SpeakerRepository speakerRepository) {
+    public FirebaseEventRepository(FirebaseDbService dbService, Checksum checksum, SpeakerRepository speakerRepository) {
         this.dbService = dbService;
         this.checksum = checksum;
         this.speakerRepository = speakerRepository;

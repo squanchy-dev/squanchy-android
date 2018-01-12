@@ -13,12 +13,12 @@ import io.reactivex.Observable;
 
 import static net.squanchy.support.lang.Lists.map;
 
-public class SpeakerRepositoryImpl implements SpeakerRepository {
+public class FirebaseSpeakerRepository implements SpeakerRepository {
 
     private final FirebaseDbService dbService;
     private final Checksum checksum;
 
-    public SpeakerRepositoryImpl(FirebaseDbService dbService, Checksum checksum) {
+    public FirebaseSpeakerRepository(FirebaseDbService dbService, Checksum checksum) {
         this.dbService = dbService;
         this.checksum = checksum;
     }
