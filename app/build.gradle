@@ -144,6 +144,7 @@ dependencies {
     implementation libraries.app.firebaseAuth
     implementation libraries.app.firebaseConfig
     implementation libraries.app.firebaseDb
+    implementation libraries.app.firebaseFirestore
     implementation libraries.app.firebaseMessaging
     implementation libraries.app.firebaseStorage
     implementation(libraries.app.firebaseUiStorage) {

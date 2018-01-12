@@ -28,6 +28,7 @@ ext {
                     firebaseAuth       : "com.google.firebase:firebase-auth:${playServicesVersion}",
                     firebaseConfig     : "com.google.firebase:firebase-config:${playServicesVersion}",
                     firebaseDb         : "com.google.firebase:firebase-database:${playServicesVersion}",
+                    firebaseFirestore  : "com.google.firebase:firebase-firestore:${playServicesVersion}",
                     firebaseMessaging  : "com.google.firebase:firebase-messaging:${playServicesVersion}",
                     firebaseStorage    : "com.google.firebase:firebase-storage:${playServicesVersion}",
                     firebaseUiStorage  : 'com.firebaseui:firebase-ui-storage:3.1.0',
