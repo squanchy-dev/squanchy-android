@@ -1,5 +1,6 @@
 package net.squanchy.service.repository.injection;
 
+import net.squanchy.service.DaysRepository;
 import net.squanchy.service.firebase.FirebaseDbService;
 import net.squanchy.service.repository.EventRepository;
 import net.squanchy.service.repository.SpeakerRepository;
@@ -37,5 +38,9 @@ public class RepositoryModule {
     VenueRepository venueRepositoryrRepository(FirebaseDbService dbService) {
         return new FirebaseVenueRepository(dbService);
     }
+
+    @Provides
+    DaysRepository daysRepository(FirebaseDbService dbService) {
+        return new FirebaseDaysRepository(dbService);
     }
 }

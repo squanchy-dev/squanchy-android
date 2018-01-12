@@ -6,6 +6,7 @@ import net.squanchy.analytics.Analytics
 import net.squanchy.analytics.AnalyticsModule
 import net.squanchy.remoteconfig.RemoteConfig
 import net.squanchy.remoteconfig.RemoteConfigModule
+import net.squanchy.service.DaysRepository
 import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.firebase.FirebaseDbService
 import net.squanchy.service.firebase.injection.FirebaseModule
@@ -50,6 +51,8 @@ interface ApplicationComponent {
     fun speakerRepository(): SpeakerRepository
 
     fun venueRepository(): VenueRepository
+
+    fun daysRepository(): DaysRepository
 
     fun analytics(): Analytics
 
