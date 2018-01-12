@@ -10,6 +10,8 @@ import net.squanchy.service.DaysRepository
 import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.firebase.FirebaseDbService
 import net.squanchy.service.firebase.injection.FirebaseModule
+import net.squanchy.service.firestore.FirestoreDbService
+import net.squanchy.service.firestore.injection.FirestoreModule
 import net.squanchy.service.repository.EventRepository
 import net.squanchy.service.repository.SpeakerRepository
 import net.squanchy.service.repository.VenueRepository
@@ -20,6 +22,7 @@ import net.squanchy.support.injection.CurrentTimeModule
 fun createApplicationComponent(application: Application): ApplicationComponent {
     return DaggerApplicationComponent.builder()
         .firebaseModule(FirebaseModule())
+        .firestoreModule(FirestoreModule())
         .repositoryModule(RepositoryModule())
         .checksumModule(ChecksumModule())
         .applicationContextModule(ApplicationContextModule(application))
@@ -31,18 +34,21 @@ fun createApplicationComponent(application: Application): ApplicationComponent {
 @ApplicationLifecycle
 @Component(
         modules = [
-                ApplicationContextModule::class,
-                FirebaseModule::class,
-                ChecksumModule::class,
-                RepositoryModule::class,
-                AnalyticsModule::class,
-                RemoteConfigModule::class,
-                CurrentTimeModule::class
+            ApplicationContextModule::class,
+            FirebaseModule::class,
+            FirestoreModule::class,
+            ChecksumModule::class,
+            RepositoryModule::class,
+            AnalyticsModule::class,
+            RemoteConfigModule::class,
+            CurrentTimeModule::class
         ]
 )
 interface ApplicationComponent {
 
     fun firebaseDbService(): FirebaseDbService
+
+    fun firestoreDbService(): FirestoreDbService
 
     fun firebaseAuthService(): FirebaseAuthService
 
