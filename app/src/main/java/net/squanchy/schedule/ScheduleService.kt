@@ -25,22 +25,21 @@ class ScheduleService internal constructor(
             val daysObservable = dbService.days()
 
             val eventsObservable = eventRepository.events(userId)
-                    .map { events -> if (onlyFavorites) events.filter { it.favorited } else events }
-                    .map { it.groupBy { it.dayId } }
+                .map { events -> if (onlyFavorites) events.filter { it.favorited } else events }
+                .map { it.groupBy { it.dayId } }
 
             eventsObservable
-                    .withLatestFrom(daysObservable, combineEventsById())
-                    .subscribeOn(Schedulers.io())
+                .withLatestFrom(daysObservable, combineEventsById())
+                .subscribeOn(Schedulers.io())
         }
     }
 
     private fun combineEventsById(): BiFunction<Map<String, List<Event>>, FirebaseDays, Schedule> {
         return BiFunction { eventsMap, (days) ->
             val pages = eventsMap.keys
-                    .map(findDayById(days!!))
-                    .filterNotNull()
-                    .map(toSchedulePage(eventsMap))
-                    .sortedBy { it.date }
+                .mapNotNull(findDayById(days!!))
+                .map(toSchedulePage(eventsMap))
+                .sortedBy { it.date }
 
             Schedule.create(pages)
         }
@@ -64,7 +63,7 @@ class ScheduleService internal constructor(
 
     fun currentUserIsSignedIn(): Observable<Boolean> {
         return authService.currentUser()
-                .map { optionalUser -> optionalUser.map { user -> !user.isAnonymous }.or(false) }
+            .map { optionalUser -> optionalUser.map { user -> !user.isAnonymous }.or(false) }
     }
 
     companion object {
