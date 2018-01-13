@@ -45,8 +45,8 @@ class FavoritesSignedInEmptyLayout @JvmOverloads constructor(
     override fun showAchievement(message: String) = Snackbar.make(this, readAsHtml(message), Snackbar.LENGTH_LONG).show()
 
     private val favoriteButtonClickListener = View.OnClickListener {
-        presentButtonIcon(counter, this, this::favoritesFilledIconId, this::favoritesEmptyIconId)
-        presentAchievementMessage(counter, this, this::initialAchieventMessage, this::perseveranceAchievementMessage)
+        presentButtonIcon(counter, this, ::favoritesFilledIconId, ::favoritesEmptyIconId)
+        presentAchievementMessage(counter, this, ::initialAchieventMessage, ::perseveranceAchievementMessage)
     }
 
     private fun favoritesFilledIconId() = R.drawable.ic_favorite_filled

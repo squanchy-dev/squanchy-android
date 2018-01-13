@@ -53,7 +53,7 @@ class NotificationsIntentService : IntentService(NotificationsIntentService::cla
         subscriptions.add(
                 sortedFavourites
                         .map { events -> events.filter { it.startTime.isAfter(notificationIntervalEnd) } }
-                        .subscribe(this::scheduleNextAlarm)
+                        .subscribe(::scheduleNextAlarm)
         )
     }
 
