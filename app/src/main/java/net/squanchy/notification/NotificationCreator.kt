@@ -28,8 +28,8 @@ class NotificationCreator(private val context: Context) {
         }
 
         val notifications = events
-                .map { createFrom(it) }
-                .toMutableList()
+            .map { createFrom(it) }
+            .toMutableList()
 
         if (events.size > 1) {
             notifications.add(createSummaryNotification(events))
@@ -55,12 +55,12 @@ class NotificationCreator(private val context: Context) {
     private fun createFrom(event: Event): Notification {
         val notificationBuilder = createDefaultBuilder(1)
         notificationBuilder
-                .setContentIntent(createPendingIntentForSingleEvent(event.id))
-                .setContentTitle(event.title)
-                .setColor(getTrackColor(event))
-                .setWhen(event.startTime.toDateTime().millis)
-                .setShowWhen(true)
-                .setGroup(GROUP_KEY_NOTIFY_SESSION)
+            .setContentIntent(createPendingIntentForSingleEvent(event.id))
+            .setContentTitle(event.title)
+            .setColor(getTrackColor(event))
+            .setWhen(event.startTime.toDateTime().millis)
+            .setShowWhen(true)
+            .setGroup(GROUP_KEY_NOTIFY_SESSION)
 
         val placeName = getPlaceName(event)
         if (!placeName.isNullOrEmpty()) {
@@ -75,11 +75,11 @@ class NotificationCreator(private val context: Context) {
     private fun createSummaryNotification(events: List<Event>): Notification {
         val summaryBuilder = createDefaultBuilder(events.size)
         summaryBuilder
-                .setContentIntent(createPendingIntentForMultipleEvents())
-                .setContentTitle(createSummaryTitle(events.size))
-                .setGroup(GROUP_KEY_NOTIFY_SESSION)
-                .setGroupSummary(true)
-                .setLocalOnly(true)
+            .setContentIntent(createPendingIntentForMultipleEvents())
+            .setContentTitle(createSummaryTitle(events.size))
+            .setGroup(GROUP_KEY_NOTIFY_SESSION)
+            .setGroupSummary(true)
+            .setLocalOnly(true)
 
         val richNotification = createInboxStyleRichNotification(summaryBuilder, events)
 
@@ -93,22 +93,22 @@ class NotificationCreator(private val context: Context) {
         extender.background = BitmapFactory.decodeResource(resources, R.drawable.notification_background)
 
         return NotificationCompat.Builder(context, EVENTS_ABOUT_TO_START_CHANNEL_ID)
-                .setTicker(
-                        context.resources.getQuantityString(
-                                R.plurals.event_notification_ticker,
-                                talksCount,
-                                talksCount
-                        )
-                )
-                .setDefaults(Notification.DEFAULT_SOUND or Notification.DEFAULT_VIBRATE)
-                .setLights(
-                        ContextCompat.getColor(context, R.color.notification_led_color),
-                        NOTIFICATION_LED_ON_MS,
-                        NOTIFICATION_LED_OFF_MS
-                )
-                .setSmallIcon(R.drawable.ic_stat_notification)
-                .setAutoCancel(true)
-                .extend(extender)
+            .setTicker(
+                    context.resources.getQuantityString(
+                            R.plurals.event_notification_ticker,
+                            talksCount,
+                            talksCount
+                    )
+            )
+            .setDefaults(Notification.DEFAULT_SOUND or Notification.DEFAULT_VIBRATE)
+            .setLights(
+                    ContextCompat.getColor(context, R.color.notification_led_color),
+                    NOTIFICATION_LED_ON_MS,
+                    NOTIFICATION_LED_OFF_MS
+            )
+            .setSmallIcon(R.drawable.ic_stat_notification)
+            .setAutoCancel(true)
+            .extend(extender)
     }
 
     private fun createPendingIntentForSingleEvent(eventId: String): PendingIntent {
@@ -125,8 +125,8 @@ class NotificationCreator(private val context: Context) {
 
     private fun getTrackColor(event: Event): Int {
         return event.track
-                .map { (_, _, accentColor) -> Color.parseColor(accentColor.or(ARGB_TRANSPARENT)) }
-                .or(Color.TRANSPARENT)
+            .map { (_, _, accentColor) -> Color.parseColor(accentColor.or(ARGB_TRANSPARENT)) }
+            .or(Color.TRANSPARENT)
     }
 
     private fun createPendingIntentForMultipleEvents(): PendingIntent {
@@ -138,23 +138,23 @@ class NotificationCreator(private val context: Context) {
         val homescreenIntent = Intent(context, HomeActivity::class.java)
         homescreenIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         return TaskStackBuilder.create(context)
-                .addNextIntent(homescreenIntent)
+            .addNextIntent(homescreenIntent)
     }
 
     private fun createBigTextRichNotification(notificationBuilder: NotificationCompat.Builder, event: Event): NotificationCompat.BigTextStyle {
         val bigTextBuilder = StringBuilder()
-                .append(getSpeakerNamesFrom(event.speakers))
+            .append(getSpeakerNamesFrom(event.speakers))
 
         val placeName = getPlaceName(event)
         if (!placeName.isNullOrEmpty()) {
             bigTextBuilder
-                    .append('\n')
-                    .append(context.getString(R.string.event_notification_starting_in, placeName))
+                .append('\n')
+                .append(context.getString(R.string.event_notification_starting_in, placeName))
         }
 
         return NotificationCompat.BigTextStyle(notificationBuilder)
-                .setBigContentTitle(event.title)
-                .bigText(bigTextBuilder.toString())
+            .setBigContentTitle(event.title)
+            .bigText(bigTextBuilder.toString())
     }
 
     private fun getSpeakerNamesFrom(speakers: List<Speaker>): String {
@@ -163,11 +163,13 @@ class NotificationCreator(private val context: Context) {
         return context.getString(R.string.event_notification_starting_by, speakerNames)
     }
 
-    private fun createInboxStyleRichNotification(notificationBuilder: NotificationCompat.Builder,
-                                                 events: List<Event>): NotificationCompat.InboxStyle {
+    private fun createInboxStyleRichNotification(
+            notificationBuilder: NotificationCompat.Builder,
+            events: List<Event>
+    ): NotificationCompat.InboxStyle {
         val bigContentTitle = createSummaryTitle(events.size)
         val richNotification = NotificationCompat.InboxStyle(notificationBuilder)
-                .setBigContentTitle(bigContentTitle)
+            .setBigContentTitle(bigContentTitle)
 
         for (event in events) {
             if (event.place.isPresent) {
@@ -188,17 +190,17 @@ class NotificationCreator(private val context: Context) {
 
     private fun createSummaryTitle(talksCount: Int): String {
         val quantityString = context.resources
-                .getQuantityString(R.plurals.event_notification_count_starting, talksCount)
+            .getQuantityString(R.plurals.event_notification_count_starting, talksCount)
         return String.format(quantityString, talksCount)
     }
 
     companion object {
-        private val GROUP_KEY_NOTIFY_SESSION = "group_key_notify_session"
-        private val EVENTS_ABOUT_TO_START_CHANNEL_ID = "events_about_to_start"
+        private const val GROUP_KEY_NOTIFY_SESSION = "group_key_notify_session"
+        private const val EVENTS_ABOUT_TO_START_CHANNEL_ID = "events_about_to_start"
 
         // pulsate every 1 second, indicating a relatively high degree of urgency
-        private val NOTIFICATION_LED_ON_MS = 100
-        private val NOTIFICATION_LED_OFF_MS = 1000
-        private val ARGB_TRANSPARENT = "#00000000"
+        private const val NOTIFICATION_LED_ON_MS = 100
+        private const val NOTIFICATION_LED_OFF_MS = 1000
+        private const val ARGB_TRANSPARENT = "#00000000"
     }
 }
