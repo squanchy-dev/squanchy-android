@@ -13,7 +13,7 @@ import net.squanchy.schedule.ScheduleModule
 import net.squanchy.schedule.ScheduleService
 
 @ActivityLifecycle
-@Component(modules = arrayOf(ScheduleModule::class, NavigationModule::class), dependencies = arrayOf(ApplicationComponent::class))
+@Component(modules = [(ScheduleModule::class), (NavigationModule::class)], dependencies = [(ApplicationComponent::class)])
 internal interface FavoritesComponent {
 
     fun service(): ScheduleService

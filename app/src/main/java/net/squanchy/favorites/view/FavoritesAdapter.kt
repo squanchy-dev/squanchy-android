@@ -61,17 +61,16 @@ internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<Recycl
                 val itemView = layoutInflater.inflate(R.layout.item_schedule_event_talk, parent, false) as EventItemView
                 EventViewHolder(itemView)
             }
-            else -> if (viewType == viewTypeHeader) {
+            viewTypeHeader -> {
                 HeaderViewHolder(layoutInflater.inflate(R.layout.item_search_header, parent, false))
-            } else {
-                throw IllegalArgumentException("View type not supported: " + viewType)
             }
+            else -> throw IllegalArgumentException("View type not supported: " + viewType)
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is EventViewHolder) {
-            val event = findFor<Event>(
+            val event = findFor(
                     0,
                     position,
                     schedule.pages,
@@ -82,7 +81,7 @@ internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<Recycl
                 holder.updateWith(event, listener!!)
             }
         } else if (holder is HeaderViewHolder) {
-            val date = findFor<LocalDateTime>(
+            val date = findFor(
                     0,
                     position,
                     schedule.pages,
