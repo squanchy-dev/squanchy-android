@@ -46,7 +46,7 @@ class FavoritesPageView @JvmOverloads constructor(
     }
 
     private fun setupToolbar() {
-        with(toolbar) {
+        toolbar.apply {
             title = resources.getString(R.string.activity_favorites)
             inflateMenu(R.menu.homepage)
             setOnMenuItemClickListener(this@FavoritesPageView::onMenuItemClickListener)
@@ -82,7 +82,7 @@ class FavoritesPageView @JvmOverloads constructor(
     private fun hasFavorites(schedule: Schedule) = !schedule.isEmpty
 
     private fun showSchedule(schedule: Schedule) {
-        favoritesListView.updateWith(schedule, this::showEventDetails)
+        favoritesListView.updateWith(schedule, ::showEventDetails)
         favoritesListView.visibility = View.VISIBLE
         emptyViewSignedIn.visibility = View.GONE
     }
