@@ -133,7 +133,7 @@ class FirstStartWithNoNetworkActivity : AppCompatActivity() {
         val animator = animationProducer.invoke(view)
         animator.addListener(
                 object : AnimationEndListener {
-                    override fun onAnimationEnd(animation: Animator) = endAction.invoke()
+                    override fun onAnimationEnd(animation: Animator) = endAction()
                 }
         )
         return animator
