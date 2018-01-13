@@ -10,9 +10,9 @@ import android.text.TextPaint
 import android.text.style.MetricAffectingSpan
 
 fun CharSequence.applyTypeface(typeface: Typeface): Spanned =
-        (this as? Spannable)?.apply {
-            setSpan(TypefaceSpan(typeface), 0, length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        } ?: SpannableString(this).applyTypeface(typeface)
+    (this as? Spannable)?.apply {
+        setSpan(TypefaceSpan(typeface), 0, length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    } ?: SpannableString(this).applyTypeface(typeface)
 
 fun Spanned.hasTypefaceSpan() = getSpans(0, length, TypefaceSpan::class.java).isNotEmpty()
 
