@@ -15,9 +15,9 @@ class RemoteConfig(
     private val cacheExpiryInSeconds: Long
         get() = if (debugMode) EXPIRY_IMMEDIATELY else EXPIRY_ONE_HOUR
 
-    private fun <T> getConfigValue(action: Func0<T>): Single<T> {
+    private fun <T> getConfigValue(action: () -> T): Single<T> {
         return fetchAndActivate(cacheExpiryInSeconds)
-            .andThen(Single.just(action.call()))
+            .andThen(Single.fromCallable { action() })
     }
 
     fun fetchNow(): Completable {
