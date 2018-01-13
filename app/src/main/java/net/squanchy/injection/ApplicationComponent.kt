@@ -30,13 +30,13 @@ fun createApplicationComponent(application: Application): ApplicationComponent {
 @ApplicationLifecycle
 @Component(
         modules = [
-                ApplicationContextModule::class,
-                FirebaseModule::class,
-                ChecksumModule::class,
-                RepositoryModule::class,
-                AnalyticsModule::class,
-                RemoteConfigModule::class,
-                CurrentTimeModule::class
+            ApplicationContextModule::class,
+            FirebaseModule::class,
+            ChecksumModule::class,
+            RepositoryModule::class,
+            AnalyticsModule::class,
+            RemoteConfigModule::class,
+            CurrentTimeModule::class
         ]
 )
 interface ApplicationComponent {
