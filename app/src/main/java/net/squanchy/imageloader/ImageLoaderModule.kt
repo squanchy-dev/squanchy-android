@@ -18,5 +18,5 @@ internal class ImageLoaderModule {
 
     @Provides
     fun imageLoader(requestManager: RequestManager, firebaseStorage: FirebaseStorage): ImageLoader =
-            GlideImageLoader(requestManager, firebaseStorage)
+        GlideImageLoader(requestManager, firebaseStorage)
 }
