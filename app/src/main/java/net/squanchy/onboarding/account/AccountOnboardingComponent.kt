@@ -15,9 +15,9 @@ import net.squanchy.signin.SignInService
 
 internal fun accountOnboardingComponent(activity: AppCompatActivity) =
     DaggerAccountOnboardingComponent.builder()
-            .activityContextModule(ActivityContextModule(activity))
-            .applicationComponent(activity.applicationComponent)
-            .build()
+        .activityContextModule(ActivityContextModule(activity))
+        .applicationComponent(activity.applicationComponent)
+        .build()
 
 @ActivityLifecycle
 @Component(
