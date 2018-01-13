@@ -4,7 +4,6 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import net.squanchy.support.lang.Func0
 import java.util.concurrent.TimeUnit
 
 class RemoteConfig(
