@@ -20,18 +20,18 @@ internal class EventDetailsService(
 
     fun toggleFavorite(event: Event): Single<FavoriteResult> {
         return currentUser()
-                .flatMap { optionalUser ->
-                    optionalUser
-                            .map {
-                                if (it.isAnonymous) {
-                                    Single.just(FavoriteResult.MUST_AUTHENTICATE)
-                                } else {
-                                    toggleFavoriteOn(event)
-                                            .andThen(Single.just(FavoriteResult.SUCCESS))
-                                }
-                            }
-                            .or(Single.just(FavoriteResult.MUST_AUTHENTICATE))
-                }
+            .flatMap { optionalUser ->
+                optionalUser
+                    .map {
+                        if (it.isAnonymous) {
+                            Single.just(FavoriteResult.MUST_AUTHENTICATE)
+                        } else {
+                            toggleFavoriteOn(event)
+                                .andThen(Single.just(FavoriteResult.SUCCESS))
+                        }
+                    }
+                    .or(Single.just(FavoriteResult.MUST_AUTHENTICATE))
+            }
     }
 
     private fun toggleFavoriteOn(event: Event): Completable {
