@@ -42,7 +42,7 @@ class FirstStartWithNoNetworkActivity : AppCompatActivity() {
         setContentView(R.layout.activity_first_start_with_no_network)
 
         DialogLayoutParameters.wrapHeight(this)
-                .applyTo(window)
+            .applyTo(window)
 
         firstStartNevermind.setOnClickListener { finish() }
 
@@ -57,8 +57,8 @@ class FirstStartWithNoNetworkActivity : AppCompatActivity() {
         super.onStart()
 
         val networkRequest = NetworkRequest.Builder()
-                .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-                .build()
+            .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+            .build()
         connectivityManager.registerNetworkCallback(networkRequest, networkCallback)
 
         doIfAnimatedVectorDrawable(firstStartProgress.drawable) { start() }
@@ -80,7 +80,7 @@ class FirstStartWithNoNetworkActivity : AppCompatActivity() {
         firstStartCta.setText(R.string.first_start_with_no_network_network_connected)
 
         animate(firstStartProgress, popOut()) { this.swapProgressWithSuccessAndContinue() }
-                .start()
+            .start()
     }
 
     private fun popOut(): (View) -> Animator = {
@@ -96,7 +96,7 @@ class FirstStartWithNoNetworkActivity : AppCompatActivity() {
         firstStartProgress.setImageResource(R.drawable.ic_circle_tick)
 
         animate(firstStartProgress, popBackIn()) { this.continueToScheduleAfterDelay() }
-                .start()
+            .start()
     }
 
     private fun popBackIn(): (View) -> Animator = {
@@ -131,17 +131,21 @@ class FirstStartWithNoNetworkActivity : AppCompatActivity() {
 
     private fun animate(view: View, animationProducer: (View) -> Animator, endAction: () -> Unit): Animator {
         val animator = animationProducer.invoke(view)
-        animator.addListener(object : AnimationEndListener {
-            override fun onAnimationEnd(animation: Animator) = endAction.invoke()
-        })
+        animator.addListener(
+                object : AnimationEndListener {
+                    override fun onAnimationEnd(animation: Animator) = endAction.invoke()
+                }
+        )
         return animator
     }
 
     private fun continueToScheduleAfterDelay() {
-        firstStartProgress.postDelayed({
-            startActivity(continuationIntent) // We don't use the navigator here, we basically want to restart the whole flow
-            finish()
-        }, DELAY_AFTER_ANIMATIONS_MILLIS)
+        firstStartProgress.postDelayed(
+                {
+                    startActivity(continuationIntent) // We don't use the navigator here, we basically want to restart the whole flow
+                    finish()
+                }, DELAY_AFTER_ANIMATIONS_MILLIS
+        )
     }
 
     private inner class NetworkConnectedCallback : ConnectivityManager.NetworkCallback() {
@@ -180,8 +184,8 @@ class FirstStartWithNoNetworkActivity : AppCompatActivity() {
         private const val DELAY_AFTER_ANIMATIONS_MILLIS: Long = 700
 
         fun createIntentContinuingTo(context: Context, continuationIntent: Intent) =
-                Intent(context, FirstStartWithNoNetworkActivity::class.java).apply {
-                    putExtra(EXTRA_CONTINUATION_INTENT, continuationIntent)
-                }
+            Intent(context, FirstStartWithNoNetworkActivity::class.java).apply {
+                putExtra(EXTRA_CONTINUATION_INTENT, continuationIntent)
+            }
     }
 }
