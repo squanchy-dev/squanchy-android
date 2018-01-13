@@ -28,13 +28,9 @@ class FavoritesPageView @JvmOverloads constructor(
 ) : CoordinatorLayout(context, attrs, defStyleAttr), Loadable {
 
     private val favoritesComponent = favoritesComponent(unwrapToActivityContext(context))
-
     private val service: ScheduleService = favoritesComponent.service()
-
     private val navigator: Navigator = favoritesComponent.navigator()
-
     private val analytics: Analytics = favoritesComponent.analytics()
-
     private val disposable = CompositeDisposable()
 
     override fun onFinishInflate() {
@@ -65,8 +61,8 @@ class FavoritesPageView @JvmOverloads constructor(
 
     private fun onMenuItemClickListener(menuItem: MenuItem): Boolean {
         return when (menuItem.itemId) {
-            R.id.action_search -> { showSearch(); return true }
-            R.id.action_settings -> { showSettings(); return true }
+            R.id.action_search -> { showSearch(); true }
+            R.id.action_settings -> { showSettings(); true }
             else -> false
         }
     }
