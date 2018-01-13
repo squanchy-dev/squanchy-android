@@ -10,12 +10,13 @@ import net.squanchy.R
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.support.view.CardSpacingItemDecorator
 
-class ScheduleDayPageView : RecyclerView {
+class ScheduleDayPageView @JvmOverloads constructor(
+        context: Context,
+        attrs: AttributeSet,
+        defStyle: Int = 0
+) : RecyclerView(context, attrs, defStyle) {
 
     private lateinit var adapter: EventsAdapter
-
-    @JvmOverloads
-    constructor(context: Context, attrs: AttributeSet, defStyle: Int = 0) : super(context, attrs, defStyle)
 
     override fun onFinishInflate() {
         super.onFinishInflate()

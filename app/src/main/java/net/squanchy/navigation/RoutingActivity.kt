@@ -38,7 +38,7 @@ class RoutingActivity : AppCompatActivity() {
 
         subscriptions.add(
                 signInService.signInAnonymouslyIfNecessary()
-                        .subscribe({ this.onboardOrProceedToRouting() }, { this.handleSignInError(it) })
+                    .subscribe({ onboardOrProceedToRouting() }, { handleSignInError(it) })
         )
     }
 
@@ -57,10 +57,10 @@ class RoutingActivity : AppCompatActivity() {
     }
 
     private fun createContinueIntentFrom(intent: Intent) =
-            Intent(intent).apply {
-                removeCategory(Intent.CATEGORY_LAUNCHER)
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            }
+        Intent(intent).apply {
+            removeCategory(Intent.CATEGORY_LAUNCHER)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
@@ -78,7 +78,7 @@ class RoutingActivity : AppCompatActivity() {
 
     private fun onboardOrProceedToRouting() {
         onboarding.nextPageToShow()
-                ?.let { navigator.toOnboardingForResult(it, ONBOARDING_REQUEST_CODE) }
+            ?.let { navigator.toOnboardingForResult(it, ONBOARDING_REQUEST_CODE) }
                 ?: proceedTo(intent)
     }
 

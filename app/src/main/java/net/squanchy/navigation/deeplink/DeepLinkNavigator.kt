@@ -42,7 +42,7 @@ internal class DeepLinkNavigator(private val navigator: Navigator) {
 
     private fun extractSegments(path: String): List<String> {
         return path.split("/".toRegex())
-                .filterNot { it.isEmpty() }
+            .filterNot { it.isEmpty() }
     }
 
     fun toFavorites() {

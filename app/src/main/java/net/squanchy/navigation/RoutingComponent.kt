@@ -15,13 +15,13 @@ import net.squanchy.signin.SignInService
 
 internal fun routingComponent(activity: AppCompatActivity) =
     DaggerRoutingComponent.builder()
-            .activityContextModule(ActivityContextModule(activity))
-            .applicationComponent(activity.applicationComponent)
-            .deepLinkModule(DeepLinkModule())
-            .navigationModule(NavigationModule())
-            .signInModule(SignInModule())
-            .routingModule(RoutingModule())
-            .build()
+        .activityContextModule(ActivityContextModule(activity))
+        .applicationComponent(activity.applicationComponent)
+        .deepLinkModule(DeepLinkModule())
+        .navigationModule(NavigationModule())
+        .signInModule(SignInModule())
+        .routingModule(RoutingModule())
+        .build()
 
 @ActivityLifecycle
 @Component(

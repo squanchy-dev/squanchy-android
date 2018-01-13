@@ -12,7 +12,7 @@ import com.google.firebase.storage.StorageReference
 class GlideImageLoader(private val requestManager: RequestManager, private val firebaseStorage: FirebaseStorage) : ImageLoader {
 
     companion object {
-        val FIREBASE_URL_SCHEMA = "gs://"
+        const val FIREBASE_URL_SCHEMA = "gs://"
     }
 
     override fun load(url: String): ImageRequest {

@@ -24,6 +24,6 @@ class OnboardingModule {
 
     companion object {
 
-        private val ONBOARDING_PREFERENCES_NAME = "onboarding"
+        private const val ONBOARDING_PREFERENCES_NAME = "onboarding"
     }
 }

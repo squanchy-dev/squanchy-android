@@ -18,20 +18,20 @@ class FirebaseAuthService(private val auth: FirebaseAuth) {
 
     fun signInWithGoogle(account: GoogleSignInAccount): Completable {
         return currentUser()
-                .firstOrError()
-                .flatMapCompletable {
-                    val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-                    if (it.isPresent) {
-                        linkAccountWithGoogleCredential(it.get(), credential)
-                    } else {
-                        signInWithGoogleCredential(credential)
-                    }
+            .firstOrError()
+            .flatMapCompletable {
+                val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+                if (it.isPresent) {
+                    linkAccountWithGoogleCredential(it.get(), credential)
+                } else {
+                    signInWithGoogleCredential(credential)
                 }
+            }
     }
 
     private fun linkAccountWithGoogleCredential(user: FirebaseUser, credential: AuthCredential): Completable {
         return fromTask<AuthResult>(lazy { user.linkWithCredential(credential) })
-                .onErrorResumeNext(deleteUserAndSignInWithCredentialIfLinkingFailed(user, credential))
+            .onErrorResumeNext(deleteUserAndSignInWithCredentialIfLinkingFailed(user, credential))
     }
 
     private fun deleteUserAndSignInWithCredentialIfLinkingFailed(user: FirebaseUser, credential: AuthCredential): (Throwable) -> CompletableSource {
@@ -74,19 +74,19 @@ class FirebaseAuthService(private val auth: FirebaseAuth) {
 
     fun <T> ifUserSignedInThenObservableFrom(observable: (String) -> Observable<T>): Observable<T> {
         return ifUserSignedIn()
-                .switchMap { user -> observable(user.uid) }
+            .switchMap { user -> observable(user.uid) }
     }
 
     fun ifUserSignedInThenCompletableFrom(completable: (String) -> Completable): Completable {
         return ifUserSignedIn()
-                .firstOrError()
-                .flatMapCompletable { user -> completable(user.uid) }
+            .firstOrError()
+            .flatMapCompletable { user -> completable(user.uid) }
     }
 
     private fun ifUserSignedIn(): Observable<FirebaseUser> {
         return currentUser()
-                .filter({ it.isPresent })
-                .map { it.get() }
+            .filter({ it.isPresent })
+            .map { it.get() }
     }
 
     fun currentUser(): Observable<Optional<FirebaseUser>> {
@@ -107,13 +107,13 @@ class FirebaseAuthService(private val auth: FirebaseAuth) {
     fun signInAnonymously(): Completable {
         return Completable.create { emitter ->
             auth.signInAnonymously()
-                    .addOnSuccessListener { emitter.onComplete() }
-                    .addOnFailureListener { e ->
-                        if (emitter.isDisposed) {
-                            return@addOnFailureListener
-                        }
-                        emitter.onError(e)
+                .addOnSuccessListener { emitter.onComplete() }
+                .addOnFailureListener { e ->
+                    if (emitter.isDisposed) {
+                        return@addOnFailureListener
                     }
+                    emitter.onError(e)
+                }
         }
     }
 }

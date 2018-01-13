@@ -44,18 +44,18 @@ class AccountOnboardingActivity : AppCompatActivity() {
 
         disableUi()
         signInService.isSignedInToGoogle()
-                .observeOn(AndroidSchedulers.mainThread())
-                .timeout(SIGNIN_STATE_CHECK_TIMEOUT_SECONDS, TimeUnit.SECONDS)
-                .subscribe(
-                        { signedIn ->
-                            if (signedIn) {
-                                markPageAsSeenAndFinish()
-                            } else {
-                                enableUi()
-                            }
-                        },
-                        { enableUi() }
-                )
+            .observeOn(AndroidSchedulers.mainThread())
+            .timeout(SIGNIN_STATE_CHECK_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+            .subscribe(
+                    { signedIn ->
+                        if (signedIn) {
+                            markPageAsSeenAndFinish()
+                        } else {
+                            enableUi()
+                        }
+                    },
+                    { enableUi() }
+            )
     }
 
     private fun signInToGoogle() {
