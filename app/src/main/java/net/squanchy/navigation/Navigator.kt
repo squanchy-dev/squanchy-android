@@ -70,9 +70,9 @@ class Navigator(
     }
 
     private fun canResolve(intent: Intent) =
-            !activity.packageManager
-                    .queryIntentActivities(intent, 0)
-                    .isEmpty()
+        !activity.packageManager
+            .queryIntentActivities(intent, 0)
+            .isEmpty()
 
     fun toMapsFor(venue: Venue) {
         toExternalUrl("http://maps.google.com/?daddr=${Uri.encode(venue.name)},${Uri.encode(venue.address)}")
