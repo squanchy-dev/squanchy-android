@@ -8,8 +8,8 @@ internal class FirstStartPersister(private val preferences: SharedPreferences) {
 
     fun storeHasBeenStarted() {
         preferences.edit()
-                .putBoolean(KEY_HAS_BEEN_STARTED_ALREADY, true)
-                .apply()
+            .putBoolean(KEY_HAS_BEEN_STARTED_ALREADY, true)
+            .apply()
     }
 
     companion object {
