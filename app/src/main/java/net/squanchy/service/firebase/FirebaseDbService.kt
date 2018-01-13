@@ -53,8 +53,8 @@ class FirebaseDbService(private val database: DatabaseReference) {
 
     fun favorites(userId: String): Observable<FirebaseFavorites> {
         return userData(userId)
-                .map { (favorites) -> favorites ?: emptyMap() }
-                .map(::FirebaseFavorites)
+            .map { (favorites) -> favorites ?: emptyMap() }
+            .map(::FirebaseFavorites)
     }
 
     private fun userData(userId: String): Observable<FirebaseUserData> {
@@ -114,28 +114,28 @@ class FirebaseDbService(private val database: DatabaseReference) {
     private fun updateFavorite(eventId: String, userId: String, action: (DatabaseReference) -> Task<Void>): Completable {
         return Completable.create { emitter ->
             action(database.child(favoriteByIdNode(userId, eventId)))
-                    .addOnSuccessListener { emitter.onComplete() }
-                    .addOnFailureListener { e ->
-                        if (emitter.isDisposed) {
-                            return@addOnFailureListener
-                        }
-
-                        emitter.onError(e)
+                .addOnSuccessListener { emitter.onComplete() }
+                .addOnFailureListener { e ->
+                    if (emitter.isDisposed) {
+                        return@addOnFailureListener
                     }
+
+                    emitter.onError(e)
+                }
         }
     }
 
     fun addAchievement(userId: String, achievementId: String, timestamp: Long?): Completable {
         return Completable.create { emitter ->
             database.child(achievementByIdNode(userId, achievementId)).setValue(timestamp)
-                    .addOnSuccessListener { emitter.onComplete() }
-                    .addOnFailureListener { e ->
-                        if (emitter.isDisposed) {
-                            return@addOnFailureListener
-                        }
-
-                        emitter.onError(e)
+                .addOnSuccessListener { emitter.onComplete() }
+                .addOnFailureListener { e ->
+                    if (emitter.isDisposed) {
+                        return@addOnFailureListener
                     }
+
+                    emitter.onError(e)
+                }
         }
     }
 
