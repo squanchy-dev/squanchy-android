@@ -10,17 +10,17 @@ import android.support.v4.content.res.ResourcesCompat
 import net.squanchy.R
 
 fun Context.getFontFor(@StyleRes styleResId: Int) =
-        ResourcesCompat.getFont(this, getFontIdFrom(styleResId))!!
+    ResourcesCompat.getFont(this, getFontIdFrom(styleResId))!!
 
 @FontRes
 private fun Context.getFontIdFrom(@StyleRes styleResId: Int) =
-        obtainStyledAttributes(styleResId, kotlin.intArrayOf(R.attr.fontFamily)).use {
-            if (hasValue(0)) {
-                getResourceId(0, -1)
-            } else {
-                error("TypedArray does not contain any fontFamily attribute!")
-            }
+    obtainStyledAttributes(styleResId, kotlin.intArrayOf(R.attr.fontFamily)).use {
+        if (hasValue(0)) {
+            getResourceId(0, -1)
+        } else {
+            error("TypedArray does not contain any fontFamily attribute!")
         }
+    }
 
 private inline fun <R> TypedArray.use(block: TypedArray.() -> R): R {
     try {
