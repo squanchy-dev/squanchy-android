@@ -11,9 +11,12 @@ internal fun presentButtonIcon(counter: Int, view: FavoritesSignedInEmptyLayoutV
     if (counter % 2 == 0) view.setButtonImage(filledIconId()) else view.setButtonImage(emptyIconId())
 }
 
-internal fun presentAchievementMessage(counter: Int, view: FavoritesSignedInEmptyLayoutView, initialAchievementMessage: AchievementMessageProvider,
-        perseveranceMessage: AchievementMessageProvider) {
-
+internal fun presentAchievementMessage(
+        counter: Int,
+        view: FavoritesSignedInEmptyLayoutView,
+        initialAchievementMessage: AchievementMessageProvider,
+        perseveranceMessage: AchievementMessageProvider
+) {
     val newCounter = counter + 1
 
     view.updateCounter(newCounter)

@@ -7,9 +7,9 @@ import java.util.Locale
 class OnboardingPersister(private val preferences: SharedPreferences) {
 
     internal fun savePageSeen(page: OnboardingPage) =
-            preferences.edit()
-                    .putBoolean(preferenceKeyFor(page), true)
-                    .apply()
+        preferences.edit()
+            .putBoolean(preferenceKeyFor(page), true)
+            .apply()
 
     internal fun pageSeen(page: OnboardingPage) = preferences.getBoolean(preferenceKeyFor(page), false)
 

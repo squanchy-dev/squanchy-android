@@ -22,8 +22,8 @@ internal interface ScheduleComponent {
 }
 
 internal fun scheduleComponent(activity: AppCompatActivity): ScheduleComponent = DaggerScheduleComponent.builder()
-        .applicationComponent(activity.applicationComponent)
-        .scheduleModule(ScheduleModule())
-        .navigationModule(NavigationModule())
-        .activityContextModule(ActivityContextModule(activity))
-        .build()
+    .applicationComponent(activity.applicationComponent)
+    .scheduleModule(ScheduleModule())
+    .navigationModule(NavigationModule())
+    .activityContextModule(ActivityContextModule(activity))
+    .build()

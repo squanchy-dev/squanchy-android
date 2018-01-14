@@ -4,7 +4,6 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import net.squanchy.support.lang.Func0
 import java.util.concurrent.TimeUnit
 
 class RemoteConfig(
@@ -15,9 +14,9 @@ class RemoteConfig(
     private val cacheExpiryInSeconds: Long
         get() = if (debugMode) EXPIRY_IMMEDIATELY else EXPIRY_ONE_HOUR
 
-    private fun <T> getConfigValue(action: Func0<T>): Single<T> {
+    private fun <T> getConfigValue(action: () -> T): Single<T> {
         return fetchAndActivate(cacheExpiryInSeconds)
-            .andThen(Single.just(action.call()))
+            .andThen(Single.fromCallable { action() })
     }
 
     fun fetchNow(): Completable {

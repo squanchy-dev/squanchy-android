@@ -69,14 +69,10 @@ open class CardLayout @JvmOverloads constructor(
     }
 
     private class NarrowerOutlineProvider(
-            @param:Px @field:Px
-            private val insetHorizontal: Int,
-            @param:Px @field:Px
-            private val insetTop: Int,
-            @param:Px @field:Px
-            private val insetBottom: Int,
-            @param:Px @field:Px
-            private val radius: Int
+            @param:Px private val insetHorizontal: Int,
+            @param:Px private val insetTop: Int,
+            @param:Px private val insetBottom: Int,
+            @param:Px private val radius: Int
     ) : ViewOutlineProvider() {
 
         override fun getOutline(view: View, outline: Outline) {

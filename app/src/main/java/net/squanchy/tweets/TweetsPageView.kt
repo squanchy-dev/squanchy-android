@@ -78,7 +78,7 @@ class TweetsPageView @JvmOverloads constructor(
         refreshingData = true
         subscription = twitterService.refresh(query)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(this::onSuccess, this::onError)
+            .subscribe(::onSuccess, ::onError)
     }
 
     private fun onSuccess(tweet: List<TweetViewModel>) {

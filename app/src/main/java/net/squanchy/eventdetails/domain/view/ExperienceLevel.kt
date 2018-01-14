@@ -19,21 +19,21 @@ enum class ExperienceLevel(
     companion object {
 
         fun tryParsingFrom(rawLevel: String?): Optional<ExperienceLevel> =
-                rawLevel?.let {
-                    try {
-                        Optional.of(fromRawLevel(it))
-                    } catch (e: IllegalArgumentException) {
-                        Timber.d(e)
-                        Optional.absent<ExperienceLevel>()
-                    }
-                } ?: Optional.absent()
+            rawLevel?.let {
+                try {
+                    Optional.of(fromRawLevel(it))
+                } catch (e: IllegalArgumentException) {
+                    Timber.d(e)
+                    Optional.absent<ExperienceLevel>()
+                }
+            } ?: Optional.absent()
 
         private fun fromRawLevel(rawLevel: String) =
-                when (rawLevel.toLowerCase(Locale.US)) {
-                    BEGINNER.rawLevel -> BEGINNER
-                    INTERMEDIATE.rawLevel -> INTERMEDIATE
-                    ADVANCED.rawLevel -> ADVANCED
-                    else -> throw IllegalArgumentException("Invalid raw level description: " + rawLevel)
-                }
+            when (rawLevel.toLowerCase(Locale.US)) {
+                BEGINNER.rawLevel -> BEGINNER
+                INTERMEDIATE.rawLevel -> INTERMEDIATE
+                ADVANCED.rawLevel -> ADVANCED
+                else -> throw IllegalArgumentException("Invalid raw level description: " + rawLevel)
+            }
     }
 }

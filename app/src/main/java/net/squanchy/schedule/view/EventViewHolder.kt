@@ -8,6 +8,6 @@ class EventViewHolder(itemView: EventItemView) : RecyclerView.ViewHolder(itemVie
 
     fun updateWith(event: Event, listener: (Event) -> Unit) {
         (itemView as EventItemView).updateWith(event)
-        itemView.setOnClickListener { listener.invoke(event) }
+        itemView.setOnClickListener { listener(event) }
     }
 }
