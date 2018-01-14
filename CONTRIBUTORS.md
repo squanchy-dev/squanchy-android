@@ -1,4 +1,4 @@
-###Squanchy Android is brought to you by:
+### Squanchy Android is brought to you by:
 
 #### Mantainers:
 
