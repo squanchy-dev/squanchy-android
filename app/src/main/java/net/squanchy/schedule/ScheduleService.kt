@@ -89,5 +89,4 @@ class FirestoreScheduleService(
         return authService.currentUser()
             .map { optionalUser -> optionalUser.map { user -> !user.isAnonymous }.or(false) }
     }
-
 }

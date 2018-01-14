@@ -27,4 +27,3 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
         }
     }
 }
-
