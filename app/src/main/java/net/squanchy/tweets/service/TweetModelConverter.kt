@@ -1,6 +1,5 @@
 package net.squanchy.tweets.service
 
-import android.R.attr.*
 import com.twitter.sdk.android.core.models.HashtagEntity
 import com.twitter.sdk.android.core.models.MediaEntity
 import com.twitter.sdk.android.core.models.MentionEntity
@@ -27,7 +26,7 @@ fun mapToViewModel(factory: TweetUrlSpanFactory, tweet: Tweet): TweetViewModel {
     val displayableText = displayableTextFor(tweet.text, displayTextRange, unresolvedPhotoUrl)
 
     return TweetViewModel.create(
-            id.toLong(),
+            tweet.id,
             displayableText,
             factory.applySpansToTweet(displayableText, displayTextRange.start(), hashtags, mentions, urls),
             user,
