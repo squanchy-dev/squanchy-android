@@ -1,5 +1,6 @@
 package net.squanchy.tweets.service
 
+import android.R.attr.*
 import com.twitter.sdk.android.core.models.HashtagEntity
 import com.twitter.sdk.android.core.models.MediaEntity
 import com.twitter.sdk.android.core.models.MentionEntity
@@ -8,8 +9,6 @@ import com.twitter.sdk.android.core.models.UrlEntity
 import net.squanchy.tweets.domain.TweetLinkInfo
 import net.squanchy.tweets.domain.view.TweetViewModel
 import net.squanchy.tweets.domain.view.User
-
-import android.R.attr.id
 import net.squanchy.tweets.view.TweetUrlSpanFactory
 
 private const val MEDIA_TYPE_PHOTO = "photo"
@@ -25,7 +24,7 @@ fun mapToViewModel(factory: TweetUrlSpanFactory, tweet: Tweet): TweetViewModel {
     val urls = adjustUrls(onlyUrlsInRange(tweet.entities.urls, displayTextRange), emojiIndices)
     val photoUrls = onlyPhotoUrls(tweet.entities.media)
     val unresolvedPhotoUrl = tweet.entities.media.map { it.url }
-    val displayableText = displayableTextFor(tweet, displayTextRange, unresolvedPhotoUrl)
+    val displayableText = displayableTextFor(tweet.text, displayTextRange, unresolvedPhotoUrl)
 
     return TweetViewModel.create(
             id.toLong(),
@@ -95,10 +94,7 @@ private fun adjustUrls(entities: List<UrlEntity>, indices: List<Int>): List<UrlE
 
 private fun offsetFrom(start: Int, indices: List<Int>): Int {
     var offset = 0
-
-    indices
-        .asSequence()
-        .takeWhile { it - offset <= start }
+    indices.takeWhile { it - offset <= start }
         .forEach { offset += 1 }
 
     return offset
@@ -109,10 +105,14 @@ private fun onlyPhotoUrls(media: List<MediaEntity>): List<String> {
         .map { it.mediaUrlHttps }
 }
 
-private fun displayableTextFor(tweet: Tweet, displayTextRange: Range, photoUrls: List<String>): String {
+private fun displayableTextFor(
+        text: String,
+        displayTextRange: Range,
+        photoUrls: List<String>
+): String {
     val beginIndex = displayTextRange.start()
     val endIndex = displayTextRange.end()
-    val displayableText = tweet.text.substring(beginIndex, endIndex)
+    val displayableText = text.substring(beginIndex, endIndex)
     return removeLastPhotoUrl(displayableText, photoUrls)
 }
 
