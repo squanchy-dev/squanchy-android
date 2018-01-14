@@ -31,6 +31,7 @@ class FirestorePlace {
     var floor: String? = null
 }
 
+@SuppressWarnings("VariableNaming")
 class FirestoreTrack {
     lateinit var id: String
     lateinit var name: String

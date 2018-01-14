@@ -7,8 +7,6 @@ import dagger.Provides
 import net.squanchy.injection.ApplicationLifecycle
 import net.squanchy.service.firestore.FirestoreDbService
 
-
-
 @Module
 class FirestoreModule {
 

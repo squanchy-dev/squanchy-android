@@ -26,6 +26,7 @@ class FirestoreScheduleService(
         private val dbService: FirestoreDbService,
         private val checksum: Checksum
 ) : ScheduleService {
+
     override fun schedule(onlyFavorites: Boolean): Observable<Schedule> {
         return dbService.scheduleView()
             .map {
