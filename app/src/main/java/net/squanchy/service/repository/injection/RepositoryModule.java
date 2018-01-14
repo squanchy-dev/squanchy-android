@@ -2,7 +2,6 @@ package net.squanchy.service.repository.injection;
 
 import net.squanchy.service.DaysRepository;
 import net.squanchy.service.firebase.FirebaseDbService;
-import net.squanchy.service.firestore.FirestoreDbService;
 import net.squanchy.service.repository.EventRepository;
 import net.squanchy.service.repository.SpeakerRepository;
 import net.squanchy.service.repository.VenueRepository;
@@ -21,11 +20,10 @@ public class RepositoryModule {
     @Provides
     EventRepository eventService(
             FirebaseDbService dbService,
-            FirestoreDbService firestoreDbService,
             Checksum checksum,
             SpeakerRepository speakerRepository
     ) {
-        return new FirebaseEventRepository(dbService, firestoreDbService, checksum, speakerRepository);
+        return new FirebaseEventRepository(dbService, checksum, speakerRepository);
     }
 
     @Provides
