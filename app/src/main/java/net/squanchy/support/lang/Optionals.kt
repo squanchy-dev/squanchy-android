@@ -1,3 +1,3 @@
 package net.squanchy.support.lang
 
-fun <T> T?.asOptional(): Optional<T> = Optional.fromNullable(this)
+fun <T> T?.optional(): Optional<T> = Optional.fromNullable(this)
