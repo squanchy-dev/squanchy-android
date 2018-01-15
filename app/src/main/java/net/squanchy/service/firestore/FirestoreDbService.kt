@@ -30,7 +30,7 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
 
     fun twitterView(): Observable<List<FirestoreTweet>> {
         return Observable.create { subscriber ->
-            val registration = db.collection("social_streams")
+            val registration = db.collection("social_stream")
                 .document("twitter")
                 .collection("tweets")
                 .addSnapshotListener { snapshot, exception ->
