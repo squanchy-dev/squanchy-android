@@ -1,0 +1,37 @@
+static def isLinuxOrMacOs() {
+    def osName = System.getProperty('os.name').toLowerCase(Locale.ROOT)
+    return osName.contains('linux') || osName.contains('mac os') || osName.contains('macos')
+}
+
+task copyGitHooks(type: Copy) {
+    description 'Installs the git hooks from team-props/git-hooks.'
+    from("${rootDir}/team-props/git-hooks/") {
+        include '**/*.sh'
+        rename '(.*).sh', '$1'
+    }
+    into "${rootDir}/.git/hooks"
+    onlyIf {
+        return isLinuxOrMacOs()
+    }
+}
+
+task installGitHooks(type: Exec) {
+    description 'Copies the resource directory to the target directory.'
+    workingDir rootDir
+    commandLine 'chmod'
+    args '-R', '+x', '.git/hooks/'
+    dependsOn copyGitHooks
+    onlyIf {
+        def preCommitHook = new File("${rootDir}/.git/hooks/pre-commit")
+        return isLinuxOrMacOs() && !preCommitHook.canExecute()
+    }
+    doLast {
+        logger.info('Git hook installed successfully.')
+    }
+}
+
+afterEvaluate {
+    // We install the hook at the first occasion
+    tasks['clean'].dependsOn installGitHooks
+    tasks['assemble'].dependsOn installGitHooks
+}
