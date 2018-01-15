@@ -10,11 +10,11 @@ import android.text.Html
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.util.TypedValue
-import com.twitter.sdk.android.core.models.HashtagEntity
-import com.twitter.sdk.android.core.models.MentionEntity
-import com.twitter.sdk.android.core.models.UrlEntity
 
 import net.squanchy.R
+import net.squanchy.service.firestore.model.twitter.FirestoreTwitterHashtag
+import net.squanchy.service.firestore.model.twitter.FirestoreTwitterMention
+import net.squanchy.service.firestore.model.twitter.FirestoreTwitterUrl
 import java.util.regex.Pattern
 
 class TweetUrlSpanFactory(private val context: Context) {
@@ -22,9 +22,9 @@ class TweetUrlSpanFactory(private val context: Context) {
     fun applySpansToTweet(
             text: String,
             startIndex: Int,
-            hashtags: List<HashtagEntity>,
-            mentions: List<MentionEntity>,
-            urls: List<UrlEntity>
+            hashtags: List<FirestoreTwitterHashtag>,
+            mentions: List<FirestoreTwitterMention>,
+            urls: List<FirestoreTwitterUrl>
     ): Spanned {
         val builder = SpannableStringBuilder(text)
 
@@ -47,15 +47,13 @@ class TweetUrlSpanFactory(private val context: Context) {
         return builder
     }
 
-    private fun offsetStart(hashtag: HashtagEntity, startIndex: Int): HashtagEntity {
-        return HashtagEntity(
-                hashtag.text,
-                hashtag.start - startIndex,
-                hashtag.end - startIndex
-        )
+    private fun offsetStart(entity: FirestoreTwitterHashtag, startIndex: Int): FirestoreTwitterHashtag {
+        entity.start = entity.start - startIndex
+        entity.end = entity.end - startIndex
+        return entity
     }
 
-    private fun HashtagEntity.createUrlSpanWith(spanFactory: TweetUrlSpanFactory): TweetUrlSpan =
+    private fun FirestoreTwitterHashtag.createUrlSpanWith(spanFactory: TweetUrlSpanFactory): TweetUrlSpan =
         spanFactory.createFor(String.format(QUERY_URL_TEMPLATE, text))
 
     private fun createFor(url: String): TweetUrlSpan {
@@ -70,31 +68,22 @@ class TweetUrlSpanFactory(private val context: Context) {
         return typedValue.data
     }
 
-    private fun offsetStart(mention: MentionEntity, startIndex: Int): MentionEntity {
-        return MentionEntity(
-                mention.id,
-                mention.idStr,
-                mention.name,
-                mention.screenName,
-                mention.start - startIndex,
-                mention.end - startIndex
-        )
+    private fun offsetStart(entity: FirestoreTwitterMention, startIndex: Int): FirestoreTwitterMention {
+        entity.start = entity.start - startIndex
+        entity.end = entity.end - startIndex
+        return entity
     }
 
-    private fun MentionEntity.createUrlSpanWith(spanFactory: TweetUrlSpanFactory): TweetUrlSpan =
+    private fun FirestoreTwitterMention.createUrlSpanWith(spanFactory: TweetUrlSpanFactory): TweetUrlSpan =
         spanFactory.createFor(String.format(MENTION_URL_TEMPLATE, screenName))
 
-    private fun offsetStart(url: UrlEntity, startIndex: Int): UrlEntity {
-        return UrlEntity(
-                url.url,
-                url.expandedUrl,
-                url.displayUrl,
-                url.start - startIndex,
-                url.end - startIndex
-        )
+    private fun offsetStart(entity: FirestoreTwitterUrl, startIndex: Int): FirestoreTwitterUrl {
+        entity.start = entity.start - startIndex
+        entity.end = entity.end - startIndex
+        return entity
     }
 
-    private fun UrlEntity.createUrlSpanWith(spanFactory: TweetUrlSpanFactory): TweetUrlSpan =
+    private fun FirestoreTwitterUrl.createUrlSpanWith(spanFactory: TweetUrlSpanFactory): TweetUrlSpan =
         spanFactory.createFor(url)
 
     private fun unescapeEntities(builder: SpannableStringBuilder) {

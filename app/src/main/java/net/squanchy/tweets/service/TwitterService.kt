@@ -1,18 +1,17 @@
 package net.squanchy.tweets.service
 
-import io.reactivex.Single
+import io.reactivex.Observable
+import net.squanchy.service.firestore.FirestoreDbService
 import net.squanchy.tweets.domain.view.TweetViewModel
 import net.squanchy.tweets.view.TweetUrlSpanFactory
 
 internal class TwitterService(
-        private val repository: TwitterRepository,
+        private val repository: FirestoreDbService,
         private val factory: TweetUrlSpanFactory
 ) {
 
-    fun refresh(query: String): Single<List<TweetViewModel>> {
-        return repository.load(query)
-            .map { search -> search.tweets }
-            .map { list -> list.filter { tweet -> tweet.retweetedStatus == null } }
+    fun refresh(query: String): Observable<List<TweetViewModel>> {
+        return repository.twitterView()
             .map { tweets -> tweets.map { mapToViewModel(factory, it) } }
     }
 }

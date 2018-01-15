@@ -5,7 +5,6 @@ import net.squanchy.injection.ActivityLifecycle
 import net.squanchy.injection.ApplicationComponent
 import net.squanchy.navigation.NavigationModule
 import net.squanchy.navigation.Navigator
-import net.squanchy.tweets.service.TwitterRepository
 import net.squanchy.tweets.service.TwitterService
 
 import dagger.Component
@@ -23,12 +22,10 @@ internal fun twitterComponent(activity: AppCompatActivity): TwitterComponent {
 
 @ActivityLifecycle
 @Component(
-        modules = arrayOf(TwitterModule::class, NavigationModule::class),
-        dependencies = arrayOf(ApplicationComponent::class)
+        modules = [(TwitterModule::class), (NavigationModule::class)],
+        dependencies = [(ApplicationComponent::class)]
 )
 internal interface TwitterComponent {
-
-    fun repository(): TwitterRepository
 
     fun service(): TwitterService
 
