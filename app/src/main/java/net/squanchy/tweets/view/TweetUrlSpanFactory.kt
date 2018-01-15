@@ -10,9 +10,6 @@ import android.text.Html
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.util.TypedValue
-import com.twitter.sdk.android.core.models.HashtagEntity
-import com.twitter.sdk.android.core.models.MentionEntity
-import com.twitter.sdk.android.core.models.UrlEntity
 
 import net.squanchy.R
 import net.squanchy.service.firestore.model.twitter.FirestoreTwitterHashtag

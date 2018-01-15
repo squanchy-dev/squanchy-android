@@ -167,7 +167,6 @@ dependencies {
     implementation libraries.app.supportConstraint
     implementation libraries.app.supportDesign
     implementation libraries.app.timber
-    implementation libraries.app.twitterCore
     implementation libraries.app.viewPagerAdapter
 
     annotationProcessor libraries.app.autoValue
