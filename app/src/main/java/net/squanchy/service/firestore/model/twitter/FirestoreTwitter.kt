@@ -4,10 +4,12 @@ import kotlin.properties.Delegates
 
 class FirestoreTweet {
 
+    lateinit var id: String
     lateinit var text: String
     lateinit var user: FirestoreTwitterUser
     lateinit var entities: FirestoreTwitterEntities
-    lateinit var displayTextRange: Array<Int>
+    var displayTextRange: List<Int> = emptyList()
+    lateinit var createdAt: String
 }
 
 class FirestoreTwitterUser {
@@ -15,7 +17,7 @@ class FirestoreTwitterUser {
     lateinit var name: String
     lateinit var screenName: String
     lateinit var id: String
-    var profileImageUrl: String? = null
+    lateinit var profileImageUrl: String
 }
 
 class FirestoreTwitterEntities {
