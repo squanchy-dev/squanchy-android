@@ -23,7 +23,7 @@ fun mapToViewModel(factory: TweetUrlSpanFactory, tweet: FirestoreTweet): TweetVi
     val urls = adjustUrls(onlyUrlsInRange(tweet.entities.urls, displayTextRange), emojiIndices)
     val photoUrls = onlyPhotoUrls(tweet.entities.media)
     val unresolvedPhotoUrl = tweet.entities.media.map { it.url }
-    val displayableText = displayableTextFor(tweet, displayTextRange, unresolvedPhotoUrl)
+    val displayableText = displayableTextFor(tweet.text, displayTextRange, unresolvedPhotoUrl)
 
     return TweetViewModel.create(
             tweet.id.toLong(),
@@ -84,10 +84,7 @@ private fun adjustUrls(entities: List<FirestoreTwitterUrl>, indices: List<Int>):
 
 private fun offsetFrom(start: Int, indices: List<Int>): Int {
     var offset = 0
-
-    indices
-        .asSequence()
-        .takeWhile { it - offset <= start }
+    indices.takeWhile { it - offset <= start }
         .forEach { offset += 1 }
 
     return offset

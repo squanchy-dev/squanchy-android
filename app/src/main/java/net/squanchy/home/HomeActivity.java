@@ -90,7 +90,7 @@ public class HomeActivity extends AppCompatActivity {
         setupBottomNavigation(bottomNavigationView);
 
         Intent intent = getIntent();
-        selectPageFrom(intent, Optional.fromNullable(savedInstanceState));
+        selectPageFrom(intent, savedInstanceState);
 
         HomeComponent homeComponent = HomeInjectorKt.homeComponent(this);
 
@@ -104,10 +104,10 @@ public class HomeActivity extends AppCompatActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
-        selectPageFrom(intent, Optional.absent());
+        selectPageFrom(intent, null);
     }
 
-    private void selectPageFrom(Intent intent, Optional<Bundle> savedState) {
+    private void selectPageFrom(Intent intent, @Nullable Bundle savedState) {
         HomeActivityIntentParser intentParser = new HomeActivityIntentParser(savedState, intent);
         BottomNavigationSection selectedPage = intentParser.getInitialSelectedPage();
         selectInitialPage(selectedPage);
@@ -196,7 +196,7 @@ public class HomeActivity extends AppCompatActivity {
     private Resources.Theme getThemeFor(BottomNavigationSection section) {
         Resources.Theme theme = getResources().newTheme();
         theme.setTo(getTheme());
-        theme.applyStyle(section.theme(), true);
+        theme.applyStyle(section.getTheme(), true);
         return theme;
     }
 
