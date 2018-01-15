@@ -95,10 +95,10 @@ private fun onlyPhotoUrls(media: List<FirestoreTwitterMedia>): List<String> {
         .map { it.mediaUrl }
 }
 
-private fun displayableTextFor(tweet: FirestoreTweet, displayTextRange: Range, photoUrls: List<String>): String {
+private fun displayableTextFor(text: String, displayTextRange: Range, photoUrls: List<String>): String {
     val beginIndex = displayTextRange.start()
     val endIndex = displayTextRange.end()
-    val displayableText = tweet.text.substring(beginIndex, endIndex)
+    val displayableText = text.substring(beginIndex, endIndex)
     return removeLastPhotoUrl(displayableText, photoUrls)
 }
 
