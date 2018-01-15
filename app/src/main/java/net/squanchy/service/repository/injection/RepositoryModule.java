@@ -1,12 +1,14 @@
 package net.squanchy.service.repository.injection;
 
+import net.squanchy.service.DaysRepository;
 import net.squanchy.service.firebase.FirebaseDbService;
 import net.squanchy.service.repository.EventRepository;
-import net.squanchy.service.repository.firebase.EventRepositoryImpl;
 import net.squanchy.service.repository.SpeakerRepository;
 import net.squanchy.service.repository.VenueRepository;
-import net.squanchy.service.repository.firebase.SpeakerRepositoryImpl;
-import net.squanchy.service.repository.firebase.VenueRepositoryImpl;
+import net.squanchy.service.repository.firebase.FirebaseDaysRepository;
+import net.squanchy.service.repository.firebase.FirebaseEventRepository;
+import net.squanchy.service.repository.firebase.FirebaseSpeakerRepository;
+import net.squanchy.service.repository.firebase.FirebaseVenueRepository;
 import net.squanchy.support.lang.Checksum;
 
 import dagger.Module;
@@ -21,7 +23,7 @@ public class RepositoryModule {
             Checksum checksum,
             SpeakerRepository speakerRepository
     ) {
-        return new EventRepositoryImpl(dbService, checksum, speakerRepository);
+        return new FirebaseEventRepository(dbService, checksum, speakerRepository);
     }
 
     @Provides
@@ -29,11 +31,16 @@ public class RepositoryModule {
             FirebaseDbService dbService,
             Checksum checksum
     ) {
-        return new SpeakerRepositoryImpl(dbService, checksum);
+        return new FirebaseSpeakerRepository(dbService, checksum);
     }
 
     @Provides
     VenueRepository venueRepositoryrRepository(FirebaseDbService dbService) {
-        return new VenueRepositoryImpl(dbService);
+        return new FirebaseVenueRepository(dbService);
+    }
+
+    @Provides
+    DaysRepository daysRepository(FirebaseDbService  dbService) {
+        return new FirebaseDaysRepository(dbService);
     }
 }

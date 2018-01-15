@@ -1,22 +1,9 @@
 package net.squanchy.schedule.domain.view
 
-import org.joda.time.LocalDateTime
+import org.joda.time.LocalDate
 
 data class SchedulePage(
         val dayId: String,
-        val date: LocalDateTime,
+        val date: LocalDate,
         val events: List<Event>
-) {
-    companion object {
-
-        fun create(
-                dayId: String,
-                date: LocalDateTime,
-                events: List<Event>
-        ) = SchedulePage(
-                dayId,
-                date,
-                events
-        )
-    }
-}
+)

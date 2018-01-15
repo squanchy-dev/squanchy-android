@@ -6,11 +6,11 @@ import net.squanchy.venue.domain.view.Venue;
 
 import io.reactivex.Observable;
 
-public class VenueRepositoryImpl implements VenueRepository {
+public class FirebaseVenueRepository implements VenueRepository {
 
     private final FirebaseDbService dbService;
 
-    public VenueRepositoryImpl(FirebaseDbService dbService) {
+    public FirebaseVenueRepository(FirebaseDbService dbService) {
         this.dbService = dbService;
     }
 
