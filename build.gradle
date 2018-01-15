@@ -26,6 +26,7 @@ def teamPropsFile(propsFile) {
 }
 
 apply from: 'dependencies.gradle'
+apply from: teamPropsFile('git-hooks.gradle')
 
 detekt {
     profile('main') {
