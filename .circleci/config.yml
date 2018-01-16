@@ -5,7 +5,7 @@ jobs:
     working_directory: ~/squanchy
 
     docker:
-      - image: circleci/android:api-26-alpha
+      - image: circleci/android:api-27-alpha
 
     environment:
       ANDROID_HOME: /opt/android/sdk
@@ -23,9 +23,6 @@ jobs:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
 
       # Prepare the container for the build
-      - run:
-          name: Accept Android SDK license
-          command: .circleci/ci-scripts/accept-android-licenses.sh
       - run:
           name: Ensure Android SDK install is up-to-date
           command: .circleci/ci-scripts/ensure-sdkmanager.sh
