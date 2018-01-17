@@ -74,6 +74,8 @@ public class SearchRecyclerView extends RecyclerView {
         private final int verticalSpacing;
 
         CardOnlySpacingItemDecorator(@Px int horizontalSpacing, @Px int verticalSpacing) {
+            super();
+
             this.horizontalSpacing = horizontalSpacing;
             this.verticalSpacing = verticalSpacing;
         }

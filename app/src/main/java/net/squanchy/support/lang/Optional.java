@@ -60,11 +60,11 @@ public final class Optional<T> {
         return isPresent() ? get() : null;
     }
 
-    public <V> Optional<V> map(final Func1<T, V> func) {
+    public <V> Optional<V> map(Func1<T, V> func) {
         return flatMap(element -> of(func.call(element)));
     }
 
-    public Optional<T> filter(final Predicate<T> predicate) {
+    public Optional<T> filter(Predicate<T> predicate) {
         return flatMap(element -> fromNullable(predicate.call(element) ? element : null));
     }
 
@@ -72,6 +72,7 @@ public final class Optional<T> {
         return isPresent() ? func.call(data) : Optional.absent();
     }
 
+    @SuppressWarnings("PMD.ConfusingTernary") // Generated code
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -86,6 +87,7 @@ public final class Optional<T> {
         return data != null ? data.equals(optional.data) : optional.data == null;
     }
 
+    @SuppressWarnings("PMD.ConfusingTernary") // Generated code
     @Override
     public int hashCode() {
         return data != null ? data.hashCode() : 0;

@@ -12,6 +12,8 @@ class GridSpanSizeLookup extends GridLayoutManager.SpanSizeLookup {
     private final ItemsAdapter itemsAdapter;
 
     GridSpanSizeLookup(ItemsAdapter adapter, int columnCount) {
+        super();
+        
         this.itemsAdapter = adapter;
         this.columnCount = columnCount;
 

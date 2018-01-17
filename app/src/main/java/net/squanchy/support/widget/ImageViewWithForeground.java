@@ -56,7 +56,8 @@ public class ImageViewWithForeground extends AppCompatImageView implements ViewW
         super(context, attrs, defStyleAttr);
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ImageViewWithForeground,
-                defStyleAttr, 0);
+                defStyleAttr, 0
+        );
 
         foregroundGravity = a.getInt(
                 R.styleable.ImageViewWithForeground_android_foregroundGravity, foregroundGravity);
@@ -105,7 +106,7 @@ public class ImageViewWithForeground extends AppCompatImageView implements ViewW
     @Override
     @SuppressWarnings("PMD.CompareObjectsWithEquals") // We actually want the instance comparison here
     protected boolean verifyDrawable(@NotNull Drawable drawable) {
-        return super.verifyDrawable(drawable) || (drawable == foregroundDrawable);
+        return super.verifyDrawable(drawable) || drawable == foregroundDrawable;
     }
 
     @Override

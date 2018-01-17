@@ -8,6 +8,7 @@ buildscript {
 
 plugins {
     id 'io.gitlab.arturbosch.detekt'
+    id 'com.github.ben-manes.versions'
 }
 
 apply plugin: 'com.android.application'

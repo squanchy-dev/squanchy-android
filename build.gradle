@@ -9,7 +9,6 @@ buildscript {
     dependencies {
         classpath buildScript.android
         classpath buildScript.gradleStaticAnalysisPlugin
-        classpath buildScript.gradleVersionsPlugin
         classpath buildScript.googleServices
         classpath buildScript.jaCoCo
         classpath buildScript.playPublisher
@@ -18,6 +17,7 @@ buildscript {
 
 plugins {
     id 'io.gitlab.arturbosch.detekt' version '1.0.0.RC6-2'
+    id 'com.github.ben-manes.versions' version '0.17.0'
 }
 
 def teamPropsFile(propsFile) {
