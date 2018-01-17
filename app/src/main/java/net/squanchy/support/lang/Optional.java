@@ -72,6 +72,7 @@ public final class Optional<T> {
         return isPresent() ? func.call(data) : Optional.absent();
     }
 
+    @SuppressWarnings("PMD.ConfusingTernary") // Generated code
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -86,6 +87,7 @@ public final class Optional<T> {
         return data != null ? data.equals(optional.data) : optional.data == null;
     }
 
+    @SuppressWarnings("PMD.ConfusingTernary") // Generated code
     @Override
     public int hashCode() {
         return data != null ? data.hashCode() : 0;

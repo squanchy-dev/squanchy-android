@@ -24,15 +24,6 @@ import static net.squanchy.imageloader.ImageLoaderComponentKt.imageLoaderCompone
 
 class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    @IntDef({ViewTypeId.HEADER, ViewTypeId.SPEAKER, ViewTypeId.EVENT})
-    @Retention(RetentionPolicy.SOURCE)
-    @interface ViewTypeId {
-
-        int HEADER = 1;
-        int SPEAKER = 2;
-        int EVENT = 3;
-    }
-
     private final ImageLoader imageLoader;
     private final Activity activity;
 
@@ -41,6 +32,15 @@ class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private SearchResults searchResults = SearchResults.Companion.create(Collections.emptyList(), Collections.emptyList());
     private ItemsAdapter itemsAdapter = new ItemsAdapter(searchResults);
+
+    @IntDef({ViewTypeId.HEADER, ViewTypeId.SPEAKER, ViewTypeId.EVENT})
+    @Retention(RetentionPolicy.SOURCE)
+    @interface ViewTypeId {
+
+        int HEADER = 1;
+        int SPEAKER = 2;
+        int EVENT = 3;
+    }
 
     SearchAdapter(AppCompatActivity activity) {
         super();
