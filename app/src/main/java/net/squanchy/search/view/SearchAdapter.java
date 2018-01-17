@@ -43,6 +43,8 @@ class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ItemsAdapter itemsAdapter = new ItemsAdapter(searchResults);
 
     SearchAdapter(AppCompatActivity activity) {
+        super();
+        
         this.activity = activity;
 
         imageLoader = imageLoaderComponent(activity).imageLoader();

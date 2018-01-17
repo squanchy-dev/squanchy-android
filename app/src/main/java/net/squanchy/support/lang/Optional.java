@@ -60,11 +60,11 @@ public final class Optional<T> {
         return isPresent() ? get() : null;
     }
 
-    public <V> Optional<V> map(final Func1<T, V> func) {
+    public <V> Optional<V> map(Func1<T, V> func) {
         return flatMap(element -> of(func.call(element)));
     }
 
-    public Optional<T> filter(final Predicate<T> predicate) {
+    public Optional<T> filter(Predicate<T> predicate) {
         return flatMap(element -> fromNullable(predicate.call(element) ? element : null));
     }
 
