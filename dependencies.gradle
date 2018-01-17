@@ -40,7 +40,7 @@ ext {
                     rxJava             : 'io.reactivex.rxjava2:rxjava:2.1.7',
                     rxAndroid          : 'io.reactivex.rxjava2:rxandroid:2.0.1',
                     supportAppCompat   : "com.android.support:appcompat-v7:${supportLibVersion}",
-                    supportConstraint  : 'com.android.support.constraint:constraint-layout:1.1.0-beta3',
+                    supportConstraint  : 'com.android.support.constraint:constraint-layout:1.1.0-beta4',
                     supportDesign      : "com.android.support:design:${supportLibVersion}",
                     timber             : 'com.jakewharton.timber:timber:4.6.0',
                     twitterCore        : 'com.twitter.sdk.android:twitter-core:3.2.0',
