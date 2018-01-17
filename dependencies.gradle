@@ -5,7 +5,7 @@ ext {
     playServicesVersion = '11.6.2'
     kotlinVersion = '1.2.20'
 
-    checkstyleVersion = '8.5'
+    checkstyleVersion = '8.7'
     findbugsVersion = '3.0.1'
     pmdVersion = '5.8.1'
 
