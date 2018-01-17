@@ -9,7 +9,6 @@ buildscript {
     dependencies {
         classpath buildScript.android
         classpath buildScript.gradleStaticAnalysisPlugin
-        classpath buildScript.gradleVersionsPlugin
         classpath buildScript.googleServices
         classpath buildScript.jaCoCo
         classpath buildScript.playPublisher
