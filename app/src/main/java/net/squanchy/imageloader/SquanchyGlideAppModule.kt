@@ -31,11 +31,11 @@ internal class SquanchyGlideModule : AppGlideModule() {
 
 private class FirebaseImageLoader : ModelLoader<StorageReference, InputStream> {
 
-    override fun buildLoadData(reference: StorageReference, width: Int, height: Int, options: Options?): ModelLoader.LoadData<InputStream> {
+    override fun buildLoadData(reference: StorageReference, width: Int, height: Int, options: Options): ModelLoader.LoadData<InputStream> {
         return ModelLoader.LoadData(FirebaseStorageKey(reference), FirebaseStorageFetcher(reference))
     }
 
-    override fun handles(model: StorageReference?) = model != null
+    override fun handles(reference: StorageReference) = true
 
     internal class Factory : ModelLoaderFactory<StorageReference, InputStream> {
 
@@ -60,14 +60,14 @@ private class FirebaseImageLoader : ModelLoader<StorageReference, InputStream> {
         private lateinit var streamTask: StreamDownloadTask
         private var inputStream: InputStream? = null
 
-        override fun loadData(priority: Priority?, callback: DataFetcher.DataCallback<in InputStream>?) {
+        override fun loadData(priority: Priority, callback: DataFetcher.DataCallback<in InputStream>) {
             streamTask = reference.stream
             streamTask.apply {
                 addOnSuccessListener {
                     inputStream = it.stream
-                    callback?.onDataReady(inputStream)
+                    callback.onDataReady(inputStream)
                 }
-                addOnFailureListener { callback?.onLoadFailed(it) }
+                addOnFailureListener { callback.onLoadFailed(it) }
             }
         }
 
