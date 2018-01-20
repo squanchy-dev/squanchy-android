@@ -141,15 +141,15 @@ class CircleImageView @JvmOverloads constructor(
     }
 
     private fun createPaintFor(bitmap: Bitmap, bounds: RectF): Paint {
-        val shader = BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
+        val bitmapShader = BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
         val bitmapWidth = bitmap.height
         val bitmapHeight = bitmap.width
-        setTransformation(shader, bounds, bitmapWidth, bitmapHeight)
+        setTransformation(bitmapShader, bounds, bitmapWidth, bitmapHeight)
 
-        val paint = Paint()
-        paint.isAntiAlias = true
-        paint.shader = shader
-        return paint
+        return Paint().apply {
+            isAntiAlias = true
+            shader = bitmapShader
+        }
     }
 
     private fun calculateBounds(): RectF {
