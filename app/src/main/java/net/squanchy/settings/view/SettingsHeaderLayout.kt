@@ -48,7 +48,7 @@ class SettingsHeaderLayout(context: Context, attrs: AttributeSet?) : AppBarLayou
 
     private fun googleUserInfoFrom(firebaseUser: FirebaseUser): Optional<UserInfo> {
         val providerData = firebaseUser.providerData
-        val googleData = Lists.filter(providerData) { data -> PROVIDER_ID_GOOGLE.equals(data.providerId, ignoreCase = true) }
+        val googleData = providerData.filter { data -> PROVIDER_ID_GOOGLE.equals(data.providerId, ignoreCase = true) }
         return if (googleData.isEmpty()) {
             Optional.absent()
         } else Optional.of(googleData[0])
