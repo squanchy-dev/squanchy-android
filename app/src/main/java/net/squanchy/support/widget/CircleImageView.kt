@@ -47,7 +47,7 @@ class CircleImageView @JvmOverloads constructor(
         defStyleAttr: Int = 0
 ) : ImageViewWithForeground(context, attrs, defStyleAttr) {
 
-    private var necessaireOptional: Necessaire? = null
+    private var necessaire: Necessaire? = null
 
     private val isZeroSize: Boolean
         get() = width == 0 || height == 0
@@ -94,7 +94,7 @@ class CircleImageView @JvmOverloads constructor(
 
     private fun updateFor(drawable: Drawable?) {
         val bitmap = extractBitmapFrom(drawable)
-        necessaireOptional = necessaireFor(bitmap)
+        necessaire = bitmap?.toNecessaire()
         invalidate()
     }
 
@@ -127,21 +127,17 @@ class CircleImageView @JvmOverloads constructor(
         }
     }
 
-    private fun necessaireFor(bitmapOptional: Bitmap?): Necessaire? {
-        return if (isZeroSize) null else bitmapOptional?.let { toNecessaireOptional(it) }
-    }
+    private fun Bitmap.toNecessaire(): Necessaire? {
+        return if (!isZeroSize) {
+            val bounds = calculateBounds()
+            val paint = createPaintFor(this, bounds)
 
-    private fun toNecessaireOptional(bitmap: Bitmap): Necessaire {
-        val bounds = calculateBounds()
-        val paint = createPaintFor(bitmap, bounds)
+            val radius = Math.min(bounds.height() / 2.0f, bounds.width() / 2.0f)
 
-        val radius = Math.min(bounds.height() / 2.0f, bounds.width() / 2.0f)
-
-        return Necessaire(
-                bounds = bounds,
-                paint = paint,
-                radius = radius
-        )
+            Necessaire(bounds, radius, paint)
+        } else {
+            null
+        }
     }
 
     private fun createPaintFor(bitmap: Bitmap, bounds: RectF): Paint {
@@ -192,12 +188,12 @@ class CircleImageView @JvmOverloads constructor(
     }
 
     private fun createMatrixFor(scale: Float, bounds: RectF, translationX: Float, translationY: Float): Matrix {
-        val matrix = Matrix()
-        matrix.setScale(scale, scale)
-        val x = bounds.left + intCeil(translationX)
-        val y = bounds.top + intCeil(translationY)
-        matrix.postTranslate(x, y)
-        return matrix
+        return Matrix().apply {
+            setScale(scale, scale)
+            val x = bounds.left + intCeil(translationX)
+            val y = bounds.top + intCeil(translationY)
+            postTranslate(x, y)
+        }
     }
 
     private fun intCeil(value: Float): Int = (value + ROUNDING_UP_FLOAT).toInt()
@@ -205,12 +201,8 @@ class CircleImageView @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        necessaireOptional?.also { draw(canvas, it) }
-    }
-
-    private fun draw(canvas: Canvas, necessaire: Necessaire) {
-        with(necessaire) {
-            canvas.drawCircle(bounds.centerX(), bounds.centerY(), radius, paint)
+        necessaire?.also {
+            canvas.drawCircle(it.bounds.centerX(), it.bounds.centerY(), it.radius, it.paint)
         }
     }
 
@@ -228,11 +220,7 @@ class CircleImageView @JvmOverloads constructor(
         }
     }
 
-    private data class Necessaire(
-            val bounds: RectF,
-            val radius: Float,
-            val paint: Paint
-    )
+    private data class Necessaire(val bounds: RectF, val radius: Float, val paint: Paint)
 
     companion object {
 
