@@ -107,15 +107,15 @@ class CircleImageView @JvmOverloads constructor(
     }
 
     private fun tryCreatingBitmapFrom(drawable: Drawable): Bitmap? {
-        return try {
+        try {
             val bitmap = createBitmapFor(drawable)
             val canvas = Canvas(bitmap)
             drawable.setBounds(0, 0, canvas.width, canvas.height)
             drawable.draw(canvas)
-            bitmap
+            return bitmap
         } catch (e: IllegalArgumentException) {
             Timber.e(e)
-            null
+            return null
         }
     }
 
@@ -128,15 +128,15 @@ class CircleImageView @JvmOverloads constructor(
     }
 
     private fun Bitmap.toNecessaire(): Necessaire? {
-        return if (!isZeroSize) {
+        if (!isZeroSize) {
             val bounds = calculateBounds()
             val paint = createPaintFor(this, bounds)
 
             val radius = Math.min(bounds.height() / 2.0f, bounds.width() / 2.0f)
 
-            Necessaire(bounds, radius, paint)
+            return Necessaire(bounds, radius, paint)
         } else {
-            null
+            return null
         }
     }
 
