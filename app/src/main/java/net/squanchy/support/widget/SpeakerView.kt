@@ -38,14 +38,14 @@ abstract class SpeakerView @JvmOverloads constructor(
         throw UnsupportedOperationException("SpeakerView doesn't support changing orientation")
     }
 
-    fun updateWith(speakers: List<Speaker>, listener: Optional<OnSpeakerClickListener>) {
+    fun updateWith(speakers: List<Speaker>, listener: OnSpeakerClickListener?) {
         speakerName.text = toCommaSeparatedNames(speakers)
         updateSpeakerPhotos(speakers, listener)
     }
 
     private fun toCommaSeparatedNames(speakers: List<Speaker>) = speakers.joinToString(", ") { it.name }
 
-    private fun updateSpeakerPhotos(speakers: List<Speaker>, listener: Optional<OnSpeakerClickListener>) {
+    private fun updateSpeakerPhotos(speakers: List<Speaker>, listener: OnSpeakerClickListener?) {
         if (!::imageLoader.isInitialized) {
             throw IllegalStateException("Unable to access the ImageLoader, it hasn't been initialized yet")
         }
@@ -71,9 +71,9 @@ abstract class SpeakerView @JvmOverloads constructor(
         }
     }
 
-    private fun setClickListenerOrNotClickable(photoView: ImageView, listener: Optional<OnSpeakerClickListener>, speaker: Speaker) {
-        if (listener.isPresent) {
-            photoView.setOnClickListener { listener.get().onSpeakerClicked(speaker) }
+    private fun setClickListenerOrNotClickable(photoView: ImageView, listener: OnSpeakerClickListener?, speaker: Speaker) {
+        if (listener != null) {
+            photoView.setOnClickListener { listener.onSpeakerClicked(speaker) }
             photoView.isClickable = true
         } else {
             photoView.setOnClickListener(null)
