@@ -170,10 +170,6 @@ dependencies {
     implementation libraries.app.timber
     implementation libraries.app.viewPagerAdapter
 
-    annotationProcessor libraries.app.autoValue
-    kapt libraries.app.autoValue
-    compileOnly libraries.app.autoValue
-
     annotationProcessor libraries.app.daggerCompiler
     kapt libraries.app.daggerCompiler
     implementation libraries.app.dagger
