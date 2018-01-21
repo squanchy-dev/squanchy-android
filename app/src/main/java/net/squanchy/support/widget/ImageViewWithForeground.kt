@@ -84,7 +84,6 @@ open class ImageViewWithForeground @JvmOverloads constructor(
         requestLayout()
     }
 
-    // We actually want the instance comparison here
     override fun verifyDrawable(drawable: Drawable): Boolean {
         return super.verifyDrawable(drawable) || drawable === foregroundDrawable
     }

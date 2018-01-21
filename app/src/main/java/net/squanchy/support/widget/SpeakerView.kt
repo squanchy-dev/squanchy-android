@@ -70,6 +70,12 @@ abstract class SpeakerView @JvmOverloads constructor(
         }
     }
 
+    private fun getAllImageViewsContainedIn(container: ViewGroup): MutableList<ImageView> {
+        return container.children
+            .map { it as ImageView }
+            .toMutableList()
+    }
+
     private fun setClickListenerOrNotClickable(photoView: ImageView, listener: OnSpeakerClickListener?, speaker: Speaker) {
         if (listener != null) {
             photoView.setOnClickListener { listener.onSpeakerClicked(speaker) }
@@ -94,12 +100,6 @@ abstract class SpeakerView @JvmOverloads constructor(
         photoView.setImageDrawable(null)
         imageLoader.load(photoUrl)
             .into(photoView)
-    }
-
-    private fun getAllImageViewsContainedIn(container: ViewGroup): MutableList<ImageView> {
-        return container.children
-            .map { it as ImageView }
-            .toMutableList()
     }
 
     interface OnSpeakerClickListener {
