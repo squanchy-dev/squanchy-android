@@ -91,9 +91,7 @@ open class ImageViewWithForeground @JvmOverloads constructor(
 
     override fun jumpDrawablesToCurrentState() {
         super.jumpDrawablesToCurrentState()
-        if (foregroundDrawable != null) {
-            foregroundDrawable!!.jumpToCurrentState()
-        }
+        foregroundDrawable?.jumpToCurrentState()
     }
 
     override fun drawableStateChanged() {
@@ -111,8 +109,8 @@ open class ImageViewWithForeground @JvmOverloads constructor(
      *
      * @param drawable The Drawable to be drawn on top of the children.
      */
-    override fun setForeground(drawable: Drawable) {
-        if (foregroundDrawable === drawable) {
+    override fun setForeground(drawable: Drawable?) {
+        if (foregroundDrawable === drawable || drawable === null) {
             return
         }
 

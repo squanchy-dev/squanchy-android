@@ -8,7 +8,7 @@ interface ViewWithForeground {
 
     fun setForegroundGravity(foregroundGravity: Int)
 
-    fun setForeground(drawable: Drawable)
+    fun setForeground(drawable: Drawable?)
 
     fun foreground(): Drawable?
 }
