@@ -101,6 +101,7 @@ class InterceptingBottomNavigationView @JvmOverloads constructor(
     private fun updateBackgroundColor(drawable: Drawable, newColor: Int) {
         if (drawable is CircularRevealDrawable) {
             drawable.color = newColor
+            invalidate()
         } else {
             super.setBackground(CircularRevealDrawable.from(newColor))
         }
