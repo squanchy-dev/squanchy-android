@@ -5,8 +5,7 @@ import android.os.Bundle
 
 import net.squanchy.home.BottomNavigationSection
 import net.squanchy.home.HomeStatePersister
-
-import net.squanchy.home.deeplink.HomeActivityDeepLinkCreator.KEY_INITIAL_PAGE_INDEX
+import net.squanchy.home.deeplink.HomeActivityDeepLinkCreator.Companion.KEY_INITIAL_PAGE_INDEX
 
 class HomeActivityIntentParser(private val savedState: Bundle?, private val intent: Intent) {
 

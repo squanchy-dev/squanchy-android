@@ -6,7 +6,7 @@
   android:orientation="vertical">
 
   <FrameLayout
-    android:id="@+id/page_container"
+    android:id="@+id/pageContainer"
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_weight="1">
@@ -30,7 +30,7 @@
   </FrameLayout>
 
   <net.squanchy.support.widget.InterceptingBottomNavigationView
-    android:id="@+id/bottom_navigation"
+    android:id="@+id/bottomNavigationView"
     android:theme="@style/ThemeOverlay.Squanchy.Home.BottomNavigationBar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
