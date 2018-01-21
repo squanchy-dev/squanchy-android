@@ -16,6 +16,6 @@ class EventDetailsSpeakerView @JvmOverloads constructor(
 ) : SpeakerView(context, attrs, defStyleAttr, defStyleRes) {
 
     override fun inflatePhotoView(speakerPhotoContainer: ViewGroup): ImageView {
-        return layoutInflater().inflate(R.layout.view_speaker_photo_event_details, speakerPhotoContainer, false) as ImageView
+        return layoutInflater.inflate(R.layout.view_speaker_photo_event_details, speakerPhotoContainer, false) as ImageView
     }
 }
