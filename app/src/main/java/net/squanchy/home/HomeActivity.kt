@@ -147,7 +147,6 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun animateStatusBarColorTo(@ColorInt color: Int) {
-        val window = window
         val currentStatusBarColor = window.statusBarColor
 
         animateColor(
