@@ -22,8 +22,7 @@ abstract class SpeakerView @JvmOverloads constructor(
 ) : LinearLayout(context, attrs, defStyleAttr, defStyleRes) {
 
     private lateinit var imageLoader: ImageLoader
-    private lateinit var speakerPhotoContainer: ViewGroup
-    val layoutInflater = LayoutInflater.from(context)
+    val layoutInflater: LayoutInflater = LayoutInflater.from(context)
 
     init {
         if (!isInEditMode) {
@@ -50,16 +49,16 @@ abstract class SpeakerView @JvmOverloads constructor(
         }
 
         val photoViews: List<ImageView>
-        if (speakerPhotoContainer.childCount > 0) {
-            photoViews = getAllImageViewsContainedIn(speakerPhotoContainer)
-            speakerPhotoContainer.removeAllViews()
+        if (speakerPhotosContainer.childCount > 0) {
+            photoViews = getAllImageViewsContainedIn(speakerPhotosContainer)
+            speakerPhotosContainer.removeAllViews()
         } else {
             photoViews = mutableListOf()
         }
 
         for (speaker in speakers) {
             val photoView = recycleOrInflatePhotoView(photoViews)
-            speakerPhotoContainer.addView(photoView)
+            speakerPhotosContainer.addView(photoView)
             setClickListenerOrNotClickable(photoView, listener, speaker)
 
             if (speaker.photoUrl.isPresent) {
@@ -88,7 +87,7 @@ abstract class SpeakerView @JvmOverloads constructor(
 
     private fun recycleOrInflatePhotoView(photoViews: MutableList<ImageView>): ImageView {
         return if (photoViews.isEmpty()) {
-            inflatePhotoView(speakerPhotoContainer)
+            inflatePhotoView(speakerPhotosContainer)
         } else {
             photoViews.removeAt(0)
         }

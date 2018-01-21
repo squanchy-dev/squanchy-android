@@ -88,7 +88,7 @@ class InterceptingBottomNavigationView @JvmOverloads constructor(
         }
     }
 
-    override fun setBackground(background: Drawable) {
+    override fun setBackground(background: Drawable?) {
         if (background is ColorDrawable) {
             val currentBackground = getBackground()
             val newColor = background.color
@@ -98,7 +98,7 @@ class InterceptingBottomNavigationView @JvmOverloads constructor(
         }
     }
 
-    private fun updateBackgroundColor(drawable: Drawable, newColor: Int) {
+    private fun updateBackgroundColor(drawable: Drawable?, newColor: Int) {
         if (drawable is CircularRevealDrawable) {
             drawable.color = newColor
             invalidate()
