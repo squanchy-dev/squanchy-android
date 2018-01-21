@@ -1,6 +1,7 @@
 package net.squanchy.schedule
 
 import io.reactivex.Observable
+import io.reactivex.functions.BiFunction
 import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Place
@@ -32,13 +33,15 @@ class FirestoreScheduleService(
 ) : ScheduleService {
 
     override fun schedule(onlyFavorites: Boolean): Observable<Schedule> {
-        return dbService.scheduleView()
-            .map { schedulePages ->
+        return Observable.combineLatest(dbService.scheduleView(), dbService.timezone(), combineInAPair())
+            .map { pagesAndTimeZone ->
+                val schedulePages = pagesAndTimeZone.first
+                val timeZone = pagesAndTimeZone.second
                 schedulePages.map { schedulePage ->
                     SchedulePage(
                             schedulePage.day.id,
                             LocalDate(schedulePage.day.date),
-                            schedulePage.events.map { it.toEvent(schedulePage.day.id) }
+                            schedulePage.events.map { it.toEvent(schedulePage.day.id, timeZone) }
                                 .sortedBy { it.startTime }
                                 .filterOnlyFavorites(onlyFavorites)
                     )
@@ -47,7 +50,10 @@ class FirestoreScheduleService(
             .map { Schedule(it) }
     }
 
-    private fun FirestoreEvent.toEvent(dayId: String) = Event(
+    private fun <T, U> combineInAPair(): BiFunction<List<T>, U, Pair<List<T>, U>> =
+        BiFunction { schedulePages, timeZone -> Pair(schedulePages, timeZone) }
+
+    private fun FirestoreEvent.toEvent(dayId: String, timeZone: DateTimeZone) = Event(
             id,
             checksum.getChecksumOf(id),
             LocalDateTime(startTime),
@@ -59,9 +65,9 @@ class FirestoreScheduleService(
             ExperienceLevel.tryParsingFrom(experienceLevel),
             dayId,
             Event.Type.fromRawType(type),
-            false, // TODO
+            false, // TODO fetch favourites
             description.optional(),
-            DateTimeZone.UTC // TODO
+            timeZone
     )
 
     private fun FirestoreTrack?.toTrack() = optional().map {
