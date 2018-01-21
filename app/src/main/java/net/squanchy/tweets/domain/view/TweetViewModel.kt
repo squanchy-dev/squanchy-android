@@ -1,6 +1,7 @@
 package net.squanchy.tweets.domain.view
 
 import net.squanchy.tweets.domain.TweetLinkInfo
+import java.util.Date
 
 @Suppress("LongParameterList") // This is just a big model - TODO refactor this to split it up
 data class TweetViewModel(
@@ -8,7 +9,7 @@ data class TweetViewModel(
         val text: String,
         val spannedText: CharSequence,
         val user: User,
-        val createdAt: String,
+        val createdAt: Date,
         val photoUrl: String?,
         val linkInfo: TweetLinkInfo
 ) {
@@ -20,7 +21,7 @@ data class TweetViewModel(
                 text: String,
                 spannedText: CharSequence,
                 user: User,
-                createdAt: String,
+                createdAt: Date,
                 photoUrl: String?,
                 linkInfo: TweetLinkInfo
         ): TweetViewModel = TweetViewModel(
