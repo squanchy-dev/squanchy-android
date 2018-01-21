@@ -6,8 +6,6 @@ import android.view.View
 import kotlinx.android.synthetic.main.item_schedule_event_talk.view.*
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Event
-import net.squanchy.support.lang.Optional
-import net.squanchy.support.widget.SpeakerView
 import org.joda.time.format.DateTimeFormat
 
 class TalkEventItemView @JvmOverloads constructor(
@@ -30,7 +28,7 @@ class TalkEventItemView @JvmOverloads constructor(
         }
 
         speaker_container.visibility = if (event.speakers.isEmpty()) View.GONE else View.VISIBLE
-        speaker_container.updateWith(event.speakers, Optional.absent<SpeakerView.OnSpeakerClickListener>())
+        speaker_container.updateWith(event.speakers, null)
     }
 
     private fun ensureSupportedType(type: Event.Type) {

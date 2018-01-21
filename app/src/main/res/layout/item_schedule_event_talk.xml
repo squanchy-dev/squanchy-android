@@ -20,7 +20,7 @@
       android:layout_marginBottom="@dimen/card_title_margin_top">
 
       <LinearLayout
-        android:id="@+id/speaker_photos_container"
+        android:id="@+id/speakerPhotosContainer"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/card_speaker_photo"
         android:orientation="horizontal"

@@ -16,5 +16,5 @@ class ScheduleSpeakerView @JvmOverloads constructor(
 ) : SpeakerView(context, attrs, defStyleAttr, defStyleRes) {
 
     override fun inflatePhotoView(speakerPhotoContainer: ViewGroup): ImageView =
-        layoutInflater().inflate(R.layout.view_speaker_photo_schedule, speakerPhotoContainer, false) as ImageView
+        layoutInflater.inflate(R.layout.view_speaker_photo_schedule, speakerPhotoContainer, false) as ImageView
 }

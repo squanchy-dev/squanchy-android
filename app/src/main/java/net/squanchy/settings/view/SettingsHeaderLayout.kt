@@ -12,7 +12,6 @@ import kotlinx.android.synthetic.main.activity_settings.view.usernameTextView
 import net.squanchy.R
 import net.squanchy.imageloader.ImageLoader
 import net.squanchy.imageloader.imageLoaderComponent
-import net.squanchy.support.lang.Lists
 import net.squanchy.support.lang.Optional
 import net.squanchy.support.unwrapToActivityContext
 
@@ -48,7 +47,7 @@ class SettingsHeaderLayout(context: Context, attrs: AttributeSet?) : AppBarLayou
 
     private fun googleUserInfoFrom(firebaseUser: FirebaseUser): Optional<UserInfo> {
         val providerData = firebaseUser.providerData
-        val googleData = Lists.filter(providerData) { data -> PROVIDER_ID_GOOGLE.equals(data.providerId, ignoreCase = true) }
+        val googleData = providerData.filter { data -> PROVIDER_ID_GOOGLE.equals(data.providerId, ignoreCase = true) }
         return if (googleData.isEmpty()) {
             Optional.absent()
         } else Optional.of(googleData[0])
