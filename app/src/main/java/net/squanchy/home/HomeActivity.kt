@@ -21,8 +21,6 @@ import net.squanchy.home.deeplink.HomeActivityDeepLinkCreator
 import net.squanchy.home.deeplink.HomeActivityIntentParser
 import net.squanchy.navigation.Navigator
 import net.squanchy.support.widget.InterceptingBottomNavigationView
-import java.util.ArrayList
-import java.util.HashMap
 
 class HomeActivity : AppCompatActivity() {
 
