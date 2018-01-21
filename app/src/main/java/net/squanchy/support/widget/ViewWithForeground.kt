@@ -10,5 +10,5 @@ interface ViewWithForeground {
 
     fun setForeground(drawable: Drawable)
 
-    fun foreground(): Drawable
+    fun foreground(): Drawable?
 }
