@@ -128,7 +128,8 @@ class InterceptingBottomNavigationView @JvmOverloads constructor(
         this.colorProvider = colorProvider
     }
 
-    @SuppressLint("RestrictedApi")      // This is a hacky solution to BottomNavigationView's lack of APIs :(
+    // This is a hacky solution to BottomNavigationView's lack of APIs :(
+    @SuppressLint("RestrictedApi")
     fun selectItemAt(@IntRange(from = 0) position: Int) {
         menu.getItem(position).isChecked = true
         bottomNavigationMenuView.updateMenuView()
