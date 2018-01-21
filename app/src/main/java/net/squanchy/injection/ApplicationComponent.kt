@@ -14,7 +14,6 @@ import net.squanchy.service.firestore.FirestoreDbService
 import net.squanchy.service.firestore.injection.FirestoreModule
 import net.squanchy.service.repository.EventRepository
 import net.squanchy.service.repository.SpeakerRepository
-import net.squanchy.service.repository.VenueRepository
 import net.squanchy.service.repository.injection.RepositoryModule
 import net.squanchy.support.injection.ChecksumModule
 import net.squanchy.support.injection.CurrentTimeModule
@@ -55,8 +54,6 @@ interface ApplicationComponent {
     fun eventRepository(): EventRepository
 
     fun speakerRepository(): SpeakerRepository
-
-    fun venueRepository(): VenueRepository
 
     fun daysRepository(): DaysRepository
 

@@ -69,7 +69,7 @@ class VenueInfoPageView @JvmOverloads constructor(
     override fun startLoading() {
         subscription = service.venue()
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { this.updateWith(it) }
+            .subscribe(::updateWith)
     }
 
     private fun updateWith(venue: Venue) {
