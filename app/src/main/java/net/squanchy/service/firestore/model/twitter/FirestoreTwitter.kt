@@ -1,5 +1,6 @@
 package net.squanchy.service.firestore.model.twitter
 
+import java.util.Date
 import kotlin.properties.Delegates
 
 class FirestoreTweet {
@@ -7,9 +8,10 @@ class FirestoreTweet {
     lateinit var id: String
     lateinit var text: String
     lateinit var user: FirestoreTwitterUser
+    var inReplyToScreenName: String? = null
     lateinit var entities: FirestoreTwitterEntities
     var displayTextRange: List<Int> = emptyList()
-    lateinit var createdAt: String
+    lateinit var createdAt: Date
 }
 
 class FirestoreTwitterUser {
