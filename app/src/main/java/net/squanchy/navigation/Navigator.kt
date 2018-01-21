@@ -18,7 +18,6 @@ import net.squanchy.search.SearchActivity
 import net.squanchy.settings.SettingsActivity
 import net.squanchy.signin.SignInActivity
 import net.squanchy.speaker.SpeakerDetailsActivity
-import net.squanchy.support.lang.Optional
 import net.squanchy.tweets.domain.TweetLinkInfo
 import net.squanchy.venue.domain.view.Venue
 import timber.log.Timber
@@ -83,10 +82,10 @@ class Navigator(
     }
 
     internal fun toHomePage() {
-        toSchedule(Optional.absent(), Optional.absent())
+        toSchedule(null, null)
     }
 
-    fun toSchedule(dayId: Optional<String>, eventId: Optional<String>) {
+    fun toSchedule(dayId: String?, eventId: String?) {
         start(
                 HomeActivity.createScheduleIntent(activity, dayId, eventId),
                 FLAG_ACTIVITY_SINGLE_TOP or FLAG_ACTIVITY_CLEAR_TOP or FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK

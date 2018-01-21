@@ -27,7 +27,6 @@ import net.squanchy.analytics.ContentType;
 import net.squanchy.home.deeplink.HomeActivityDeepLinkCreator;
 import net.squanchy.home.deeplink.HomeActivityIntentParser;
 import net.squanchy.navigation.Navigator;
-import net.squanchy.support.lang.Optional;
 import net.squanchy.support.widget.InterceptingBottomNavigationView;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -49,7 +48,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private CompositeDisposable subscriptions;
 
-    public static Intent createScheduleIntent(Context context, Optional<String> dayId, Optional<String> eventId) {
+    public static Intent createScheduleIntent(Context context, @Nullable String dayId, @Nullable String eventId) {
         return new HomeActivityDeepLinkCreator(context)
                 .deepLinkTo(BottomNavigationSection.SCHEDULE)
                 .withDayId(dayId)
