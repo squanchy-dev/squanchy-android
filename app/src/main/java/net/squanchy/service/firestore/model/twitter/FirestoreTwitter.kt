@@ -8,6 +8,7 @@ class FirestoreTweet {
     lateinit var id: String
     lateinit var text: String
     lateinit var user: FirestoreTwitterUser
+    var inReplyToScreenName: String? = null
     lateinit var entities: FirestoreTwitterEntities
     var displayTextRange: List<Int> = emptyList()
     lateinit var createdAt: Date
