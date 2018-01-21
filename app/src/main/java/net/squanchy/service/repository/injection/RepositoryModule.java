@@ -4,11 +4,9 @@ import net.squanchy.service.DaysRepository;
 import net.squanchy.service.firebase.FirebaseDbService;
 import net.squanchy.service.repository.EventRepository;
 import net.squanchy.service.repository.SpeakerRepository;
-import net.squanchy.service.repository.VenueRepository;
 import net.squanchy.service.repository.firebase.FirebaseDaysRepository;
 import net.squanchy.service.repository.firebase.FirebaseEventRepository;
 import net.squanchy.service.repository.firebase.FirebaseSpeakerRepository;
-import net.squanchy.service.repository.firebase.FirebaseVenueRepository;
 import net.squanchy.support.lang.Checksum;
 
 import dagger.Module;
@@ -32,11 +30,6 @@ public class RepositoryModule {
             Checksum checksum
     ) {
         return new FirebaseSpeakerRepository(dbService, checksum);
-    }
-
-    @Provides
-    VenueRepository venueRepositoryrRepository(FirebaseDbService dbService) {
-        return new FirebaseVenueRepository(dbService);
     }
 
     @Provides
