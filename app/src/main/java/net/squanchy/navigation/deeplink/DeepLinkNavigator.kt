@@ -1,22 +1,15 @@
 package net.squanchy.navigation.deeplink
 
 import net.squanchy.navigation.Navigator
-import net.squanchy.support.lang.Optional
 
 internal class DeepLinkNavigator(private val navigator: Navigator) {
 
     fun toSchedule(path: String) {
         val pathSegments = extractSegments(path)
 
-        var dayId = Optional.absent<String>()
-        if (pathSegments.isNotEmpty()) {
-            dayId = Optional.of(pathSegments.first())
-        }
+        val dayId = if (pathSegments.isNotEmpty()) pathSegments.first() else null
+        val eventId = if (pathSegments.size > 1) pathSegments[1] else null
 
-        var eventId = Optional.absent<String>()
-        if (pathSegments.size > 1) {
-            eventId = Optional.of(pathSegments[1])
-        }
         navigator.toSchedule(dayId, eventId)
     }
 
