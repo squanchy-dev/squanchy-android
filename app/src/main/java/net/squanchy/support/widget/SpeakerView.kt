@@ -12,7 +12,6 @@ import net.squanchy.imageloader.ImageLoader
 import net.squanchy.imageloader.imageLoaderComponent
 import net.squanchy.speaker.domain.view.Speaker
 import net.squanchy.support.kotlin.children
-import net.squanchy.support.lang.Optional
 import net.squanchy.support.unwrapToActivityContext
 
 abstract class SpeakerView @JvmOverloads constructor(
