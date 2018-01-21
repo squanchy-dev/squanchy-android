@@ -1,7 +1,6 @@
 package net.squanchy.support.widget
 
 import android.content.Context
-import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -44,9 +43,7 @@ abstract class SpeakerView @JvmOverloads constructor(
         updateSpeakerPhotos(speakers, listener)
     }
 
-    private fun toCommaSeparatedNames(speakers: List<Speaker>): String {
-        return TextUtils.join(", ", speakers.map { it.name })
-    }
+    private fun toCommaSeparatedNames(speakers: List<Speaker>) = speakers.joinToString(", ") { it.name }
 
     private fun updateSpeakerPhotos(speakers: List<Speaker>, listener: Optional<OnSpeakerClickListener>) {
         if (!::imageLoader.isInitialized) {
