@@ -35,8 +35,8 @@ class FirestoreScheduleService(
     override fun schedule(onlyFavorites: Boolean): Observable<Schedule> {
         return Observable.combineLatest(dbService.scheduleView(), dbService.timezone(), combineInAPair())
             .map { pagesAndTimeZone ->
-                val schedulePages = pagesAndTimeZone.first
-                val timeZone = pagesAndTimeZone.second
+                val (schedulePages, timeZone) = pagesAndTimeZone
+                
                 schedulePages.map { schedulePage ->
                     SchedulePage(
                             schedulePage.day.id,
