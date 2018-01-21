@@ -24,7 +24,7 @@ class InterceptingBottomNavigationView @JvmOverloads constructor(
     private var listener: BottomNavigationView.OnNavigationItemSelectedListener? = null
     private var colorProvider: ColorProvider? = null
 
-    var revealDurationMillis: Int = 0
+    var revealDurationMillis: Int
 
     private val bottomNavigationMenuView: BottomNavigationMenuView
         get() = getChildAt(0) as BottomNavigationMenuView
