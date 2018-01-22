@@ -6,7 +6,6 @@
 
 <resources>
 
-  <string name="activity_social_feed">@string/social_query</string>
   <string name="activity_schedule">Schedule</string>
   <string name="activity_favorites">Favorites</string>
   <string name="event_details">Details</string>
@@ -16,7 +15,7 @@
   <string name="experience_level_intermediate">Intermediate</string>
   <string name="experience_level_advanced">Advanced</string>
 
-  <string name="no_tweets_for_query">No Tweets for %s… yet</string>
+  <string name="no_tweets_for_query">Nothing to see here</string>
 
   <string name="event_notification_starting_channel_name">Events about to start</string>
   <string name="event_notification_starting_channel_description">These notifications will be shown before a favorite event is about to start</string>

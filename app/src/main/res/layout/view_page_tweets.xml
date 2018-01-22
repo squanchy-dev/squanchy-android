@@ -16,8 +16,7 @@
     <android.support.v7.widget.Toolbar
       android:id="@+id/toolbar"
       android:layout_width="match_parent"
-      android:layout_height="?attr/actionBarSize"
-      app:title="@string/activity_social_feed" />
+      android:layout_height="?attr/actionBarSize" />
 
   </android.support.design.widget.AppBarLayout>
 
@@ -38,17 +37,10 @@
       android:visibility="gone"
       tools:visibility="visible" />
 
-    <android.support.v4.widget.SwipeRefreshLayout
-      android:id="@+id/swipeRefreshContainer"
+    <net.squanchy.tweets.view.TweetFeedView
+      android:id="@+id/tweetFeed"
       android:layout_width="match_parent"
-      android:layout_height="match_parent">
-
-      <net.squanchy.tweets.view.TweetFeedView
-        android:id="@+id/tweetFeed"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    </android.support.v4.widget.SwipeRefreshLayout>
+      android:layout_height="match_parent" />
 
   </FrameLayout>
 

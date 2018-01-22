@@ -25,14 +25,14 @@ fun mapToViewModel(factory: TweetUrlSpanFactory, tweet: FirestoreTweet): TweetVi
     val unresolvedPhotoUrl = tweet.entities.media.map { it.url }
     val displayableText = displayableTextFor(tweet.text, displayTextRange, unresolvedPhotoUrl)
 
-    return TweetViewModel.create(
-            tweet.id.toLong(),
-            displayableText,
-            factory.applySpansToTweet(displayableText, displayTextRange.start(), hashtags, mentions, urls),
-            user,
-            tweet.createdAt,
-            photoUrlMaybeFrom(photoUrls),
-            TweetLinkInfo.create(tweet)
+    return TweetViewModel(
+            id = tweet.id.toLong(),
+            text = displayableText,
+            spannedText = factory.applySpansToTweet(displayableText, displayTextRange.start(), hashtags, mentions, urls),
+            user = user,
+            createdAt = tweet.createdAt,
+            photoUrl = photoUrlMaybeFrom(photoUrls),
+            linkInfo = TweetLinkInfo.create(tweet)
     )
 }
 
