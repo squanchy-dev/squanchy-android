@@ -6,19 +6,16 @@ import android.util.AttributeSet
 import android.view.View
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import kotlinx.android.synthetic.main.view_page_tweets.view.*
 import net.squanchy.R
 import net.squanchy.home.Loadable
 import net.squanchy.navigation.Navigator
 import net.squanchy.support.unwrapToActivityContext
 import net.squanchy.tweets.domain.TweetLinkInfo
-import net.squanchy.tweets.domain.view.TweetViewModel
+import net.squanchy.tweets.domain.view.TwitterScreenViewModel
 import net.squanchy.tweets.service.TwitterService
 import net.squanchy.tweets.view.TweetsAdapter
 import timber.log.Timber
-import kotlinx.android.synthetic.main.view_page_tweets.view.tweetFeed
-import kotlinx.android.synthetic.main.view_page_tweets.view.toolbar
-import kotlinx.android.synthetic.main.view_page_tweets.view.swipeRefreshContainer
-import kotlinx.android.synthetic.main.view_page_tweets.view.tweetEmptyView
 
 class TweetsPageView @JvmOverloads constructor(
         context: Context,
@@ -64,7 +61,6 @@ class TweetsPageView @JvmOverloads constructor(
     }
 
     override fun startLoading() {
-        query = context.getString(R.string.social_query)
         tweetEmptyView.text = context.getString(R.string.no_tweets_for_query, query)
         refreshTimeline()
     }
@@ -76,13 +72,14 @@ class TweetsPageView @JvmOverloads constructor(
     private fun refreshTimeline() {
         swipeRefreshContainer.isRefreshing = true
         refreshingData = true
-        subscription = twitterService.refresh(query)
+        subscription = twitterService.refresh()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(::onSuccess, ::onError)
     }
 
-    private fun onSuccess(tweet: List<TweetViewModel>) {
-        tweetsAdapter.updateWith(tweet, tweetClickListener)
+    private fun onSuccess(data: TwitterScreenViewModel) {
+        toolbar.title = data.hashtag
+        tweetsAdapter.updateWith(data.tweets, tweetClickListener)
         onRefreshCompleted()
     }
 

@@ -12,26 +12,4 @@ data class TweetViewModel(
         val createdAt: Date,
         val photoUrl: String?,
         val linkInfo: TweetLinkInfo
-) {
-
-    companion object {
-
-        fun create(
-                id: Long,
-                text: String,
-                spannedText: CharSequence,
-                user: User,
-                createdAt: Date,
-                photoUrl: String?,
-                linkInfo: TweetLinkInfo
-        ): TweetViewModel = TweetViewModel(
-                id,
-                text,
-                spannedText,
-                user,
-                createdAt,
-                photoUrl,
-                linkInfo
-        )
-    }
-}
+)
