@@ -22,7 +22,7 @@ class InterceptingBottomNavigationView @JvmOverloads constructor(
 
     private var lastUpEvent: MotionEvent? = null
     private var listener: BottomNavigationView.OnNavigationItemSelectedListener? = null
-    private var colorProvider: ColorProvider? = null
+    var colorProvider: (() -> Int)? = null
 
     var revealDurationMillis: Int
 
@@ -41,7 +41,7 @@ class InterceptingBottomNavigationView @JvmOverloads constructor(
         }
 
         if (itemSelected && colorProvider != null) {
-            startCircularReveal(colorProvider!!.selectedItemColor, menuItem)
+            startCircularReveal(colorProvider!!(), menuItem)
         }
 
         return itemSelected
@@ -125,20 +125,10 @@ class InterceptingBottomNavigationView @JvmOverloads constructor(
         return super.onInterceptTouchEvent(ev)
     }
 
-    fun setColorProvider(colorProvider: ColorProvider?) {
-        this.colorProvider = colorProvider
-    }
-
     // This is a hacky solution to BottomNavigationView's lack of APIs :(
     @SuppressLint("RestrictedApi")
     fun selectItemAt(@IntRange(from = 0) position: Int) {
         menu.getItem(position).isChecked = true
         bottomNavigationMenuView.updateMenuView()
-    }
-
-    interface ColorProvider {
-
-        @get:ColorInt
-        val selectedItemColor: Int
     }
 }
