@@ -79,7 +79,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setupBottomNavigation(bottomNavigationView: InterceptingBottomNavigationView) {
         bottomNavigationView.disableShiftMode()
-        bottomNavigationView.setRevealDurationMillis(pageFadeDurationMillis)
+        bottomNavigationView.revealDurationMillis = pageFadeDurationMillis
 
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -118,7 +118,7 @@ class HomeActivity : AppCompatActivity() {
 
         val theme = getThemeFor(section)
         animateStatusBarColorTo(getColorFromTheme(theme, android.R.attr.statusBarColor))
-        bottomNavigationView.setColorProvider { getColorFromTheme(theme, android.support.design.R.attr.colorPrimary) }
+        bottomNavigationView.colorProvider = { getColorFromTheme(theme, android.support.design.R.attr.colorPrimary) }
 
         currentSection = section
 
