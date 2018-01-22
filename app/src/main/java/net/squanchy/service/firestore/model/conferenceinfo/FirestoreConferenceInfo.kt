@@ -11,3 +11,10 @@ class FirestoreVenue {
     lateinit var mapUrl: String
     lateinit var timezone: String
 }
+
+class FirestoreConferenceInfo {
+
+    lateinit var name: String
+    lateinit var socialHashtag: String
+    lateinit var twitterHandle: String
+}
