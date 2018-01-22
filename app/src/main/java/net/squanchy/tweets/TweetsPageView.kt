@@ -31,9 +31,7 @@ class TweetsPageView @JvmOverloads constructor(
 
     private val tweetsAdapter = TweetsAdapter(context)
 
-    private lateinit var query: String
     private lateinit var subscription: Disposable
-    private var refreshingData: Boolean = false
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -41,12 +39,6 @@ class TweetsPageView @JvmOverloads constructor(
         setupToolbar()
 
         tweetFeed.adapter = tweetsAdapter
-
-        swipeRefreshContainer.setOnRefreshListener {
-            if (refreshingData.not()) {
-                refreshTimeline()
-            }
-        }
     }
 
     private fun setupToolbar() {
@@ -61,20 +53,13 @@ class TweetsPageView @JvmOverloads constructor(
     }
 
     override fun startLoading() {
-        tweetEmptyView.text = context.getString(R.string.no_tweets_for_query, query)
-        refreshTimeline()
+        subscription = twitterService.refresh()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(::onSuccess, ::onError)
     }
 
     override fun stopLoading() {
         subscription.dispose()
-    }
-
-    private fun refreshTimeline() {
-        swipeRefreshContainer.isRefreshing = true
-        refreshingData = true
-        subscription = twitterService.refresh()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(::onSuccess, ::onError)
     }
 
     private fun onSuccess(data: TwitterScreenViewModel) {
@@ -89,9 +74,6 @@ class TweetsPageView @JvmOverloads constructor(
     }
 
     private fun onRefreshCompleted() {
-        refreshingData = false
-        swipeRefreshContainer.isRefreshing = false
-
         if (tweetsAdapter.isEmpty) {
             tweetEmptyView.visibility = View.VISIBLE
             tweetFeed.visibility = View.GONE
