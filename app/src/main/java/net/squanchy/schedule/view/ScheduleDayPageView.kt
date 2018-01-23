@@ -9,6 +9,7 @@ import android.util.AttributeSet
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.support.view.CardSpacingItemDecorator
+import org.joda.time.LocalDateTime
 
 class ScheduleDayPageView @JvmOverloads constructor(
         context: Context,
@@ -36,6 +37,15 @@ class ScheduleDayPageView @JvmOverloads constructor(
         val diffResult = DiffUtil.calculateDiff(callback, true) // TODO move off the UI thread
         adapter.updateWith(newData, listener)
         diffResult.dispatchUpdatesTo(adapter)
+
+        val backThen = LocalDateTime.now()
+        adapter.events
+            .firstOrNull {
+                it.startTime.toDateTime(it.timeZone).isAfter(backThen.toDateTime(it.timeZone))
+            }
+            ?.let {
+                scrollToPosition(adapter.events.indexOf(it))
+            }
     }
 
     private class EventsDiffCallback(
