@@ -16,11 +16,13 @@ import net.squanchy.home.Loadable
 import net.squanchy.navigation.Navigator
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Schedule
+import net.squanchy.schedule.domain.view.SchedulePage
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter
 import net.squanchy.support.font.applyTypeface
 import net.squanchy.support.font.getFontFor
 import net.squanchy.support.font.hasTypefaceSpan
 import net.squanchy.support.unwrapToActivityContext
+import org.joda.time.LocalDateTime
 import timber.log.Timber
 
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
@@ -121,7 +123,16 @@ class SchedulePageView @JvmOverloads constructor(
 
     fun updateWith(schedule: Schedule, onEventClicked: (Event) -> Unit) {
         viewPagerAdapter.updateWith(schedule.pages, onEventClicked)
+
+        viewpager.setCurrentItem(findTodayIndexOrDefault(schedule.pages), false)
+
         progressbar.visibility = View.GONE
+    }
+
+    private fun findTodayIndexOrDefault(pages: List<SchedulePage>): Int {
+        val now = LocalDateTime.now()
+        return pages.firstOrNull { it.date.toLocalDate().isEqual(now.toLocalDate()) }
+            ?.let (pages::indexOf) ?: 0
     }
 
     private class TrackingOnTabSelectedListener constructor(
