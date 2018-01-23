@@ -21,8 +21,8 @@ import net.squanchy.schedule.view.ScheduleViewPagerAdapter
 import net.squanchy.support.font.applyTypeface
 import net.squanchy.support.font.getFontFor
 import net.squanchy.support.font.hasTypefaceSpan
+import net.squanchy.support.system.CurrentTime
 import net.squanchy.support.unwrapToActivityContext
-import org.joda.time.LocalDateTime
 import timber.log.Timber
 
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
@@ -36,6 +36,7 @@ class SchedulePageView @JvmOverloads constructor(
     private val service: ScheduleService
     private val navigate: Navigator
     private val analytics: Analytics
+    private val currentTime: CurrentTime
     private var subscriptions = CompositeDisposable()
 
     init {
@@ -45,6 +46,7 @@ class SchedulePageView @JvmOverloads constructor(
         navigate = component.navigator()
         analytics = component.analytics()
         viewPagerAdapter = ScheduleViewPagerAdapter(activity)
+        currentTime = component.currentTime()
     }
 
     override fun onFinishInflate() {
@@ -122,18 +124,25 @@ class SchedulePageView @JvmOverloads constructor(
     }
 
     fun updateWith(schedule: Schedule, onEventClicked: (Event) -> Unit) {
-        viewPagerAdapter.updateWith(schedule.pages, onEventClicked)
+        val initialEventForPage = schedule.pages.map(::findNextEventForPage)
+        viewPagerAdapter.updateWith(schedule.pages, initialEventForPage, onEventClicked)
 
-        viewpager.setCurrentItem(findTodayIndexOrDefault(schedule.pages), false)
+        val todayPageIndex = findTodayIndexOrDefault(schedule.pages)
+        viewpager.setCurrentItem(todayPageIndex, false)
 
         progressbar.visibility = View.GONE
     }
 
     private fun findTodayIndexOrDefault(pages: List<SchedulePage>): Int {
-        val now = LocalDateTime.now()
+        val now = currentTime.currentLocalDateTime()
         return pages.firstOrNull { it.date.toLocalDate().isEqual(now.toLocalDate()) }
-            ?.let (pages::indexOf) ?: 0
+            ?.let(pages::indexOf) ?: 0
     }
+
+    private fun findNextEventForPage(page: SchedulePage) = page.events
+        .firstOrNull {
+            it.startTime.toDateTime(it.timeZone).isAfter(currentTime.currentLocalDateTime().toDateTime(it.timeZone))
+        }
 
     private class TrackingOnTabSelectedListener constructor(
             private val analytics: Analytics,

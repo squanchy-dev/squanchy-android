@@ -15,9 +15,11 @@ class ScheduleViewPagerAdapter(private val context: Context) : ViewPagerAdapter<
     private lateinit var listener: (Event) -> Unit
 
     private var pages = emptyList<SchedulePage>()
+    private var initialEventForPage = emptyList<Event?>()
 
-    fun updateWith(pages: List<SchedulePage>, listener: (Event) -> Unit) {
+    fun updateWith(pages: List<SchedulePage>, initialEventForPage: List<Event?>, listener: (Event) -> Unit) {
         this.pages = pages
+        this.initialEventForPage = initialEventForPage
         this.listener = listener
         notifyDataSetChanged()
     }
@@ -31,7 +33,8 @@ class ScheduleViewPagerAdapter(private val context: Context) : ViewPagerAdapter<
 
     override fun bindView(view: ScheduleDayPageView, position: Int) {
         val events = pages[position].events
-        view.updateWith(events, listener)
+        val initialEvent = initialEventForPage[position]
+        view.updateWith(events, initialEvent, listener)
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
