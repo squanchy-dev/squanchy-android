@@ -1,9 +1,8 @@
 package net.squanchy.support.injection
 
-import net.squanchy.support.system.CurrentTime
-
 import dagger.Module
 import dagger.Provides
+import net.squanchy.support.system.CurrentTime
 
 @Module
 class CurrentTimeModule {
