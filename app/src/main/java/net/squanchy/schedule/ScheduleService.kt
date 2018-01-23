@@ -27,9 +27,9 @@ interface ScheduleService {
 }
 
 class FirestoreScheduleService(
-        private val authService: FirebaseAuthService,
-        private val dbService: FirestoreDbService,
-        private val checksum: Checksum
+    private val authService: FirebaseAuthService,
+    private val dbService: FirestoreDbService,
+    private val checksum: Checksum
 ) : ScheduleService {
 
     override fun schedule(onlyFavorites: Boolean): Observable<Schedule> {
@@ -39,11 +39,11 @@ class FirestoreScheduleService(
 
                 schedulePages.map { schedulePage ->
                     SchedulePage(
-                            schedulePage.day.id,
-                            LocalDate(schedulePage.day.date),
-                            schedulePage.events.map { it.toEvent(schedulePage.day.id, timeZone) }
-                                .sortedBy { it.startTime }
-                                .filterOnlyFavorites(onlyFavorites)
+                        schedulePage.day.id,
+                        LocalDate(schedulePage.day.date),
+                        schedulePage.events.map { it.toEvent(schedulePage.day.id, timeZone) }
+                            .sortedBy { it.startTime }
+                            .filterOnlyFavorites(onlyFavorites)
                     )
                 }
             }
@@ -54,29 +54,29 @@ class FirestoreScheduleService(
         BiFunction { schedulePages, timeZone -> Pair(schedulePages, timeZone) }
 
     private fun FirestoreEvent.toEvent(dayId: String, timeZone: DateTimeZone) = Event(
-            id,
-            checksum.getChecksumOf(id),
-            LocalDateTime(startTime),
-            LocalDateTime(endTime),
-            title,
-            place.toPlace(),
-            track.toTrack(),
-            speakers.toSpeakersList(checksum),
-            ExperienceLevel.tryParsingFrom(experienceLevel),
-            dayId,
-            Event.Type.fromRawType(type),
-            false, // TODO fetch favourites
-            description.optional(),
-            timeZone
+        id,
+        checksum.getChecksumOf(id),
+        LocalDateTime(startTime),
+        LocalDateTime(endTime),
+        title,
+        place.toPlace(),
+        track.toTrack(),
+        speakers.toSpeakersList(checksum),
+        ExperienceLevel.tryParsingFrom(experienceLevel),
+        dayId,
+        Event.Type.fromRawType(type),
+        false, // TODO fetch favourites
+        description.optional(),
+        timeZone
     )
 
     private fun FirestoreTrack?.toTrack() = optional().map {
         Track(
-                it.id,
-                it.name,
-                it.accent_color.optional(),
-                it.text_color.optional(),
-                it.icon_url.optional()
+            it.id,
+            it.name,
+            it.accentColor.optional(),
+            it.textColor.optional(),
+            it.iconUrl.optional()
         )
     }
 
@@ -86,15 +86,15 @@ class FirestoreScheduleService(
 
     private fun List<FirestoreSpeaker>.toSpeakersList(checksum: Checksum) = map {
         Speaker(
-                checksum.getChecksumOf(it.id),
-                it.id,
-                it.name,
-                it.bio,
-                it.companyName.optional(),
-                it.companyUrl.optional(),
-                it.personalUrl.optional(),
-                it.photoUrl.optional(),
-                it.twitterUsername.optional()
+            checksum.getChecksumOf(it.id),
+            it.id,
+            it.name,
+            it.bio,
+            it.companyName.optional(),
+            it.companyUrl.optional(),
+            it.personalUrl.optional(),
+            it.photoUrl.optional(),
+            it.twitterUsername.optional()
         )
     }
 
