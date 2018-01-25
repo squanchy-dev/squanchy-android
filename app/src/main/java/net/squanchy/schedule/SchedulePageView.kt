@@ -149,28 +149,31 @@ class SchedulePageView @JvmOverloads constructor(
                 startDateTime.isAfter(currentDateTime)
             }
 
-    private inner class ScrollingOnTabSelectedListener constructor(
+    private interface OnTabSelectedListener : TabLayout.OnTabSelectedListener {
+
+        override fun onTabReselected(tab: TabLayout.Tab) {}
+        override fun onTabUnselected(tab: TabLayout.Tab) {}
+        override fun onTabSelected(tab: TabLayout.Tab) {}
+    }
+
+    private inner class ScrollingOnTabSelectedListener(
             private val schedule: Schedule,
             private val viewPagerAdapter: ScheduleViewPagerAdapter
     ) : OnTabSelectedListener {
+
         override fun onTabReselected(tab: TabLayout.Tab) {
             val page = schedule.pages[tab.position]
             findNextEventForPage(page)?.let { viewPagerAdapter.refresh(tab.position, it) }
         }
     }
 
-    private class TrackingOnTabSelectedListener constructor(
+    private class TrackingOnTabSelectedListener(
             private val analytics: Analytics,
             private val viewPagerAdapter: ScheduleViewPagerAdapter
     ) : OnTabSelectedListener {
+
         override fun onTabSelected(tab: TabLayout.Tab) {
             analytics.trackItemSelected(ContentType.SCHEDULE_DAY, viewPagerAdapter.getPageDayId(tab.position))
         }
-    }
-
-    private interface OnTabSelectedListener : TabLayout.OnTabSelectedListener {
-        override fun onTabReselected(tab: TabLayout.Tab) {}
-        override fun onTabUnselected(tab: TabLayout.Tab) {}
-        override fun onTabSelected(tab: TabLayout.Tab) {}
     }
 }
