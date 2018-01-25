@@ -1,7 +1,6 @@
 package net.squanchy.schedule.view
 
 import android.content.Context
-import android.graphics.PointF
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.LinearSmoothScroller
@@ -56,20 +55,15 @@ class ScheduleDayPageView @JvmOverloads constructor(
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) = oldEvents[oldItemPosition] == newEvents[newItemPosition]
     }
-}
 
-private class SnappingLinearLayoutManager(context: Context) : LinearLayoutManager(context) {
+    private class SnappingLinearLayoutManager(context: Context) : LinearLayoutManager(context) {
 
-    override fun smoothScrollToPosition(recyclerView: RecyclerView, state: RecyclerView.State?, position: Int) {
-        val smoothScroller = TopSnappedSmoothScroller(this, recyclerView.context)
-        smoothScroller.targetPosition = position
-        startSmoothScroll(smoothScroller)
+        override fun smoothScrollToPosition(recyclerView: RecyclerView, state: RecyclerView.State?, position: Int) {
+            val smoothScroller = object : LinearSmoothScroller(recyclerView.context) {
+                override fun getVerticalSnapPreference() = SNAP_TO_START
+            }
+            smoothScroller.targetPosition = position
+            startSmoothScroll(smoothScroller)
+        }
     }
-}
-
-private class TopSnappedSmoothScroller(private val layoutManager: SnappingLinearLayoutManager, context: Context) : LinearSmoothScroller(context) {
-    override fun computeScrollVectorForPosition(targetPosition: Int): PointF? =
-        layoutManager.computeScrollVectorForPosition(targetPosition)
-
-    override fun getVerticalSnapPreference() = SNAP_TO_START
 }
