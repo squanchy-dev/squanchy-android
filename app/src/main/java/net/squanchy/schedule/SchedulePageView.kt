@@ -143,8 +143,10 @@ class SchedulePageView @JvmOverloads constructor(
     private fun findNextEventForPage(page: SchedulePage) =
         page
             .events
-            .firstOrNull {
-                it.startTime.toDateTime(it.timeZone).isAfter(currentTime.currentLocalDateTime().toDateTime(it.timeZone))
+            .firstOrNull { event ->
+                val startDateTime = event.startTime.toDateTime(event.timeZone)
+                val currentDateTime = currentTime.currentLocalDateTime().toDateTime(event.timeZone)
+                startDateTime.isAfter(currentDateTime)
             }
 
     private inner class ScrollingOnTabSelectedListener constructor(
