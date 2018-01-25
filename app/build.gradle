@@ -12,12 +12,13 @@ plugins {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'com.github.triplet.play'
+apply plugin: 'com.novoda.build-properties'
+apply plugin: 'com.google.firebase.firebase-perf'
+apply plugin: 'io.fabric'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'io.fabric'
-apply plugin: 'com.novoda.build-properties'
-apply plugin: 'com.github.triplet.play'
 
 buildProperties {
     application {
@@ -146,6 +147,7 @@ dependencies {
     implementation libraries.app.firebaseConfig
     implementation libraries.app.firebaseDb
     implementation libraries.app.firebaseMessaging
+    implementation libraries.app.firebasePerf
     implementation libraries.app.firebaseStorage
     implementation(libraries.app.firebaseUiStorage) {
         exclude group: 'com.android.support'
