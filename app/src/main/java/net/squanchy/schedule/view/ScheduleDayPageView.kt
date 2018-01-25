@@ -1,15 +1,15 @@
 package net.squanchy.schedule.view
 
 import android.content.Context
+import android.graphics.PointF
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.LinearSmoothScroller
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.support.view.CardSpacingItemDecorator
-import android.graphics.PointF
-import android.support.v7.widget.LinearSmoothScroller
 
 class ScheduleDayPageView @JvmOverloads constructor(
         context: Context,
