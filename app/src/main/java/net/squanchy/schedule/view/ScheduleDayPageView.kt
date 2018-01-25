@@ -8,6 +8,8 @@ import android.util.AttributeSet
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.support.view.CardSpacingItemDecorator
+import android.graphics.PointF
+import android.support.v7.widget.LinearSmoothScroller
 
 class ScheduleDayPageView @JvmOverloads constructor(
         context: Context,
@@ -20,7 +22,7 @@ class ScheduleDayPageView @JvmOverloads constructor(
     override fun onFinishInflate() {
         super.onFinishInflate()
 
-        val layoutManager = LinearLayoutManager(context)
+        val layoutManager = SnappingLinearLayoutManager(context)
         setLayoutManager(layoutManager)
         adapter = EventsAdapter(context)
         setAdapter(adapter)
@@ -30,14 +32,16 @@ class ScheduleDayPageView @JvmOverloads constructor(
         addItemDecoration(CardSpacingItemDecorator(horizontalSpacing, verticalSpacing))
     }
 
-    fun updateWith(newData: List<Event>, initialEvent: Event?, listener: (Event) -> Unit) {
+    fun updateWith(newData: List<Event>, listener: (Event) -> Unit) {
         val callback = EventsDiffCallback(adapter.events, newData)
         val diffResult = DiffUtil.calculateDiff(callback, true) // TODO move off the UI thread
         adapter.updateWith(newData, listener)
         diffResult.dispatchUpdatesTo(adapter)
-
-        initialEvent?.let { scrollToPosition(adapter.events.indexOf(it)) }
     }
+
+    fun scrollToEvent(eventPosition: Int, animate: Boolean) =
+        if (animate) smoothScrollToPosition(eventPosition)
+        else scrollToPosition(eventPosition)
 
     private class EventsDiffCallback(
             private val oldEvents: List<Event>,
@@ -52,4 +56,20 @@ class ScheduleDayPageView @JvmOverloads constructor(
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) = oldEvents[oldItemPosition] == newEvents[newItemPosition]
     }
+}
+
+private class SnappingLinearLayoutManager(context: Context) : LinearLayoutManager(context) {
+
+    override fun smoothScrollToPosition(recyclerView: RecyclerView, state: RecyclerView.State?, position: Int) {
+        val smoothScroller = TopSnappedSmoothScroller(this, recyclerView.context)
+        smoothScroller.targetPosition = position
+        startSmoothScroll(smoothScroller)
+    }
+}
+
+private class TopSnappedSmoothScroller(private val layoutManager: SnappingLinearLayoutManager, context: Context) : LinearSmoothScroller(context) {
+    override fun computeScrollVectorForPosition(targetPosition: Int): PointF? =
+        layoutManager.computeScrollVectorForPosition(targetPosition)
+
+    override fun getVerticalSnapPreference() = SNAP_TO_START
 }

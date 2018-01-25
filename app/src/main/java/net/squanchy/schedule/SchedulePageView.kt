@@ -124,12 +124,13 @@ class SchedulePageView @JvmOverloads constructor(
     }
 
     fun updateWith(schedule: Schedule, onEventClicked: (Event) -> Unit) {
-        val initialEventForPage = schedule.pages.map(::findNextEventForPage)
+        val initialEventForPage = schedule.pages.map(::findNextEventForPage).toTypedArray()
         viewPagerAdapter.updateWith(schedule.pages, initialEventForPage, onEventClicked)
 
         val todayPageIndex = findTodayIndexOrDefault(schedule.pages)
         viewpager.setCurrentItem(todayPageIndex, false)
 
+        tabstrip.addOnTabSelectedListener(ScrollingOnTabSelectedListener(schedule, viewPagerAdapter))
         progressbar.visibility = View.GONE
     }
 
@@ -139,26 +140,35 @@ class SchedulePageView @JvmOverloads constructor(
             ?.let(pages::indexOf) ?: 0
     }
 
-    private fun findNextEventForPage(page: SchedulePage) = page.events
-        .firstOrNull {
-            it.startTime.toDateTime(it.timeZone).isAfter(currentTime.currentLocalDateTime().toDateTime(it.timeZone))
+    private fun findNextEventForPage(page: SchedulePage) =
+        page
+            .events
+            .firstOrNull {
+                it.startTime.toDateTime(it.timeZone).isAfter(currentTime.currentLocalDateTime().toDateTime(it.timeZone))
+            }
+
+    private inner class ScrollingOnTabSelectedListener constructor(
+            private val schedule: Schedule,
+            private val viewPagerAdapter: ScheduleViewPagerAdapter
+    ) : OnTabSelectedListener {
+        override fun onTabReselected(tab: TabLayout.Tab) {
+            val page = schedule.pages[tab.position]
+            findNextEventForPage(page)?.let { viewPagerAdapter.refresh(tab.position, it) }
         }
+    }
 
     private class TrackingOnTabSelectedListener constructor(
             private val analytics: Analytics,
             private val viewPagerAdapter: ScheduleViewPagerAdapter
-    ) : TabLayout.OnTabSelectedListener {
-
+    ) : OnTabSelectedListener {
         override fun onTabSelected(tab: TabLayout.Tab) {
             analytics.trackItemSelected(ContentType.SCHEDULE_DAY, viewPagerAdapter.getPageDayId(tab.position))
         }
+    }
 
-        override fun onTabUnselected(tab: TabLayout.Tab) {
-            // No-op
-        }
-
-        override fun onTabReselected(tab: TabLayout.Tab) {
-            // No-op
-        }
+    private interface OnTabSelectedListener : TabLayout.OnTabSelectedListener {
+        override fun onTabReselected(tab: TabLayout.Tab) {}
+        override fun onTabUnselected(tab: TabLayout.Tab) {}
+        override fun onTabSelected(tab: TabLayout.Tab) {}
     }
 }
