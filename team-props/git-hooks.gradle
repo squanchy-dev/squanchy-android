@@ -11,9 +11,7 @@ task copyGitHooks(type: Copy) {
         rename '(.*).sh', '$1'
     }
     into "${rootDir}/.git/hooks"
-    onlyIf {
-        return isLinuxOrMacOs()
-    }
+    onlyIf { isLinuxOrMacOs() }
 }
 
 task installGitHooks(type: Exec) {
@@ -23,10 +21,7 @@ task installGitHooks(type: Exec) {
     commandLine 'chmod'
     args '-R', '+x', '.git/hooks/'
     dependsOn copyGitHooks
-    onlyIf {
-        def preCommitHook = new File("${rootDir}/.git/hooks/pre-commit")
-        return isLinuxOrMacOs() && !preCommitHook.canExecute()
-    }
+    onlyIf { isLinuxOrMacOs() }
     doLast {
         logger.info('Git hook installed successfully.')
     }
