@@ -16,7 +16,6 @@ import net.squanchy.home.Loadable
 import net.squanchy.navigation.Navigator
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Schedule
-import net.squanchy.schedule.domain.view.SchedulePage
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter
 import net.squanchy.support.font.applyTypeface
 import net.squanchy.support.font.getFontFor
@@ -124,37 +123,15 @@ class SchedulePageView @JvmOverloads constructor(
     }
 
     fun updateWith(schedule: Schedule, onEventClicked: (Event) -> Unit) {
-        val initialEventForPage = schedule.pages.map(::findNextEventForPage).toTypedArray()
+        val initialEventForPage = schedule.pages.map { schedule.findNextEventForPage(it, currentTime) }.toTypedArray()
         viewPagerAdapter.updateWith(schedule.pages, initialEventForPage, onEventClicked)
 
-        val todayPageIndex = findTodayIndexOrDefault(schedule)
+        val todayPageIndex = schedule.findTodayIndexOrDefault(currentTime)
         viewpager.setCurrentItem(todayPageIndex, false)
 
         tabstrip.addOnTabSelectedListener(ScrollingOnTabSelectedListener(schedule, viewPagerAdapter))
         progressbar.visibility = View.GONE
     }
-
-    private fun findTodayIndexOrDefault(schedule: Schedule) =
-        schedule.pages
-            .indexOfFirst { page ->
-                val now = currentTime.currentDateTime().toDateTime(schedule.timezone)
-                page.date.toLocalDate().isEqual(now.toLocalDate())
-            }
-            .let {
-                when (it) {
-                    -1 -> 0 // default to the first page
-                    else -> it
-                }
-            }
-
-    private fun findNextEventForPage(page: SchedulePage) =
-        page
-            .events
-            .firstOrNull { event ->
-                val startDateTime = event.startTime.toDateTime().withZone(event.timeZone)
-                val currentDateTime = currentTime.currentDateTime().toDateTime().withZone(event.timeZone)
-                startDateTime.isAfter(currentDateTime)
-            }
 
     private interface OnTabSelectedListener : TabLayout.OnTabSelectedListener {
 
@@ -170,7 +147,7 @@ class SchedulePageView @JvmOverloads constructor(
 
         override fun onTabReselected(tab: TabLayout.Tab) {
             val page = schedule.pages[tab.position]
-            findNextEventForPage(page)?.let { viewPagerAdapter.refresh(tab.position, it) }
+            schedule.findNextEventForPage(page, currentTime)?.let { viewPagerAdapter.refresh(tab.position, it) }
         }
     }
 
