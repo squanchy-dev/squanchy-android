@@ -127,25 +127,32 @@ class SchedulePageView @JvmOverloads constructor(
         val initialEventForPage = schedule.pages.map(::findNextEventForPage).toTypedArray()
         viewPagerAdapter.updateWith(schedule.pages, initialEventForPage, onEventClicked)
 
-        val todayPageIndex = findTodayIndexOrDefault(schedule.pages)
+        val todayPageIndex = findTodayIndexOrDefault(schedule)
         viewpager.setCurrentItem(todayPageIndex, false)
 
         tabstrip.addOnTabSelectedListener(ScrollingOnTabSelectedListener(schedule, viewPagerAdapter))
         progressbar.visibility = View.GONE
     }
 
-    private fun findTodayIndexOrDefault(pages: List<SchedulePage>): Int {
-        val now = currentTime.currentLocalDateTime()
-        return pages.firstOrNull { it.date.toLocalDate().isEqual(now.toLocalDate()) }
-            ?.let(pages::indexOf) ?: 0
-    }
+    private fun findTodayIndexOrDefault(schedule: Schedule) =
+        schedule.pages
+            .indexOfFirst { page ->
+                val now = currentTime.currentDateTime().toDateTime(schedule.timezone)
+                page.date.toLocalDate().isEqual(now.toLocalDate())
+            }
+            .let {
+                when (it) {
+                    -1 -> 0 // default to the first page
+                    else -> it
+                }
+            }
 
     private fun findNextEventForPage(page: SchedulePage) =
         page
             .events
             .firstOrNull { event ->
-                val startDateTime = event.startTime.toDateTime(event.timeZone)
-                val currentDateTime = currentTime.currentLocalDateTime().toDateTime(event.timeZone)
+                val startDateTime = event.startTime.toDateTime().withZone(event.timeZone)
+                val currentDateTime = currentTime.currentDateTime().toDateTime().withZone(event.timeZone)
                 startDateTime.isAfter(currentDateTime)
             }
 
