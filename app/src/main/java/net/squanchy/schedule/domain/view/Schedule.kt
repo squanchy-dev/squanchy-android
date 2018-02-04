@@ -18,10 +18,10 @@ data class Schedule(val pages: List<SchedulePage>, val timezone: DateTimeZone) {
         fun create(pages: List<SchedulePage>, timezone: DateTimeZone) = Schedule(pages, timezone)
     }
 
-    fun findTodayIndexOrDefault(currentTime: CurrentTime) =
-        pages
+    fun findTodayIndexOrDefault(currentTime: CurrentTime): Int {
+        val now = currentTime.currentDateTime().withZone(timezone)
+        return pages
             .indexOfFirst { page ->
-                val now = currentTime.currentDateTime().toDateTime(timezone)
                 page.date.toLocalDate().isEqual(now.toLocalDate())
             }
             .let {
@@ -30,6 +30,7 @@ data class Schedule(val pages: List<SchedulePage>, val timezone: DateTimeZone) {
                     else -> it
                 }
             }
+    }
 
     fun findNextEventForPage(page: SchedulePage, currentTime: CurrentTime) =
         page.events
