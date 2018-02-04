@@ -58,7 +58,7 @@ ext {
     buildScript = [
         android                   : 'com.android.tools.build:gradle:3.0.1',
         firebase                  : 'com.google.firebase:firebase-plugins:1.1.5',
-        googleServices            : 'com.google.gms:google-services:3.1.2',
+        googleServices            : 'com.google.gms:google-services:3.2.0',
         gradleStaticAnalysisPlugin: 'com.novoda:gradle-static-analysis-plugin:0.4.1',
         jaCoCo                    : 'org.jacoco:org.jacoco.core:0.8.0',
         playPublisher             : 'com.github.triplet.gradle:play-publisher:1.2.0'
