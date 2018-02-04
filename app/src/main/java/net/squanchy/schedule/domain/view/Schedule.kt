@@ -6,6 +6,8 @@ import org.joda.time.DateTimeZone
 private const val NOT_FOUND_INDEX = -1
 private const val FIRST_PAGE_INDEX = 0
 
+private const val CURRENT_SLOT_THRESHOLD = .6f
+
 data class Schedule(val pages: List<SchedulePage>, val timezone: DateTimeZone) {
 
     val isEmpty: Boolean
@@ -30,11 +32,19 @@ data class Schedule(val pages: List<SchedulePage>, val timezone: DateTimeZone) {
             }
 
     fun findNextEventForPage(page: SchedulePage, currentTime: CurrentTime) =
-        page
-            .events
+        page.events
             .firstOrNull { event ->
                 val startDateTime = event.startTime.toDateTime().withZone(event.timeZone)
                 val currentDateTime = currentTime.currentDateTime().toDateTime().withZone(event.timeZone)
-                startDateTime.isAfter(currentDateTime)
+                val endDateTime = event.endTime.toDateTime().withZone(event.timeZone)
+
+                if (currentDateTime.isAfter(endDateTime)) {
+                    false
+                } else {
+                    val duration = endDateTime.millis - startDateTime.millis
+                    val offset = currentDateTime.millis - startDateTime.millis
+
+                    offset.toFloat() / duration < CURRENT_SLOT_THRESHOLD
+                }
             }
 }
