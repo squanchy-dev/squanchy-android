@@ -129,7 +129,7 @@ class SchedulePageView @JvmOverloads constructor(
         val todayPageIndex = schedule.findTodayIndexOrDefault(currentTime)
         viewpager.setCurrentItem(todayPageIndex, false)
 
-        tabstrip.addOnTabSelectedListener(ScrollingOnTabSelectedListener(schedule, viewPagerAdapter))
+        tabstrip.addOnTabSelectedListener(ScrollingOnTabSelectedListener(schedule, viewPagerAdapter, currentTime))
         progressbar.visibility = View.GONE
     }
 
@@ -140,9 +140,10 @@ class SchedulePageView @JvmOverloads constructor(
         override fun onTabSelected(tab: TabLayout.Tab) {}
     }
 
-    private inner class ScrollingOnTabSelectedListener(
+    private class ScrollingOnTabSelectedListener(
             private val schedule: Schedule,
-            private val viewPagerAdapter: ScheduleViewPagerAdapter
+            private val viewPagerAdapter: ScheduleViewPagerAdapter,
+            private val currentTime: CurrentTime
     ) : OnTabSelectedListener {
 
         override fun onTabReselected(tab: TabLayout.Tab) {
