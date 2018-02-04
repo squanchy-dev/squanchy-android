@@ -27,8 +27,7 @@ class EventDetailsCoordinatorLayout @JvmOverloads constructor(
             favoriteFab.setImageResource(
                     if (event.favorited)
                         R.drawable.ic_favorite_filled
-                    else
-                        R.drawable.ic_favorite_empty
+                    else R.drawable.ic_favorite_empty
             )
             favoriteFab.setOnClickListener { listener.onFavoriteClick() }
             favoriteFab.visibility = View.VISIBLE
