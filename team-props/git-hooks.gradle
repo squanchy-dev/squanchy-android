@@ -5,7 +5,6 @@ static def isLinuxOrMacOs() {
 
 task copyGitHooks(type: Copy) {
     description 'Copies the git hooks from team-props/git-hooks to the .git folder.'
-    group 'git hooks'
     from("${rootDir}/team-props/git-hooks/") {
         include '**/*.sh'
         rename '(.*).sh', '$1'
