@@ -12,6 +12,7 @@ import net.squanchy.schedule.domain.view.SchedulePage
 import net.squanchy.schedule.view.EventItemView
 import net.squanchy.schedule.view.EventViewHolder
 import net.squanchy.search.view.HeaderViewHolder
+import org.joda.time.DateTimeZone
 
 import org.joda.time.LocalDateTime
 
@@ -25,7 +26,7 @@ internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<Recycl
 
     private val layoutInflater = LayoutInflater.from(context)
 
-    private var schedule = Schedule.create(emptyList())
+    private var schedule = Schedule.create(emptyList(), DateTimeZone.UTC)
 
     private var listener: ((Event) -> Unit)? = null
 

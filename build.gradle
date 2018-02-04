@@ -17,7 +17,7 @@ buildscript {
 }
 
 plugins {
-    id 'io.gitlab.arturbosch.detekt' version '1.0.0.RC6-2'
+    id 'io.gitlab.arturbosch.detekt' version '1.0.0.RC6-3'
     id 'com.github.ben-manes.versions' version '0.17.0'
 }
 
@@ -28,12 +28,6 @@ def teamPropsFile(propsFile) {
 
 apply from: 'dependencies.gradle'
 apply from: teamPropsFile('git-hooks.gradle')
-
-detekt {
-    profile('main') {
-        filters = '.*'        // Nothing to check in the root project
-    }
-}
 
 subprojects {
     buildscript {
