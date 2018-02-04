@@ -15,10 +15,14 @@ class ScheduleViewPagerAdapter(private val context: Context) : ViewPagerAdapter<
     private lateinit var listener: (Event) -> Unit
 
     private var pages = emptyList<SchedulePage>()
+    private var initialEventForPage = emptyArray<Event?>()
+    private var triggerScrollForPage = emptyArray<((Event) -> Unit)?>()
 
-    fun updateWith(pages: List<SchedulePage>, listener: (Event) -> Unit) {
+    fun updateWith(pages: List<SchedulePage>, initialEventForPage: Array<Event?>, listener: (Event) -> Unit) {
         this.pages = pages
+        this.initialEventForPage = initialEventForPage
         this.listener = listener
+        this.triggerScrollForPage = arrayOfNulls(pages.size)
         notifyDataSetChanged()
     }
 
@@ -31,7 +35,10 @@ class ScheduleViewPagerAdapter(private val context: Context) : ViewPagerAdapter<
 
     override fun bindView(view: ScheduleDayPageView, position: Int) {
         val events = pages[position].events
+        val initialEvent = initialEventForPage[position]
+        triggerScrollForPage[position] = { view.scrollToEvent(events.indexOf(it), true) }
         view.updateWith(events, listener)
+        initialEvent?.let { view.scrollToEvent(events.indexOf(it), false) }
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
@@ -40,6 +47,10 @@ class ScheduleViewPagerAdapter(private val context: Context) : ViewPagerAdapter<
     }
 
     fun getPageDayId(position: Int) = pages[position].dayId
+
+    fun refresh(page: Int, event: Event) {
+        triggerScrollForPage[page]?.invoke(event)
+    }
 
     override fun isViewFromObject(view: View, `object`: Any) = view === `object`
 
