@@ -29,12 +29,6 @@ def teamPropsFile(propsFile) {
 apply from: 'dependencies.gradle'
 apply from: teamPropsFile('git-hooks.gradle')
 
-detekt {
-    profile('main') {
-        filters = '.*'        // Nothing to check in the root project
-    }
-}
-
 subprojects {
     buildscript {
         repositories {
