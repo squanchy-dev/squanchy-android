@@ -3,6 +3,9 @@ package net.squanchy.schedule.domain.view
 import net.squanchy.support.system.CurrentTime
 import org.joda.time.DateTimeZone
 
+private const val NOT_FOUND_INDEX = -1
+private const val FIRST_PAGE_INDEX = 0
+
 data class Schedule(val pages: List<SchedulePage>, val timezone: DateTimeZone) {
 
     val isEmpty: Boolean
@@ -21,7 +24,7 @@ data class Schedule(val pages: List<SchedulePage>, val timezone: DateTimeZone) {
             }
             .let {
                 when (it) {
-                    -1 -> 0 // default to the first page
+                    NOT_FOUND_INDEX -> FIRST_PAGE_INDEX
                     else -> it
                 }
             }
