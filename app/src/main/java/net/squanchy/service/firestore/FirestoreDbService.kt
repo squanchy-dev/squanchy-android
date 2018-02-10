@@ -5,6 +5,7 @@ import io.reactivex.Observable
 import net.squanchy.service.firestore.model.conferenceinfo.FirestoreConferenceInfo
 import net.squanchy.service.firestore.model.conferenceinfo.FirestoreVenue
 import net.squanchy.service.firestore.model.schedule.FirestoreSchedulePage
+import net.squanchy.service.firestore.model.schedule.FirestoreSpeaker
 import net.squanchy.service.firestore.model.twitter.FirestoreTweet
 import org.joda.time.DateTimeZone
 
@@ -61,7 +62,7 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
                         subscriber.onError(exception)
                         return@addSnapshotListener
                     }
-                    subscriber.onNext(snapshot.toObject(FirestoreVenue::class.java) )
+                    subscriber.onNext(snapshot.toObject(FirestoreVenue::class.java))
                 }
 
             subscriber.setCancellable { registration.remove() }
@@ -77,7 +78,24 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
                         subscriber.onError(exception)
                         return@addSnapshotListener
                     }
-                    subscriber.onNext(snapshot.toObject(FirestoreConferenceInfo::class.java) )
+                    subscriber.onNext(snapshot.toObject(FirestoreConferenceInfo::class.java))
+                }
+
+            subscriber.setCancellable { registration.remove() }
+        }
+    }
+
+    fun speakers(): Observable<List<FirestoreSpeaker>> {
+        return Observable.create { subscriber ->
+            val registration = db.collection("speakers")
+                .addSnapshotListener { snapshot, exception ->
+                    if (exception != null && subscriber.isDisposed.not()) {
+                        subscriber.onError(exception)
+                        return@addSnapshotListener
+                    }
+                    subscriber.onNext(snapshot.documents.map {
+                        it.toObject(FirestoreSpeaker::class.java).apply { id = it.id }
+                    })
                 }
 
             subscriber.setCancellable { registration.remove() }

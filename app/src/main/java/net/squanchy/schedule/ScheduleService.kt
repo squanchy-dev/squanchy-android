@@ -50,8 +50,7 @@ class FirestoreScheduleService(
             .map { Schedule(it) }
     }
 
-    private fun <T, U> combineInAPair(): BiFunction<List<T>, U, Pair<List<T>, U>> =
-        BiFunction { schedulePages, timeZone -> Pair(schedulePages, timeZone) }
+    private fun <T, U> combineInAPair(): BiFunction<List<T>, U, Pair<List<T>, U>> = BiFunction(::Pair)
 
     private fun FirestoreEvent.toEvent(dayId: String, timeZone: DateTimeZone) = Event(
         id,
