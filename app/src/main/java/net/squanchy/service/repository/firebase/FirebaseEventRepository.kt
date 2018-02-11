@@ -16,6 +16,7 @@ import net.squanchy.service.firebase.model.FirebaseFavorites
 import net.squanchy.service.firebase.model.FirebasePlaces
 import net.squanchy.service.firebase.model.FirebaseTracks
 import net.squanchy.service.firebase.model.FirebaseVenue
+import net.squanchy.service.firestore.FirestoreDbService
 import net.squanchy.service.repository.EventRepository
 import net.squanchy.service.repository.SpeakerRepository
 import net.squanchy.speaker.domain.view.Speaker
@@ -27,6 +28,7 @@ import org.joda.time.LocalDateTime
 
 class FirebaseEventRepository(
         private val dbService: FirebaseDbService,
+        private val firestoreDbService: FirestoreDbService,
         private val checksum: Checksum,
         private val speakerRepository: SpeakerRepository
 ) : EventRepository {

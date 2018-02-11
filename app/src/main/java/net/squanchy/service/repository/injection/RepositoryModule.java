@@ -19,10 +19,11 @@ public class RepositoryModule {
     @Provides
     EventRepository eventService(
             FirebaseDbService dbService,
+            FirestoreDbService firestoreDbService,
             Checksum checksum,
             SpeakerRepository speakerRepository
     ) {
-        return new FirebaseEventRepository(dbService, checksum, speakerRepository);
+        return new FirebaseEventRepository(dbService, firestoreDbService, checksum, speakerRepository);
     }
 
     @Provides
