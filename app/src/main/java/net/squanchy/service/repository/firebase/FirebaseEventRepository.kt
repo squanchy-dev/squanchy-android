@@ -11,6 +11,7 @@ import net.squanchy.service.firebase.model.FirebaseFavorites
 import net.squanchy.service.firestore.FirestoreDbService
 import net.squanchy.service.firestore.model.conferenceinfo.FirestoreVenue
 import net.squanchy.service.firestore.model.schedule.FirestoreEvent
+import net.squanchy.service.firestore.toEvent
 import net.squanchy.service.firestore.toPlace
 import net.squanchy.service.firestore.toSpeaker
 import net.squanchy.service.firestore.toTrack
@@ -45,23 +46,10 @@ class FirebaseEventRepository(
     }
 
     private val combineIntoEvent: (FirestoreEvent, FirebaseFavorites, DateTimeZone) -> Event
-        get() = { apiEvent, favorites, timeZone ->
-            Event.create(
-                apiEvent.id,
-                checksum.getChecksumOf(apiEvent.id),
-                LocalDateTime(apiEvent.startTime),
-                LocalDateTime(apiEvent.endTime),
-                apiEvent.title,
-                apiEvent.place?.toPlace().optional(),
-                Optional.fromNullable(apiEvent.experienceLevel).flatMap { ExperienceLevel.tryParsingFrom(it) },
-                apiEvent.speakers.map { it.toSpeaker(checksum) },
-                Event.Type.fromRawType(apiEvent.type),
-                favorites.hasFavorite(apiEvent.id),
-                Optional.fromNullable(apiEvent.description),
-                apiEvent.track?.toTrack().optional(),
-                timeZone
-            )
-        }
+        get() = { event, favourites, timezone -> event.toEvent(checksum, timezone, favourites) }
+
+    private val combineIntoEvents: (List<FirestoreEvent>, FirebaseFavorites, DateTimeZone) -> List<Event>
+        get() = { event, favourites, timezone -> event.map { it.toEvent(checksum, timezone, favourites) } }
 
     override fun events(userId: String): Observable<List<Event>> {
         val sessionsObservable = firestoreDbService.events()
@@ -74,29 +62,6 @@ class FirebaseEventRepository(
             timeZoneObservable,
             Function3(combineIntoEvents)
         )
-    }
-
-    private val combineIntoEvents: (List<FirestoreEvent>, FirebaseFavorites, DateTimeZone) -> List<Event>
-        get() = { firebaseEvents, favorites, timeZone -> firebaseEvents.map(combineEventWith(favorites, timeZone)) }
-
-    private fun combineEventWith(favorites: FirebaseFavorites, timeZone: DateTimeZone): ((FirestoreEvent) -> Event) {
-        return { apiEvent ->
-            Event.create(
-                apiEvent.id,
-                checksum.getChecksumOf(apiEvent.id),
-                LocalDateTime(apiEvent.startTime),
-                LocalDateTime(apiEvent.endTime),
-                apiEvent.title,
-                apiEvent.place?.toPlace().optional(),
-                apiEvent.experienceLevel.optional().flatMap { ExperienceLevel.tryParsingFrom(it) },
-                apiEvent.speakers.map { it.toSpeaker(checksum) },
-                Event.Type.fromRawType(apiEvent.type),
-                favorites.hasFavorite(apiEvent.id),
-                Optional.fromNullable(apiEvent.description),
-                apiEvent.track?.toTrack().optional(),
-                timeZone
-            )
-        }
     }
 
     override fun addFavorite(eventId: String, userId: String): Completable {

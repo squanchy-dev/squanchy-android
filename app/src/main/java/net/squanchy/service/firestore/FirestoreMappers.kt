@@ -4,6 +4,7 @@ import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Place
 import net.squanchy.schedule.domain.view.Track
+import net.squanchy.service.firebase.model.FirebaseFavorites
 import net.squanchy.service.firestore.model.conferenceinfo.FirestoreVenue
 import net.squanchy.service.firestore.model.schedule.FirestoreEvent
 import net.squanchy.service.firestore.model.schedule.FirestorePlace
@@ -15,22 +16,6 @@ import net.squanchy.support.lang.optional
 import net.squanchy.venue.domain.view.Venue
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDateTime
-
-fun FirestoreEvent.toEvent(checksum: Checksum, timeZone: DateTimeZone) = Event(
-    id,
-    checksum.getChecksumOf(id),
-    LocalDateTime(startTime),
-    LocalDateTime(endTime),
-    title,
-    place.optional().map { it.toPlace() },
-    track.optional().map { it.toTrack() },
-    speakers.map { it.toSpeaker(checksum) },
-    ExperienceLevel.tryParsingFrom(experienceLevel),
-    Event.Type.fromRawType(type),
-    false, // TODO fetch favourites
-    description.optional(),
-    timeZone
-)
 
 fun FirestorePlace.toPlace(): Place = Place.create(id, name, floor.optional())
 
@@ -62,4 +47,20 @@ fun FirestoreVenue.toVenue() = Venue(
     description = description,
     mapUrl = mapUrl,
     timeZone = DateTimeZone.forID(timezone)
+)
+
+fun FirestoreEvent.toEvent(checksum: Checksum, dateTime: DateTimeZone, favorites: FirebaseFavorites? = null) = Event(
+    id = id,
+    numericId = checksum.getChecksumOf(id),
+    startTime = LocalDateTime(startTime),
+    endTime = LocalDateTime(endTime),
+    title = title,
+    place = place?.toPlace().optional(),
+    experienceLevel = experienceLevel.optional().flatMap { ExperienceLevel.tryParsingFrom(it) },
+    speakers = speakers.map { it.toSpeaker(checksum) },
+    type = Event.Type.fromRawType(type),
+    favorited = favorites?.hasFavorite(id) ?: false,
+    description = description.optional(),
+    track = track?.toTrack().optional(),
+    timeZone = dateTime
 )
