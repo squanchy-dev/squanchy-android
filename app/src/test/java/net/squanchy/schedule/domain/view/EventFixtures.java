@@ -103,20 +103,19 @@ public final class EventFixtures {
     }
 
     public Event build() {
-        return Event.Companion.create(
+        return new Event(
                 eventId,
                 numericEventId,
-                dayId,
                 startTime,
                 endTime,
                 title,
                 place,
-                experienceLevel,
+                track,
                 speakers,
+                experienceLevel,
                 type,
                 false,
                 description,
-                track,
                 timeZone
         );
     }
