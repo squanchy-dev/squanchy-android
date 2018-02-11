@@ -41,7 +41,7 @@ class FirestoreScheduleService(
                     SchedulePage(
                         schedulePage.day.id,
                         LocalDate(schedulePage.day.date),
-                        schedulePage.events.map { it.toEvent(schedulePage.day.id, timeZone) }
+                        schedulePage.events.map { it.toEvent(timeZone) }
                             .sortedBy { it.startTime }
                             .filterOnlyFavorites(onlyFavorites)
                     )
@@ -52,7 +52,7 @@ class FirestoreScheduleService(
 
     private fun <T, U> combineInAPair(): BiFunction<List<T>, U, Pair<List<T>, U>> = BiFunction(::Pair)
 
-    private fun FirestoreEvent.toEvent(dayId: String, timeZone: DateTimeZone) = Event(
+    private fun FirestoreEvent.toEvent(timeZone: DateTimeZone) = Event(
         id,
         checksum.getChecksumOf(id),
         LocalDateTime(startTime),
@@ -62,7 +62,6 @@ class FirestoreScheduleService(
         track.toTrack(),
         speakers.toSpeakersList(checksum),
         ExperienceLevel.tryParsingFrom(experienceLevel),
-        dayId,
         Event.Type.fromRawType(type),
         false, // TODO fetch favourites
         description.optional(),

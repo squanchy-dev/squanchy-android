@@ -77,7 +77,6 @@ public class DebugActivity extends AppCompatActivity {
         return Event.Companion.create(
                 String.valueOf(id),
                 id,
-                "1",
                 start,
                 end,
                 "A very interesting talk",

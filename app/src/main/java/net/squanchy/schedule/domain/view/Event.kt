@@ -17,7 +17,6 @@ data class Event(
         val track: Optional<Track>,
         val speakers: List<Speaker>,
         val experienceLevel: Optional<ExperienceLevel>,
-        val dayId: String,
         val type: Type,
         val favorited: Boolean,
         val description: Optional<String>,
@@ -49,7 +48,6 @@ data class Event(
         fun create(
                 eventId: String,
                 numericEventId: Long,
-                dayId: String,
                 startTime: LocalDateTime,
                 endTime: LocalDateTime,
                 title: String,
@@ -71,7 +69,6 @@ data class Event(
                 track,
                 speakers,
                 experienceLevel,
-                dayId,
                 type,
                 favorited,
                 description,

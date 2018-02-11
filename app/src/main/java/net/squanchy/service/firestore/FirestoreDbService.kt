@@ -103,6 +103,25 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
         }
     }
 
+    fun events(): Observable<List<FirestoreEvent>> {
+        return Observable.create { subscriber ->
+            val registration = db.collection("views")
+                .document("event_details")
+                .collection("events")
+                .addSnapshotListener { snapshot, exception ->
+                    if (exception != null && subscriber.isDisposed.not()) {
+                        subscriber.onError(exception)
+                        return@addSnapshotListener
+                    }
+                    subscriber.onNext(snapshot.documents.map {
+                        it.toObject(FirestoreEvent::class.java)
+                    })
+                }
+
+            subscriber.setCancellable { registration.remove() }
+        }
+    }
+
     fun event(eventId: String): Observable<FirestoreEvent> {
         return Observable.create { subscriber ->
             val registration = db.collection("views")
