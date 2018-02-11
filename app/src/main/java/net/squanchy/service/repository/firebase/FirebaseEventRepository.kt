@@ -38,8 +38,8 @@ class FirebaseEventRepository(
         val eventObservable = firestoreDbService.event(eventId)
         val speakersObservable = speakerRepository.speakers()
         val favoritesObservable = dbService.favorites(userId)
-        val placesObservable = dbService.places().map(toPlaces())                 // TODO access them by ID directly?
-        val tracksObservable = dbService.tracks().map(toTracks)                 // TODO extract repositories?
+        val placesObservable = dbService.places().map(toPlaces()) // TODO access them by ID directly?
+        val tracksObservable = dbService.tracks().map(toTracks) // TODO extract repositories?
         val timeZoneObservable = dbService.venueInfo().map(toTimeZone())
 
         return Observable.combineLatest(
@@ -113,8 +113,8 @@ class FirebaseEventRepository(
         val sessionsObservable = firestoreDbService.events()
         val speakersObservable = speakerRepository.speakers()
         val favoritesObservable = dbService.favorites(userId)
-        val placesObservable = dbService.places().map(toPlaces())                 // TODO access them by ID directly?
-        val tracksObservable = dbService.tracks().map(toTracks)                 // TODO extract repositories?
+        val placesObservable = dbService.places().map(toPlaces()) // TODO access them by ID directly?
+        val tracksObservable = dbService.tracks().map(toTracks) // TODO extract repositories?
         val timeZoneObservable = dbService.venueInfo().map(toTimeZone())
 
         return Observable.combineLatest(

@@ -88,7 +88,9 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
 
     fun speakers(): Observable<List<FirestoreSpeaker>> {
         return Observable.create { subscriber ->
-            val registration = db.collection("speakers")
+            val registration = db.collection("views")
+                .document("speakers")
+                .collection("speaker_pages")
                 .addSnapshotListener { snapshot, exception ->
                     if (exception != null && subscriber.isDisposed.not()) {
                         subscriber.onError(exception)
