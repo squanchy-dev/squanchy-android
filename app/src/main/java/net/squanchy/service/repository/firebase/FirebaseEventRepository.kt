@@ -4,7 +4,6 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.functions.Function3
 import io.reactivex.schedulers.Schedulers
-import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.service.firebase.FirebaseDbService
 import net.squanchy.service.firebase.model.FirebaseFavorites
@@ -12,15 +11,9 @@ import net.squanchy.service.firestore.FirestoreDbService
 import net.squanchy.service.firestore.model.conferenceinfo.FirestoreVenue
 import net.squanchy.service.firestore.model.schedule.FirestoreEvent
 import net.squanchy.service.firestore.toEvent
-import net.squanchy.service.firestore.toPlace
-import net.squanchy.service.firestore.toSpeaker
-import net.squanchy.service.firestore.toTrack
 import net.squanchy.service.repository.EventRepository
 import net.squanchy.support.lang.Checksum
-import net.squanchy.support.lang.Optional
-import net.squanchy.support.lang.optional
 import org.joda.time.DateTimeZone
-import org.joda.time.LocalDateTime
 
 class FirebaseEventRepository(
     private val dbService: FirebaseDbService,

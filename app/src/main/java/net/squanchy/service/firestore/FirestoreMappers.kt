@@ -49,7 +49,7 @@ fun FirestoreVenue.toVenue() = Venue(
     timeZone = DateTimeZone.forID(timezone)
 )
 
-fun FirestoreEvent.toEvent(checksum: Checksum, dateTime: DateTimeZone, favorites: FirebaseFavorites? = null) = Event(
+fun FirestoreEvent.toEvent(checksum: Checksum, dateTime: DateTimeZone, favorites: FirebaseFavorites?) = Event(
     id = id,
     numericId = checksum.getChecksumOf(id),
     startTime = LocalDateTime(startTime),
