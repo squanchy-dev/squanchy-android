@@ -9,8 +9,8 @@ import net.squanchy.support.lang.Checksum
 import net.squanchy.support.lang.Optional
 
 class FirestoreSpeakerRepository(
-        private val dbService: FirestoreDbService,
-        private val checksum: Checksum
+    private val dbService: FirestoreDbService,
+    private val checksum: Checksum
 ) : SpeakerRepository {
 
     override fun speakers(): Observable<List<Speaker>> {
@@ -24,17 +24,15 @@ class FirestoreSpeakerRepository(
             .map { it.toSpeaker() }
     }
 
-    private fun FirestoreSpeaker.toSpeaker(): Speaker {
-        return Speaker(
-                numericId = checksum.getChecksumOf(id),
-                id = id,
-                name = name,
-                bio = bio,
-                companyName = Optional.fromNullable(companyName),
-                companyUrl = Optional.fromNullable(companyUrl),
-                personalUrl = Optional.fromNullable(personalUrl),
-                photoUrl = Optional.fromNullable(photoUrl),
-                twitterUsername = Optional.fromNullable(twitterUsername)
-        )
-    }
+    private fun FirestoreSpeaker.toSpeaker() = Speaker(
+        numericId = checksum.getChecksumOf(id),
+        id = id,
+        name = name,
+        bio = bio,
+        companyName = Optional.fromNullable(companyName),
+        companyUrl = Optional.fromNullable(companyUrl),
+        personalUrl = Optional.fromNullable(personalUrl),
+        photoUrl = Optional.fromNullable(photoUrl),
+        twitterUsername = Optional.fromNullable(twitterUsername)
+    )
 }
