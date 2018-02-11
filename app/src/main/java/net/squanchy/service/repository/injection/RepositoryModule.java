@@ -17,13 +17,8 @@ import dagger.Provides;
 public class RepositoryModule {
 
     @Provides
-    EventRepository eventService(
-            FirebaseDbService dbService,
-            FirestoreDbService firestoreDbService,
-            Checksum checksum,
-            SpeakerRepository speakerRepository
-    ) {
-        return new FirebaseEventRepository(dbService, firestoreDbService, checksum, speakerRepository);
+    EventRepository eventService(FirebaseDbService dbService, FirestoreDbService firestoreDbService, Checksum checksum) {
+        return new FirebaseEventRepository(dbService, firestoreDbService, checksum);
     }
 
     @Provides

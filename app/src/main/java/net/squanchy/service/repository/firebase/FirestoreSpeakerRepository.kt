@@ -3,6 +3,7 @@ package net.squanchy.service.repository.firebase
 import io.reactivex.Observable
 import net.squanchy.service.firestore.FirestoreDbService
 import net.squanchy.service.firestore.model.schedule.FirestoreSpeaker
+import net.squanchy.service.firestore.toSpeaker
 import net.squanchy.service.repository.SpeakerRepository
 import net.squanchy.speaker.domain.view.Speaker
 import net.squanchy.support.lang.Checksum
@@ -15,24 +16,12 @@ class FirestoreSpeakerRepository(
 
     override fun speakers(): Observable<List<Speaker>> {
         return dbService.speakers()
-            .map { it.map { it.toSpeaker() } }
+            .map { it.map { it.toSpeaker(checksum) } }
     }
 
     override fun speaker(speakerId: String): Observable<Speaker> {
         return dbService.speakers()
             .map { it.first { it.id == speakerId } }
-            .map { it.toSpeaker() }
+            .map { it.toSpeaker(checksum) }
     }
-
-    private fun FirestoreSpeaker.toSpeaker() = Speaker(
-        numericId = checksum.getChecksumOf(id),
-        id = id,
-        name = name,
-        bio = bio,
-        companyName = Optional.fromNullable(companyName),
-        companyUrl = Optional.fromNullable(companyUrl),
-        personalUrl = Optional.fromNullable(personalUrl),
-        photoUrl = Optional.fromNullable(photoUrl),
-        twitterUsername = Optional.fromNullable(twitterUsername)
-    )
 }

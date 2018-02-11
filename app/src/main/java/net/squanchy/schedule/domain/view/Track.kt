@@ -8,21 +8,4 @@ data class Track(
         val accentColor: Optional<String>,
         val textColor: Optional<String>,
         val iconUrl: Optional<String>
-) {
-    companion object {
-
-        fun create(
-                id: String,
-                name: String,
-                accentColor: Optional<String>,
-                textColor: Optional<String>,
-                iconUrl: Optional<String>
-        ) = Track(
-                id,
-                name,
-                accentColor,
-                textColor,
-                iconUrl
-        )
-    }
-}
+)

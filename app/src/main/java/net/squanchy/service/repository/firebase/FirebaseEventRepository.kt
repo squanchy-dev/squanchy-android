@@ -6,19 +6,15 @@ import io.reactivex.functions.Function3
 import io.reactivex.schedulers.Schedulers
 import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.schedule.domain.view.Event
-import net.squanchy.schedule.domain.view.Place
-import net.squanchy.schedule.domain.view.Track
 import net.squanchy.service.firebase.FirebaseDbService
 import net.squanchy.service.firebase.model.FirebaseFavorites
 import net.squanchy.service.firestore.FirestoreDbService
 import net.squanchy.service.firestore.model.conferenceinfo.FirestoreVenue
 import net.squanchy.service.firestore.model.schedule.FirestoreEvent
-import net.squanchy.service.firestore.model.schedule.FirestorePlace
-import net.squanchy.service.firestore.model.schedule.FirestoreSpeaker
-import net.squanchy.service.firestore.model.schedule.FirestoreTrack
+import net.squanchy.service.firestore.toPlace
+import net.squanchy.service.firestore.toSpeaker
+import net.squanchy.service.firestore.toTrack
 import net.squanchy.service.repository.EventRepository
-import net.squanchy.service.repository.SpeakerRepository
-import net.squanchy.speaker.domain.view.Speaker
 import net.squanchy.support.lang.Checksum
 import net.squanchy.support.lang.Optional
 import net.squanchy.support.lang.optional
@@ -28,8 +24,7 @@ import org.joda.time.LocalDateTime
 class FirebaseEventRepository(
     private val dbService: FirebaseDbService,
     private val firestoreDbService: FirestoreDbService,
-    private val checksum: Checksum,
-    private val speakerRepository: SpeakerRepository
+    private val checksum: Checksum
 ) : EventRepository {
 
     override fun event(eventId: String, userId: String): Observable<Event> {
@@ -49,16 +44,6 @@ class FirebaseEventRepository(
         return DateTimeZone.forID(timezone)
     }
 
-    private fun FirestorePlace.toPlace(): Place = Place.create(id, name, floor.optional())
-
-    private fun FirestoreTrack.toTrack() = Track.create(
-        id,
-        name,
-        accentColor.optional(),
-        textColor.optional(),
-        iconUrl.optional()
-    )
-
     private val combineIntoEvent: (FirestoreEvent, FirebaseFavorites, DateTimeZone) -> Event
         get() = { apiEvent, favorites, timeZone ->
             Event.create(
@@ -69,7 +54,7 @@ class FirebaseEventRepository(
                 apiEvent.title,
                 apiEvent.place?.toPlace().optional(),
                 Optional.fromNullable(apiEvent.experienceLevel).flatMap { ExperienceLevel.tryParsingFrom(it) },
-                apiEvent.speakers.map { it.toSpeaker() },
+                apiEvent.speakers.map { it.toSpeaker(checksum) },
                 Event.Type.fromRawType(apiEvent.type),
                 favorites.hasFavorite(apiEvent.id),
                 Optional.fromNullable(apiEvent.description),
@@ -103,8 +88,8 @@ class FirebaseEventRepository(
                 LocalDateTime(apiEvent.endTime),
                 apiEvent.title,
                 apiEvent.place?.toPlace().optional(),
-                Optional.fromNullable(apiEvent.experienceLevel).flatMap { ExperienceLevel.tryParsingFrom(it) },
-                apiEvent.speakers.map { it.toSpeaker() },
+                apiEvent.experienceLevel.optional().flatMap { ExperienceLevel.tryParsingFrom(it) },
+                apiEvent.speakers.map { it.toSpeaker(checksum) },
                 Event.Type.fromRawType(apiEvent.type),
                 favorites.hasFavorite(apiEvent.id),
                 Optional.fromNullable(apiEvent.description),
@@ -113,18 +98,6 @@ class FirebaseEventRepository(
             )
         }
     }
-
-    private fun FirestoreSpeaker.toSpeaker() = Speaker(
-        numericId = checksum.getChecksumOf(id),
-        id = id,
-        name = name,
-        bio = bio,
-        companyName = companyName.optional(),
-        companyUrl = companyUrl.optional(),
-        personalUrl = personalUrl.optional(),
-        photoUrl = photoUrl.optional(),
-        twitterUsername = twitterUsername.optional()
-    )
 
     override fun addFavorite(eventId: String, userId: String): Completable {
         return dbService.addFavorite(eventId, userId)
