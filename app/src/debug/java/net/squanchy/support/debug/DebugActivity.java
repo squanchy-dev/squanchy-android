@@ -114,7 +114,7 @@ public class DebugActivity extends AppCompatActivity {
     }
 
     private Track createTrack() {
-        return Track.Companion.create(
+        return new Track(
                 "0",
                 "UI",
                 Optional.of(generateColor()),

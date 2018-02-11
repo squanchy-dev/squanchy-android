@@ -2,28 +2,14 @@ package net.squanchy.schedule
 
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
-import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.schedule.domain.view.Event
-import net.squanchy.schedule.domain.view.Place
 import net.squanchy.schedule.domain.view.Schedule
 import net.squanchy.schedule.domain.view.SchedulePage
-import net.squanchy.schedule.domain.view.Track
 import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.firestore.FirestoreDbService
-import net.squanchy.service.firestore.model.schedule.FirestoreEvent
-import net.squanchy.service.firestore.model.schedule.FirestorePlace
-import net.squanchy.service.firestore.model.schedule.FirestoreSpeaker
-import net.squanchy.service.firestore.model.schedule.FirestoreTrack
 import net.squanchy.service.firestore.toEvent
-import net.squanchy.service.firestore.toPlace
-import net.squanchy.service.firestore.toSpeaker
-import net.squanchy.service.firestore.toTrack
-import net.squanchy.speaker.domain.view.Speaker
 import net.squanchy.support.lang.Checksum
-import net.squanchy.support.lang.optional
-import org.joda.time.DateTimeZone
 import org.joda.time.LocalDate
-import org.joda.time.LocalDateTime
 
 interface ScheduleService {
     fun schedule(onlyFavorites: Boolean): Observable<Schedule>
