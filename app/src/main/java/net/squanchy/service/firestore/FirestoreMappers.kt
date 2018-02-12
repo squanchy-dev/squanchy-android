@@ -55,11 +55,14 @@ fun FirestoreEvent.toEvent(checksum: Checksum, dateTime: DateTimeZone) = Event(
     endTime = LocalDateTime(endTime),
     title = title,
     place = place?.toPlace().optional(),
-    experienceLevel = experienceLevel.optional().flatMap { ExperienceLevel.tryParsingFrom(it) },
+    experienceLevel = experienceLevel.toExperienceLevel() ,
     speakers = speakers.map { it.toSpeaker(checksum) },
-    type = Event.Type.fromRawType(type),
+    type = type.toEventType(),
     favorited = false, // TODO implement the favourites in firestore
     description = description.optional(),
     track = track?.toTrack().optional(),
     timeZone = dateTime
 )
+
+private fun String?.toExperienceLevel() = ExperienceLevel.tryParsingFrom(this)
+private fun String.toEventType() = Event.Type.fromRawType(this)
