@@ -16,7 +16,7 @@ import net.squanchy.venue.domain.view.Venue
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDateTime
 
-fun FirestorePlace.toPlace(): Place = Place.create(id, name, floor.optional())
+fun FirestorePlace.toPlace(): Place = Place(id = id, name = name, floor = floor.optional())
 
 fun FirestoreTrack.toTrack() = Track(
     id = id,
