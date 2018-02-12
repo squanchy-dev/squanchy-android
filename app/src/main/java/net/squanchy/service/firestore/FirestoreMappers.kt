@@ -49,7 +49,7 @@ fun FirestoreVenue.toVenue() = Venue(
     timeZone = DateTimeZone.forID(timezone)
 )
 
-fun FirestoreEvent.toEvent(checksum: Checksum, dateTime: DateTimeZone, favorites: FirebaseFavorites?) = Event(
+fun FirestoreEvent.toEvent(checksum: Checksum, dateTime: DateTimeZone) = Event(
     id = id,
     numericId = checksum.getChecksumOf(id),
     startTime = LocalDateTime(startTime),
@@ -59,7 +59,7 @@ fun FirestoreEvent.toEvent(checksum: Checksum, dateTime: DateTimeZone, favorites
     experienceLevel = experienceLevel.optional().flatMap { ExperienceLevel.tryParsingFrom(it) },
     speakers = speakers.map { it.toSpeaker(checksum) },
     type = Event.Type.fromRawType(type),
-    favorited = favorites?.hasFavorite(id) ?: false,
+    favorited = false, // TODO implement the favourites in firestore
     description = description.optional(),
     track = track?.toTrack().optional(),
     timeZone = dateTime

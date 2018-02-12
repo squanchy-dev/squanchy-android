@@ -2,11 +2,10 @@ package net.squanchy.service.repository.firebase
 
 import io.reactivex.Completable
 import io.reactivex.Observable
-import io.reactivex.functions.Function3
+import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.service.firebase.FirebaseDbService
-import net.squanchy.service.firebase.model.FirebaseFavorites
 import net.squanchy.service.firestore.FirestoreDbService
 import net.squanchy.service.firestore.model.conferenceinfo.FirestoreVenue
 import net.squanchy.service.firestore.model.schedule.FirestoreEvent
@@ -23,14 +22,12 @@ class FirebaseEventRepository(
 
     override fun event(eventId: String, userId: String): Observable<Event> {
         val eventObservable = firestoreDbService.event(eventId)
-        val favoritesObservable = dbService.favorites(userId)
         val timeZoneObservable = firestoreDbService.venueInfo().map { it.extractTimeZone() }
 
         return Observable.combineLatest(
             eventObservable,
-            favoritesObservable,
             timeZoneObservable,
-            Function3(combineIntoEvent)
+            BiFunction(::combineIntoEvent)
         ).subscribeOn(Schedulers.io())
     }
 
@@ -38,22 +35,18 @@ class FirebaseEventRepository(
         return DateTimeZone.forID(timezone)
     }
 
-    private val combineIntoEvent: (FirestoreEvent, FirebaseFavorites, DateTimeZone) -> Event
-        get() = { event, favourites, timezone -> event.toEvent(checksum, timezone, favourites) }
+    private fun combineIntoEvent(event: FirestoreEvent, timeZone: DateTimeZone):  Event = event.toEvent(checksum, timeZone)
 
-    private val combineIntoEvents: (List<FirestoreEvent>, FirebaseFavorites, DateTimeZone) -> List<Event>
-        get() = { event, favourites, timezone -> event.map { it.toEvent(checksum, timezone, favourites) } }
+    private fun combineIntoEvents(events: List<FirestoreEvent>, timeZone: DateTimeZone): List<Event> = events.map { combineIntoEvent(it, timeZone) }
 
     override fun events(userId: String): Observable<List<Event>> {
         val sessionsObservable = firestoreDbService.events()
-        val favoritesObservable = dbService.favorites(userId)
         val timeZoneObservable = firestoreDbService.venueInfo().map { it.extractTimeZone() }
 
         return Observable.combineLatest(
             sessionsObservable,
-            favoritesObservable,
             timeZoneObservable,
-            Function3(combineIntoEvents)
+            BiFunction(::combineIntoEvents)
         )
     }
 
