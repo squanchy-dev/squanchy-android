@@ -88,6 +88,7 @@ fun fixtureOfFirestoreEvent(
     track: FirestoreTrack? = fixtureOfFirestoreTrack(),
     speakers: List<FirestoreSpeaker> = listOf(fixtureOfFirestoreSpeaker()),
     experienceLevel: String? = "beginner",
+    type: String = "keynote",
     description: String? = "Something something an event"
 ) = FirestoreEvent().apply {
     this.id = id
@@ -96,6 +97,7 @@ fun fixtureOfFirestoreEvent(
     this.endTime = endTime
     this.place = place
     this.track = track
+    this.type = type
     this.speakers = speakers
     this.description = description
     this.experienceLevel = experienceLevel
