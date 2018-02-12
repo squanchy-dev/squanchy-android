@@ -18,8 +18,7 @@ class FirestoreSpeakerRepository(
     }
 
     override fun speaker(speakerId: String): Observable<Speaker> {
-        return dbService.speakers()
-            .map { it.first { it.id == speakerId } }
+        return dbService.speaker(speakerId)
             .map { it.toSpeaker(checksum) }
     }
 }

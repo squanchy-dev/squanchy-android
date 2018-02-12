@@ -96,9 +96,25 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
                         subscriber.onError(exception)
                         return@addSnapshotListener
                     }
-                    subscriber.onNext(snapshot.documents.map {
-                        it.toObject(FirestoreSpeaker::class.java).apply { id = it.id }
-                    })
+                    subscriber.onNext(snapshot.documents.map { it.toObject(FirestoreSpeaker::class.java) })
+                }
+
+            subscriber.setCancellable { registration.remove() }
+        }
+    }
+
+    fun speaker(speakerId: String): Observable<FirestoreSpeaker> {
+        return Observable.create { subscriber ->
+            val registration = db.collection("views")
+                .document("speakers")
+                .collection("speaker_pages")
+                .document(speakerId)
+                .addSnapshotListener { snapshot, exception ->
+                    if (exception != null && subscriber.isDisposed.not()) {
+                        subscriber.onError(exception)
+                        return@addSnapshotListener
+                    }
+                    subscriber.onNext(snapshot.toObject(FirestoreSpeaker::class.java))
                 }
 
             subscriber.setCancellable { registration.remove() }
@@ -115,9 +131,7 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
                         subscriber.onError(exception)
                         return@addSnapshotListener
                     }
-                    subscriber.onNext(snapshot.documents.map {
-                        it.toObject(FirestoreEvent::class.java)
-                    })
+                    subscriber.onNext(snapshot.documents.map { it.toObject(FirestoreEvent::class.java) })
                 }
 
             subscriber.setCancellable { registration.remove() }

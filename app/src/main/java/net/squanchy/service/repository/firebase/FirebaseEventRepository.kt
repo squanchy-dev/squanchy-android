@@ -35,7 +35,7 @@ class FirebaseEventRepository(
         return DateTimeZone.forID(timezone)
     }
 
-    private fun combineIntoEvent(event: FirestoreEvent, timeZone: DateTimeZone):  Event = event.toEvent(checksum, timeZone)
+    private fun combineIntoEvent(event: FirestoreEvent, timeZone: DateTimeZone): Event = event.toEvent(checksum, timeZone)
 
     private fun combineIntoEvents(events: List<FirestoreEvent>, timeZone: DateTimeZone): List<Event> = events.map { combineIntoEvent(it, timeZone) }
 
