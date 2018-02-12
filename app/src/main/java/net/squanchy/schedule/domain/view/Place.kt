@@ -3,7 +3,7 @@ package net.squanchy.schedule.domain.view
 import net.squanchy.support.lang.Optional
 
 data class Place(
-        val id: String,
-        val name: String,
-        val floor: Optional<String>
+    val id: String,
+    val name: String,
+    val floor: Optional<String>
 )
