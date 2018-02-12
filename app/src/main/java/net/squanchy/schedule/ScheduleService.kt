@@ -31,8 +31,8 @@ class FirestoreScheduleService(
                     SchedulePage(
                         schedulePage.day.id,
                         LocalDate(schedulePage.day.date),
-                        // TODO pass the favourites here instead of null to know which talks are favourites
-                        schedulePage.events.map { it.toEvent(checksum, timeZone, null) }
+                        // TODO needs to implement the favourites
+                        schedulePage.events.map { it.toEvent(checksum, timeZone) }
                             .sortedBy { it.startTime }
                             .filterOnlyFavorites(onlyFavorites)
                     )
