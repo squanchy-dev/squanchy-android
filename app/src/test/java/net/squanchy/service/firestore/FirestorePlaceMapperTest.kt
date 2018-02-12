@@ -31,8 +31,8 @@ class FirestorePlaceMapperTest {
     }
 
     @Test
-    fun `place floor should be absent when not specified`() {
-        val firestorePlace = fixtureOfFirestorePlace()
+    fun `place floor should be absent when floor is null`() {
+        val firestorePlace = fixtureOfFirestorePlace(floor = null)
         val place = firestorePlace.toPlace()
         Assert.assertFalse(place.floor.isPresent)
     }
