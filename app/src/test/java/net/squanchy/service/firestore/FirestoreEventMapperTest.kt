@@ -11,7 +11,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
-import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnit
 import org.mockito.junit.MockitoRule
 import org.mockito.quality.Strictness
@@ -39,14 +38,14 @@ class FirestoreEventMapperTest {
     }
 
     @Test
-    fun `event id should match after mapping`() {
+    fun `event id should match when mapped`() {
         val firestoreEvent = fixtureOfFirestoreEvent(id = FAKE_STRING)
         val event = firestoreEvent.toEvent(checksum, timeZone)
         Assert.assertEquals(FAKE_STRING, event.id)
     }
 
     @Test
-    fun `event start date should match after mapping`() {
+    fun `event start date should match when mapped`() {
         val date = Date(1518471471)
         val firestoreEvent = fixtureOfFirestoreEvent(startTime = date)
         val event = firestoreEvent.toEvent(checksum, timeZone)
@@ -54,7 +53,7 @@ class FirestoreEventMapperTest {
     }
 
     @Test
-    fun `event end date should match after mapping`() {
+    fun `event end date should match when mapped`() {
         val date = Date(1518471471)
         val firestoreEvent = fixtureOfFirestoreEvent(endTime = date)
         val event = firestoreEvent.toEvent(checksum, timeZone)
@@ -62,14 +61,14 @@ class FirestoreEventMapperTest {
     }
 
     @Test
-    fun `event title should match after mapping`() {
+    fun `event title should match when mapped`() {
         val firestoreEvent = fixtureOfFirestoreEvent(title = FAKE_STRING)
         val event = firestoreEvent.toEvent(checksum, timeZone)
         Assert.assertEquals(FAKE_STRING, event.title)
     }
 
     @Test
-    fun `event place should match after mapping`() {
+    fun `event place should match when mapped`() {
         val firestorePlace = fixtureOfFirestorePlace()
         val firestoreEvent = fixtureOfFirestoreEvent(place = firestorePlace)
         val event = firestoreEvent.toEvent(checksum, timeZone)
@@ -77,14 +76,14 @@ class FirestoreEventMapperTest {
     }
 
     @Test
-    fun `event place should be absent when is null`() {
+    fun `event place should be absent when mapping null`() {
         val firestoreEvent = fixtureOfFirestoreEvent(place = null)
         val event = firestoreEvent.toEvent(checksum, timeZone)
         Assert.assertFalse(event.place.isPresent)
     }
 
     @Test
-    fun `event track should match after mapping`() {
+    fun `event track should match when mapped`() {
         val firestoreTrack = fixtureOfFirestoreTrack()
         val firestoreEvent = fixtureOfFirestoreEvent(track = firestoreTrack)
         val event = firestoreEvent.toEvent(checksum, timeZone)
@@ -92,21 +91,21 @@ class FirestoreEventMapperTest {
     }
 
     @Test
-    fun `event track should be absent when is null`() {
+    fun `event track should be absent when mapping null`() {
         val firestoreEvent = fixtureOfFirestoreEvent(track = null)
         val event = firestoreEvent.toEvent(checksum, timeZone)
         Assert.assertFalse(event.track.isPresent)
     }
 
     @Test
-    fun `event experience level should match after mapping`() {
+    fun `event experience level should match when mapped`() {
         val firestoreEvent = fixtureOfFirestoreEvent(experienceLevel = FAKE_EXPERIENCE_LEVEL)
         val event = firestoreEvent.toEvent(checksum, timeZone)
         Assert.assertEquals(ExperienceLevel.tryParsingFrom(FAKE_EXPERIENCE_LEVEL), event.experienceLevel)
     }
 
     @Test
-    fun `event experience level should be absent when is null`() {
+    fun `event experience level should be absent when mapping null`() {
         val firestoreEvent = fixtureOfFirestoreEvent(experienceLevel = null)
         val event = firestoreEvent.toEvent(checksum, timeZone)
         Assert.assertFalse(event.experienceLevel.isPresent)
@@ -120,21 +119,21 @@ class FirestoreEventMapperTest {
     }
 
     @Test
-    fun `event description should match after mapping`() {
+    fun `event description should match when mapped`() {
         val firestoreEvent = fixtureOfFirestoreEvent(description = FAKE_STRING)
         val event = firestoreEvent.toEvent(checksum, timeZone)
         Assert.assertEquals(FAKE_STRING, event.description.get())
     }
 
     @Test
-    fun `event description should be absent when is null`() {
+    fun `event description should be absent when mapping null`() {
         val firestoreEvent = fixtureOfFirestoreEvent(description = null)
         val event = firestoreEvent.toEvent(checksum, timeZone)
         Assert.assertFalse(event.description.isPresent)
     }
 
     @Test
-    fun `event type should match after mapping`() {
+    fun `event type should match when mapped`() {
         val firestoreEvent = fixtureOfFirestoreEvent(type = FAKE_TYPE)
         val event = firestoreEvent.toEvent(checksum, timeZone)
         Assert.assertEquals(Event.Type.fromRawType(FAKE_TYPE), event.type)
