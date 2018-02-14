@@ -7,10 +7,14 @@ import org.joda.time.DateTimeZone
 import org.joda.time.LocalDateTime
 import org.junit.Assert
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
+import org.mockito.junit.MockitoJUnit
+import org.mockito.junit.MockitoRule
+import org.mockito.quality.Strictness
 import java.util.Date
 
 private const val FAKE_STRING = "eventId"
@@ -20,6 +24,9 @@ private const val CHECKSUM_RESULT = 1000L
 
 class FirestoreEventMapperTest {
 
+    @Rule
+    var rule: MockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS)
+
     @Mock
     lateinit var checksum: Checksum
 
@@ -27,7 +34,6 @@ class FirestoreEventMapperTest {
 
     @Before
     fun before() {
-        MockitoAnnotations.initMocks(this)
         `when`(checksum.getChecksumOf(FAKE_STRING)).thenReturn(CHECKSUM_RESULT)
         timeZone = DateTimeZone.UTC
     }

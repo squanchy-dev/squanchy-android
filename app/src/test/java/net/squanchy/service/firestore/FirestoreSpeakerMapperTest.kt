@@ -3,23 +3,29 @@ package net.squanchy.service.firestore
 import net.squanchy.support.lang.Checksum
 import org.junit.Assert
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
+import org.mockito.junit.MockitoJUnit
+import org.mockito.junit.MockitoRule
+import org.mockito.quality.Strictness
 
 private const val CHECKSUM_RESULT = 1000L
 private const val FAKE_SPEAKER_STRING = "Mr William Shatner"
 
 class FirestoreSpeakerMapperTest {
 
+    @Rule
+    var rule: MockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS)
+
     @Mock
     lateinit var checksum: Checksum
 
     @Before
     fun before() {
-        MockitoAnnotations.initMocks(this)
         `when`(checksum.getChecksumOf(anyString())).thenReturn(CHECKSUM_RESULT)
     }
 
