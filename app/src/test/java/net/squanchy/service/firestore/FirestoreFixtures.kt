@@ -11,7 +11,7 @@ import net.squanchy.service.firestore.model.schedule.FirestoreSpeaker
 import net.squanchy.service.firestore.model.schedule.FirestoreTrack
 import java.util.Date
 
-fun fixtureOfFirestoreTrack(
+fun aFirestoreTrack(
     id: String = "fakeId",
     name: String = "fakeTrack",
     accentColor: String? = "#ABCDEF",
@@ -25,7 +25,7 @@ fun fixtureOfFirestoreTrack(
     this.iconUrl = iconUrl
 }
 
-fun fixtureOfFirestoreSpeaker(
+fun aFirestoreSpeaker(
     id: String = "speakerId",
     name: String = "Boaty McBoatface",
     bio: String = "Hello, I'm a fake",
@@ -45,7 +45,7 @@ fun fixtureOfFirestoreSpeaker(
     this.twitterUsername = twitterUsername
 }
 
-fun fixtureOfFirestorePlace(
+fun aFirestorePlace(
     id: String = "placeId",
     name: String = "Turin",
     floor: String? = "This floor"
@@ -55,7 +55,7 @@ fun fixtureOfFirestorePlace(
     this.floor = floor
 }
 
-fun fixtureOfFirestoreDay(
+fun aFirestoreDay(
     id: String = "today",
     date: Date = Date()
 ) = FirestoreDay().apply {
@@ -63,7 +63,7 @@ fun fixtureOfFirestoreDay(
     this.date = date
 }
 
-fun fixtureOfFirestoreVenue(
+fun aFirestoreVenue(
     name: String = "VenueOfTheConference",
     address: String = "Conference rd",
     latLon: GeoPoint = GeoPoint(0.0, 0.0),
@@ -79,14 +79,14 @@ fun fixtureOfFirestoreVenue(
     this.timezone = timezone
 }
 
-fun fixtureOfFirestoreEvent(
+fun aFirestoreEvent(
     id: String = "EventId",
     title: String = "Getting started with fakes",
     startTime: Date = Date(),
     endTime: Date = Date(),
-    place: FirestorePlace? = fixtureOfFirestorePlace(),
-    track: FirestoreTrack? = fixtureOfFirestoreTrack(),
-    speakers: List<FirestoreSpeaker> = listOf(fixtureOfFirestoreSpeaker()),
+    place: FirestorePlace? = aFirestorePlace(),
+    track: FirestoreTrack? = aFirestoreTrack(),
+    speakers: List<FirestoreSpeaker> = listOf(aFirestoreSpeaker()),
     experienceLevel: String? = "beginner",
     type: String = "keynote",
     description: String? = "Something something an event"
@@ -103,15 +103,15 @@ fun fixtureOfFirestoreEvent(
     this.experienceLevel = experienceLevel
 }
 
-fun fixtureOfFirestoreSchedulePage(
-    day: FirestoreDay = fixtureOfFirestoreDay(),
-    events: List<FirestoreEvent> = (0..3).map { fixtureOfFirestoreEvent() }
+fun aFirestoreSchedulePage(
+    day: FirestoreDay = aFirestoreDay(),
+    events: List<FirestoreEvent> = (0..3).map { aFirestoreEvent() }
 ) = FirestoreSchedulePage().apply {
     this.day = day
     this.events = events
 }
 
-fun fixtureOfFirestoreConferenceInfo(
+fun aFirestoreConferenceInfo(
     name: String = "Android Conference",
     socialHashtag: String = "#AndroidIsCool",
     twitterHandle: String = "@ThisIsAFakeConf"
