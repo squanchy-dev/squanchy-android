@@ -1,5 +1,6 @@
 package net.squanchy.service.firestore
 
+import android.text.format.DateUtils
 import com.google.firebase.firestore.GeoPoint
 import net.squanchy.service.firestore.model.conferenceinfo.FirestoreConferenceInfo
 import net.squanchy.service.firestore.model.conferenceinfo.FirestoreVenue
@@ -10,6 +11,9 @@ import net.squanchy.service.firestore.model.schedule.FirestoreSchedulePage
 import net.squanchy.service.firestore.model.schedule.FirestoreSpeaker
 import net.squanchy.service.firestore.model.schedule.FirestoreTrack
 import java.util.Date
+
+private const val MILLIS_OF_A_DATE_1 = 1518652975855
+private const val MILLIS_OF_A_DATE_2 = MILLIS_OF_A_DATE_1 + DateUtils.DAY_IN_MILLIS
 
 fun aFirestoreTrack(
     id: String = "fakeId",
@@ -56,15 +60,15 @@ fun aFirestorePlace(
 }
 
 fun aFirestoreDay(
-    id: String = "today",
-    date: Date = Date()
+    id: String = "dayId",
+    date: Date = Date(MILLIS_OF_A_DATE_1)
 ) = FirestoreDay().apply {
     this.id = id
     this.date = date
 }
 
 fun aFirestoreVenue(
-    name: String = "VenueOfTheConference",
+    name: String = "Venue Of The Conference",
     address: String = "Conference rd",
     latLon: GeoPoint = GeoPoint(0.0, 0.0),
     description: String = "This is the conference you're looking for",
@@ -82,8 +86,8 @@ fun aFirestoreVenue(
 fun aFirestoreEvent(
     id: String = "EventId",
     title: String = "Getting started with fakes",
-    startTime: Date = Date(),
-    endTime: Date = Date(),
+    startTime: Date = Date(MILLIS_OF_A_DATE_1),
+    endTime: Date = Date(MILLIS_OF_A_DATE_2),
     place: FirestorePlace? = aFirestorePlace(),
     track: FirestoreTrack? = aFirestoreTrack(),
     speakers: List<FirestoreSpeaker> = listOf(aFirestoreSpeaker()),
