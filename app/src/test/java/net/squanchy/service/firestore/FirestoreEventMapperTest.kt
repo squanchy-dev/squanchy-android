@@ -24,7 +24,8 @@ private const val CHECKSUM_RESULT = 1000L
 class FirestoreEventMapperTest {
 
     @Rule
-    var rule: MockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS)
+    @JvmField
+    var rule: MockitoRule = MockitoJUnit.rule()
 
     @Mock
     lateinit var checksum: Checksum

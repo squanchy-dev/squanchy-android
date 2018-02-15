@@ -18,7 +18,8 @@ private const val FAKE_SPEAKER_STRING = "Mr William Shatner"
 class FirestoreSpeakerMapperTest {
 
     @Rule
-    var rule: MockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS)
+    @JvmField
+    var rule: MockitoRule = MockitoJUnit.rule()
 
     @Mock
     lateinit var checksum: Checksum
