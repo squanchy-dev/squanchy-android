@@ -92,7 +92,7 @@ public class DebugActivity extends AppCompatActivity {
     }
 
     private Optional<Place> createPlace() {
-        Place place = Place.Companion.create("1", "That room over there", Optional.absent());
+        Place place = new Place("1", "That room over there", Optional.absent());
         return Optional.of(place);
     }
 

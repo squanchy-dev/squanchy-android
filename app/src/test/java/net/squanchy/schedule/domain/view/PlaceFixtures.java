@@ -32,6 +32,6 @@ final class PlaceFixtures {
     }
 
     Place build() {
-        return Place.Companion.create(id, name, floor);
+        return new Place(id, name, floor);
     }
 }
