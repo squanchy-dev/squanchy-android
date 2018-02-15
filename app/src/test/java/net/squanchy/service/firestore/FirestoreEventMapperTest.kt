@@ -13,7 +13,6 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnit
 import org.mockito.junit.MockitoRule
-import org.mockito.quality.Strictness
 import java.util.Date
 
 private const val FAKE_STRING = "eventId"

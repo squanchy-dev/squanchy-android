@@ -10,7 +10,6 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnit
 import org.mockito.junit.MockitoRule
-import org.mockito.quality.Strictness
 
 private const val CHECKSUM_RESULT = 1000L
 private const val FAKE_SPEAKER_STRING = "Mr William Shatner"
