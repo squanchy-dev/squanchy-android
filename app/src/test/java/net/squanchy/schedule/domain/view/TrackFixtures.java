@@ -44,6 +44,6 @@ final class TrackFixtures {
     }
 
     Track build() {
-        return Track.Companion.create(id, name, accentColor, textColor, iconUrl);
+        return new Track(id, name, accentColor, textColor, iconUrl);
     }
 }

@@ -77,7 +77,6 @@ public class DebugActivity extends AppCompatActivity {
         return Event.Companion.create(
                 String.valueOf(id),
                 id,
-                "1",
                 start,
                 end,
                 "A very interesting talk",
@@ -93,7 +92,7 @@ public class DebugActivity extends AppCompatActivity {
     }
 
     private Optional<Place> createPlace() {
-        Place place = Place.Companion.create("1", "That room over there", Optional.absent());
+        Place place = new Place("1", "That room over there", Optional.absent());
         return Optional.of(place);
     }
 
@@ -115,7 +114,7 @@ public class DebugActivity extends AppCompatActivity {
     }
 
     private Track createTrack() {
-        return Track.Companion.create(
+        return new Track(
                 "0",
                 "UI",
                 Optional.of(generateColor()),

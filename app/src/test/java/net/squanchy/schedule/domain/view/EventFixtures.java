@@ -17,7 +17,6 @@ public final class EventFixtures {
 
     private String eventId = "banana";
     private long numericEventId = 1234;
-    private String dayId = "potato";
     private LocalDateTime startTime = new LocalDateTime(123456);
     private LocalDateTime endTime = new LocalDateTime(123666);
     private String title = "Hello \uD83C\uDF4C";    // Yes, that's a banana emoji. You never know
@@ -44,11 +43,6 @@ public final class EventFixtures {
 
     public EventFixtures withNumericId(long numericEventId) {
         this.numericEventId = numericEventId;
-        return this;
-    }
-
-    public EventFixtures withDayId(String dayId) {
-        this.dayId = dayId;
         return this;
     }
 
@@ -103,20 +97,19 @@ public final class EventFixtures {
     }
 
     public Event build() {
-        return Event.Companion.create(
+        return new Event(
                 eventId,
                 numericEventId,
-                dayId,
                 startTime,
                 endTime,
                 title,
                 place,
-                experienceLevel,
+                track,
                 speakers,
+                experienceLevel,
                 type,
                 false,
                 description,
-                track,
                 timeZone
         );
     }

@@ -2,24 +2,14 @@ package net.squanchy.schedule
 
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
-import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.schedule.domain.view.Event
-import net.squanchy.schedule.domain.view.Place
 import net.squanchy.schedule.domain.view.Schedule
 import net.squanchy.schedule.domain.view.SchedulePage
-import net.squanchy.schedule.domain.view.Track
 import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.firestore.FirestoreDbService
-import net.squanchy.service.firestore.model.schedule.FirestoreEvent
-import net.squanchy.service.firestore.model.schedule.FirestorePlace
-import net.squanchy.service.firestore.model.schedule.FirestoreSpeaker
-import net.squanchy.service.firestore.model.schedule.FirestoreTrack
-import net.squanchy.speaker.domain.view.Speaker
+import net.squanchy.service.firestore.toEvent
 import net.squanchy.support.lang.Checksum
-import net.squanchy.support.lang.optional
-import org.joda.time.DateTimeZone
 import org.joda.time.LocalDate
-import org.joda.time.LocalDateTime
 
 interface ScheduleService {
     fun schedule(onlyFavorites: Boolean): Observable<Schedule>
@@ -35,68 +25,23 @@ class FirestoreScheduleService(
     override fun schedule(onlyFavorites: Boolean): Observable<Schedule> {
         return Observable.combineLatest(dbService.scheduleView(), dbService.timezone(), combineInAPair())
             .map { pagesAndTimeZone ->
-                val (schedulePages, timeZone) = pagesAndTimeZone
 
+                val (schedulePages, timeZone) = pagesAndTimeZone
                 schedulePages.map { schedulePage ->
                     SchedulePage(
                         schedulePage.day.id,
                         LocalDate(schedulePage.day.date),
-                        schedulePage.events.map { it.toEvent(schedulePage.day.id, timeZone) }
+                        // TODO needs to implement the favourites
+                        schedulePage.events.map { it.toEvent(checksum, timeZone) }
                             .sortedBy { it.startTime }
                             .filterOnlyFavorites(onlyFavorites)
                     )
                 }
             }
-            .map { Schedule(it) }
+            .map(::Schedule)
     }
 
-    private fun <T, U> combineInAPair(): BiFunction<List<T>, U, Pair<List<T>, U>> =
-        BiFunction { schedulePages, timeZone -> Pair(schedulePages, timeZone) }
-
-    private fun FirestoreEvent.toEvent(dayId: String, timeZone: DateTimeZone) = Event(
-        id,
-        checksum.getChecksumOf(id),
-        LocalDateTime(startTime),
-        LocalDateTime(endTime),
-        title,
-        place.toPlace(),
-        track.toTrack(),
-        speakers.toSpeakersList(checksum),
-        ExperienceLevel.tryParsingFrom(experienceLevel),
-        dayId,
-        Event.Type.fromRawType(type),
-        false, // TODO fetch favourites
-        description.optional(),
-        timeZone
-    )
-
-    private fun FirestoreTrack?.toTrack() = optional().map {
-        Track(
-            it.id,
-            it.name,
-            it.accentColor.optional(),
-            it.textColor.optional(),
-            it.iconUrl.optional()
-        )
-    }
-
-    private fun FirestorePlace?.toPlace() = optional().map {
-        Place(it.id, it.name, it.floor.optional())
-    }
-
-    private fun List<FirestoreSpeaker>.toSpeakersList(checksum: Checksum) = map {
-        Speaker(
-            checksum.getChecksumOf(it.id),
-            it.id,
-            it.name,
-            it.bio,
-            it.companyName.optional(),
-            it.companyUrl.optional(),
-            it.personalUrl.optional(),
-            it.photoUrl.optional(),
-            it.twitterUsername.optional()
-        )
-    }
+    private fun <T, U> combineInAPair(): BiFunction<List<T>, U, Pair<List<T>, U>> = BiFunction(::Pair)
 
     private fun List<Event>.filterOnlyFavorites(onlyFavorites: Boolean) = when {
         onlyFavorites -> filter { it.favorited }
