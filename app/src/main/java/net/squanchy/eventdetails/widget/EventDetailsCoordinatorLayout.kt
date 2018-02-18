@@ -4,10 +4,7 @@ import android.content.Context
 import android.support.design.widget.CoordinatorLayout
 import android.util.AttributeSet
 import android.view.View
-import kotlinx.android.synthetic.main.activity_event_details.view.favoriteFab
-import kotlinx.android.synthetic.main.activity_event_details.view.eventDetailsHeaderLayout
-import kotlinx.android.synthetic.main.activity_event_details.view.eventDetailsLayout
-
+import kotlinx.android.synthetic.main.activity_event_details.view.*
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Event.Type
@@ -27,8 +24,7 @@ class EventDetailsCoordinatorLayout @JvmOverloads constructor(
             favoriteFab.setImageResource(
                     if (event.favorited)
                         R.drawable.ic_favorite_filled
-                    else
-                        R.drawable.ic_favorite_empty
+                    else R.drawable.ic_favorite_empty
             )
             favoriteFab.setOnClickListener { listener.onFavoriteClick() }
             favoriteFab.visibility = View.VISIBLE

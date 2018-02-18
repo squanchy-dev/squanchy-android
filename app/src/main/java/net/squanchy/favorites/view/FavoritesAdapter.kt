@@ -11,19 +11,20 @@ import net.squanchy.schedule.domain.view.SchedulePage
 import net.squanchy.schedule.view.EventItemView
 import net.squanchy.schedule.view.EventViewHolder
 import net.squanchy.search.view.HeaderViewHolder
+import org.joda.time.DateTimeZone
 import org.joda.time.LocalDate
 
 // todo #333 too complicated logic. Need to refactor once sample data is available.
 internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
-        private val viewTypeTalk: Int = 1
-        private val viewTypeHeader: Int = 2
+        private const val viewTypeTalk: Int = 1
+        private const val viewTypeHeader: Int = 2
     }
 
     private val layoutInflater = LayoutInflater.from(context)
 
-    private var schedule = Schedule.create(emptyList())
+    private var schedule = Schedule.create(emptyList(), DateTimeZone.UTC)
 
     private var listener: ((Event) -> Unit)? = null
 
@@ -32,11 +33,11 @@ internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<Recycl
     }
 
     override fun getItemId(position: Int): Long = findFor(
-            0,
-            position,
-            schedule.pages,
-            { schedulePage -> (-schedulePage.dayId.hashCode()).toLong() },
-            { schedulePage, positionInPage -> schedulePage.events[positionInPage].numericId }
+        0,
+        position,
+        schedule.pages,
+        { schedulePage -> (-schedulePage.dayId.hashCode()).toLong() },
+        { schedulePage, positionInPage -> schedulePage.events[positionInPage].numericId }
     )
 
     fun updateWith(schedule: Schedule, listener: (Event) -> Unit) {
@@ -46,11 +47,11 @@ internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<Recycl
     }
 
     override fun getItemViewType(position: Int) = findFor(
-            0,
-            position,
-            schedule.pages,
-            { _ -> viewTypeHeader },
-            { _, _ -> viewTypeTalk }
+        0,
+        position,
+        schedule.pages,
+        { _ -> viewTypeHeader },
+        { _, _ -> viewTypeTalk }
     )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -69,22 +70,22 @@ internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<Recycl
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is EventViewHolder) {
             val event = findFor(
-                    0,
-                    position,
-                    schedule.pages,
-                    { _ -> throw IndexOutOfBoundsException() },
-                    { schedulePage, positionInPage -> schedulePage.events[positionInPage] }
+                0,
+                position,
+                schedule.pages,
+                { _ -> throw IndexOutOfBoundsException() },
+                { schedulePage, positionInPage -> schedulePage.events[positionInPage] }
             )
             if (listener != null) {
                 holder.updateWith(event, listener!!)
             }
         } else if (holder is HeaderViewHolder) {
             val date = findFor(
-                    0,
-                    position,
-                    schedule.pages,
-                    { schedule.pages[position].date },
-                    { _, _ -> throw IndexOutOfBoundsException() }
+                0,
+                position,
+                schedule.pages,
+                { schedule.pages[position].date },
+                { _, _ -> throw IndexOutOfBoundsException() }
             )
             holder.updateWith(formatHeader(date))
         }
@@ -95,11 +96,11 @@ internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<Recycl
     override fun getItemCount(): Int = schedule.pages.fold(0) { count, page -> count + page.events.size + 1 }
 
     private fun <T> findFor(
-            pagePosition: Int,
-            position: Int,
-            pages: List<SchedulePage>,
-            header: (SchedulePage) -> T,
-            row: (SchedulePage, Int) -> T
+        pagePosition: Int,
+        position: Int,
+        pages: List<SchedulePage>,
+        header: (SchedulePage) -> T,
+        row: (SchedulePage, Int) -> T
     ): T {
 
         if (pagePosition >= pages.size) {

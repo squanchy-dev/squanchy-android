@@ -3,9 +3,9 @@ package net.squanchy.schedule.view
 import android.content.Context
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.LinearSmoothScroller
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
-
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.support.view.CardSpacingItemDecorator
@@ -21,7 +21,7 @@ class ScheduleDayPageView @JvmOverloads constructor(
     override fun onFinishInflate() {
         super.onFinishInflate()
 
-        val layoutManager = LinearLayoutManager(context)
+        val layoutManager = SnappingLinearLayoutManager(context)
         setLayoutManager(layoutManager)
         adapter = EventsAdapter(context)
         setAdapter(adapter)
@@ -38,6 +38,10 @@ class ScheduleDayPageView @JvmOverloads constructor(
         diffResult.dispatchUpdatesTo(adapter)
     }
 
+    fun scrollToEvent(eventPosition: Int, animate: Boolean) =
+        if (animate) smoothScrollToPosition(eventPosition)
+        else scrollToPosition(eventPosition)
+
     private class EventsDiffCallback(
             private val oldEvents: List<Event>,
             private val newEvents: List<Event>
@@ -50,5 +54,16 @@ class ScheduleDayPageView @JvmOverloads constructor(
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) = oldEvents[oldItemPosition].id == newEvents[newItemPosition].id
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) = oldEvents[oldItemPosition] == newEvents[newItemPosition]
+    }
+
+    private class SnappingLinearLayoutManager(context: Context) : LinearLayoutManager(context) {
+
+        override fun smoothScrollToPosition(recyclerView: RecyclerView, state: RecyclerView.State?, position: Int) {
+            val smoothScroller = object : LinearSmoothScroller(recyclerView.context) {
+                override fun getVerticalSnapPreference() = SNAP_TO_START
+            }
+            smoothScroller.targetPosition = position
+            startSmoothScroll(smoothScroller)
+        }
     }
 }

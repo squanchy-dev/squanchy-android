@@ -54,7 +54,7 @@ android {
         versionName project.VERSION_NAME
 
         manifestPlaceholders += [
-                fabricApiKey: (buildProperties.secrets['fabricApiKey'] | buildProperties.env['FABRIC_API_KEY']).string
+            fabricApiKey: (buildProperties.secrets['fabricApiKey'] | buildProperties.env['FABRIC_API_KEY']).string
         ]
 
         resValueProperty 'app_name', (buildProperties.application['applicationName'] | "Squanchy")
@@ -90,12 +90,6 @@ android {
         debug {
             ext.enableCrashlytics = false
         }
-    }
-
-    lintOptions {
-        lintConfig teamPropsFile('static-analysis/lint-config.xml')
-        abortOnError true
-        warningsAsErrors true
     }
 
     sourceSets {

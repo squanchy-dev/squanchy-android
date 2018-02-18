@@ -1,15 +1,15 @@
 ext {
     daggerVersion = '2.14.1'
-    glideVersion = '4.5.0'
+    glideVersion = '4.6.1'
     supportLibVersion = '27.0.2'
     playServicesVersion = '11.8.0'
-    kotlinVersion = '1.2.20'
+    kotlinVersion = '1.2.21'
 
-    checkstyleVersion = '8.7'
+    checkstyleVersion = '8.8'
     findbugsVersion = '3.0.1'
-    pmdVersion = '6.0.0'
+    pmdVersion = '6.0.1'
 
-    ktLintVersion = '0.14.0'
+    ktLintVersion = '0.15.0'
 
     gradlePlugins = [
         buildProperties: 'com.novoda:build-properties-plugin:1.2.1',
@@ -31,14 +31,14 @@ ext {
             firebaseMessaging  : "com.google.firebase:firebase-messaging:${playServicesVersion}",
             firebasePerf       : "com.google.firebase:firebase-perf:${playServicesVersion}",
             firebaseStorage    : "com.google.firebase:firebase-storage:${playServicesVersion}",
-            firebaseUiStorage  : 'com.firebaseui:firebase-ui-storage:3.1.3',
+            firebaseUiStorage  : 'com.firebaseui:firebase-ui-storage:3.2.1',
             glide              : "com.github.bumptech.glide:glide:${glideVersion}",
             glideCompiler      : "com.github.bumptech.glide:compiler:${glideVersion}",
             glideOkHttp3       : "com.github.bumptech.glide:okhttp3-integration:${glideVersion}",
             jodaTimeAndroid    : 'net.danlew:android.joda:2.9.9.1',
             kotlin             : "org.jetbrains.kotlin:kotlin-stdlib-jre7:${kotlinVersion}",
             playServicesAuth   : "com.google.android.gms:play-services-auth:${playServicesVersion}",
-            rxJava             : 'io.reactivex.rxjava2:rxjava:2.1.8',
+            rxJava             : 'io.reactivex.rxjava2:rxjava:2.1.9',
             rxAndroid          : 'io.reactivex.rxjava2:rxandroid:2.0.1',
             supportAppCompat   : "com.android.support:appcompat-v7:${supportLibVersion}",
             supportConstraint  : 'com.android.support.constraint:constraint-layout:1.1.0-beta4',
@@ -59,8 +59,8 @@ ext {
     buildScript = [
         android                   : 'com.android.tools.build:gradle:3.0.1',
         firebase                  : 'com.google.firebase:firebase-plugins:1.1.5',
-        googleServices            : 'com.google.gms:google-services:3.1.2',
-        gradleStaticAnalysisPlugin: 'com.novoda:gradle-static-analysis-plugin:0.4.1',
+        googleServices            : 'com.google.gms:google-services:3.2.0',
+        gradleStaticAnalysisPlugin: 'com.novoda:gradle-static-analysis-plugin:0.5.2',
         jaCoCo                    : 'org.jacoco:org.jacoco.core:0.8.0',
         playPublisher             : 'com.github.triplet.gradle:play-publisher:1.2.0'
     ]

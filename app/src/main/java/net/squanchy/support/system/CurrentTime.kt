@@ -1,10 +1,12 @@
 package net.squanchy.support.system
 
-import org.joda.time.LocalDateTime
+import org.joda.time.DateTime
 
-class CurrentTime {
+interface CurrentTime {
+    fun currentDateTime(): DateTime
+}
 
-    fun currentTimestamp(): Long = System.currentTimeMillis()
+class AndroidCurrentTime : CurrentTime {
 
-    fun currentLocalDateTime(): LocalDateTime = LocalDateTime.now()
+    override fun currentDateTime(): DateTime = DateTime.now()
 }

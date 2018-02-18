@@ -5,15 +5,12 @@ static def isLinuxOrMacOs() {
 
 task copyGitHooks(type: Copy) {
     description 'Copies the git hooks from team-props/git-hooks to the .git folder.'
-    group 'git hooks'
     from("${rootDir}/team-props/git-hooks/") {
         include '**/*.sh'
         rename '(.*).sh', '$1'
     }
     into "${rootDir}/.git/hooks"
-    onlyIf {
-        return isLinuxOrMacOs()
-    }
+    onlyIf { isLinuxOrMacOs() }
 }
 
 task installGitHooks(type: Exec) {
@@ -23,10 +20,7 @@ task installGitHooks(type: Exec) {
     commandLine 'chmod'
     args '-R', '+x', '.git/hooks/'
     dependsOn copyGitHooks
-    onlyIf {
-        def preCommitHook = new File("${rootDir}/.git/hooks/pre-commit")
-        return isLinuxOrMacOs() && !preCommitHook.canExecute()
-    }
+    onlyIf { isLinuxOrMacOs() }
     doLast {
         logger.info('Git hook installed successfully.')
     }

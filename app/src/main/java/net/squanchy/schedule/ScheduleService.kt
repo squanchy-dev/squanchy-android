@@ -7,8 +7,10 @@ import net.squanchy.schedule.domain.view.Schedule
 import net.squanchy.schedule.domain.view.SchedulePage
 import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.firestore.FirestoreDbService
+import net.squanchy.service.firestore.model.schedule.FirestoreSchedulePage
 import net.squanchy.service.firestore.toEvent
 import net.squanchy.support.lang.Checksum
+import org.joda.time.DateTimeZone
 import org.joda.time.LocalDate
 
 interface ScheduleService {
@@ -24,21 +26,28 @@ class FirestoreScheduleService(
 
     override fun schedule(onlyFavorites: Boolean): Observable<Schedule> {
         return Observable.combineLatest(dbService.scheduleView(), dbService.timezone(), combineInAPair())
-            .map { pagesAndTimeZone ->
-
-                val (schedulePages, timeZone) = pagesAndTimeZone
-                schedulePages.map { schedulePage ->
-                    SchedulePage(
-                        schedulePage.day.id,
-                        LocalDate(schedulePage.day.date),
-                        // TODO needs to implement the favourites
-                        schedulePage.events.map { it.toEvent(checksum, timeZone) }
-                            .sortedBy { it.startTime }
-                            .filterOnlyFavorites(onlyFavorites)
-                    )
-                }
+            .map { scheduleViewAndTimeZone ->
+                val (scheduleView, timeZone) = scheduleViewAndTimeZone
+                val schedulePages = createSchedulePages(scheduleView, timeZone, onlyFavorites, checksum)
+                Pair(schedulePages, timeZone)
             }
-            .map(::Schedule)
+            .map { pagesAndTimeZone -> Schedule(pagesAndTimeZone.first, pagesAndTimeZone.second) }
+    }
+
+    private fun createSchedulePages(
+        schedulePages: List<FirestoreSchedulePage>,
+        timeZone: DateTimeZone,
+        onlyFavorites: Boolean,
+        checksum: Checksum
+    ) = schedulePages.map { schedulePage ->
+        SchedulePage(
+            schedulePage.day.id,
+            LocalDate(schedulePage.day.date),
+            // TODO we don't have favourites yet (they're all "false")
+            schedulePage.events.map { it.toEvent(checksum, timeZone) }
+                .sortedBy { it.startTime }
+                .filterOnlyFavorites(onlyFavorites)
+        )
     }
 
     private fun <T, U> combineInAPair(): BiFunction<List<T>, U, Pair<List<T>, U>> = BiFunction(::Pair)
