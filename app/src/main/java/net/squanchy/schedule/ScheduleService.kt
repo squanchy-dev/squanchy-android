@@ -42,7 +42,7 @@ class FirestoreScheduleService(
         schedulePages: List<FirestoreSchedulePage>,
         timeZone: DateTimeZone,
         onlyFavorites: Boolean,
-        filters: Set<Track>,
+        selectedTracks: Set<Track>,
         checksum: Checksum
     ) = schedulePages.map { schedulePage ->
         SchedulePage(
@@ -52,7 +52,7 @@ class FirestoreScheduleService(
             schedulePage.events.map { it.toEvent(checksum, timeZone) }
                 .sortedBy { it.startTime }
                 .filterOnlyFavorites(onlyFavorites)
-                .filterByTracks(filters)
+                .filterByTracks(selectedTracks)
         )
     }
 
