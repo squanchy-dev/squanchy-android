@@ -7,7 +7,6 @@ import net.squanchy.service.firestore.model.conferenceinfo.FirestoreVenue
 import net.squanchy.service.firestore.model.schedule.FirestoreEvent
 import net.squanchy.service.firestore.model.schedule.FirestoreSchedulePage
 import net.squanchy.service.firestore.model.schedule.FirestoreSpeaker
-import net.squanchy.service.firestore.model.schedule.FirestoreTrack
 import net.squanchy.service.firestore.model.twitter.FirestoreTweet
 import org.joda.time.DateTimeZone
 

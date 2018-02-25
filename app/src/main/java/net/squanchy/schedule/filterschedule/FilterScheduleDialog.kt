@@ -13,11 +13,19 @@ class FilterScheduleDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         service = filterScheduleComponent(this).service()
 
+        val selection = if (savedInstanceState == null) {
+            service.currentSelection
+        } else {
+            val restoredSelection = savedInstanceState.getBooleanArray(KEY_SELECTION)
+            service.restore(restoredSelection)
+            restoredSelection
+        }
+
         return AlertDialog.Builder(activity!!)
             .setTitle(R.string.filter_schedule)
             .setNegativeButton(android.R.string.no, { dialog, _ -> dialog.dismiss() })
             .setPositiveButton(android.R.string.yes, { _, _ -> onFilteringDone() })
-            .setMultiChoiceItems(service.trackNames, service.currentSelection, { _, which, isChecked ->
+            .setMultiChoiceItems(service.trackNames, selection, { _, which, isChecked ->
                 if (isChecked) {
                     service.add(which)
                 } else {
@@ -27,8 +35,17 @@ class FilterScheduleDialog : DialogFragment() {
             .create()
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBooleanArray(KEY_SELECTION, service.currentSelection)
+    }
+
     private fun onFilteringDone() {
         service.confirm()
         dismiss()
+    }
+
+    companion object {
+        private const val KEY_SELECTION = "KEY_SELECTION"
     }
 }

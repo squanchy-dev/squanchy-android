@@ -12,13 +12,11 @@ class FilterScheduleService(private val filterRepository: FilterScheduleReposito
 
     val currentSelection: BooleanArray
         get() {
-            val filtering = allTracks.map { currentFiltering.contains(it) }.toBooleanArray()
-            // When the filter is empty (all false) we return an all selected array for a consistent UX
-            if (filtering.all { !it }) {
-                return BooleanArray(allTracks.size) { true }
-            } else {
-                return filtering
+            // When the no filter is selected (all false) we return an all selected array for a consistent UX
+            if (currentFiltering.isEmpty()) {
+                currentFiltering = allTracks.toSet()
             }
+            return allTracks.map { currentFiltering.contains(it) }.toBooleanArray()
         }
 
     fun confirm() {
@@ -31,5 +29,9 @@ class FilterScheduleService(private val filterRepository: FilterScheduleReposito
 
     fun remove(position: Int) {
         currentFiltering -= allTracks[position]
+    }
+
+    fun restore(selection: BooleanArray) {
+        currentFiltering = allTracks.filterIndexed { index, _ -> selection[index] }.toSet()
     }
 }
