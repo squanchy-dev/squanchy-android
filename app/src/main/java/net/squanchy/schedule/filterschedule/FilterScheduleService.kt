@@ -11,7 +11,15 @@ class FilterScheduleService(private val filterRepository: FilterScheduleReposito
         get() = allTracks.map { it.name }.toTypedArray()
 
     val currentSelection: BooleanArray
-        get() = allTracks.map { currentFiltering.contains(it) }.toBooleanArray()
+        get() {
+            val filtering = allTracks.map { currentFiltering.contains(it) }.toBooleanArray()
+            // When the filter is empty (all false) we return an all selected array for a consistent UX
+            if (filtering.all { !it }) {
+                return BooleanArray(allTracks.size) { true }
+            } else {
+                return filtering
+            }
+        }
 
     fun confirm() {
         filterRepository.setFilter(currentFiltering)

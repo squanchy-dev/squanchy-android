@@ -156,21 +156,4 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
             subscriber.setCancellable { registration.remove() }
         }
     }
-
-    fun tracks(): Observable<List<FirestoreTrack>> {
-        return Observable.create { subscriber ->
-            val registration = db.collection("tracks")
-                .addSnapshotListener { snapshot, exception ->
-                    if (exception != null && subscriber.isDisposed.not()) {
-                        subscriber.onError(exception)
-                        return@addSnapshotListener
-                    }
-                    subscriber.onNext(
-                        snapshot.map { it.toObject(FirestoreTrack::class.java).apply { id = it.id } }
-                    )
-                }
-
-            subscriber.setCancellable { registration.remove() }
-        }
-    }
 }

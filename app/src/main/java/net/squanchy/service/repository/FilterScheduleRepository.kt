@@ -1,6 +1,5 @@
 package net.squanchy.service.repository
 
-import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import net.squanchy.schedule.domain.view.Track
 

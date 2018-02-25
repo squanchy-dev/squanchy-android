@@ -63,6 +63,7 @@ class FavoritesPageView @JvmOverloads constructor(
         return when (menuItem.itemId) {
             R.id.action_search -> { showSearch(); true }
             R.id.action_settings -> { showSettings(); true }
+            R.id.action_filter -> { navigator.toScheduleFiltering(context); true }
             else -> false
         }
     }
