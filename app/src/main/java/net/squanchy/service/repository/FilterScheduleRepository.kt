@@ -1,19 +1,25 @@
 package net.squanchy.service.repository
 
+import io.reactivex.Observable
+import io.reactivex.subjects.BehaviorSubject
 import net.squanchy.schedule.domain.view.Track
+import net.squanchy.service.firestore.FirestoreDbService
+import net.squanchy.service.firestore.toTrack
 
 interface FilterScheduleRepository {
 
-    var filters: Set<Track>
-    var allTracks: Set<Track>
+    val filters: BehaviorSubject<Set<Track>>
+    val allTracks: Observable<List<Track>>
 
-    fun hasFilter(): Boolean
+    fun setFilter(tracks: Set<Track>)
 }
 
-class LocalFilterScheduleRepository : FilterScheduleRepository {
+class LocalFilterScheduleRepository(dbService: FirestoreDbService) : FilterScheduleRepository {
 
-    override var allTracks: Set<Track> = emptySet()
-    override var filters: Set<Track> = emptySet()
+    override val allTracks = dbService.tracks().map { it.map { it.toTrack() } }
+    override val filters: BehaviorSubject<Set<Track>> = BehaviorSubject.createDefault(emptySet())
 
-    override fun hasFilter() = filters.isNotEmpty()
+    override fun setFilter(tracks: Set<Track>) {
+        filters.onNext(tracks)
+    }
 }
