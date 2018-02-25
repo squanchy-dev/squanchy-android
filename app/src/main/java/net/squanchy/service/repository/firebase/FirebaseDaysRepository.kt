@@ -2,7 +2,7 @@ package net.squanchy.service.repository.firebase
 
 import io.reactivex.Observable
 import net.squanchy.schedule.domain.view.Day
-import net.squanchy.service.DaysRepository
+import net.squanchy.service.repository.DaysRepository
 import net.squanchy.service.firebase.FirebaseDbService
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat

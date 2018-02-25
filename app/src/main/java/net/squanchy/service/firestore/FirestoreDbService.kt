@@ -2,6 +2,7 @@ package net.squanchy.service.firestore
 
 import com.google.firebase.firestore.FirebaseFirestore
 import io.reactivex.Observable
+import net.squanchy.service.DbService
 import net.squanchy.service.firestore.model.conferenceinfo.FirestoreConferenceInfo
 import net.squanchy.service.firestore.model.conferenceinfo.FirestoreVenue
 import net.squanchy.service.firestore.model.schedule.FirestoreEvent
@@ -12,9 +13,9 @@ import org.joda.time.DateTimeZone
 
 // TODO
 // val onCurrentThread = Executors.newSingleThreadExecutor { Thread.currentThread() }
-class FirestoreDbService(private val db: FirebaseFirestore) {
+class FirestoreDbService(private val db: FirebaseFirestore) : DbService {
 
-    fun scheduleView(): Observable<List<FirestoreSchedulePage>> {
+    override fun scheduleView(): Observable<List<FirestoreSchedulePage>> {
         return Observable.create { subscriber ->
             val registration = db.collection("views")
                 .document("schedule")
@@ -33,7 +34,7 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
         }
     }
 
-    fun twitterView(): Observable<List<FirestoreTweet>> {
+    override fun twitterView(): Observable<List<FirestoreTweet>> {
         return Observable.create { subscriber ->
             val registration = db.collection("social_stream")
                 .document("twitter")
@@ -50,11 +51,11 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
         }
     }
 
-    fun timezone(): Observable<DateTimeZone> = venueInfo()
+    override fun timezone(): Observable<DateTimeZone> = venueInfo()
         .map { it.timezone }
         .map { DateTimeZone.forID(it) }
 
-    fun venueInfo(): Observable<FirestoreVenue> {
+    override fun venueInfo(): Observable<FirestoreVenue> {
         return Observable.create { subscriber ->
             val registration = db.collection("conference_info")
                 .document("venue")
@@ -70,7 +71,7 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
         }
     }
 
-    fun conferenceInfo(): Observable<FirestoreConferenceInfo> {
+    override fun conferenceInfo(): Observable<FirestoreConferenceInfo> {
         return Observable.create { subscriber ->
             val registration = db.collection("conference_info")
                 .document("conference")
@@ -86,7 +87,7 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
         }
     }
 
-    fun speakers(): Observable<List<FirestoreSpeaker>> {
+    override fun speakers(): Observable<List<FirestoreSpeaker>> {
         return Observable.create { subscriber ->
             val registration = db.collection("views")
                 .document("speakers")
@@ -103,7 +104,7 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
         }
     }
 
-    fun speaker(speakerId: String): Observable<FirestoreSpeaker> {
+    override fun speaker(speakerId: String): Observable<FirestoreSpeaker> {
         return Observable.create { subscriber ->
             val registration = db.collection("views")
                 .document("speakers")
@@ -121,7 +122,7 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
         }
     }
 
-    fun events(): Observable<List<FirestoreEvent>> {
+    override fun events(): Observable<List<FirestoreEvent>> {
         return Observable.create { subscriber ->
             val registration = db.collection("views")
                 .document("event_details")
@@ -138,7 +139,7 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
         }
     }
 
-    fun event(eventId: String): Observable<FirestoreEvent> {
+    override fun event(eventId: String): Observable<FirestoreEvent> {
         return Observable.create { subscriber ->
             val registration = db.collection("views")
                 .document("event_details")

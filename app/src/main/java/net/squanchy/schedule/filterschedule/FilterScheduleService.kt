@@ -5,7 +5,7 @@ import net.squanchy.service.repository.FilterScheduleRepository
 class FilterScheduleService(private val filterRepository: FilterScheduleRepository) {
 
     private val allTracks = filterRepository.allTracks
-    var currentFiltering = filterRepository.filters.value
+    private var currentFiltering = filterRepository.filters.value
 
     val trackNames
         get() = allTracks.map { it.name }.toTypedArray()

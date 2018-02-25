@@ -3,7 +3,7 @@ package net.squanchy.service.repository.injection
 import dagger.Module
 import dagger.Provides
 import net.squanchy.injection.ApplicationLifecycle
-import net.squanchy.service.DaysRepository
+import net.squanchy.service.repository.DaysRepository
 import net.squanchy.service.firebase.FirebaseDbService
 import net.squanchy.service.firestore.FirestoreDbService
 import net.squanchy.service.repository.EventRepository
