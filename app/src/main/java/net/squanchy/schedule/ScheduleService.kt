@@ -19,6 +19,7 @@ import org.joda.time.LocalDate
 interface ScheduleService {
     fun schedule(onlyFavorites: Boolean): Observable<Schedule>
     fun currentUserIsSignedIn(): Observable<Boolean>
+    fun filterTracks(tracks: Set<Track>)
 }
 
 class FirestoreScheduleService(
@@ -76,5 +77,9 @@ class FirestoreScheduleService(
     override fun currentUserIsSignedIn(): Observable<Boolean> {
         return authService.currentUser()
             .map { optionalUser -> optionalUser.map { user -> !user.isAnonymous }.or(false) }
+    }
+
+    override fun filterTracks(tracks: Set<Track>) {
+        filterScheduleRepository.setFilter(tracks)
     }
 }
