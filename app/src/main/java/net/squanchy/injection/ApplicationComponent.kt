@@ -13,6 +13,7 @@ import net.squanchy.service.firebase.injection.FirebaseModule
 import net.squanchy.service.firestore.FirestoreDbService
 import net.squanchy.service.firestore.injection.FirestoreModule
 import net.squanchy.service.repository.EventRepository
+import net.squanchy.service.repository.FilterScheduleRepository
 import net.squanchy.service.repository.SpeakerRepository
 import net.squanchy.service.repository.injection.RepositoryModule
 import net.squanchy.support.injection.ChecksumModule
@@ -32,16 +33,16 @@ fun createApplicationComponent(application: Application): ApplicationComponent {
 
 @ApplicationLifecycle
 @Component(
-        modules = [
-            ApplicationContextModule::class,
-            FirebaseModule::class,
-            FirestoreModule::class,
-            ChecksumModule::class,
-            RepositoryModule::class,
-            AnalyticsModule::class,
-            RemoteConfigModule::class,
-            CurrentTimeModule::class
-        ]
+    modules = [
+        ApplicationContextModule::class,
+        FirebaseModule::class,
+        FirestoreModule::class,
+        ChecksumModule::class,
+        RepositoryModule::class,
+        AnalyticsModule::class,
+        RemoteConfigModule::class,
+        CurrentTimeModule::class
+    ]
 )
 interface ApplicationComponent {
 
@@ -56,6 +57,8 @@ interface ApplicationComponent {
     fun speakerRepository(): SpeakerRepository
 
     fun daysRepository(): DaysRepository
+
+    fun filterScheduleRepository(): FilterScheduleRepository
 
     fun analytics(): Analytics
 
