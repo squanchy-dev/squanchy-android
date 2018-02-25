@@ -35,5 +35,5 @@ class RepositoryModule {
 
     @Provides
     @ApplicationLifecycle
-    internal fun filterScheduleRepository(dbService: FirestoreDbService): FilterScheduleRepository = LocalFilterScheduleRepository(dbService)
+    internal fun filterScheduleRepository(): FilterScheduleRepository = LocalFilterScheduleRepository()
 }

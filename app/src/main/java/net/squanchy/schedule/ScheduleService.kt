@@ -10,6 +10,7 @@ import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.firestore.FirestoreDbService
 import net.squanchy.service.firestore.model.schedule.FirestoreSchedulePage
 import net.squanchy.service.firestore.toEvent
+import net.squanchy.service.firestore.toTrack
 import net.squanchy.service.repository.FilterScheduleRepository
 import net.squanchy.support.lang.Checksum
 import net.squanchy.support.lang.Optional
@@ -33,10 +34,20 @@ class FirestoreScheduleService(
         return Observable.combineLatest(dbService.scheduleView(), dbService.timezone(), filterScheduleRepository.filters, combineInATriple())
             .map { scheduleViewTimeZoneAndFilters ->
                 val (scheduleView, timeZone, filters) = scheduleViewTimeZoneAndFilters
+                extractTracksFrom(scheduleView)
                 val schedulePages = createSchedulePages(scheduleView, timeZone, onlyFavorites, filters, checksum)
                 Pair(schedulePages, timeZone)
             }
             .map { pagesAndTimeZone -> Schedule(pagesAndTimeZone.first, pagesAndTimeZone.second) }
+    }
+
+    private fun extractTracksFrom(scheduleView: List<FirestoreSchedulePage>) {
+        val uniqueTracks = scheduleView.map { it.events }
+            .flatten()
+            .mapNotNull { it.track }
+            .map { it.toTrack() }
+            .distinct()
+        filterScheduleRepository.allTracks = uniqueTracks
     }
 
     private fun createSchedulePages(
