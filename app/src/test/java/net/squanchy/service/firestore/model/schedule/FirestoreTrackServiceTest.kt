@@ -1,11 +1,10 @@
-package net.squanchy
+package net.squanchy.service.firestore.model.schedule
 
 import io.reactivex.Observable
 import io.reactivex.observers.TestObserver
 import net.squanchy.schedule.domain.view.Track
-import net.squanchy.service.firestore.model.schedule.FirestoreTrackService
 import net.squanchy.service.firestore.FirestoreDbService
-import net.squanchy.service.firestore.model.schedule.FirestoreTrack
+import net.squanchy.service.firestore.aFirestoreTrack
 import net.squanchy.support.lang.Optional
 import org.junit.Rule
 import org.junit.Test
@@ -39,21 +38,15 @@ class FirestoreTrackServiceTest {
     fun `should map nulls in the DB events it receives to absent()s in the domain events it emits`() {
         val trackService = FirestoreTrackService(firestoreDbService)
         val subscription = TestObserver<List<Track>>()
-        val firestoreTracks = listOf(FirestoreTrack().apply {
-            id = "any"
-            name = "name"
-            accentColor = null
-            iconUrl = null
-            textColor = null
-        })
+        val firestoreTracks = listOf(aFirestoreTrack(accentColor = null, iconUrl = null, textColor = null))
         `when`(firestoreDbService.tracks()).thenReturn(Observable.just(firestoreTracks))
 
         trackService.tracks()
             .subscribe(subscription)
 
         val tracks = listOf(Track(
-            id = "any",
-            name = "name",
+            id = "fakeId",
+            name = "fakeTrack",
             accentColor = Optional.absent(),
             iconUrl = Optional.absent(),
             textColor = Optional.absent()
@@ -65,24 +58,18 @@ class FirestoreTrackServiceTest {
     fun `should map all values in the DB events it receives to optionals in the domain events it emits`() {
         val trackService = FirestoreTrackService(firestoreDbService)
         val subscription = TestObserver<List<Track>>()
-        val firestoreTracks = listOf(FirestoreTrack().apply {
-            id = "any"
-            name = "name"
-            accentColor = "#ffff00"
-            iconUrl = "http://example.com/icon.png"
-            textColor = "#0000ff"
-        })
+        val firestoreTracks = listOf(aFirestoreTrack())
         `when`(firestoreDbService.tracks()).thenReturn(Observable.just(firestoreTracks))
 
         trackService.tracks()
             .subscribe(subscription)
 
         val tracks = listOf(Track(
-            id = "any",
-            name = "name",
-            accentColor = Optional.of("#ffff00"),
-            iconUrl = Optional.of("http://example.com/icon.png"),
-            textColor = Optional.of("#0000ff")
+            id = "fakeId",
+            name = "fakeTrack",
+            accentColor = Optional.of("#ABCDEF"),
+            iconUrl = Optional.of("www.squanchy.net"),
+            textColor = Optional.of("#FEDCBA")
         ))
         subscription.assertValue(tracks)
     }
