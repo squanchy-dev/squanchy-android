@@ -5,47 +5,42 @@ import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AlertDialog
 import net.squanchy.R
+import net.squanchy.service.firestore.model.schedule.TrackService
+import net.squanchy.schedule.domain.view.Track
+import net.squanchy.service.repository.TrackFilter
 
 class FilterScheduleDialog : DialogFragment() {
 
-    private lateinit var service: FilterScheduleService
+    private lateinit var trackService: TrackService
+    private lateinit var trackFilter: TrackFilter
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        service = filterScheduleComponent(this).service()
+        val component = trackFilterComponent(context!!)
+        trackService = component.trackService()
+        trackFilter = component.trackFilter()
 
-        val selection = if (savedInstanceState == null) {
-            service.currentSelection
-        } else {
-            val restoredSelection = savedInstanceState.getBooleanArray(KEY_SELECTION)
-            service.restore(restoredSelection)
-            restoredSelection
-        }
+        // TODO these should not be snapshots but be responsive! (the Dialog won't work for us)
+        val tracks = tracksSnapshot()
+        val selectedTracks = selectedTracksSnapshot()
+        val trackSelectionStatuses = tracks.map { track -> selectedTracks.contains(track) }.toBooleanArray()
 
         return AlertDialog.Builder(activity!!)
             .setTitle(R.string.filter_schedule)
-            .setNegativeButton(android.R.string.no, { dialog, _ -> dialog.dismiss() })
-            .setPositiveButton(android.R.string.yes, { _, _ -> onFilteringDone() })
-            .setMultiChoiceItems(service.trackNames, selection, { _, which, isChecked ->
-                if (isChecked) {
-                    service.add(which)
-                } else {
-                    service.remove(which)
-                }
+            .setNeutralButton("done", { _, _ -> dismiss() })
+            .setMultiChoiceItems(tracks.trackNames(), trackSelectionStatuses, { _, index, isChecked ->
+                if (isChecked) selectedTracks.add(tracks[index]) else selectedTracks.remove(tracks[index])
+                trackFilter.updateSelectedTracks(selectedTracks)
             })
             .create()
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putBooleanArray(KEY_SELECTION, service.currentSelection)
-    }
+    private fun selectedTracksSnapshot() = trackFilter.selectedTracks
+        .blockingSingle()
+        .toMutableSet()
 
-    private fun onFilteringDone() {
-        service.confirm()
-        dismiss()
-    }
+    private fun tracksSnapshot() = trackService.tracks()
+        .takeUntil { it.isNotEmpty() }
+        .blockingSingle()
 
-    companion object {
-        private const val KEY_SELECTION = "KEY_SELECTION"
-    }
+    private fun List<Track>.trackNames() = map { it.name }.toTypedArray()
 }

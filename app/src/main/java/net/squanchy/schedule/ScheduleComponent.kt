@@ -9,11 +9,17 @@ import net.squanchy.injection.ApplicationComponent
 import net.squanchy.injection.applicationComponent
 import net.squanchy.navigation.NavigationModule
 import net.squanchy.navigation.Navigator
+import net.squanchy.schedule.filterschedule.TrackFilterModule
 import net.squanchy.support.injection.CurrentTimeModule
 import net.squanchy.support.system.CurrentTime
 
 @ActivityLifecycle
-@Component(modules = [ScheduleModule::class, NavigationModule::class, CurrentTimeModule::class], dependencies = [ApplicationComponent::class])
+@Component(modules = [
+    ScheduleModule::class,
+    NavigationModule::class,
+    CurrentTimeModule::class,
+    TrackFilterModule::class
+], dependencies = [ApplicationComponent::class])
 internal interface ScheduleComponent {
 
     fun service(): ScheduleService
@@ -29,6 +35,7 @@ internal fun scheduleComponent(activity: AppCompatActivity): ScheduleComponent =
     .applicationComponent(activity.applicationComponent)
     .scheduleModule(ScheduleModule())
     .navigationModule(NavigationModule())
+    .trackFilterModule(TrackFilterModule())
     .activityContextModule(ActivityContextModule(activity))
     .currentTimeModule(CurrentTimeModule())
     .build()
