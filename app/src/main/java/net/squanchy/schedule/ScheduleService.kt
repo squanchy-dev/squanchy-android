@@ -5,12 +5,12 @@ import io.reactivex.functions.BiFunction
 import net.squanchy.schedule.domain.view.Schedule
 import net.squanchy.schedule.domain.view.SchedulePage
 import net.squanchy.schedule.domain.view.Track
+import net.squanchy.schedule.filterschedule.TracksFilter
 import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.firestore.FirestoreDbService
 import net.squanchy.service.firestore.model.schedule.FirestoreEvent
 import net.squanchy.service.firestore.model.schedule.FirestoreSchedulePage
 import net.squanchy.service.firestore.toEvent
-import net.squanchy.service.repository.TrackFilter
 import net.squanchy.support.lang.Checksum
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDate
@@ -23,14 +23,14 @@ interface ScheduleService {
 class FirestoreScheduleService(
     private val authService: FirebaseAuthService,
     private val dbService: FirestoreDbService,
-    private val trackFilter: TrackFilter,
+    private val tracksFilter: TracksFilter,
     private val checksum: Checksum
 ) : ScheduleService {
 
     override fun schedule(onlyFavorites: Boolean): Observable<Schedule> {
         val filteredDbSchedulePages = dbService.scheduleView()
             .filterByFavorites(onlyFavorites)
-            .filterByTracks(trackFilter.selectedTracks)
+            .filterByTracks(tracksFilter.selectedTracks)
 
         val domainSchedulePages = Observable.combineLatest(
             filteredDbSchedulePages,

@@ -7,16 +7,18 @@ import net.squanchy.service.firestore.FirestoreDbService
 import net.squanchy.service.repository.DaysRepository
 import net.squanchy.service.repository.EventRepository
 import net.squanchy.service.repository.SpeakerRepository
+import net.squanchy.service.repository.TracksRepository
 import net.squanchy.service.repository.firebase.FirebaseDaysRepository
 import net.squanchy.service.repository.firebase.FirebaseEventRepository
 import net.squanchy.service.repository.firebase.FirestoreSpeakerRepository
+import net.squanchy.service.repository.firestore.FirestoreTracksRepository
 import net.squanchy.support.lang.Checksum
 
 @Module
 class RepositoryModule {
 
     @Provides
-    internal fun eventService(dbService: FirebaseDbService, firestoreDbService: FirestoreDbService, checksum: Checksum): EventRepository {
+    internal fun eventRepository(dbService: FirebaseDbService, firestoreDbService: FirestoreDbService, checksum: Checksum): EventRepository {
         return FirebaseEventRepository(dbService, firestoreDbService, checksum)
     }
 
@@ -28,5 +30,10 @@ class RepositoryModule {
     @Provides
     internal fun daysRepository(dbService: FirebaseDbService): DaysRepository {
         return FirebaseDaysRepository(dbService)
+    }
+
+    @Provides
+    internal fun tracksRepository(dbService: FirestoreDbService): TracksRepository {
+        return FirestoreTracksRepository(dbService)
     }
 }

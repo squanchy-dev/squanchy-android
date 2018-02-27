@@ -1,17 +1,17 @@
-package net.squanchy.service.repository
+package net.squanchy.schedule.filterschedule
 
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import net.squanchy.schedule.domain.view.Track
 
-interface TrackFilter {
+interface TracksFilter {
 
     fun updateSelectedTracks(newSelectedTracks: Set<Track>)
 
     val selectedTracks: Observable<Set<Track>>
 }
 
-class InMemoryTrackFilter : TrackFilter {
+class InMemoryTracksFilter : TracksFilter {
 
     private val selectedTracksSubject = BehaviorSubject.createDefault(emptySet<Track>())
 

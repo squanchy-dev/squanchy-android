@@ -8,13 +8,13 @@ import net.squanchy.schedule.domain.view.SchedulePage
 import net.squanchy.schedule.domain.view.Track
 import net.squanchy.schedule.domain.view.aTrack
 import net.squanchy.schedule.domain.view.anEvent
+import net.squanchy.schedule.filterschedule.TracksFilter
 import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.firestore.FirestoreDbService
 import net.squanchy.service.firestore.aFirestoreEvent
 import net.squanchy.service.firestore.aFirestoreSchedulePage
 import net.squanchy.service.firestore.aFirestoreSpeaker
 import net.squanchy.service.firestore.aFirestoreTrack
-import net.squanchy.service.repository.TrackFilter
 import net.squanchy.support.lang.Checksum
 import net.squanchy.support.lang.Optional
 import org.joda.time.DateTimeZone
@@ -40,7 +40,7 @@ class FirestoreScheduleServiceTest {
     private lateinit var dbService: FirestoreDbService
 
     @Mock
-    private lateinit var trackFilter: TrackFilter
+    private lateinit var tracksFilter: TracksFilter
 
     @Mock
     private lateinit var checksum: Checksum
@@ -49,7 +49,7 @@ class FirestoreScheduleServiceTest {
 
     @Before
     fun init() {
-        scheduleService = FirestoreScheduleService(authService, dbService, trackFilter, checksum)
+        scheduleService = FirestoreScheduleService(authService, dbService, tracksFilter, checksum)
         `when`(dbService.timezone()).thenReturn(Observable.just(A_TIMEZONE))
         `when`(checksum.getChecksumOf(aFirestoreSpeaker().id)).thenReturn(5466L)
         `when`(checksum.getChecksumOf(aFirestoreEvent().id)).thenReturn(1234L)
@@ -65,7 +65,7 @@ class FirestoreScheduleServiceTest {
         )
         `when`(dbService.scheduleView()).thenReturn(Observable.just(listOf(schedulePage)))
         val allowedTracks = setOf(aTrack(id = "A"), aTrack("C"))
-        `when`(trackFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
+        `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
         val subscription = TestObserver<Schedule>()
 
         scheduleService.schedule(onlyFavorites = false)
@@ -89,7 +89,7 @@ class FirestoreScheduleServiceTest {
         )
         `when`(dbService.scheduleView()).thenReturn(Observable.just(listOf(schedulePage)))
         val allowedTracks = emptySet<Track>()
-        `when`(trackFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
+        `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
         val subscription = TestObserver<Schedule>()
 
         scheduleService.schedule(onlyFavorites = false)
@@ -112,7 +112,7 @@ class FirestoreScheduleServiceTest {
         )
         `when`(dbService.scheduleView()).thenReturn(Observable.just(listOf(schedulePage)))
         val allowedTracks = setOf(aTrack(id = "A"), aTrack("C"))
-        `when`(trackFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
+        `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
         val subscription = TestObserver<Schedule>()
 
         scheduleService.schedule(onlyFavorites = false)
@@ -133,7 +133,7 @@ class FirestoreScheduleServiceTest {
         )
         `when`(dbService.scheduleView()).thenReturn(Observable.just(listOf(schedulePage)))
         val allowedTracks = setOf(aTrack(id = "A"), aTrack("C"))
-        `when`(trackFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
+        `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
         val subscription = TestObserver<Schedule>()
 
         scheduleService.schedule(onlyFavorites = false)
@@ -158,7 +158,7 @@ class FirestoreScheduleServiceTest {
         )
         `when`(dbService.scheduleView()).thenReturn(Observable.just(listOf(schedulePage)))
         val allowedTracks = emptySet<Track>()
-        `when`(trackFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
+        `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
         val subscription = TestObserver<Schedule>()
 
         scheduleService.schedule(onlyFavorites = false)
