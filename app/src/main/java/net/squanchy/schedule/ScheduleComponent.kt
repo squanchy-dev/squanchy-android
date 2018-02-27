@@ -35,7 +35,7 @@ internal fun scheduleComponent(activity: AppCompatActivity): ScheduleComponent =
     .applicationComponent(activity.applicationComponent)
     .scheduleModule(ScheduleModule())
     .navigationModule(NavigationModule())
-    .trackFilterModule(TracksFilterModule())
+    .tracksFilterModule(TracksFilterModule())
     .activityContextModule(ActivityContextModule(activity))
     .currentTimeModule(CurrentTimeModule())
     .build()

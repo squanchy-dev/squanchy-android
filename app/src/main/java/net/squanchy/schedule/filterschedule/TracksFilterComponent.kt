@@ -16,8 +16,8 @@ interface TracksFilterComponent {
     fun tracksFilter(): TracksFilter
 }
 
-internal fun trackFilterComponent(context: Context): TracksFilterComponent =
+internal fun tracksFilterComponent(context: Context): TracksFilterComponent =
     DaggerTracksFilterComponent.builder()
         .applicationComponent(context.applicationComponent)
-        .trackFilterModule(TracksFilterModule())
+        .tracksFilterModule(TracksFilterModule())
         .build()

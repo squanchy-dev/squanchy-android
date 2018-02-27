@@ -28,7 +28,7 @@ internal fun favoritesComponent(activity: AppCompatActivity): FavoritesComponent
     return DaggerFavoritesComponent.builder()
             .applicationComponent(createApplicationComponent(activity.application))
             .scheduleModule(ScheduleModule())
-            .trackFilterModule(TracksFilterModule())
+            .tracksFilterModule(TracksFilterModule())
             .navigationModule(NavigationModule())
             .activityContextModule(ActivityContextModule(activity))
             .build()
