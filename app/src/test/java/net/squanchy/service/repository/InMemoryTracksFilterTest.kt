@@ -3,11 +3,12 @@ package net.squanchy.service.repository
 import io.reactivex.observers.TestObserver
 import net.squanchy.schedule.domain.view.Track
 import net.squanchy.schedule.domain.view.aTrack
+import net.squanchy.schedule.filterschedule.InMemoryTracksFilter
 import org.junit.Test
 
-class InMemoryTrackFilterTest {
+class InMemoryTracksFilterTest {
 
-    private val trackFilterRepository = InMemoryTrackFilter()
+    private val trackFilterRepository = InMemoryTracksFilter()
 
     companion object {
         val A_SET_OF_TRACKS = setOf(aTrack())
