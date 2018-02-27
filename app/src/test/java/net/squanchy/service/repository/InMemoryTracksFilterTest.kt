@@ -8,10 +8,22 @@ import org.junit.Test
 
 class InMemoryTracksFilterTest {
 
-    private val trackFilterRepository = InMemoryTracksFilter()
+    private val trackFilterRepository = InMemoryTracksFilter(tracksRepository)
 
     companion object {
         val A_SET_OF_TRACKS = setOf(aTrack())
+    }
+
+    @Test
+    fun `should start with isInitialized false`() {
+        assert(!trackFilterRepository.isInitialized)
+    }
+
+    @Test
+    fun `should return isInitialized true after the tracks are updated with any set of tracks`() {
+        trackFilterRepository.updateSelectedTracks(emptySet())
+
+        assert(trackFilterRepository.isInitialized)
     }
 
     @Test

@@ -1,7 +1,7 @@
 package net.squanchy.schedule.filterschedule
 
 import io.reactivex.Observable
-import io.reactivex.subjects.ReplaySubject
+import io.reactivex.subjects.BehaviorSubject
 import net.squanchy.schedule.domain.view.Track
 
 interface TracksFilter {
@@ -10,16 +10,17 @@ interface TracksFilter {
 
     val selectedTracks: Observable<Set<Track>>
 
-    fun isInitialized(): Boolean
+    val isInitialized: Boolean
 }
 
 class InMemoryTracksFilter : TracksFilter {
 
-    private val selectedTracksSubject = ReplaySubject.createWithSize<Set<Track>>(1)
+    private val selectedTracksSubject = BehaviorSubject.create<Set<Track>>()
 
     private var initialized = false
 
-    override fun isInitialized() = initialized
+    override val isInitialized
+        get() = initialized
 
     override fun updateSelectedTracks(newSelectedTracks: Set<Track>) {
         initialized = true

@@ -53,7 +53,7 @@ class SquanchyApplication : Application() {
         preloadRemoteConfig()
     }
 
-    @SuppressLint("CheckResult")    // This is a fire-and-forget operation
+    @SuppressLint("CheckResult") // This is a fire-and-forget operation
     private fun preloadRemoteConfig() {
         applicationComponent.remoteConfig()
             .fetchNow()

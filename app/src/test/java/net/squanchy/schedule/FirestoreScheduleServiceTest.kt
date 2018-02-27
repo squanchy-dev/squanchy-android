@@ -56,6 +56,36 @@ class FirestoreScheduleServiceTest {
     }
 
     @Test
+    fun `should not exclude any events from the schedule when not filtering only by favorites`() {
+        val schedulePage = aFirestoreSchedulePage(
+            events = listOf(
+                aFirestoreEvent(id = "1", track = null),
+                aFirestoreEvent(id = "2", track = null)
+            )
+        )
+        `when`(dbService.scheduleView()).thenReturn(Observable.just(listOf(schedulePage)))
+        val allowedTracks = setOf(aTrack(id = "a track id"))
+        `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
+        `when`(checksum.getChecksumOf("1")).thenReturn(1234L)
+        `when`(checksum.getChecksumOf("2")).thenReturn(2345L)
+        // TODO mark one of the two firestore events above as favorite
+        val subscription = TestObserver<Schedule>()
+
+        scheduleService.schedule(onlyFavorites = false)
+            .subscribe(subscription)
+
+        subscription.assertValue(Schedule(
+            listOf(SchedulePage("dayId", LocalDate(schedulePage.day.date), listOf(
+                anEvent(id = "1", numericId = 1234L, track = Optional.absent()),
+                anEvent(id = "2", numericId = 2345L, track = Optional.absent())
+            ))), A_TIMEZONE)
+        )
+    }
+
+    // TODO test events are filtered out when onyFavorites and they're not favorited
+
+
+    @Test
     fun `should not exclude events with no track from the schedule when filtering has at least a track`() {
         val schedulePage = aFirestoreSchedulePage(
             events = listOf(
