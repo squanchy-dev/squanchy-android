@@ -9,5 +9,5 @@ import net.squanchy.service.repository.TrackFilter
 class TrackFilterModule {
 
     @Provides
-    fun trackFilter(): TrackFilter = LocalTrackFilter
+    fun trackFilter(): TrackFilter = LocalTrackFilter()
 }

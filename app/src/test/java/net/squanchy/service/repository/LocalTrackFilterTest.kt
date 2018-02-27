@@ -2,15 +2,15 @@ package net.squanchy.service.repository
 
 import io.reactivex.observers.TestObserver
 import net.squanchy.schedule.domain.view.Track
-import net.squanchy.support.lang.Optional
+import net.squanchy.schedule.domain.view.aTrack
 import org.junit.Test
 
 class LocalTrackFilterTest {
 
-    private val trackFilterRepository = LocalTrackFilter
+    private val trackFilterRepository = LocalTrackFilter()
 
     companion object {
-        val A_SET_OF_TRACKS = setOf(Track("any", "name", Optional.absent(), Optional.absent(), Optional.absent()))
+        val A_SET_OF_TRACKS = setOf(aTrack())
     }
 
     @Test

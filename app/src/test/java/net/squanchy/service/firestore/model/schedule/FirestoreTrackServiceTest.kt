@@ -3,6 +3,7 @@ package net.squanchy.service.firestore.model.schedule
 import io.reactivex.Observable
 import io.reactivex.observers.TestObserver
 import net.squanchy.schedule.domain.view.Track
+import net.squanchy.schedule.domain.view.aTrack
 import net.squanchy.service.firestore.FirestoreDbService
 import net.squanchy.service.firestore.aFirestoreTrack
 import net.squanchy.support.lang.Optional
@@ -44,9 +45,7 @@ class FirestoreTrackServiceTest {
         trackService.tracks()
             .subscribe(subscription)
 
-        val tracks = listOf(Track(
-            id = "fakeId",
-            name = "fakeTrack",
+        val tracks = listOf(aTrack(
             accentColor = Optional.absent(),
             iconUrl = Optional.absent(),
             textColor = Optional.absent()
@@ -64,13 +63,7 @@ class FirestoreTrackServiceTest {
         trackService.tracks()
             .subscribe(subscription)
 
-        val tracks = listOf(Track(
-            id = "fakeId",
-            name = "fakeTrack",
-            accentColor = Optional.of("#ABCDEF"),
-            iconUrl = Optional.of("www.squanchy.net"),
-            textColor = Optional.of("#FEDCBA")
-        ))
+        val tracks = listOf(aTrack())
         subscription.assertValue(tracks)
     }
 }
