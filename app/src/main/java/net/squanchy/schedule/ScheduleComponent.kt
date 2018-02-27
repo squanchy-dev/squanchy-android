@@ -9,7 +9,9 @@ import net.squanchy.injection.ApplicationComponent
 import net.squanchy.injection.applicationComponent
 import net.squanchy.navigation.NavigationModule
 import net.squanchy.navigation.Navigator
+import net.squanchy.schedule.filterschedule.TracksFilter
 import net.squanchy.schedule.filterschedule.TracksFilterModule
+import net.squanchy.service.repository.TracksRepository
 import net.squanchy.support.injection.CurrentTimeModule
 import net.squanchy.support.system.CurrentTime
 
@@ -22,13 +24,17 @@ import net.squanchy.support.system.CurrentTime
 ], dependencies = [ApplicationComponent::class])
 internal interface ScheduleComponent {
 
-    fun service(): ScheduleService
+    fun scheduleService(): ScheduleService
 
     fun navigator(): Navigator
 
     fun analytics(): Analytics
 
     fun currentTime(): CurrentTime
+
+    fun tracksRepository(): TracksRepository
+
+    fun tracksFilter(): TracksFilter
 }
 
 internal fun scheduleComponent(activity: AppCompatActivity): ScheduleComponent = DaggerScheduleComponent.builder()

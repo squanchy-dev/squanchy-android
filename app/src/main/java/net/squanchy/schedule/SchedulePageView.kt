@@ -1,5 +1,6 @@
 package net.squanchy.schedule
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.TabLayout
@@ -8,6 +9,7 @@ import android.util.AttributeSet
 import android.view.View
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.view_page_schedule.view.*
 import net.squanchy.R
 import net.squanchy.analytics.Analytics
@@ -16,7 +18,9 @@ import net.squanchy.home.Loadable
 import net.squanchy.navigation.Navigator
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Schedule
+import net.squanchy.schedule.filterschedule.TracksFilter
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter
+import net.squanchy.service.repository.TracksRepository
 import net.squanchy.support.font.applyTypeface
 import net.squanchy.support.font.getFontFor
 import net.squanchy.support.font.hasTypefaceSpan
@@ -26,9 +30,9 @@ import timber.log.Timber
 
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class SchedulePageView @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet,
-        defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet,
+    defStyleAttr: Int = 0
 ) : CoordinatorLayout(context, attrs, defStyleAttr), Loadable {
 
     private val viewPagerAdapter: ScheduleViewPagerAdapter
@@ -41,11 +45,26 @@ class SchedulePageView @JvmOverloads constructor(
     init {
         val activity = unwrapToActivityContext(getContext())
         val component = scheduleComponent(activity)
-        service = component.service()
+        service = component.scheduleService()
         navigate = component.navigator()
         analytics = component.analytics()
         viewPagerAdapter = ScheduleViewPagerAdapter(activity)
         currentTime = component.currentTime()
+
+        selectAllTracksIfFilterIsUninitialized(component.tracksFilter(), component.tracksRepository())
+    }
+
+    @SuppressLint("CheckResult") // This is a one-off fire-and-forget operation, will unsubscribe once done
+    private fun selectAllTracksIfFilterIsUninitialized(tracksFilter: TracksFilter, tracksRepository: TracksRepository) {
+        if (tracksFilter.isInitialized()) {
+            return
+        }
+
+        tracksRepository.tracks()
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
+            .firstElement()
+            .subscribe({ tracks -> tracksFilter.updateSelectedTracks(tracks.toSet()) })
     }
 
     override fun onFinishInflate() {
@@ -85,12 +104,12 @@ class SchedulePageView @JvmOverloads constructor(
 
     override fun startLoading() {
         subscriptions.add(
-                service.schedule(false)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                            { updateWith(it, { event -> onEventClicked(event) }) },
-                            { Timber.e(it) }
-                    )
+            service.schedule(false)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { updateWith(it, { event -> onEventClicked(event) }) },
+                    { Timber.e(it) }
+                )
         )
     }
 
@@ -145,9 +164,9 @@ class SchedulePageView @JvmOverloads constructor(
     }
 
     private class ScrollingOnTabSelectedListener(
-            private val schedule: Schedule,
-            private val viewPagerAdapter: ScheduleViewPagerAdapter,
-            private val currentTime: CurrentTime
+        private val schedule: Schedule,
+        private val viewPagerAdapter: ScheduleViewPagerAdapter,
+        private val currentTime: CurrentTime
     ) : OnTabSelectedListener {
 
         override fun onTabReselected(tab: TabLayout.Tab) {
@@ -157,8 +176,8 @@ class SchedulePageView @JvmOverloads constructor(
     }
 
     private class TrackingOnTabSelectedListener(
-            private val analytics: Analytics,
-            private val viewPagerAdapter: ScheduleViewPagerAdapter
+        private val analytics: Analytics,
+        private val viewPagerAdapter: ScheduleViewPagerAdapter
     ) : OnTabSelectedListener {
 
         override fun onTabSelected(tab: TabLayout.Tab) {
