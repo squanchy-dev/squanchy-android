@@ -1,6 +1,5 @@
 package net.squanchy.schedule
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.TabLayout
@@ -9,7 +8,6 @@ import android.util.AttributeSet
 import android.view.View
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.view_page_schedule.view.*
 import net.squanchy.R
 import net.squanchy.analytics.Analytics
@@ -18,9 +16,7 @@ import net.squanchy.home.Loadable
 import net.squanchy.navigation.Navigator
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Schedule
-import net.squanchy.schedule.filterschedule.TracksFilter
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter
-import net.squanchy.service.repository.TracksRepository
 import net.squanchy.support.font.applyTypeface
 import net.squanchy.support.font.getFontFor
 import net.squanchy.support.font.hasTypefaceSpan
@@ -50,21 +46,6 @@ class SchedulePageView @JvmOverloads constructor(
         analytics = component.analytics()
         viewPagerAdapter = ScheduleViewPagerAdapter(activity)
         currentTime = component.currentTime()
-
-        selectAllTracksIfFilterIsUninitialized(component.tracksFilter(), component.tracksRepository())
-    }
-
-    @SuppressLint("CheckResult") // This is a one-off fire-and-forget operation, will unsubscribe once done
-    private fun selectAllTracksIfFilterIsUninitialized(tracksFilter: TracksFilter, tracksRepository: TracksRepository) {
-        if (tracksFilter.isInitialized()) {
-            return
-        }
-
-        tracksRepository.tracks()
-            .subscribeOn(Schedulers.io())
-            .observeOn(Schedulers.io())
-            .firstElement()
-            .subscribe({ tracks -> tracksFilter.updateSelectedTracks(tracks.toSet()) })
     }
 
     override fun onFinishInflate() {

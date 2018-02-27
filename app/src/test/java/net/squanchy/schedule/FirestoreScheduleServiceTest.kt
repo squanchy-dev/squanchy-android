@@ -84,7 +84,6 @@ class FirestoreScheduleServiceTest {
 
     // TODO test events are filtered out when onyFavorites and they're not favorited
 
-
     @Test
     fun `should not exclude events with no track from the schedule when filtering has at least a track`() {
         val schedulePage = aFirestoreSchedulePage(

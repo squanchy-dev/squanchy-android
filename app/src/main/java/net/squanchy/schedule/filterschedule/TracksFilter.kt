@@ -3,6 +3,7 @@ package net.squanchy.schedule.filterschedule
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import net.squanchy.schedule.domain.view.Track
+import net.squanchy.service.repository.TracksRepository
 
 interface TracksFilter {
 
@@ -13,7 +14,7 @@ interface TracksFilter {
     val isInitialized: Boolean
 }
 
-class InMemoryTracksFilter : TracksFilter {
+class InMemoryTracksFilter(private val tracksRepository: TracksRepository) : TracksFilter {
 
     private val selectedTracksSubject = BehaviorSubject.create<Set<Track>>()
 
@@ -28,5 +29,9 @@ class InMemoryTracksFilter : TracksFilter {
     }
 
     override val selectedTracks: Observable<Set<Track>>
-        get() = selectedTracksSubject
+        get() = selectedTracksSubject.startWith(
+            tracksRepository.tracks()
+                .take(if (selectedTracksSubject.hasValue()) 0 else 1)
+                .map { it.toSet() }
+        )
 }
