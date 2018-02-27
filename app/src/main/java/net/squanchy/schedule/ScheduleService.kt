@@ -16,7 +16,7 @@ import org.joda.time.DateTimeZone
 import org.joda.time.LocalDate
 
 interface ScheduleService {
-    fun schedule(onlyFavorites: Boolean): Observable<Schedule>
+    fun schedule(onlyFavorites: Boolean = false): Observable<Schedule>
     fun currentUserIsSignedIn(): Observable<Boolean>
 }
 
