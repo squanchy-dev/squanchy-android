@@ -5,9 +5,9 @@ import net.squanchy.schedule.domain.view.Track
 import net.squanchy.schedule.domain.view.aTrack
 import org.junit.Test
 
-class LocalTrackFilterTest {
+class InMemoryTrackFilterTest {
 
-    private val trackFilterRepository = LocalTrackFilter()
+    private val trackFilterRepository = InMemoryTrackFilter()
 
     companion object {
         val A_SET_OF_TRACKS = setOf(aTrack())

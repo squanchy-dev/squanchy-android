@@ -11,7 +11,7 @@ interface TrackFilter {
     val selectedTracks: Observable<Set<Track>>
 }
 
-class LocalTrackFilter : TrackFilter {
+class InMemoryTrackFilter : TrackFilter {
 
     private val selectedTracksSubject = BehaviorSubject.createDefault(emptySet<Track>())
 
