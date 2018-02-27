@@ -166,7 +166,7 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
                         return@addSnapshotListener
                     }
                     subscriber.onNext(snapshot.documents.map { trackSnapshot ->
-                        trackSnapshot.toObject(FirestoreTrack::class.java).apply { id = trackSnapshot.id }    // TODO should be done in the backend
+                        trackSnapshot.toObject(FirestoreTrack::class.java).apply { id = trackSnapshot.id } // TODO should be done in the backend
                     })
                 }
 
