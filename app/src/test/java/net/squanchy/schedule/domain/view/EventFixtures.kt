@@ -2,6 +2,7 @@ package net.squanchy.schedule.domain.view
 
 import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.speaker.domain.view.Speaker
+import net.squanchy.speaker.domain.view.aSpeaker
 import net.squanchy.support.lang.Optional
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDateTime
@@ -9,13 +10,13 @@ import org.joda.time.LocalDateTime
 fun anEvent(
     id: String = "banana",
     numericId: Long = 1234,
-    startTime: LocalDateTime = LocalDateTime(123456),
-    endTime: LocalDateTime = LocalDateTime(123666),
+    startTime: LocalDateTime = LocalDateTime(123456789),
+    endTime: LocalDateTime = LocalDateTime(123459999),
     title: String = "Hello \uD83C\uDF4C", // Yes, that's a banana emoji. You never know
     place: Optional<Place> = Optional.of(aPlace()),
-    experienceLevel: Optional<ExperienceLevel> = Optional.absent<ExperienceLevel>(),
-    speakers: List<Speaker> = emptyList(),
-    type: Event.Type = Event.Type.OTHER,
+    experienceLevel: Optional<ExperienceLevel> = Optional.of(ExperienceLevel.BEGINNER),
+    speakers: List<Speaker> = listOf(aSpeaker()),
+    type: Event.Type = Event.Type.KEYNOTE,
     description: Optional<String> = Optional.of("Now this is the story all about how\nMy life got flipped, turned upside down"),
     track: Optional<Track> = Optional.of(aTrack()),
     timeZone: DateTimeZone = DateTimeZone.forID("Europe/Rome"),

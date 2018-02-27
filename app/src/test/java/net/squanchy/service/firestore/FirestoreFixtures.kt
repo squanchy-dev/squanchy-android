@@ -1,6 +1,5 @@
 package net.squanchy.service.firestore
 
-import android.text.format.DateUtils
 import com.google.firebase.firestore.GeoPoint
 import net.squanchy.service.firestore.model.conferenceinfo.FirestoreConferenceInfo
 import net.squanchy.service.firestore.model.conferenceinfo.FirestoreVenue
@@ -12,12 +11,12 @@ import net.squanchy.service.firestore.model.schedule.FirestoreSpeaker
 import net.squanchy.service.firestore.model.schedule.FirestoreTrack
 import java.util.Date
 
-private const val MILLIS_OF_A_DATE_1 = 1518652975855
-private const val MILLIS_OF_A_DATE_2 = MILLIS_OF_A_DATE_1 + DateUtils.DAY_IN_MILLIS
+private val A_DATE = Date(123456789)
+private val A_DATE_PLUS_SOME_TIME = Date(123459999)
 
 fun aFirestoreTrack(
-    id: String = "fakeId",
-    name: String = "fakeTrack",
+    id: String = "a track id",
+    name: String = "a track name",
     accentColor: String? = "#ABCDEF",
     textColor: String? = "#FEDCBA",
     iconUrl: String? = "www.squanchy.net"
@@ -30,14 +29,20 @@ fun aFirestoreTrack(
 }
 
 fun aFirestoreSpeaker(
-    id: String = "speakerId",
-    name: String = "Boaty McBoatface",
-    bio: String = "Hello, I'm a fake",
-    companyName: String? = "Squanchy",
-    companyUrl: String? = "www.squanchy.net",
-    personalUrl: String? = "www.squanchy.net",
-    photoUrl: String? = "@DonuldTrump",
-    twitterUsername: String? = null
+    id: String = "bananana",
+    name: String = "Banana Joe",
+    bio: String = """Joe ¡oh Banana Joe!
+Tu tienes, ¡oh Banana nana Joe!
+Corazón gigante y alma soñan,te
+¡Oh Banana nana Joe!
+Joe ¡oh Banana Joe!
+Tu eres, ¡oh Banana na na Joe!
+Un gran marinero con puños de acero""",
+    companyName: String? = "Amantido",
+    companyUrl: String? = "http://banana.joe",
+    personalUrl: String? = "https://en.wikipedia.org/wiki/Banana_Joe_(film)",
+    photoUrl: String? = "https://i.ytimg.com/vi/-1HB26ko2H8/hqdefault.jpg",
+    twitterUsername: String? = "@bananaJoe1982"
 ) = FirestoreSpeaker().apply {
     this.id = id
     this.name = name
@@ -50,9 +55,9 @@ fun aFirestoreSpeaker(
 }
 
 fun aFirestorePlace(
-    id: String = "placeId",
-    name: String = "Turin",
-    floor: String? = "This floor"
+    id: String = "banana-room",
+    name: String = "The banana room™",
+    floor: String? = "Banana floor"
 ) = FirestorePlace().apply {
     this.id = id
     this.name = name
@@ -61,7 +66,7 @@ fun aFirestorePlace(
 
 fun aFirestoreDay(
     id: String = "dayId",
-    date: Date = Date(MILLIS_OF_A_DATE_1)
+    date: Date = A_DATE
 ) = FirestoreDay().apply {
     this.id = id
     this.date = date
@@ -84,16 +89,16 @@ fun aFirestoreVenue(
 }
 
 fun aFirestoreEvent(
-    id: String = "EventId",
-    title: String = "Getting started with fakes",
-    startTime: Date = Date(MILLIS_OF_A_DATE_1),
-    endTime: Date = Date(MILLIS_OF_A_DATE_2),
+    id: String = "banana",
+    title: String = "Hello \uD83C\uDF4C", // Yes, that's a banana emoji. You never know
+    startTime: Date = A_DATE,
+    endTime: Date = A_DATE_PLUS_SOME_TIME,
     place: FirestorePlace? = aFirestorePlace(),
     track: FirestoreTrack? = aFirestoreTrack(),
     speakers: List<FirestoreSpeaker> = listOf(aFirestoreSpeaker()),
     experienceLevel: String? = "beginner",
     type: String = "keynote",
-    description: String? = "Something something an event"
+    description: String? = "Now this is the story all about how\nMy life got flipped, turned upside down"
 ) = FirestoreEvent().apply {
     this.id = id
     this.title = title
