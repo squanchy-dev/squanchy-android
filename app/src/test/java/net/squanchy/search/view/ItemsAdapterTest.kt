@@ -5,7 +5,7 @@ import net.squanchy.schedule.domain.view.anEvent
 import net.squanchy.search.SearchResults
 import net.squanchy.search.view.SearchAdapter.ViewTypeId
 import net.squanchy.speaker.domain.view.Speaker
-import net.squanchy.speaker.domain.view.SpeakerFixtures.aSpeaker
+import net.squanchy.speaker.domain.view.aSpeaker
 import org.fest.assertions.api.Assertions.assertThat
 import org.junit.Rule
 import org.junit.Test
@@ -554,8 +554,8 @@ class ItemsAdapterTest {
             internal val NO_SPEAKERS = emptyList<Speaker>()
 
             internal val ANY_TWO_SPEAKERS = listOf(
-                aSpeaker().withId("banana").withNumericId(1).withName("Banana Joe").build(),
-                aSpeaker().withId("potato").withNumericId(2).withName("Detective Patatorfio").build()
+                aSpeaker(id = "banana", numericId = 1, name = "Banana Joe"),
+                aSpeaker(id = "potato", numericId = 2, name = "Detective Patatorfio")
             )
             internal val ANY_THREE_EVENTS: List<Event> = listOf(
                 anEvent(id = "carrot", numericId = 3, title = "Karotoff"),
