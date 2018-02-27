@@ -62,10 +62,7 @@ class FirestoreScheduleService(
             this,
             selectedTracks,
             BiFunction { pages: List<FirestoreSchedulePage>, tracks: Set<Track> ->
-                when {
-                    tracks.isEmpty() -> emptyList()
-                    else -> pages.filterPagesEvents { event -> tracks.any { it.id == event.track?.id } }
-                }
+                pages.filterPagesEvents { it.hasTrackOrNoTrack(tracks) }
             }
         )
 
@@ -79,6 +76,9 @@ class FirestoreScheduleService(
             day = this@filterPageEvents.day
         }
     }
+
+    private fun FirestoreEvent.hasTrackOrNoTrack(allowedTracks: Set<Track>) =
+        track?.let { allowedTracks.any { it.id == this.track?.id ?: it.id } } ?: true
 
     private fun toDomainSchedulePages() =
         BiFunction<List<FirestoreSchedulePage>, DateTimeZone, List<SchedulePage>> { pages, timeZone ->
