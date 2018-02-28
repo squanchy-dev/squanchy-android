@@ -11,6 +11,7 @@ import net.squanchy.schedule.domain.view.anEvent
 import net.squanchy.schedule.filterschedule.TracksFilter
 import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.firestore.FirestoreDbService
+import net.squanchy.service.firestore.aFirestoreDay
 import net.squanchy.service.firestore.aFirestoreEvent
 import net.squanchy.service.firestore.aFirestoreSchedulePage
 import net.squanchy.service.firestore.aFirestoreSpeaker
@@ -19,6 +20,7 @@ import net.squanchy.support.lang.Checksum
 import net.squanchy.support.lang.Optional
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDate
+import org.joda.time.LocalDateTime
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -26,11 +28,21 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnit
 import org.mockito.junit.MockitoRule
+import java.util.Calendar
+import java.util.Date
+import java.util.TimeZone
 
 class FirestoreScheduleServiceTest {
 
     companion object {
         private val A_TIMEZONE = DateTimeZone.forID("Europe/Rome")
+
+        private val CALENDAR = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"))
+
+        private val A_START_TIME = Date(123456)
+        private val AN_END_TIME = Date(123999)
+        private val A_LATER_START_TIME = Date(124000)
+        private val A_LATER_END_TIME = Date(124999)
     }
 
     @Rule
@@ -56,6 +68,81 @@ class FirestoreScheduleServiceTest {
         scheduleService = FirestoreScheduleService(authService, dbService, tracksFilter, checksum)
         `when`(dbService.timezone()).thenReturn(Observable.just(A_TIMEZONE))
         `when`(checksum.getChecksumOf(aFirestoreSpeaker().id)).thenReturn(5466L)
+    }
+
+    @Test
+    fun `should sort events in each schedule page by start time`() {
+        val firstDaySchedulePage = aFirestoreSchedulePage(
+            day = aFirestoreDay(id = "1", date = A_START_TIME.dateOnly()),
+            events = listOf(
+                aFirestoreEvent(id = "1", startTime = A_START_TIME, endTime = AN_END_TIME),
+                aFirestoreEvent(id = "2", startTime = A_LATER_START_TIME, endTime = A_LATER_END_TIME),
+                aFirestoreEvent(id = "3", startTime = A_START_TIME, endTime = AN_END_TIME)
+            )
+        )
+        val secondDaySchedulePage = aFirestoreSchedulePage(
+            day = aFirestoreDay(id = "2", date = A_START_TIME.plusOneDay().dateOnly()),
+            events = listOf(
+                aFirestoreEvent(id = "4", startTime = A_START_TIME.plusOneDay(), endTime = AN_END_TIME.plusOneDay()),
+                aFirestoreEvent(id = "6", startTime = A_LATER_START_TIME.plusOneDay(), endTime = A_LATER_END_TIME.plusOneDay()),
+                aFirestoreEvent(id = "5", startTime = A_START_TIME.plusOneDay(), endTime = AN_END_TIME.plusOneDay())
+            )
+        )
+        `when`(dbService.scheduleView()).thenReturn(Observable.just(listOf(firstDaySchedulePage, secondDaySchedulePage)))
+        val allowedTracks = setOf(aTrack(id = "a track id"))
+        `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
+        `when`(checksum.getChecksumOf("1")).thenReturn(1)
+        `when`(checksum.getChecksumOf("2")).thenReturn(2)
+        `when`(checksum.getChecksumOf("3")).thenReturn(3)
+        `when`(checksum.getChecksumOf("4")).thenReturn(4)
+        `when`(checksum.getChecksumOf("5")).thenReturn(5)
+        `when`(checksum.getChecksumOf("6")).thenReturn(6)
+        val subscription = TestObserver<Schedule>()
+
+        scheduleService.schedule(onlyFavorites = false)
+            .subscribe(subscription)
+
+        subscription.assertValue(Schedule(
+            listOf(
+                SchedulePage(
+                    dayId = "1",
+                    date = LocalDate(A_START_TIME.dateOnly()),
+                    events = listOf(
+                        anEvent(id = "1", numericId = 1, startTime = A_START_TIME.toLocalDateTime(), endTime = AN_END_TIME.toLocalDateTime()),
+                        anEvent(id = "3", numericId = 3, startTime = A_START_TIME.toLocalDateTime(), endTime = AN_END_TIME.toLocalDateTime()),
+                        anEvent(
+                            id = "2",
+                            numericId = 2,
+                            startTime = A_LATER_START_TIME.toLocalDateTime(),
+                            endTime = A_LATER_END_TIME.toLocalDateTime()
+                        )
+                    )),
+                SchedulePage(
+                    dayId = "2",
+                    date = LocalDate(A_START_TIME.plusOneDay().dateOnly()),
+                    events = listOf(
+                        anEvent(
+                            id = "4",
+                            numericId = 4,
+                            startTime = A_START_TIME.plusOneDay().toLocalDateTime(),
+                            endTime = AN_END_TIME.plusOneDay().toLocalDateTime()
+                        ),
+                        anEvent(
+                            id = "5",
+                            numericId = 5,
+                            startTime = A_START_TIME.plusOneDay().toLocalDateTime(),
+                            endTime = AN_END_TIME.plusOneDay().toLocalDateTime()
+                        ),
+                        anEvent(
+                            id = "6",
+                            numericId = 6,
+                            startTime = A_LATER_START_TIME.plusOneDay().toLocalDateTime(),
+                            endTime = A_LATER_END_TIME.plusOneDay().toLocalDateTime()
+                        )
+                    ))
+            ),
+            A_TIMEZONE)
+        )
     }
 
     @Test
@@ -206,4 +293,21 @@ class FirestoreScheduleServiceTest {
             ))), A_TIMEZONE)
         )
     }
+
+    private fun Date.plusOneDay(): Date = CALENDAR.apply {
+        clear()
+        time = this@plusOneDay
+        add(Calendar.DAY_OF_YEAR, 1)
+    }.time
+
+    private fun Date.dateOnly(): Date = CALENDAR.apply {
+        clear()
+        time = this@dateOnly
+        set(Calendar.HOUR, 0)
+        set(Calendar.MINUTE, 0)
+        set(Calendar.SECOND, 0)
+        set(Calendar.MILLISECOND, 0)
+    }.time
+
+    private fun Date.toLocalDateTime() = LocalDateTime(this)
 }

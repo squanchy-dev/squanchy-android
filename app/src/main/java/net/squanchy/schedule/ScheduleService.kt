@@ -35,7 +35,7 @@ class FirestoreScheduleService(
         val domainSchedulePages = Observable.combineLatest(
             filteredDbSchedulePages,
             dbService.timezone(),
-            toDomainSchedulePages()
+            toSortedDomainSchedulePages()
         )
 
         return Observable.combineLatest(domainSchedulePages, dbService.timezone(), combineInAPair())
@@ -80,16 +80,16 @@ class FirestoreScheduleService(
     private fun FirestoreEvent.hasTrackOrNoTrack(allowedTracks: Set<Track>) =
         track?.let { allowedTracks.any { it.id == this.track?.id ?: it.id } } ?: true
 
-    private fun toDomainSchedulePages() =
+    private fun toSortedDomainSchedulePages() =
         BiFunction<List<FirestoreSchedulePage>, DateTimeZone, List<SchedulePage>> { pages, timeZone ->
-            pages.toDomainSchedulePages(checksum, timeZone)
+            pages.toSortedDomainSchedulePages(checksum, timeZone)
         }
 
-    private fun List<FirestoreSchedulePage>.toDomainSchedulePages(checksum: Checksum, timeZone: DateTimeZone) =
-        map { it.toDomainSchedulePage(checksum, timeZone) }
+    private fun List<FirestoreSchedulePage>.toSortedDomainSchedulePages(checksum: Checksum, timeZone: DateTimeZone) =
+        map { it.toSortedDomainSchedulePage(checksum, timeZone) }
 
-    private fun FirestoreSchedulePage.toDomainSchedulePage(checksum: Checksum, timeZone: DateTimeZone): SchedulePage =
-        SchedulePage(day.id, LocalDate(day.date), events.map { it.toEvent(checksum, timeZone) })
+    private fun FirestoreSchedulePage.toSortedDomainSchedulePage(checksum: Checksum, timeZone: DateTimeZone): SchedulePage =
+        SchedulePage(day.id, LocalDate(day.date), events.map { it.toEvent(checksum, timeZone) }.sortedBy { it.startTime })
 
     private fun <A, B> combineInAPair(): BiFunction<A, B, Pair<A, B>> = BiFunction { a, b -> Pair(a, b) }
 
