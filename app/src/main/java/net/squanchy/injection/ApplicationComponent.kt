@@ -6,6 +6,8 @@ import net.squanchy.analytics.Analytics
 import net.squanchy.analytics.AnalyticsModule
 import net.squanchy.remoteconfig.RemoteConfig
 import net.squanchy.remoteconfig.RemoteConfigModule
+import net.squanchy.schedule.filterschedule.TracksFilter
+import net.squanchy.schedule.filterschedule.TracksFilterModule
 import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.firebase.FirebaseDbService
 import net.squanchy.service.firebase.injection.FirebaseModule
@@ -28,6 +30,7 @@ fun createApplicationComponent(application: Application): ApplicationComponent {
         .applicationContextModule(ApplicationContextModule(application))
         .analyticsModule(AnalyticsModule(application))
         .remoteConfigModule(RemoteConfigModule())
+        .tracksFilterModule(TracksFilterModule())
         .build()
 }
 
@@ -41,7 +44,8 @@ fun createApplicationComponent(application: Application): ApplicationComponent {
         RepositoryModule::class,
         AnalyticsModule::class,
         RemoteConfigModule::class,
-        CurrentTimeModule::class
+        CurrentTimeModule::class,
+        TracksFilterModule::class
     ]
 )
 interface ApplicationComponent {
@@ -59,6 +63,8 @@ interface ApplicationComponent {
     fun daysRepository(): DaysRepository
 
     fun tracksRepository(): TracksRepository
+
+    fun tracksFilter(): TracksFilter
 
     fun analytics(): Analytics
 

@@ -8,7 +8,7 @@ import net.squanchy.injection.applicationComponent
 import net.squanchy.service.repository.TracksRepository
 
 @ActivityLifecycle
-@Component(modules = [TracksFilterModule::class], dependencies = [ApplicationComponent::class])
+@Component(dependencies = [ApplicationComponent::class])
 interface TracksFilterComponent {
 
     fun tracksRepository(): TracksRepository
@@ -19,5 +19,4 @@ interface TracksFilterComponent {
 internal fun tracksFilterComponent(context: Context): TracksFilterComponent =
     DaggerTracksFilterComponent.builder()
         .applicationComponent(context.applicationComponent)
-        .tracksFilterModule(TracksFilterModule())
         .build()

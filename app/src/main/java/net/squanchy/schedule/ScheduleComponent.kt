@@ -10,18 +10,12 @@ import net.squanchy.injection.applicationComponent
 import net.squanchy.navigation.NavigationModule
 import net.squanchy.navigation.Navigator
 import net.squanchy.schedule.filterschedule.TracksFilter
-import net.squanchy.schedule.filterschedule.TracksFilterModule
 import net.squanchy.service.repository.TracksRepository
 import net.squanchy.support.injection.CurrentTimeModule
 import net.squanchy.support.system.CurrentTime
 
 @ActivityLifecycle
-@Component(modules = [
-    ScheduleModule::class,
-    NavigationModule::class,
-    CurrentTimeModule::class,
-    TracksFilterModule::class
-], dependencies = [ApplicationComponent::class])
+@Component(modules = [ScheduleModule::class, NavigationModule::class, CurrentTimeModule::class], dependencies = [ApplicationComponent::class])
 internal interface ScheduleComponent {
 
     fun scheduleService(): ScheduleService
@@ -41,7 +35,6 @@ internal fun scheduleComponent(activity: AppCompatActivity): ScheduleComponent =
     .applicationComponent(activity.applicationComponent)
     .scheduleModule(ScheduleModule())
     .navigationModule(NavigationModule())
-    .tracksFilterModule(TracksFilterModule())
     .activityContextModule(ActivityContextModule(activity))
     .currentTimeModule(CurrentTimeModule())
     .build()
