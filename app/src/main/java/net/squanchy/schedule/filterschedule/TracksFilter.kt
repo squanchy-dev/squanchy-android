@@ -12,9 +12,9 @@ interface TracksFilter {
     val selectedTracks: Observable<Set<Track>>
 }
 
-private val selectedTracksSubject = BehaviorSubject.create<Set<Track>>()
-
 class InMemoryTracksFilter(private val tracksRepository: TracksRepository) : TracksFilter {
+
+    private val selectedTracksSubject = BehaviorSubject.create<Set<Track>>()
 
     override fun updateSelectedTracks(newSelectedTracks: Set<Track>) {
         selectedTracksSubject.onNext(newSelectedTracks)
