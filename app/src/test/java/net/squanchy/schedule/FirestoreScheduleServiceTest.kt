@@ -4,8 +4,9 @@ import io.reactivex.Observable
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.BehaviorSubject
 import net.squanchy.schedule.domain.view.Schedule
-import net.squanchy.schedule.domain.view.SchedulePage
 import net.squanchy.schedule.domain.view.Track
+import net.squanchy.schedule.domain.view.aSchedule
+import net.squanchy.schedule.domain.view.aSchedulePage
 import net.squanchy.schedule.domain.view.aTrack
 import net.squanchy.schedule.domain.view.anEvent
 import net.squanchy.schedule.filterschedule.TracksFilter
@@ -18,7 +19,6 @@ import net.squanchy.service.firestore.aFirestoreSpeaker
 import net.squanchy.service.firestore.aFirestoreTrack
 import net.squanchy.support.lang.Checksum
 import net.squanchy.support.lang.Optional
-import org.joda.time.DateTimeZone
 import org.joda.time.LocalDate
 import org.joda.time.LocalDateTime
 import org.junit.Before
@@ -35,8 +35,6 @@ import java.util.TimeZone
 class FirestoreScheduleServiceTest {
 
     companion object {
-        private val A_TIMEZONE = DateTimeZone.forID("Europe/Rome")
-
         private val CALENDAR = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"))
 
         private val A_START_TIME = Date(123456)
@@ -66,7 +64,7 @@ class FirestoreScheduleServiceTest {
     @Before
     fun init() {
         scheduleService = FirestoreScheduleService(authService, dbService, tracksFilter, checksum)
-        `when`(dbService.timezone()).thenReturn(Observable.just(A_TIMEZONE))
+        `when`(dbService.timezone()).thenReturn(Observable.just(aSchedule().timezone))
         `when`(checksum.getChecksumOf(aFirestoreSpeaker().id)).thenReturn(5466L)
     }
 
@@ -102,47 +100,44 @@ class FirestoreScheduleServiceTest {
         scheduleService.schedule(onlyFavorites = false)
             .subscribe(subscription)
 
-        subscription.assertValue(Schedule(
-            listOf(
-                SchedulePage(
-                    dayId = "1",
-                    date = LocalDate(A_START_TIME.dateOnly()),
-                    events = listOf(
-                        anEvent(id = "1", numericId = 1, startTime = A_START_TIME.toLocalDateTime(), endTime = AN_END_TIME.toLocalDateTime()),
-                        anEvent(id = "3", numericId = 3, startTime = A_START_TIME.toLocalDateTime(), endTime = AN_END_TIME.toLocalDateTime()),
-                        anEvent(
-                            id = "2",
-                            numericId = 2,
-                            startTime = A_LATER_START_TIME.toLocalDateTime(),
-                            endTime = A_LATER_END_TIME.toLocalDateTime()
-                        )
-                    )),
-                SchedulePage(
-                    dayId = "2",
-                    date = LocalDate(A_START_TIME.plusOneDay().dateOnly()),
-                    events = listOf(
-                        anEvent(
-                            id = "4",
-                            numericId = 4,
-                            startTime = A_START_TIME.plusOneDay().toLocalDateTime(),
-                            endTime = AN_END_TIME.plusOneDay().toLocalDateTime()
-                        ),
-                        anEvent(
-                            id = "5",
-                            numericId = 5,
-                            startTime = A_START_TIME.plusOneDay().toLocalDateTime(),
-                            endTime = AN_END_TIME.plusOneDay().toLocalDateTime()
-                        ),
-                        anEvent(
-                            id = "6",
-                            numericId = 6,
-                            startTime = A_LATER_START_TIME.plusOneDay().toLocalDateTime(),
-                            endTime = A_LATER_END_TIME.plusOneDay().toLocalDateTime()
-                        )
-                    ))
-            ),
-            A_TIMEZONE)
-        )
+        subscription.assertValue(aSchedule(listOf(
+            aSchedulePage(
+                dayId = "1",
+                date = LocalDate(A_START_TIME.dateOnly()),
+                events = listOf(
+                    anEvent(id = "1", numericId = 1, startTime = A_START_TIME.toLocalDateTime(), endTime = AN_END_TIME.toLocalDateTime()),
+                    anEvent(id = "3", numericId = 3, startTime = A_START_TIME.toLocalDateTime(), endTime = AN_END_TIME.toLocalDateTime()),
+                    anEvent(
+                        id = "2",
+                        numericId = 2,
+                        startTime = A_LATER_START_TIME.toLocalDateTime(),
+                        endTime = A_LATER_END_TIME.toLocalDateTime()
+                    )
+                )),
+            aSchedulePage(
+                dayId = "2",
+                date = LocalDate(A_START_TIME.plusOneDay().dateOnly()),
+                events = listOf(
+                    anEvent(
+                        id = "4",
+                        numericId = 4,
+                        startTime = A_START_TIME.plusOneDay().toLocalDateTime(),
+                        endTime = AN_END_TIME.plusOneDay().toLocalDateTime()
+                    ),
+                    anEvent(
+                        id = "5",
+                        numericId = 5,
+                        startTime = A_START_TIME.plusOneDay().toLocalDateTime(),
+                        endTime = AN_END_TIME.plusOneDay().toLocalDateTime()
+                    ),
+                    anEvent(
+                        id = "6",
+                        numericId = 6,
+                        startTime = A_LATER_START_TIME.plusOneDay().toLocalDateTime(),
+                        endTime = A_LATER_END_TIME.plusOneDay().toLocalDateTime()
+                    )
+                ))
+        )))
     }
 
     @Test
@@ -164,11 +159,13 @@ class FirestoreScheduleServiceTest {
         scheduleService.schedule(onlyFavorites = false)
             .subscribe(subscription)
 
-        subscription.assertValue(Schedule(
-            listOf(SchedulePage("dayId", LocalDate(schedulePage.day.date), listOf(
-                anEvent(id = "1", numericId = 1, track = Optional.absent()),
-                anEvent(id = "2", numericId = 2, track = Optional.absent())
-            ))), A_TIMEZONE)
+        subscription.assertValue(
+            aSchedule(listOf(
+                aSchedulePage(events = listOf(
+                    anEvent(id = "1", numericId = 1, track = Optional.absent()),
+                    anEvent(id = "2", numericId = 2, track = Optional.absent())
+                ))
+            ))
         )
     }
 
@@ -191,11 +188,13 @@ class FirestoreScheduleServiceTest {
         scheduleService.schedule(onlyFavorites = false)
             .subscribe(subscription)
 
-        subscription.assertValue(Schedule(
-            listOf(SchedulePage("dayId", LocalDate(schedulePage.day.date), listOf(
-                anEvent(track = Optional.absent(), numericId = 1),
-                anEvent(track = Optional.absent(), numericId = 1)
-            ))), A_TIMEZONE)
+        subscription.assertValue(
+            aSchedule(listOf(
+                aSchedulePage(events = listOf(
+                    anEvent(track = Optional.absent(), numericId = 1),
+                    anEvent(track = Optional.absent(), numericId = 1)
+                ))
+            ))
         )
     }
 
@@ -216,11 +215,13 @@ class FirestoreScheduleServiceTest {
         scheduleService.schedule(onlyFavorites = false)
             .subscribe(subscription)
 
-        subscription.assertValue(Schedule(
-            listOf(SchedulePage("dayId", LocalDate(schedulePage.day.date), listOf(
-                anEvent(track = Optional.absent(), numericId = 1),
-                anEvent(track = Optional.absent(), numericId = 1)
-            ))), A_TIMEZONE)
+        subscription.assertValue(
+            aSchedule(listOf(
+                aSchedulePage(events = listOf(
+                    anEvent(track = Optional.absent(), numericId = 1),
+                    anEvent(track = Optional.absent(), numericId = 1)
+                ))
+            ))
         )
     }
 
@@ -239,8 +240,10 @@ class FirestoreScheduleServiceTest {
         scheduleService.schedule(onlyFavorites = false)
             .subscribe(subscription)
 
-        subscription.assertValue(Schedule(
-            listOf(SchedulePage("dayId", LocalDate(schedulePage.day.date), emptyList())), A_TIMEZONE)
+        subscription.assertValue(
+            aSchedule(listOf(
+                aSchedulePage(events = emptyList())
+            ))
         )
     }
 
@@ -261,11 +264,13 @@ class FirestoreScheduleServiceTest {
         scheduleService.schedule(onlyFavorites = false)
             .subscribe(subscription)
 
-        subscription.assertValue(Schedule(
-            listOf(SchedulePage("dayId", LocalDate(schedulePage.day.date), listOf(
-                anEvent(track = Optional.of(aTrack(id = "A")), numericId = 1),
-                anEvent(track = Optional.of(aTrack(id = "C")), numericId = 1)
-            ))), A_TIMEZONE)
+        subscription.assertValue(
+            aSchedule(listOf(
+                aSchedulePage(events = listOf(
+                    anEvent(track = Optional.of(aTrack(id = "A")), numericId = 1),
+                    anEvent(track = Optional.of(aTrack(id = "C")), numericId = 1)
+                ))
+            ))
         )
     }
 
@@ -287,10 +292,12 @@ class FirestoreScheduleServiceTest {
         scheduleService.schedule(onlyFavorites = false)
             .subscribe(subscription)
 
-        subscription.assertValue(Schedule(
-            listOf(SchedulePage("dayId", LocalDate(schedulePage.day.date), listOf(
-                anEvent(track = Optional.absent(), numericId = 1)
-            ))), A_TIMEZONE)
+        subscription.assertValue(
+            aSchedule(listOf(
+                aSchedulePage(events = listOf(
+                    anEvent(track = Optional.absent(), numericId = 1)
+                ))
+            ))
         )
     }
 
