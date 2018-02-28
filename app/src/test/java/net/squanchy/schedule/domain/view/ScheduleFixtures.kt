@@ -5,7 +5,36 @@ import net.squanchy.speaker.domain.view.Speaker
 import net.squanchy.speaker.domain.view.aSpeaker
 import net.squanchy.support.lang.Optional
 import org.joda.time.DateTimeZone
+import org.joda.time.LocalDate
 import org.joda.time.LocalDateTime
+
+private val A_TIMEZONE = DateTimeZone.forID("Europe/Rome")
+
+fun aSchedule(
+    pages: List<SchedulePage> = listOf(aSchedulePage()),
+    timezone: DateTimeZone = A_TIMEZONE
+) = Schedule(
+    pages = pages,
+    timezone = timezone
+)
+
+fun aSchedulePage(
+    dayId: String = aDay().id,
+    date: LocalDate = aDay().date,
+    events: List<Event> = listOf(anEvent())
+) = SchedulePage(
+    dayId = dayId,
+    date = date,
+    events = events
+)
+
+fun aDay(
+    id: String = "dayId",
+    date: LocalDate = LocalDate(123456789, A_TIMEZONE)
+) = Day(
+    id = id,
+    date = date
+)
 
 fun anEvent(
     id: String = "banana",
@@ -35,4 +64,28 @@ fun anEvent(
     track = track,
     timeZone = timeZone,
     favorited = favorited
+)
+
+fun aPlace(
+    id: String = "banana-room",
+    name: String = "The banana room™",
+    floor: Optional<String> = Optional.of("Banana floor")
+) = Place(
+    id = id,
+    name = name,
+    floor = floor
+)
+
+fun aTrack(
+    id: String = "a track id",
+    name: String = "a track name",
+    accentColor: Optional<String> = Optional.of("#ABCDEF"),
+    textColor: Optional<String> = Optional.of("#FEDCBA"),
+    iconUrl: Optional<String> = Optional.of("www.squanchy.net")
+) = Track(
+    id = id,
+    name = name,
+    accentColor = accentColor,
+    textColor = textColor,
+    iconUrl = iconUrl
 )
