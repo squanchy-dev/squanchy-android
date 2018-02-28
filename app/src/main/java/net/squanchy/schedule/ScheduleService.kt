@@ -55,7 +55,7 @@ class FirestoreScheduleService(
     private fun Observable<List<FirestoreSchedulePage>>.removeNonFavorites(): Observable<List<FirestoreSchedulePage>> =
         map { pages: List<FirestoreSchedulePage> -> pages.filterPagesEvents { it.isFavorite() } }
 
-    private fun FirestoreEvent.isFavorite() = true // TODO add actual favourites filtering
+    private fun FirestoreEvent.isFavorite() = false // TODO add actual favourites filtering
 
     private fun Observable<List<FirestoreSchedulePage>>.filterByTracks(selectedTracks: Observable<Set<Track>>) =
         Observable.combineLatest(

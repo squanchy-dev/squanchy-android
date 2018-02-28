@@ -18,8 +18,8 @@ import org.joda.time.LocalDate
 internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
-        private const val viewTypeTalk: Int = 1
-        private const val viewTypeHeader: Int = 2
+        private const val VIEW_TYPE_TALK: Int = 1
+        private const val VIEW_TYPE_HEADER: Int = 2
     }
 
     private val layoutInflater = LayoutInflater.from(context)
@@ -50,17 +50,17 @@ internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<Recycl
         0,
         position,
         schedule.pages,
-        { _ -> viewTypeHeader },
-        { _, _ -> viewTypeTalk }
+        { _ -> VIEW_TYPE_HEADER },
+        { _, _ -> VIEW_TYPE_TALK }
     )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            viewTypeTalk -> {
+            VIEW_TYPE_TALK -> {
                 val itemView = layoutInflater.inflate(R.layout.item_schedule_event_talk, parent, false) as EventItemView
                 EventViewHolder(itemView)
             }
-            viewTypeHeader -> {
+            VIEW_TYPE_HEADER -> {
                 HeaderViewHolder(layoutInflater.inflate(R.layout.item_search_header, parent, false))
             }
             else -> throw IllegalArgumentException("View type not supported: " + viewType)
