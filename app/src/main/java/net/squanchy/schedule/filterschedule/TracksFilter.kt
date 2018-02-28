@@ -14,9 +14,9 @@ interface TracksFilter {
     val isInitialized: Boolean
 }
 
-class InMemoryTracksFilter(private val tracksRepository: TracksRepository) : TracksFilter {
+private val selectedTracksSubject = BehaviorSubject.create<Set<Track>>()
 
-    private val selectedTracksSubject = BehaviorSubject.create<Set<Track>>()
+class InMemoryTracksFilter(private val tracksRepository: TracksRepository) : TracksFilter {
 
     private var initialized = false
 
