@@ -2,6 +2,7 @@ package net.squanchy.schedule
 
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
+import io.reactivex.schedulers.Schedulers
 import net.squanchy.schedule.domain.view.Schedule
 import net.squanchy.schedule.domain.view.SchedulePage
 import net.squanchy.schedule.domain.view.Track
@@ -44,6 +45,7 @@ class FirestoreScheduleService(
                 Pair(schedulePages, timeZone)
             }
             .map { pagesAndTimeZone -> Schedule(pagesAndTimeZone.first, pagesAndTimeZone.second) }
+            .subscribeOn(Schedulers.io())
     }
 
     private fun Observable<List<FirestoreSchedulePage>>.filterByFavorites(onlyFavorites: Boolean) =
