@@ -29,6 +29,10 @@ import org.mockito.junit.MockitoRule
 
 class FirestoreScheduleServiceTest {
 
+    companion object {
+        private val A_TIMEZONE = DateTimeZone.forID("Europe/Rome")
+    }
+
     @Rule
     @JvmField
     var rule: MockitoRule = MockitoJUnit.rule()
@@ -52,7 +56,6 @@ class FirestoreScheduleServiceTest {
         scheduleService = FirestoreScheduleService(authService, dbService, tracksFilter, checksum)
         `when`(dbService.timezone()).thenReturn(Observable.just(A_TIMEZONE))
         `when`(checksum.getChecksumOf(aFirestoreSpeaker().id)).thenReturn(5466L)
-        `when`(checksum.getChecksumOf(aFirestoreEvent().id)).thenReturn(1234L)
     }
 
     @Test
@@ -66,8 +69,8 @@ class FirestoreScheduleServiceTest {
         `when`(dbService.scheduleView()).thenReturn(Observable.just(listOf(schedulePage)))
         val allowedTracks = setOf(aTrack(id = "a track id"))
         `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
-        `when`(checksum.getChecksumOf("1")).thenReturn(1234L)
-        `when`(checksum.getChecksumOf("2")).thenReturn(2345L)
+        `when`(checksum.getChecksumOf("1")).thenReturn(1)
+        `when`(checksum.getChecksumOf("2")).thenReturn(2)
         // TODO mark one of the two firestore events above as favorite
         val subscription = TestObserver<Schedule>()
 
@@ -76,8 +79,8 @@ class FirestoreScheduleServiceTest {
 
         subscription.assertValue(Schedule(
             listOf(SchedulePage("dayId", LocalDate(schedulePage.day.date), listOf(
-                anEvent(id = "1", numericId = 1234L, track = Optional.absent()),
-                anEvent(id = "2", numericId = 2345L, track = Optional.absent())
+                anEvent(id = "1", numericId = 1, track = Optional.absent()),
+                anEvent(id = "2", numericId = 2, track = Optional.absent())
             ))), A_TIMEZONE)
         )
     }
@@ -95,6 +98,7 @@ class FirestoreScheduleServiceTest {
         `when`(dbService.scheduleView()).thenReturn(Observable.just(listOf(schedulePage)))
         val allowedTracks = setOf(aTrack(id = "A"), aTrack("C"))
         `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
+        `when`(checksum.getChecksumOf(aFirestoreEvent().id)).thenReturn(1)
         val subscription = TestObserver<Schedule>()
 
         scheduleService.schedule(onlyFavorites = false)
@@ -102,8 +106,8 @@ class FirestoreScheduleServiceTest {
 
         subscription.assertValue(Schedule(
             listOf(SchedulePage("dayId", LocalDate(schedulePage.day.date), listOf(
-                anEvent(track = Optional.absent()),
-                anEvent(track = Optional.absent())
+                anEvent(track = Optional.absent(), numericId = 1),
+                anEvent(track = Optional.absent(), numericId = 1)
             ))), A_TIMEZONE)
         )
     }
@@ -119,6 +123,7 @@ class FirestoreScheduleServiceTest {
         `when`(dbService.scheduleView()).thenReturn(Observable.just(listOf(schedulePage)))
         val allowedTracks = emptySet<Track>()
         `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
+        `when`(checksum.getChecksumOf(aFirestoreEvent().id)).thenReturn(1)
         val subscription = TestObserver<Schedule>()
 
         scheduleService.schedule(onlyFavorites = false)
@@ -126,8 +131,8 @@ class FirestoreScheduleServiceTest {
 
         subscription.assertValue(Schedule(
             listOf(SchedulePage("dayId", LocalDate(schedulePage.day.date), listOf(
-                anEvent(track = Optional.absent()),
-                anEvent(track = Optional.absent())
+                anEvent(track = Optional.absent(), numericId = 1),
+                anEvent(track = Optional.absent(), numericId = 1)
             ))), A_TIMEZONE)
         )
     }
@@ -163,6 +168,7 @@ class FirestoreScheduleServiceTest {
         `when`(dbService.scheduleView()).thenReturn(Observable.just(listOf(schedulePage)))
         val allowedTracks = setOf(aTrack(id = "A"), aTrack("C"))
         `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
+        `when`(checksum.getChecksumOf(aFirestoreEvent().id)).thenReturn(1)
         val subscription = TestObserver<Schedule>()
 
         scheduleService.schedule(onlyFavorites = false)
@@ -170,8 +176,8 @@ class FirestoreScheduleServiceTest {
 
         subscription.assertValue(Schedule(
             listOf(SchedulePage("dayId", LocalDate(schedulePage.day.date), listOf(
-                anEvent(track = Optional.of(aTrack(id = "A"))),
-                anEvent(track = Optional.of(aTrack(id = "C")))
+                anEvent(track = Optional.of(aTrack(id = "A")), numericId = 1),
+                anEvent(track = Optional.of(aTrack(id = "C")), numericId = 1)
             ))), A_TIMEZONE)
         )
     }
@@ -188,6 +194,7 @@ class FirestoreScheduleServiceTest {
         `when`(dbService.scheduleView()).thenReturn(Observable.just(listOf(schedulePage)))
         val allowedTracks = emptySet<Track>()
         `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
+        `when`(checksum.getChecksumOf(aFirestoreEvent().id)).thenReturn(1)
         val subscription = TestObserver<Schedule>()
 
         scheduleService.schedule(onlyFavorites = false)
@@ -195,12 +202,8 @@ class FirestoreScheduleServiceTest {
 
         subscription.assertValue(Schedule(
             listOf(SchedulePage("dayId", LocalDate(schedulePage.day.date), listOf(
-                anEvent(track = Optional.absent())
+                anEvent(track = Optional.absent(), numericId = 1)
             ))), A_TIMEZONE)
         )
-    }
-
-    companion object {
-        private val A_TIMEZONE = DateTimeZone.forID("Europe/Rome")
     }
 }
