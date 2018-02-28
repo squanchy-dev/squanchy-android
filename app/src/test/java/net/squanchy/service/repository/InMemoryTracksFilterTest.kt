@@ -26,18 +26,6 @@ class InMemoryTracksFilterTest {
     }
 
     @Test
-    fun `should start with isInitialized false`() {
-        assert(!tracksFilter.isInitialized)
-    }
-
-    @Test
-    fun `should return isInitialized true after the tracks are updated with any set of tracks`() {
-        tracksFilter.updateSelectedTracks(emptySet())
-
-        assert(tracksFilter.isInitialized)
-    }
-
-    @Test
     fun `should emit all tracks from the repository when first subscribed to`() {
         val subscription = TestObserver<Set<Track>>()
         tracksFilter.selectedTracks

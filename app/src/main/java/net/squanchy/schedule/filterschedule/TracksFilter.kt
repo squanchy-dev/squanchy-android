@@ -10,21 +10,13 @@ interface TracksFilter {
     fun updateSelectedTracks(newSelectedTracks: Set<Track>)
 
     val selectedTracks: Observable<Set<Track>>
-
-    val isInitialized: Boolean
 }
 
 private val selectedTracksSubject = BehaviorSubject.create<Set<Track>>()
 
 class InMemoryTracksFilter(private val tracksRepository: TracksRepository) : TracksFilter {
 
-    private var initialized = false
-
-    override val isInitialized
-        get() = initialized
-
     override fun updateSelectedTracks(newSelectedTracks: Set<Track>) {
-        initialized = true
         selectedTracksSubject.onNext(newSelectedTracks)
     }
 
