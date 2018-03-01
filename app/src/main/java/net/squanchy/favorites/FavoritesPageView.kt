@@ -9,6 +9,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.BiFunction
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.view_page_favorites.view.*
 import net.squanchy.R
 import net.squanchy.analytics.Analytics
@@ -56,6 +57,7 @@ class FavoritesPageView @JvmOverloads constructor(
                 scheduleService.currentUserIsSignedIn(),
                 BiFunction<Schedule, Boolean, LoadScheduleResult> { schedule, signedIn -> LoadScheduleResult(schedule, signedIn) }
             )
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { handleLoadSchedule(it) }
         )
