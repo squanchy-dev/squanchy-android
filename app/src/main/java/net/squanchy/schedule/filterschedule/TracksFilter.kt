@@ -21,9 +21,10 @@ class InMemoryTracksFilter(private val tracksRepository: TracksRepository) : Tra
     }
 
     override val selectedTracks: Observable<Set<Track>>
-        get() = selectedTracksSubject.startWith(
-            tracksRepository.tracks()
-                .take(if (selectedTracksSubject.hasValue()) 0 else 1)
-                .map { it.toSet() }
-        )
+        get() = selectedTracksSubject.orFallbackToDbIfEmpty()
+
+    private fun BehaviorSubject<Set<Track>>.orFallbackToDbIfEmpty() =
+        if (hasValue()) this else this.startWith(tracksRepository.tracks().asSets())
+
+    private fun <T> Observable<List<T>>.asSets(): Observable<Set<T>> = map { it -> it.toSet() }
 }
