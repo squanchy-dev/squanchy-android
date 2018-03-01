@@ -50,25 +50,30 @@ class FilterScheduleActivity : AppCompatActivity() {
         subscription = Observable.combineLatest(tracksRepository.tracks(), tracksFilter.selectedTracks, combineIntoCheckableTracks())
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                trackAdapter.updateTracks(it) { track, selected ->
-                    val selectedTracks = it.filter { it.second }.map { it.first }.toSet()
-                    val newSelectedTracks = if (selected) selectedTracks + track else selectedTracks - track
+            .subscribe { checkableTracks ->
+                trackAdapter.updateTracks(checkableTracks) { track, selected ->
+                    val selectedTracks = checkableTracks.allSelected()
+                    val newSelectedTracks = selectedTracks.addOrRemove(track, selected)
                     tracksFilter.updateSelectedTracks(newSelectedTracks)
-                    trackAdapter.notifyItemChanged(it.map { checkableTrack -> checkableTrack.first }.indexOf(track))
+                    trackAdapter.notifyItemChanged(checkableTracks.map { checkableTrack -> checkableTrack.first }.indexOf(track))
                 }
             }
     }
 
+    private fun Iterable<CheckableTrack>.allSelected(): Set<Track> =
+        filter { it.selected() }.map { it.track() }.toSet()
+
+    private fun Set<Track>.addOrRemove(track: Track, selected: Boolean): Set<Track> =
+        if (selected) this + track else this - track
+
     private fun combineIntoCheckableTracks(): BiFunction<List<Track>, Set<Track>, List<CheckableTrack>> {
         return BiFunction { tracks, selectedTracks ->
-            tracks.map { CheckableTrack(it, selectedTracks.contains(it)) }
+            tracks.map { track -> CheckableTrack(track, selectedTracks.contains(track)) }
         }
     }
 
     override fun onStop() {
         super.onStop()
-
         subscription?.dispose()
     }
 }
@@ -91,12 +96,12 @@ private class TrackFiltersAdapter(context: Context) : RecyclerView.Adapter<Track
         return TrackViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: TrackViewHolder?, position: Int) {
-        holder?.bind(checkableTracks[position], trackStateChangeListener)
+    override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
+        holder.bind(checkableTracks[position], trackStateChangeListener)
     }
 
     override fun getItemId(position: Int): Long {
-        return checkableTracks[position].first.id.hashCode().toLong() // TODO this should use a proper checksum
+        return checkableTracks[position].track().id.hashCode().toLong() // TODO this should use a proper checksum
     }
 
     fun updateTracks(newCheckableTracks: List<CheckableTrack>, listener: OnTrackSelectedChangeListener) {
@@ -133,3 +138,6 @@ private class TrackViewHolder(val item: CheckBox) : RecyclerView.ViewHolder(item
 private typealias OnTrackSelectedChangeListener = (track: Track, selected: Boolean) -> Unit
 
 private typealias CheckableTrack = Pair<Track, Boolean>
+
+private fun CheckableTrack.track() = this.first
+private fun CheckableTrack.selected() = this.second
