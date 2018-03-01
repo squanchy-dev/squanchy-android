@@ -80,7 +80,7 @@ class FirestoreScheduleService(
     }
 
     private fun FirestoreEvent.hasTrackOrNoTrack(allowedTracks: Set<Track>) =
-        track?.let { allowedTracks.any { it.id == this.track?.id ?: it.id } } ?: true
+        track?.let { eventTrack -> allowedTracks.any { it.id == eventTrack.id } } ?: true
 
     private fun toSortedDomainSchedulePages() =
         BiFunction<List<FirestoreSchedulePage>, DateTimeZone, List<SchedulePage>> { pages, timeZone ->
