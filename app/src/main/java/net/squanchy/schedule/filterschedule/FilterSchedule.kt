@@ -87,7 +87,7 @@ private class TrackFiltersAdapter(context: Context) : RecyclerView.Adapter<Track
     private val layoutInflater = LayoutInflater.from(context)
 
     private var checkableTracks: List<CheckableTrack> = emptyList()
-    private var trackStateChangeListener: OnTrackSelectedChangeListener? = null
+    private lateinit var trackStateChangeListener: OnTrackSelectedChangeListener
 
     override fun getItemCount(): Int = checkableTracks.size
 
