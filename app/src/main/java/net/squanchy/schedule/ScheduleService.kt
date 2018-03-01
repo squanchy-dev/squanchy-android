@@ -39,12 +39,7 @@ class FirestoreScheduleService(
             toSortedDomainSchedulePages()
         )
 
-        return Observable.combineLatest(domainSchedulePages, dbService.timezone(), combineInAPair())
-            .map { schedulePagesAndTimeZone ->
-                val (schedulePages, timeZone) = schedulePagesAndTimeZone
-                Pair(schedulePages, timeZone)
-            }
-            .map { pagesAndTimeZone -> Schedule(pagesAndTimeZone.first, pagesAndTimeZone.second) }
+        return Observable.combineLatest(domainSchedulePages, dbService.timezone(), BiFunction(::Schedule))
             .subscribeOn(Schedulers.io())
     }
 
@@ -93,8 +88,6 @@ class FirestoreScheduleService(
 
     private fun FirestoreSchedulePage.toSortedDomainSchedulePage(checksum: Checksum, timeZone: DateTimeZone): SchedulePage =
         SchedulePage(day.id, LocalDate(day.date), events.map { it.toEvent(checksum, timeZone) }.sortedBy { it.startTime })
-
-    private fun <A, B> combineInAPair(): BiFunction<A, B, Pair<A, B>> = BiFunction { a, b -> Pair(a, b) }
 
     override fun currentUserIsSignedIn(): Observable<Boolean> {
         return authService.currentUser()

@@ -64,7 +64,7 @@ class FirestoreScheduleServiceTest {
     @Before
     fun init() {
         scheduleService = FirestoreScheduleService(authService, dbService, tracksFilter, checksum)
-        `when`(dbService.timezone()).thenReturn(Observable.just(aSchedule().timezone))
+        `when`(dbService.timezone()).thenReturn(Observable.just(aSchedule().timeZone))
         `when`(checksum.getChecksumOf(aFirestoreSpeaker().id)).thenReturn(5466)
     }
 

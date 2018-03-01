@@ -15,7 +15,7 @@ fun aSchedule(
     timezone: DateTimeZone = A_TIMEZONE
 ) = Schedule(
     pages = pages,
-    timezone = timezone
+    timeZone = timezone
 )
 
 fun aSchedulePage(
