@@ -18,22 +18,16 @@ import net.squanchy.support.lang.Checksum
 class RepositoryModule {
 
     @Provides
-    internal fun eventRepository(dbService: FirebaseDbService, firestoreDbService: FirestoreDbService, checksum: Checksum): EventRepository {
-        return FirebaseEventRepository(dbService, firestoreDbService, checksum)
-    }
+    internal fun eventRepository(dbService: FirebaseDbService, firestoreDbService: FirestoreDbService, checksum: Checksum): EventRepository =
+        FirebaseEventRepository(dbService, firestoreDbService, checksum)
 
     @Provides
-    internal fun speakerRepository(dbService: FirestoreDbService, checksum: Checksum): SpeakerRepository {
-        return FirestoreSpeakerRepository(dbService, checksum)
-    }
+    internal fun speakerRepository(dbService: FirestoreDbService, checksum: Checksum): SpeakerRepository =
+        FirestoreSpeakerRepository(dbService, checksum)
 
     @Provides
-    internal fun daysRepository(dbService: FirebaseDbService): DaysRepository {
-        return FirebaseDaysRepository(dbService)
-    }
+    internal fun daysRepository(dbService: FirebaseDbService): DaysRepository = FirebaseDaysRepository(dbService)
 
     @Provides
-    internal fun tracksRepository(dbService: FirestoreDbService): TracksRepository {
-        return FirestoreTracksRepository(dbService)
-    }
+    internal fun tracksRepository(dbService: FirestoreDbService): TracksRepository = FirestoreTracksRepository(dbService)
 }
