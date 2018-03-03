@@ -21,11 +21,11 @@ import net.squanchy.R
 import net.squanchy.schedule.domain.view.Track
 import net.squanchy.service.repository.TracksRepository
 
-class FilterScheduleActivity : AppCompatActivity() {
+class ScheduleTracksFilterActivity : AppCompatActivity() {
 
     private lateinit var tracksRepository: TracksRepository
     private lateinit var tracksFilter: TracksFilter
-    private lateinit var trackAdapter: TrackFiltersAdapter
+    private lateinit var trackAdapter: TracksFilterAdapter
 
     private var subscription: Disposable? = null
 
@@ -38,7 +38,7 @@ class FilterScheduleActivity : AppCompatActivity() {
         tracksRepository = component.tracksRepository()
         tracksFilter = component.tracksFilter()
 
-        trackAdapter = TrackFiltersAdapter(this)
+        trackAdapter = TracksFilterAdapter(this)
 
         trackFiltersList.layoutManager = LinearLayoutManager(this)
         trackFiltersList.adapter = trackAdapter
@@ -78,7 +78,7 @@ class FilterScheduleActivity : AppCompatActivity() {
     }
 }
 
-private class TrackFiltersAdapter(context: Context) : RecyclerView.Adapter<TrackViewHolder>() {
+private class TracksFilterAdapter(context: Context) : RecyclerView.Adapter<TrackViewHolder>() {
 
     init {
         setHasStableIds(true)
