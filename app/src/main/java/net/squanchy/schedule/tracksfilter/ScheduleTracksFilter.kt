@@ -55,7 +55,6 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
                     val selectedTracks = checkableTracks.allSelected()
                     val newSelectedTracks = selectedTracks.addOrRemove(track, selected)
                     tracksFilter.updateSelectedTracks(newSelectedTracks)
-                    trackAdapter.notifyItemChanged(checkableTracks.map { checkableTrack -> checkableTrack.first }.indexOf(track))
                 }
             }
     }

@@ -24,7 +24,7 @@ class InMemoryTracksFilter(private val tracksRepository: TracksRepository) : Tra
         get() = selectedTracksSubject.orStartWithDbIfEmpty()
 
     private fun BehaviorSubject<Set<Track>>.orStartWithDbIfEmpty() =
-        if (hasValue()) this else this.startWith(tracksRepository.tracks().asSets())
+        if (hasValue()) this else this.startWith(tracksRepository.tracks().take(1).asSets())
 
     private fun <T> Observable<List<T>>.asSets(): Observable<Set<T>> = map { it -> it.toSet() }
 }
