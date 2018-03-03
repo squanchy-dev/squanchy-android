@@ -9,7 +9,7 @@ import net.squanchy.schedule.domain.view.aSchedule
 import net.squanchy.schedule.domain.view.aSchedulePage
 import net.squanchy.schedule.domain.view.aTrack
 import net.squanchy.schedule.domain.view.anEvent
-import net.squanchy.schedule.filterschedule.TracksFilter
+import net.squanchy.schedule.tracksfilter.TracksFilter
 import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.firestore.FirestoreDbService
 import net.squanchy.service.firestore.aFirestoreDay

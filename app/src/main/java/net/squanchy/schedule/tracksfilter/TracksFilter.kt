@@ -1,4 +1,4 @@
-package net.squanchy.schedule.filterschedule
+package net.squanchy.schedule.tracksfilter
 
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject

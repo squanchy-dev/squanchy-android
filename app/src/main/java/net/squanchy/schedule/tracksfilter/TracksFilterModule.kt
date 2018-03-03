@@ -1,4 +1,4 @@
-package net.squanchy.schedule.filterschedule
+package net.squanchy.schedule.tracksfilter
 
 import dagger.Module
 import dagger.Provides
