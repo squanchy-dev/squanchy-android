@@ -102,7 +102,7 @@ class SchedulePageView @JvmOverloads constructor(
     }
 
     override fun stopLoading() {
-        subscriptions.dispose()
+        subscriptions.clear()
     }
 
     private fun hackToApplyTypefaces(tabLayout: TabLayout) {
