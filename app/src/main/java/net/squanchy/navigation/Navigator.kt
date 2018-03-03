@@ -15,12 +15,11 @@ import net.squanchy.eventdetails.EventDetailsActivity
 import net.squanchy.home.HomeActivity
 import net.squanchy.navigation.firststart.FirstStartWithNoNetworkActivity
 import net.squanchy.onboarding.OnboardingPage
-import net.squanchy.schedule.filterschedule.FilterScheduleDialog
+import net.squanchy.schedule.filterschedule.FilterScheduleActivity
 import net.squanchy.search.SearchActivity
 import net.squanchy.settings.SettingsActivity
 import net.squanchy.signin.SignInActivity
 import net.squanchy.speaker.SpeakerDetailsActivity
-import net.squanchy.support.unwrapToActivityContext
 import net.squanchy.tweets.domain.TweetLinkInfo
 import net.squanchy.venue.domain.view.Venue
 import timber.log.Timber
@@ -63,9 +62,7 @@ class Navigator(
     }
 
     fun toScheduleFiltering(ctx: Context) {
-        val activity = unwrapToActivityContext(ctx)
-        val dialog = FilterScheduleDialog()
-        dialog.show(activity.supportFragmentManager, "FILTER")
+        start(Intent(ctx, FilterScheduleActivity::class.java))
     }
 
     private fun attemptDeeplinkOrFallback(deeplinkUrl: String, fallbackUrl: String) {

@@ -2,9 +2,9 @@ package net.squanchy.schedule
 
 import dagger.Module
 import dagger.Provides
+import net.squanchy.schedule.filterschedule.TracksFilter
 import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.firestore.FirestoreDbService
-import net.squanchy.service.repository.FilterScheduleRepository
 import net.squanchy.support.injection.ChecksumModule
 import net.squanchy.support.lang.Checksum
 
@@ -15,7 +15,7 @@ class ScheduleModule {
     internal fun scheduleService(
         authService: FirebaseAuthService,
         dbService: FirestoreDbService,
-        filterScheduleRepository: FilterScheduleRepository,
+        tracksFilter: TracksFilter,
         checksum: Checksum
-    ): ScheduleService = FirestoreScheduleService(authService, dbService, filterScheduleRepository, checksum)
+    ): ScheduleService = FirestoreScheduleService(authService, dbService, tracksFilter, checksum)
 }

@@ -1,88 +1,91 @@
 package net.squanchy.schedule
 
 import io.reactivex.Observable
-import io.reactivex.functions.Function3
-import net.squanchy.schedule.domain.view.Event
+import io.reactivex.functions.BiFunction
 import net.squanchy.schedule.domain.view.Schedule
 import net.squanchy.schedule.domain.view.SchedulePage
 import net.squanchy.schedule.domain.view.Track
+import net.squanchy.schedule.filterschedule.TracksFilter
 import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.firestore.FirestoreDbService
+import net.squanchy.service.firestore.model.schedule.FirestoreEvent
 import net.squanchy.service.firestore.model.schedule.FirestoreSchedulePage
 import net.squanchy.service.firestore.toEvent
-import net.squanchy.service.firestore.toTrack
-import net.squanchy.service.repository.FilterScheduleRepository
 import net.squanchy.support.lang.Checksum
-import net.squanchy.support.lang.Optional
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDate
 
 interface ScheduleService {
-    fun schedule(onlyFavorites: Boolean): Observable<Schedule>
+    fun schedule(onlyFavorites: Boolean = false): Observable<Schedule>
     fun currentUserIsSignedIn(): Observable<Boolean>
 }
 
 class FirestoreScheduleService(
     private val authService: FirebaseAuthService,
     private val dbService: FirestoreDbService,
-    private val filterScheduleRepository: FilterScheduleRepository,
+    private val tracksFilter: TracksFilter,
     private val checksum: Checksum
 ) : ScheduleService {
 
     override fun schedule(onlyFavorites: Boolean): Observable<Schedule> {
-        return Observable.combineLatest(dbService.scheduleView(), dbService.timezone(), filterScheduleRepository.filters, combineInATriple())
-            .map { scheduleViewTimeZoneAndFilters ->
-                val (scheduleView, timeZone, filters) = scheduleViewTimeZoneAndFilters
-                extractTracksFrom(scheduleView)
-                val schedulePages = createSchedulePages(scheduleView, timeZone, onlyFavorites, filters, checksum)
-                Pair(schedulePages, timeZone)
-            }
-            .map { pagesAndTimeZone -> Schedule(pagesAndTimeZone.first, pagesAndTimeZone.second) }
-    }
+        val filteredDbSchedulePages = dbService.scheduleView()
+            .filterByFavorites(onlyFavorites)
+            .filterByTracks(tracksFilter.selectedTracks)
 
-    private fun extractTracksFrom(scheduleView: List<FirestoreSchedulePage>) {
-        val uniqueTracks = scheduleView.map { it.events }
-            .flatten()
-            .mapNotNull { it.track }
-            .map { it.toTrack() }
-            .distinct()
-        filterScheduleRepository.allTracks = uniqueTracks
-    }
-
-    private fun createSchedulePages(
-        schedulePages: List<FirestoreSchedulePage>,
-        timeZone: DateTimeZone,
-        onlyFavorites: Boolean,
-        selectedTracks: Set<Track>,
-        checksum: Checksum
-    ) = schedulePages.map { schedulePage ->
-        SchedulePage(
-            schedulePage.day.id,
-            LocalDate(schedulePage.day.date),
-            // TODO we don't have favourites yet (they're all "false")
-            schedulePage.events.map { it.toEvent(checksum, timeZone) }
-                .sortedBy { it.startTime }
-                .filterOnlyFavorites(onlyFavorites)
-                .filterByTracks(selectedTracks)
+        val domainSchedulePages = Observable.combineLatest(
+            filteredDbSchedulePages,
+            dbService.timezone(),
+            toSortedDomainSchedulePages()
         )
+
+        return Observable.combineLatest(domainSchedulePages, dbService.timezone(), BiFunction(::Schedule))
     }
 
-    private fun <T, U, V> combineInATriple(): Function3<List<T>, U, Set<V>, Triple<List<T>, U, Set<V>>> = Function3(::Triple)
+    private fun Observable<List<FirestoreSchedulePage>>.filterByFavorites(onlyFavorites: Boolean) =
+        when {
+            onlyFavorites -> this.removeNonFavorites()
+            else -> this
+        }
 
-    private fun List<Event>.filterOnlyFavorites(onlyFavorites: Boolean) = when {
-        onlyFavorites -> filter { it.favorited }
-        else -> this
+    private fun Observable<List<FirestoreSchedulePage>>.removeNonFavorites(): Observable<List<FirestoreSchedulePage>> =
+        map { pages: List<FirestoreSchedulePage> -> pages.filterPagesEvents { it.isFavorite() } }
+
+    private fun FirestoreEvent.isFavorite() = false // TODO add actual favourites filtering
+
+    private fun Observable<List<FirestoreSchedulePage>>.filterByTracks(selectedTracks: Observable<Set<Track>>) =
+        Observable.combineLatest(
+            this,
+            selectedTracks,
+            BiFunction { pages: List<FirestoreSchedulePage>, tracks: Set<Track> ->
+                pages.filterPagesEvents { it.hasTrackOrNoTrack(tracks) }
+            }
+        )
+
+    private fun List<FirestoreSchedulePage>.filterPagesEvents(predicate: (FirestoreEvent) -> Boolean) =
+        map { it.filterPageEvents(predicate) }
+
+    private fun FirestoreSchedulePage.filterPageEvents(predicate: (FirestoreEvent) -> Boolean): FirestoreSchedulePage {
+        val filteredEvents = events.filter(predicate)
+        return FirestoreSchedulePage().apply {
+            events = filteredEvents
+            day = this@filterPageEvents.day
+        }
     }
 
-    private fun List<Event>.filterByTracks(tracks: Set<Track>) = when {
-        tracks.isEmpty() -> this
-        else -> filter { shouldIncludeEvent(it, tracks) }
-    }
+    private fun FirestoreEvent.hasTrackOrNoTrack(allowedTracks: Set<Track>) =
+        track?.let { eventTrack -> allowedTracks.any { it.id == eventTrack.id } } ?: true
 
-    private fun shouldIncludeEvent(event: Event, tracks: Set<Track>): Boolean = when (event.track) {
-        Optional.absent<Track>() -> true
-        else -> tracks.contains(event.track.get())
-    }
+    private fun toSortedDomainSchedulePages() =
+        BiFunction<List<FirestoreSchedulePage>, DateTimeZone, List<SchedulePage>> { pages, timeZone ->
+            pages.toSortedDomainSchedulePages(checksum, timeZone)
+        }
+
+    private fun List<FirestoreSchedulePage>.toSortedDomainSchedulePages(checksum: Checksum, timeZone: DateTimeZone) =
+        map { page -> page.toSortedDomainSchedulePage(checksum, timeZone) }
+            .sortedBy { page -> page.date }
+
+    private fun FirestoreSchedulePage.toSortedDomainSchedulePage(checksum: Checksum, timeZone: DateTimeZone): SchedulePage =
+        SchedulePage(day.id, LocalDate(day.date), events.map { it.toEvent(checksum, timeZone) }.sortedBy { it.startTime })
 
     override fun currentUserIsSignedIn(): Observable<Boolean> {
         return authService.currentUser()
