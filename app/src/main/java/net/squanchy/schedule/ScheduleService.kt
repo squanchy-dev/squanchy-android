@@ -2,6 +2,7 @@ package net.squanchy.schedule
 
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
+import io.reactivex.schedulers.Schedulers
 import net.squanchy.schedule.domain.view.Schedule
 import net.squanchy.schedule.domain.view.SchedulePage
 import net.squanchy.schedule.domain.view.Track
@@ -29,6 +30,7 @@ class FirestoreScheduleService(
 
     override fun schedule(onlyFavorites: Boolean): Observable<Schedule> {
         val filteredDbSchedulePages = dbService.scheduleView()
+            .observeOn(Schedulers.io())
             .filterByFavorites(onlyFavorites)
             .filterByTracks(tracksFilter.selectedTracks)
 
