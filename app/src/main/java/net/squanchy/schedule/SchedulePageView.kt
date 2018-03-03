@@ -25,7 +25,6 @@ import net.squanchy.support.system.CurrentTime
 import net.squanchy.support.unwrapToActivityContext
 import timber.log.Timber
 
-@Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class SchedulePageView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet,
