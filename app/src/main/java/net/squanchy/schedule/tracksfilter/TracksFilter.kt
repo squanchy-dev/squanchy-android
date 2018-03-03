@@ -14,6 +14,10 @@ interface TracksFilter {
 
 class InMemoryTracksFilter(private val tracksRepository: TracksRepository) : TracksFilter {
 
+    init {
+        println("!!! I AM ALIVE \uD83D\uDC76 ${hashCode()}")
+    }
+
     private val selectedTracksSubject = BehaviorSubject.create<Set<Track>>()
 
     override fun updateSelectedTracks(newSelectedTracks: Set<Track>) {
