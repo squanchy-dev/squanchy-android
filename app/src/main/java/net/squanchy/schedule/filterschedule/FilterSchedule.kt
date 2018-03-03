@@ -113,7 +113,7 @@ private class TrackFiltersAdapter(context: Context) : RecyclerView.Adapter<Track
 
 private class TrackViewHolder(val item: CheckBox) : RecyclerView.ViewHolder(item) {
 
-    fun bind(checkableTrack: CheckableTrack, listener: OnTrackSelectedChangeListener?) {
+    fun bind(checkableTrack: CheckableTrack, listener: OnTrackSelectedChangeListener) {
         val (track, selected) = checkableTrack
 
         item.apply {
@@ -125,7 +125,7 @@ private class TrackViewHolder(val item: CheckBox) : RecyclerView.ViewHolder(item
                 tintCheckbox(Color.parseColor(track.accentColor.get()))
             }
 
-            setOnClickListener { listener?.invoke(track, isChecked) }
+            setOnClickListener { listener.invoke(track, isChecked) }
         }
     }
 
