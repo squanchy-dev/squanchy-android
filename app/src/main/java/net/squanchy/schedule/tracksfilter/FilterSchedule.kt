@@ -1,4 +1,4 @@
-package net.squanchy.schedule.filterschedule
+package net.squanchy.schedule.tracksfilter
 
 import android.content.Context
 import android.content.res.ColorStateList

@@ -46,7 +46,7 @@
       android:launchMode="singleTask" />
 
     <activity
-      android:name="net.squanchy.schedule.filterschedule.FilterScheduleActivity"
+      android:name="net.squanchy.schedule.tracksfilter.FilterScheduleActivity"
       android:theme="@style/Theme.Squanchy.Schedule" />
 
     <activity

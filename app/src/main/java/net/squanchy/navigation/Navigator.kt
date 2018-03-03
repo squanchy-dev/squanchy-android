@@ -15,7 +15,7 @@ import net.squanchy.eventdetails.EventDetailsActivity
 import net.squanchy.home.HomeActivity
 import net.squanchy.navigation.firststart.FirstStartWithNoNetworkActivity
 import net.squanchy.onboarding.OnboardingPage
-import net.squanchy.schedule.filterschedule.FilterScheduleActivity
+import net.squanchy.schedule.tracksfilter.FilterScheduleActivity
 import net.squanchy.search.SearchActivity
 import net.squanchy.settings.SettingsActivity
 import net.squanchy.signin.SignInActivity
