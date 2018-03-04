@@ -1,12 +1,14 @@
 @file:JvmName("BottomNavigationHelper")
 package net.squanchy.home
 
+import android.annotation.SuppressLint
 import android.support.design.internal.BottomNavigationItemView
 import android.support.design.internal.BottomNavigationMenuView
 import android.support.design.widget.BottomNavigationView
 import net.squanchy.support.kotlin.children
 import timber.log.Timber
 
+@SuppressLint("RestrictedApi") // This is a hack, not much we can do about it until there is an API for this
 fun BottomNavigationView.disableShiftMode() {
     val menuView = getChildAt(0) as BottomNavigationMenuView
     try {
