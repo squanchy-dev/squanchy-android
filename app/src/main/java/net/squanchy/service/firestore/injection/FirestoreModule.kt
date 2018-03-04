@@ -10,7 +10,6 @@ import net.squanchy.service.firestore.FirestoreDbService
 class FirestoreModule {
 
     @Provides
-    @ApplicationLifecycle
     internal fun firebaseFirestore(): FirebaseFirestore {
         return FirebaseFirestore.getInstance()
     }

@@ -1,7 +1,9 @@
 package net.squanchy.schedule
 
 import io.reactivex.Observable
+import io.reactivex.Scheduler
 import io.reactivex.functions.BiFunction
+import io.reactivex.schedulers.Schedulers
 import net.squanchy.schedule.domain.view.Schedule
 import net.squanchy.schedule.domain.view.SchedulePage
 import net.squanchy.schedule.domain.view.Track
@@ -16,7 +18,9 @@ import org.joda.time.DateTimeZone
 import org.joda.time.LocalDate
 
 interface ScheduleService {
+
     fun schedule(onlyFavorites: Boolean = false): Observable<Schedule>
+
     fun currentUserIsSignedIn(): Observable<Boolean>
 }
 
@@ -27,8 +31,11 @@ class FirestoreScheduleService(
     private val checksum: Checksum
 ) : ScheduleService {
 
-    override fun schedule(onlyFavorites: Boolean): Observable<Schedule> {
+    override fun schedule(onlyFavorites: Boolean): Observable<Schedule> = schedule(onlyFavorites, Schedulers.io())
+
+    fun schedule(onlyFavorites: Boolean, observeScheduler: Scheduler): Observable<Schedule> {
         val filteredDbSchedulePages = dbService.scheduleView()
+            .observeOn(observeScheduler)
             .filterByFavorites(onlyFavorites)
             .filterByTracks(tracksFilter.selectedTracks)
 

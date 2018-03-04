@@ -8,7 +8,6 @@ import android.util.AttributeSet
 import android.view.View
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.view_page_schedule.view.*
 import net.squanchy.R
 import net.squanchy.analytics.Analytics
@@ -86,7 +85,6 @@ class SchedulePageView @JvmOverloads constructor(
     override fun startLoading() {
         subscriptions.add(
             service.schedule()
-                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { updateWith(it, { event -> onEventClicked(event) }) },
