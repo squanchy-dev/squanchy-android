@@ -1,7 +1,7 @@
 ext {
     daggerVersion = '2.14.1'
     glideVersion = '4.6.1'
-    supportLibVersion = '27.0.2'
+    supportLibVersion = '27.1.0'
     playServicesVersion = '11.8.0'
     kotlinVersion = '1.2.21'
 
