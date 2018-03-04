@@ -19,7 +19,7 @@ ext {
 
     libraries = [
         app : [
-            crashlytics        : 'com.crashlytics.sdk.android:crashlytics:2.8.0',
+            crashlytics        : 'com.crashlytics.sdk.android:crashlytics:2.9.1',
             dagger             : "com.google.dagger:dagger:${daggerVersion}",
             daggerCompiler     : "com.google.dagger:dagger-compiler:${daggerVersion}",
             findbugsAnnotations: "com.google.code.findbugs:annotations:3.0.1u2",
