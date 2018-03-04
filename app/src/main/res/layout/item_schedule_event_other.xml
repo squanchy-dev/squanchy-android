@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<net.squanchy.schedule.view.OtherEventItemView xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- We do only want the padding on the start side -->
+<net.squanchy.schedule.view.OtherEventItemView
+  xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:paddingStart="@dimen/card_padding_horizontal"
   android:paddingTop="@dimen/card_padding_top"
   android:paddingBottom="@dimen/card_padding_bottom"
-  tools:layout_margin="16dp">
+  tools:layout_margin="16dp"
+  tools:ignore="RtlSymmetry">
 
   <LinearLayout
     android:layout_width="match_parent"

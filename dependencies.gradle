@@ -1,13 +1,13 @@
 ext {
     daggerVersion = '2.14.1'
     glideVersion = '4.6.1'
-    supportLibVersion = '27.0.2'
+    supportLibVersion = '27.1.0'
     playServicesVersion = '11.8.0'
-    kotlinVersion = '1.2.21'
+    kotlinVersion = '1.2.30'
 
     checkstyleVersion = '8.8'
     findbugsVersion = '3.0.1'
-    pmdVersion = '6.0.1'
+    pmdVersion = '6.1.0'
 
     ktLintVersion = '0.15.0'
 
@@ -19,7 +19,7 @@ ext {
 
     libraries = [
         app : [
-            crashlytics        : 'com.crashlytics.sdk.android:crashlytics:2.8.0',
+            crashlytics        : 'com.crashlytics.sdk.android:crashlytics:2.9.1',
             dagger             : "com.google.dagger:dagger:${daggerVersion}",
             daggerCompiler     : "com.google.dagger:dagger-compiler:${daggerVersion}",
             findbugsAnnotations: "com.google.code.findbugs:annotations:3.0.1u2",
@@ -35,15 +35,15 @@ ext {
             glide              : "com.github.bumptech.glide:glide:${glideVersion}",
             glideCompiler      : "com.github.bumptech.glide:compiler:${glideVersion}",
             glideOkHttp3       : "com.github.bumptech.glide:okhttp3-integration:${glideVersion}",
-            jodaTimeAndroid    : 'net.danlew:android.joda:2.9.9.1',
+            jodaTimeAndroid    : 'net.danlew:android.joda:2.9.9.2',
             kotlin             : "org.jetbrains.kotlin:kotlin-stdlib-jre7:${kotlinVersion}",
             playServicesAuth   : "com.google.android.gms:play-services-auth:${playServicesVersion}",
-            rxJava             : 'io.reactivex.rxjava2:rxjava:2.1.9',
-            rxAndroid          : 'io.reactivex.rxjava2:rxandroid:2.0.1',
+            rxJava             : 'io.reactivex.rxjava2:rxjava:2.1.10',
+            rxAndroid          : 'io.reactivex.rxjava2:rxandroid:2.0.2',
             supportAppCompat   : "com.android.support:appcompat-v7:${supportLibVersion}",
-            supportConstraint  : 'com.android.support.constraint:constraint-layout:1.1.0-beta4',
+            supportConstraint  : 'com.android.support.constraint:constraint-layout:1.1.0-beta5',
             supportDesign      : "com.android.support:design:${supportLibVersion}",
-            timber             : 'com.jakewharton.timber:timber:4.6.0',
+            timber             : 'com.jakewharton.timber:timber:4.6.1',
             twitterCore        : 'com.twitter.sdk.android:twitter-core:3.2.0',
             viewPagerAdapter   : 'com.novoda:view-pager-adapter:1.0.0'
         ],
@@ -57,7 +57,7 @@ ext {
     ]
 
     buildScript = [
-        android                   : 'com.android.tools.build:gradle:3.0.1',
+        android                   : 'com.android.tools.build:gradle:3.1.0-beta4',
         firebase                  : 'com.google.firebase:firebase-plugins:1.1.5',
         googleServices            : 'com.google.gms:google-services:3.2.0',
         gradleStaticAnalysisPlugin: 'com.novoda:gradle-static-analysis-plugin:0.5.2',
