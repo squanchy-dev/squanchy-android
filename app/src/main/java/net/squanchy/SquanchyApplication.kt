@@ -1,5 +1,6 @@
 package net.squanchy
 
+import android.annotation.SuppressLint
 import android.app.Application
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
@@ -28,6 +29,7 @@ class SquanchyApplication : Application() {
         preloadRemoteConfig()
     }
 
+    @SuppressLint("CheckResult") // This is a fire-and-forget operation
     private fun preloadRemoteConfig() {
         applicationComponent.remoteConfig()
             .fetchNow()
