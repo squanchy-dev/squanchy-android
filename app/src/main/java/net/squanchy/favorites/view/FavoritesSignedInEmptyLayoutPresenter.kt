@@ -12,10 +12,10 @@ internal fun presentButtonIcon(counter: Int, view: FavoritesSignedInEmptyLayoutV
 }
 
 internal fun presentAchievementMessage(
-    counter: Int,
-    view: FavoritesSignedInEmptyLayoutView,
-    initialAchievementMessage: AchievementMessageProvider,
-    perseveranceMessage: AchievementMessageProvider
+        counter: Int,
+        view: FavoritesSignedInEmptyLayoutView,
+        initialAchievementMessage: AchievementMessageProvider,
+        perseveranceMessage: AchievementMessageProvider
 ) {
     val newCounter = counter + 1
 

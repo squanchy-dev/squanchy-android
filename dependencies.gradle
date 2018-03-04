@@ -1,15 +1,15 @@
 ext {
     daggerVersion = '2.14.1'
     glideVersion = '4.6.1'
-    supportLibVersion = '27.1.0'
+    supportLibVersion = '27.0.2'
     playServicesVersion = '11.8.0'
-    kotlinVersion = '1.2.30'
+    kotlinVersion = '1.2.21'
 
     checkstyleVersion = '8.8'
     findbugsVersion = '3.0.1'
-    pmdVersion = '6.1.0'
+    pmdVersion = '6.0.1'
 
-    ktLintVersion = '0.18.0'
+    ktLintVersion = '0.15.0'
 
     gradlePlugins = [
         buildProperties: 'com.novoda:build-properties-plugin:1.2.1',
@@ -19,7 +19,7 @@ ext {
 
     libraries = [
         app : [
-            crashlytics        : 'com.crashlytics.sdk.android:crashlytics:2.9.1',
+            crashlytics        : 'com.crashlytics.sdk.android:crashlytics:2.8.0',
             dagger             : "com.google.dagger:dagger:${daggerVersion}",
             daggerCompiler     : "com.google.dagger:dagger-compiler:${daggerVersion}",
             findbugsAnnotations: "com.google.code.findbugs:annotations:3.0.1u2",
@@ -34,15 +34,15 @@ ext {
             glide              : "com.github.bumptech.glide:glide:${glideVersion}",
             glideCompiler      : "com.github.bumptech.glide:compiler:${glideVersion}",
             glideOkHttp3       : "com.github.bumptech.glide:okhttp3-integration:${glideVersion}",
-            jodaTimeAndroid    : 'net.danlew:android.joda:2.9.9.2',
+            jodaTimeAndroid    : 'net.danlew:android.joda:2.9.9.1',
             kotlin             : "org.jetbrains.kotlin:kotlin-stdlib-jre7:${kotlinVersion}",
             playServicesAuth   : "com.google.android.gms:play-services-auth:${playServicesVersion}",
-            rxJava             : 'io.reactivex.rxjava2:rxjava:2.1.10',
-            rxAndroid          : 'io.reactivex.rxjava2:rxandroid:2.0.2',
+            rxJava             : 'io.reactivex.rxjava2:rxjava:2.1.9',
+            rxAndroid          : 'io.reactivex.rxjava2:rxandroid:2.0.1',
             supportAppCompat   : "com.android.support:appcompat-v7:${supportLibVersion}",
-            supportConstraint  : 'com.android.support.constraint:constraint-layout:1.1.0-beta5',
+            supportConstraint  : 'com.android.support.constraint:constraint-layout:1.1.0-beta4',
             supportDesign      : "com.android.support:design:${supportLibVersion}",
-            timber             : 'com.jakewharton.timber:timber:4.6.1',
+            timber             : 'com.jakewharton.timber:timber:4.6.0',
             twitterCore        : 'com.twitter.sdk.android:twitter-core:3.2.0',
             viewPagerAdapter   : 'com.novoda:view-pager-adapter:1.0.0'
         ],
@@ -51,7 +51,7 @@ ext {
             fest    : 'org.easytesting:fest-assert-core:2.0M10',
             jodaTime: 'joda-time:joda-time:2.9.9',
             jUnit4  : 'junit:junit:4.12',
-            mockito : 'org.mockito:mockito-inline:2.15.0'
+            mockito : 'org.mockito:mockito-inline:2.13.0'
         ]
     ]
 

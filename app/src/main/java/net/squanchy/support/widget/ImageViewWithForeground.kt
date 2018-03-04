@@ -29,9 +29,9 @@ import android.view.Gravity
 import net.squanchy.R
 
 open class ImageViewWithForeground @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet,
-    defStyleAttr: Int = 0
+        context: Context,
+        attrs: AttributeSet,
+        defStyleAttr: Int = 0
 ) : AppCompatImageView(context, attrs, defStyleAttr), ViewWithForeground {
 
     private var foregroundDrawable: Drawable? = null

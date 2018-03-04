@@ -15,10 +15,10 @@ import net.squanchy.support.kotlin.children
 import net.squanchy.support.unwrapToActivityContext
 
 abstract class SpeakerView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet,
-    defStyleAttr: Int = 0,
-    defStyleRes: Int = 0
+        context: Context,
+        attrs: AttributeSet,
+        defStyleAttr: Int = 0,
+        defStyleRes: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr, defStyleRes) {
 
     private lateinit var imageLoader: ImageLoader

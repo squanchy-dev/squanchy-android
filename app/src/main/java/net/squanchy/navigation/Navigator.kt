@@ -23,8 +23,8 @@ import net.squanchy.venue.domain.view.Venue
 import timber.log.Timber
 
 class Navigator(
-    private val activity: Activity,
-    private val debugActivityIntentFactory: DebugActivityIntentFactory
+        private val activity: Activity,
+        private val debugActivityIntentFactory: DebugActivityIntentFactory
 ) {
 
     fun toEventDetails(eventId: String) {

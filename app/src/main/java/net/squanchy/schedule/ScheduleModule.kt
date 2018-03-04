@@ -11,8 +11,8 @@ class ScheduleModule {
 
     @Provides
     internal fun scheduleService(
-        dbService: FirebaseDbService,
-        authService: FirebaseAuthService,
-        eventRepository: EventRepository
+            dbService: FirebaseDbService,
+            authService: FirebaseAuthService,
+            eventRepository: EventRepository
     ): ScheduleService = ScheduleService(dbService, authService, eventRepository)
 }

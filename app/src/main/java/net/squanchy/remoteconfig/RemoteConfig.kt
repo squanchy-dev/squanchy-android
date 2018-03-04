@@ -7,8 +7,8 @@ import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
 class RemoteConfig(
-    private val firebaseRemoteConfig: FirebaseRemoteConfig,
-    private val debugMode: Boolean
+        private val firebaseRemoteConfig: FirebaseRemoteConfig,
+        private val debugMode: Boolean
 ) {
 
     private val cacheExpiryInSeconds: Long

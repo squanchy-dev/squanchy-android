@@ -5,8 +5,8 @@ import android.support.annotation.StringRes
 import net.squanchy.R
 
 internal enum class License(
-    val label: String,
-    @get:StringRes val noticeResId: Int
+        val label: String,
+        @get:StringRes val noticeResId: Int
 ) {
     @SuppressWarnings("EnumNaming")
     APACHE_2("Apache 2.0 License", R.string.license_notice_apache_2),

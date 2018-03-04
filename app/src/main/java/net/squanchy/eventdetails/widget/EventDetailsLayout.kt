@@ -24,9 +24,9 @@ import net.squanchy.support.lang.Optional
 import org.joda.time.format.DateTimeFormat
 
 class EventDetailsLayout @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet?,
-    defStyle: Int = 0
+        context: Context,
+        attrs: AttributeSet?,
+        defStyle: Int = 0
 ) : LinearLayout(context, attrs, defStyle) {
 
     init {

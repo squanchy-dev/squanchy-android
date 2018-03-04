@@ -164,8 +164,8 @@ class NotificationCreator(private val context: Context) {
     }
 
     private fun createInboxStyleRichNotification(
-        notificationBuilder: NotificationCompat.Builder,
-        events: List<Event>
+            notificationBuilder: NotificationCompat.Builder,
+            events: List<Event>
     ): NotificationCompat.InboxStyle {
         val bigContentTitle = createSummaryTitle(events.size)
         val richNotification = NotificationCompat.InboxStyle(notificationBuilder)
