@@ -9,7 +9,7 @@ ext {
     findbugsVersion = '3.0.1'
     pmdVersion = '6.1.0'
 
-    ktLintVersion = '0.15.0'
+    ktLintVersion = '0.18.0'
 
     gradlePlugins = [
         buildProperties: 'com.novoda:build-properties-plugin:1.2.1',

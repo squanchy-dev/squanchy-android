@@ -13,10 +13,10 @@ import net.squanchy.support.lang.Optional
 import net.squanchy.support.unwrapToActivityContext
 
 class SpeakerHeaderView @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet,
-        defStyleAttr: Int = 0,
-        defStyleRes: Int = 0
+    context: Context,
+    attrs: AttributeSet,
+    defStyleAttr: Int = 0,
+    defStyleRes: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr, defStyleRes) {
 
     private lateinit var imageLoader: ImageLoader
