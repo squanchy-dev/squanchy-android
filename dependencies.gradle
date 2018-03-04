@@ -7,7 +7,7 @@ ext {
 
     checkstyleVersion = '8.8'
     findbugsVersion = '3.0.1'
-    pmdVersion = '6.0.1'
+    pmdVersion = '6.1.0'
 
     ktLintVersion = '0.15.0'
 
