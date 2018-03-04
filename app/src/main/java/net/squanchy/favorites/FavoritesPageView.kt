@@ -22,9 +22,9 @@ import net.squanchy.schedule.domain.view.Schedule
 import net.squanchy.support.unwrapToActivityContext
 
 class FavoritesPageView @JvmOverloads constructor(
-        context: Context?,
-        attrs: AttributeSet? = null,
-        defStyleAttr: Int = 0
+    context: Context?,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : CoordinatorLayout(context, attrs, defStyleAttr), Loadable {
 
     private val favoritesComponent = favoritesComponent(unwrapToActivityContext(context))

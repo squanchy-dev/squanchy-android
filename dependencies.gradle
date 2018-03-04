@@ -9,7 +9,7 @@ ext {
     findbugsVersion = '3.0.1'
     pmdVersion = '6.0.1'
 
-    ktLintVersion = '0.15.0'
+    ktLintVersion = '0.18.0'
 
     gradlePlugins = [
         buildProperties: 'com.novoda:build-properties-plugin:1.2.1',
@@ -51,7 +51,7 @@ ext {
             fest    : 'org.easytesting:fest-assert-core:2.0M10',
             jodaTime: 'joda-time:joda-time:2.9.9',
             jUnit4  : 'junit:junit:4.12',
-            mockito : 'org.mockito:mockito-inline:2.13.0'
+            mockito : 'org.mockito:mockito-inline:2.15.0'
         ]
     ]
 

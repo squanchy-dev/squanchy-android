@@ -10,8 +10,8 @@ import net.squanchy.service.repository.EventRepository
 import net.squanchy.support.lang.Optional
 
 internal class EventDetailsService(
-        private val eventRepository: EventRepository,
-        private val authService: FirebaseAuthService
+    private val eventRepository: EventRepository,
+    private val authService: FirebaseAuthService
 ) {
 
     fun event(eventId: String): Observable<Event> {
