@@ -9,9 +9,9 @@ import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import java.util.Locale
 
 class ExperienceLevelView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet,
-    defStyleAttr: Int = 0
+        context: Context,
+        attrs: AttributeSet,
+        defStyleAttr: Int = 0
 ) : AppCompatTextView(context, attrs, defStyleAttr) {
 
     override fun onFinishInflate() {

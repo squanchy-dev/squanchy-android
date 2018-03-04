@@ -42,9 +42,9 @@ import timber.log.Timber
 import kotlin.math.min
 
 class CircleImageView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet,
-    defStyleAttr: Int = 0
+        context: Context,
+        attrs: AttributeSet,
+        defStyleAttr: Int = 0
 ) : ImageViewWithForeground(context, attrs, defStyleAttr) {
 
     private var necessaire: Necessaire? = null

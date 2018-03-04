@@ -9,9 +9,9 @@ import net.squanchy.R
 import net.squanchy.support.view.CardSpacingItemDecorator
 
 class TweetFeedView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet?,
-    defStyle: Int = 0
+        context: Context,
+        attrs: AttributeSet?,
+        defStyle: Int = 0
 ) : RecyclerView(context, attrs, defStyle) {
 
     override fun onFinishInflate() {

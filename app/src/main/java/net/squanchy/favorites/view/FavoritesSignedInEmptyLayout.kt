@@ -13,10 +13,10 @@ import kotlinx.android.synthetic.main.merge_no_favorites_view.view.*
 import net.squanchy.R
 
 class FavoritesSignedInEmptyLayout @JvmOverloads constructor(
-    context: Context?,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0,
-    defStyleRes: Int = 0
+        context: Context?,
+        attrs: AttributeSet? = null,
+        defStyleAttr: Int = 0,
+        defStyleRes: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr, defStyleRes), FavoritesSignedInEmptyLayoutView {
 
     private var counter = 0

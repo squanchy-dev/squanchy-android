@@ -26,9 +26,9 @@ import timber.log.Timber
 
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class SchedulePageView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet,
-    defStyleAttr: Int = 0
+        context: Context,
+        attrs: AttributeSet,
+        defStyleAttr: Int = 0
 ) : CoordinatorLayout(context, attrs, defStyleAttr), Loadable {
 
     private val viewPagerAdapter: ScheduleViewPagerAdapter
@@ -141,9 +141,9 @@ class SchedulePageView @JvmOverloads constructor(
     }
 
     private class ScrollingOnTabSelectedListener(
-        private val schedule: Schedule,
-        private val viewPagerAdapter: ScheduleViewPagerAdapter,
-        private val currentTime: CurrentTime
+            private val schedule: Schedule,
+            private val viewPagerAdapter: ScheduleViewPagerAdapter,
+            private val currentTime: CurrentTime
     ) : OnTabSelectedListener {
 
         override fun onTabReselected(tab: TabLayout.Tab) {
@@ -153,8 +153,8 @@ class SchedulePageView @JvmOverloads constructor(
     }
 
     private class TrackingOnTabSelectedListener(
-        private val analytics: Analytics,
-        private val viewPagerAdapter: ScheduleViewPagerAdapter
+            private val analytics: Analytics,
+            private val viewPagerAdapter: ScheduleViewPagerAdapter
     ) : OnTabSelectedListener {
 
         override fun onTabSelected(tab: TabLayout.Tab) {

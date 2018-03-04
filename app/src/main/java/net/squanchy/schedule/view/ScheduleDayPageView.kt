@@ -11,9 +11,9 @@ import net.squanchy.schedule.domain.view.Event
 import net.squanchy.support.view.CardSpacingItemDecorator
 
 class ScheduleDayPageView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet,
-    defStyle: Int = 0
+        context: Context,
+        attrs: AttributeSet,
+        defStyle: Int = 0
 ) : RecyclerView(context, attrs, defStyle) {
 
     private lateinit var adapter: EventsAdapter
@@ -43,8 +43,8 @@ class ScheduleDayPageView @JvmOverloads constructor(
         else scrollToPosition(eventPosition)
 
     private class EventsDiffCallback(
-        private val oldEvents: List<Event>,
-        private val newEvents: List<Event>
+            private val oldEvents: List<Event>,
+            private val newEvents: List<Event>
     ) : DiffUtil.Callback() {
 
         override fun getOldListSize() = oldEvents.size

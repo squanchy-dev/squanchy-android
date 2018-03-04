@@ -8,9 +8,9 @@ import timber.log.Timber
 import java.util.Locale
 
 enum class ExperienceLevel(
-    private val rawLevel: String,
-    @StringRes val labelStringResId: Int,
-    @ColorRes val colorResId: Int
+        private val rawLevel: String,
+        @StringRes val labelStringResId: Int,
+        @ColorRes val colorResId: Int
 ) {
     BEGINNER("beginner", R.string.experience_level_beginner, R.color.experience_level_beginner),
     INTERMEDIATE("intermediate", R.string.experience_level_intermediate, R.color.experience_level_intermediate),

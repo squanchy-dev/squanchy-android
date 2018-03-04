@@ -12,10 +12,10 @@ import android.widget.FrameLayout
 import net.squanchy.R
 
 open class CardLayout @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet,
-    defStyleAttr: Int = R.attr.cardViewDefaultStyle,
-    defStyleRes: Int = 0
+        context: Context,
+        attrs: AttributeSet,
+        defStyleAttr: Int = R.attr.cardViewDefaultStyle,
+        defStyleRes: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr, defStyleRes) {
 
     init {
@@ -69,10 +69,10 @@ open class CardLayout @JvmOverloads constructor(
     }
 
     private class NarrowerOutlineProvider(
-        @param:Px private val insetHorizontal: Int,
-        @param:Px private val insetTop: Int,
-        @param:Px private val insetBottom: Int,
-        @param:Px private val radius: Int
+            @param:Px private val insetHorizontal: Int,
+            @param:Px private val insetTop: Int,
+            @param:Px private val insetBottom: Int,
+            @param:Px private val radius: Int
     ) : ViewOutlineProvider() {
 
         override fun getOutline(view: View, outline: Outline) {

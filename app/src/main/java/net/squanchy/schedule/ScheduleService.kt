@@ -19,9 +19,9 @@ import org.joda.time.format.DateTimeFormat
 private val dateFormatter = DateTimeFormat.forPattern("yyyy-MM-dd")
 
 class ScheduleService internal constructor(
-    private val dbService: FirebaseDbService,
-    private val authService: FirebaseAuthService,
-    private val eventRepository: EventRepository
+        private val dbService: FirebaseDbService,
+        private val authService: FirebaseAuthService,
+        private val eventRepository: EventRepository
 ) {
 
     fun schedule(onlyFavorites: Boolean): Observable<Schedule> {
