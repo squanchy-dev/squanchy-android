@@ -90,7 +90,7 @@ private class TracksFilterAdapter(context: Context) : RecyclerView.Adapter<Track
 
     override fun getItemCount(): Int = checkableTracks.size
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): TrackViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
         val view = layoutInflater.inflate(R.layout.track_filters_item, parent, false) as CheckBox
         return TrackViewHolder(view)
     }

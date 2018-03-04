@@ -18,9 +18,9 @@ import net.squanchy.tweets.view.TweetsAdapter
 import timber.log.Timber
 
 class TweetsPageView @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet,
-        defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet,
+    defStyleAttr: Int = 0
 ) : CoordinatorLayout(context, attrs, defStyleAttr), Loadable {
 
     private val component = twitterComponent(unwrapToActivityContext(context))

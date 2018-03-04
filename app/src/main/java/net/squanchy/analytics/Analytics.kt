@@ -2,21 +2,17 @@ package net.squanchy.analytics
 
 import android.app.Activity
 import android.os.Bundle
-
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.answers.ContentViewEvent
 import com.crashlytics.android.answers.CustomEvent
 import com.google.firebase.analytics.FirebaseAnalytics
-
+import net.squanchy.BuildConfig
+import timber.log.Timber
 import java.util.Locale
 
-import net.squanchy.BuildConfig
-
-import timber.log.Timber
-
 class Analytics internal constructor(
-        private val firebaseAnalytics: FirebaseAnalytics,
-        private val crashlytics: Crashlytics
+    private val firebaseAnalytics: FirebaseAnalytics,
+    private val crashlytics: Crashlytics
 ) {
 
     fun initializeStaticUserProperties() {

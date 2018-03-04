@@ -20,11 +20,11 @@ import java.util.regex.Pattern
 class TweetUrlSpanFactory(private val context: Context) {
 
     fun applySpansToTweet(
-            text: String,
-            startIndex: Int,
-            hashtags: List<FirestoreTwitterHashtag>,
-            mentions: List<FirestoreTwitterMention>,
-            urls: List<FirestoreTwitterUrl>
+        text: String,
+        startIndex: Int,
+        hashtags: List<FirestoreTwitterHashtag>,
+        mentions: List<FirestoreTwitterMention>,
+        urls: List<FirestoreTwitterUrl>
     ): Spanned {
         val builder = SpannableStringBuilder(text)
 
