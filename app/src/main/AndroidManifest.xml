@@ -46,6 +46,10 @@
       android:launchMode="singleTask" />
 
     <activity
+      android:name="net.squanchy.schedule.tracksfilter.ScheduleTracksFilterActivity"
+      android:theme="@style/Theme.Squanchy.Schedule" />
+
+    <activity
       android:name="net.squanchy.eventdetails.EventDetailsActivity"
       android:theme="@style/Theme.Squanchy.EventDetails" />
 

@@ -1,5 +1,6 @@
 package net.squanchy
 
+import android.annotation.SuppressLint
 import android.app.Application
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
@@ -20,18 +21,6 @@ class SquanchyApplication : Application() {
         JodaTimeAndroid.init(this)
         setupTracking()
         initializeFirebase()
-
-        preloadRemoteConfig()
-    }
-
-    private fun preloadRemoteConfig() {
-        applicationComponent.remoteConfig()
-            .fetchNow()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                    { Timber.i("Remote config prefetched") },
-                    { throwable -> Timber.e(throwable, "Unable to preload the remote config") }
-            )
     }
 
     private fun setupTracking() {
@@ -61,5 +50,17 @@ class SquanchyApplication : Application() {
 
     private fun initializeFirebase() {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true)
+        preloadRemoteConfig()
+    }
+
+    @SuppressLint("CheckResult") // This is a fire-and-forget operation
+    private fun preloadRemoteConfig() {
+        applicationComponent.remoteConfig()
+            .fetchNow()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { Timber.i("Remote config prefetched") },
+                { throwable -> Timber.e(throwable, "Unable to preload the remote config") }
+            )
     }
 }

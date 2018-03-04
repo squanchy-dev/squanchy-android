@@ -190,5 +190,7 @@
 
   <dimen name="match_constraint">0dp</dimen>
   <dimen name="preference_header_margin_vertical">16dp</dimen>
+  <dimen name="track_filters_item_padding_horizontal">16dp</dimen>
+  <dimen name="track_filters_item_padding_vertical">@dimen/track_filters_item_padding_horizontal</dimen>
 
 </resources>
