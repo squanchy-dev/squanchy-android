@@ -4,7 +4,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.AuthCredential
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
@@ -30,7 +29,7 @@ class FirebaseAuthService(private val auth: FirebaseAuth) {
     }
 
     private fun linkAccountWithGoogleCredential(user: FirebaseUser, credential: AuthCredential): Completable {
-        return fromTask<AuthResult>(lazy { user.linkWithCredential(credential) })
+        return fromTask(lazy { user.linkWithCredential(credential) })
             .onErrorResumeNext(deleteUserAndSignInWithCredentialIfLinkingFailed(user, credential))
     }
 
@@ -53,11 +52,11 @@ class FirebaseAuthService(private val auth: FirebaseAuth) {
     }
 
     private fun signInWithGoogleCredential(credential: AuthCredential): Completable {
-        return fromTask<AuthResult>(lazy { auth.signInWithCredential(credential) })
+        return fromTask(lazy { auth.signInWithCredential(credential) })
     }
 
     private fun deleteUser(user: FirebaseUser): Completable {
-        return fromTask<Void>(lazy { user.delete() })
+        return fromTask(lazy { user.delete() })
     }
 
     private fun <T> fromTask(task: Lazy<Task<T>>): Completable {
@@ -91,7 +90,7 @@ class FirebaseAuthService(private val auth: FirebaseAuth) {
 
     fun currentUser(): Observable<Optional<FirebaseUser>> {
         return Observable.create<Optional<FirebaseUser>> { e ->
-            val listener = { firebaseAuth: FirebaseAuth -> e.onNext(Optional.fromNullable<FirebaseUser>(firebaseAuth.currentUser)) }
+            val listener = { firebaseAuth: FirebaseAuth -> e.onNext(Optional.fromNullable(firebaseAuth.currentUser)) }
 
             auth.addAuthStateListener(listener)
 

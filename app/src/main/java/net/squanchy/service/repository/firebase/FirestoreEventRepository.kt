@@ -5,7 +5,6 @@ import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
 import net.squanchy.schedule.domain.view.Event
-import net.squanchy.service.firebase.FirebaseDbService
 import net.squanchy.service.firestore.FirestoreDbService
 import net.squanchy.service.firestore.model.conferenceinfo.FirestoreVenue
 import net.squanchy.service.firestore.model.schedule.FirestoreEvent
@@ -14,8 +13,7 @@ import net.squanchy.service.repository.EventRepository
 import net.squanchy.support.lang.Checksum
 import org.joda.time.DateTimeZone
 
-class FirebaseEventRepository(
-    private val dbService: FirebaseDbService,
+class FirestoreEventRepository(
     private val firestoreDbService: FirestoreDbService,
     private val checksum: Checksum
 ) : EventRepository {
@@ -31,9 +29,7 @@ class FirebaseEventRepository(
         ).subscribeOn(Schedulers.io())
     }
 
-    private fun FirestoreVenue.extractTimeZone(): DateTimeZone {
-        return DateTimeZone.forID(timezone)
-    }
+    private fun FirestoreVenue.extractTimeZone() = DateTimeZone.forID(timezone)
 
     private fun combineIntoEvent(event: FirestoreEvent, timeZone: DateTimeZone): Event = event.toEvent(checksum, timeZone)
 
@@ -50,11 +46,7 @@ class FirebaseEventRepository(
         )
     }
 
-    override fun addFavorite(eventId: String, userId: String): Completable {
-        return dbService.addFavorite(eventId, userId)
-    }
+    override fun addFavorite(eventId: String, userId: String): Completable = firestoreDbService.addFavorite(eventId, userId)
 
-    override fun removeFavorite(eventId: String, userId: String): Completable {
-        return dbService.removeFavorite(eventId, userId)
-    }
+    override fun removeFavorite(eventId: String, userId: String): Completable = firestoreDbService.removeFavorite(eventId, userId)
 }
