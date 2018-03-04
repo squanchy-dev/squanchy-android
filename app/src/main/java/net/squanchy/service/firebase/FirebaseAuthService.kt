@@ -36,7 +36,6 @@ class FirebaseAuthService(private val auth: FirebaseAuth) {
     }
 
     @SuppressLint("CheckResult") // False positive, to remove in 3.1.0-beta5
-
     private fun deleteUserAndSignInWithCredentialIfLinkingFailed(user: FirebaseUser, credential: AuthCredential): (Throwable) -> CompletableSource =
         {
             if (!linkingFailed(it)) {
