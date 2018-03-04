@@ -1,5 +1,6 @@
 package net.squanchy.service.firebase
 
+import android.annotation.SuppressLint
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseException
@@ -34,8 +35,9 @@ class FirebaseAuthService(private val auth: FirebaseAuth) {
             .onErrorResumeNext(deleteUserAndSignInWithCredentialIfLinkingFailed(user, credential))
     }
 
-    private fun deleteUserAndSignInWithCredentialIfLinkingFailed(user: FirebaseUser, credential: AuthCredential): (Throwable) -> CompletableSource {
-        return {
+    @SuppressLint("CheckResult") // False positive, to remove in 3.1.0-beta5
+    private fun deleteUserAndSignInWithCredentialIfLinkingFailed(user: FirebaseUser, credential: AuthCredential): (Throwable) -> CompletableSource =
+        {
             if (!linkingFailed(it)) {
                 Completable.error(it)
             } else {
@@ -46,7 +48,6 @@ class FirebaseAuthService(private val auth: FirebaseAuth) {
                 deleteUser(user).andThen(signInWithGoogleCredential(credential))
             }
         }
-    }
 
     private fun linkingFailed(error: Throwable): Boolean {
         return error is FirebaseAuthUserCollisionException
@@ -66,7 +67,8 @@ class FirebaseAuthService(private val auth: FirebaseAuth) {
                 if (result.isSuccessful) {
                     completableObserver.onComplete()
                 } else {
-                    completableObserver.onError(result.exception ?: FirebaseException("Unknown exception in Firebase Auth"))
+                    completableObserver.onError(result.exception
+                        ?: FirebaseException("Unknown exception in Firebase Auth"))
                 }
             }
         }

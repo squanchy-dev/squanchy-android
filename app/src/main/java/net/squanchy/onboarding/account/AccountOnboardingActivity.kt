@@ -5,9 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
-import kotlinx.android.synthetic.main.activity_onboarding_account.onboardingContentRoot
-import kotlinx.android.synthetic.main.activity_onboarding_account.onboardingSignInButton
-import kotlinx.android.synthetic.main.activity_onboarding_account.onboardingSkip
+import io.reactivex.disposables.Disposable
+import kotlinx.android.synthetic.main.activity_onboarding_account.*
 import net.squanchy.R
 import net.squanchy.navigation.Navigator
 import net.squanchy.onboarding.Onboarding
@@ -21,6 +20,7 @@ class AccountOnboardingActivity : AppCompatActivity() {
     private lateinit var onboarding: Onboarding
     private lateinit var navigator: Navigator
     private lateinit var signInService: SignInService
+    private lateinit var subscription: Disposable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,18 +43,18 @@ class AccountOnboardingActivity : AppCompatActivity() {
         super.onStart()
 
         disableUi()
-        signInService.isSignedInToGoogle()
+        subscription = signInService.isSignedInToGoogle()
             .observeOn(AndroidSchedulers.mainThread())
             .timeout(SIGNIN_STATE_CHECK_TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .subscribe(
-                    { signedIn ->
-                        if (signedIn) {
-                            markPageAsSeenAndFinish()
-                        } else {
-                            enableUi()
-                        }
-                    },
-                    { enableUi() }
+                { signedIn ->
+                    if (signedIn) {
+                        markPageAsSeenAndFinish()
+                    } else {
+                        enableUi()
+                    }
+                },
+                { enableUi() }
             )
     }
 
@@ -90,6 +90,11 @@ class AccountOnboardingActivity : AppCompatActivity() {
     private fun enableUi() {
         onboardingContentRoot.isEnabled = true
         onboardingContentRoot.alpha = ENABLED_UI_ALPHA
+    }
+
+    override fun onStop() {
+        super.onStop()
+        subscription.dispose()
     }
 
     companion object {
