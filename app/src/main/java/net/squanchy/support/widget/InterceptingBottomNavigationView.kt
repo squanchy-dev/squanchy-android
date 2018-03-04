@@ -15,9 +15,9 @@ import net.squanchy.support.graphics.CircularRevealDrawable
 import net.squanchy.support.view.Hotspot
 
 class InterceptingBottomNavigationView @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet,
-        defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet,
+    defStyleAttr: Int = 0
 ) : BottomNavigationView(context, attrs, defStyleAttr) {
 
     private var lastUpEvent: MotionEvent? = null

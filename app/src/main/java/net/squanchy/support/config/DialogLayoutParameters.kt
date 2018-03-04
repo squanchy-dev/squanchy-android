@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import android.view.Window
 
 class DialogLayoutParameters private constructor(
-        private val formFactorChecker: FormFactorChecker,
-        private val height: Int
+    private val formFactorChecker: FormFactorChecker,
+    private val height: Int
 ) {
 
     fun applyTo(window: Window) {

@@ -9,9 +9,9 @@ import net.squanchy.schedule.domain.view.Event
 import org.joda.time.format.DateTimeFormat
 
 class TalkEventItemView @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet,
-        defStyleAttr: Int = R.attr.cardViewDefaultStyle
+    context: Context,
+    attrs: AttributeSet,
+    defStyleAttr: Int = R.attr.cardViewDefaultStyle
 ) : EventItemView(context, attrs, defStyleAttr) {
 
     override fun updateWith(event: Event) {

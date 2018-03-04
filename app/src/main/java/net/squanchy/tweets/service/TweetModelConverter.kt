@@ -105,9 +105,9 @@ private fun onlyPhotoUrls(media: List<MediaEntity>): List<String> {
 }
 
 private fun displayableTextFor(
-        text: String,
-        displayTextRange: Range,
-        photoUrls: List<String>
+    text: String,
+    displayTextRange: Range,
+    photoUrls: List<String>
 ): String {
     val beginIndex = displayTextRange.start()
     val endIndex = displayTextRange.end()
