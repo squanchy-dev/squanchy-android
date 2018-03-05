@@ -34,7 +34,7 @@ class SignInService(private val authService: FirebaseAuthService) {
 
     fun currentUser(): Observable<Optional<FirebaseUser>> {
         return authService.currentUser()
-            .subscribeOn(Schedulers.io())
+            //.subscribeOn(Schedulers.io())
     }
 
     internal fun signInWithGoogle(account: GoogleSignInAccount): Completable {

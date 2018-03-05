@@ -51,18 +51,26 @@ class FavoritesPageView @JvmOverloads constructor(
 
     override fun startLoading() {
         disposable.add(
-                Observable.combineLatest(service.schedule(true), service.currentUserIsSignedIn(),
-                BiFunction<Schedule, Boolean, LoadScheduleResult> { schedule, signedIn -> LoadScheduleResult(schedule, signedIn) })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { handleLoadSchedule(it) })
+                Observable.combineLatest(
+                        service.schedule(true),
+                        service.currentUserIsSignedIn(),
+                        BiFunction<Schedule, Boolean, LoadScheduleResult>(::LoadScheduleResult)
+                )
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(::handleLoadSchedule)
+        )
     }
 
     override fun stopLoading() = disposable.clear()
 
     private fun onMenuItemClickListener(menuItem: MenuItem): Boolean {
         return when (menuItem.itemId) {
-            R.id.action_search -> { showSearch(); true }
-            R.id.action_settings -> { showSettings(); true }
+            R.id.action_search -> {
+                showSearch(); true
+            }
+            R.id.action_settings -> {
+                showSettings(); true
+            }
             else -> false
         }
     }
@@ -81,6 +89,7 @@ class FavoritesPageView @JvmOverloads constructor(
         favoritesListView.updateWith(schedule, ::showEventDetails)
         favoritesListView.visibility = View.VISIBLE
         emptyViewSignedIn.visibility = View.GONE
+        emptyViewSignedOut.visibility = View.GONE
     }
 
     private fun showEventDetails(event: Event) {
