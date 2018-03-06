@@ -189,12 +189,12 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
                         subscriber.onError(exception)
                         return@addSnapshotListener
                     }
-                    subscriber.onNext(snapshot.documents.map { trackSnapshot ->
-                        trackSnapshot.toObject(FirestoreFavorite::class.java)
+                    subscriber.onNext(snapshot.documents.map { snapshot ->
+                        snapshot.toObject(FirestoreFavorite::class.java)
                     })
                 }
 
-            subscriber.setCancellable { registration.remove() }
+            subscriber.setCancellable(registration::remove)
         }
     }
 
