@@ -7,8 +7,8 @@ import net.squanchy.tweets.domain.view.TwitterScreenViewModel
 import net.squanchy.tweets.view.TweetUrlSpanFactory
 
 internal class TwitterService(
-        dbService: FirestoreDbService,
-        private val factory: TweetUrlSpanFactory
+    dbService: FirestoreDbService,
+    private val factory: TweetUrlSpanFactory
 ) {
 
     private val tweets = dbService.twitterView()

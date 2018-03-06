@@ -11,9 +11,9 @@ import net.squanchy.schedule.domain.view.Event.Type
 import net.squanchy.support.widget.SpeakerView
 
 class EventDetailsCoordinatorLayout @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet,
-        defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet,
+    defStyleAttr: Int = 0
 ) : CoordinatorLayout(context, attrs, defStyleAttr) {
 
     internal fun updateWith(event: Event, listener: OnEventDetailsClickListener) {

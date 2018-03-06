@@ -21,7 +21,7 @@ class FirestoreSpeakerMapperTest {
     var rule: MockitoRule = MockitoJUnit.rule()
 
     @Mock
-    lateinit var checksum: Checksum
+    private lateinit var checksum: Checksum
 
     @Before
     fun before() {

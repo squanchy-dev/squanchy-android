@@ -6,14 +6,17 @@ import net.squanchy.analytics.Analytics
 import net.squanchy.analytics.AnalyticsModule
 import net.squanchy.remoteconfig.RemoteConfig
 import net.squanchy.remoteconfig.RemoteConfigModule
-import net.squanchy.service.DaysRepository
+import net.squanchy.schedule.tracksfilter.TracksFilter
+import net.squanchy.schedule.tracksfilter.TracksFilterModule
 import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.firebase.FirebaseDbService
 import net.squanchy.service.firebase.injection.FirebaseModule
 import net.squanchy.service.firestore.FirestoreDbService
 import net.squanchy.service.firestore.injection.FirestoreModule
+import net.squanchy.service.repository.DaysRepository
 import net.squanchy.service.repository.EventRepository
 import net.squanchy.service.repository.SpeakerRepository
+import net.squanchy.service.repository.TracksRepository
 import net.squanchy.service.repository.injection.RepositoryModule
 import net.squanchy.support.injection.ChecksumModule
 import net.squanchy.support.injection.CurrentTimeModule
@@ -27,21 +30,23 @@ fun createApplicationComponent(application: Application): ApplicationComponent {
         .applicationContextModule(ApplicationContextModule(application))
         .analyticsModule(AnalyticsModule(application))
         .remoteConfigModule(RemoteConfigModule())
+        .tracksFilterModule(TracksFilterModule())
         .build()
 }
 
 @ApplicationLifecycle
 @Component(
-        modules = [
-            ApplicationContextModule::class,
-            FirebaseModule::class,
-            FirestoreModule::class,
-            ChecksumModule::class,
-            RepositoryModule::class,
-            AnalyticsModule::class,
-            RemoteConfigModule::class,
-            CurrentTimeModule::class
-        ]
+    modules = [
+        ApplicationContextModule::class,
+        FirebaseModule::class,
+        FirestoreModule::class,
+        ChecksumModule::class,
+        RepositoryModule::class,
+        AnalyticsModule::class,
+        RemoteConfigModule::class,
+        CurrentTimeModule::class,
+        TracksFilterModule::class
+    ]
 )
 interface ApplicationComponent {
 
@@ -56,6 +61,10 @@ interface ApplicationComponent {
     fun speakerRepository(): SpeakerRepository
 
     fun daysRepository(): DaysRepository
+
+    fun tracksRepository(): TracksRepository
+
+    fun tracksFilter(): TracksFilter
 
     fun analytics(): Analytics
 

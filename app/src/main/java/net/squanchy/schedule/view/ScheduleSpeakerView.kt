@@ -9,10 +9,10 @@ import net.squanchy.R
 import net.squanchy.support.widget.SpeakerView
 
 class ScheduleSpeakerView @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet,
-        defStyleAttr: Int = 0,
-        defStyleRes: Int = 0
+    context: Context,
+    attrs: AttributeSet,
+    defStyleAttr: Int = 0,
+    defStyleRes: Int = 0
 ) : SpeakerView(context, attrs, defStyleAttr, defStyleRes) {
 
     override fun inflatePhotoView(speakerPhotoContainer: ViewGroup): ImageView =

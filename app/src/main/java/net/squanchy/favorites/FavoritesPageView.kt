@@ -22,13 +22,13 @@ import net.squanchy.schedule.domain.view.Schedule
 import net.squanchy.support.unwrapToActivityContext
 
 class FavoritesPageView @JvmOverloads constructor(
-        context: Context?,
-        attrs: AttributeSet? = null,
-        defStyleAttr: Int = 0
+    context: Context?,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : CoordinatorLayout(context, attrs, defStyleAttr), Loadable {
 
     private val favoritesComponent = favoritesComponent(unwrapToActivityContext(context))
-    private val service: ScheduleService = favoritesComponent.service()
+    private val scheduleService: ScheduleService = favoritesComponent.scheduleService()
     private val navigator: Navigator = favoritesComponent.navigator()
     private val analytics: Analytics = favoritesComponent.analytics()
     private val disposable = CompositeDisposable()
@@ -51,10 +51,14 @@ class FavoritesPageView @JvmOverloads constructor(
 
     override fun startLoading() {
         disposable.add(
-                Observable.combineLatest(service.schedule(true), service.currentUserIsSignedIn(),
-                BiFunction<Schedule, Boolean, LoadScheduleResult> { schedule, signedIn -> LoadScheduleResult(schedule, signedIn) })
+            Observable.combineLatest(
+                scheduleService.schedule(onlyFavorites = true),
+                scheduleService.currentUserIsSignedIn(),
+                BiFunction<Schedule, Boolean, LoadScheduleResult>(::LoadScheduleResult)
+            )
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { handleLoadSchedule(it) })
+                .subscribe(::handleLoadSchedule)
+        )
     }
 
     override fun stopLoading() = disposable.clear()
@@ -63,6 +67,7 @@ class FavoritesPageView @JvmOverloads constructor(
         return when (menuItem.itemId) {
             R.id.action_search -> { showSearch(); true }
             R.id.action_settings -> { showSettings(); true }
+            R.id.action_filter -> { navigator.toScheduleFiltering(context); true }
             else -> false
         }
     }
@@ -81,6 +86,7 @@ class FavoritesPageView @JvmOverloads constructor(
         favoritesListView.updateWith(schedule, ::showEventDetails)
         favoritesListView.visibility = View.VISIBLE
         emptyViewSignedIn.visibility = View.GONE
+        emptyViewSignedOut.visibility = View.GONE
     }
 
     private fun showEventDetails(event: Event) {

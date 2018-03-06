@@ -11,6 +11,7 @@ import net.squanchy.service.firestore.model.conferenceinfo.FirestoreVenue
 import net.squanchy.service.firestore.model.schedule.FirestoreEvent
 import net.squanchy.service.firestore.model.schedule.FirestoreSchedulePage
 import net.squanchy.service.firestore.model.schedule.FirestoreSpeaker
+import net.squanchy.service.firestore.model.schedule.FirestoreTrack
 import net.squanchy.service.firestore.model.twitter.FirestoreTweet
 import org.joda.time.DateTimeZone
 
@@ -154,6 +155,23 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
                         return@addSnapshotListener
                     }
                     subscriber.onNext(snapshot.toObject(FirestoreEvent::class.java))
+                }
+
+            subscriber.setCancellable { registration.remove() }
+        }
+    }
+
+    fun tracks(): Observable<List<FirestoreTrack>> {
+        return Observable.create { subscriber ->
+            val registration = db.collection("tracks")
+                .addSnapshotListener { snapshot, exception ->
+                    if (exception != null && subscriber.isDisposed.not()) {
+                        subscriber.onError(exception)
+                        return@addSnapshotListener
+                    }
+                    subscriber.onNext(snapshot.documents.map { trackSnapshot ->
+                        trackSnapshot.toObject(FirestoreTrack::class.java).apply { id = trackSnapshot.id } // TODO should be done in the backend
+                    })
                 }
 
             subscriber.setCancellable { registration.remove() }
