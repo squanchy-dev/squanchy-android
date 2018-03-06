@@ -179,8 +179,28 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
         }
     }
 
+    fun favorites(userId: String): Observable<List<FirestoreFavorite>> {
+        return Observable.create { subscriber ->
+            val registration = db.collection(USER_DATA)
+                .document(userId)
+                .collection(FAVORITES)
+                .addSnapshotListener { snapshot, exception ->
+                    if (exception != null && subscriber.isDisposed.not()) {
+                        subscriber.onError(exception)
+                        return@addSnapshotListener
+                    }
+                    subscriber.onNext(snapshot.documents.map { trackSnapshot ->
+                        trackSnapshot.toObject(FirestoreFavorite::class.java)
+                    })
+                }
+
+            subscriber.setCancellable { registration.remove() }
+        }
+    }
+
     private val addToFirestoreAction: (DocumentReference.(String) -> Task<*>) = { eventId: String ->
-        collection(FAVORITES).document(eventId).set(FirestoreFavorite().apply { id = eventId })
+        val firestoreFavorite = FirestoreFavorite().apply { id = eventId }
+        collection(FAVORITES).document(eventId).set(firestoreFavorite)
     }
 
     private val deleteFromFirestoreAction: (DocumentReference.(String) -> Task<*>) = { eventId ->
