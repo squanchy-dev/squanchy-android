@@ -27,9 +27,9 @@ class SignInService(private val authService: FirebaseAuthService) {
                 if (user.isPresent) {
                     currentUser().firstOrError()
                         .flatMapCompletable { Completable.complete() }
+                } else {
+                    authService.signInAnonymously()
                 }
-
-                authService.signInAnonymously()
             }
     }
 
