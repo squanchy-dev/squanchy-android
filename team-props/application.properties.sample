@@ -1,4 +1,11 @@
+# The application's package name
 applicationId=net.squanchy.example
+
+# The application label, that is, its displayed name (e.g., in the launcher)
 applicationName="Squanchy"
-socialQuery=#squanchy                 
+
+# The query to use for the social feed (i.e., the search terms to use)
+socialQuery=#squanchy
+
+# The deeplinking scheme to use; e.g., in this case: squanchy://...
 deeplinkScheme=squanchy

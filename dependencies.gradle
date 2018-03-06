@@ -12,7 +12,7 @@ ext {
     ktLintVersion = '0.19.0'
 
     gradlePlugins = [
-        buildProperties: 'com.novoda:build-properties-plugin:1.2.1',
+        buildProperties: 'com.novoda:gradle-build-properties-plugin:0.3.9',
         fabric         : 'io.fabric.tools:gradle:1.25.1',
         kotlin         : "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
     ]
@@ -49,7 +49,7 @@ ext {
         ],
 
         test: [
-            fest    : 'org.easytesting:fest-assert-core:2.0M10',
+            truth   : 'com.google.truth:truth:0.39',
             jodaTime: 'joda-time:joda-time:2.9.9',
             jUnit4  : 'junit:junit:4.12',
             mockito : 'org.mockito:mockito-inline:2.13.0'
@@ -57,7 +57,7 @@ ext {
     ]
 
     buildScript = [
-        android                   : 'com.android.tools.build:gradle:3.1.0-beta4',
+        android                   : 'com.android.tools.build:gradle:3.1.0-rc01',
         firebase                  : 'com.google.firebase:firebase-plugins:1.1.5',
         googleServices            : 'com.google.gms:google-services:3.2.0',
         gradleStaticAnalysisPlugin: 'com.novoda:gradle-static-analysis-plugin:0.5.2',
