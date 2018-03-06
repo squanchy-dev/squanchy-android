@@ -22,15 +22,19 @@ apply plugin: 'kotlin-kapt'
 
 buildProperties {
     application {
-        file teamPropsFile('application.properties')
+        using teamPropsFile('application.properties')
     }
 
     secrets {
-        file teamPropsFile('secrets.properties')
+        using teamPropsFile('secrets.properties')
     }
 
     releaseSigningConfig {
-        file teamPropsFile('releaseSigningConfig.properties')
+        using teamPropsFile('releaseSigningConfig.properties')
+    }
+
+    env {
+        using System.getenv()
     }
 }
 
@@ -57,20 +61,27 @@ android {
             fabricApiKey: (buildProperties.secrets['fabricApiKey'] | buildProperties.env['FABRIC_API_KEY']).string
         ]
 
-        resValueProperty 'app_name', (buildProperties.application['applicationName'] | "Squanchy")
+        resValueString 'app_name', (buildProperties.application['applicationName'] | "Squanchy")
 
-        resValueProperty 'api_value_twitter_api_key', (buildProperties.secrets['twitterApiKey'] | buildProperties.env['TWITTER_API_KEY'])
-        resValueProperty 'api_value_twitter_secret', (buildProperties.secrets['twitterSecret'] | buildProperties.env['TWITTER_SECRET'])
+        resValueString 'api_value_twitter_api_key', (buildProperties.secrets['twitterApiKey'] | buildProperties.env['TWITTER_API_KEY'])
+        resValueString 'api_value_twitter_secret', (buildProperties.secrets['twitterSecret'] | buildProperties.env['TWITTER_SECRET'])
 
-        resValueProperty 'social_query', (buildProperties.application['socialQuery'] | "#AndroidDev")
-        resValueProperty 'deeplink_scheme', (buildProperties.application['deeplinkScheme'] | "squanchy")
+        resValueString 'social_query', (buildProperties.application['socialQuery'] | "#AndroidDev")
+        resValueString 'deeplink_scheme', (buildProperties.application['deeplinkScheme'] | "squanchy")
+    }
+
+    signingConfigs.all { signingConfig ->
+        signingConfig.ext.from = { buildProperties ->
+            signingConfig.storeFile teamPropsFile(buildProperties['storeFile'].string)
+            signingConfig.storePassword buildProperties['storePassword'].string
+            signingConfig.keyAlias buildProperties['keyAlias'].string
+            signingConfig.keyPassword buildProperties['keyPassword'].string
+        }
     }
 
     if (isNotRunningOnCI()) {
         signingConfigs {
-            config {
-                signingConfigProperties buildProperties.releaseSigningConfig
-            }
+            release.from buildProperties.releaseSigningConfig
         }
 
         buildTypes {
@@ -81,7 +92,7 @@ android {
                 minifyEnabled true
                 shrinkResources true
                 proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-                signingConfig signingConfigs.config
+                signingConfig signingConfigs.release
             }
         }
     }
