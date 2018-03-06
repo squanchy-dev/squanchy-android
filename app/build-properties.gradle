@@ -1,0 +1,17 @@
+apply plugin: 'com.novoda.build-properties'
+
+buildProperties {
+    application.using teamPropsFile('application.properties')
+    secrets.using teamPropsFile('secrets.properties')
+    debugSigningConfig.using teamPropsFile('debugSigningConfig.properties')
+    releaseSigningConfig.using teamPropsFile('releaseSigningConfig.properties')
+    env.using System.getenv()
+}
+
+project.ext {
+    applicationProps = buildProperties.application
+    secretsProps = buildProperties.secrets
+    debugSigningConfig = buildProperties.debugSigningConfig
+    releaseSigningConfig = buildProperties.releaseSigningConfig
+    envVars = buildProperties.env
+}
