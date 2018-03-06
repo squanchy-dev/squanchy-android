@@ -21,12 +21,6 @@ apply plugin: 'kotlin-kapt'
 
 apply from: 'build-properties.gradle'
 
-def applicationProps = buildProperties.application
-def secretsProps = buildProperties.secrets
-def debugSigningConfig = buildProperties.debugSigningConfig
-def releaseSigningConfig = buildProperties.releaseSigningConfig
-def envVars = buildProperties.env
-
 android {
     compileSdkVersion Integer.parseInt(project.COMPILE_SDK_VERSION)
 

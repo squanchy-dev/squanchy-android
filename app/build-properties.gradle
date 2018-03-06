@@ -7,3 +7,11 @@ buildProperties {
     releaseSigningConfig.using teamPropsFile('releaseSigningConfig.properties')
     env.using System.getenv()
 }
+
+project.ext {
+    applicationProps = buildProperties.application
+    secretsProps = buildProperties.secrets
+    debugSigningConfig = buildProperties.debugSigningConfig
+    releaseSigningConfig = buildProperties.releaseSigningConfig
+    envVars = buildProperties.env
+}
