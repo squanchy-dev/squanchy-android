@@ -47,5 +47,5 @@ captures/
 
 app/google-services.json
 team-props/*.properties
-team-props/*.keystore
+team-props/signing/*.keystore
 team-props/play-store-keys.json

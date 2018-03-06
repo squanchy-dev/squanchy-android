@@ -1,4 +1,4 @@
 keyAlias=
 keyPassword=
-storeFile=keystore.keystore
+storeFile=signing/release.keystore
 storePassword=
