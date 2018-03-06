@@ -9,7 +9,6 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.BiFunction
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.view_page_favorites.view.*
 import net.squanchy.R
 import net.squanchy.analytics.Analytics
@@ -55,11 +54,10 @@ class FavoritesPageView @JvmOverloads constructor(
             Observable.combineLatest(
                 scheduleService.schedule(onlyFavorites = true),
                 scheduleService.currentUserIsSignedIn(),
-                BiFunction<Schedule, Boolean, LoadScheduleResult> { schedule, signedIn -> LoadScheduleResult(schedule, signedIn) }
+                BiFunction<Schedule, Boolean, LoadScheduleResult>(::LoadScheduleResult)
             )
-                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { handleLoadSchedule(it) }
+                .subscribe(::handleLoadSchedule)
         )
     }
 
@@ -88,6 +86,7 @@ class FavoritesPageView @JvmOverloads constructor(
         favoritesListView.updateWith(schedule, ::showEventDetails)
         favoritesListView.visibility = View.VISIBLE
         emptyViewSignedIn.visibility = View.GONE
+        emptyViewSignedOut.visibility = View.GONE
     }
 
     private fun showEventDetails(event: Event) {

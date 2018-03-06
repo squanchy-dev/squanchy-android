@@ -12,7 +12,6 @@ import android.support.transition.TransitionManager
 import android.support.v7.app.AppCompatActivity
 import android.util.TypedValue
 import android.view.View
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_home.*
 import net.squanchy.R
 import net.squanchy.analytics.Analytics
@@ -40,7 +39,6 @@ class HomeActivity : AppCompatActivity() {
                 pageContainer.findViewById<View>(R.id.venueContentRoot) as Loadable
         )
     }
-    private val subscriptions = CompositeDisposable()
 
     private var pageFadeDurationMillis: Int = 0
 
@@ -69,6 +67,14 @@ class HomeActivity : AppCompatActivity() {
         super.onNewIntent(intent)
 
         selectPageFrom(intent, null)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_SIGN_IN_MAY_GOD_HAVE_MERCY_OF_OUR_SOULS) {
+            startLoading()
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
+        }
     }
 
     private fun selectPageFrom(intent: Intent, savedState: Bundle?) {
@@ -167,7 +173,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     fun requestSignIn() {
-        disposeAllSubscriptions()
+        stopLoading()
         navigator.toSignInForResult(REQUEST_SIGN_IN_MAY_GOD_HAVE_MERCY_OF_OUR_SOULS)
     }
 
@@ -176,9 +182,11 @@ class HomeActivity : AppCompatActivity() {
 
         selectInitialPage(currentSection)
 
-        for (loadable in loadables) {
-            loadable.startLoading()
-        }
+        startLoading()
+    }
+
+    private fun startLoading() {
+        loadables.forEach { it.startLoading() }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -190,15 +198,11 @@ class HomeActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
 
-        disposeAllSubscriptions()
+        stopLoading()
     }
 
-    private fun disposeAllSubscriptions() {
-        subscriptions.clear()
-
-        for (loadable in loadables) {
-            loadable.stopLoading()
-        }
+    private fun stopLoading() {
+        loadables.forEach { it.stopLoading() }
     }
 
     companion object {
