@@ -13,26 +13,13 @@ plugins {
 
 apply plugin: 'com.android.application'
 apply plugin: 'com.github.triplet.play'
-apply plugin: 'com.novoda.build-properties'
 apply plugin: 'com.google.firebase.firebase-perf'
 apply plugin: 'io.fabric'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
-buildProperties {
-    application {
-        file teamPropsFile('application.properties')
-    }
-
-    secrets {
-        file teamPropsFile('secrets.properties')
-    }
-
-    releaseSigningConfig {
-        file teamPropsFile('releaseSigningConfig.properties')
-    }
-}
+apply from: 'build-properties.gradle'
 
 android {
     compileSdkVersion Integer.parseInt(project.COMPILE_SDK_VERSION)
@@ -43,7 +30,7 @@ android {
     }
 
     defaultConfig {
-        applicationId((buildProperties.application['applicationId'] | buildProperties.env['APPLICATION_ID']).string)
+        applicationId(applicationProps['applicationId'].or(envVars['APPLICATION_ID']).string)
 
         minSdkVersion Integer.parseInt(project.MIN_SDK_VERSION)
         targetSdkVersion Integer.parseInt(project.TARGET_SDK_VERSION)
@@ -54,23 +41,31 @@ android {
         versionName project.VERSION_NAME
 
         manifestPlaceholders += [
-            fabricApiKey: (buildProperties.secrets['fabricApiKey'] | buildProperties.env['FABRIC_API_KEY']).string
+            fabricApiKey: secretsProps['fabricApiKey'].or(envVars['FABRIC_API_KEY']).string
         ]
 
-        resValueProperty 'app_name', (buildProperties.application['applicationName'] | "Squanchy")
+        resValueString 'app_name', applicationProps['applicationName'].or("Squanchy")
 
-        resValueProperty 'api_value_twitter_api_key', (buildProperties.secrets['twitterApiKey'] | buildProperties.env['TWITTER_API_KEY'])
-        resValueProperty 'api_value_twitter_secret', (buildProperties.secrets['twitterSecret'] | buildProperties.env['TWITTER_SECRET'])
+        resValueString 'api_value_twitter_api_key', secretsProps['twitterApiKey'].or(envVars['TWITTER_API_KEY'])
+        resValueString 'api_value_twitter_secret', secretsProps['twitterSecret'].or(envVars['TWITTER_SECRET'])
 
-        resValueProperty 'social_query', (buildProperties.application['socialQuery'] | "#AndroidDev")
-        resValueProperty 'deeplink_scheme', (buildProperties.application['deeplinkScheme'] | "squanchy")
+        resValueString 'social_query', applicationProps['socialQuery'].or("#AndroidDev")
+        resValueString 'deeplink_scheme', applicationProps['deeplinkScheme'].or("squanchy")
+    }
+
+    signingConfigs.all { signingConfig ->
+        signingConfig.ext.from = { buildProperties ->
+            signingConfig.storeFile teamPropsFile(buildProperties['storeFile'].string)
+            signingConfig.storePassword buildProperties['storePassword'].string
+            signingConfig.keyAlias buildProperties['keyAlias'].string
+            signingConfig.keyPassword buildProperties['keyPassword'].string
+        }
     }
 
     if (isNotRunningOnCI()) {
         signingConfigs {
-            config {
-                signingConfigProperties buildProperties.releaseSigningConfig
-            }
+            debug.from debugSigningConfig
+            release.from releaseSigningConfig
         }
 
         buildTypes {
@@ -81,7 +76,7 @@ android {
                 minifyEnabled true
                 shrinkResources true
                 proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-                signingConfig signingConfigs.config
+                signingConfig signingConfigs.release
             }
         }
     }
