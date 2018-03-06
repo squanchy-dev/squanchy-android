@@ -43,9 +43,10 @@ local.properties
 *.DS_Store
 
 # Heap dump captures
-captures/
+/captures/
 
-app/google-services.json
-team-props/*.properties
-team-props/signing/*.keystore
-team-props/play-store-keys.json
+/app/google-services.json
+/team-props/*.properties
+/team-props/signing/*.keystore
+/team-props/play-store-keys.json
+!/team-props/debugSigningConfig.properties
