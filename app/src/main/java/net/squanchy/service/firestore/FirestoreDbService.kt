@@ -9,6 +9,7 @@ import io.reactivex.Observable
 import net.squanchy.service.firestore.model.conferenceinfo.FirestoreConferenceInfo
 import net.squanchy.service.firestore.model.conferenceinfo.FirestoreVenue
 import net.squanchy.service.firestore.model.schedule.FirestoreEvent
+import net.squanchy.service.firestore.model.schedule.FirestoreFavorite
 import net.squanchy.service.firestore.model.schedule.FirestoreSchedulePage
 import net.squanchy.service.firestore.model.schedule.FirestoreSpeaker
 import net.squanchy.service.firestore.model.schedule.FirestoreTrack
@@ -178,19 +179,22 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
         }
     }
 
-    private val addToFirestoreAction: (CollectionReference.(String) -> Task<DocumentReference>) = { eventId: String -> add(eventId) }
+    private val addToFirestoreAction: (DocumentReference.(String) -> Task<*>) = { eventId: String ->
+        collection(FAVORITES).document(eventId).set(FirestoreFavorite().apply { id = eventId })
+    }
 
-    private val deleteFromFirestoreAction: (CollectionReference.(String) -> Task<Void>) = { eventId -> document(eventId).delete() }
+    private val deleteFromFirestoreAction: (DocumentReference.(String) -> Task<*>) = { eventId ->
+        collection(FAVORITES).document(eventId).delete()
+    }
 
     fun addFavorite(eventId: String, userId: String): Completable = updateFavorite(eventId, userId, addToFirestoreAction)
 
     fun removeFavorite(eventId: String, userId: String): Completable = updateFavorite(eventId, userId, deleteFromFirestoreAction)
 
-    private fun updateFavorite(eventId: String, userId: String, action: CollectionReference.(String) -> Task<*>): Completable {
+    private fun updateFavorite(eventId: String, userId: String, action: DocumentReference.(String) -> Task<*>): Completable {
         return Completable.create { emitter ->
             db.collection(USER_DATA)
                 .document(userId)
-                .collection(FAVORITES)
                 .action(eventId)
                 .addOnFailureListener { exception ->
                     if (emitter.isDisposed.not()) {
