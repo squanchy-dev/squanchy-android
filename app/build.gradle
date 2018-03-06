@@ -165,7 +165,7 @@ dependencies {
     kapt libraries.app.daggerCompiler
     implementation libraries.app.dagger
 
-    testImplementation libraries.test.fest
+    testImplementation libraries.test.truth
     testImplementation libraries.test.jodaTime
     testImplementation libraries.test.jUnit4
     testImplementation libraries.test.mockito

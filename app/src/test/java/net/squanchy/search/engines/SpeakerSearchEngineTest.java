@@ -1,11 +1,10 @@
 package net.squanchy.search.engines;
 
 import net.squanchy.speaker.domain.view.Speaker;
-
 import org.junit.Test;
 
+import static com.google.common.truth.Truth.assertThat;
 import static net.squanchy.speaker.domain.view.SpeakerFixtures.aSpeaker;
-import static org.fest.assertions.api.Assertions.assertThat;
 
 public class SpeakerSearchEngineTest {
 
