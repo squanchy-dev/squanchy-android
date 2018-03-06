@@ -73,7 +73,7 @@ internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<Recycl
                 0,
                 position,
                 schedule.pages,
-                { _ -> throw IndexOutOfBoundsException() },
+                { throw IndexOutOfBoundsException() },
                 { schedulePage, positionInPage -> schedulePage.events[positionInPage] }
             )
             if (listener != null) {
@@ -84,7 +84,7 @@ internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<Recycl
                 0,
                 position,
                 schedule.pages,
-                { schedule.pages[position].date },
+                { it.date },
                 { _, _ -> throw IndexOutOfBoundsException() }
             )
             holder.updateWith(formatHeader(date))
