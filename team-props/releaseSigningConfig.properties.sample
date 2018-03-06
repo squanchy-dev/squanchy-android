@@ -1,4 +1,7 @@
+# The path of the release keystore file (inside the team-props folder)
+storeFile=signing/release.keystore
+
+# The keystore password, alias and alias password to use for release builds
+storePassword=
 keyAlias=
 keyPassword=
-storeFile=keystore.keystore
-storePassword=

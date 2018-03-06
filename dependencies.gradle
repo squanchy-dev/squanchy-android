@@ -12,7 +12,7 @@ ext {
     ktLintVersion = '0.15.0'
 
     gradlePlugins = [
-        buildProperties: 'com.novoda:build-properties-plugin:1.2.1',
+        buildProperties: 'com.novoda:gradle-build-properties-plugin:0.3.9',
         fabric         : 'io.fabric.tools:gradle:1.25.1',
         kotlin         : "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
     ]
