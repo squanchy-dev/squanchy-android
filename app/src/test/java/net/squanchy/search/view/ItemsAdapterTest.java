@@ -1,14 +1,9 @@
 package net.squanchy.search.view;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.search.SearchResults;
 import net.squanchy.search.view.SearchAdapter.ViewTypeId;
 import net.squanchy.speaker.domain.view.Speaker;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
@@ -17,9 +12,13 @@ import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import static com.google.common.truth.Truth.assertThat;
 import static net.squanchy.schedule.domain.view.EventFixtures.anEvent;
 import static net.squanchy.speaker.domain.view.SpeakerFixtures.aSpeaker;
-import static org.fest.assertions.api.Assertions.assertThat;
 
 @RunWith(Enclosed.class)
 public class ItemsAdapterTest {
@@ -32,7 +31,7 @@ public class ItemsAdapterTest {
 
             int totalItemsCount = itemsAdapter.totalItemsCount();
 
-            assertThat(totalItemsCount).isZero();
+            assertThat(totalItemsCount).isEqualTo(0);
         }
 
         @Test

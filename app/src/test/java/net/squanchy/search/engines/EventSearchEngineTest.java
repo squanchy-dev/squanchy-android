@@ -1,11 +1,10 @@
 package net.squanchy.search.engines;
 
 import net.squanchy.schedule.domain.view.Event;
-
 import org.junit.Test;
 
+import static com.google.common.truth.Truth.assertThat;
 import static net.squanchy.schedule.domain.view.EventFixtures.anEvent;
-import static org.fest.assertions.api.Assertions.assertThat;
 
 public class EventSearchEngineTest {
 
