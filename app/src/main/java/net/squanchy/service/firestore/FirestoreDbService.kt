@@ -1,7 +1,6 @@
 package net.squanchy.service.firestore
 
 import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import io.reactivex.Completable

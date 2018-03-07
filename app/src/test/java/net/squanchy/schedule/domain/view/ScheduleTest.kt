@@ -1,6 +1,6 @@
 package net.squanchy.schedule.domain.view
 
-import org.fest.assertions.api.Assertions.assertThat
+import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 
 class ScheduleTest {
@@ -11,7 +11,7 @@ class ScheduleTest {
 
         val empty = schedule.isEmpty
 
-        assertThat(empty).isTrue
+        assertThat(empty).isTrue()
     }
 
     @Test
@@ -20,7 +20,7 @@ class ScheduleTest {
 
         val empty = schedule.isEmpty
 
-        assertThat(empty).isTrue
+        assertThat(empty).isTrue()
     }
 
     @Test
@@ -29,6 +29,6 @@ class ScheduleTest {
 
         val empty = schedule.isEmpty
 
-        assertThat(empty).isFalse
+        assertThat(empty).isFalse()
     }
 }

@@ -1,12 +1,12 @@
 package net.squanchy.search.view
 
+import com.google.common.truth.Truth.assertThat
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.anEvent
 import net.squanchy.search.SearchResults
 import net.squanchy.search.view.SearchAdapter.ViewTypeId
 import net.squanchy.speaker.domain.view.Speaker
 import net.squanchy.speaker.domain.view.aSpeaker
-import org.fest.assertions.api.Assertions.assertThat
 import org.junit.Rule
 import org.junit.Test
 import org.junit.experimental.runners.Enclosed
@@ -25,7 +25,7 @@ class ItemsAdapterTest {
 
             val totalItemsCount = itemsAdapter.totalItemsCount()
 
-            assertThat(totalItemsCount).isZero
+            assertThat(totalItemsCount).isEqualTo(0)
         }
 
         @Test
