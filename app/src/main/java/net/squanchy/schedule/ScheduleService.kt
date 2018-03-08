@@ -60,12 +60,12 @@ class FirestoreScheduleService(
             this,
             authService.ifUserSignedInThenObservableFrom(dbService::favorites),
             BiFunction { schedule: List<FirestoreSchedulePage>, favorites: List<FirestoreFavorite> ->
-                schedule.filterPagesEvents { favorites.includes(it) }
+                schedule.filterPagesEvents { favorites.includes(it.id) }
             })
     }
 
-    private fun List<FirestoreFavorite>.includes(event: FirestoreEvent) =
-        mapNotNull { it.id }.contains(event.id)
+    private fun List<FirestoreFavorite>.includes(eventId: String) =
+        mapNotNull { it.id }.contains(eventId)
 
     private fun Observable<List<FirestoreSchedulePage>>.filterByTracks(selectedTracks: Observable<Set<Track>>) =
         Observable.combineLatest(
