@@ -34,12 +34,6 @@ class FirestoreEventRepository(
 
     private fun FirestoreVenue.extractTimeZone() = DateTimeZone.forID(timezone)
 
-    private fun combineIntoEvents(events: List<FirestoreEvent>, timeZone: DateTimeZone, favorites: List<FirestoreFavorite>): List<Event> =
-        events.map { combineIntoEvent(it, timeZone, favorites.map { it.id }) }
-
-    private fun combineIntoEvent(event: FirestoreEvent, timeZone: DateTimeZone, favoriteIds: List<String>): Event =
-        event.toEvent(checksum, timeZone, favoriteIds.contains(event.id))
-
     override fun events(userId: String): Observable<List<Event>> {
         val sessionsObservable = firestoreDbService.events()
         val timeZoneObservable = firestoreDbService.venueInfo().map { it.extractTimeZone() }
@@ -52,6 +46,12 @@ class FirestoreEventRepository(
             Function3(::combineIntoEvents)
         )
     }
+
+    private fun combineIntoEvents(events: List<FirestoreEvent>, timeZone: DateTimeZone, favorites: List<FirestoreFavorite>): List<Event> =
+        events.map { combineIntoEvent(it, timeZone, favorites.map { it.id }) }
+
+    private fun combineIntoEvent(event: FirestoreEvent, timeZone: DateTimeZone, favoriteIds: List<String>): Event =
+        event.toEvent(checksum, timeZone, favoriteIds.contains(event.id))
 
     override fun addFavorite(eventId: String, userId: String): Completable = firestoreDbService.addFavorite(eventId, userId)
 
