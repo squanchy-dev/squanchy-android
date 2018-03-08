@@ -185,8 +185,8 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
                         subscriber.onError(exception)
                         return@addSnapshotListener
                     }
-                    subscriber.onNext(snapshot.documents.map { snapshot ->
-                        snapshot.toObject(FirestoreFavorite::class.java)
+                    subscriber.onNext(snapshot.documents.map { favoriteSnapshot ->
+                        favoriteSnapshot.toObject(FirestoreFavorite::class.java)
                     })
                 }
 
@@ -194,18 +194,18 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
         }
     }
 
+    fun addFavorite(eventId: String, userId: String): Completable = updateFavorite(eventId, userId, addToFirestoreAction)
+
     private val addToFirestoreAction: (DocumentReference.(String) -> Task<*>) = { eventId: String ->
         val firestoreFavorite = FirestoreFavorite().apply { id = eventId }
         collection(FAVORITES).document(eventId).set(firestoreFavorite)
     }
 
+    fun removeFavorite(eventId: String, userId: String): Completable = updateFavorite(eventId, userId, deleteFromFirestoreAction)
+
     private val deleteFromFirestoreAction: (DocumentReference.(String) -> Task<*>) = { eventId ->
         collection(FAVORITES).document(eventId).delete()
     }
-
-    fun addFavorite(eventId: String, userId: String): Completable = updateFavorite(eventId, userId, addToFirestoreAction)
-
-    fun removeFavorite(eventId: String, userId: String): Completable = updateFavorite(eventId, userId, deleteFromFirestoreAction)
 
     private fun updateFavorite(eventId: String, userId: String, action: DocumentReference.(String) -> Task<*>): Completable {
         return Completable.create { emitter ->
