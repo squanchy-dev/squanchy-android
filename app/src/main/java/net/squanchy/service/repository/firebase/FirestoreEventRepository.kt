@@ -22,7 +22,7 @@ class FirestoreEventRepository(
     override fun event(eventId: String, userId: String): Observable<Event> {
         val eventObservable = firestoreDbService.event(eventId)
         val timeZoneObservable = firestoreDbService.venueInfo().map { it.extractTimeZone() }
-        val favoritesObservable = firestoreDbService.favorites(userId)
+        val favoritesObservable = firestoreDbService.favorites(userId).map { it.map { it.id } }
 
         return Observable.combineLatest(
             eventObservable,
@@ -34,14 +34,11 @@ class FirestoreEventRepository(
 
     private fun FirestoreVenue.extractTimeZone() = DateTimeZone.forID(timezone)
 
-    private fun combineIntoEvent(event: FirestoreEvent, timeZone: DateTimeZone, favorites: List<FirestoreFavorite>): Event =
-        event.toEvent(checksum, timeZone, favorites.includes(event))
-
     private fun combineIntoEvents(events: List<FirestoreEvent>, timeZone: DateTimeZone, favorites: List<FirestoreFavorite>): List<Event> =
-        events.map { combineIntoEvent(it, timeZone, favorites) }
+        events.map { combineIntoEvent(it, timeZone, favorites.map { it.id }) }
 
-    private fun List<FirestoreFavorite>.includes(event: FirestoreEvent) =
-        mapNotNull { it.id }.contains(event.id)
+    private fun combineIntoEvent(event: FirestoreEvent, timeZone: DateTimeZone, favoriteIds: List<String>): Event =
+        event.toEvent(checksum, timeZone, favoriteIds.contains(event.id))
 
     override fun events(userId: String): Observable<List<Event>> {
         val sessionsObservable = firestoreDbService.events()
