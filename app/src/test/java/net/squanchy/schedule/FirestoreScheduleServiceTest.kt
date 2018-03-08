@@ -186,7 +186,7 @@ class FirestoreScheduleServiceTest {
     }
 
     @Test
-    fun `should exclude events that are not favorites when filtering by only favourites`() {
+    fun `should exclude events that are not favorites when filtering by only favorites`() {
         val schedulePage = aFirestoreSchedulePage(
             events = listOf(
                 aFirestoreEvent(id = "A"),
