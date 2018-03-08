@@ -1,8 +1,8 @@
 package net.squanchy.search.engines
 
+import com.google.common.truth.Truth.assertThat
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.anEvent
-import org.fest.assertions.api.Assertions.assertThat
 import org.junit.Test
 
 class EventSearchEngineTest {
@@ -15,7 +15,7 @@ class EventSearchEngineTest {
 
         val matches = searchEngine.matches(ANY_EVENT, query)
 
-        assertThat(matches).isFalse
+        assertThat(matches).isFalse()
     }
 
     @Test
@@ -24,7 +24,7 @@ class EventSearchEngineTest {
 
         val matches = searchEngine.matches(MATCHING_EVENT, query)
 
-        assertThat(matches).isFalse
+        assertThat(matches).isFalse()
     }
 
     @Test
@@ -33,7 +33,7 @@ class EventSearchEngineTest {
 
         val matches = searchEngine.matches(MATCHING_EVENT, query)
 
-        assertThat(matches).isTrue
+        assertThat(matches).isTrue()
     }
 
     @Test
@@ -42,7 +42,7 @@ class EventSearchEngineTest {
 
         val matches = searchEngine.matches(event, "anything")
 
-        assertThat(matches).isFalse
+        assertThat(matches).isFalse()
     }
 
     @Test
@@ -51,7 +51,7 @@ class EventSearchEngineTest {
 
         val matches = searchEngine.matches(event, "anything")
 
-        assertThat(matches).isFalse
+        assertThat(matches).isFalse()
     }
 
     @Test
@@ -60,7 +60,7 @@ class EventSearchEngineTest {
 
         val matches = searchEngine.matches(event, "anything")
 
-        assertThat(matches).isFalse
+        assertThat(matches).isFalse()
     }
 
     @Test
@@ -69,7 +69,7 @@ class EventSearchEngineTest {
 
         val matches = searchEngine.matches(event, "anything")
 
-        assertThat(matches).isFalse
+        assertThat(matches).isFalse()
     }
 
     @Test
@@ -78,7 +78,7 @@ class EventSearchEngineTest {
 
         val matches = searchEngine.matches(event, "anything")
 
-        assertThat(matches).isFalse
+        assertThat(matches).isFalse()
     }
 
     @Test
@@ -86,7 +86,7 @@ class EventSearchEngineTest {
 
         val matches = searchEngine.matches(MATCHING_EVENT, "Banane")
 
-        assertThat(matches).isTrue
+        assertThat(matches).isTrue()
     }
 
     @Test
@@ -94,7 +94,7 @@ class EventSearchEngineTest {
 
         val matches = searchEngine.matches(MATCHING_EVENT, "banAne")
 
-        assertThat(matches).isTrue
+        assertThat(matches).isTrue()
     }
 
     @Test
@@ -102,7 +102,7 @@ class EventSearchEngineTest {
 
         val matches = searchEngine.matches(MATCHING_EVENT, "Banane")
 
-        assertThat(matches).isTrue
+        assertThat(matches).isTrue()
     }
 
     @Test
@@ -110,7 +110,7 @@ class EventSearchEngineTest {
 
         val matches = searchEngine.matches(MATCHING_EVENT, "BanÀne")
 
-        assertThat(matches).isTrue
+        assertThat(matches).isTrue()
     }
 
     companion object {

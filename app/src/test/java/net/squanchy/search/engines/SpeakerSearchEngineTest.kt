@@ -1,7 +1,7 @@
 package net.squanchy.search.engines
 
+import com.google.common.truth.Truth.assertThat
 import net.squanchy.speaker.domain.view.aSpeaker
-import org.fest.assertions.api.Assertions.assertThat
 import org.junit.Test
 
 class SpeakerSearchEngineTest {
@@ -14,7 +14,7 @@ class SpeakerSearchEngineTest {
 
         val matches = searchEngine.matches(ANY_SPEAKER, query)
 
-        assertThat(matches).isFalse
+        assertThat(matches).isFalse()
     }
 
     @Test
@@ -23,7 +23,7 @@ class SpeakerSearchEngineTest {
 
         val matches = searchEngine.matches(MATCHING_SPEAKER, query)
 
-        assertThat(matches).isFalse
+        assertThat(matches).isFalse()
     }
 
     @Test
@@ -32,7 +32,7 @@ class SpeakerSearchEngineTest {
 
         val matches = searchEngine.matches(MATCHING_SPEAKER, query)
 
-        assertThat(matches).isTrue
+        assertThat(matches).isTrue()
     }
 
     @Test
@@ -40,7 +40,7 @@ class SpeakerSearchEngineTest {
 
         val matches = searchEngine.matches(MATCHING_SPEAKER, "Banana Joe")
 
-        assertThat(matches).isTrue
+        assertThat(matches).isTrue()
     }
 
     @Test
@@ -48,7 +48,7 @@ class SpeakerSearchEngineTest {
 
         val matches = searchEngine.matches(MATCHING_SPEAKER, "anana J")
 
-        assertThat(matches).isTrue
+        assertThat(matches).isTrue()
     }
 
     @Test
@@ -56,7 +56,7 @@ class SpeakerSearchEngineTest {
 
         val matches = searchEngine.matches(MATCHING_SPEAKER, "anana J")
 
-        assertThat(matches).isTrue
+        assertThat(matches).isTrue()
     }
 
     @Test
@@ -64,7 +64,7 @@ class SpeakerSearchEngineTest {
 
         val matches = searchEngine.matches(MATCHING_SPEAKER, "anÀna J")
 
-        assertThat(matches).isTrue
+        assertThat(matches).isTrue()
     }
 
     companion object {

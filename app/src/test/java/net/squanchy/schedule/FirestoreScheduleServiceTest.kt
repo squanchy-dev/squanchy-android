@@ -16,6 +16,7 @@ import net.squanchy.service.firestore.aFirestoreEvent
 import net.squanchy.service.firestore.aFirestoreSchedulePage
 import net.squanchy.service.firestore.aFirestoreSpeaker
 import net.squanchy.service.firestore.aFirestoreTrack
+import net.squanchy.service.firestore.model.schedule.FirestoreFavorite
 import net.squanchy.support.lang.Checksum
 import net.squanchy.support.lang.Optional
 import org.joda.time.LocalDate
@@ -169,7 +170,8 @@ class FirestoreScheduleServiceTest {
         `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
         `when`(checksum.getChecksumOf("1")).thenReturn(1)
         `when`(checksum.getChecksumOf("2")).thenReturn(2)
-        // TODO mark one of the two firestore events above as favorite
+        `when`(authService.ifUserSignedInThenObservableFrom(dbService::favorites))
+            .thenReturn(Observable.just(listOf(FirestoreFavorite().apply { id = "1" })))
 
         scheduleService.schedule(onlyFavorites = false, observeScheduler = Schedulers.trampoline())
             .test()
@@ -183,7 +185,33 @@ class FirestoreScheduleServiceTest {
             )
     }
 
-    // TODO test events are filtered out when onyFavorites and they're not favorited
+    @Test
+    fun `should exclude events that are not favorites when filtering by only favorites`() {
+        val schedulePage = aFirestoreSchedulePage(
+            events = listOf(
+                aFirestoreEvent(id = "A"),
+                aFirestoreEvent(id = "B"),
+                aFirestoreEvent(id = "C")
+            )
+        )
+        `when`(checksum.getChecksumOf("A")).thenReturn(0)
+        `when`(dbService.scheduleView()).thenReturn(Observable.just(listOf(schedulePage)))
+        `when`(authService.ifUserSignedInThenObservableFrom(dbService::favorites))
+            .thenReturn(Observable.just(listOf(FirestoreFavorite().apply { id = "A" })))
+
+        val allowedTracks = setOf(aTrack(id = "a track id"))
+        `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
+
+        scheduleService.schedule(onlyFavorites = true, observeScheduler = Schedulers.trampoline())
+            .test()
+            .assertValue(
+                aSchedule(listOf(
+                    aSchedulePage(events = listOf(
+                        anEvent(id = "A", numericId = 0)
+                    ))
+                ))
+            )
+    }
 
     @Test
     fun `should not exclude events with no track from the schedule when filtering has at least a track`() {

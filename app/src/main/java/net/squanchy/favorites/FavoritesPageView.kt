@@ -74,13 +74,14 @@ class FavoritesPageView @JvmOverloads constructor(
 
     private fun handleLoadSchedule(result: LoadScheduleResult) {
         when {
-            hasFavorites(result.schedule) -> showSchedule(result.schedule)
+            result.schedule.hasFavorites -> showSchedule(result.schedule)
             result.signedIn -> promptToFavorite()
             else -> promptToSign()
         }
     }
 
-    private fun hasFavorites(schedule: Schedule) = !schedule.isEmpty
+    private val Schedule.hasFavorites
+        get() = !isEmpty
 
     private fun showSchedule(schedule: Schedule) {
         favoritesListView.updateWith(schedule, ::showEventDetails)

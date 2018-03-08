@@ -56,3 +56,7 @@ class FirestoreSpeaker {
     var photoUrl: String? = null
     var twitterUsername: String? = null
 }
+
+class FirestoreFavorite {
+    lateinit var id: String
+}

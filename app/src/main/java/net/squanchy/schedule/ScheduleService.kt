@@ -11,6 +11,7 @@ import net.squanchy.schedule.tracksfilter.TracksFilter
 import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.firestore.FirestoreDbService
 import net.squanchy.service.firestore.model.schedule.FirestoreEvent
+import net.squanchy.service.firestore.model.schedule.FirestoreFavorite
 import net.squanchy.service.firestore.model.schedule.FirestoreSchedulePage
 import net.squanchy.service.firestore.toEvent
 import net.squanchy.support.lang.Checksum
@@ -54,10 +55,17 @@ class FirestoreScheduleService(
             else -> this
         }
 
-    private fun Observable<List<FirestoreSchedulePage>>.removeNonFavorites(): Observable<List<FirestoreSchedulePage>> =
-        map { pages: List<FirestoreSchedulePage> -> pages.filterPagesEvents { it.isFavorite() } }
+    private fun Observable<List<FirestoreSchedulePage>>.removeNonFavorites(): Observable<List<FirestoreSchedulePage>> {
+        return Observable.combineLatest(
+            this,
+            authService.ifUserSignedInThenObservableFrom(dbService::favorites),
+            BiFunction { schedule: List<FirestoreSchedulePage>, favorites: List<FirestoreFavorite> ->
+                schedule.filterPagesEvents { favorites.includes(it.id) }
+            })
+    }
 
-    private fun FirestoreEvent.isFavorite() = false // TODO add actual favourites filtering
+    private fun List<FirestoreFavorite>.includes(eventId: String) =
+        mapNotNull { it.id }.contains(eventId)
 
     private fun Observable<List<FirestoreSchedulePage>>.filterByTracks(selectedTracks: Observable<Set<Track>>) =
         Observable.combineLatest(

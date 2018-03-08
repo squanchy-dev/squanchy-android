@@ -11,7 +11,7 @@ private const val CURRENT_SLOT_THRESHOLD = .6f
 data class Schedule(val pages: List<SchedulePage>, val timeZone: DateTimeZone) {
 
     val isEmpty: Boolean
-        get() = pages.isEmpty()
+        get() = pages.all { it.events.isEmpty() }
 
     companion object {
 
