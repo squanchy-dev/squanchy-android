@@ -10,22 +10,15 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
 import io.reactivex.schedulers.Schedulers
-import net.squanchy.service.firebase.model.FirebaseDays
 import net.squanchy.service.firebase.model.FirebaseEvent
 import net.squanchy.service.firebase.model.FirebaseEvents
 import net.squanchy.service.firebase.model.FirebaseFavorites
-import net.squanchy.service.firebase.model.FirebasePlaces
 import net.squanchy.service.firebase.model.FirebaseSpeakers
 import net.squanchy.service.firebase.model.FirebaseTrack
 import net.squanchy.service.firebase.model.FirebaseTracks
 import net.squanchy.service.firebase.model.FirebaseUserData
-import net.squanchy.service.firebase.model.FirebaseVenue
 
 class FirebaseDbService(private val database: DatabaseReference) {
-
-    fun days(): Observable<FirebaseDays> {
-        return observeChild(daysNode(), FirebaseDays::class.java)
-    }
 
     fun speakers(): Observable<FirebaseSpeakers> {
         return observeChild(speakersNode(), FirebaseSpeakers::class.java)
@@ -37,10 +30,6 @@ class FirebaseDbService(private val database: DatabaseReference) {
 
     fun event(eventId: String): Observable<FirebaseEvent> {
         return observeChild(eventByIdNode(eventId), FirebaseEvent::class.java)
-    }
-
-    fun places(): Observable<FirebasePlaces> {
-        return observeChild(placesNode(), FirebasePlaces::class.java)
     }
 
     fun tracks(): Observable<FirebaseTracks> {
@@ -59,10 +48,6 @@ class FirebaseDbService(private val database: DatabaseReference) {
 
     private fun userData(userId: String): Observable<FirebaseUserData> {
         return observeOptionalChild(userDataNode(userId), FirebaseUserData::class.java, lazy { FirebaseUserData() })
-    }
-
-    fun venueInfo(): Observable<FirebaseVenue> {
-        return observeChild(venueInfoNode(), FirebaseVenue::class.java)
     }
 
     private fun <T> observeChild(path: String, clazz: Class<T>): Observable<T> {

@@ -13,7 +13,6 @@ import net.squanchy.service.firebase.FirebaseDbService
 import net.squanchy.service.firebase.injection.FirebaseModule
 import net.squanchy.service.firestore.FirestoreDbService
 import net.squanchy.service.firestore.injection.FirestoreModule
-import net.squanchy.service.repository.DaysRepository
 import net.squanchy.service.repository.EventRepository
 import net.squanchy.service.repository.SpeakerRepository
 import net.squanchy.service.repository.TracksRepository
@@ -59,8 +58,6 @@ interface ApplicationComponent {
     fun eventRepository(): EventRepository
 
     fun speakerRepository(): SpeakerRepository
-
-    fun daysRepository(): DaysRepository
 
     fun tracksRepository(): TracksRepository
 
