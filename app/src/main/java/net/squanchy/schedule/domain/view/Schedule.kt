@@ -13,11 +13,6 @@ data class Schedule(val pages: List<SchedulePage>, val timeZone: DateTimeZone) {
     val isEmpty: Boolean
         get() = pages.all { it.events.isEmpty() }
 
-    companion object {
-
-        fun create(pages: List<SchedulePage>, timezone: DateTimeZone) = Schedule(pages, timezone)
-    }
-
     fun findTodayIndexOrDefault(currentTime: CurrentTime): Int {
         val now = currentTime.currentDateTime().withZone(timeZone)
         return pages
