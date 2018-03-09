@@ -13,7 +13,7 @@ import net.squanchy.tweets.view.TweetUrlSpanFactory
 private const val MEDIA_TYPE_PHOTO = "photo"
 
 fun mapToViewModel(factory: TweetUrlSpanFactory, tweet: FirestoreTweet): TweetViewModel {
-    val user = User.create(tweet.user.name, tweet.user.screenName, tweet.user.profileImageUrl)
+    val user = User(name = tweet.user.name, screenName = tweet.user.screenName, photoUrl = tweet.user.profileImageUrl)
 
     val emojiIndices = findEmojiIndices(tweet.text)
     val displayTextRange = Range.from(tweet.displayTextRange, tweet.text.length, emojiIndices.size)
@@ -26,13 +26,13 @@ fun mapToViewModel(factory: TweetUrlSpanFactory, tweet: FirestoreTweet): TweetVi
     val displayableText = displayableTextFor(tweet.text, displayTextRange, unresolvedPhotoUrl)
 
     return TweetViewModel(
-            id = tweet.id.toLong(),
-            text = displayableText,
-            spannedText = factory.applySpansToTweet(displayableText, displayTextRange.start(), hashtags, mentions, urls),
-            user = user,
-            createdAt = tweet.createdAt,
-            photoUrl = photoUrlMaybeFrom(photoUrls),
-            linkInfo = TweetLinkInfo.create(tweet)
+        id = tweet.id.toLong(),
+        text = displayableText,
+        spannedText = factory.applySpansToTweet(displayableText, displayTextRange.start(), hashtags, mentions, urls),
+        user = user,
+        createdAt = tweet.createdAt,
+        photoUrl = photoUrlMaybeFrom(photoUrls),
+        linkInfo = TweetLinkInfo(tweet)
     )
 }
 

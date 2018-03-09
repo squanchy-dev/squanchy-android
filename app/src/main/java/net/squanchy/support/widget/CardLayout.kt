@@ -56,7 +56,7 @@ open class CardLayout @JvmOverloads constructor(
 
     private fun applyInsetsAndRadius(insetHorizontal: Int, insetTop: Int, insetBottom: Int, radius: Int) {
         super.setOutlineProvider(
-                NarrowerOutlineProvider(insetHorizontal, insetTop, insetBottom, radius)
+            NarrowerOutlineProvider(insetHorizontal, insetTop, insetBottom, radius)
         )
     }
 
@@ -77,11 +77,11 @@ open class CardLayout @JvmOverloads constructor(
 
         override fun getOutline(view: View, outline: Outline) {
             outline.setRoundRect(
-                    insetHorizontal,
-                    insetTop,
-                    view.width - insetHorizontal,
-                    view.height - insetBottom,
-                    radius.toFloat()
+                insetHorizontal,
+                insetTop,
+                view.width - insetHorizontal,
+                view.height - insetBottom,
+                radius.toFloat()
             )
         }
     }

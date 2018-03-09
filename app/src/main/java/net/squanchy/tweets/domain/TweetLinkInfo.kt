@@ -7,9 +7,4 @@ data class TweetLinkInfo(private val tweet: FirestoreTweet) {
         get() = tweet.id
     val screenName: String
         get() = tweet.user.screenName
-
-    companion object {
-
-        fun create(tweet: FirestoreTweet): TweetLinkInfo = TweetLinkInfo(tweet)
-    }
 }
