@@ -25,18 +25,18 @@ class HomeActivity : AppCompatActivity() {
 
     private val pageViews: Map<BottomNavigationSection, View> by lazy {
         mapOf(
-                BottomNavigationSection.SCHEDULE to pageContainer.findViewById<View>(R.id.schedule_content_root),
-                BottomNavigationSection.FAVORITES to pageContainer.findViewById<View>(R.id.favorites_content_root),
-                BottomNavigationSection.TWEETS to pageContainer.findViewById<View>(R.id.tweetsContentRoot),
-                BottomNavigationSection.VENUE_INFO to pageContainer.findViewById<View>(R.id.venueContentRoot)
+            BottomNavigationSection.SCHEDULE to pageContainer.findViewById<View>(R.id.schedule_content_root),
+            BottomNavigationSection.FAVORITES to pageContainer.findViewById<View>(R.id.favorites_content_root),
+            BottomNavigationSection.TWEETS to pageContainer.findViewById<View>(R.id.tweetsContentRoot),
+            BottomNavigationSection.VENUE_INFO to pageContainer.findViewById<View>(R.id.venueContentRoot)
         )
     }
     private val loadables: List<Loadable> by lazy {
         listOf(
-                pageContainer.findViewById<View>(R.id.schedule_content_root) as Loadable,
-                pageContainer.findViewById<View>(R.id.favorites_content_root) as Loadable,
-                pageContainer.findViewById<View>(R.id.tweetsContentRoot) as Loadable,
-                pageContainer.findViewById<View>(R.id.venueContentRoot) as Loadable
+            pageContainer.findViewById<View>(R.id.schedule_content_root) as Loadable,
+            pageContainer.findViewById<View>(R.id.favorites_content_root) as Loadable,
+            pageContainer.findViewById<View>(R.id.tweetsContentRoot) as Loadable,
+            pageContainer.findViewById<View>(R.id.venueContentRoot) as Loadable
         )
     }
 
@@ -116,8 +116,7 @@ class HomeActivity : AppCompatActivity() {
             return
         }
 
-        val transition = Fade()
-        transition.duration = pageFadeDurationMillis.toLong()
+        val transition = Fade().apply { duration = pageFadeDurationMillis.toLong() }
         TransitionManager.beginDelayedTransition(pageContainer, transition)
 
         swapPageTo(section)
@@ -156,15 +155,16 @@ class HomeActivity : AppCompatActivity() {
         val currentStatusBarColor = window.statusBarColor
 
         animateColor(
-                currentStatusBarColor,
-                color,
-                ValueAnimator.AnimatorUpdateListener { animation -> window.statusBarColor = animation.animatedValue as Int })
+            currentStatusBarColor,
+            color,
+            ValueAnimator.AnimatorUpdateListener { animation -> window.statusBarColor = animation.animatedValue as Int })
     }
 
     private fun animateColor(@ColorInt currentColor: Int, @ColorInt targetColor: Int, listener: ValueAnimator.AnimatorUpdateListener) {
-        val animator = ValueAnimator.ofArgb(currentColor, targetColor).setDuration(pageFadeDurationMillis.toLong())
-        animator.addUpdateListener(listener)
-        animator.start()
+        ValueAnimator.ofArgb(currentColor, targetColor).apply {
+            duration = pageFadeDurationMillis.toLong()
+            addUpdateListener(listener)
+        }.start()
     }
 
     private fun trackPageSelection(section: BottomNavigationSection) {
