@@ -41,6 +41,7 @@ class FavoritesSignedInEmptyLayout @JvmOverloads constructor(
 
     override fun setButtonImage(@DrawableRes resId: Int) = favoriteFab.setImageResource(resId)
 
+    //TODO do we still need this? Also why is it requiring Nougat?
     @RequiresApi(Build.VERSION_CODES.N)
     override fun showAchievement(message: String) = Snackbar.make(this, readAsHtml(message), Snackbar.LENGTH_LONG).show()
 

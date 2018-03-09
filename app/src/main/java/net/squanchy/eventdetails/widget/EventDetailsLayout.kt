@@ -23,6 +23,7 @@ import net.squanchy.schedule.domain.view.Place
 import net.squanchy.support.lang.Optional
 import org.joda.time.format.DateTimeFormat
 
+// TODO flatten this layout as a ConstraintLayout
 class EventDetailsLayout @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet?,
