@@ -59,7 +59,7 @@ class FirestoreScheduleService(
         return Observable.combineLatest(
             this,
             authService.ifUserSignedInThenObservableFrom(dbService::favorites),
-            BiFunction { schedule: List<FirestoreSchedulePage>, favorites: List<FirestoreFavorite> ->
+            BiFunction { schedule, favorites ->
                 schedule.filterPagesEvents { favorites.includes(it.id) }
             })
     }

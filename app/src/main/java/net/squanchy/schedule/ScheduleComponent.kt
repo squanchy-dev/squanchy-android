@@ -22,7 +22,6 @@ internal fun scheduleComponent(activity: AppCompatActivity): ScheduleComponent =
     .currentTimeModule(CurrentTimeModule())
     .build()
 
-
 @ActivityLifecycle
 @Component(modules = [ScheduleModule::class, NavigationModule::class, CurrentTimeModule::class], dependencies = [ApplicationComponent::class])
 internal interface ScheduleComponent {

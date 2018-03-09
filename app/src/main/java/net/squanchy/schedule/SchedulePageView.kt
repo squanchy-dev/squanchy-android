@@ -113,17 +113,13 @@ class SchedulePageView @JvmOverloads constructor(
             val typeface = context.getFontFor(R.style.TextAppearance_Squanchy_Tab)
 
             (0 until tabLayout.tabCount)
-                .mapNotNull { tabLayout.getTabAt(it) }
+                .mapNotNull(tabLayout::getTabAt)
                 .filterNot { hasTypefaceSpan(it.text) }
                 .forEach { it.text = it.text?.applyTypeface(typeface) }
         }
     }
 
-    private fun hasTypefaceSpan(text: CharSequence?) = if (text !is Spanned) {
-        false
-    } else {
-        text.hasTypefaceSpan()
-    }
+    private fun hasTypefaceSpan(text: CharSequence?) = if (text !is Spanned) false else text.hasTypefaceSpan()
 
     fun updateWith(schedule: Schedule, onEventClicked: (Event) -> Unit) {
         val initialEventForPage = schedule.pages.map { schedule.findNextEventForPage(it, currentTime) }.toTypedArray()
