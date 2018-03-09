@@ -1,4 +1,5 @@
-# Squanchy
+# Squanchy Android
+[![Master CI](https://img.shields.io/circleci/project/github/squanchy-dev/squanchy-android/develop.svg?style=for-the-badge)](https://circleci.com/gh/squanchy-dev/squanchy-android/tree/develop) [![Apache 2 license](https://img.shields.io/github/license/squanchy-dev/squanchy-android.svg?style=for-the-badge)](https://github.com/squanchy-dev/squanchy-android/blob/master/LICENSE)
 
 Squanchy is an open source schedule platform for conferences.
 
