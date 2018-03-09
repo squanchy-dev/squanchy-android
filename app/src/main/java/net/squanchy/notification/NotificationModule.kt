@@ -8,7 +8,7 @@ import net.squanchy.injection.ServiceContextModule
 import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.repository.EventRepository
 
-@Module(includes = arrayOf(ServiceContextModule::class))
+@Module(includes = [ServiceContextModule::class])
 internal class NotificationModule {
 
     @Provides
