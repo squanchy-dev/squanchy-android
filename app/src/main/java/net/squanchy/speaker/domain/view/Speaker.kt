@@ -28,15 +28,15 @@ data class Speaker(
             photoUrl: Optional<String>,
             twitterUsername: Optional<String>
         ) = Speaker(
-                numericSpeakerId,
-                speakerId,
-                name,
-                bio,
-                companyName,
-                companyUrl,
-                personalUrl,
-                photoUrl,
-                twitterUsername
+            numericSpeakerId,
+            speakerId,
+            name,
+            bio,
+            companyName,
+            companyUrl,
+            personalUrl,
+            photoUrl,
+            twitterUsername
         )
     }
 }
