@@ -19,11 +19,9 @@ import org.joda.time.DateTimeZone
 // val onCurrentThread = Executors.newSingleThreadExecutor { Thread.currentThread() }
 class FirestoreDbService(private val db: FirebaseFirestore) {
 
-    private fun FirebaseFirestore.view(viewName: String) = db.collection(VIEWS).document(viewName)
-
     fun scheduleView(): Observable<List<FirestoreSchedulePage>> {
         return Observable.create { subscriber ->
-            val registration = db.view(SCHEDULE)
+            val registration = view(SCHEDULE)
                 .collection(SCHEDULE_PAGES)
                 .orderBy(DAY_DATE_SORTING)
                 .addSnapshotListener { snapshot, exception ->
@@ -94,7 +92,7 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
 
     fun speakers(): Observable<List<FirestoreSpeaker>> {
         return Observable.create { subscriber ->
-            val registration = db.view(SPEAKERS)
+            val registration = view(SPEAKERS)
                 .collection(SPEAKER_PAGES)
                 .addSnapshotListener { snapshot, exception ->
                     if (exception != null && subscriber.isDisposed.not()) {
@@ -110,7 +108,7 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
 
     fun speaker(speakerId: String): Observable<FirestoreSpeaker> {
         return Observable.create { subscriber ->
-            val registration = db.view(SPEAKERS)
+            val registration = view(SPEAKERS)
                 .collection(SPEAKER_PAGES)
                 .document(speakerId)
                 .addSnapshotListener { snapshot, exception ->
@@ -127,7 +125,7 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
 
     fun events(): Observable<List<FirestoreEvent>> {
         return Observable.create { subscriber ->
-            val registration = db.view(EVENT_DETAILS)
+            val registration = view(EVENT_DETAILS)
                 .collection(EVENTS)
                 .addSnapshotListener { snapshot, exception ->
                     if (exception != null && subscriber.isDisposed.not()) {
@@ -143,7 +141,7 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
 
     fun event(eventId: String): Observable<FirestoreEvent> {
         return Observable.create { subscriber ->
-            val registration = db.view(EVENT_DETAILS)
+            val registration = view(EVENT_DETAILS)
                 .collection(EVENTS)
                 .document(eventId)
                 .addSnapshotListener { snapshot, exception ->
@@ -175,6 +173,8 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
         }
     }
 
+    private fun view(viewName: String) = db.collection(VIEWS).document(viewName)
+
     fun favorites(userId: String): Observable<List<FirestoreFavorite>> {
         return Observable.create { subscriber ->
             val registration = db.collection(USER_DATA)
@@ -194,14 +194,16 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
         }
     }
 
-    fun addFavorite(eventId: String, userId: String): Completable = updateFavorite(eventId, userId, addToFirestoreAction)
+    fun addFavorite(eventId: String, userId: String): Completable =
+        updateFavorite(eventId, userId, addToFirestoreAction)
 
     private val addToFirestoreAction: (DocumentReference.(String) -> Task<*>) = { eventId: String ->
         val firestoreFavorite = FirestoreFavorite().apply { id = eventId }
         collection(FAVORITES).document(eventId).set(firestoreFavorite)
     }
 
-    fun removeFavorite(eventId: String, userId: String): Completable = updateFavorite(eventId, userId, deleteFromFirestoreAction)
+    fun removeFavorite(eventId: String, userId: String): Completable =
+        updateFavorite(eventId, userId, deleteFromFirestoreAction)
 
     private val deleteFromFirestoreAction: (DocumentReference.(String) -> Task<*>) = { eventId ->
         collection(FAVORITES).document(eventId).delete()
