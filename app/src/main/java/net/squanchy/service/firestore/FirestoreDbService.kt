@@ -158,14 +158,15 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
 
     fun tracks(): Observable<List<FirestoreTrack>> {
         return Observable.create { subscriber ->
-            val registration = db.collection("tracks")
+            val registration = view("tracks")
+                .collection("tracks")
                 .addSnapshotListener { snapshot, exception ->
                     if (exception != null && subscriber.isDisposed.not()) {
                         subscriber.onError(exception)
                         return@addSnapshotListener
                     }
                     subscriber.onNext(snapshot.documents.map { trackSnapshot ->
-                        trackSnapshot.toObject(FirestoreTrack::class.java).apply { id = trackSnapshot.id } // TODO should be done in the backend
+                        trackSnapshot.toObject(FirestoreTrack::class.java)
                     })
                 }
 
