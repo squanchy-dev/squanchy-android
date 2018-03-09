@@ -1,6 +1,5 @@
 package net.squanchy.service.firestore.model.schedule
 
-import com.google.firebase.firestore.PropertyName
 import java.util.Date
 
 class FirestoreSchedulePage {
@@ -35,14 +34,8 @@ class FirestorePlace {
 class FirestoreTrack {
     lateinit var id: String
     lateinit var name: String
-    @JvmField
-    @field:PropertyName("accent_color")
     var accentColor: String? = null
-    @JvmField
-    @field:PropertyName("text_color")
     var textColor: String? = null
-    @JvmField
-    @field:PropertyName("icon_url")
     var iconUrl: String? = null
 }
 

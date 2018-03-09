@@ -19,12 +19,10 @@ import org.joda.time.DateTimeZone
 // val onCurrentThread = Executors.newSingleThreadExecutor { Thread.currentThread() }
 class FirestoreDbService(private val db: FirebaseFirestore) {
 
-    private fun FirebaseFirestore.view(viewName: String) = db.collection(VIEWS).document(viewName)
-
     fun scheduleView(): Observable<List<FirestoreSchedulePage>> {
         return Observable.create { subscriber ->
-            val registration = db.view(SCHEDULE)
-                .collection(SCHEDULE_PAGES)
+            val registration = view(VIEW_SCHEDULE)
+                .collection(COLLECTION_SCHEDULE_PAGES)
                 .orderBy(DAY_DATE_SORTING)
                 .addSnapshotListener { snapshot, exception ->
                     if (exception != null) {
@@ -42,8 +40,8 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
     fun twitterView(): Observable<List<FirestoreTweet>> {
         return Observable.create { subscriber ->
             val registration = db.collection(SOCIAL_STREAM)
-                .document(TWITTER)
-                .collection(TWEETS)
+                .document(VIEW_TWITTER)
+                .collection(COLLECTION_TWEETS)
                 .addSnapshotListener { snapshot, exception ->
                     if (exception != null && subscriber.isDisposed.not()) {
                         subscriber.onError(exception)
@@ -94,8 +92,8 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
 
     fun speakers(): Observable<List<FirestoreSpeaker>> {
         return Observable.create { subscriber ->
-            val registration = db.view(SPEAKERS)
-                .collection(SPEAKER_PAGES)
+            val registration = view(VIEW_SPEAKERS)
+                .collection(COLLECTION_SPEAKER_PAGES)
                 .addSnapshotListener { snapshot, exception ->
                     if (exception != null && subscriber.isDisposed.not()) {
                         subscriber.onError(exception)
@@ -110,8 +108,8 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
 
     fun speaker(speakerId: String): Observable<FirestoreSpeaker> {
         return Observable.create { subscriber ->
-            val registration = db.view(SPEAKERS)
-                .collection(SPEAKER_PAGES)
+            val registration = view(VIEW_SPEAKERS)
+                .collection(COLLECTION_SPEAKER_PAGES)
                 .document(speakerId)
                 .addSnapshotListener { snapshot, exception ->
                     if (exception != null && subscriber.isDisposed.not()) {
@@ -127,8 +125,8 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
 
     fun events(): Observable<List<FirestoreEvent>> {
         return Observable.create { subscriber ->
-            val registration = db.view(EVENT_DETAILS)
-                .collection(EVENTS)
+            val registration = view(VIEW_EVENT_DETAILS)
+                .collection(COLLECTION_EVENTS)
                 .addSnapshotListener { snapshot, exception ->
                     if (exception != null && subscriber.isDisposed.not()) {
                         subscriber.onError(exception)
@@ -143,8 +141,8 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
 
     fun event(eventId: String): Observable<FirestoreEvent> {
         return Observable.create { subscriber ->
-            val registration = db.view(EVENT_DETAILS)
-                .collection(EVENTS)
+            val registration = view(VIEW_EVENT_DETAILS)
+                .collection(COLLECTION_EVENTS)
                 .document(eventId)
                 .addSnapshotListener { snapshot, exception ->
                     if (exception != null && subscriber.isDisposed.not()) {
@@ -160,14 +158,15 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
 
     fun tracks(): Observable<List<FirestoreTrack>> {
         return Observable.create { subscriber ->
-            val registration = db.collection("tracks")
+            val registration = view(VIEW_TRACKS)
+                .collection(COLLECTION_TRACKS)
                 .addSnapshotListener { snapshot, exception ->
                     if (exception != null && subscriber.isDisposed.not()) {
                         subscriber.onError(exception)
                         return@addSnapshotListener
                     }
                     subscriber.onNext(snapshot.documents.map { trackSnapshot ->
-                        trackSnapshot.toObject(FirestoreTrack::class.java).apply { id = trackSnapshot.id } // TODO should be done in the backend
+                        trackSnapshot.toObject(FirestoreTrack::class.java)
                     })
                 }
 
@@ -175,11 +174,13 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
         }
     }
 
+    private fun view(viewName: String) = db.collection(VIEWS).document(viewName)
+
     fun favorites(userId: String): Observable<List<FirestoreFavorite>> {
         return Observable.create { subscriber ->
             val registration = db.collection(USER_DATA)
                 .document(userId)
-                .collection(FAVORITES)
+                .collection(COLLECTION_FAVORITES)
                 .addSnapshotListener { snapshot, exception ->
                     if (exception != null && subscriber.isDisposed.not()) {
                         subscriber.onError(exception)
@@ -194,17 +195,19 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
         }
     }
 
-    fun addFavorite(eventId: String, userId: String): Completable = updateFavorite(eventId, userId, addToFirestoreAction)
+    fun addFavorite(eventId: String, userId: String): Completable =
+        updateFavorite(eventId, userId, addToFirestoreAction)
 
     private val addToFirestoreAction: (DocumentReference.(String) -> Task<*>) = { eventId: String ->
         val firestoreFavorite = FirestoreFavorite().apply { id = eventId }
-        collection(FAVORITES).document(eventId).set(firestoreFavorite)
+        collection(COLLECTION_FAVORITES).document(eventId).set(firestoreFavorite)
     }
 
-    fun removeFavorite(eventId: String, userId: String): Completable = updateFavorite(eventId, userId, deleteFromFirestoreAction)
+    fun removeFavorite(eventId: String, userId: String): Completable =
+        updateFavorite(eventId, userId, deleteFromFirestoreAction)
 
     private val deleteFromFirestoreAction: (DocumentReference.(String) -> Task<*>) = { eventId ->
-        collection(FAVORITES).document(eventId).delete()
+        collection(COLLECTION_FAVORITES).document(eventId).delete()
     }
 
     private fun updateFavorite(eventId: String, userId: String, action: DocumentReference.(String) -> Task<*>): Completable {
@@ -227,20 +230,24 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
 
     companion object {
         private const val VIEWS = "views"
-        private const val SPEAKERS = "speakers"
-        private const val SPEAKER_PAGES = "speaker_pages"
         private const val CONFERENCE = "conference"
         private const val CONFERENCE_INFO = "conference_info"
         private const val VENUE = "venue"
-        private const val SCHEDULE = "schedule"
-        private const val SCHEDULE_PAGES = "schedule_pages"
-        private const val EVENTS = "events"
-        private const val EVENT_DETAILS = "event_details"
-        private const val USER_DATA = "user_data"
-        private const val FAVORITES = "favorites"
         private const val SOCIAL_STREAM = "social_stream"
-        private const val TWITTER = "twitter"
-        private const val TWEETS = "tweets"
+        private const val USER_DATA = "user_data"
+
+        private const val VIEW_TWITTER = "twitter"
+        private const val COLLECTION_TWEETS = "tweets"
+        private const val VIEW_SPEAKERS = "speakers"
+        private const val COLLECTION_SPEAKER_PAGES = "speaker_pages"
+        private const val VIEW_SCHEDULE = "schedule"
+        private const val COLLECTION_SCHEDULE_PAGES = "schedule_pages"
+        private const val VIEW_EVENT_DETAILS = "event_details"
+        private const val COLLECTION_EVENTS = "events"
+        private const val COLLECTION_FAVORITES = "favorites"
+        private const val VIEW_TRACKS = "tracks_view"
+        private const val COLLECTION_TRACKS = "tracks"
+
         private const val DAY_DATE_SORTING = "day.date"
     }
 }
