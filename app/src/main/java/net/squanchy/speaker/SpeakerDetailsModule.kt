@@ -1,7 +1,6 @@
 package net.squanchy.speaker
 
-import net.squanchy.service.firebase.FirebaseAuthService
-import net.squanchy.service.repository.SpeakerRepository
+import net.squanchy.service.firestore.FirebaseAuthService
 
 import dagger.Module
 import dagger.Provides

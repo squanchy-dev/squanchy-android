@@ -80,9 +80,9 @@ class SettingsFragment : PreferenceFragment() {
         hideDividers()
 
         subscriptions.add(
-                signInService.currentUser()
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe { onUserChanged(it) }
+            signInService.currentUser()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { onUserChanged(it) }
         )
     }
 

@@ -1,7 +1,7 @@
 package net.squanchy.venue
 
 import io.reactivex.Observable
-import net.squanchy.service.firebase.FirebaseAuthService
+import net.squanchy.service.firestore.FirebaseAuthService
 import net.squanchy.service.firestore.FirestoreDbService
 import net.squanchy.service.firestore.toVenue
 import net.squanchy.venue.domain.view.Venue

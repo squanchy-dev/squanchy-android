@@ -1,4 +1,4 @@
-package net.squanchy.service.firebase
+package net.squanchy.service.firestore
 
 import android.annotation.SuppressLint
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount

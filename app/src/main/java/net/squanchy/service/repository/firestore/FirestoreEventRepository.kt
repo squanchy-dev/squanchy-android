@@ -1,4 +1,4 @@
-package net.squanchy.service.repository.firebase
+package net.squanchy.service.repository.firestore
 
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -10,9 +10,19 @@ import net.squanchy.service.firestore.model.conferenceinfo.FirestoreVenue
 import net.squanchy.service.firestore.model.schedule.FirestoreEvent
 import net.squanchy.service.firestore.model.schedule.FirestoreFavorite
 import net.squanchy.service.firestore.toEvent
-import net.squanchy.service.repository.EventRepository
 import net.squanchy.support.lang.Checksum
 import org.joda.time.DateTimeZone
+
+interface EventRepository {
+
+    fun event(eventId: String, userId: String): Observable<Event>
+
+    fun events(userId: String): Observable<List<Event>>
+
+    fun addFavorite(eventId: String, userId: String): Completable
+
+    fun removeFavorite(eventId: String, userId: String): Completable
+}
 
 class FirestoreEventRepository(
     private val firestoreDbService: FirestoreDbService,

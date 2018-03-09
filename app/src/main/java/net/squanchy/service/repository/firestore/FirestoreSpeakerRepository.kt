@@ -1,11 +1,17 @@
-package net.squanchy.service.repository.firebase
+package net.squanchy.service.repository.firestore
 
 import io.reactivex.Observable
 import net.squanchy.service.firestore.FirestoreDbService
 import net.squanchy.service.firestore.toSpeaker
-import net.squanchy.service.repository.SpeakerRepository
 import net.squanchy.speaker.domain.view.Speaker
 import net.squanchy.support.lang.Checksum
+
+interface SpeakerRepository {
+
+    fun speakers(): Observable<List<Speaker>>
+
+    fun speaker(speakerId: String): Observable<Speaker>
+}
 
 class FirestoreSpeakerRepository(
     private val dbService: FirestoreDbService,

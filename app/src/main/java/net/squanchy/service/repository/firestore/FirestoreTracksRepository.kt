@@ -4,7 +4,11 @@ import io.reactivex.Observable
 import net.squanchy.schedule.domain.view.Track
 import net.squanchy.service.firestore.FirestoreDbService
 import net.squanchy.service.firestore.toTrack
-import net.squanchy.service.repository.TracksRepository
+
+interface TracksRepository {
+
+    fun tracks(): Observable<List<Track>>
+}
 
 class FirestoreTracksRepository(private val firestoreDbService: FirestoreDbService) : TracksRepository {
 
