@@ -33,11 +33,10 @@ internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<Recycl
     }
 
     override fun getItemId(position: Int): Long = findFor(
-        0,
-        position,
-        schedule.pages,
-        { schedulePage -> (-schedulePage.dayId.hashCode()).toLong() },
-        { schedulePage, positionInPage -> schedulePage.events[positionInPage].numericId }
+        pages = schedule.pages,
+        absolutePosition = position,
+        headerProducer = { schedulePage -> (-schedulePage.dayId.hashCode()).toLong() },
+        rowProducer = { schedulePage, positionInPage -> schedulePage.events[positionInPage].numericId }
     )
 
     fun updateWith(schedule: Schedule, listener: (Event) -> Unit) {
@@ -47,11 +46,10 @@ internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<Recycl
     }
 
     override fun getItemViewType(position: Int) = findFor(
-        0,
-        position,
-        schedule.pages,
-        { _ -> VIEW_TYPE_HEADER },
-        { _, _ -> VIEW_TYPE_TALK }
+        pages = schedule.pages,
+        absolutePosition = position,
+        headerProducer = { _ -> VIEW_TYPE_HEADER },
+        rowProducer = { _, _ -> VIEW_TYPE_TALK }
     )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -63,29 +61,27 @@ internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<Recycl
             VIEW_TYPE_HEADER -> {
                 HeaderViewHolder(layoutInflater.inflate(R.layout.item_search_header, parent, false))
             }
-            else -> throw IllegalArgumentException("View type not supported: " + viewType)
+            else -> throw IllegalArgumentException("View type not supported: $viewType")
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is EventViewHolder) {
             val event = findFor(
-                0,
-                position,
-                schedule.pages,
-                { throw IndexOutOfBoundsException() },
-                { schedulePage, positionInPage -> schedulePage.events[positionInPage] }
+                pages = schedule.pages,
+                absolutePosition = position,
+                headerProducer = { throw IndexOutOfBoundsException() },
+                rowProducer = { schedulePage, positionInPage -> schedulePage.events[positionInPage] }
             )
             if (listener != null) {
                 holder.updateWith(event, listener!!)
             }
         } else if (holder is HeaderViewHolder) {
             val date = findFor(
-                0,
-                position,
-                schedule.pages,
-                { page -> page.date },
-                { _, _ -> throw IndexOutOfBoundsException() }
+                pages = schedule.pages,
+                absolutePosition = position,
+                headerProducer = { page -> page.date },
+                rowProducer = { _, _ -> throw IndexOutOfBoundsException() }
             )
             holder.updateWith(formatHeader(date))
         }
@@ -96,31 +92,29 @@ internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<Recycl
     override fun getItemCount(): Int = schedule.pages.fold(0) { count, page -> count + page.events.size + 1 }
 
     private fun <T> findFor(
-        pagePosition: Int,
-        position: Int,
         pages: List<SchedulePage>,
-        header: (SchedulePage) -> T,
-        row: (SchedulePage, Int) -> T
+        pageIndex: Int = 0,
+        absolutePosition: Int,
+        headerProducer: (SchedulePage) -> T,
+        rowProducer: (SchedulePage, Int) -> T
     ): T {
-
-        if (pagePosition >= pages.size) {
+        if (pageIndex >= pages.size) {
             throw IndexOutOfBoundsException()
         }
 
-        val schedulePage = pages[pagePosition]
-
-        if (position == 0) {
-            return header(schedulePage)
+        val schedulePage = pages[pageIndex]
+        if (absolutePosition == 0) {
+            return headerProducer(schedulePage)
         }
 
-        val adjustedPosition = position - 1
-
-        val size = schedulePage.events.size
-
-        if (adjustedPosition < size) {
-            return row(schedulePage, adjustedPosition)
+        val adjustedPosition = absolutePosition - 1
+        val pageEventsCount = schedulePage.events.size
+        if (adjustedPosition < pageEventsCount) {
+            return rowProducer(schedulePage, adjustedPosition)
         }
 
-        return findFor(pagePosition + 1, adjustedPosition - size, pages, header, row)
+        val nextPageIndex = pageIndex + 1
+        val firstPositionInNextPage = adjustedPosition - pageEventsCount
+        return findFor(pages, nextPageIndex, firstPositionInNextPage, headerProducer, rowProducer)
     }
 }
