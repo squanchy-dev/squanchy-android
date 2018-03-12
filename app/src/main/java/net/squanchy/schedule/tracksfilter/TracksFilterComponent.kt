@@ -5,6 +5,7 @@ import dagger.Component
 import net.squanchy.injection.ActivityLifecycle
 import net.squanchy.injection.ApplicationComponent
 import net.squanchy.injection.applicationComponent
+import net.squanchy.service.repository.firestore.TracksRepository
 
 @ActivityLifecycle
 @Component(dependencies = [ApplicationComponent::class])

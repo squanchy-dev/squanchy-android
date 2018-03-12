@@ -12,6 +12,9 @@ import net.squanchy.service.firestore.FirestoreDbService
 class FirestoreModule {
 
     @Provides
+    internal fun firebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
+
+    @Provides
     internal fun firebaseFirestore(): FirebaseFirestore {
         return FirebaseFirestore.getInstance()
     }

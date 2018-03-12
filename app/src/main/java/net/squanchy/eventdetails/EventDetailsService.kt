@@ -7,6 +7,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.service.firestore.FirebaseAuthService
+import net.squanchy.service.repository.firestore.EventRepository
 import net.squanchy.support.lang.Optional
 
 internal class EventDetailsService(

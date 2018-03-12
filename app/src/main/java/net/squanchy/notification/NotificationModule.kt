@@ -6,6 +6,7 @@ import dagger.Module
 import dagger.Provides
 import net.squanchy.injection.ServiceContextModule
 import net.squanchy.service.firestore.FirebaseAuthService
+import net.squanchy.service.repository.firestore.EventRepository
 
 @Module(includes = [ServiceContextModule::class])
 internal class NotificationModule {
