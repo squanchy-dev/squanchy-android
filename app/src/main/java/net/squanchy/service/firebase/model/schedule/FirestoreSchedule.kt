@@ -1,4 +1,4 @@
-package net.squanchy.service.firestore.model.schedule
+package net.squanchy.service.firebase.model.schedule
 
 import java.util.Date
 

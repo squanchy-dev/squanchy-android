@@ -1,4 +1,4 @@
-package net.squanchy.service.firestore.model.conferenceinfo
+package net.squanchy.service.firebase.model.conferenceinfo
 
 import com.google.firebase.firestore.GeoPoint
 

@@ -1,6 +1,6 @@
 package net.squanchy.tweets.domain
 
-import net.squanchy.service.firestore.model.twitter.FirestoreTweet
+import net.squanchy.service.firebase.model.twitter.FirestoreTweet
 
 data class TweetLinkInfo(private val tweet: FirestoreTweet) {
     val statusId: String

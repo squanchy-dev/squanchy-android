@@ -5,7 +5,7 @@ import android.support.v4.app.NotificationManagerCompat
 import dagger.Module
 import dagger.Provides
 import net.squanchy.injection.ServiceContextModule
-import net.squanchy.service.firestore.FirebaseAuthService
+import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.repository.EventRepository
 
 @Module(includes = [ServiceContextModule::class])

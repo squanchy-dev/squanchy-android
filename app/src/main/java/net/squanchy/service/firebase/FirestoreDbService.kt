@@ -1,18 +1,18 @@
-package net.squanchy.service.firestore
+package net.squanchy.service.firebase
 
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import io.reactivex.Completable
 import io.reactivex.Observable
-import net.squanchy.service.firestore.model.conferenceinfo.FirestoreConferenceInfo
-import net.squanchy.service.firestore.model.conferenceinfo.FirestoreVenue
-import net.squanchy.service.firestore.model.schedule.FirestoreEvent
-import net.squanchy.service.firestore.model.schedule.FirestoreFavorite
-import net.squanchy.service.firestore.model.schedule.FirestoreSchedulePage
-import net.squanchy.service.firestore.model.schedule.FirestoreSpeaker
-import net.squanchy.service.firestore.model.schedule.FirestoreTrack
-import net.squanchy.service.firestore.model.twitter.FirestoreTweet
+import net.squanchy.service.firebase.model.conferenceinfo.FirestoreConferenceInfo
+import net.squanchy.service.firebase.model.conferenceinfo.FirestoreVenue
+import net.squanchy.service.firebase.model.schedule.FirestoreEvent
+import net.squanchy.service.firebase.model.schedule.FirestoreFavorite
+import net.squanchy.service.firebase.model.schedule.FirestoreSchedulePage
+import net.squanchy.service.firebase.model.schedule.FirestoreSpeaker
+import net.squanchy.service.firebase.model.schedule.FirestoreTrack
+import net.squanchy.service.firebase.model.twitter.FirestoreTweet
 import org.joda.time.DateTimeZone
 
 // TODO

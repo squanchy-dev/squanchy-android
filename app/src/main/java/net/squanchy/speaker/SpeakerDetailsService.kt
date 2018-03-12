@@ -1,7 +1,7 @@
 package net.squanchy.speaker
 
 import io.reactivex.Observable
-import net.squanchy.service.firestore.FirebaseAuthService
+import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.repository.SpeakerRepository
 import net.squanchy.speaker.domain.view.Speaker
 

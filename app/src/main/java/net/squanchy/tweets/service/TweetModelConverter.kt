@@ -1,10 +1,10 @@
 package net.squanchy.tweets.service
 
-import net.squanchy.service.firestore.model.twitter.FirestoreTweet
-import net.squanchy.service.firestore.model.twitter.FirestoreTwitterHashtag
-import net.squanchy.service.firestore.model.twitter.FirestoreTwitterMedia
-import net.squanchy.service.firestore.model.twitter.FirestoreTwitterMention
-import net.squanchy.service.firestore.model.twitter.FirestoreTwitterUrl
+import net.squanchy.service.firebase.model.twitter.FirestoreTweet
+import net.squanchy.service.firebase.model.twitter.FirestoreTwitterHashtag
+import net.squanchy.service.firebase.model.twitter.FirestoreTwitterMedia
+import net.squanchy.service.firebase.model.twitter.FirestoreTwitterMention
+import net.squanchy.service.firebase.model.twitter.FirestoreTwitterUrl
 import net.squanchy.tweets.domain.TweetLinkInfo
 import net.squanchy.tweets.domain.view.TweetViewModel
 import net.squanchy.tweets.domain.view.User

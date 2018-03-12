@@ -2,8 +2,8 @@ package net.squanchy.venue
 
 import dagger.Module
 import dagger.Provides
-import net.squanchy.service.firestore.FirebaseAuthService
-import net.squanchy.service.firestore.FirestoreDbService
+import net.squanchy.service.firebase.FirebaseAuthService
+import net.squanchy.service.firebase.FirestoreDbService
 
 @Module
 internal class VenueInfoModule {

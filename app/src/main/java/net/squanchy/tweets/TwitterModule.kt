@@ -3,7 +3,7 @@ package net.squanchy.tweets
 import android.app.Activity
 import dagger.Module
 import dagger.Provides
-import net.squanchy.service.firestore.FirestoreDbService
+import net.squanchy.service.firebase.FirestoreDbService
 import net.squanchy.tweets.service.TwitterService
 import net.squanchy.tweets.view.TweetUrlSpanFactory
 

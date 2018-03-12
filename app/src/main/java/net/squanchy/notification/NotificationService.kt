@@ -3,7 +3,7 @@ package net.squanchy.notification
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import net.squanchy.schedule.domain.view.Event
-import net.squanchy.service.firestore.FirebaseAuthService
+import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.repository.EventRepository
 
 internal class NotificationService(private val authService: FirebaseAuthService, private val eventRepository: EventRepository) {

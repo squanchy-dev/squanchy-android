@@ -6,7 +6,7 @@ import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
-import net.squanchy.service.firestore.FirebaseAuthService
+import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.support.lang.Optional
 
 class SignInService(private val authService: FirebaseAuthService) {

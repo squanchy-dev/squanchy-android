@@ -2,7 +2,7 @@ package net.squanchy.tweets.service
 
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
-import net.squanchy.service.firestore.FirestoreDbService
+import net.squanchy.service.firebase.FirestoreDbService
 import net.squanchy.tweets.domain.view.TwitterScreenViewModel
 import net.squanchy.tweets.view.TweetUrlSpanFactory
 

@@ -1,14 +1,14 @@
-package net.squanchy.service.firestore
+package net.squanchy.service.firebase
 
 import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Place
 import net.squanchy.schedule.domain.view.Track
-import net.squanchy.service.firestore.model.conferenceinfo.FirestoreVenue
-import net.squanchy.service.firestore.model.schedule.FirestoreEvent
-import net.squanchy.service.firestore.model.schedule.FirestorePlace
-import net.squanchy.service.firestore.model.schedule.FirestoreSpeaker
-import net.squanchy.service.firestore.model.schedule.FirestoreTrack
+import net.squanchy.service.firebase.model.conferenceinfo.FirestoreVenue
+import net.squanchy.service.firebase.model.schedule.FirestoreEvent
+import net.squanchy.service.firebase.model.schedule.FirestorePlace
+import net.squanchy.service.firebase.model.schedule.FirestoreSpeaker
+import net.squanchy.service.firebase.model.schedule.FirestoreTrack
 import net.squanchy.speaker.domain.view.Speaker
 import net.squanchy.support.lang.Checksum
 import net.squanchy.support.lang.optional

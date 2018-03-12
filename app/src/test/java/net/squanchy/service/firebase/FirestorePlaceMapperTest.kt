@@ -1,4 +1,4 @@
-package net.squanchy.service.firestore
+package net.squanchy.service.firebase
 
 import org.junit.Assert
 import org.junit.Test

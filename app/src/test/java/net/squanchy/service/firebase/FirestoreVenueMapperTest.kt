@@ -1,4 +1,4 @@
-package net.squanchy.service.firestore
+package net.squanchy.service.firebase
 
 import com.google.firebase.firestore.GeoPoint
 import org.junit.Assert

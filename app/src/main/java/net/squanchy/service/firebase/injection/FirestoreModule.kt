@@ -1,12 +1,12 @@
-package net.squanchy.service.firestore.injection
+package net.squanchy.service.firebase.injection
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import net.squanchy.injection.ApplicationLifecycle
-import net.squanchy.service.firestore.FirebaseAuthService
-import net.squanchy.service.firestore.FirestoreDbService
+import net.squanchy.service.firebase.FirebaseAuthService
+import net.squanchy.service.firebase.FirestoreDbService
 
 @Module
 class FirestoreModule {

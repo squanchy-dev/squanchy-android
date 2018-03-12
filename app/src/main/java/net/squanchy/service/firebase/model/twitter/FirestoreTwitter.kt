@@ -1,4 +1,4 @@
-package net.squanchy.service.firestore.model.twitter
+package net.squanchy.service.firebase.model.twitter
 
 import java.util.Date
 import kotlin.properties.Delegates

@@ -1,14 +1,14 @@
-package net.squanchy.service.firestore
+package net.squanchy.service.firebase
 
 import com.google.firebase.firestore.GeoPoint
-import net.squanchy.service.firestore.model.conferenceinfo.FirestoreConferenceInfo
-import net.squanchy.service.firestore.model.conferenceinfo.FirestoreVenue
-import net.squanchy.service.firestore.model.schedule.FirestoreDay
-import net.squanchy.service.firestore.model.schedule.FirestoreEvent
-import net.squanchy.service.firestore.model.schedule.FirestorePlace
-import net.squanchy.service.firestore.model.schedule.FirestoreSchedulePage
-import net.squanchy.service.firestore.model.schedule.FirestoreSpeaker
-import net.squanchy.service.firestore.model.schedule.FirestoreTrack
+import net.squanchy.service.firebase.model.conferenceinfo.FirestoreConferenceInfo
+import net.squanchy.service.firebase.model.conferenceinfo.FirestoreVenue
+import net.squanchy.service.firebase.model.schedule.FirestoreDay
+import net.squanchy.service.firebase.model.schedule.FirestoreEvent
+import net.squanchy.service.firebase.model.schedule.FirestorePlace
+import net.squanchy.service.firebase.model.schedule.FirestoreSchedulePage
+import net.squanchy.service.firebase.model.schedule.FirestoreSpeaker
+import net.squanchy.service.firebase.model.schedule.FirestoreTrack
 import java.util.Date
 
 private val A_DATE = Date(123456789)

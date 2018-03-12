@@ -2,7 +2,7 @@ package net.squanchy.service.repository.injection
 
 import dagger.Module
 import dagger.Provides
-import net.squanchy.service.firestore.FirestoreDbService
+import net.squanchy.service.firebase.FirestoreDbService
 import net.squanchy.service.repository.EventRepository
 import net.squanchy.service.repository.firestore.FirestoreEventRepository
 import net.squanchy.service.repository.firestore.FirestoreSpeakerRepository
