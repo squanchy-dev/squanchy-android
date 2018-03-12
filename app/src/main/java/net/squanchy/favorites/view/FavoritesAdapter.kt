@@ -14,8 +14,7 @@ import net.squanchy.search.view.HeaderViewHolder
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDate
 
-// todo #333 too complicated logic. Need to refactor once sample data is available.
-internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+internal class FavoritesAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         private const val VIEW_TYPE_TALK: Int = 1
@@ -25,14 +24,13 @@ internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<Recycl
     private val layoutInflater = LayoutInflater.from(context)
 
     private var schedule = Schedule.create(emptyList(), DateTimeZone.UTC)
-
     private var listener: ((Event) -> Unit)? = null
 
     init {
         setHasStableIds(true)
     }
 
-    override fun getItemId(position: Int): Long = findFor(
+    override fun getItemId(position: Int): Long = produceData(
         pages = schedule.pages,
         absolutePosition = position,
         headerProducer = { schedulePage -> (-schedulePage.dayId.hashCode()).toLong() },
@@ -45,7 +43,7 @@ internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<Recycl
         notifyDataSetChanged()
     }
 
-    override fun getItemViewType(position: Int) = findFor(
+    override fun getItemViewType(position: Int) = produceData(
         pages = schedule.pages,
         absolutePosition = position,
         headerProducer = { _ -> VIEW_TYPE_HEADER },
@@ -67,7 +65,7 @@ internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<Recycl
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is EventViewHolder) {
-            val event = findFor(
+            val event = produceData(
                 pages = schedule.pages,
                 absolutePosition = position,
                 headerProducer = { throw IndexOutOfBoundsException() },
@@ -77,7 +75,7 @@ internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<Recycl
                 holder.updateWith(event, listener!!)
             }
         } else if (holder is HeaderViewHolder) {
-            val date = findFor(
+            val date = produceData(
                 pages = schedule.pages,
                 absolutePosition = position,
                 headerProducer = { page -> page.date },
@@ -89,12 +87,18 @@ internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<Recycl
 
     private fun formatHeader(date: LocalDate): CharSequence = date.toString("EEEE d")
 
-    override fun getItemCount(): Int = schedule.pages.fold(0) { count, page -> count + page.events.size + 1 }
+    override fun getItemCount(): Int = schedule.pages.fold(0) { count, page ->
+        if (page.events.isNotEmpty()) {
+            count + page.events.size + 1
+        } else {
+            count
+        }
+    }
 
-    private fun <T> findFor(
+    private fun <T> produceData(
         pages: List<SchedulePage>,
         pageIndex: Int = 0,
-        absolutePosition: Int,
+        absolutePosition: ItemPosition,
         headerProducer: (SchedulePage) -> T,
         rowProducer: (SchedulePage, Int) -> T
     ): T {
@@ -103,18 +107,28 @@ internal class FavoritesAdapter(context: Context?) : RecyclerView.Adapter<Recycl
         }
 
         val schedulePage = pages[pageIndex]
-        if (absolutePosition == 0) {
-            return headerProducer(schedulePage)
-        }
-
-        val adjustedPosition = absolutePosition - 1
         val pageEventsCount = schedulePage.events.size
-        if (adjustedPosition < pageEventsCount) {
-            return rowProducer(schedulePage, adjustedPosition)
-        }
-
         val nextPageIndex = pageIndex + 1
-        val firstPositionInNextPage = adjustedPosition - pageEventsCount
-        return findFor(pages, nextPageIndex, firstPositionInNextPage, headerProducer, rowProducer)
+        var firstPositionInNextPage: ItemPosition = absolutePosition
+
+        if (pageEventsCount != 0) {
+            if (absolutePosition.isHeader()) {
+                return headerProducer(schedulePage)
+            }
+
+            val adjustedPosition = absolutePosition - 1
+            if (adjustedPosition.isRowWithin(pageEventsCount)) {
+                return rowProducer(schedulePage, adjustedPosition)
+            }
+
+            firstPositionInNextPage = adjustedPosition - pageEventsCount
+        }
+        return produceData(pages, nextPageIndex, firstPositionInNextPage, headerProducer, rowProducer)
     }
 }
+
+private typealias ItemPosition = Int
+
+private fun ItemPosition.isHeader() = this == 0
+
+private fun ItemPosition.isRowWithin(eventsCount: Int) = this < eventsCount
