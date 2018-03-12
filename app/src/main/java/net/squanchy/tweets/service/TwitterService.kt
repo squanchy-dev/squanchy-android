@@ -12,6 +12,7 @@ internal class TwitterService(
 ) {
 
     private val tweets = dbService.twitterView()
+        .map { tweets -> tweets.sortedByDescending { it.createdAt } }
         .map { tweets -> tweets.map { mapToViewModel(factory, it) } }
 
     private val hashtag = dbService.conferenceInfo()
