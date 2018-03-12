@@ -1,6 +1,5 @@
 package net.squanchy.service.firebase
 
-import android.annotation.SuppressLint
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseException

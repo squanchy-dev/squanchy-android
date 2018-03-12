@@ -1,6 +1,5 @@
 package net.squanchy.eventdetails
 
-import android.annotation.SuppressLint
 import com.google.firebase.auth.FirebaseUser
 import io.reactivex.Completable
 import io.reactivex.Observable
