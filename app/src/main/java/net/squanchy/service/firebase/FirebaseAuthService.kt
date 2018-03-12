@@ -1,6 +1,5 @@
 package net.squanchy.service.firebase
 
-import android.annotation.SuppressLint
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseException
@@ -34,7 +33,6 @@ class FirebaseAuthService(private val auth: FirebaseAuth) {
             .onErrorResumeNext(deleteUserAndSignInWithCredentialIfLinkingFailed(user, credential))
     }
 
-    @SuppressLint("CheckResult") // False positive, to remove in 3.1.0-beta5
     private fun deleteUserAndSignInWithCredentialIfLinkingFailed(user: FirebaseUser, credential: AuthCredential): (Throwable) -> CompletableSource =
         {
             if (!linkingFailed(it)) {
