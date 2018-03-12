@@ -10,7 +10,7 @@ import net.squanchy.schedule.domain.view.Schedule
 import net.squanchy.support.view.CardSpacingItemDecorator
 
 internal class FavoritesListView @JvmOverloads constructor(
-    context: Context?,
+    context: Context,
     attrs: AttributeSet? = null,
     defStyle: Int = 0
 ) : RecyclerView(context, attrs, defStyle) {
