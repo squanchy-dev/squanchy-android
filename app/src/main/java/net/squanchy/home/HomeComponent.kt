@@ -12,7 +12,7 @@ import dagger.Component
 import net.squanchy.injection.ActivityContextModule
 import net.squanchy.injection.applicationComponent
 
-internal fun homeComponent(activity: AppCompatActivity) =
+fun homeComponent(activity: AppCompatActivity) =
     DaggerHomeComponent.builder()
         .applicationComponent(activity.applicationComponent)
         .activityContextModule(ActivityContextModule(activity))
@@ -20,7 +20,7 @@ internal fun homeComponent(activity: AppCompatActivity) =
 
 @ActivityLifecycle
 @Component(modules = [NavigationModule::class, CurrentTimeModule::class], dependencies = [ApplicationComponent::class])
-internal interface HomeComponent {
+interface HomeComponent {
 
     fun analytics(): Analytics
 
