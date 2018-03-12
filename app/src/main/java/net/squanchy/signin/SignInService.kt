@@ -19,7 +19,6 @@ class SignInService(private val authService: FirebaseAuthService) {
             .map { it.get() }
             .map { firebaseUser -> !firebaseUser.isAnonymous }
 
-    @SuppressLint("CheckResult") // False positive, to remove in 3.1.0-beta5
     fun signInAnonymouslyIfNecessary(): Completable {
         return authService.currentUser()
             .firstOrError()
