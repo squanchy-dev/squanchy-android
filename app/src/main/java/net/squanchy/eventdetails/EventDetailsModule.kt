@@ -4,7 +4,7 @@ import net.squanchy.service.firestore.FirebaseAuthService
 
 import dagger.Module
 import dagger.Provides
-import net.squanchy.service.repository.firestore.EventRepository
+import net.squanchy.service.repository.EventRepository
 
 @Module
 internal class EventDetailsModule {

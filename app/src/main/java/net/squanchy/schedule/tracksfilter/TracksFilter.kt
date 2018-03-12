@@ -3,7 +3,7 @@ package net.squanchy.schedule.tracksfilter
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import net.squanchy.schedule.domain.view.Track
-import net.squanchy.service.repository.firestore.TracksRepository
+import net.squanchy.service.repository.TracksRepository
 
 interface TracksFilter {
 

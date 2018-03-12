@@ -19,7 +19,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_track_filters.*
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Track
-import net.squanchy.service.repository.firestore.TracksRepository
+import net.squanchy.service.repository.TracksRepository
 
 class ScheduleTracksFilterActivity : AppCompatActivity() {
 

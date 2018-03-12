@@ -4,7 +4,7 @@ import net.squanchy.service.firestore.FirebaseAuthService
 
 import dagger.Module
 import dagger.Provides
-import net.squanchy.service.repository.firestore.SpeakerRepository
+import net.squanchy.service.repository.SpeakerRepository
 
 @Module
 internal class SpeakerDetailsModule {

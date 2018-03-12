@@ -7,8 +7,8 @@ import java.util.List;
 import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.search.engines.SearchEngines;
 import net.squanchy.service.firestore.FirebaseAuthService;
-import net.squanchy.service.repository.firestore.EventRepository;
-import net.squanchy.service.repository.firestore.SpeakerRepository;
+import net.squanchy.service.repository.EventRepository;
+import net.squanchy.service.repository.SpeakerRepository;
 import net.squanchy.speaker.domain.view.Speaker;
 
 import io.reactivex.Observable;

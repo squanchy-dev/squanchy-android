@@ -2,8 +2,8 @@ package net.squanchy.search;
 
 import net.squanchy.search.engines.SearchEngines;
 import net.squanchy.service.firestore.FirebaseAuthService;
-import net.squanchy.service.repository.firestore.EventRepository;
-import net.squanchy.service.repository.firestore.SpeakerRepository;
+import net.squanchy.service.repository.EventRepository;
+import net.squanchy.service.repository.SpeakerRepository;
 
 import dagger.Module;
 import dagger.Provides;
