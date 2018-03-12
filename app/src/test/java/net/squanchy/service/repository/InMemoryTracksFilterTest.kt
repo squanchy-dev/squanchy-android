@@ -5,6 +5,7 @@ import io.reactivex.observers.TestObserver
 import net.squanchy.schedule.domain.view.Track
 import net.squanchy.schedule.domain.view.aTrack
 import net.squanchy.schedule.tracksfilter.InMemoryTracksFilter
+import net.squanchy.service.repository.firestore.TracksRepository
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito
