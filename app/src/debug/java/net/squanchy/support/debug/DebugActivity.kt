@@ -21,7 +21,6 @@ import org.joda.time.LocalDateTime
 import java.util.ArrayList
 import java.util.Random
 
-// It's because there's a bunch of test data
 class DebugActivity : AppCompatActivity() {
 
     private lateinit var notificationCreator: NotificationCreator
