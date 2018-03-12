@@ -245,7 +245,7 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
         private const val VIEW_EVENT_DETAILS = "event_details"
         private const val COLLECTION_EVENTS = "events"
         private const val COLLECTION_FAVORITES = "favorites"
-        private const val VIEW_TRACKS = "tracks_view"
+        private const val VIEW_TRACKS = "tracks"
         private const val COLLECTION_TRACKS = "tracks"
 
         private const val DAY_DATE_SORTING = "day.date"
