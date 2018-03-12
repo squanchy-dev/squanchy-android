@@ -32,7 +32,8 @@ data class Event(
         COFFEE_BREAK("coffee_break"),
         LUNCH("lunch"),
         SOCIAL("social"),
-        OTHER("other");
+        OTHER("other"),
+        WORKSHOP("workshop");
 
         companion object {
 
