@@ -32,7 +32,7 @@ class TalkEventItemView @JvmOverloads constructor(
     }
 
     private fun ensureSupportedType(type: Event.Type) {
-        if (type === Event.Type.TALK || type === Event.Type.KEYNOTE) {
+        if (type == Event.Type.TALK || type == Event.Type.KEYNOTE || type == Event.Type.WORKSHOP) {
             return
         }
         throw IllegalArgumentException("Event with type ${type.name} is not supported by this view")

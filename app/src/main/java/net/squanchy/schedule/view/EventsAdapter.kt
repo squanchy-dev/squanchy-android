@@ -34,7 +34,7 @@ internal class EventsAdapter(context: Context) : RecyclerView.Adapter<EventViewH
     override fun getItemViewType(position: Int): Int {
         val itemType = _events[position].type
         return when (itemType) {
-            Event.Type.KEYNOTE, Event.Type.TALK -> ItemViewType.TYPE_TALK.ordinal
+            Event.Type.KEYNOTE, Event.Type.TALK, Event.Type.WORKSHOP -> ItemViewType.TYPE_TALK.ordinal
             Event.Type.COFFEE_BREAK, Event.Type.LUNCH, Event.Type.OTHER, Event.Type.REGISTRATION, Event.Type.SOCIAL -> ItemViewType.TYPE_OTHER.ordinal
         }
     }
