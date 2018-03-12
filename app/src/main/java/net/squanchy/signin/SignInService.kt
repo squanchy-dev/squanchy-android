@@ -1,6 +1,5 @@
 package net.squanchy.signin
 
-import android.annotation.SuppressLint
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.auth.FirebaseUser
 import io.reactivex.Completable
@@ -19,7 +18,6 @@ class SignInService(private val authService: FirebaseAuthService) {
             .map { it.get() }
             .map { firebaseUser -> !firebaseUser.isAnonymous }
 
-    @SuppressLint("CheckResult") // False positive, to remove in 3.1.0-beta5
     fun signInAnonymouslyIfNecessary(): Completable {
         return authService.currentUser()
             .firstOrError()

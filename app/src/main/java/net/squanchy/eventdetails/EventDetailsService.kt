@@ -1,6 +1,5 @@
 package net.squanchy.eventdetails
 
-import android.annotation.SuppressLint
 import com.google.firebase.auth.FirebaseUser
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -19,7 +18,6 @@ internal class EventDetailsService(
         return authService.ifUserSignedInThenObservableFrom { userId -> eventRepository.event(eventId, userId) }
     }
 
-    @SuppressLint("CheckResult") // False positive, to remove in 3.1.0-beta5
     fun toggleFavorite(event: Event): Single<FavoriteResult> {
         return currentUser()
             .flatMap { optionalUser ->
