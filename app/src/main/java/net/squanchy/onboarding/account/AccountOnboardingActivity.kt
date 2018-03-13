@@ -25,10 +25,11 @@ class AccountOnboardingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val component = accountOnboardingComponent(this)
-        onboarding = component.onboarding()
-        navigator = component.navigator()
-        signInService = component.signInService()
+        with(accountOnboardingComponent(this)) {
+            onboarding = onboarding()
+            navigator = navigator()
+            signInService = signInService()
+        }
 
         setContentView(R.layout.activity_onboarding_account)
         enableLightNavigationBar(this)

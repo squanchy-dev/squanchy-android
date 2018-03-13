@@ -16,9 +16,11 @@ class GlideImageLoader(private val requestManager: RequestManager, private val f
     }
 
     override fun load(url: String): ImageRequest {
-        return if (url.startsWith(FIREBASE_URL_SCHEMA))
+        return if (url.startsWith(FIREBASE_URL_SCHEMA)) {
             load(firebaseStorage.getReferenceFromUrl(url))
-        else GlideImageRequest(requestManager.load(url))
+        } else {
+            GlideImageRequest(requestManager.load(url))
+        }
     }
 
     override fun load(storageReference: StorageReference): ImageRequest = GlideImageRequest(requestManager.load(storageReference))

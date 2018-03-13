@@ -28,7 +28,7 @@ class NotificationCreator(private val context: Context) {
         }
 
         val notifications = events
-            .map { createFrom(it) }
+            .map(::createFrom)
             .toMutableList()
 
         if (events.size > 1) {
@@ -40,9 +40,9 @@ class NotificationCreator(private val context: Context) {
     @TargetApi(Build.VERSION_CODES.O)
     private fun createChannel() {
         val channel = NotificationChannel(
-                EVENTS_ABOUT_TO_START_CHANNEL_ID,
-                context.getString(R.string.event_notification_starting_channel_name),
-                NotificationManager.IMPORTANCE_HIGH
+            EVENTS_ABOUT_TO_START_CHANNEL_ID,
+            context.getString(R.string.event_notification_starting_channel_name),
+            NotificationManager.IMPORTANCE_HIGH
         )
         channel.description = context.getString(R.string.event_notification_starting_channel_description)
         channel.enableLights(true)
@@ -94,17 +94,17 @@ class NotificationCreator(private val context: Context) {
 
         return NotificationCompat.Builder(context, EVENTS_ABOUT_TO_START_CHANNEL_ID)
             .setTicker(
-                    context.resources.getQuantityString(
-                            R.plurals.event_notification_ticker,
-                            talksCount,
-                            talksCount
-                    )
+                context.resources.getQuantityString(
+                    R.plurals.event_notification_ticker,
+                    talksCount,
+                    talksCount
+                )
             )
             .setDefaults(Notification.DEFAULT_SOUND or Notification.DEFAULT_VIBRATE)
             .setLights(
-                    ContextCompat.getColor(context, R.color.notification_led_color),
-                    NOTIFICATION_LED_ON_MS,
-                    NOTIFICATION_LED_OFF_MS
+                ContextCompat.getColor(context, R.color.notification_led_color),
+                NOTIFICATION_LED_ON_MS,
+                NOTIFICATION_LED_OFF_MS
             )
             .setSmallIcon(R.drawable.ic_stat_notification)
             .setAutoCancel(true)
@@ -174,11 +174,11 @@ class NotificationCreator(private val context: Context) {
         for (event in events) {
             if (event.place.isPresent) {
                 richNotification.addLine(
-                        context.getString(
-                                R.string.room_event_notification,
-                                event.place.get().name,
-                                event.title
-                        )
+                    context.getString(
+                        R.string.room_event_notification,
+                        event.place.get().name,
+                        event.title
+                    )
                 )
             } else {
                 richNotification.addLine(event.title)

@@ -64,9 +64,9 @@ class SpeakerDetailsActivity : AppCompatActivity() {
         val speakerId = intent.getStringExtra(EXTRA_SPEAKER_ID)
 
         subscriptions.add(
-                service.speaker(speakerId)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe { onSpeakerRetrieved(it) }
+            service.speaker(speakerId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { onSpeakerRetrieved(it) }
         )
     }
 

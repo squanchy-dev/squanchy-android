@@ -14,6 +14,14 @@ import net.squanchy.service.repository.TracksRepository
 import net.squanchy.support.injection.CurrentTimeModule
 import net.squanchy.support.system.CurrentTime
 
+internal fun scheduleComponent(activity: AppCompatActivity): ScheduleComponent = DaggerScheduleComponent.builder()
+    .applicationComponent(activity.applicationComponent)
+    .scheduleModule(ScheduleModule())
+    .navigationModule(NavigationModule())
+    .activityContextModule(ActivityContextModule(activity))
+    .currentTimeModule(CurrentTimeModule())
+    .build()
+
 @ActivityLifecycle
 @Component(modules = [ScheduleModule::class, NavigationModule::class, CurrentTimeModule::class], dependencies = [ApplicationComponent::class])
 internal interface ScheduleComponent {
@@ -30,11 +38,3 @@ internal interface ScheduleComponent {
 
     fun tracksFilter(): TracksFilter
 }
-
-internal fun scheduleComponent(activity: AppCompatActivity): ScheduleComponent = DaggerScheduleComponent.builder()
-    .applicationComponent(activity.applicationComponent)
-    .scheduleModule(ScheduleModule())
-    .navigationModule(NavigationModule())
-    .activityContextModule(ActivityContextModule(activity))
-    .currentTimeModule(CurrentTimeModule())
-    .build()

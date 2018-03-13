@@ -42,18 +42,18 @@ class NotificationsIntentService : IntentService(NotificationsIntentService::cla
         val now = LocalDateTime()
         if (shouldShowNotifications()) {
             subscriptions.add(
-                    sortedFavourites
-                            .map { events -> events.filter { it.startTime.isAfter(now) } }
-                            .map { events -> events.filter { isBeforeOrEqualTo(it.startTime, notificationIntervalEnd) } }
-                            .map { notificationCreator.createFrom(it) }
-                            .subscribe(notifier::showNotifications)
+                sortedFavourites
+                    .map { events -> events.filter { it.startTime.isAfter(now) } }
+                    .map { events -> events.filter { isBeforeOrEqualTo(it.startTime, notificationIntervalEnd) } }
+                    .map(notificationCreator::createFrom)
+                    .subscribe(notifier::showNotifications)
             )
         }
 
         subscriptions.add(
-                sortedFavourites
-                        .map { events -> events.filter { it.startTime.isAfter(notificationIntervalEnd) } }
-                        .subscribe(::scheduleNextAlarm)
+            sortedFavourites
+                .map { events -> events.filter { it.startTime.isAfter(notificationIntervalEnd) } }
+                .subscribe(::scheduleNextAlarm)
         )
     }
 
@@ -88,7 +88,7 @@ class NotificationsIntentService : IntentService(NotificationsIntentService::cla
     }
 
     companion object {
-        private val NOTIFICATION_INTERVAL_MINUTES = 10
-        private val SHOW_NOTIFICATIONS_DEFAULT = true
+        private const val NOTIFICATION_INTERVAL_MINUTES = 10
+        private const val SHOW_NOTIFICATIONS_DEFAULT = true
     }
 }

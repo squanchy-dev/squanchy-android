@@ -23,7 +23,8 @@ internal class FavoritesAdapter(context: Context) : RecyclerView.Adapter<Recycle
 
     private val layoutInflater = LayoutInflater.from(context)
 
-    private var schedule = Schedule.create(emptyList(), DateTimeZone.UTC)
+    private var schedule = Schedule(emptyList(), DateTimeZone.UTC)
+
     private var listener: ((Event) -> Unit)? = null
 
     init {

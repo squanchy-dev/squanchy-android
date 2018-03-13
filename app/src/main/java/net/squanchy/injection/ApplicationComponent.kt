@@ -9,11 +9,8 @@ import net.squanchy.remoteconfig.RemoteConfigModule
 import net.squanchy.schedule.tracksfilter.TracksFilter
 import net.squanchy.schedule.tracksfilter.TracksFilterModule
 import net.squanchy.service.firebase.FirebaseAuthService
-import net.squanchy.service.firebase.FirebaseDbService
-import net.squanchy.service.firebase.injection.FirebaseModule
-import net.squanchy.service.firestore.FirestoreDbService
-import net.squanchy.service.firestore.injection.FirestoreModule
-import net.squanchy.service.repository.DaysRepository
+import net.squanchy.service.firebase.FirestoreDbService
+import net.squanchy.service.firebase.injection.FirestoreModule
 import net.squanchy.service.repository.EventRepository
 import net.squanchy.service.repository.SpeakerRepository
 import net.squanchy.service.repository.TracksRepository
@@ -23,7 +20,6 @@ import net.squanchy.support.injection.CurrentTimeModule
 
 fun createApplicationComponent(application: Application): ApplicationComponent {
     return DaggerApplicationComponent.builder()
-        .firebaseModule(FirebaseModule())
         .firestoreModule(FirestoreModule())
         .repositoryModule(RepositoryModule())
         .checksumModule(ChecksumModule())
@@ -38,7 +34,6 @@ fun createApplicationComponent(application: Application): ApplicationComponent {
 @Component(
     modules = [
         ApplicationContextModule::class,
-        FirebaseModule::class,
         FirestoreModule::class,
         ChecksumModule::class,
         RepositoryModule::class,
@@ -50,8 +45,6 @@ fun createApplicationComponent(application: Application): ApplicationComponent {
 )
 interface ApplicationComponent {
 
-    fun firebaseDbService(): FirebaseDbService
-
     fun firestoreDbService(): FirestoreDbService
 
     fun firebaseAuthService(): FirebaseAuthService
@@ -59,8 +52,6 @@ interface ApplicationComponent {
     fun eventRepository(): EventRepository
 
     fun speakerRepository(): SpeakerRepository
-
-    fun daysRepository(): DaysRepository
 
     fun tracksRepository(): TracksRepository
 

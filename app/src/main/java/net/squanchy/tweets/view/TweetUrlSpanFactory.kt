@@ -12,9 +12,9 @@ import android.text.Spanned
 import android.util.TypedValue
 
 import net.squanchy.R
-import net.squanchy.service.firestore.model.twitter.FirestoreTwitterHashtag
-import net.squanchy.service.firestore.model.twitter.FirestoreTwitterMention
-import net.squanchy.service.firestore.model.twitter.FirestoreTwitterUrl
+import net.squanchy.service.firebase.model.twitter.FirestoreTwitterHashtag
+import net.squanchy.service.firebase.model.twitter.FirestoreTwitterMention
+import net.squanchy.service.firebase.model.twitter.FirestoreTwitterUrl
 import java.util.regex.Pattern
 
 class TweetUrlSpanFactory(private val context: Context) {

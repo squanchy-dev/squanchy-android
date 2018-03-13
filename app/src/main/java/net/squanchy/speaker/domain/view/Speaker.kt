@@ -13,30 +13,4 @@ data class Speaker(
     val personalUrl: Optional<String>,
     val photoUrl: Optional<String>,
     val twitterUsername: Optional<String>
-) {
-
-    companion object {
-
-        fun create(
-            speakerId: String,
-            numericSpeakerId: Long,
-            name: String,
-            bio: String,
-            companyName: Optional<String>,
-            companyUrl: Optional<String>,
-            personalUrl: Optional<String>,
-            photoUrl: Optional<String>,
-            twitterUsername: Optional<String>
-        ) = Speaker(
-                numericSpeakerId,
-                speakerId,
-                name,
-                bio,
-                companyName,
-                companyUrl,
-                personalUrl,
-                photoUrl,
-                twitterUsername
-        )
-    }
-}
+)

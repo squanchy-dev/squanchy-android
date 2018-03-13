@@ -9,7 +9,7 @@ class CardSpacingItemDecorator(
     @param:Px @field:Px
     private val horizontalSpacing: Int,
     @param:Px @field:Px
-            private val verticalSpacing: Int
+    private val verticalSpacing: Int
 ) : RecyclerView.ItemDecoration() {
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {

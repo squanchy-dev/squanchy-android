@@ -79,7 +79,7 @@ class FirstStartWithNoNetworkActivity : AppCompatActivity() {
     private fun showNetworkAcquiredAndFinish() {
         firstStartCta.setText(R.string.first_start_with_no_network_network_connected)
 
-        animate(firstStartProgress, popOut()) { this.swapProgressWithSuccessAndContinue() }
+        animate(firstStartProgress, popOut(), ::swapProgressWithSuccessAndContinue)
             .start()
     }
 

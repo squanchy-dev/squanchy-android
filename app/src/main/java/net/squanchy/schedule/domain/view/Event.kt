@@ -43,37 +43,4 @@ data class Event(
             }
         }
     }
-
-    companion object {
-
-        fun create(
-            eventId: String,
-            numericEventId: Long,
-            startTime: LocalDateTime,
-            endTime: LocalDateTime,
-            title: String,
-            place: Optional<Place>,
-            experienceLevel: Optional<ExperienceLevel>,
-            speakers: List<Speaker>,
-            type: Type,
-            favorited: Boolean,
-            description: Optional<String>,
-            track: Optional<Track>,
-            timeZone: DateTimeZone
-        ) = Event(
-            eventId,
-            numericEventId,
-            startTime,
-            endTime,
-            title,
-            place,
-            track,
-            speakers,
-            experienceLevel,
-            type,
-            favorited,
-            description,
-            timeZone
-        )
-    }
 }
