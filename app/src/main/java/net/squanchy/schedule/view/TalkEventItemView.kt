@@ -31,6 +31,7 @@ class TalkEventItemView @JvmOverloads constructor(
         speaker_container.updateWith(event.speakers, null)
     }
 
+    @SuppressWarnings("ComplexCondition")
     private fun ensureSupportedType(type: Event.Type) {
         if (type == Event.Type.TALK || type == Event.Type.KEYNOTE || type == Event.Type.WORKSHOP) {
             return

@@ -19,6 +19,7 @@ import java.util.regex.Pattern
 
 class TweetUrlSpanFactory(private val context: Context) {
 
+    @SuppressWarnings("LongParameterList")
     fun applySpansToTweet(
         text: String,
         startIndex: Int,
