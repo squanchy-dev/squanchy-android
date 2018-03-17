@@ -38,7 +38,7 @@ class RoutingActivity : AppCompatActivity() {
 
         subscriptions.add(
                 signInService.signInAnonymouslyIfNecessary()
-                    .subscribe({ onboardOrProceedToRouting() }, { handleSignInError(it) })
+                    .subscribe(::onboardOrProceedToRouting, ::handleSignInError)
         )
     }
 

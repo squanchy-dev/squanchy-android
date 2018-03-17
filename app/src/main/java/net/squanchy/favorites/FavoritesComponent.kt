@@ -6,17 +6,17 @@ import net.squanchy.analytics.Analytics
 import net.squanchy.injection.ActivityContextModule
 import net.squanchy.injection.ActivityLifecycle
 import net.squanchy.injection.ApplicationComponent
-import net.squanchy.injection.createApplicationComponent
+import net.squanchy.injection.applicationComponent
 import net.squanchy.navigation.NavigationModule
 import net.squanchy.navigation.Navigator
 import net.squanchy.schedule.ScheduleModule
 import net.squanchy.schedule.ScheduleService
 
 @ActivityLifecycle
-@Component(modules = [(ScheduleModule::class), (NavigationModule::class)], dependencies = [(ApplicationComponent::class)])
+@Component(modules = [ScheduleModule::class, NavigationModule::class], dependencies = [ApplicationComponent::class])
 internal interface FavoritesComponent {
 
-    fun service(): ScheduleService
+    fun scheduleService(): ScheduleService
 
     fun navigator(): Navigator
 
@@ -25,9 +25,9 @@ internal interface FavoritesComponent {
 
 internal fun favoritesComponent(activity: AppCompatActivity): FavoritesComponent {
     return DaggerFavoritesComponent.builder()
-            .applicationComponent(createApplicationComponent(activity.application))
-            .scheduleModule(ScheduleModule())
-            .navigationModule(NavigationModule())
-            .activityContextModule(ActivityContextModule(activity))
-            .build()
+        .applicationComponent(activity.application.applicationComponent)
+        .scheduleModule(ScheduleModule())
+        .navigationModule(NavigationModule())
+        .activityContextModule(ActivityContextModule(activity))
+        .build()
 }

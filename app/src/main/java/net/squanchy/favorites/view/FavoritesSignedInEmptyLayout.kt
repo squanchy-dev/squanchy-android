@@ -13,10 +13,10 @@ import kotlinx.android.synthetic.main.merge_no_favorites_view.view.*
 import net.squanchy.R
 
 class FavoritesSignedInEmptyLayout @JvmOverloads constructor(
-        context: Context?,
-        attrs: AttributeSet? = null,
-        defStyleAttr: Int = 0,
-        defStyleRes: Int = 0
+    context: Context?,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0,
+    defStyleRes: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr, defStyleRes), FavoritesSignedInEmptyLayoutView {
 
     private var counter = 0
@@ -41,6 +41,7 @@ class FavoritesSignedInEmptyLayout @JvmOverloads constructor(
 
     override fun setButtonImage(@DrawableRes resId: Int) = favoriteFab.setImageResource(resId)
 
+    //TODO do we still need this? Also why is it requiring Nougat?
     @RequiresApi(Build.VERSION_CODES.N)
     override fun showAchievement(message: String) = Snackbar.make(this, readAsHtml(message), Snackbar.LENGTH_LONG).show()
 

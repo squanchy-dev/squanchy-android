@@ -12,10 +12,10 @@ import android.widget.FrameLayout
 import net.squanchy.R
 
 open class CardLayout @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet,
-        defStyleAttr: Int = R.attr.cardViewDefaultStyle,
-        defStyleRes: Int = 0
+    context: Context,
+    attrs: AttributeSet,
+    defStyleAttr: Int = R.attr.cardViewDefaultStyle,
+    defStyleRes: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr, defStyleRes) {
 
     init {
@@ -56,7 +56,7 @@ open class CardLayout @JvmOverloads constructor(
 
     private fun applyInsetsAndRadius(insetHorizontal: Int, insetTop: Int, insetBottom: Int, radius: Int) {
         super.setOutlineProvider(
-                NarrowerOutlineProvider(insetHorizontal, insetTop, insetBottom, radius)
+            NarrowerOutlineProvider(insetHorizontal, insetTop, insetBottom, radius)
         )
     }
 
@@ -69,19 +69,19 @@ open class CardLayout @JvmOverloads constructor(
     }
 
     private class NarrowerOutlineProvider(
-            @param:Px private val insetHorizontal: Int,
-            @param:Px private val insetTop: Int,
-            @param:Px private val insetBottom: Int,
-            @param:Px private val radius: Int
+        @param:Px private val insetHorizontal: Int,
+        @param:Px private val insetTop: Int,
+        @param:Px private val insetBottom: Int,
+        @param:Px private val radius: Int
     ) : ViewOutlineProvider() {
 
         override fun getOutline(view: View, outline: Outline) {
             outline.setRoundRect(
-                    insetHorizontal,
-                    insetTop,
-                    view.width - insetHorizontal,
-                    view.height - insetBottom,
-                    radius.toFloat()
+                insetHorizontal,
+                insetTop,
+                view.width - insetHorizontal,
+                view.height - insetBottom,
+                radius.toFloat()
             )
         }
     }

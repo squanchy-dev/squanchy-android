@@ -2,13 +2,10 @@ package net.squanchy.tweets.view
 
 import android.content.Context
 import android.support.annotation.StringRes
-
-import java.util.Locale
-
 import net.squanchy.R
 import net.squanchy.tweets.domain.view.TweetViewModel
-
 import org.joda.time.DateTime
+import org.joda.time.LocalDateTime
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.DateTimeFormatter
 
@@ -24,11 +21,8 @@ internal class TwitterFooterFormatter(private val context: Context) {
     }
 
     private fun timestampFrom(tweet: TweetViewModel): String {
-        val createdAt = DateTimeFormat.forPattern(DATE_PATTERN)
-            .withLocale(Locale.US)
-            .parseDateTime(tweet.createdAt)
-
-        val formattedTime = timeFormatter.print(createdAt)
+        val createdAt = LocalDateTime.fromDateFields(tweet.createdAt).toDateTime()
+        val formattedTime = timeFormatter.print(tweet.createdAt.time)
 
         return when {
             isToday(createdAt) -> formatRecentDay(context, R.string.tweet_date_today, formattedTime)

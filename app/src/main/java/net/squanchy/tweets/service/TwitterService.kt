@@ -1,18 +1,24 @@
 package net.squanchy.tweets.service
 
-import io.reactivex.Single
-import net.squanchy.tweets.domain.view.TweetViewModel
+import io.reactivex.Observable
+import io.reactivex.functions.BiFunction
+import net.squanchy.service.firebase.FirestoreDbService
+import net.squanchy.tweets.domain.view.TwitterScreenViewModel
 import net.squanchy.tweets.view.TweetUrlSpanFactory
 
 internal class TwitterService(
-        private val repository: TwitterRepository,
-        private val factory: TweetUrlSpanFactory
+    dbService: FirestoreDbService,
+    private val factory: TweetUrlSpanFactory
 ) {
 
-    fun refresh(query: String): Single<List<TweetViewModel>> {
-        return repository.load(query)
-            .map { search -> search.tweets }
-            .map { list -> list.filter { tweet -> tweet.retweetedStatus == null } }
-            .map { tweets -> tweets.map { mapToViewModel(factory, it) } }
+    private val tweets = dbService.twitterView()
+        .map { tweets -> tweets.sortedByDescending { it.createdAt } }
+        .map { tweets -> tweets.map { mapToViewModel(factory, it) } }
+
+    private val hashtag = dbService.conferenceInfo()
+        .map { it.socialHashtag }
+
+    fun refresh(): Observable<TwitterScreenViewModel> {
+        return Observable.combineLatest(tweets, hashtag, BiFunction { tweets, hashtag -> TwitterScreenViewModel(hashtag, tweets) })
     }
 }

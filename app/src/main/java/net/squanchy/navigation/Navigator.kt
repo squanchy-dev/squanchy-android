@@ -1,6 +1,7 @@
 package net.squanchy.navigation
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -14,6 +15,7 @@ import net.squanchy.eventdetails.EventDetailsActivity
 import net.squanchy.home.HomeActivity
 import net.squanchy.navigation.firststart.FirstStartWithNoNetworkActivity
 import net.squanchy.onboarding.OnboardingPage
+import net.squanchy.schedule.tracksfilter.ScheduleTracksFilterActivity
 import net.squanchy.search.SearchActivity
 import net.squanchy.settings.SettingsActivity
 import net.squanchy.signin.SignInActivity
@@ -23,8 +25,8 @@ import net.squanchy.venue.domain.view.Venue
 import timber.log.Timber
 
 class Navigator(
-        private val activity: Activity,
-        private val debugActivityIntentFactory: DebugActivityIntentFactory
+    private val activity: Activity,
+    private val debugActivityIntentFactory: DebugActivityIntentFactory
 ) {
 
     fun toEventDetails(eventId: String) {
@@ -57,6 +59,10 @@ class Navigator(
         val deeplinkStatusUrl = "twitter://status?status_id=${linkInfo.statusId}"
         val fallbackStatusUrl = "http://twitter.com/${linkInfo.screenName}/status/${linkInfo.statusId}"
         attemptDeeplinkOrFallback(deeplinkStatusUrl, fallbackStatusUrl)
+    }
+
+    fun toScheduleFiltering(ctx: Context) {
+        start(Intent(ctx, ScheduleTracksFilterActivity::class.java))
     }
 
     private fun attemptDeeplinkOrFallback(deeplinkUrl: String, fallbackUrl: String) {

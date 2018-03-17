@@ -135,6 +135,7 @@ dependencies {
     implementation libraries.app.firebaseAuth
     implementation libraries.app.firebaseConfig
     implementation libraries.app.firebaseDb
+    implementation libraries.app.firebaseFirestore
     implementation libraries.app.firebaseMessaging
     implementation libraries.app.firebasePerf
     implementation libraries.app.firebaseStorage
@@ -158,7 +159,6 @@ dependencies {
     implementation libraries.app.supportConstraint
     implementation libraries.app.supportDesign
     implementation libraries.app.timber
-    implementation libraries.app.twitterCore
     implementation libraries.app.viewPagerAdapter
 
     annotationProcessor libraries.app.daggerCompiler

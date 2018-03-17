@@ -1,10 +1,10 @@
 package net.squanchy.eventdetails
 
 import net.squanchy.service.firebase.FirebaseAuthService
-import net.squanchy.service.repository.EventRepository
 
 import dagger.Module
 import dagger.Provides
+import net.squanchy.service.repository.EventRepository
 
 @Module
 internal class EventDetailsModule {

@@ -22,13 +22,13 @@ import net.squanchy.schedule.domain.view.Schedule
 import net.squanchy.support.unwrapToActivityContext
 
 class FavoritesPageView @JvmOverloads constructor(
-        context: Context?,
-        attrs: AttributeSet? = null,
-        defStyleAttr: Int = 0
+    context: Context?,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : CoordinatorLayout(context, attrs, defStyleAttr), Loadable {
 
     private val favoritesComponent = favoritesComponent(unwrapToActivityContext(context))
-    private val service: ScheduleService = favoritesComponent.service()
+    private val scheduleService: ScheduleService = favoritesComponent.scheduleService()
     private val navigator: Navigator = favoritesComponent.navigator()
     private val analytics: Analytics = favoritesComponent.analytics()
     private val disposable = CompositeDisposable()
@@ -51,13 +51,13 @@ class FavoritesPageView @JvmOverloads constructor(
 
     override fun startLoading() {
         disposable.add(
-                Observable.combineLatest(
-                        service.schedule(true),
-                        service.currentUserIsSignedIn(),
-                        BiFunction<Schedule, Boolean, LoadScheduleResult>(::LoadScheduleResult)
-                )
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(::handleLoadSchedule)
+            Observable.combineLatest(
+                scheduleService.schedule(onlyFavorites = true),
+                scheduleService.currentUserIsSignedIn(),
+                BiFunction<Schedule, Boolean, LoadScheduleResult>(::LoadScheduleResult)
+            )
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(::handleLoadSchedule)
         )
     }
 
@@ -65,25 +65,23 @@ class FavoritesPageView @JvmOverloads constructor(
 
     private fun onMenuItemClickListener(menuItem: MenuItem): Boolean {
         return when (menuItem.itemId) {
-            R.id.action_search -> {
-                showSearch(); true
-            }
-            R.id.action_settings -> {
-                showSettings(); true
-            }
+            R.id.action_search -> { showSearch(); true }
+            R.id.action_settings -> { showSettings(); true }
+            R.id.action_filter -> { navigator.toScheduleFiltering(context); true }
             else -> false
         }
     }
 
     private fun handleLoadSchedule(result: LoadScheduleResult) {
         when {
-            hasFavorites(result.schedule) -> showSchedule(result.schedule)
+            result.schedule.hasFavorites -> showSchedule(result.schedule)
             result.signedIn -> promptToFavorite()
             else -> promptToSign()
         }
     }
 
-    private fun hasFavorites(schedule: Schedule) = !schedule.isEmpty
+    private val Schedule.hasFavorites
+        get() = !isEmpty
 
     private fun showSchedule(schedule: Schedule) {
         favoritesListView.updateWith(schedule, ::showEventDetails)

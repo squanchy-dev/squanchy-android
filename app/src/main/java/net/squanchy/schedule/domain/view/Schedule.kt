@@ -8,21 +8,16 @@ private const val FIRST_PAGE_INDEX = 0
 
 private const val CURRENT_SLOT_THRESHOLD = .6f
 
-data class Schedule(val pages: List<SchedulePage>, val timezone: DateTimeZone) {
+data class Schedule(val pages: List<SchedulePage>, val timeZone: DateTimeZone) {
 
     val isEmpty: Boolean
-        get() = pages.isEmpty()
-
-    companion object {
-
-        fun create(pages: List<SchedulePage>, timezone: DateTimeZone) = Schedule(pages, timezone)
-    }
+        get() = pages.all { it.events.isEmpty() }
 
     fun findTodayIndexOrDefault(currentTime: CurrentTime): Int {
-        val now = currentTime.currentDateTime().withZone(timezone)
+        val now = currentTime.currentDateTime().withZone(timeZone)
         return pages
             .indexOfFirst { page ->
-                page.date.toLocalDate().isEqual(now.toLocalDate())
+                page.date.isEqual(now.toLocalDate())
             }
             .let {
                 when (it) {

@@ -9,9 +9,9 @@ import net.squanchy.schedule.domain.view.Event
 import org.joda.time.format.DateTimeFormat
 
 class TalkEventItemView @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet,
-        defStyleAttr: Int = R.attr.cardViewDefaultStyle
+    context: Context,
+    attrs: AttributeSet,
+    defStyleAttr: Int = R.attr.cardViewDefaultStyle
 ) : EventItemView(context, attrs, defStyleAttr) {
 
     override fun updateWith(event: Event) {
@@ -32,7 +32,7 @@ class TalkEventItemView @JvmOverloads constructor(
     }
 
     private fun ensureSupportedType(type: Event.Type) {
-        if (type === Event.Type.TALK || type === Event.Type.KEYNOTE) {
+        if (type == Event.Type.TALK || type == Event.Type.KEYNOTE || type == Event.Type.WORKSHOP) {
             return
         }
         throw IllegalArgumentException("Event with type ${type.name} is not supported by this view")

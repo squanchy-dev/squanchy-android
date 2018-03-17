@@ -9,7 +9,7 @@ ext {
     findbugsVersion = '3.0.1'
     pmdVersion = '6.1.0'
 
-    ktLintVersion = '0.15.0'
+    ktLintVersion = '0.19.0'
 
     gradlePlugins = [
         buildProperties: 'com.novoda:gradle-build-properties-plugin:0.3.9',
@@ -27,6 +27,7 @@ ext {
             firebaseAuth       : "com.google.firebase:firebase-auth:${playServicesVersion}",
             firebaseConfig     : "com.google.firebase:firebase-config:${playServicesVersion}",
             firebaseDb         : "com.google.firebase:firebase-database:${playServicesVersion}",
+            firebaseFirestore  : "com.google.firebase:firebase-firestore:${playServicesVersion}",
             firebaseMessaging  : "com.google.firebase:firebase-messaging:${playServicesVersion}",
             firebasePerf       : "com.google.firebase:firebase-perf:${playServicesVersion}",
             firebaseStorage    : "com.google.firebase:firebase-storage:${playServicesVersion}",
@@ -43,7 +44,6 @@ ext {
             supportConstraint  : 'com.android.support.constraint:constraint-layout:1.1.0-beta5',
             supportDesign      : "com.android.support:design:${supportLibVersion}",
             timber             : 'com.jakewharton.timber:timber:4.6.1',
-            twitterCore        : 'com.twitter.sdk.android:twitter-core:3.2.0',
             viewPagerAdapter   : 'com.novoda:view-pager-adapter:1.0.0'
         ],
 

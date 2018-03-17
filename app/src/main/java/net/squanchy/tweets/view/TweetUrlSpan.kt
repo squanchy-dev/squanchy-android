@@ -12,8 +12,8 @@ import android.view.View
 import timber.log.Timber
 
 internal class TweetUrlSpan(
-        private val url: String,
-        private val linkColor: Int
+    private val url: String,
+    private val linkColor: Int
 ) : ClickableSpan() {
 
     override fun updateDrawState(ds: TextPaint) {

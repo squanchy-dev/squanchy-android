@@ -14,4 +14,10 @@
     android:icon="@drawable/ic_search"
     app:showAsAction="ifRoom" />
 
+  <item
+    android:id="@+id/action_filter"
+    android:title="@string/filter_schedule"
+    android:icon="@drawable/ic_filter_list"
+    app:showAsAction="ifRoom" />
+
 </menu>

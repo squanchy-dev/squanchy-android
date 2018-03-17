@@ -9,10 +9,10 @@ import android.widget.FrameLayout
 import net.squanchy.R
 
 class MaxSizeFrameLayout @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet?,
-        defStyleAttr: Int = 0,
-        defStyleRes: Int = 0
+    context: Context,
+    attrs: AttributeSet?,
+    defStyleAttr: Int = 0,
+    defStyleRes: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr, defStyleRes) {
 
     @Px

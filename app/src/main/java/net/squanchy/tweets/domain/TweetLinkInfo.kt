@@ -1,15 +1,10 @@
 package net.squanchy.tweets.domain
 
-import com.twitter.sdk.android.core.models.Tweet
+import net.squanchy.service.firebase.model.twitter.FirestoreTweet
 
-data class TweetLinkInfo(private val tweet: Tweet) {
+data class TweetLinkInfo(private val tweet: FirestoreTweet) {
     val statusId: String
-        get() = tweet.idStr
+        get() = tweet.id
     val screenName: String
         get() = tweet.user.screenName
-
-    companion object {
-
-        fun create(tweet: Tweet): TweetLinkInfo = TweetLinkInfo(tweet)
-    }
 }

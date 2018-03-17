@@ -9,9 +9,9 @@ import net.squanchy.schedule.domain.view.Event
 import org.joda.time.format.DateTimeFormat
 
 class OtherEventItemView @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet,
-        defStyleAttr: Int = R.attr.cardViewDefaultStyle
+    context: Context,
+    attrs: AttributeSet,
+    defStyleAttr: Int = R.attr.cardViewDefaultStyle
 ) : EventItemView(context, attrs, defStyleAttr) {
 
     override fun updateWith(event: Event) {
@@ -25,10 +25,10 @@ class OtherEventItemView @JvmOverloads constructor(
     @Suppress("ComplexCondition")
     private fun ensureSupportedType(type: Event.Type) {
         if (type === Event.Type.COFFEE_BREAK
-                || type === Event.Type.LUNCH
-                || type === Event.Type.OTHER
-                || type === Event.Type.REGISTRATION
-                || type === Event.Type.SOCIAL) {
+            || type === Event.Type.LUNCH
+            || type === Event.Type.OTHER
+            || type === Event.Type.REGISTRATION
+            || type === Event.Type.SOCIAL) {
             return
         }
         throw IllegalArgumentException("Event with type ${type.name} is not supported by this view")

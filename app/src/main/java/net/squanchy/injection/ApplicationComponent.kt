@@ -6,42 +6,46 @@ import net.squanchy.analytics.Analytics
 import net.squanchy.analytics.AnalyticsModule
 import net.squanchy.remoteconfig.RemoteConfig
 import net.squanchy.remoteconfig.RemoteConfigModule
+import net.squanchy.schedule.tracksfilter.TracksFilter
+import net.squanchy.schedule.tracksfilter.TracksFilterModule
 import net.squanchy.service.firebase.FirebaseAuthService
-import net.squanchy.service.firebase.FirebaseDbService
-import net.squanchy.service.firebase.injection.FirebaseModule
+import net.squanchy.service.firebase.FirestoreDbService
+import net.squanchy.service.firebase.injection.FirestoreModule
 import net.squanchy.service.repository.EventRepository
 import net.squanchy.service.repository.SpeakerRepository
-import net.squanchy.service.repository.VenueRepository
+import net.squanchy.service.repository.TracksRepository
 import net.squanchy.service.repository.injection.RepositoryModule
 import net.squanchy.support.injection.ChecksumModule
 import net.squanchy.support.injection.CurrentTimeModule
 
 fun createApplicationComponent(application: Application): ApplicationComponent {
     return DaggerApplicationComponent.builder()
-        .firebaseModule(FirebaseModule())
+        .firestoreModule(FirestoreModule())
         .repositoryModule(RepositoryModule())
         .checksumModule(ChecksumModule())
         .applicationContextModule(ApplicationContextModule(application))
         .analyticsModule(AnalyticsModule(application))
         .remoteConfigModule(RemoteConfigModule())
+        .tracksFilterModule(TracksFilterModule())
         .build()
 }
 
 @ApplicationLifecycle
 @Component(
-        modules = [
-            ApplicationContextModule::class,
-            FirebaseModule::class,
-            ChecksumModule::class,
-            RepositoryModule::class,
-            AnalyticsModule::class,
-            RemoteConfigModule::class,
-            CurrentTimeModule::class
-        ]
+    modules = [
+        ApplicationContextModule::class,
+        FirestoreModule::class,
+        ChecksumModule::class,
+        RepositoryModule::class,
+        AnalyticsModule::class,
+        RemoteConfigModule::class,
+        CurrentTimeModule::class,
+        TracksFilterModule::class
+    ]
 )
 interface ApplicationComponent {
 
-    fun firebaseDbService(): FirebaseDbService
+    fun firestoreDbService(): FirestoreDbService
 
     fun firebaseAuthService(): FirebaseAuthService
 
@@ -49,7 +53,9 @@ interface ApplicationComponent {
 
     fun speakerRepository(): SpeakerRepository
 
-    fun venueRepository(): VenueRepository
+    fun tracksRepository(): TracksRepository
+
+    fun tracksFilter(): TracksFilter
 
     fun analytics(): Analytics
 
