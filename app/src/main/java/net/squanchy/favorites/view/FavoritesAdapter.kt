@@ -96,6 +96,7 @@ internal class FavoritesAdapter(context: Context) : RecyclerView.Adapter<Recycle
         }
     }
 
+    @SuppressWarnings("LongParameterList")
     private fun <T> produceData(
         pages: List<SchedulePage>,
         pageIndex: Int = 0,

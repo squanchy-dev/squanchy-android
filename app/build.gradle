@@ -112,7 +112,7 @@ detekt {
 
     idea {
         path = "$rootDir/.idea"
-        codeStyleScheme = "$rootDir/.idea/codeStyleSettings.xml"
+        codeStyleScheme = "$rootDir/.idea/codeStyles/Project.xml"
         inspectionsProfile = "$rootDir/.idea/inspectionProfiles/Squanchy.xml"
         report = "$projectDir/build/reports/detekt-idea"
         mask = "*.kt,"
