@@ -161,9 +161,14 @@ dependencies {
     implementation libraries.app.timber
     implementation libraries.app.viewPagerAdapter
 
+    implementation libraries.app.moshi
+    implementation libraries.app.moshiKotlin
+
     annotationProcessor libraries.app.daggerCompiler
     kapt libraries.app.daggerCompiler
     implementation libraries.app.dagger
+
+    implementation libraries.app.angolia
 
     testImplementation libraries.test.truth
     testImplementation libraries.test.jodaTime
