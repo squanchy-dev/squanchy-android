@@ -55,7 +55,7 @@ fun FirestoreEvent.toEvent(checksum: Checksum, dateTime: DateTimeZone, isFavorit
     endTime = LocalDateTime(endTime),
     title = title,
     place = place?.toPlace().optional(),
-    experienceLevel = experienceLevel.toExperienceLevel() ,
+    experienceLevel = experienceLevel.toExperienceLevel(),
     speakers = speakers.map { it.toSpeaker(checksum) },
     type = type.toEventType(),
     favorited = isFavorite,
