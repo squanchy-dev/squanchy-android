@@ -17,7 +17,7 @@ buildscript {
 }
 
 plugins {
-    id 'io.gitlab.arturbosch.detekt' version '1.0.0.RC6-3'
+    id 'io.gitlab.arturbosch.detekt' version '1.0.0.RC6-4' apply false
     id 'com.github.ben-manes.versions' version '0.17.0'
 }
 
@@ -48,6 +48,7 @@ subprojects {
     }
 
     apply plugin: 'com.github.ben-manes.versions'
+    apply plugin: 'io.gitlab.arturbosch.detekt'
     apply from: teamPropsFile('static-analysis.gradle')
 }
 
