@@ -38,7 +38,7 @@ ext {
             jodaTimeAndroid    : 'net.danlew:android.joda:2.9.9.2',
             kotlin             : "org.jetbrains.kotlin:kotlin-stdlib-jre7:${kotlinVersion}",
             playServicesAuth   : "com.google.android.gms:play-services-auth:${playServicesVersion}",
-            rxJava             : 'io.reactivex.rxjava2:rxjava:2.1.10',
+            rxJava             : 'io.reactivex.rxjava2:rxjava:2.1.11',
             rxAndroid          : 'io.reactivex.rxjava2:rxandroid:2.0.2',
             supportAppCompat   : "com.android.support:appcompat-v7:${supportLibVersion}",
             supportConstraint  : 'com.android.support.constraint:constraint-layout:1.1.0-beta5',
