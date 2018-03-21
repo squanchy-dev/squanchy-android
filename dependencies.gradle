@@ -13,7 +13,7 @@ ext {
 
     gradlePlugins = [
         buildProperties: 'com.novoda:gradle-build-properties-plugin:0.3.9',
-        fabric         : 'io.fabric.tools:gradle:1.25.1',
+        fabric         : 'io.fabric.tools:gradle:1.25.2',
         kotlin         : "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
     ]
 
