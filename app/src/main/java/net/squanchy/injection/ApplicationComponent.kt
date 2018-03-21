@@ -8,6 +8,8 @@ import net.squanchy.remoteconfig.RemoteConfig
 import net.squanchy.remoteconfig.RemoteConfigModule
 import net.squanchy.schedule.tracksfilter.TracksFilter
 import net.squanchy.schedule.tracksfilter.TracksFilterModule
+import net.squanchy.search.algolia.AlgoliaModule
+import net.squanchy.search.algolia.AlgoliaSearchEngine
 import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.firebase.FirestoreDbService
 import net.squanchy.service.firebase.injection.FirestoreModule
@@ -24,6 +26,7 @@ fun createApplicationComponent(application: Application): ApplicationComponent {
         .repositoryModule(RepositoryModule())
         .checksumModule(ChecksumModule())
         .applicationContextModule(ApplicationContextModule(application))
+        .algoliaModule(AlgoliaModule())
         .analyticsModule(AnalyticsModule(application))
         .remoteConfigModule(RemoteConfigModule())
         .tracksFilterModule(TracksFilterModule())
@@ -33,6 +36,7 @@ fun createApplicationComponent(application: Application): ApplicationComponent {
 @ApplicationLifecycle
 @Component(
     modules = [
+        AlgoliaModule::class,
         ApplicationContextModule::class,
         FirestoreModule::class,
         ChecksumModule::class,
@@ -62,4 +66,6 @@ interface ApplicationComponent {
     fun remoteConfig(): RemoteConfig
 
     fun application(): Application
+
+    fun algoliaSearchEngine(): AlgoliaSearchEngine
 }
