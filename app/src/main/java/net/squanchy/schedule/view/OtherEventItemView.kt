@@ -24,11 +24,11 @@ class OtherEventItemView @JvmOverloads constructor(
 
     @Suppress("ComplexCondition")
     private fun ensureSupportedType(type: Event.Type) {
-        if (type === Event.Type.COFFEE_BREAK
-            || type === Event.Type.LUNCH
-            || type === Event.Type.OTHER
-            || type === Event.Type.REGISTRATION
-            || type === Event.Type.SOCIAL) {
+        if (type === Event.Type.COFFEE_BREAK ||
+            type === Event.Type.LUNCH ||
+            type === Event.Type.OTHER ||
+            type === Event.Type.REGISTRATION ||
+            type === Event.Type.SOCIAL) {
             return
         }
         throw IllegalArgumentException("Event with type ${type.name} is not supported by this view")

@@ -2,8 +2,8 @@
 
 echo "Running static analysis..."
 
-# Format code using KtLint
-./gradlew app:ktlintFormat app:detektCheck app:ktlint --daemon
+# Validate Kotlin code with detekt and KtLint before committing
+./gradlew app:detektCheck app:ktlint --daemon
 
 status=$?
 

@@ -1,8 +1,8 @@
 ext {
-    daggerVersion = '2.14.1'
+    daggerVersion = '2.15'
     glideVersion = '4.6.1'
     supportLibVersion = '27.1.0'
-    playServicesVersion = '11.8.0'
+    playServicesVersion = '12.0.0'
     kotlinVersion = '1.2.30'
     moshiVersion = '1.5.0'
 
@@ -10,11 +10,11 @@ ext {
     findbugsVersion = '3.0.1'
     pmdVersion = '6.1.0'
 
-    ktLintVersion = '0.19.0'
+    ktLintVersion = '0.20.0'
 
     gradlePlugins = [
-        buildProperties: 'com.novoda:gradle-build-properties-plugin:0.3.9',
-        fabric         : 'io.fabric.tools:gradle:1.25.1',
+        buildProperties: 'com.novoda:gradle-build-properties-plugin:0.4',
+        fabric         : 'io.fabric.tools:gradle:1.25.2',
         kotlin         : "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
     ]
 
@@ -42,7 +42,7 @@ ext {
             moshi              : "com.squareup.moshi:moshi:${moshiVersion}",
             moshiKotlin        : "com.squareup.moshi:moshi-kotlin:${moshiVersion}",
             playServicesAuth   : "com.google.android.gms:play-services-auth:${playServicesVersion}",
-            rxJava             : 'io.reactivex.rxjava2:rxjava:2.1.10',
+            rxJava             : 'io.reactivex.rxjava2:rxjava:2.1.11',
             rxAndroid          : 'io.reactivex.rxjava2:rxandroid:2.0.2',
             supportAppCompat   : "com.android.support:appcompat-v7:${supportLibVersion}",
             supportConstraint  : 'com.android.support.constraint:constraint-layout:1.1.0-beta5',
@@ -55,7 +55,7 @@ ext {
             truth   : 'com.google.truth:truth:0.39',
             jodaTime: 'joda-time:joda-time:2.9.9',
             jUnit4  : 'junit:junit:4.12',
-            mockito : 'org.mockito:mockito-inline:2.13.0'
+            mockito : 'org.mockito:mockito-inline:2.16.0'
         ]
     ]
 
