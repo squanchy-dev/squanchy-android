@@ -1,5 +1,6 @@
 package net.squanchy.search;
 
+import net.squanchy.search.angolia.AngoliaModule;
 import net.squanchy.search.engines.SearchEngines;
 import net.squanchy.service.firebase.FirebaseAuthService;
 import net.squanchy.service.repository.EventRepository;
@@ -8,7 +9,7 @@ import net.squanchy.service.repository.SpeakerRepository;
 import dagger.Module;
 import dagger.Provides;
 
-@Module
+@Module(includes = AngoliaModule.class)
 class SearchModule {
 
     @Provides
