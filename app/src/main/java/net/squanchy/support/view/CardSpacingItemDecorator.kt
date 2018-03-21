@@ -6,10 +6,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 
 class CardSpacingItemDecorator(
-    @param:Px @field:Px
-    private val horizontalSpacing: Int,
-    @param:Px @field:Px
-    private val verticalSpacing: Int
+    @param:Px @field:Px private val horizontalSpacing: Int,
+    @param:Px @field:Px private val verticalSpacing: Int
 ) : RecyclerView.ItemDecoration() {
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
