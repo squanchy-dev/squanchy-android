@@ -1,4 +1,4 @@
-package net.squanchy.search.angolia
+package net.squanchy.search.algolia
 
 import com.algolia.search.saas.Index
 import com.algolia.search.saas.Query
@@ -7,11 +7,11 @@ import com.squareup.moshi.Moshi
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
 import io.reactivex.subjects.PublishSubject
-import net.squanchy.search.angolia.model.AngoliaSearchResult
-import net.squanchy.search.angolia.model.SearchResult
+import net.squanchy.search.algolia.model.AlgoliaSearchResult
+import net.squanchy.search.algolia.model.SearchResult
 import timber.log.Timber
 
-class AngoliaSearchEngine(
+class AlgoliaSearchEngine(
     private val eventIndex: Index,
     private val speakerIndex: Index
 ) {
@@ -19,7 +19,7 @@ class AngoliaSearchEngine(
     private val publishSubject: PublishSubject<SearchResult> = PublishSubject.create()
 
     private val moshi: Moshi = Moshi.Builder().build()
-    private val adapter: JsonAdapter<AngoliaSearchResult> = moshi.adapter(AngoliaSearchResult::class.java)
+    private val adapter: JsonAdapter<AlgoliaSearchResult> = moshi.adapter(AlgoliaSearchResult::class.java)
 
     fun query(key: String): Observable<SearchResult> {
         Observable.combineLatest(eventIndex.searchAsObservable(key), speakerIndex.searchAsObservable(key), combineInPair())
@@ -28,7 +28,7 @@ class AngoliaSearchEngine(
         return publishSubject
     }
 
-    private fun Index.searchAsObservable(key: String): Observable<AngoliaSearchResult> {
+    private fun Index.searchAsObservable(key: String): Observable<AlgoliaSearchResult> {
         return Observable.create { e ->
             val request = searchAsync(Query(key)) { result, error ->
                 if (!e.isDisposed) {
@@ -36,7 +36,7 @@ class AngoliaSearchEngine(
                         e.onNext(adapter.fromJson(result.toString())!!)
                     } else {
                         Timber.e(error)
-                        e.onNext(AngoliaSearchResult(emptyList()))
+                        e.onNext(AlgoliaSearchResult(emptyList()))
                     }
                 }
             }
@@ -44,8 +44,8 @@ class AngoliaSearchEngine(
         }
     }
 
-    private fun combineInPair(): BiFunction<AngoliaSearchResult, AngoliaSearchResult, Pair<AngoliaSearchResult, AngoliaSearchResult>> =
+    private fun combineInPair(): BiFunction<AlgoliaSearchResult, AlgoliaSearchResult, Pair<AlgoliaSearchResult, AlgoliaSearchResult>> =
         BiFunction(::Pair)
 
-    private fun AngoliaSearchResult.extractIds() = angoliaSearchHit.map { it.objectID }
+    private fun AlgoliaSearchResult.extractIds() = algoliaSearchHit.map { it.objectID }
 }

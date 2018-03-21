@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.squanchy.schedule.domain.view.Event;
+import net.squanchy.search.algolia.AlgoliaSearchEngine;
 import net.squanchy.search.engines.SearchEngines;
 import net.squanchy.service.firebase.FirebaseAuthService;
 import net.squanchy.service.repository.EventRepository;
@@ -22,17 +23,20 @@ class SearchService {
     private final SpeakerRepository speakerRepository;
     private final SearchEngines searchEngines;
     private final FirebaseAuthService authService;
+    private final AlgoliaSearchEngine algoliaSearchEngine;
 
     SearchService(
             EventRepository eventRepository,
             SpeakerRepository speakerRepository,
             SearchEngines searchEngines,
-            FirebaseAuthService authService
+            FirebaseAuthService authService,
+            AlgoliaSearchEngine algoliaSearchEngine
     ) {
         this.eventRepository = eventRepository;
         this.speakerRepository = speakerRepository;
         this.searchEngines = searchEngines;
         this.authService = authService;
+        this.algoliaSearchEngine = algoliaSearchEngine;
     }
 
     Observable<SearchResults> find(String query) {

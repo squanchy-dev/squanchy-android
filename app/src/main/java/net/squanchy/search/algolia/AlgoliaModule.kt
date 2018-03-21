@@ -1,4 +1,4 @@
-package net.squanchy.search.angolia
+package net.squanchy.search.algolia
 
 import android.app.Application
 import com.algolia.search.saas.Client
@@ -10,26 +10,26 @@ import net.squanchy.injection.ApplicationLifecycle
 import javax.inject.Named
 
 @Module
-class AngoliaModule {
+class AlgoliaModule {
 
     @Provides
     @ApplicationLifecycle
-    fun angoliaClient(app: Application) = Client(app.getString(R.string.algolia_application_id), app.getString(R.string.algolia_api_key))
+    fun algoliaClient(app: Application) = Client(app.getString(R.string.algolia_application_id), app.getString(R.string.algolia_api_key))
 
     @Provides
     @ApplicationLifecycle
     @Named(EVENT_INDEX)
-    fun angoliaEventIndex(client: Client) = client.getIndex(EVENT_INDEX)
+    fun algoliaEventIndex(client: Client) = client.getIndex(EVENT_INDEX)
 
     @Provides
     @ApplicationLifecycle
     @Named(SPEAKER_INDEX)
-    fun angoliaSpeakerIndex(client: Client) = client.getIndex(SPEAKER_INDEX)
+    fun algoliaSpeakerIndex(client: Client) = client.getIndex(SPEAKER_INDEX)
 
     @Provides
     @ApplicationLifecycle
-    fun angoliaSearchEngine(@Named(EVENT_INDEX) eventIndex: Index, @Named(SPEAKER_INDEX) speakerIndex: Index) =
-        AngoliaSearchEngine(eventIndex, speakerIndex)
+    fun algoliaSearchEngine(@Named(EVENT_INDEX) eventIndex: Index, @Named(SPEAKER_INDEX) speakerIndex: Index) =
+        AlgoliaSearchEngine(eventIndex, speakerIndex)
 
     companion object {
         const val EVENT_INDEX = "squanchy_dev-events"
