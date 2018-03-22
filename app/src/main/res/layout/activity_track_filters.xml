@@ -1,9 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView
+
+<FrameLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
-  android:id="@+id/trackFiltersList"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/backgroundDim"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:paddingLeft="@dimen/track_filters_item_padding_horizontal"
-  android:paddingRight="@dimen/track_filters_item_padding_horizontal"
-  android:clipToPadding="false"/>
+  android:background="#4d000000">
+
+  <android.support.constraint.ConstraintLayout
+    android:id="@+id/filtersRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/window_background"
+    android:clickable="true"
+    android:focusable="false"
+    android:elevation="4dp">
+
+    <TextView
+      android:id="@+id/title"
+      android:layout_width="@dimen/match_constraint"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="12dp"
+      android:layout_marginStart="16dp"
+      android:layout_marginEnd="16dp"
+      android:fontFamily="@font/title_typeface"
+      android:textSize="20sp"
+      android:textColor="#434343"
+      android:text="Visible tracks"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toStartOf="@+id/closeButton" />
+
+    <TextView
+      android:id="@+id/subtitle"
+      android:layout_width="@dimen/match_constraint"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="4dp"
+      android:fontFamily="@font/default_typeface_medium"
+      android:textSize="12sp"
+      android:textColor="#909090"
+      android:text="Select the tracks to show in your schedule"
+      app:layout_constraintStart_toStartOf="@+id/title"
+      app:layout_constraintTop_toBottomOf="@+id/title"
+      app:layout_constraintEnd_toEndOf="@+id/title" />
+
+    <ImageButton
+      android:id="@+id/closeButton"
+      android:layout_width="24dp"
+      android:layout_height="24dp"
+      android:layout_marginTop="16dp"
+      android:layout_marginEnd="16dp"
+      android:src="@drawable/ic_close"
+      android:tint="#4D000000"
+      android:background="?android:attr/selectableItemBackgroundBorderless"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v7.widget.RecyclerView
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      android:id="@+id/trackFiltersList"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/match_constraint"
+      android:layout_marginTop="16dp"
+      android:paddingBottom="16dp"
+      android:paddingLeft="@dimen/track_filters_item_padding_horizontal"
+      android:paddingRight="@dimen/track_filters_item_padding_horizontal"
+      android:clipToPadding="false"
+      app:layout_constraintTop_toBottomOf="@+id/subtitle" />
+
+  </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>
+
