@@ -6,6 +6,8 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.recyclerview.extensions.ListAdapter
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -31,6 +33,7 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
     private lateinit var trackAdapter: TracksFilterAdapter
 
     private var subscription: Disposable? = null
+    private var checkableTracks: List<CheckableTrack>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,15 +47,22 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
         tracksRepository = component.tracksRepository()
         tracksFilter = component.tracksFilter()
 
-        trackAdapter = TracksFilterAdapter(this)
+        trackAdapter = TracksFilterAdapter(this) { track, selected ->
+            val selectedTracks = checkableTracks?.allSelected() ?: emptySet()
+            val newSelectedTracks = selectedTracks.addOrRemove(track, selected)
+            tracksFilter.updateSelectedTracks(newSelectedTracks)
+        }
 
         trackFiltersList.layoutManager = FlexboxLayoutManager(this, FlexDirection.ROW)
         trackFiltersList.addItemDecoration(FlexboxItemDecoration(this).apply {
-            setDrawable(resources.getDrawable(R.drawable.filters_separator))
+            setDrawable(resources.getDrawable(R.drawable.filters_separator, theme))
             setOrientation(FlexboxItemDecoration.BOTH)
         })
         trackFiltersList.adapter = trackAdapter
     }
+
+    private fun Set<Track>.addOrRemove(track: Track, selected: Boolean): Set<Track> =
+        if (selected) this + track else this - track
 
     override fun onStart() {
         super.onStart()
@@ -61,19 +71,10 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { checkableTracks ->
-                trackAdapter.updateTracks(checkableTracks) { track, selected ->
-                    val selectedTracks = checkableTracks.allSelected()
-                    val newSelectedTracks = selectedTracks.addOrRemove(track, selected)
-                    tracksFilter.updateSelectedTracks(newSelectedTracks)
-                }
+                this.checkableTracks = checkableTracks
+                trackAdapter.submitList(checkableTracks)
             }
     }
-
-    private fun Iterable<CheckableTrack>.allSelected(): Set<Track> =
-        filter { it.selected() }.map { it.track() }.toSet()
-
-    private fun Set<Track>.addOrRemove(track: Track, selected: Boolean): Set<Track> =
-        if (selected) this + track else this - track
 
     private fun combineIntoCheckableTracks(): BiFunction<List<Track>, Set<Track>, List<CheckableTrack>> {
         return BiFunction { tracks, selectedTracks ->
@@ -87,7 +88,10 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
     }
 }
 
-private class TracksFilterAdapter(context: Context) : RecyclerView.Adapter<TrackViewHolder>() {
+private class TracksFilterAdapter(
+    context: Context,
+    private val trackStateChangeListener: OnTrackSelectedChangeListener
+) : ListAdapter<CheckableTrack, TrackViewHolder>(DiffCallback()) {
 
     init {
         setHasStableIds(true)
@@ -95,28 +99,27 @@ private class TracksFilterAdapter(context: Context) : RecyclerView.Adapter<Track
 
     private val layoutInflater = LayoutInflater.from(context)
 
-    private var checkableTracks: List<CheckableTrack> = emptyList()
-    private lateinit var trackStateChangeListener: OnTrackSelectedChangeListener
-
-    override fun getItemCount(): Int = checkableTracks.size
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
         val view = layoutInflater.inflate(R.layout.track_filters_item, parent, false) as CheckBox
         return TrackViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
-        holder.bind(checkableTracks[position], trackStateChangeListener)
+        holder.bind(getItem(position), trackStateChangeListener)
     }
 
     override fun getItemId(position: Int): Long {
-        return checkableTracks[position].track().id.hashCode().toLong() // TODO this should use a proper checksum
+        return getItem(position).track().id.hashCode().toLong() // TODO this should use a proper checksum
     }
 
-    fun updateTracks(newCheckableTracks: List<CheckableTrack>, listener: OnTrackSelectedChangeListener) {
-        checkableTracks = newCheckableTracks // TODO use DiffUtil instead
-        trackStateChangeListener = listener
-        notifyDataSetChanged()
+    class DiffCallback : DiffUtil.ItemCallback<CheckableTrack>() {
+        override fun areItemsTheSame(oldItem: CheckableTrack?, newItem: CheckableTrack?): Boolean {
+            return oldItem?.track()?.id == newItem?.track()?.id
+        }
+
+        override fun areContentsTheSame(oldItem: CheckableTrack?, newItem: CheckableTrack?): Boolean {
+            return oldItem == newItem
+        }
     }
 }
 
@@ -142,6 +145,7 @@ private class TrackViewHolder(val item: CheckBox) : RecyclerView.ViewHolder(item
             if (track.accentColor.isPresent) {
                 backgroundTintList = ColorStateList.valueOf(trackColor)
             }
+
             if (isChecked) {
                 setTextColor(trackColor.contrastingTextColor(darkTextColor, lightTextColor))
                 alpha = ALPHA_CHECKED
@@ -158,6 +162,9 @@ private class TrackViewHolder(val item: CheckBox) : RecyclerView.ViewHolder(item
 private typealias OnTrackSelectedChangeListener = (track: Track, selected: Boolean) -> Unit
 
 private typealias CheckableTrack = Pair<Track, Boolean>
+
+private fun Iterable<CheckableTrack>.allSelected(): Set<Track> =
+    filter { it.selected() }.map { it.track() }.toSet()
 
 private fun CheckableTrack.track() = this.first
 private fun CheckableTrack.selected() = this.second
