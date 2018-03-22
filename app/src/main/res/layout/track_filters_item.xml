@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CheckBox
   xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="wrap_content"
   android:layout_height="wrap_content"
-  android:minHeight="?android:attr/listPreferredItemHeightSmall"
-  android:textAppearance="?android:attr/textAppearanceMedium"
-  android:gravity="center_vertical"
+  android:background="@drawable/chip_background"
+  android:button="@null"
+  android:fontFamily="@font/default_typeface_bold"
+  android:gravity="center"
   android:paddingLeft="@dimen/track_filters_item_padding_horizontal"
-  android:paddingRight="@dimen/track_filters_item_padding_horizontal" />
+  android:paddingRight="@dimen/track_filters_item_padding_horizontal"
+  android:textSize="12sp"
+  tools:text="Track name" />
