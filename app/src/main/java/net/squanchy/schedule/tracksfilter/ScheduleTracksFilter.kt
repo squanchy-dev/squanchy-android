@@ -59,6 +59,7 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
             setOrientation(FlexboxItemDecoration.BOTH)
         })
         trackFiltersList.adapter = trackAdapter
+        trackFiltersList.itemAnimator = null
     }
 
     private fun Set<Track>.addOrRemove(track: Track, selected: Boolean): Set<Track> =
