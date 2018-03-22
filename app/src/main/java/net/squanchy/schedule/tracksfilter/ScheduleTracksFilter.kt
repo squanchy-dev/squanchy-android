@@ -33,7 +33,7 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
     private lateinit var trackAdapter: TracksFilterAdapter
 
     private var subscription: Disposable? = null
-    private var checkableTracks: List<CheckableTrack>? = null
+    private var checkableTracks: List<CheckableTrack> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +48,7 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
         tracksFilter = component.tracksFilter()
 
         trackAdapter = TracksFilterAdapter(this) { track, selected ->
-            val selectedTracks = checkableTracks?.allSelected() ?: emptySet()
+            val selectedTracks = checkableTracks.allSelected()
             val newSelectedTracks = selectedTracks.addOrRemove(track, selected)
             tracksFilter.updateSelectedTracks(newSelectedTracks)
         }
