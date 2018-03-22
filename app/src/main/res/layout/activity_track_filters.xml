@@ -51,9 +51,11 @@
     <android.support.v7.widget.RecyclerView
       android:id="@+id/trackFiltersList"
       style="@style/TrackFilters.Filters.Tracks"
-      android:layout_width="match_parent"
+      android:layout_width="@dimen/match_constraint"
       android:layout_height="@dimen/match_constraint"
-      app:layout_constraintTop_toBottomOf="@+id/subtitle" />
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/subtitle"
+      app:layout_constraintEnd_toEndOf="parent" />
 
   </android.support.constraint.ConstraintLayout>
 
