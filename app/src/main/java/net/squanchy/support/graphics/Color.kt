@@ -11,7 +11,7 @@ private const val FACTOR_GREEN = 0.7151
 private const val FACTOR_BLUE = 0.0721
 
 @ColorInt
-internal fun Int.contrastingTextColor(darkTextColor: Int, lightTextColor: Int): Int {
+internal fun Int.contrastingTextColor(@ColorInt darkTextColor: Int, @ColorInt lightTextColor: Int): Int {
     val r = Color.red(this)
     val g = Color.green(this)
     val b = Color.blue(this)
