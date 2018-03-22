@@ -2,16 +2,18 @@
 <resources>
 
   <color name="card_background">@color/white</color>
-  <color name="licenses_notice_background">#e0e0e0</color>
+  <color name="licenses_notice_background">#E0E0E0</color>
   <color name="notification_led_color">@color/accent</color>
-  <color name="venue_info_name">#2e676e</color>
-  <color name="venue_info_address">#38828a</color>
-  <color name="venue_info_label">#38828a</color>
+  <color name="venue_info_name">#2E676E</color>
+  <color name="venue_info_address">#38828A</color>
+  <color name="venue_info_label">#38828A</color>
 
   <color name="experience_level_beginner">#A1D450</color>
   <color name="experience_level_intermediate">#EEA53A</color>
   <color name="experience_level_advanced">#EE6227</color>
 
   <color name="navigation_bar_light">#EEEEEE</color>
+  <color name="dialog_dim">#4D000000</color>
+  <color name="track_filters_close_button_tint">#4D000000</color>
 
 </resources>

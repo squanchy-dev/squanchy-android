@@ -3,70 +3,56 @@
 <FrameLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/backgroundDim"
+  style="@style/TrackFilters.BackgroundDim"
   android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:background="#4d000000">
+  android:layout_height="match_parent">
 
+  <!-- This is not accessible to the keyboard by design, it should only stop taps from going through it -->
   <android.support.constraint.ConstraintLayout
     android:id="@+id/filtersRoot"
+    style="@style/TrackFilters.Filters"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/window_background"
-    android:clickable="true"
-    android:focusable="false"
-    android:elevation="4dp">
+    tools:ignore="KeyboardInaccessibleWidget">
 
     <TextView
       android:id="@+id/title"
+      style="@style/TrackFilters.Filters.Title"
       android:layout_width="@dimen/match_constraint"
       android:layout_height="wrap_content"
-      android:layout_marginTop="12dp"
-      android:layout_marginStart="16dp"
-      android:layout_marginEnd="16dp"
-      android:fontFamily="@font/title_typeface"
-      android:textSize="20sp"
-      android:textColor="#434343"
-      android:text="Visible tracks"
+      android:layout_marginTop="@dimen/track_filters_title_margin_top"
+      android:layout_marginStart="@dimen/track_filters_title_margin_horizontal"
+      android:layout_marginEnd="@dimen/track_filters_title_margin_horizontal"
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toStartOf="@+id/closeButton" />
 
     <TextView
       android:id="@+id/subtitle"
+      style="@style/TrackFilters.Filters.Subtitle"
       android:layout_width="@dimen/match_constraint"
       android:layout_height="wrap_content"
-      android:layout_marginTop="4dp"
-      android:fontFamily="@font/default_typeface_medium"
-      android:textSize="12sp"
-      android:textColor="#909090"
-      android:text="Select the tracks to show in your schedule"
+      android:layout_marginTop="@dimen/track_filters_subtitle_margin_top"
       app:layout_constraintStart_toStartOf="@+id/title"
       app:layout_constraintTop_toBottomOf="@+id/title"
       app:layout_constraintEnd_toEndOf="@+id/title" />
 
     <ImageButton
       android:id="@+id/closeButton"
-      android:layout_width="24dp"
-      android:layout_height="24dp"
-      android:layout_marginTop="16dp"
-      android:layout_marginEnd="16dp"
-      android:src="@drawable/ic_close"
-      android:tint="#4D000000"
-      android:background="?android:attr/selectableItemBackgroundBorderless"
+      style="@style/TrackFilters.Filters.CloseButton"
+      android:layout_width="@dimen/track_filters_close_button_size"
+      android:layout_height="@dimen/track_filters_close_button_size"
+      android:layout_marginTop="@dimen/track_filters_close_button_margin"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.RecyclerView
-      xmlns:android="http://schemas.android.com/apk/res/android"
       android:id="@+id/trackFiltersList"
+      style="@style/TrackFilters.Filters.Tracks"
       android:layout_width="match_parent"
       android:layout_height="@dimen/match_constraint"
-      android:layout_marginTop="16dp"
-      android:paddingBottom="16dp"
-      android:paddingLeft="@dimen/track_filters_item_padding_horizontal"
-      android:paddingRight="@dimen/track_filters_item_padding_horizontal"
-      android:clipToPadding="false"
       app:layout_constraintTop_toBottomOf="@+id/subtitle" />
 
   </android.support.constraint.ConstraintLayout>
