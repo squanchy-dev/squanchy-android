@@ -47,7 +47,7 @@
 
     <activity
       android:name="net.squanchy.schedule.tracksfilter.ScheduleTracksFilterActivity"
-      android:theme="@style/Theme.Squanchy.Schedule" />
+      android:theme="@style/Theme.Squanchy.ScheduleTracksFilter" />
 
     <activity
       android:name="net.squanchy.eventdetails.EventDetailsActivity"

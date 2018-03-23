@@ -105,7 +105,7 @@
   <style name="Theme.Squanchy.Search" parent="Theme.Squanchy.MostlyWhite" />
 
   <style name="Theme.Squanchy.Settings" parent="Theme.Squanchy.PrimaryStatusBar">
-    <item name="colorAccent">?colorPrimary</item>
+    <item name="colorAccent">?attr/colorPrimary</item>
     <item name="fontFamily">@font/default_typeface_regular</item>
   </style>
 
@@ -117,6 +117,24 @@
 
   <style name="Theme.Squanchy.FirstStartWithNoNetwork" parent="Theme.Squanchy.Dialog">
     <item name="android:backgroundDimEnabled">false</item>
+  </style>
+
+  <style name="Theme.Squanchy.ScheduleTracksFilter" parent="Theme.Squanchy">
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+    <item name="android:windowElevation">4dp</item>
+    <item name="android:windowCloseOnTouchOutside">true</item>
+    <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:colorBackground">?attr/colorBackgroundFloating</item>
+    <item name="android:colorBackgroundCacheHint">@null</item>
+
+    <item name="android:windowFrame">@null</item>
+    <item name="android:windowIsFloating">false</item>
+    <item name="android:windowIsTranslucent">true</item>
+    <item name="android:backgroundDimEnabled">true</item>
+    <item name="android:windowContentOverlay">@null</item>
+    <item name="android:windowAnimationStyle">@style/Animation.AppCompat.Dialog</item>
+    <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
   </style>
 
 </resources>
