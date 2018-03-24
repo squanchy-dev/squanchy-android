@@ -66,10 +66,12 @@ fun aFirestorePlace(
 
 fun aFirestoreDay(
     id: String = "dayId",
-    date: Date = A_DATE
+    date: Date = A_DATE,
+    position: Int = Int.MIN_VALUE
 ) = FirestoreDay().apply {
     this.id = id
     this.date = date
+    this.position = position
 }
 
 fun aFirestoreVenue(

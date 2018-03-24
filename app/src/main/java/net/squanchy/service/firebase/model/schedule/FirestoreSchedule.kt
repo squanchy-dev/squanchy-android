@@ -10,6 +10,7 @@ class FirestoreSchedulePage {
 class FirestoreDay {
     lateinit var id: String
     lateinit var date: Date
+    var position: Int = Int.MIN_VALUE
 }
 
 class FirestoreEvent {
