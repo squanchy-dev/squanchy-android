@@ -3,7 +3,7 @@ ext {
     glideVersion = '4.6.1'
     supportLibVersion = '27.1.0'
     playServicesVersion = '12.0.0'
-    kotlinVersion = '1.2.30'
+    kotlinVersion = '1.2.31'
 
     checkstyleVersion = '8.8'
     findbugsVersion = '3.0.1'
@@ -39,10 +39,10 @@ ext {
             jodaTimeAndroid    : 'net.danlew:android.joda:2.9.9.2',
             kotlin             : "org.jetbrains.kotlin:kotlin-stdlib-jre7:${kotlinVersion}",
             playServicesAuth   : "com.google.android.gms:play-services-auth:${playServicesVersion}",
-            rxJava             : 'io.reactivex.rxjava2:rxjava:2.1.11',
+            rxJava             : 'io.reactivex.rxjava2:rxjava:2.1.12',
             rxAndroid          : 'io.reactivex.rxjava2:rxandroid:2.0.2',
             supportAppCompat   : "com.android.support:appcompat-v7:${supportLibVersion}",
-            supportConstraint  : 'com.android.support.constraint:constraint-layout:1.1.0-beta5',
+            supportConstraint  : 'com.android.support.constraint:constraint-layout:1.1.0-beta6',
             supportDesign      : "com.android.support:design:${supportLibVersion}",
             timber             : 'com.jakewharton.timber:timber:4.6.1',
             viewPagerAdapter   : 'com.novoda:view-pager-adapter:1.0.0'
@@ -61,7 +61,6 @@ ext {
         firebase                  : 'com.google.firebase:firebase-plugins:1.1.5',
         googleServices            : 'com.google.gms:google-services:3.2.0',
         gradleStaticAnalysisPlugin: 'com.novoda:gradle-static-analysis-plugin:0.5.2',
-        jaCoCo                    : 'org.jacoco:org.jacoco.core:0.8.0',
         playPublisher             : 'com.github.triplet.gradle:play-publisher:1.2.0'
     ]
 }
