@@ -3,21 +3,20 @@ package net.squanchy.search.algolia
 import com.algolia.search.saas.AlgoliaException
 import com.algolia.search.saas.Index
 import com.algolia.search.saas.Query
+import net.squanchy.search.algolia.model.AlgoliaSearchResponse
 import java.io.IOException
-
-typealias JsonString = String
 
 interface SearchIndex {
 
     @Throws(IOException::class)
-    fun search(key: String): JsonString?
+    fun search(key: String): AlgoliaSearchResponse?
 }
 
-class AlgoliaIndex(private val index: Index) : SearchIndex {
+class AlgoliaIndex(private val index: Index, private val parser: ResponseParser<AlgoliaSearchResponse>) : SearchIndex {
 
-    override fun search(key: String): JsonString? {
+    override fun search(key: String): AlgoliaSearchResponse? {
         return try {
-            index.searchSync(Query(key))?.toString()
+            parser.parse(index.searchSync(Query(key)).toString())
         } catch (e: AlgoliaException) {
             throw IOException(e)
         }

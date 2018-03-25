@@ -31,7 +31,7 @@ class AlgoliaSearchEngineTest {
     @Before
     fun setup() {
         parser = MoshiResponseParser(Moshi.Builder().build().adapter(AlgoliaSearchResponse::class.java))
-        algoliaSearchEngine = AlgoliaSearchEngine(eventIndex, speakerIndex, parser)
+        algoliaSearchEngine = AlgoliaSearchEngine(eventIndex, speakerIndex)
     }
 
     @Test
@@ -43,8 +43,8 @@ class AlgoliaSearchEngineTest {
 
     @Test
     fun `should return the correct list with speaker and event ids when the requests are successful`() {
-        `when`(speakerIndex.search("sa")).thenReturn(algoliaSpeakerResponse)
-        `when`(eventIndex.search("sa")).thenReturn(algoliaEventResponse)
+        `when`(speakerIndex.search("sa")).thenReturn(parser.parse(algoliaSpeakerResponse))
+        `when`(eventIndex.search("sa")).thenReturn(parser.parse(algoliaEventResponse))
 
         algoliaSearchEngine.query("sa")
             .test()
@@ -53,7 +53,7 @@ class AlgoliaSearchEngineTest {
 
     @Test
     fun `should return the error object when one of the two requests fails`() {
-        `when`(speakerIndex.search("sa")).thenReturn(algoliaSpeakerResponse)
+        `when`(speakerIndex.search("sa")).thenReturn(parser.parse(algoliaSpeakerResponse))
         `when`(eventIndex.search("sa")).thenThrow(IOException(":("))
 
         algoliaSearchEngine.query("sa")

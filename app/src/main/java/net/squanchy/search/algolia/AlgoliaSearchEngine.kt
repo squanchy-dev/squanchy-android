@@ -1,6 +1,5 @@
 package net.squanchy.search.algolia
 
-import com.algolia.search.saas.AlgoliaException
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
 import net.squanchy.search.algolia.model.AlgoliaSearchResponse
@@ -12,8 +11,7 @@ import timber.log.Timber
 
 class AlgoliaSearchEngine(
     private val eventIndex: SearchIndex,
-    private val speakerIndex: SearchIndex,
-    private val parser: ResponseParser<AlgoliaSearchResponse>
+    private val speakerIndex: SearchIndex
 ) {
 
     fun query(key: String): Observable<AlgoliaSearchResult> {
@@ -22,26 +20,12 @@ class AlgoliaSearchEngine(
         } else {
             return Observable.combineLatest(eventIndex.searchAsObservable(key), speakerIndex.searchAsObservable(key), combineInPair())
                 .map<AlgoliaSearchResult> { Matches(it.first.extractIds(), it.second.extractIds()) }
+                .doOnError(Timber::e)
                 .onErrorReturnItem(ErrorSearching)
         }
     }
 
-    private fun SearchIndex.searchAsObservable(key: String): Observable<AlgoliaSearchResponse> {
-        return Observable.create { emitter ->
-            try {
-                val result = search(key)
-                if (!emitter.isDisposed && result != null) {
-                    val parsedResult = parser.parse(result)
-                    parsedResult?.let(emitter::onNext)
-                }
-            } catch (ex: AlgoliaException) {
-                Timber.e(ex)
-                if (!emitter.isDisposed) {
-                    emitter.onError(ex)
-                }
-            }
-        }
-    }
+    private fun SearchIndex.searchAsObservable(key: String): Observable<AlgoliaSearchResponse> = Observable.fromCallable { search(key) }
 
     private fun combineInPair(): BiFunction<AlgoliaSearchResponse, AlgoliaSearchResponse, Pair<AlgoliaSearchResponse, AlgoliaSearchResponse>> =
         BiFunction(::Pair)

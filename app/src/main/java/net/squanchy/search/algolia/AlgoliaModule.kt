@@ -21,21 +21,20 @@ class AlgoliaModule {
     @Provides
     @ApplicationLifecycle
     @Named(EVENT_INDEX)
-    fun algoliaEventIndex(client: Client) = AlgoliaIndex(client.getIndex(EVENT_INDEX))
+    fun algoliaEventIndex(client: Client, parser: ResponseParser<AlgoliaSearchResponse>) = AlgoliaIndex(client.getIndex(EVENT_INDEX), parser)
 
     @Provides
     @ApplicationLifecycle
     @Named(SPEAKER_INDEX)
-    fun algoliaSpeakerIndex(client: Client) = AlgoliaIndex(client.getIndex(SPEAKER_INDEX))
+    fun algoliaSpeakerIndex(client: Client, parser: ResponseParser<AlgoliaSearchResponse>) = AlgoliaIndex(client.getIndex(SPEAKER_INDEX), parser)
 
     @Provides
     @ApplicationLifecycle
     fun algoliaSearchEngine(
         @Named(EVENT_INDEX) eventIndex: AlgoliaIndex,
-        @Named(SPEAKER_INDEX) speakerIndex: AlgoliaIndex,
-        parser: ResponseParser<AlgoliaSearchResponse>
+        @Named(SPEAKER_INDEX) speakerIndex: AlgoliaIndex
     ): AlgoliaSearchEngine {
-        return AlgoliaSearchEngine(eventIndex, speakerIndex, parser)
+        return AlgoliaSearchEngine(eventIndex, speakerIndex)
     }
 
     @Provides
