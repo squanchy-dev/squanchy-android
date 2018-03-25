@@ -35,7 +35,7 @@ class AlgoliaSearchEngineTest {
     }
 
     @Test
-    fun `should return DoNotFilter when query is less than 2 characters`() {
+    fun `should return QueryNotLongEnough when query is less than 2 characters`() {
         algoliaSearchEngine.query(INVALID_QUERY)
             .test()
             .assertValue(AlgoliaSearchResult.QueryNotLongEnough)
