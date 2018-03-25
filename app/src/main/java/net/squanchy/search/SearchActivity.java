@@ -103,7 +103,7 @@ public class SearchActivity extends AppCompatActivity implements SearchRecyclerV
                 .doOnNext(this::updateSearchActionIcon)
                 .flatMap(searchService::find)
                 .doOnNext(searchResults -> speakersSubscription.dispose())
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onReceivedSearchResults, Timber::e);
 

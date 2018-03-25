@@ -2,7 +2,6 @@ package net.squanchy.search.algolia
 
 import android.app.Application
 import com.algolia.search.saas.Client
-import com.algolia.search.saas.Index
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import dagger.Module
@@ -22,18 +21,18 @@ class AlgoliaModule {
     @Provides
     @ApplicationLifecycle
     @Named(EVENT_INDEX)
-    fun algoliaEventIndex(client: Client) = client.getIndex(EVENT_INDEX)
+    fun algoliaEventIndex(client: Client) = AlgoliaIndex(client.getIndex(EVENT_INDEX))
 
     @Provides
     @ApplicationLifecycle
     @Named(SPEAKER_INDEX)
-    fun algoliaSpeakerIndex(client: Client) = client.getIndex(SPEAKER_INDEX)
+    fun algoliaSpeakerIndex(client: Client) = AlgoliaIndex(client.getIndex(SPEAKER_INDEX))
 
     @Provides
     @ApplicationLifecycle
     fun algoliaSearchEngine(
-        @Named(EVENT_INDEX) eventIndex: Index,
-        @Named(SPEAKER_INDEX) speakerIndex: Index,
+        @Named(EVENT_INDEX) eventIndex: AlgoliaIndex,
+        @Named(SPEAKER_INDEX) speakerIndex: AlgoliaIndex,
         parser: ResponseParser<AlgoliaSearchResponse>
     ): AlgoliaSearchEngine {
         return AlgoliaSearchEngine(eventIndex, speakerIndex, parser)

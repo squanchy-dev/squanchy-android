@@ -5,7 +5,7 @@ import io.reactivex.functions.Function3
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.search.algolia.AlgoliaSearchEngine
 import net.squanchy.search.algolia.model.AlgoliaSearchResult
-import net.squanchy.search.algolia.model.AlgoliaSearchResult.DoNotFilter
+import net.squanchy.search.algolia.model.AlgoliaSearchResult.QueryNotLongEnough
 import net.squanchy.search.algolia.model.AlgoliaSearchResult.ErrorSearching
 import net.squanchy.search.algolia.model.AlgoliaSearchResult.Matches
 import net.squanchy.service.firebase.FirebaseAuthService
@@ -34,7 +34,7 @@ class SearchService(
     private fun combiner(): Function3<List<Event>, List<Speaker>, AlgoliaSearchResult, SearchResults> {
         return Function3 { events, speakers, result ->
             when (result) {
-                is DoNotFilter -> SearchResults(events, speakers)
+                is QueryNotLongEnough -> SearchResults(events, speakers)
                 //TODO handle the error
                 is ErrorSearching -> SearchResults(events, speakers)
                 is Matches -> SearchResults(

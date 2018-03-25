@@ -9,7 +9,7 @@ class AlgoliaSearchHit(
 )
 
 sealed class AlgoliaSearchResult {
-    object DoNotFilter : AlgoliaSearchResult()
+    object QueryNotLongEnough : AlgoliaSearchResult()
     object ErrorSearching : AlgoliaSearchResult()
     data class Matches(val eventIds: List<String>, val speakerIds: List<String>) : AlgoliaSearchResult()
 }
