@@ -144,6 +144,8 @@ dependencies {
         exclude group: 'com.google.firebase'
     }
 
+    implementation libraries.app.flexbox
+
     annotationProcessor libraries.app.glideCompiler
     kapt libraries.app.glideCompiler
     implementation libraries.app.glide

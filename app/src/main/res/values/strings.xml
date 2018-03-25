@@ -115,4 +115,7 @@
   <string name="first_start_with_no_network_cancel_button">You know what, nevermind</string>
 
   <string name="filter_schedule">Filter</string>
+  <string name="filter_tracks_title">Visible tracks</string>
+  <string name="filter_tracks_subtitle">Select the tracks to show in your schedule</string>
+
 </resources>

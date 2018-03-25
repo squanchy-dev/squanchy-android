@@ -632,4 +632,67 @@
     <item name="android:paddingTop">@dimen/preference_header_margin_vertical</item>
   </style>
 
+  <style name="TrackFilters" parent="None" />
+
+  <style name="TrackFilters.BackgroundDim" parent="None">
+    <item name="android:background">@color/dialog_dim</item>
+  </style>
+
+  <style name="TrackFilters.Filters" parent="None">
+    <item name="android:background">@color/window_background</item>
+    <item name="android:clickable">true</item>
+    <item name="android:elevation">@dimen/track_filters_elevation</item>
+    <item name="android:focusable">false</item>
+  </style>
+
+  <style name="TrackFilters.Filters.Title" parent="None">
+    <item name="android:text">@string/filter_tracks_title</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.TrackFilters.Filters.Title</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.TrackFilters.Filters.Title" parent="None">
+    <item name="android:textColor">#434343</item>
+    <item name="android:textSize">20sp</item>
+    <item name="fontFamily">@font/title_typeface</item>
+  </style>
+
+  <style name="TrackFilters.Filters.Subtitle" parent="None">
+    <item name="android:text">@string/filter_tracks_title</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.TrackFilters.Filters.Subtitle</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.TrackFilters.Filters.Subtitle" parent="None">
+    <item name="android:textColor">#909090</item>
+    <item name="android:textSize">12sp</item>
+    <item name="fontFamily">@font/default_typeface_medium</item>
+  </style>
+
+  <style name="TrackFilters.Filters.CloseButton" parent="None">
+    <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
+    <item name="android:scaleType">centerInside</item>
+    <item name="android:src">@drawable/ic_close</item>
+    <item name="android:tint">@color/track_filters_close_button_tint</item>
+  </style>
+
+  <style name="TrackFilters.Filters.Tracks" parent="None">
+    <item name="android:clipToPadding">false</item>
+    <item name="android:padding">@dimen/track_filters_tracks_padding</item>
+  </style>
+
+  <style name="TrackFilters.Filters.Tracks.Item" parent="None">
+    <item name="android:background">@drawable/chip_background</item>
+    <item name="android:button">@null</item>
+    <item name="android:gravity">center</item>
+    <item name="android:paddingLeft">@dimen/track_filters_item_padding_horizontal</item>
+    <item name="android:paddingTop">@dimen/track_filters_item_padding_vertical</item>
+    <item name="android:paddingRight">@dimen/track_filters_item_padding_horizontal</item>
+    <item name="android:paddingBottom">@dimen/track_filters_item_padding_vertical</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.TrackFilters.Filters.Tracks.Item</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.TrackFilters.Filters.Tracks.Item" parent="None">
+    <item name="android:textSize">12sp</item>
+    <item name="fontFamily">@font/default_typeface_bold</item>
+  </style>
+
 </resources>

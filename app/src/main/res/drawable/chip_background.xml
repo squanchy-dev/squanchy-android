@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:state_checked="true">
+    <shape android:shape="rectangle">
+      <corners android:radius="@dimen/track_filters_item_corner_radius" />
+      <solid android:color="@color/white" />
+      <stroke android:color="@color/white" android:width="@dimen/track_filters_item_stroke_width" />
+    </shape>
+  </item>
+  <item android:state_checked="false">
+    <shape android:shape="rectangle">
+      <corners android:radius="@dimen/track_filters_item_corner_radius" />
+      <solid android:color="@color/transparent" />
+      <stroke android:color="@color/white" android:width="@dimen/track_filters_item_stroke_width" />
+    </shape>
+  </item>
+</selector>

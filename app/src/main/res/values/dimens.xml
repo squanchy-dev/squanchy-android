@@ -189,8 +189,19 @@
   <dimen name="first_start_with_no_network_progress_size">48dp</dimen>
 
   <dimen name="match_constraint">0dp</dimen>
+
   <dimen name="preference_header_margin_vertical">16dp</dimen>
+
+  <dimen name="track_filters_elevation">4dp</dimen>
+  <dimen name="track_filters_title_margin_top">12dp</dimen>
+  <dimen name="track_filters_title_margin_horizontal">16dp</dimen>
+  <dimen name="track_filters_subtitle_margin_top">4dp</dimen>
+  <dimen name="track_filters_tracks_padding">16dp</dimen>
+  <dimen name="track_filters_item_padding_vertical">8dp</dimen>
   <dimen name="track_filters_item_padding_horizontal">16dp</dimen>
-  <dimen name="track_filters_item_padding_vertical">@dimen/track_filters_item_padding_horizontal</dimen>
+  <dimen name="track_filters_close_button_size">48dp</dimen>
+  <dimen name="track_filters_close_button_margin">4dp</dimen>
+  <dimen name="track_filters_item_corner_radius">200dp</dimen>
+  <dimen name="track_filters_item_stroke_width">2dp</dimen>
 
 </resources>

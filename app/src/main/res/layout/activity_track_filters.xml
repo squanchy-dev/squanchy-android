@@ -1,9 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView
+<!-- We can't use merge here because we have a style on it 🙄 -->
+<FrameLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
-  android:id="@+id/trackFiltersList"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/backgroundDim"
+  style="@style/TrackFilters.BackgroundDim"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:paddingLeft="@dimen/track_filters_item_padding_horizontal"
-  android:paddingRight="@dimen/track_filters_item_padding_horizontal"
-  android:clipToPadding="false"/>
+  tools:ignore="MergeRootFrame">
+
+  <!-- This is not accessible to the keyboard by design, it should only stop taps from going through it -->
+  <android.support.constraint.ConstraintLayout
+    android:id="@+id/filtersRoot"
+    style="@style/TrackFilters.Filters"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:ignore="KeyboardInaccessibleWidget">
+
+    <TextView
+      android:id="@+id/title"
+      style="@style/TrackFilters.Filters.Title"
+      android:layout_width="@dimen/match_constraint"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/track_filters_title_margin_top"
+      android:layout_marginStart="@dimen/track_filters_title_margin_horizontal"
+      android:layout_marginEnd="@dimen/track_filters_title_margin_horizontal"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toStartOf="@+id/closeButton" />
+
+    <TextView
+      android:id="@+id/subtitle"
+      style="@style/TrackFilters.Filters.Subtitle"
+      android:layout_width="@dimen/match_constraint"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/track_filters_subtitle_margin_top"
+      app:layout_constraintStart_toStartOf="@+id/title"
+      app:layout_constraintTop_toBottomOf="@+id/title"
+      app:layout_constraintEnd_toEndOf="@+id/title" />
+
+    <ImageButton
+      android:id="@+id/closeButton"
+      style="@style/TrackFilters.Filters.CloseButton"
+      android:layout_width="@dimen/track_filters_close_button_size"
+      android:layout_height="@dimen/track_filters_close_button_size"
+      android:layout_marginTop="@dimen/track_filters_close_button_margin"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v7.widget.RecyclerView
+      android:id="@+id/trackFiltersList"
+      style="@style/TrackFilters.Filters.Tracks"
+      android:layout_width="@dimen/match_constraint"
+      android:layout_height="wrap_content"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/subtitle"
+      app:layout_constraintEnd_toEndOf="parent" />
+
+  </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>
