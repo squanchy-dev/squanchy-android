@@ -2,42 +2,46 @@ package net.squanchy.search.algolia
 
 import com.algolia.search.saas.Index
 import com.algolia.search.saas.Query
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
 import io.reactivex.subjects.PublishSubject
+import net.squanchy.search.algolia.model.AlgoliaSearchResponse
 import net.squanchy.search.algolia.model.AlgoliaSearchResult
-import net.squanchy.search.algolia.model.AlgoliaMatches
+import net.squanchy.search.algolia.model.AlgoliaSearchResult.Matches
+import net.squanchy.search.algolia.model.AlgoliaSearchResult.DoNotFilter
+import net.squanchy.search.algolia.model.AlgoliaSearchResult.ErrorSearching
 import timber.log.Timber
 
 class AlgoliaSearchEngine(
     private val eventIndex: Index,
-    private val speakerIndex: Index
+    private val speakerIndex: Index,
+    private val parser: ResponseParser<AlgoliaSearchResponse>
 ) {
 
-    private val publishSubject: PublishSubject<AlgoliaMatches> = PublishSubject.create()
+    private val publishSubject: PublishSubject<AlgoliaSearchResult> = PublishSubject.create()
 
-    private val moshi: Moshi = Moshi.Builder().build()
-    private val adapter: JsonAdapter<AlgoliaSearchResult> = moshi.adapter(AlgoliaSearchResult::class.java)
-
-    fun query(key: String): Observable<AlgoliaMatches> {
-        Observable.combineLatest(eventIndex.searchAsObservable(key), speakerIndex.searchAsObservable(key), combineInPair())
-            .map { AlgoliaMatches(it.first.extractIds(), it.second.extractIds()) }
-            .subscribe(publishSubject)
+    fun query(key: String): Observable<AlgoliaSearchResult> {
+        if (key.length < 2) {
+            publishSubject.onNext(DoNotFilter)
+        } else {
+            Observable.combineLatest(eventIndex.searchAsObservable(key), speakerIndex.searchAsObservable(key), combineInPair())
+                .map<AlgoliaSearchResult> { Matches(it.first.extractIds(), it.second.extractIds()) }
+                .onErrorReturnItem(ErrorSearching)
+                .subscribe(publishSubject)
+        }
         return publishSubject
     }
 
-    private fun Index.searchAsObservable(key: String): Observable<AlgoliaSearchResult> {
+    private fun Index.searchAsObservable(key: String): Observable<AlgoliaSearchResponse> {
         return Observable.create { e ->
-            val request = searchAsync(Query(key)) { result, error ->
+            val request = searchAsync(Query(key)) { result, ex ->
                 if (!e.isDisposed) {
                     if (result != null) {
-                        val parsedResult = adapter.fromJson(result.toString())
-                        parsedResult?.let { e.onNext(it) }
+                        val parsedResult = parser.parse(result)
+                        parsedResult?.let(e::onNext)
                     } else {
-                        Timber.e(error)
-                        e.onNext(AlgoliaSearchResult(emptyList()))
+                        Timber.e(ex)
+                        e.onError(ex)
                     }
                 }
             }
@@ -45,8 +49,8 @@ class AlgoliaSearchEngine(
         }
     }
 
-    private fun combineInPair(): BiFunction<AlgoliaSearchResult, AlgoliaSearchResult, Pair<AlgoliaSearchResult, AlgoliaSearchResult>> =
+    private fun combineInPair(): BiFunction<AlgoliaSearchResponse, AlgoliaSearchResponse, Pair<AlgoliaSearchResponse, AlgoliaSearchResponse>> =
         BiFunction(::Pair)
 
-    private fun AlgoliaSearchResult.extractIds() = hits?.map { it.objectID } ?: emptyList()
+    private fun AlgoliaSearchResponse.extractIds() = hits?.map { it.objectID } ?: emptyList()
 }

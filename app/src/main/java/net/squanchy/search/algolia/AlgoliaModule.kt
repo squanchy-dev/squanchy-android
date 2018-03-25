@@ -3,10 +3,13 @@ package net.squanchy.search.algolia
 import android.app.Application
 import com.algolia.search.saas.Client
 import com.algolia.search.saas.Index
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import net.squanchy.R
 import net.squanchy.injection.ApplicationLifecycle
+import net.squanchy.search.algolia.model.AlgoliaSearchResponse
 import javax.inject.Named
 
 @Module
@@ -28,8 +31,24 @@ class AlgoliaModule {
 
     @Provides
     @ApplicationLifecycle
-    fun algoliaSearchEngine(@Named(EVENT_INDEX) eventIndex: Index, @Named(SPEAKER_INDEX) speakerIndex: Index) =
-        AlgoliaSearchEngine(eventIndex, speakerIndex)
+    fun algoliaSearchEngine(
+        @Named(EVENT_INDEX) eventIndex: Index,
+        @Named(SPEAKER_INDEX) speakerIndex: Index,
+        parser: ResponseParser<AlgoliaSearchResponse>
+    ): AlgoliaSearchEngine {
+        return AlgoliaSearchEngine(eventIndex, speakerIndex, parser)
+    }
+
+    @Provides
+    @ApplicationLifecycle
+    fun moshi() = Moshi.Builder().build()
+
+    @Provides
+    @ApplicationLifecycle
+    fun algoliaResultAdapter(moshi: Moshi): JsonAdapter<AlgoliaSearchResponse> = moshi.adapter(AlgoliaSearchResponse::class.java)
+
+    @Provides
+    fun responseParser(adapter: JsonAdapter<AlgoliaSearchResponse>): ResponseParser<AlgoliaSearchResponse> = MoshiResponseParser(adapter)
 
     companion object {
         const val EVENT_INDEX = "squanchy_dev-events"
