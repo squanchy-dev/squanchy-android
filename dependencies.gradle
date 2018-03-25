@@ -20,7 +20,7 @@ ext {
 
     libraries = [
         app : [
-            angolia            : 'com.algolia:algoliasearch-android:3.14.1',
+            algolia            : 'com.algolia:algoliasearch-android:3.14.1',
             crashlytics        : 'com.crashlytics.sdk.android:crashlytics:2.9.1',
             dagger             : "com.google.dagger:dagger:${daggerVersion}",
             daggerCompiler     : "com.google.dagger:dagger-compiler:${daggerVersion}",

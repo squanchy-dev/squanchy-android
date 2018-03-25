@@ -170,7 +170,7 @@ dependencies {
     kapt libraries.app.daggerCompiler
     implementation libraries.app.dagger
 
-    implementation libraries.app.angolia
+    implementation libraries.app.algolia
 
     testImplementation libraries.test.truth
     testImplementation libraries.test.jodaTime
