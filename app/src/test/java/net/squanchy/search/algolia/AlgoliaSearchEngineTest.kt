@@ -36,28 +36,33 @@ class AlgoliaSearchEngineTest {
 
     @Test
     fun `should return DoNotFilter when query is less than 2 characters`() {
-        algoliaSearchEngine.query("A")
+        algoliaSearchEngine.query(INVALID_QUERY)
             .test()
             .assertValue(AlgoliaSearchResult.QueryNotLongEnough)
     }
 
     @Test
     fun `should return the correct list with speaker and event ids when the requests are successful`() {
-        `when`(speakerIndex.search("sa")).thenReturn(parser.parse(algoliaSpeakerResponse))
-        `when`(eventIndex.search("sa")).thenReturn(parser.parse(algoliaEventResponse))
+        `when`(speakerIndex.search(VALID_QUERY)).thenReturn(parser.parse(algoliaSpeakerResponse))
+        `when`(eventIndex.search(VALID_QUERY)).thenReturn(parser.parse(algoliaEventResponse))
 
-        algoliaSearchEngine.query("sa")
+        algoliaSearchEngine.query(VALID_QUERY)
             .test()
             .assertValue(AlgoliaSearchResult.Matches(MATCHING_EVENT_IDS, MATCHING_SPEAKER_IDS))
     }
 
     @Test
     fun `should return the error object when one of the two requests fails`() {
-        `when`(speakerIndex.search("sa")).thenReturn(parser.parse(algoliaSpeakerResponse))
-        `when`(eventIndex.search("sa")).thenThrow(IOException(":("))
+        `when`(speakerIndex.search(VALID_QUERY)).thenReturn(parser.parse(algoliaSpeakerResponse))
+        `when`(eventIndex.search(VALID_QUERY)).thenThrow(IOException(":("))
 
-        algoliaSearchEngine.query("sa")
+        algoliaSearchEngine.query(VALID_QUERY)
             .test()
             .assertValue(AlgoliaSearchResult.ErrorSearching)
+    }
+
+    companion object {
+        private const val VALID_QUERY = "sa"
+        private const val INVALID_QUERY = "a"
     }
 }
