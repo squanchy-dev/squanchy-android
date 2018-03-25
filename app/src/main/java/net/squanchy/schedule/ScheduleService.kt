@@ -98,15 +98,11 @@ class FirestoreScheduleService(
 
     private fun List<FirestoreSchedulePage>.toSortedDomainSchedulePages(checksum: Checksum, timeZone: DateTimeZone) =
         map { page -> page.toSortedDomainSchedulePage(checksum, timeZone) }
-            .sortedBy(SchedulePage::position)
+            .sortedBy(SchedulePage::date)
 
     private fun FirestoreSchedulePage.toSortedDomainSchedulePage(checksum: Checksum, timeZone: DateTimeZone): SchedulePage =
-        SchedulePage(
-            day.id,
-            LocalDate(day.date),
-            day.position,
-            events.map { it.toEvent(checksum, timeZone) }.sortedBy(Event::startTime)
-        )
+        SchedulePage(day.id, LocalDate(day.date), events.map { it.toEvent(checksum, timeZone) }
+            .sortedBy(Event::startTime))
 
     override fun currentUserIsSignedIn(): Observable<Boolean> {
         return authService.currentUser()

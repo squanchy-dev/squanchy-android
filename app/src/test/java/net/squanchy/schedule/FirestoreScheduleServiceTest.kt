@@ -69,9 +69,9 @@ class FirestoreScheduleServiceTest {
     }
 
     @Test
-    fun `should sort schedule pages by date position`() {
-        val firstDaySchedulePage = aFirestoreSchedulePage(day = aFirestoreDay(id = "B", date = A_START_TIME.dateOnly(), position = 2))
-        val secondDaySchedulePage = aFirestoreSchedulePage(day = aFirestoreDay(id = "A", date = A_START_TIME.plusOneDay().dateOnly(), position = 1))
+    fun `should sort schedule pages by date`() {
+        val firstDaySchedulePage = aFirestoreSchedulePage(day = aFirestoreDay(id = "1", date = A_START_TIME.dateOnly()))
+        val secondDaySchedulePage = aFirestoreSchedulePage(day = aFirestoreDay(id = "2", date = A_START_TIME.plusOneDay().dateOnly()))
         `when`(dbService.scheduleView()).thenReturn(Observable.just(listOf(firstDaySchedulePage, secondDaySchedulePage)))
         val allowedTracks = setOf(aTrack())
         `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
@@ -82,8 +82,8 @@ class FirestoreScheduleServiceTest {
             .assertValue(
                 aSchedule(
                     listOf(
-                        aSchedulePage(dayId = "A", date = LocalDate(A_START_TIME.plusOneDay().dateOnly()), position = 1),
-                        aSchedulePage(dayId = "B", date = LocalDate(A_START_TIME.dateOnly()), position = 2)
+                        aSchedulePage(dayId = "1", date = LocalDate(A_START_TIME.dateOnly())),
+                        aSchedulePage(dayId = "2", date = LocalDate(A_START_TIME.plusOneDay().dateOnly()))
                     )
                 )
             )

@@ -21,12 +21,10 @@ fun aSchedule(
 fun aSchedulePage(
     dayId: String = aDay().id,
     date: LocalDate = aDay().date,
-    position: Int = Int.MIN_VALUE,
     events: List<Event> = (0..3).map { anEvent() }
 ) = SchedulePage(
     dayId = dayId,
     date = date,
-    position = position,
     events = events
 )
 
