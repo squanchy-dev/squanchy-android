@@ -4,6 +4,7 @@ import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
+import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Schedule
 import net.squanchy.schedule.domain.view.SchedulePage
 import net.squanchy.schedule.domain.view.Track
@@ -97,11 +98,15 @@ class FirestoreScheduleService(
 
     private fun List<FirestoreSchedulePage>.toSortedDomainSchedulePages(checksum: Checksum, timeZone: DateTimeZone) =
         map { page -> page.toSortedDomainSchedulePage(checksum, timeZone) }
-            .sortedBy { page -> page.position }
+            .sortedBy(SchedulePage::position)
 
     private fun FirestoreSchedulePage.toSortedDomainSchedulePage(checksum: Checksum, timeZone: DateTimeZone): SchedulePage =
-        SchedulePage(day.id, LocalDate(day.date), day.position, events.map { it.toEvent(checksum, timeZone) }
-            .sortedBy { it.startTime })
+        SchedulePage(
+            day.id,
+            LocalDate(day.date),
+            day.position,
+            events.map { it.toEvent(checksum, timeZone) }.sortedBy(Event::startTime)
+        )
 
     override fun currentUserIsSignedIn(): Observable<Boolean> {
         return authService.currentUser()
