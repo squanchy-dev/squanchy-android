@@ -20,24 +20,24 @@ class SearchService(
     private val algoliaSearchEngine: AlgoliaSearchEngine
 ) {
 
-    fun find(query: String): Observable<SearchResults> {
+    fun find(query: String): Observable<SearchResult> {
         return authService.ifUserSignedInThenObservableFrom { userId ->
             Observable.combineLatest(
                 eventRepository.events(userId),
                 speakerRepository.speakers(),
                 algoliaSearchEngine.query(query),
-                combiner()
+                combineWithSearchResult()
             )
         }
     }
 
-    private fun combiner(): Function3<List<Event>, List<Speaker>, AlgoliaSearchResult, SearchResults> {
+    private fun combineWithSearchResult(): Function3<List<Event>, List<Speaker>, AlgoliaSearchResult, SearchResult> {
         return Function3 { events, speakers, result ->
             when (result) {
-                is QueryNotLongEnough -> SearchResults(events, speakers)
+                is QueryNotLongEnough -> SearchResult(events, speakers)
                 //TODO handle the error
-                is ErrorSearching -> SearchResults(events, speakers)
-                is Matches -> SearchResults(
+                is ErrorSearching -> SearchResult(events, speakers)
+                is Matches -> SearchResult(
                     events.filter { result.eventIds.contains(it.id) },
                     speakers.filter { result.speakerIds.contains(it.id) }
                 )

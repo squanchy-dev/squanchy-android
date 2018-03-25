@@ -3,7 +3,7 @@ package net.squanchy.search
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.speaker.domain.view.Speaker
 
-data class SearchResults(
+data class SearchResult(
     val events: List<Event>,
     val speakers: List<Speaker>
 ) {
@@ -12,6 +12,6 @@ data class SearchResults(
 
     companion object {
 
-        fun create(events: List<Event>, speakers: List<Speaker>) = SearchResults(events, speakers)
+        fun create(events: List<Event>, speakers: List<Speaker>) = SearchResult(events, speakers)
     }
 }

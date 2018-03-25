@@ -18,7 +18,7 @@ import net.squanchy.R;
 import net.squanchy.imageloader.ImageLoader;
 import net.squanchy.schedule.view.EventItemView;
 import net.squanchy.schedule.view.EventViewHolder;
-import net.squanchy.search.SearchResults;
+import net.squanchy.search.SearchResult;
 
 import static net.squanchy.imageloader.ImageLoaderComponentKt.imageLoaderComponent;
 
@@ -30,8 +30,8 @@ class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Nullable
     private SearchRecyclerView.OnSearchResultClickListener listener;
 
-    private SearchResults searchResults = SearchResults.Companion.create(Collections.emptyList(), Collections.emptyList());
-    private ItemsAdapter itemsAdapter = new ItemsAdapter(searchResults);
+    private SearchResult searchResult = SearchResult.Companion.create(Collections.emptyList(), Collections.emptyList());
+    private ItemsAdapter itemsAdapter = new ItemsAdapter(searchResult);
 
     @IntDef({ViewTypeId.HEADER, ViewTypeId.SPEAKER, ViewTypeId.EVENT})
     @Retention(RetentionPolicy.SOURCE)
@@ -109,9 +109,9 @@ class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return itemsAdapter.totalItemsCount();
     }
 
-    public void updateWith(SearchResults searchResults, SearchRecyclerView.OnSearchResultClickListener listener) {
-        this.searchResults = searchResults;
-        this.itemsAdapter = new ItemsAdapter(searchResults);
+    public void updateWith(SearchResult searchResult, SearchRecyclerView.OnSearchResultClickListener listener) {
+        this.searchResult = searchResult;
+        this.itemsAdapter = new ItemsAdapter(searchResult);
         this.listener = listener;
 
         notifyDataSetChanged();

@@ -95,14 +95,14 @@ public class SearchActivity extends AppCompatActivity implements SearchRecyclerV
         searchField.addTextChangedListener(searchTextWatcher);
 
         Disposable speakersSubscription = searchService.speakers()
-                .map(speakers -> SearchResults.Companion.create(Collections.emptyList(), speakers))
+                .map(speakers -> SearchResult.Companion.create(Collections.emptyList(), speakers))
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(searchResults -> searchRecyclerView.updateWith(searchResults, this), Timber::e);
+                .subscribe(searchResult -> searchRecyclerView.updateWith(searchResult, this), Timber::e);
 
         Disposable searchSubscription = querySubject.throttleLast(QUERY_DEBOUNCE_TIMEOUT, TimeUnit.MILLISECONDS)
                 .doOnNext(this::updateSearchActionIcon)
                 .flatMap(searchService::find)
-                .doOnNext(searchResults -> speakersSubscription.dispose())
+                .doOnNext(searchResult -> speakersSubscription.dispose())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onReceivedSearchResults, Timber::e);
@@ -133,8 +133,8 @@ public class SearchActivity extends AppCompatActivity implements SearchRecyclerV
         supportInvalidateOptionsMenu();
     }
 
-    private void onReceivedSearchResults(SearchResults searchResults) {
-        if (searchResults.isEmpty()) {
+    private void onReceivedSearchResults(SearchResult searchResult) {
+        if (searchResult.isEmpty()) {
             searchRecyclerView.setVisibility(View.INVISIBLE);
             emptyView.setVisibility(View.VISIBLE);
 
@@ -144,7 +144,7 @@ public class SearchActivity extends AppCompatActivity implements SearchRecyclerV
             emptyView.setVisibility(View.INVISIBLE);
             searchRecyclerView.setVisibility(View.VISIBLE);
 
-            searchRecyclerView.updateWith(searchResults, this);
+            searchRecyclerView.updateWith(searchResult, this);
         }
     }
 
