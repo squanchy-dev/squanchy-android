@@ -12,7 +12,6 @@ import net.squanchy.schedule.domain.view.anEvent
 import net.squanchy.search.algolia.AlgoliaSearchEngine
 import net.squanchy.search.algolia.model.AlgoliaSearchResult
 import net.squanchy.service.firebase.FirebaseAuthService
-import net.squanchy.service.repository.AuthProvider
 import net.squanchy.service.repository.EventRepository
 import net.squanchy.service.repository.SpeakerRepository
 import net.squanchy.speaker.domain.view.aSpeaker
