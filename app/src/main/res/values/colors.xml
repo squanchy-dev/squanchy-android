@@ -16,4 +16,6 @@
   <color name="dialog_dim">#4D000000</color>
   <color name="track_filters_close_button_tint">#4D000000</color>
 
+  <color name="schedule_empty_view_text_color">#4d606060</color>
+
 </resources>
