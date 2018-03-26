@@ -25,9 +25,9 @@ import net.squanchy.support.unwrapToActivityContext
 import timber.log.Timber
 
 class SchedulePageView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet,
-    defStyleAttr: Int = 0
+        context: Context,
+        attrs: AttributeSet,
+        defStyleAttr: Int = 0
 ) : CoordinatorLayout(context, attrs, defStyleAttr), Loadable {
 
     private val viewPagerAdapter: ScheduleViewPagerAdapter
@@ -84,12 +84,12 @@ class SchedulePageView @JvmOverloads constructor(
 
     override fun startLoading() {
         subscriptions.add(
-            service.schedule()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { updateWith(it, { event -> onEventClicked(event) }) },
-                    { Timber.e(it) }
-                )
+                service.schedule()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            { updateWith(it, { event -> onEventClicked(event) }) },
+                            { Timber.e(it) }
+                    )
         )
     }
 
@@ -122,6 +122,19 @@ class SchedulePageView @JvmOverloads constructor(
     private fun hasTypefaceSpan(text: CharSequence?) = if (text !is Spanned) false else text.hasTypefaceSpan()
 
     fun updateWith(schedule: Schedule, onEventClicked: (Event) -> Unit) {
+        progressbar.visibility = View.GONE
+
+        if (schedule.isEmpty) {
+            viewpager.visibility = GONE
+            tabstrip.visibility = GONE
+            emptyView.visibility = VISIBLE
+            return
+        }
+
+        viewpager.visibility = VISIBLE
+        tabstrip.visibility = VISIBLE
+        emptyView.visibility = GONE
+
         val initialEventForPage = schedule.pages.map { schedule.findNextEventForPage(it, currentTime) }.toTypedArray()
         viewPagerAdapter.updateWith(schedule.pages, initialEventForPage, onEventClicked)
 
@@ -140,9 +153,9 @@ class SchedulePageView @JvmOverloads constructor(
     }
 
     private class ScrollingOnTabSelectedListener(
-        private val schedule: Schedule,
-        private val viewPagerAdapter: ScheduleViewPagerAdapter,
-        private val currentTime: CurrentTime
+            private val schedule: Schedule,
+            private val viewPagerAdapter: ScheduleViewPagerAdapter,
+            private val currentTime: CurrentTime
     ) : OnTabSelectedListener {
 
         override fun onTabReselected(tab: TabLayout.Tab) {
@@ -152,8 +165,8 @@ class SchedulePageView @JvmOverloads constructor(
     }
 
     private class TrackingOnTabSelectedListener(
-        private val analytics: Analytics,
-        private val viewPagerAdapter: ScheduleViewPagerAdapter
+            private val analytics: Analytics,
+            private val viewPagerAdapter: ScheduleViewPagerAdapter
     ) : OnTabSelectedListener {
 
         override fun onTabSelected(tab: TabLayout.Tab) {
