@@ -1,1 +1,1 @@
-include ':app', ':support-chip'
+include ':app'
