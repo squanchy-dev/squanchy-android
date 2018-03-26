@@ -5,27 +5,27 @@ import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import net.squanchy.injection.ApplicationLifecycle
+import net.squanchy.service.firebase.FirebaseAuthProvider
 import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.firebase.FirestoreDbService
+import net.squanchy.service.repository.AuthProvider
 
 @Module
 class FirestoreModule {
 
     @Provides
-    internal fun firebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
+    fun firebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
 
     @Provides
-    internal fun firebaseFirestore(): FirebaseFirestore {
-        return FirebaseFirestore.getInstance()
-    }
+    fun firebaseFirestore(): FirebaseFirestore = FirebaseFirestore.getInstance()
 
     @Provides
     @ApplicationLifecycle
-    internal fun firestoreDbService(database: FirebaseFirestore): FirestoreDbService = FirestoreDbService(database)
+    fun firestoreDbService(database: FirebaseFirestore): FirestoreDbService = FirestoreDbService(database)
 
-    @ApplicationLifecycle
     @Provides
-    internal fun firebaseAuthService(firebaseAuth: FirebaseAuth): FirebaseAuthService = FirebaseAuthService(
-        firebaseAuth
-    )
+    fun authProvider(firebaseAuth: FirebaseAuth): AuthProvider = FirebaseAuthProvider(firebaseAuth)
+
+    @Provides
+    fun firebaseAuthService(authProvider: AuthProvider): FirebaseAuthService = FirebaseAuthService(authProvider)
 }
