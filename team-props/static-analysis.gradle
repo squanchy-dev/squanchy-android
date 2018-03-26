@@ -1,3 +1,9 @@
+// Don't do static analysis for support (adopted) modules
+if (project.name.startsWith('support-')) {
+    // TODO remove this once we get rid of all support (adopted) modules
+    return
+}
+
 apply plugin: 'com.novoda.static-analysis'
 
 staticAnalysis {
@@ -29,7 +35,7 @@ staticAnalysis {
         excludeFilter teamPropsFile('static-analysis/findbugs-excludes.xml')
         includeVariants { variant -> excludeTestAndRelease(variant) }
     }
-    
+
     lintOptions {
         lintConfig teamPropsFile('static-analysis/lint-config.xml')
         warningsAsErrors true
