@@ -1,13 +1,12 @@
 package net.squanchy.signin
 
-import net.squanchy.service.firebase.FirebaseAuthService
-
 import dagger.Module
 import dagger.Provides
+import net.squanchy.service.repository.AuthService
 
 @Module
 internal class SignInModule {
 
     @Provides
-    fun service(authService: FirebaseAuthService) = SignInService(authService)
+    fun service(authService: AuthService) = SignInService(authService)
 }

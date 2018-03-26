@@ -8,7 +8,7 @@ import net.squanchy.search.algolia.model.AlgoliaSearchResult
 import net.squanchy.search.algolia.model.AlgoliaSearchResult.QueryNotLongEnough
 import net.squanchy.search.algolia.model.AlgoliaSearchResult.ErrorSearching
 import net.squanchy.search.algolia.model.AlgoliaSearchResult.Matches
-import net.squanchy.service.firebase.FirebaseAuthService
+import net.squanchy.service.repository.AuthService
 import net.squanchy.service.repository.EventRepository
 import net.squanchy.service.repository.SpeakerRepository
 import net.squanchy.speaker.domain.view.Speaker
@@ -16,7 +16,7 @@ import net.squanchy.speaker.domain.view.Speaker
 class SearchService(
     private val eventRepository: EventRepository,
     private val speakerRepository: SpeakerRepository,
-    private val authService: FirebaseAuthService,
+    private val authService: AuthService,
     private val algoliaSearchEngine: AlgoliaSearchEngine
 ) {
 

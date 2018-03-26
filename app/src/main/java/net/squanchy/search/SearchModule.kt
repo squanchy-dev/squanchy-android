@@ -3,7 +3,7 @@ package net.squanchy.search
 import dagger.Module
 import dagger.Provides
 import net.squanchy.search.algolia.AlgoliaSearchEngine
-import net.squanchy.service.firebase.FirebaseAuthService
+import net.squanchy.service.repository.AuthService
 import net.squanchy.service.repository.EventRepository
 import net.squanchy.service.repository.SpeakerRepository
 
@@ -14,7 +14,7 @@ class SearchModule {
     fun searchService(
         eventRepository: EventRepository,
         speakerRepository: SpeakerRepository,
-        authService: FirebaseAuthService,
+        authService: AuthService,
         algoliaSearchEngine: AlgoliaSearchEngine
     ): SearchService {
         return SearchService(eventRepository, speakerRepository, authService, algoliaSearchEngine)

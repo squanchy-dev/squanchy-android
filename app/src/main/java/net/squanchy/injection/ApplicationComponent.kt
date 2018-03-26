@@ -10,9 +10,9 @@ import net.squanchy.schedule.tracksfilter.TracksFilter
 import net.squanchy.schedule.tracksfilter.TracksFilterModule
 import net.squanchy.search.algolia.AlgoliaModule
 import net.squanchy.search.algolia.AlgoliaSearchEngine
-import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.firebase.FirestoreDbService
 import net.squanchy.service.firebase.injection.FirestoreModule
+import net.squanchy.service.repository.AuthService
 import net.squanchy.service.repository.EventRepository
 import net.squanchy.service.repository.SpeakerRepository
 import net.squanchy.service.repository.TracksRepository
@@ -51,7 +51,7 @@ interface ApplicationComponent {
 
     fun firestoreDbService(): FirestoreDbService
 
-    fun firebaseAuthService(): FirebaseAuthService
+    fun firebaseAuthService(): AuthService
 
     fun eventRepository(): EventRepository
 

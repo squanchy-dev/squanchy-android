@@ -1,17 +1,12 @@
 package net.squanchy.search
 
-import android.net.Uri
-import android.os.Parcel
-import com.google.android.gms.internal.zzebw
-import com.google.firebase.FirebaseApp
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.FirebaseUserMetadata
-import com.google.firebase.auth.UserInfo
 import io.reactivex.Observable
 import net.squanchy.schedule.domain.view.anEvent
 import net.squanchy.search.algolia.AlgoliaSearchEngine
 import net.squanchy.search.algolia.model.AlgoliaSearchResult
+import net.squanchy.service.aUser
 import net.squanchy.service.firebase.FirebaseAuthService
+import net.squanchy.service.repository.AuthService
 import net.squanchy.service.repository.EventRepository
 import net.squanchy.service.repository.SpeakerRepository
 import net.squanchy.speaker.domain.view.aSpeaker
@@ -35,7 +30,7 @@ class SearchServiceTest {
     lateinit var authService: FirebaseAuthService
 
     @Mock
-    lateinit var firebaseAuth: AuthProvider
+    lateinit var authProvider: AuthService
 
     @Mock
     lateinit var eventRepository: EventRepository
@@ -48,9 +43,7 @@ class SearchServiceTest {
 
     @Before
     fun setup() {
-        `when`(firebaseAuth.currentUser()).thenReturn(Observable.just(Optional.of<FirebaseUser>(FakeUser)))
-
-        authService = FirebaseAuthService(firebaseAuth)
+        `when`(authProvider.currentUser()).thenReturn(Observable.just(Optional.of(aUser(id = UID))))
         searchService = SearchService(eventRepository, speakerRepository, authService, algoliaSearchEngine)
     }
 
@@ -81,82 +74,5 @@ class SearchServiceTest {
     companion object {
         private const val QUERY = "A"
         private const val UID = "uid"
-    }
-
-    object FakeUser : FirebaseUser() {
-
-        override fun getUid(): String = UID
-
-        override fun zze(): String {
-            TODO("not implemented")
-        }
-
-        override fun getEmail(): String? {
-            TODO("not implemented")
-        }
-
-        override fun zzc(): zzebw {
-            TODO("not implemented")
-        }
-
-        override fun zza(): MutableList<String> {
-            TODO("not implemented")
-        }
-
-        override fun zza(p0: MutableList<out UserInfo>): FirebaseUser {
-            TODO("not implemented")
-        }
-
-        override fun zza(p0: Boolean): FirebaseUser {
-            TODO("not implemented")
-        }
-
-        override fun zza(p0: zzebw) {
-            TODO("not implemented")
-        }
-
-        override fun getProviderData(): MutableList<out UserInfo> {
-            TODO("not implemented")
-        }
-
-        override fun writeToParcel(dest: Parcel?, flags: Int) {
-            TODO("not implemented")
-        }
-
-        override fun getMetadata(): FirebaseUserMetadata? {
-            TODO("not implemented")
-        }
-
-        override fun isAnonymous(): Boolean {
-            TODO("not implemented")
-        }
-
-        override fun getPhoneNumber(): String? {
-            TODO("not implemented")
-        }
-
-        override fun isEmailVerified(): Boolean {
-            TODO("not implemented")
-        }
-
-        override fun zzd(): String {
-            TODO("not implemented")
-        }
-
-        override fun zzb(): FirebaseApp {
-            TODO("not implemented")
-        }
-
-        override fun getDisplayName(): String? {
-            TODO("not implemented")
-        }
-
-        override fun getPhotoUrl(): Uri? {
-            TODO("not implemented")
-        }
-
-        override fun getProviderId(): String {
-            TODO("not implemented")
-        }
     }
 }
