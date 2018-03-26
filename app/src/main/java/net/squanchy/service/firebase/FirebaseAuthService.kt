@@ -105,8 +105,6 @@ class FirebaseAuthService(private val auth: FirebaseAuth) {
         return currentFirebaseUser().map { it.map { it.toUser() } }
     }
 
-    private fun FirebaseUser.toUser() = User(uid, isAnonymous, providerData[0].photoUrl)
-
     fun signOut(): Completable {
         auth.signOut()
         return signInAnonymously()
