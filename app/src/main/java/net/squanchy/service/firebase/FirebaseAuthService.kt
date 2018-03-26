@@ -71,7 +71,7 @@ class FirebaseAuthService(private val auth: FirebaseAuth) : AuthService {
 
     private fun ifUserSignedIn(): Observable<FirebaseUser> {
         return currentFirebaseUser()
-            .filter({ it.isPresent })
+            .filter { it.isPresent }
             .map { it.get() }
     }
 
