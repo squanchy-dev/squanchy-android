@@ -1,14 +1,15 @@
 package net.squanchy.search
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import io.reactivex.Completable
 import io.reactivex.Observable
 import net.squanchy.schedule.domain.view.anEvent
 import net.squanchy.search.algolia.AlgoliaSearchEngine
 import net.squanchy.search.algolia.model.AlgoliaSearchResult
-import net.squanchy.service.aUser
-import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.repository.AuthService
 import net.squanchy.service.repository.EventRepository
 import net.squanchy.service.repository.SpeakerRepository
+import net.squanchy.service.repository.User
 import net.squanchy.speaker.domain.view.aSpeaker
 import net.squanchy.support.lang.Optional
 import org.junit.Before
@@ -27,11 +28,6 @@ class SearchServiceTest {
 
     lateinit var searchService: SearchService
 
-    lateinit var authService: FirebaseAuthService
-
-    @Mock
-    lateinit var authProvider: AuthService
-
     @Mock
     lateinit var eventRepository: EventRepository
 
@@ -43,8 +39,7 @@ class SearchServiceTest {
 
     @Before
     fun setup() {
-        `when`(authProvider.currentUser()).thenReturn(Observable.just(Optional.of(aUser(id = UID))))
-        searchService = SearchService(eventRepository, speakerRepository, authService, algoliaSearchEngine)
+        searchService = SearchService(eventRepository, speakerRepository, FakeAuthService, algoliaSearchEngine)
     }
 
     @Test
@@ -74,5 +69,32 @@ class SearchServiceTest {
     companion object {
         private const val QUERY = "A"
         private const val UID = "uid"
+    }
+
+    private object FakeAuthService : AuthService {
+
+        override fun signInWithGoogle(account: GoogleSignInAccount): Completable {
+            TODO("not implemented")
+        }
+
+        override fun <T> ifUserSignedInThenObservableFrom(observable: (String) -> Observable<T>): Observable<T> {
+            return observable(UID)
+        }
+
+        override fun ifUserSignedInThenCompletableFrom(completable: (String) -> Completable): Completable {
+            TODO("not implemented")
+        }
+
+        override fun currentUser(): Observable<Optional<User>> {
+            TODO("not implemented")
+        }
+
+        override fun signOut(): Completable {
+            TODO("not implemented")
+        }
+
+        override fun signInAnonymously(): Completable {
+            TODO("not implemented")
+        }
     }
 }
