@@ -2,19 +2,22 @@ package net.squanchy.service.firebase
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import io.reactivex.Completable
 import io.reactivex.CompletableSource
 import io.reactivex.Observable
-import net.squanchy.service.repository.AuthProvider
+import net.squanchy.service.repository.AuthService
+import net.squanchy.service.repository.User
 import net.squanchy.support.lang.Optional
+import net.squanchy.support.lang.optional
 
-class FirebaseAuthService(private val auth: AuthProvider) {
+class FirebaseAuthService(private val auth: FirebaseAuth) : AuthService {
 
-    fun signInWithGoogle(account: GoogleSignInAccount): Completable {
-        return currentUser()
+    override fun signInWithGoogle(account: GoogleSignInAccount): Completable {
+        return currentFirebaseUser()
             .firstOrError()
             .flatMapCompletable {
                 val credential = GoogleAuthProvider.getCredential(account.idToken, null)
@@ -49,40 +52,59 @@ class FirebaseAuthService(private val auth: AuthProvider) {
     }
 
     private fun signInWithGoogleCredential(credential: AuthCredential): Completable {
-        return auth.signInWithCredential(credential)
+        return { auth.signInWithCredential(credential) }.toCompletable()
     }
 
     private fun deleteUser(user: FirebaseUser): Completable {
-        return user::delete.toCompletable()
+        return { user.delete() }.toCompletable()
     }
 
-    fun <T> ifUserSignedInThenObservableFrom(observable: (String) -> Observable<T>): Observable<T> {
+    override fun <T> ifUserSignedInThenObservableFrom(observable: (String) -> Observable<T>): Observable<T> {
         return ifUserSignedIn()
             .switchMap { user -> observable(user.uid) }
     }
 
-    fun ifUserSignedInThenCompletableFrom(completable: (String) -> Completable): Completable {
+    override fun ifUserSignedInThenCompletableFrom(completable: (String) -> Completable): Completable {
         return ifUserSignedIn()
             .firstOrError()
             .flatMapCompletable { user -> completable(user.uid) }
     }
 
     private fun ifUserSignedIn(): Observable<FirebaseUser> {
-        return currentUser()
+        return currentFirebaseUser()
             .filter { it.isPresent }
             .map { it.get() }
     }
 
-    fun currentUser(): Observable<Optional<FirebaseUser>> {
-        return auth.currentUser()
+    private fun currentFirebaseUser(): Observable<Optional<FirebaseUser>> {
+        return Observable.create { e ->
+            val listener = { firebaseAuth: FirebaseAuth -> e.onNext(firebaseAuth.currentUser.optional()) }
+
+            auth.addAuthStateListener(listener)
+
+            e.setCancellable { auth.removeAuthStateListener(listener) }
+        }
     }
 
-    fun signOut(): Completable {
-        return auth.signOut()
-            .andThen(auth.signInAnonymously())
+    override fun currentUser(): Observable<Optional<User>> {
+        return currentFirebaseUser().map { it.map { it.toUser() } }
     }
 
-    fun signInAnonymously(): Completable {
-        return auth.signInAnonymously()
+    override fun signOut(): Completable {
+        auth.signOut()
+        return signInAnonymously()
+    }
+
+    override fun signInAnonymously(): Completable {
+        return Completable.create { emitter ->
+            auth.signInAnonymously()
+                .addOnSuccessListener { emitter.onComplete() }
+                .addOnFailureListener { e ->
+                    if (emitter.isDisposed) {
+                        return@addOnFailureListener
+                    }
+                    emitter.onError(e)
+                }
+        }
     }
 }

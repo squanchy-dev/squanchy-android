@@ -7,7 +7,7 @@ import io.reactivex.Completable
 fun <T> (() -> Task<T>).toCompletable(): Completable {
     return Completable.create { completableObserver ->
         invoke().addOnCompleteListener { result ->
-            if (result.isSuccessful) {
+            if (result.isSuccessful && !completableObserver.isDisposed) {
                 completableObserver.onComplete()
             } else {
                 completableObserver.onError(result.exception
