@@ -12,6 +12,7 @@ import io.reactivex.Observable
 import net.squanchy.service.repository.AuthService
 import net.squanchy.service.repository.User
 import net.squanchy.support.lang.Optional
+import net.squanchy.support.lang.optional
 
 class FirebaseAuthService(private val auth: FirebaseAuth) : AuthService {
 
@@ -77,7 +78,7 @@ class FirebaseAuthService(private val auth: FirebaseAuth) : AuthService {
 
     private fun currentFirebaseUser(): Observable<Optional<FirebaseUser>> {
         return Observable.create { e ->
-            val listener = { firebaseAuth: FirebaseAuth -> e.onNext(Optional.fromNullable(firebaseAuth.currentUser)) }
+            val listener = { firebaseAuth: FirebaseAuth -> e.onNext(firebaseAuth.currentUser.optional()) }
 
             auth.addAuthStateListener(listener)
 
