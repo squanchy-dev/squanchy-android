@@ -15,7 +15,7 @@ class AlgoliaSearchEngine(
 ) {
 
     fun query(key: String): Observable<AlgoliaSearchResult> {
-        if (key.length < 2) {
+        if (key.length < QUERY_MIN_LENGTH) {
             return Observable.just(QueryNotLongEnough)
         } else {
             return Observable.combineLatest(eventIndex.searchAsObservable(key), speakerIndex.searchAsObservable(key), combineInPair())
@@ -31,4 +31,8 @@ class AlgoliaSearchEngine(
         BiFunction(::Pair)
 
     private fun AlgoliaSearchResponse.extractIds() = hits?.map { it.objectID } ?: emptyList()
+
+    companion object {
+        private const val QUERY_MIN_LENGTH = 2
+    }
 }
