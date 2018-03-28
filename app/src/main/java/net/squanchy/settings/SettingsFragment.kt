@@ -15,6 +15,7 @@ import net.squanchy.BuildConfig
 import net.squanchy.R
 import net.squanchy.analytics.Analytics
 import net.squanchy.navigation.Navigator
+import net.squanchy.signin.SignInOrigin
 import net.squanchy.signin.SignInService
 import net.squanchy.support.lang.Optional
 
@@ -123,7 +124,7 @@ class SettingsFragment : PreferenceFragment() {
 
         accountSignInSignOutPreference.setTitle(R.string.sign_in_title)
         accountSignInSignOutPreference.setOnPreferenceClickListener {
-            navigator.toSignInForResult(REQUEST_CODE_SIGNIN)
+            navigator.toSignIn(SignInOrigin.SETTINGS)
             true
         }
     }
@@ -131,10 +132,5 @@ class SettingsFragment : PreferenceFragment() {
     override fun onStop() {
         super.onStop()
         subscriptions.clear()
-    }
-
-    companion object {
-
-        const val REQUEST_CODE_SIGNIN = 1235
     }
 }

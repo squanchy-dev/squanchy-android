@@ -1,7 +1,6 @@
 package net.squanchy.home
 
 import android.animation.ValueAnimator
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
@@ -20,6 +19,7 @@ import net.squanchy.analytics.ContentType
 import net.squanchy.home.deeplink.HomeActivityDeepLinkCreator
 import net.squanchy.home.deeplink.HomeActivityIntentParser
 import net.squanchy.navigation.Navigator
+import net.squanchy.signin.SignInOrigin
 import net.squanchy.support.widget.InterceptingBottomNavigationView
 
 class HomeActivity : AppCompatActivity() {
@@ -72,9 +72,6 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_SIGN_IN_MAY_GOD_HAVE_MERCY_OF_OUR_SOULS) {
-            if (resultCode == Activity.RESULT_OK) {
-                analytics.trackUserLoggedInFavorites()
-            }
             startLoading()
         } else {
             super.onActivityResult(requestCode, resultCode, data)
@@ -178,7 +175,7 @@ class HomeActivity : AppCompatActivity() {
 
     fun requestSignIn() {
         stopLoading()
-        navigator.toSignInForResult(REQUEST_SIGN_IN_MAY_GOD_HAVE_MERCY_OF_OUR_SOULS)
+        navigator.toSignInForResult(REQUEST_SIGN_IN_MAY_GOD_HAVE_MERCY_OF_OUR_SOULS, SignInOrigin.FAVORITES)
     }
 
     override fun onStart() {

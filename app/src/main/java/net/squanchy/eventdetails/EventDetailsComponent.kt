@@ -1,7 +1,6 @@
 package net.squanchy.eventdetails
 
 import dagger.Component
-import net.squanchy.analytics.Analytics
 import net.squanchy.injection.ActivityContextModule
 import net.squanchy.injection.ActivityLifecycle
 import net.squanchy.injection.ApplicationComponent
@@ -24,6 +23,4 @@ internal interface EventDetailsComponent {
     fun service(): EventDetailsService
 
     fun navigator(): Navigator
-
-    fun analytics(): Analytics
 }

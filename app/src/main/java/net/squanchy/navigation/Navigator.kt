@@ -19,6 +19,7 @@ import net.squanchy.schedule.tracksfilter.ScheduleTracksFilterActivity
 import net.squanchy.search.SearchActivity
 import net.squanchy.settings.SettingsActivity
 import net.squanchy.signin.SignInActivity
+import net.squanchy.signin.SignInOrigin
 import net.squanchy.speaker.SpeakerDetailsActivity
 import net.squanchy.tweets.domain.TweetLinkInfo
 import net.squanchy.venue.domain.view.Venue
@@ -149,9 +150,20 @@ class Navigator(
         activity.startActivity(intent)
     }
 
-    fun toSignInForResult(requestCode: Int) {
-        val intent = Intent(activity, SignInActivity::class.java)
+    fun toSignIn(signInOrigin: SignInOrigin) {
+        val intent = createSignInIntent(signInOrigin)
+        start(intent)
+    }
+
+    fun toSignInForResult(requestCode: Int, signInOrigin: SignInOrigin) {
+        val intent = createSignInIntent(signInOrigin)
         startForResult(intent, requestCode)
+    }
+
+    private fun createSignInIntent(signInOrigin: SignInOrigin): Intent {
+        val intent = Intent(activity, SignInActivity::class.java)
+        intent.putExtra(SignInActivity.EXTRA_SIGN_IN_ORIGIN, signInOrigin)
+        return intent
     }
 
     fun toOnboardingForResult(page: OnboardingPage, requestCode: Int) {
