@@ -2,6 +2,7 @@ package net.squanchy.settings
 
 import android.app.Activity
 import dagger.Component
+import net.squanchy.analytics.Analytics
 import net.squanchy.injection.ActivityLifecycle
 import net.squanchy.injection.ApplicationComponent
 import net.squanchy.injection.applicationComponent
@@ -19,4 +20,6 @@ internal fun settingsActivityComponent(activity: Activity) =
 internal interface SettingsActivityComponent {
 
     fun signInService(): SignInService
+
+    fun analytics(): Analytics
 }

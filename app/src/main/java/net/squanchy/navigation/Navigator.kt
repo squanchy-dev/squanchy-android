@@ -35,8 +35,8 @@ class Navigator(
 
     fun toSpeakerDetails(speakerId: String) {
         start(
-                SpeakerDetailsActivity.createIntent(activity, speakerId),
-                FLAG_ACTIVITY_SINGLE_TOP or FLAG_ACTIVITY_CLEAR_TOP
+            SpeakerDetailsActivity.createIntent(activity, speakerId),
+            FLAG_ACTIVITY_SINGLE_TOP or FLAG_ACTIVITY_CLEAR_TOP
         )
     }
 
@@ -93,29 +93,29 @@ class Navigator(
 
     fun toSchedule(dayId: String?, eventId: String?) {
         start(
-                HomeActivity.createScheduleIntent(activity, dayId, eventId),
-                FLAG_ACTIVITY_SINGLE_TOP or FLAG_ACTIVITY_CLEAR_TOP or FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK
+            HomeActivity.createScheduleIntent(activity, dayId, eventId),
+            FLAG_ACTIVITY_SINGLE_TOP or FLAG_ACTIVITY_CLEAR_TOP or FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK
         )
     }
 
     fun toFavorites() {
         start(
-                HomeActivity.createFavoritesIntent(activity),
-                FLAG_ACTIVITY_SINGLE_TOP or FLAG_ACTIVITY_CLEAR_TOP or FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK
+            HomeActivity.createFavoritesIntent(activity),
+            FLAG_ACTIVITY_SINGLE_TOP or FLAG_ACTIVITY_CLEAR_TOP or FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK
         )
     }
 
     fun toTwitterFeed() {
         start(
-                HomeActivity.createTweetsIntent(activity),
-                FLAG_ACTIVITY_SINGLE_TOP or FLAG_ACTIVITY_CLEAR_TOP or FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK
+            HomeActivity.createTweetsIntent(activity),
+            FLAG_ACTIVITY_SINGLE_TOP or FLAG_ACTIVITY_CLEAR_TOP or FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK
         )
     }
 
     fun toVenueInfo() {
         start(
-                HomeActivity.createVenueInfoIntent(activity),
-                FLAG_ACTIVITY_SINGLE_TOP or FLAG_ACTIVITY_CLEAR_TOP or FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK
+            HomeActivity.createVenueInfoIntent(activity),
+            FLAG_ACTIVITY_SINGLE_TOP or FLAG_ACTIVITY_CLEAR_TOP or FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK
         )
     }
 
@@ -135,14 +135,10 @@ class Navigator(
         start(Intent(activity, LicensesActivity::class.java))
     }
 
-    fun toSignIn() {
-        start(Intent(activity, SignInActivity::class.java))
-    }
-
     internal fun toFirstStartWithNoNetwork(continuationIntent: Intent) {
         start(
-                FirstStartWithNoNetworkActivity.createIntentContinuingTo(activity, continuationIntent),
-                FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK
+            FirstStartWithNoNetworkActivity.createIntentContinuingTo(activity, continuationIntent),
+            FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK
         )
     }
 

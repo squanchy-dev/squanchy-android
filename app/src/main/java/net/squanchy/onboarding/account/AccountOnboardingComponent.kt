@@ -2,6 +2,7 @@ package net.squanchy.onboarding.account
 
 import android.support.v7.app.AppCompatActivity
 import dagger.Component
+import net.squanchy.analytics.Analytics
 import net.squanchy.injection.ActivityContextModule
 import net.squanchy.injection.ActivityLifecycle
 import net.squanchy.injection.ApplicationComponent
@@ -31,4 +32,6 @@ internal interface AccountOnboardingComponent {
     fun signInService(): SignInService
 
     fun navigator(): Navigator
+
+    fun analytics(): Analytics
 }

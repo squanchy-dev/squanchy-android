@@ -1,18 +1,21 @@
 package net.squanchy.settings
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.activity_settings.settingsHeaderLayout
-import kotlinx.android.synthetic.main.activity_settings.toolbar
+import kotlinx.android.synthetic.main.activity_settings.*
 import net.squanchy.R
+import net.squanchy.analytics.Analytics
 import net.squanchy.signin.SignInService
 
 class SettingsActivity : AppCompatActivity() {
 
     private lateinit var signInService: SignInService
+    private lateinit var analytics: Analytics
     private lateinit var subscription: Disposable
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +31,7 @@ class SettingsActivity : AppCompatActivity() {
 
         val component = settingsActivityComponent(this)
         signInService = component.signInService()
+        analytics = component.analytics()
     }
 
     private fun setupToolbar() {
@@ -42,6 +46,17 @@ class SettingsActivity : AppCompatActivity() {
         subscription = signInService.currentUser()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(settingsHeaderLayout::updateWith)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode != SettingsFragment.REQUEST_CODE_SIGNIN) {
+            super.onActivityResult(requestCode, resultCode, data)
+            return
+        }
+
+        if (resultCode == Activity.RESULT_OK) {
+            analytics.trackUserLoggedInSettings()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

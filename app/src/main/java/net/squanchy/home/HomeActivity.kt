@@ -1,6 +1,7 @@
 package net.squanchy.home
 
 import android.animation.ValueAnimator
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
@@ -71,6 +72,9 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_SIGN_IN_MAY_GOD_HAVE_MERCY_OF_OUR_SOULS) {
+            if (resultCode == Activity.RESULT_OK) {
+                analytics.trackUserLoggedInFavorites()
+            }
             startLoading()
         } else {
             super.onActivityResult(requestCode, resultCode, data)

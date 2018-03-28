@@ -72,8 +72,24 @@ class Analytics internal constructor(
     fun trackUserNotLoggedIn() {
         setUserLoginProperty(LoginStatus.NOT_LOGGED_IN)
     }
+
+    fun trackUserLoggedInOnboarding() {
+        setUserLoginProperty(LoginStatus.LOGGED_IN_ONBOARDING)
+    }
+
+    fun trackUserLoggedInSettings() {
+        setUserLoginProperty(LoginStatus.LOGGED_IN_SETTINGS)
+    }
+
+    fun trackUserLoggedInFavorites() {
+        setUserLoginProperty(LoginStatus.LOGGED_IN_FAVORITES)
+    }
+
+    fun trackUserLoggedInEventDetails() {
+        setUserLoginProperty(LoginStatus.LOGGED_IN_EVENT_DETAILS)
+    }
+
     private fun setUserLoginProperty(loginStatus: LoginStatus) {
         firebaseAnalytics.setUserProperty("login_status", loginStatus.rawLoginStatus)
     }
-
 }

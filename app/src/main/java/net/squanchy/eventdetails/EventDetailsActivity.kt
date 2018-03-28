@@ -1,5 +1,6 @@
 package net.squanchy.eventdetails
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -8,9 +9,9 @@ import android.view.Menu
 import android.view.MenuItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.activity_event_details.eventDetailsRoot
-import kotlinx.android.synthetic.main.activity_event_details.toolbar
+import kotlinx.android.synthetic.main.activity_event_details.*
 import net.squanchy.R
+import net.squanchy.analytics.Analytics
 import net.squanchy.eventdetails.widget.EventDetailsCoordinatorLayout
 import net.squanchy.navigation.Navigator
 import net.squanchy.notification.NotificationsIntentService
@@ -24,6 +25,7 @@ class EventDetailsActivity : AppCompatActivity() {
     private lateinit var service: EventDetailsService
 
     private lateinit var navigator: Navigator
+    private lateinit var analytics: Analytics
     private lateinit var eventId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +38,7 @@ class EventDetailsActivity : AppCompatActivity() {
         with(eventDetailsComponent(this)) {
             service = service()
             navigator = navigator()
+            analytics = analytics()
         }
     }
 
@@ -55,6 +58,9 @@ class EventDetailsActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_SIGNIN) {
+            if (resultCode == Activity.RESULT_OK) {
+                analytics.trackUserLoggedInEventDetails()
+            }
             subscribeToEvent(eventId)
         } else {
             super.onActivityResult(requestCode, resultCode, data)

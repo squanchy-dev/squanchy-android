@@ -8,6 +8,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_onboarding_account.*
 import net.squanchy.R
+import net.squanchy.analytics.Analytics
 import net.squanchy.navigation.Navigator
 import net.squanchy.onboarding.Onboarding
 import net.squanchy.onboarding.OnboardingPage
@@ -20,6 +21,7 @@ class AccountOnboardingActivity : AppCompatActivity() {
     private lateinit var onboarding: Onboarding
     private lateinit var navigator: Navigator
     private lateinit var signInService: SignInService
+    private lateinit var analytics: Analytics
     private lateinit var subscription: Disposable
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +31,7 @@ class AccountOnboardingActivity : AppCompatActivity() {
             onboarding = onboarding()
             navigator = navigator()
             signInService = signInService()
+            analytics = analytics()
         }
 
         setContentView(R.layout.activity_onboarding_account)
@@ -76,6 +79,7 @@ class AccountOnboardingActivity : AppCompatActivity() {
         }
 
         if (resultCode == Activity.RESULT_OK) {
+            analytics.trackUserLoggedInOnboarding()
             markPageAsSeenAndFinish()
         } else {
             enableUi()
