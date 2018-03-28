@@ -3,6 +3,7 @@ package net.squanchy.schedule.tracksfilter
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.recyclerview.extensions.ListAdapter
 import android.support.v7.util.DiffUtil
@@ -131,7 +132,7 @@ private class TrackViewHolder(val item: FilterChipView) : RecyclerView.ViewHolde
 
             color = when {
                 track.accentColor.isPresent -> Color.parseColor(track.accentColor.get())
-                else -> Color.MAGENTA // TODO handle default color for tracks (maybe gray-ish?)
+                else -> ContextCompat.getColor(context, R.color.chip_default_background_tint)
             }
 
             onCheckedChangeListener = { _, checked -> listener.invoke(track, checked) }

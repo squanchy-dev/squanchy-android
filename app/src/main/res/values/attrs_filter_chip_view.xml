@@ -13,7 +13,7 @@
   </declare-styleable>
 
   <style name="Widget.Squanchy.FilterChipView" parent="None">
-    <item name="color">?colorAccent</item>
+    <item name="color">@color/chip_default_background_tint</item>
     <item name="strokeWidth">2dp</item>
     <item name="checkedLightTextColor">@color/white</item>
     <item name="checkedDarkTextColor">?android:textColorPrimary</item>
@@ -21,4 +21,5 @@
     <item name="uncheckedAlpha">0.7</item>
   </style>
 
+  <color name="chip_default_background_tint">#e0e0e0</color>
 </resources>

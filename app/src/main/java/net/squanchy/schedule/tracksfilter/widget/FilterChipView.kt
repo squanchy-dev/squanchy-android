@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.support.annotation.ColorInt
 import android.support.annotation.Px
+import android.support.v4.content.ContextCompat
 import android.support.v4.content.res.ResourcesCompat
 import android.util.AttributeSet
 import android.view.accessibility.AccessibilityEvent
@@ -48,7 +49,7 @@ class FilterChipView @JvmOverloads constructor(
         textDarkColor = a.getColor(R.styleable.FilterChipView_checkedDarkTextColor, Color.RED)
         textLightColor = a.getColor(R.styleable.FilterChipView_checkedLightTextColor, Color.MAGENTA)
 
-        baseColor = a.getColor(R.styleable.FilterChipView_color, Color.MAGENTA)
+        baseColor = a.getColor(R.styleable.FilterChipView_color, ContextCompat.getColor(context, R.color.chip_default_background_tint))
         updateColors(baseColor)
 
         strokeWidth = a.getDimensionPixelSize(R.styleable.FilterChipView_strokeWidth, 0)
