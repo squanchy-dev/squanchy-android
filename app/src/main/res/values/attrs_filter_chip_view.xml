@@ -1,0 +1,24 @@
+<resources>
+
+  <declare-styleable name="FilterChipView">
+    <attr name="color" format="color" />
+    <attr name="strokeWidth" format="dimension" />
+    <attr name="uncheckedStrokeWidth" format="dimension" />
+
+    <attr name="checkedLightTextColor" format="color" />
+    <attr name="checkedDarkTextColor" format="color" />
+
+    <attr name="checkedAlpha" format="float" />
+    <attr name="uncheckedAlpha" format="float" />
+  </declare-styleable>
+
+  <style name="Widget.Squanchy.FilterChipView" parent="None">
+    <item name="color">?colorAccent</item>
+    <item name="strokeWidth">2dp</item>
+    <item name="checkedLightTextColor">@color/white</item>
+    <item name="checkedDarkTextColor">?android:textColorPrimary</item>
+    <item name="checkedAlpha">1.0</item>
+    <item name="uncheckedAlpha">0.7</item>
+  </style>
+
+</resources>
