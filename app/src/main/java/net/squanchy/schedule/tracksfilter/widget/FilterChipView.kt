@@ -33,6 +33,8 @@ class FilterChipView @JvmOverloads constructor(
     private var textLightColor: Int
     @Px
     private var strokeWidth: Int
+
+    // It sounds weird, but a <shape> with a stroke color inflates as a GradientDrawable
     private var backgroundDrawable: GradientDrawable
     private var backgroundAlpha: CheckableValue<Float>
 
@@ -146,63 +148,64 @@ class FilterChipView @JvmOverloads constructor(
     }
 
     override fun setBackgroundTintList(tint: ColorStateList?) {
-        when {
-            isInitialized -> UnsupportedOperationException("Can't interact with a FilterChipView's background directly")
-            else -> super.setBackgroundTintList(tint)
+        allowOnlyWhileInitializing("Can't interact with a FilterChipView's background directly") {
+            super.setBackgroundTintList(tint)
         }
     }
 
     override fun setBackground(background: Drawable?) {
-        when {
-            isInitialized -> UnsupportedOperationException("Can't interact with a FilterChipView's background directly")
-            else -> super.setBackground(background)
+        allowOnlyWhileInitializing("Can't interact with a FilterChipView's background directly") {
+            super.setBackground(background)
         }
     }
 
     override fun setBackgroundTintMode(tintMode: PorterDuff.Mode?) {
-        when {
-            isInitialized -> UnsupportedOperationException("Can't interact with a FilterChipView's background directly")
-            else -> super.setBackgroundTintMode(tintMode)
+        allowOnlyWhileInitializing("Can't interact with a FilterChipView's background directly") {
+            super.setBackgroundTintMode(tintMode)
         }
     }
 
-    @Suppress("DEPRECATION") // We're just preventing others from messing with this, not really using it
+    @Suppress("DEPRECATION", "OverridingDeprecatedMember") // We're just preventing others from messing with this, not really using it
     override fun setBackgroundDrawable(background: Drawable?) {
-        when {
-            isInitialized -> UnsupportedOperationException("Can't interact with a FilterChipView's background directly")
-            else -> super.setBackgroundDrawable(background)
+        allowOnlyWhileInitializing("Can't interact with a FilterChipView's background directly") {
+            super.setBackgroundDrawable(background)
         }
     }
 
     override fun setBackgroundResource(resid: Int) {
-        when {
-            isInitialized -> UnsupportedOperationException("Can't interact with a FilterChipView's background directly")
-            else -> super.setBackgroundResource(resid)
+        allowOnlyWhileInitializing("Can't interact with a FilterChipView's background directly") {
+            super.setBackgroundResource(resid)
         }
     }
 
     override fun setBackgroundColor(color: Int) {
-        when {
-            isInitialized -> UnsupportedOperationException("Can't interact with a FilterChipView's background directly")
-            else -> super.setBackgroundColor(color)
+        allowOnlyWhileInitializing("Can't interact with a FilterChipView's background directly") {
+            super.setBackgroundColor(color)
         }
     }
 
     override fun getBackgroundTintList(): ColorStateList {
-        throw UnsupportedOperationException("Can't interact with a FilterChipView's background directly")
+        return allowOnlyWhileInitializing("Can't obtain the background color of a FilterChipView, use the color property") {
+            return@allowOnlyWhileInitializing super.getBackgroundTintList()
+        }
     }
 
     override fun setTextColor(color: Int) {
-        when {
-            isInitialized -> throw UnsupportedOperationException("Can't interact with a FilterChipView's text color directly")
-            else -> super.setTextColor(color)
+        allowOnlyWhileInitializing("Can't interact with a FilterChipView's text color directly") {
+            super.setTextColor(color)
         }
     }
 
     override fun setTextColor(colors: ColorStateList?) {
+        allowOnlyWhileInitializing("Can't interact with a FilterChipView's text color directly") {
+            super.setTextColor(colors)
+        }
+    }
+
+    private inline fun <T> allowOnlyWhileInitializing(errorMessage: String, whileInitializing: () -> T): T {
         when {
-            isInitialized -> throw UnsupportedOperationException("Can't interact with a FilterChipView's text color directly")
-            else -> super.setTextColor(colors)
+            isInitialized -> throw UnsupportedOperationException(errorMessage)
+            else -> return whileInitializing.invoke()
         }
     }
 
