@@ -29,7 +29,7 @@ class SquanchyApplication : Application() {
         with(applicationComponent.analytics()) {
             enableExceptionLogging()
             initializeStaticUserProperties()
-            trackUserInitiallyNotLoggedIn()
+            trackFirstStartUserNotLoggedIn()
         }
 
         if (BuildConfig.DEBUG) {

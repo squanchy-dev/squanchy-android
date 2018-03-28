@@ -17,22 +17,22 @@ class AnalyticsModule(private val application: Application) {
     internal fun crashlytics(): Crashlytics = Crashlytics.getInstance()
 
     @Provides
-    internal fun firstStartUserPropertiesPersister(application: Application): FirstStartUserPropertiesPersister {
-        val preferences = application.getSharedPreferences(FIRST_START_USER_PROPERTIES_SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
-        return FirstStartUserPropertiesPersister(preferences)
+    internal fun firstStartDetector(application: Application): FirstStartDetector {
+        val preferences = application.getSharedPreferences(FIRST_START_DETECTOR_SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        return FirstStartDetector(preferences)
     }
 
     @Provides
     internal fun analytics(
         firebaseAnalytics: FirebaseAnalytics,
         crashlytics: Crashlytics,
-        firstStartUserPropertiesPersister: FirstStartUserPropertiesPersister
+        firstStartDetector: FirstStartDetector
     ): Analytics {
-        return Analytics(firebaseAnalytics, crashlytics, firstStartUserPropertiesPersister)
+        return Analytics(firebaseAnalytics, crashlytics, firstStartDetector)
     }
 
     companion object {
 
-        private const val FIRST_START_USER_PROPERTIES_SHARED_PREFERENCES_NAME = "first_start_user_properties"
+        private const val FIRST_START_DETECTOR_SHARED_PREFERENCES_NAME = "first_start_detector"
     }
 }

@@ -13,7 +13,7 @@ import java.util.Locale
 class Analytics internal constructor(
     private val firebaseAnalytics: FirebaseAnalytics,
     private val crashlytics: Crashlytics,
-    private val firstStartUserPropertiesPersister: FirstStartUserPropertiesPersister
+    private val firstStartDetector: FirstStartDetector
 ) {
 
     fun initializeStaticUserProperties() {
@@ -61,12 +61,12 @@ class Analytics internal constructor(
         Timber.plant(CrashlyticsErrorsTree())
     }
 
-    fun trackUserInitiallyNotLoggedIn() {
-        if (firstStartUserPropertiesPersister.userPropertiesSetAlready()) {
+    fun trackFirstStartUserNotLoggedIn() {
+        if (firstStartDetector.isFirstStartNotLoggedInStatusTracked()) {
             return
         }
         trackUserNotLoggedIn()
-        firstStartUserPropertiesPersister.storeUserPropertiesSet()
+        firstStartDetector.setFirstStartNotLoggedInStatusTracked()
     }
 
     fun trackUserNotLoggedIn() {
