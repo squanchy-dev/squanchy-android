@@ -16,12 +16,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposables
 import kotlinx.android.synthetic.main.activity_signin.*
 import net.squanchy.R
+import net.squanchy.analytics.Analytics
 import net.squanchy.google.GoogleClientId
 import net.squanchy.support.config.DialogLayoutParameters
 
 class SignInActivity : AppCompatActivity() {
 
     private lateinit var service: SignInService
+    private lateinit var analytics: Analytics
     private lateinit var googleApiClient: GoogleApiClient
 
     private var subscription = Disposables.disposed()
@@ -29,10 +31,14 @@ class SignInActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        ensureSignInOriginIsSet()
+
         googleApiClient = connectToGoogleApis()
 
-        val component = signInComponent(this)
-        service = component.service()
+        with(signInComponent(this)) {
+            service = service()
+            analytics = analytics()
+        }
 
         setContentView(R.layout.activity_signin)
 
@@ -44,6 +50,12 @@ class SignInActivity : AppCompatActivity() {
         setupWindowParameters()
 
         setResult(Activity.RESULT_CANCELED)
+    }
+
+    private fun ensureSignInOriginIsSet() {
+        if (!intent.extras.containsKey(EXTRA_SIGN_IN_ORIGIN)) {
+            throw IllegalStateException("Sign in origin extra required but not set")
+        }
     }
 
     private fun connectToGoogleApis(): GoogleApiClient {
@@ -99,8 +111,14 @@ class SignInActivity : AppCompatActivity() {
 
         subscription = service.signInWithGoogle(account)
             .subscribeOn(AndroidSchedulers.mainThread())
-            .subscribe { setResult(RESULT_OK); finish() }
+            .subscribe {
+                analytics.trackUserLoggedInFrom(getSignInOrigin())
+                setResult(RESULT_OK)
+                finish()
+            }
     }
+
+    private fun getSignInOrigin() = intent.getSerializableExtra(EXTRA_SIGN_IN_ORIGIN) as SignInOrigin
 
     private fun showProgress() {
         signInContent.isEnabled = false
@@ -134,5 +152,6 @@ class SignInActivity : AppCompatActivity() {
         private const val RC_SIGN_IN = 9001
         private const val ALPHA_DISABLED = .54f
         private const val ALPHA_ENABLED = 1f
+        const val EXTRA_SIGN_IN_ORIGIN = "sign_in_origin"
     }
 }

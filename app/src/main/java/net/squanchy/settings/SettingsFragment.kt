@@ -13,7 +13,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import net.squanchy.BuildConfig
 import net.squanchy.R
+import net.squanchy.analytics.Analytics
 import net.squanchy.navigation.Navigator
+import net.squanchy.signin.SignInOrigin
 import net.squanchy.signin.SignInService
 import net.squanchy.support.lang.Optional
 
@@ -23,6 +25,7 @@ class SettingsFragment : PreferenceFragment() {
 
     private lateinit var signInService: SignInService
     private lateinit var navigator: Navigator
+    private lateinit var analytics: Analytics
 
     private lateinit var accountCategory: PreferenceCategory
     private lateinit var accountEmailPreference: Preference
@@ -44,10 +47,11 @@ class SettingsFragment : PreferenceFragment() {
         }
 
         val activity = activity as AppCompatActivity // TODO UNYOLO
-        val component = settingsFragmentComponent(activity)
-
-        signInService = component.signInService()
-        navigator = component.navigator()
+        with(settingsFragmentComponent(activity)) {
+            signInService = signInService()
+            navigator = navigator()
+            analytics = analytics()
+        }
 
         accountCategory = findPreference(getString(R.string.account_category_key)) as PreferenceCategory
         accountEmailPreference = findPreference(getString(R.string.account_email_preference_key))
@@ -107,7 +111,10 @@ class SettingsFragment : PreferenceFragment() {
         accountSignInSignOutPreference.setTitle(R.string.sign_out_title)
         accountSignInSignOutPreference.setOnPreferenceClickListener {
             signInService.signOut()
-                .subscribe { Snackbar.make(viewOrThrow, R.string.settings_message_signed_out, Snackbar.LENGTH_SHORT).show() }
+                .subscribe {
+                    Snackbar.make(viewOrThrow, R.string.settings_message_signed_out, Snackbar.LENGTH_SHORT).show()
+                    analytics.trackUserNotLoggedIn()
+                }
             true
         }
     }
@@ -117,7 +124,7 @@ class SettingsFragment : PreferenceFragment() {
 
         accountSignInSignOutPreference.setTitle(R.string.sign_in_title)
         accountSignInSignOutPreference.setOnPreferenceClickListener {
-            navigator.toSignIn()
+            navigator.toSignIn(SignInOrigin.SETTINGS)
             true
         }
     }

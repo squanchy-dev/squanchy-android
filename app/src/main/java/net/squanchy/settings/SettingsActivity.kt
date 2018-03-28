@@ -5,8 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.activity_settings.settingsHeaderLayout
-import kotlinx.android.synthetic.main.activity_settings.toolbar
+import kotlinx.android.synthetic.main.activity_settings.*
 import net.squanchy.R
 import net.squanchy.signin.SignInService
 

@@ -21,8 +21,8 @@ internal fun accountOnboardingComponent(activity: AppCompatActivity) =
 
 @ActivityLifecycle
 @Component(
-        modules = [OnboardingModule::class, SignInModule::class, NavigationModule::class],
-        dependencies = [ApplicationComponent::class]
+    modules = [OnboardingModule::class, SignInModule::class, NavigationModule::class],
+    dependencies = [ApplicationComponent::class]
 )
 internal interface AccountOnboardingComponent {
 
