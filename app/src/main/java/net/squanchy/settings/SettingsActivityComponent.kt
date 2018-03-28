@@ -19,5 +19,4 @@ internal fun settingsActivityComponent(activity: Activity) =
 internal interface SettingsActivityComponent {
 
     fun signInService(): SignInService
-
 }
