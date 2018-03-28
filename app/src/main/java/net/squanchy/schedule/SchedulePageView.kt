@@ -84,12 +84,12 @@ class SchedulePageView @JvmOverloads constructor(
 
     override fun startLoading() {
         subscriptions.add(
-                service.schedule()
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                            { updateWith(it, { event -> onEventClicked(event) }) },
-                            { Timber.e(it) }
-                    )
+            service.schedule()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { updateWith(it, { event -> onEventClicked(event) }) },
+                    { Timber.e(it) }
+                )
         )
     }
 
