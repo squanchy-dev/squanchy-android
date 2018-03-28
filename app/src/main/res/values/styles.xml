@@ -66,11 +66,11 @@
   <style name="Schedule.EmptyView" parent="None">
     <item name="android:gravity">center_horizontal</item>
     <item name="android:drawableTop">@drawable/empty_schedule</item>
-    <item name="android:textAppearance">@style/Schedule.EmptyView.TextAppearance</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.Schedule.EmptyView</item>
     <item name="android:text">@string/schedule_empty_view_text</item>
   </style>
 
-  <style name="Schedule.EmptyView.TextAppearance" parent="None">
+  <style name="TextAppearance.Squanchy.Schedule.EmptyView" parent="None">
     <item name="android:textColor">@color/schedule_empty_view_text_color</item>
     <item name="android:textSize">@dimen/schedule_empty_view_text_size</item>
     <item name="android:fontFamily">@font/default_typeface_medium</item>
