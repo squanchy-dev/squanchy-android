@@ -38,9 +38,21 @@ class ScheduleDayPageView @JvmOverloads constructor(
         diffResult.dispatchUpdatesTo(adapter)
     }
 
-    fun scrollToEvent(eventPosition: Int, animate: Boolean) =
-        if (animate) smoothScrollToPosition(eventPosition)
-        else scrollToPosition(eventPosition)
+    private var userHasScrolled: Boolean = false
+
+    override fun onScrolled(dx: Int, dy: Int) {
+        userHasScrolled = true
+        super.onScrolled(dx, dy)
+    }
+
+    fun autoscrollToEvent(eventPosition: Int, animate: Boolean) {
+        if (userHasScrolled) return       // TODO only do it if it's an actual autoscroll (i.e., not because user has tapped the tab)
+
+        when {
+            animate -> smoothScrollToPosition(eventPosition)
+            else -> scrollToPosition(eventPosition)
+        }
+    }
 
     private class EventsDiffCallback(
         private val oldEvents: List<Event>,

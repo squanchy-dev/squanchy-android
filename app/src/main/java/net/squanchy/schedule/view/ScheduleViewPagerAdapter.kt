@@ -36,9 +36,9 @@ class ScheduleViewPagerAdapter(private val context: Context) : ViewPagerAdapter<
     override fun bindView(view: ScheduleDayPageView, position: Int) {
         val events = pages[position].events
         val initialEvent = initialEventForPage[position]
-        triggerScrollForPage[position] = { view.scrollToEvent(events.indexOf(it), true) }
+        triggerScrollForPage[position] = { view.autoscrollToEvent(events.indexOf(it), true) }
         view.updateWith(events, listener)
-        initialEvent?.let { view.scrollToEvent(events.indexOf(it), false) }
+        initialEvent?.let { view.autoscrollToEvent(events.indexOf(it), false) }
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
