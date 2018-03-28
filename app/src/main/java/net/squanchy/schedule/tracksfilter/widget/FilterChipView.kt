@@ -10,19 +10,20 @@ import android.support.annotation.ColorInt
 import android.support.annotation.Px
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.res.ResourcesCompat
+import android.support.v7.widget.AppCompatTextView
 import android.util.AttributeSet
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import android.widget.Checkable
-import android.widget.TextView
 import net.squanchy.R
+import net.squanchy.support.graphics.darkenToEnsureTextContrasts
 import net.squanchy.support.graphics.pickBestTextColorByContrast
 
 class FilterChipView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet,
     defStyle: Int = 0
-) : TextView(context, attrs, defStyle), Checkable {
+) : AppCompatTextView(context, attrs, defStyle), Checkable {
 
     private var isInitialized = false
 
@@ -30,8 +31,10 @@ class FilterChipView @JvmOverloads constructor(
     private var isBroadcastingCheckedChange: Boolean = false
 
     private var baseColor: Int
-    private var textDarkColor: Int
-    private var textLightColor: Int
+    private var checkedTextColorDark: Int
+    private var checkedTextColorLight: Int
+    private var uncheckedFallbackTextColor: Int
+
     @Px
     private var strokeWidth: Int
 
@@ -46,11 +49,11 @@ class FilterChipView @JvmOverloads constructor(
     init {
         val a = this.context.obtainStyledAttributes(attrs, R.styleable.FilterChipView, defStyle, R.style.Widget_Squanchy_FilterChipView)
 
-        textDarkColor = a.getColor(R.styleable.FilterChipView_checkedDarkTextColor, Color.RED)
-        textLightColor = a.getColor(R.styleable.FilterChipView_checkedLightTextColor, Color.MAGENTA)
+        checkedTextColorDark = a.getColor(R.styleable.FilterChipView_checkedTextColorDark, Color.YELLOW)
+        checkedTextColorLight = a.getColor(R.styleable.FilterChipView_checkedTextColorLight, Color.MAGENTA)
+        uncheckedFallbackTextColor = a.getColor(R.styleable.FilterChipView_uncheckedFallbackTextColor, Color.GREEN)
 
         baseColor = a.getColor(R.styleable.FilterChipView_color, ContextCompat.getColor(context, R.color.chip_default_background_tint))
-        updateColors(baseColor)
 
         strokeWidth = a.getDimensionPixelSize(R.styleable.FilterChipView_strokeWidth, 0)
 
@@ -68,8 +71,9 @@ class FilterChipView @JvmOverloads constructor(
         isFocusable = true
 
         super.setOnClickListener { toggle() }
-
         isInitialized = true
+
+        updateColors(baseColor)
     }
 
     var color: Int
@@ -77,16 +81,20 @@ class FilterChipView @JvmOverloads constructor(
         get() = baseColor
         set(@ColorInt color) = updateColors(color)
 
+    private val parentBackgroundColor
+        get() = ASSUMED_PARENT_BACKGROUND_COLOR // TODO allow setting a proper parent color via code if necessary
+
     private fun updateColors(@ColorInt baseColor: Int) {
         this.baseColor = baseColor
         backgroundColor = CheckableValue(checkedValue = baseColor, uncheckedValue = Color.TRANSPARENT)
         strokeColor = CheckableValue(checkedValue = baseColor, uncheckedValue = baseColor)
 
-        val checkedTextColor = baseColor.pickBestTextColorByContrast(textLightColor, textDarkColor)
-        val uncheckedTextColor = Color.WHITE.pickBestTextColorByContrast(baseColor, textDarkColor)
+        val checkedTextColor = baseColor.pickBestTextColorByContrast(checkedTextColorLight, checkedTextColorDark)
+        val contrastSafeBaseColor = baseColor.darkenToEnsureTextContrasts(parentBackgroundColor, uncheckedFallbackTextColor)
+        val uncheckedTextColor = parentBackgroundColor.pickBestTextColorByContrast(baseColor, contrastSafeBaseColor)
         textColor = CheckableValue(checkedValue = checkedTextColor, uncheckedValue = uncheckedTextColor)
 
-        invalidate()
+        redraw()
     }
 
     override fun isChecked(): Boolean = isChecked
@@ -99,9 +107,7 @@ class FilterChipView @JvmOverloads constructor(
         if (checked == isChecked) return
         isChecked = checked
 
-        updateBackgroundDrawable()
-        updateTextColor()
-        invalidate()
+        redraw()
 
         // Avoid infinite recursions if checked is set from a listener
         if (isBroadcastingCheckedChange) {
@@ -111,6 +117,12 @@ class FilterChipView @JvmOverloads constructor(
         isBroadcastingCheckedChange = true
         onCheckedChangeListener?.invoke(this, checked)
         isBroadcastingCheckedChange = false
+    }
+
+    private fun redraw() {
+        updateBackgroundDrawable()
+        updateTextColor()
+        invalidate()
     }
 
     private fun updateBackgroundDrawable() {
@@ -214,6 +226,7 @@ class FilterChipView @JvmOverloads constructor(
         private const val MAX_ALPHA_VALUE: Int = 255
         private const val DEFAULT_CHECKED_ALPHA: Float = 1.0F
         private const val DEFAULT_UNCHECKED_ALPHA: Float = .7F
+        private const val ASSUMED_PARENT_BACKGROUND_COLOR = Color.WHITE
     }
 }
 

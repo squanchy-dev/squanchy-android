@@ -5,8 +5,9 @@
     <attr name="strokeWidth" format="dimension" />
     <attr name="uncheckedStrokeWidth" format="dimension" />
 
-    <attr name="checkedLightTextColor" format="color" />
-    <attr name="checkedDarkTextColor" format="color" />
+    <attr name="checkedTextColorLight" format="color" />
+    <attr name="checkedTextColorDark" format="color" />
+    <attr name="uncheckedFallbackTextColor" format="color" />
 
     <attr name="checkedAlpha" format="float" />
     <attr name="uncheckedAlpha" format="float" />
@@ -15,8 +16,9 @@
   <style name="Widget.Squanchy.FilterChipView" parent="None">
     <item name="color">@color/chip_default_background_tint</item>
     <item name="strokeWidth">2dp</item>
-    <item name="checkedLightTextColor">@color/white</item>
-    <item name="checkedDarkTextColor">?android:textColorPrimary</item>
+    <item name="checkedTextColorLight">@color/white</item>
+    <item name="checkedTextColorDark">?android:textColorPrimary</item>
+    <item name="uncheckedFallbackTextColor">?android:textColorPrimary</item>
     <item name="checkedAlpha">1.0</item>
     <item name="uncheckedAlpha">0.7</item>
   </style>
