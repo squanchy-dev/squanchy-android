@@ -46,7 +46,7 @@ class ScheduleDayPageView @JvmOverloads constructor(
     }
 
     fun autoscrollToEvent(eventPosition: Int, animate: Boolean) {
-        if (userHasScrolled) return       // TODO only do it if it's an actual autoscroll (i.e., not because user has tapped the tab)
+        if (userHasScrolled) return // TODO only do it if it's an actual autoscroll (i.e., not because user has tapped the tab)
 
         when {
             animate -> smoothScrollToPosition(eventPosition)
