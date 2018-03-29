@@ -1,7 +1,6 @@
 package net.squanchy.schedule.tracksfilter
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
@@ -11,7 +10,6 @@ import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.CheckBox
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxItemDecoration
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -23,8 +21,8 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_track_filters.*
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Track
+import net.squanchy.schedule.tracksfilter.widget.FilterChipView
 import net.squanchy.service.repository.TracksRepository
-import net.squanchy.support.graphics.contrastingTextColor
 
 class ScheduleTracksFilterActivity : AppCompatActivity() {
 
@@ -101,7 +99,7 @@ private class TracksFilterAdapter(
     private val layoutInflater = LayoutInflater.from(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
-        val view = layoutInflater.inflate(R.layout.track_filters_item, parent, false) as CheckBox
+        val view = layoutInflater.inflate(R.layout.track_filters_item, parent, false) as FilterChipView
         return TrackViewHolder(view)
     }
 
@@ -124,38 +122,21 @@ private class TracksFilterAdapter(
     }
 }
 
-private class TrackViewHolder(val item: CheckBox) : RecyclerView.ViewHolder(item) {
-
-    val darkTextColor = ContextCompat.getColor(item.context, R.color.primary_text)
-    val lightTextColor = ContextCompat.getColor(item.context, R.color.text_inverse)
-
-    companion object {
-        private const val ALPHA_CHECKED = 1.0F
-        private const val ALPHA_NOT_CHECKED = 0.7F
-    }
+private class TrackViewHolder(val item: FilterChipView) : RecyclerView.ViewHolder(item) {
 
     fun bind(checkableTrack: CheckableTrack, listener: OnTrackSelectedChangeListener) {
         val (track, selected) = checkableTrack
 
         item.apply {
             text = track.name
-            tag = track
+
+            color = when {
+                track.accentColor.isPresent -> Color.parseColor(track.accentColor.get())
+                else -> ContextCompat.getColor(context, R.color.chip_default_background_tint)
+            }
+
+            onCheckedChangeListener = { _, checked -> listener.invoke(track, checked) }
             isChecked = selected
-
-            val trackColor = Color.parseColor(track.accentColor.get())
-            if (track.accentColor.isPresent) {
-                backgroundTintList = ColorStateList.valueOf(trackColor)
-            }
-
-            if (isChecked) {
-                setTextColor(trackColor.contrastingTextColor(darkTextColor, lightTextColor))
-                alpha = ALPHA_CHECKED
-            } else {
-                setTextColor(trackColor)
-                alpha = ALPHA_NOT_CHECKED
-            }
-
-            setOnClickListener { listener.invoke(track, isChecked) }
         }
     }
 }

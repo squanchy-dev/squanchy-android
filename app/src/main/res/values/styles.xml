@@ -657,7 +657,7 @@
   </style>
 
   <style name="TrackFilters.Filters.Subtitle" parent="None">
-    <item name="android:text">@string/filter_tracks_title</item>
+    <item name="android:text">@string/filter_tracks_subtitle</item>
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.TrackFilters.Filters.Subtitle</item>
   </style>
 
@@ -680,19 +680,17 @@
   </style>
 
   <style name="TrackFilters.Filters.Tracks.Item" parent="None">
-    <item name="android:background">@drawable/chip_background</item>
-    <item name="android:button">@null</item>
     <item name="android:gravity">center</item>
     <item name="android:paddingLeft">@dimen/track_filters_item_padding_horizontal</item>
     <item name="android:paddingTop">@dimen/track_filters_item_padding_vertical</item>
     <item name="android:paddingRight">@dimen/track_filters_item_padding_horizontal</item>
     <item name="android:paddingBottom">@dimen/track_filters_item_padding_vertical</item>
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.TrackFilters.Filters.Tracks.Item</item>
+    <item name="fontFamily">@font/default_typeface_bold</item>
   </style>
 
   <style name="TextAppearance.Squanchy.TrackFilters.Filters.Tracks.Item" parent="None">
     <item name="android:textSize">12sp</item>
-    <item name="fontFamily">@font/default_typeface_bold</item>
   </style>
 
 </resources>
