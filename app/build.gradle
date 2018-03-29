@@ -124,6 +124,8 @@ project.afterEvaluate {
 }
 
 dependencies {
+    implementation libraries.app.androidKtx
+
     implementation libraries.app.crashlytics
     implementation(libraries.app.findbugsAnnotations) {
         exclude group: 'net.jcip'
