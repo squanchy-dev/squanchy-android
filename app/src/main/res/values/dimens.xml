@@ -204,4 +204,6 @@
   <dimen name="track_filters_item_corner_radius">200dp</dimen>
   <dimen name="track_filters_item_stroke_width">2dp</dimen>
 
+  <dimen name="schedule_empty_view_text_size">16sp</dimen>
+
 </resources>

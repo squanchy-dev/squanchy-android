@@ -19,6 +19,7 @@ import net.squanchy.schedule.tracksfilter.ScheduleTracksFilterActivity
 import net.squanchy.search.SearchActivity
 import net.squanchy.settings.SettingsActivity
 import net.squanchy.signin.SignInActivity
+import net.squanchy.signin.SignInOrigin
 import net.squanchy.speaker.SpeakerDetailsActivity
 import net.squanchy.tweets.domain.TweetLinkInfo
 import net.squanchy.venue.domain.view.Venue
@@ -35,8 +36,8 @@ class Navigator(
 
     fun toSpeakerDetails(speakerId: String) {
         start(
-                SpeakerDetailsActivity.createIntent(activity, speakerId),
-                FLAG_ACTIVITY_SINGLE_TOP or FLAG_ACTIVITY_CLEAR_TOP
+            SpeakerDetailsActivity.createIntent(activity, speakerId),
+            FLAG_ACTIVITY_SINGLE_TOP or FLAG_ACTIVITY_CLEAR_TOP
         )
     }
 
@@ -93,29 +94,29 @@ class Navigator(
 
     fun toSchedule(dayId: String?, eventId: String?) {
         start(
-                HomeActivity.createScheduleIntent(activity, dayId, eventId),
-                FLAG_ACTIVITY_SINGLE_TOP or FLAG_ACTIVITY_CLEAR_TOP or FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK
+            HomeActivity.createScheduleIntent(activity, dayId, eventId),
+            FLAG_ACTIVITY_SINGLE_TOP or FLAG_ACTIVITY_CLEAR_TOP or FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK
         )
     }
 
     fun toFavorites() {
         start(
-                HomeActivity.createFavoritesIntent(activity),
-                FLAG_ACTIVITY_SINGLE_TOP or FLAG_ACTIVITY_CLEAR_TOP or FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK
+            HomeActivity.createFavoritesIntent(activity),
+            FLAG_ACTIVITY_SINGLE_TOP or FLAG_ACTIVITY_CLEAR_TOP or FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK
         )
     }
 
     fun toTwitterFeed() {
         start(
-                HomeActivity.createTweetsIntent(activity),
-                FLAG_ACTIVITY_SINGLE_TOP or FLAG_ACTIVITY_CLEAR_TOP or FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK
+            HomeActivity.createTweetsIntent(activity),
+            FLAG_ACTIVITY_SINGLE_TOP or FLAG_ACTIVITY_CLEAR_TOP or FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK
         )
     }
 
     fun toVenueInfo() {
         start(
-                HomeActivity.createVenueInfoIntent(activity),
-                FLAG_ACTIVITY_SINGLE_TOP or FLAG_ACTIVITY_CLEAR_TOP or FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK
+            HomeActivity.createVenueInfoIntent(activity),
+            FLAG_ACTIVITY_SINGLE_TOP or FLAG_ACTIVITY_CLEAR_TOP or FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK
         )
     }
 
@@ -135,14 +136,10 @@ class Navigator(
         start(Intent(activity, LicensesActivity::class.java))
     }
 
-    fun toSignIn() {
-        start(Intent(activity, SignInActivity::class.java))
-    }
-
     internal fun toFirstStartWithNoNetwork(continuationIntent: Intent) {
         start(
-                FirstStartWithNoNetworkActivity.createIntentContinuingTo(activity, continuationIntent),
-                FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK
+            FirstStartWithNoNetworkActivity.createIntentContinuingTo(activity, continuationIntent),
+            FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK
         )
     }
 
@@ -153,9 +150,20 @@ class Navigator(
         activity.startActivity(intent)
     }
 
-    fun toSignInForResult(requestCode: Int) {
-        val intent = Intent(activity, SignInActivity::class.java)
+    fun toSignIn(signInOrigin: SignInOrigin) {
+        val intent = createSignInIntent(signInOrigin)
+        start(intent)
+    }
+
+    fun toSignInForResult(requestCode: Int, signInOrigin: SignInOrigin) {
+        val intent = createSignInIntent(signInOrigin)
         startForResult(intent, requestCode)
+    }
+
+    private fun createSignInIntent(signInOrigin: SignInOrigin): Intent {
+        val intent = Intent(activity, SignInActivity::class.java)
+        intent.putExtra(SignInActivity.EXTRA_SIGN_IN_ORIGIN, signInOrigin)
+        return intent
     }
 
     fun toOnboardingForResult(page: OnboardingPage, requestCode: Int) {

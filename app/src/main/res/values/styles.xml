@@ -63,6 +63,19 @@
     <item name="fontFamily">@font/default_typeface_regular</item>
   </style>
 
+  <style name="Schedule.EmptyView" parent="None">
+    <item name="android:gravity">center_horizontal</item>
+    <item name="android:drawableTop">@drawable/empty_schedule</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.Schedule.EmptyView</item>
+    <item name="android:text">@string/schedule_empty_view_text</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.Schedule.EmptyView" parent="None">
+    <item name="android:textColor">@color/schedule_empty_view_text_color</item>
+    <item name="android:textSize">@dimen/schedule_empty_view_text_size</item>
+    <item name="android:fontFamily">@font/default_typeface_medium</item>
+  </style>
+
   <style name="Schedule.Card.Timestamp" parent="None">
     <item name="android:gravity">start|center_vertical</item>
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.Card.Timestamp</item>

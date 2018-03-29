@@ -8,13 +8,13 @@ import android.view.Menu
 import android.view.MenuItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.activity_event_details.eventDetailsRoot
-import kotlinx.android.synthetic.main.activity_event_details.toolbar
+import kotlinx.android.synthetic.main.activity_event_details.*
 import net.squanchy.R
 import net.squanchy.eventdetails.widget.EventDetailsCoordinatorLayout
 import net.squanchy.navigation.Navigator
 import net.squanchy.notification.NotificationsIntentService
 import net.squanchy.schedule.domain.view.Event
+import net.squanchy.signin.SignInOrigin
 import net.squanchy.speaker.domain.view.Speaker
 
 class EventDetailsActivity : AppCompatActivity() {
@@ -63,9 +63,9 @@ class EventDetailsActivity : AppCompatActivity() {
 
     private fun subscribeToEvent(eventId: String) {
         subscriptions.add(
-                service.event(eventId)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe { event -> eventDetailsRoot.updateWith(event, onEventDetailsClickListener(event)) }
+            service.event(eventId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { event -> eventDetailsRoot.updateWith(event, onEventDetailsClickListener(event)) }
         )
     }
 
@@ -77,20 +77,20 @@ class EventDetailsActivity : AppCompatActivity() {
 
             override fun onFavoriteClick() {
                 subscriptions.add(
-                        service.toggleFavorite(event)
-                            .subscribe { result ->
-                                if (result === EventDetailsService.FavoriteResult.MUST_AUTHENTICATE) {
-                                    requestSignIn()
-                                } else {
-                                    triggerNotificationService()
-                                }
+                    service.toggleFavorite(event)
+                        .subscribe { result ->
+                            if (result === EventDetailsService.FavoriteResult.MUST_AUTHENTICATE) {
+                                requestSignIn()
+                            } else {
+                                triggerNotificationService()
                             }
+                        }
                 )
             }
         }
 
     private fun requestSignIn() {
-        navigator.toSignInForResult(REQUEST_CODE_SIGNIN)
+        navigator.toSignInForResult(REQUEST_CODE_SIGNIN, SignInOrigin.EVENT_DETAILS)
         unsubscribeFromUpdates()
     }
 

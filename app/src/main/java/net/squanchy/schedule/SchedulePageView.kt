@@ -122,6 +122,19 @@ class SchedulePageView @JvmOverloads constructor(
     private fun hasTypefaceSpan(text: CharSequence?) = if (text !is Spanned) false else text.hasTypefaceSpan()
 
     fun updateWith(schedule: Schedule, onEventClicked: (Event) -> Unit) {
+        progressbar.visibility = View.GONE
+
+        if (schedule.isEmpty) {
+            viewpager.visibility = GONE
+            tabstrip.visibility = GONE
+            emptyView.visibility = VISIBLE
+            return
+        }
+
+        viewpager.visibility = VISIBLE
+        tabstrip.visibility = VISIBLE
+        emptyView.visibility = GONE
+
         val initialEventForPage = schedule.pages.map { schedule.findNextEventForPage(it, currentTime) }.toTypedArray()
         viewPagerAdapter.updateWith(schedule.pages, initialEventForPage, onEventClicked)
 
