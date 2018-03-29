@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Locale;
 
 import net.squanchy.schedule.domain.view.Event;
-import net.squanchy.search.SearchResults;
+import net.squanchy.search.SearchResult;
 import net.squanchy.search.view.SearchAdapter.ViewTypeId;
 import net.squanchy.speaker.domain.view.Speaker;
 
@@ -17,32 +17,32 @@ class ItemsAdapter {
     private static final long ITEM_ID_EVENTS_HEADER = -100;
     private static final long ITEM_ID_SPEAKERS_HEADER = -101;
 
-    private final SearchResults searchResults;
+    private final SearchResult searchResult;
 
-    ItemsAdapter(SearchResults searchResults) {
-        this.searchResults = searchResults;
+    ItemsAdapter(SearchResult searchResult) {
+        this.searchResult = searchResult;
     }
 
     int totalItemsCount() {
-        if (searchResults.isEmpty()) {
+        if (searchResult.isEmpty()) {
             return 0;
         }
 
-        int totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResults.getEvents());
-        int totalSpeakerItemsCount = totalCountForSectionIncludingHeaders(searchResults.getSpeakers());
+        int totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResult.getEvents());
+        int totalSpeakerItemsCount = totalCountForSectionIncludingHeaders(searchResult.getSpeakers());
 
         return totalEventItemsCount + totalSpeakerItemsCount;
     }
 
     boolean isEmpty() {
-        return searchResults.isEmpty();
+        return searchResult.isEmpty();
     }
 
     @ViewTypeId
     int viewTypeAtAbsolutePosition(int position) {
         ensurePositionExists(position);
 
-        int totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResults.getEvents());
+        int totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResult.getEvents());
 
         int adjustedPosition;
         if (position < totalEventItemsCount) {
@@ -63,12 +63,12 @@ class ItemsAdapter {
     long itemIdAtAbsolutePosition(int position) {
         ensurePositionExists(position);
 
-        int totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResults.getEvents());
+        int totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResult.getEvents());
         if (totalEventItemsCount > 0 && position < totalEventItemsCount) {
             if (position == 0) {
                 return ITEM_ID_EVENTS_HEADER;
             } else {
-                return searchResults.getEvents().get(position - 1).getNumericId();
+                return searchResult.getEvents().get(position - 1).getNumericId();
             }
         } else {
             int adjustedPosition = position - totalEventItemsCount;
@@ -76,7 +76,7 @@ class ItemsAdapter {
             if (adjustedPosition == 0) {
                 return ITEM_ID_SPEAKERS_HEADER;
             } else {
-                return searchResults.getSpeakers().get(adjustedPosition - 1).getNumericId();
+                return searchResult.getSpeakers().get(adjustedPosition - 1).getNumericId();
             }
         }
     }
@@ -84,7 +84,7 @@ class ItemsAdapter {
     Speaker speakerAtAbsolutePosition(int position) {
         ensurePositionExists(position);
 
-        int totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResults.getEvents());
+        int totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResult.getEvents());
         if (totalEventItemsCount > 0 && position < totalEventItemsCount) {
             throw new IndexOutOfBoundsException("No speaker at position " + position + ", that is supposed to be in the events sublist");
         }
@@ -92,7 +92,7 @@ class ItemsAdapter {
         int adjustedPosition = position - totalEventItemsCount;
         // We checked position is in range so it MUST be a speaker
         if (adjustedPosition > 0) {
-            return searchResults.getSpeakers().get(adjustedPosition - 1);
+            return searchResult.getSpeakers().get(adjustedPosition - 1);
         } else {
             throw new IndexOutOfBoundsException("No speaker at position " + position + ", that is supposed to be the speakers header");
         }
@@ -101,20 +101,20 @@ class ItemsAdapter {
     Event eventAtAbsolutePosition(int position) {
         ensurePositionExists(position);
 
-        int totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResults.getEvents());
+        int totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResult.getEvents());
         if (position == 0) {
             throw new IndexOutOfBoundsException("No event at position " + position + ", that is supposed to be the events header");
         } else if (position - 1 >= totalEventItemsCount) {
             throw new IndexOutOfBoundsException("No event at position " + position + ", that is supposed to be in the speakers sublist");
         }
 
-        return searchResults.getEvents().get(position - 1);
+        return searchResult.getEvents().get(position - 1);
     }
 
     HeaderType headerTypeAtAbsolutePosition(int position) {
         ensurePositionExists(position);
 
-        int totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResults.getEvents());
+        int totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResult.getEvents());
         if (totalEventItemsCount > 0) {
             if (position == 0) {
                 return HeaderType.EVENTS;

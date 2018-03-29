@@ -3,7 +3,7 @@ package net.squanchy.search.view
 import com.google.common.truth.Truth.assertThat
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.anEvent
-import net.squanchy.search.SearchResults
+import net.squanchy.search.SearchResult
 import net.squanchy.search.view.SearchAdapter.ViewTypeId
 import net.squanchy.speaker.domain.view.Speaker
 import net.squanchy.speaker.domain.view.aSpeaker
@@ -544,7 +544,7 @@ class ItemsAdapterTest {
         }
 
         internal fun givenSearchResultsWith(events: List<Event>, speakers: List<Speaker>) {
-            val searchResults = SearchResults.create(events, speakers)
+            val searchResults = SearchResult.create(events, speakers)
             itemsAdapter = ItemsAdapter(searchResults)
         }
 

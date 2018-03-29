@@ -1,15 +1,15 @@
 package net.squanchy.signin
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.firebase.auth.FirebaseUser
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
-import net.squanchy.service.firebase.FirebaseAuthService
+import net.squanchy.service.repository.AuthService
+import net.squanchy.service.repository.User
 import net.squanchy.support.lang.Optional
 
-class SignInService(private val authService: FirebaseAuthService) {
+class SignInService(private val authService: AuthService) {
 
     fun isSignedInToGoogle(): Maybe<Boolean> =
         currentUser()
@@ -31,7 +31,7 @@ class SignInService(private val authService: FirebaseAuthService) {
             }
     }
 
-    fun currentUser(): Observable<Optional<FirebaseUser>> {
+    fun currentUser(): Observable<Optional<User>> {
         return authService.currentUser()
             .subscribeOn(Schedulers.io())
     }

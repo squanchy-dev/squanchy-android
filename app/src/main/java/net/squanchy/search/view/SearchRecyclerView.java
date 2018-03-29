@@ -11,7 +11,7 @@ import android.view.View;
 
 import net.squanchy.R;
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter;
-import net.squanchy.search.SearchResults;
+import net.squanchy.search.SearchResult;
 import net.squanchy.speaker.domain.view.Speaker;
 import net.squanchy.support.widget.CardLayout;
 
@@ -49,12 +49,12 @@ public class SearchRecyclerView extends RecyclerView {
         setClipToPadding(false);
     }
 
-    public void updateWith(SearchResults searchResults, OnSearchResultClickListener listener) {
+    public void updateWith(SearchResult searchResult, OnSearchResultClickListener listener) {
         if (getAdapter() == null) {
             super.setAdapter(adapter);
         }
 
-        adapter.updateWith(searchResults, listener);
+        adapter.updateWith(searchResult, listener);
 
         GridLayoutManager layoutManager = (GridLayoutManager) getLayoutManager();
         GridLayoutManager.SpanSizeLookup spanSizeLookup = adapter.createSpanSizeLookup(COLUMNS_COUNT);
