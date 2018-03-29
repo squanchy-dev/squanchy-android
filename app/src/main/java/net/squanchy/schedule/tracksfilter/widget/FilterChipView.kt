@@ -127,7 +127,7 @@ class FilterChipView @JvmOverloads constructor(
     }
 
     private fun updateBackgroundDrawable() {
-        with(backgroundDrawable) {
+        backgroundDrawable.apply {
             setStroke(strokeWidth, strokeColor[isChecked])
             color = ColorStateList.valueOf(backgroundColor[isChecked])
             alpha = (backgroundAlpha[isChecked] * Companion.MAX_ALPHA_VALUE).toInt()
