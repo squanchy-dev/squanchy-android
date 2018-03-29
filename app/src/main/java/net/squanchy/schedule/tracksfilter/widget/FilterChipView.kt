@@ -49,6 +49,7 @@ class FilterChipView @JvmOverloads constructor(
     init {
         val a = this.context.obtainStyledAttributes(attrs, R.styleable.FilterChipView, defStyle, R.style.Widget_Squanchy_FilterChipView)
 
+        // TODO use more appropriate defaults once finished dev'ing
         checkedTextColorDark = a.getColor(R.styleable.FilterChipView_checkedTextColorDark, Color.YELLOW)
         checkedTextColorLight = a.getColor(R.styleable.FilterChipView_checkedTextColorLight, Color.MAGENTA)
         uncheckedFallbackTextColor = a.getColor(R.styleable.FilterChipView_uncheckedFallbackTextColor, Color.GREEN)
