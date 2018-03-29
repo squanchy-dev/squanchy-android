@@ -19,6 +19,7 @@ ext {
 
     libraries = [
         app : [
+            androidKtx         : 'androidx.core:core-ktx:0.2',
             crashlytics        : 'com.crashlytics.sdk.android:crashlytics:2.9.1',
             dagger             : "com.google.dagger:dagger:${daggerVersion}",
             daggerCompiler     : "com.google.dagger:dagger-compiler:${daggerVersion}",
