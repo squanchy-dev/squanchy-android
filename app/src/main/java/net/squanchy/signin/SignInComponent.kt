@@ -1,10 +1,10 @@
 package net.squanchy.signin
 
 import android.app.Activity
+import dagger.Component
+import net.squanchy.analytics.Analytics
 import net.squanchy.injection.ActivityLifecycle
 import net.squanchy.injection.ApplicationComponent
-
-import dagger.Component
 import net.squanchy.injection.applicationComponent
 
 fun signInComponent(activity: Activity) =
@@ -18,4 +18,6 @@ fun signInComponent(activity: Activity) =
 interface SignInComponent {
 
     fun service(): SignInService
+
+    fun analytics(): Analytics
 }

@@ -11,6 +11,7 @@ import net.squanchy.R
 import net.squanchy.navigation.Navigator
 import net.squanchy.onboarding.Onboarding
 import net.squanchy.onboarding.OnboardingPage
+import net.squanchy.signin.SignInOrigin
 import net.squanchy.signin.SignInService
 import net.squanchy.support.view.enableLightNavigationBar
 import java.util.concurrent.TimeUnit
@@ -61,7 +62,7 @@ class AccountOnboardingActivity : AppCompatActivity() {
 
     private fun signInToGoogle() {
         disableUi()
-        navigator.toSignInForResult(REQUEST_CODE_SIGNIN)
+        navigator.toSignInForResult(REQUEST_CODE_SIGNIN, SignInOrigin.ONBOARDING)
     }
 
     private fun disableUi() {

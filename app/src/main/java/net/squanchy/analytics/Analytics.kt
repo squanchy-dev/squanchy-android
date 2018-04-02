@@ -7,12 +7,14 @@ import com.crashlytics.android.answers.ContentViewEvent
 import com.crashlytics.android.answers.CustomEvent
 import com.google.firebase.analytics.FirebaseAnalytics
 import net.squanchy.BuildConfig
+import net.squanchy.signin.SignInOrigin
 import timber.log.Timber
 import java.util.Locale
 
 class Analytics internal constructor(
     private val firebaseAnalytics: FirebaseAnalytics,
-    private val crashlytics: Crashlytics
+    private val crashlytics: Crashlytics,
+    private val firstStartDetector: FirstStartDetector
 ) {
 
     fun initializeStaticUserProperties() {
@@ -58,5 +60,30 @@ class Analytics internal constructor(
 
     fun enableExceptionLogging() {
         Timber.plant(CrashlyticsErrorsTree())
+    }
+
+    fun trackFirstStartUserNotLoggedIn() {
+        if (firstStartDetector.isFirstStartNotLoggedInStatusTracked()) {
+            return
+        }
+        trackUserNotLoggedIn()
+        firstStartDetector.setFirstStartNotLoggedInStatusTracked()
+    }
+
+    fun trackUserNotLoggedIn() {
+        setUserLoginProperty(LoginStatus.NOT_LOGGED_IN)
+    }
+
+    fun trackUserLoggedInFrom(signInOrigin: SignInOrigin) {
+        when (signInOrigin) {
+            SignInOrigin.ONBOARDING -> setUserLoginProperty(LoginStatus.LOGGED_IN_ONBOARDING)
+            SignInOrigin.FAVORITES -> setUserLoginProperty(LoginStatus.LOGGED_IN_FAVORITES)
+            SignInOrigin.EVENT_DETAILS -> setUserLoginProperty(LoginStatus.LOGGED_IN_EVENT_DETAILS)
+            SignInOrigin.SETTINGS -> setUserLoginProperty(LoginStatus.LOGGED_IN_SETTINGS)
+        }
+    }
+
+    private fun setUserLoginProperty(loginStatus: LoginStatus) {
+        firebaseAnalytics.setUserProperty("login_status", loginStatus.rawLoginStatus)
     }
 }

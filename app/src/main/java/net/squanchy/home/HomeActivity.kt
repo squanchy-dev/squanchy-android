@@ -19,6 +19,7 @@ import net.squanchy.analytics.ContentType
 import net.squanchy.home.deeplink.HomeActivityDeepLinkCreator
 import net.squanchy.home.deeplink.HomeActivityIntentParser
 import net.squanchy.navigation.Navigator
+import net.squanchy.signin.SignInOrigin
 import net.squanchy.support.widget.InterceptingBottomNavigationView
 
 class HomeActivity : AppCompatActivity() {
@@ -174,7 +175,7 @@ class HomeActivity : AppCompatActivity() {
 
     fun requestSignIn() {
         stopLoading()
-        navigator.toSignInForResult(REQUEST_SIGN_IN_MAY_GOD_HAVE_MERCY_OF_OUR_SOULS)
+        navigator.toSignInForResult(REQUEST_SIGN_IN_MAY_GOD_HAVE_MERCY_OF_OUR_SOULS, SignInOrigin.FAVORITES)
     }
 
     override fun onStart() {

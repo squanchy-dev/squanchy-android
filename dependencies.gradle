@@ -21,6 +21,7 @@ ext {
     libraries = [
         app : [
             algolia            : 'com.algolia:algoliasearch-android:3.14.1',
+            androidKtx         : 'androidx.core:core-ktx:0.2',
             crashlytics        : 'com.crashlytics.sdk.android:crashlytics:2.9.1',
             dagger             : "com.google.dagger:dagger:${daggerVersion}",
             daggerCompiler     : "com.google.dagger:dagger-compiler:${daggerVersion}",
@@ -61,7 +62,7 @@ ext {
     ]
 
     buildScript = [
-        android                   : 'com.android.tools.build:gradle:3.1.0-rc03',
+        android                   : 'com.android.tools.build:gradle:3.1.0',
         firebase                  : 'com.google.firebase:firebase-plugins:1.1.5',
         googleServices            : 'com.google.gms:google-services:3.2.0',
         gradleStaticAnalysisPlugin: 'com.novoda:gradle-static-analysis-plugin:0.5.2',

@@ -118,4 +118,6 @@
   <string name="filter_tracks_title">Visible tracks</string>
   <string name="filter_tracks_subtitle">Select the tracks to show in your schedule</string>
 
+  <string name="schedule_empty_view_text">Nothing here. Come back soon!</string>
+
 </resources>
