@@ -195,8 +195,11 @@
   <dimen name="track_filters_elevation">4dp</dimen>
   <dimen name="track_filters_title_margin_top">12dp</dimen>
   <dimen name="track_filters_title_margin_horizontal">16dp</dimen>
+  <dimen name="track_filters_title_appear_delta_y">32dp</dimen>
   <dimen name="track_filters_subtitle_margin_top">4dp</dimen>
+  <dimen name="track_filters_subtitle_appear_delta_y">27dp</dimen>
   <dimen name="track_filters_tracks_padding">16dp</dimen>
+  <dimen name="track_filters_tracks_appear_delta_y">22dp</dimen>
   <dimen name="track_filters_item_padding_vertical">8dp</dimen>
   <dimen name="track_filters_item_padding_horizontal">16dp</dimen>
   <dimen name="track_filters_close_button_size">48dp</dimen>

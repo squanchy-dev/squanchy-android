@@ -1,15 +1,12 @@
 package net.squanchy.schedule.tracksfilter
 
-import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.recyclerview.extensions.ListAdapter
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.view.View
+import android.view.ViewAnimationUtils
+import android.view.animation.AnimationUtils
+import android.view.animation.Interpolator
+import androidx.view.postOnAnimationDelayed
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxItemDecoration
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -21,15 +18,17 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_track_filters.*
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Track
-import net.squanchy.schedule.tracksfilter.widget.FilterChipView
 import net.squanchy.service.repository.TracksRepository
 import net.squanchy.support.view.setAdapterIfNone
+import kotlin.math.hypot
 
 class ScheduleTracksFilterActivity : AppCompatActivity() {
 
     private lateinit var tracksRepository: TracksRepository
     private lateinit var tracksFilter: TracksFilter
     private lateinit var trackAdapter: TracksFilterAdapter
+
+    private lateinit var appearInterpolator: Interpolator
 
     private var subscription: Disposable? = null
     private var checkableTracks: List<CheckableTrack> = emptyList()
@@ -74,7 +73,67 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
                 this.checkableTracks = checkableTracks
                 trackAdapter.submitList(checkableTracks)
             }
+
+        prepareAppearanceAnimation()
+        filtersRoot.postOnAnimation { animateAppearing() }
     }
+
+    private fun prepareAppearanceAnimation() {
+        appearInterpolator = AnimationUtils.loadInterpolator(this, android.R.interpolator.linear_out_slow_in)
+
+        val titleDeltaY = resources.getDimension(R.dimen.track_filters_title_appear_delta_y)
+        dialogTitle.apply {
+            translationY = -titleDeltaY
+            alpha = 0F
+        }
+
+        val subtitleDeltaY = resources.getDimension(R.dimen.track_filters_subtitle_appear_delta_y)
+        dialogSubtitle.apply {
+            translationY = -subtitleDeltaY
+            alpha = 0F
+        }
+
+        val tracksDeltaY = resources.getDimension(R.dimen.track_filters_tracks_appear_delta_y)
+        trackFiltersList.apply {
+            translationY = -tracksDeltaY
+            alpha = 0F
+        }
+    }
+
+    @Suppress("MagicNumber") // Just animation code… needs a few magic numbers
+    private fun animateAppearing() {
+        val centerX = closeButton.x + closeButton.width / 2
+        val centerY = closeButton.y + closeButton.height / 2
+
+        ViewAnimationUtils.createCircularReveal(
+            filtersRoot,
+            centerX.toInt(),
+            centerY.toInt(),
+            0F,
+            hypot(filtersRoot.width.toDouble(), filtersRoot.height.toDouble()).toFloat()
+        ).apply {
+            val totalDuration = resources.getInteger(R.integer.track_filters_appear_duration).toLong()
+            val delay = resources.getInteger(R.integer.track_filters_appear_delay).toLong()
+
+            duration = totalDuration
+
+            filtersRoot.postOnAnimationDelayed(totalDuration / 2) {
+                dialogTitle.slideDownAndFadeIn(duration = totalDuration - delay, delay = 0)
+                dialogSubtitle.slideDownAndFadeIn(duration = totalDuration - 2 * delay, delay = delay)
+                trackFiltersList.slideDownAndFadeIn(duration = totalDuration - 3 * delay, delay = 2 * delay)
+            }
+
+            start()
+        }
+    }
+
+    private fun View.slideDownAndFadeIn(duration: Long, delay: Long = 0) = this.animate()
+        .translationY(0F)
+        .alpha(1F)
+        .setInterpolator(appearInterpolator)
+        .setDuration(duration)
+        .setStartDelay(delay)
+        .start()
 
     private fun combineIntoCheckableTracks(): BiFunction<List<Track>, Set<Track>, List<CheckableTrack>> {
         return BiFunction { tracks, selectedTracks ->
@@ -87,67 +146,3 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
         subscription?.dispose()
     }
 }
-
-private class TracksFilterAdapter(
-    context: Context,
-    private val trackStateChangeListener: OnTrackSelectedChangeListener
-) : ListAdapter<CheckableTrack, TrackViewHolder>(DiffCallback()) {
-
-    init {
-        setHasStableIds(true)
-    }
-
-    private val layoutInflater = LayoutInflater.from(context)
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
-        val view = layoutInflater.inflate(R.layout.track_filters_item, parent, false) as FilterChipView
-        return TrackViewHolder(view)
-    }
-
-    override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
-        holder.bind(getItem(position), trackStateChangeListener)
-    }
-
-    override fun getItemId(position: Int): Long {
-        return getItem(position).track().numericId
-    }
-
-    class DiffCallback : DiffUtil.ItemCallback<CheckableTrack>() {
-        override fun areItemsTheSame(oldItem: CheckableTrack?, newItem: CheckableTrack?): Boolean {
-            return oldItem?.track()?.id == newItem?.track()?.id
-        }
-
-        override fun areContentsTheSame(oldItem: CheckableTrack?, newItem: CheckableTrack?): Boolean {
-            return oldItem == newItem
-        }
-    }
-}
-
-private class TrackViewHolder(val item: FilterChipView) : RecyclerView.ViewHolder(item) {
-
-    fun bind(checkableTrack: CheckableTrack, listener: OnTrackSelectedChangeListener) {
-        val (track, selected) = checkableTrack
-
-        item.apply {
-            text = track.name
-
-            color = when {
-                track.accentColor.isPresent -> Color.parseColor(track.accentColor.get())
-                else -> ContextCompat.getColor(context, R.color.chip_default_background_tint)
-            }
-
-            onCheckedChangeListener = { _, checked -> listener.invoke(track, checked) }
-            isChecked = selected
-        }
-    }
-}
-
-private typealias OnTrackSelectedChangeListener = (track: Track, selected: Boolean) -> Unit
-
-private typealias CheckableTrack = Pair<Track, Boolean>
-
-private fun Iterable<CheckableTrack>.allSelected(): Set<Track> =
-    filter { it.selected() }.map { it.track() }.toSet()
-
-private fun CheckableTrack.track() = this.first
-private fun CheckableTrack.selected() = this.second
