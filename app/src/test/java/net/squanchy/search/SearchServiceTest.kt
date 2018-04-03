@@ -51,7 +51,7 @@ class SearchServiceTest {
         `when`(speakerRepository.speakers()).thenReturn(Observable.just(speakerList))
         searchService.find(QUERY)
             .test()
-            .assertValue(SearchResult(eventList, speakerList))
+            .assertValue(SearchResult.Success(emptyList(), speakerList))
     }
 
     @Test
@@ -63,7 +63,19 @@ class SearchServiceTest {
         `when`(speakerRepository.speakers()).thenReturn(Observable.just(speakerList))
         searchService.find(QUERY)
             .test()
-            .assertValue(SearchResult(listOf(anEvent(id = "qwer")), emptyList()))
+            .assertValue(SearchResult.Success(listOf(anEvent(id = "qwer")), emptyList()))
+    }
+
+    @Test
+    fun `should receive an error when the angolia search engine fails`() {
+        val eventList = listOf(anEvent(), anEvent(id = "qwer"))
+        val speakerList = listOf(aSpeaker(), aSpeaker(id = "qwer"))
+        `when`(algoliaSearchEngine.query(QUERY)).thenReturn(Observable.just(AlgoliaSearchResult.ErrorSearching))
+        `when`(eventRepository.events(UID)).thenReturn(Observable.just(eventList))
+        `when`(speakerRepository.speakers()).thenReturn(Observable.just(speakerList))
+        searchService.find(QUERY)
+            .test()
+            .assertValue(SearchResult.Error)
     }
 
     companion object {

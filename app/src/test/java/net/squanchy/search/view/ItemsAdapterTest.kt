@@ -544,7 +544,7 @@ class ItemsAdapterTest {
         }
 
         internal fun givenSearchResultsWith(events: List<Event>, speakers: List<Speaker>) {
-            val searchResults = SearchResult.create(events, speakers)
+            val searchResults = SearchResult.Success(events, speakers)
             itemsAdapter = ItemsAdapter(searchResults)
         }
 

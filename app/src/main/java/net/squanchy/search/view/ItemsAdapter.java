@@ -17,9 +17,9 @@ class ItemsAdapter {
     private static final long ITEM_ID_EVENTS_HEADER = -100;
     private static final long ITEM_ID_SPEAKERS_HEADER = -101;
 
-    private final SearchResult searchResult;
+    private final SearchResult.Success searchResult;
 
-    ItemsAdapter(SearchResult searchResult) {
+    ItemsAdapter(SearchResult.Success searchResult) {
         this.searchResult = searchResult;
     }
 

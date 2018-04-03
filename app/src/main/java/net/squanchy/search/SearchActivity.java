@@ -20,7 +20,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -94,20 +93,14 @@ public class SearchActivity extends AppCompatActivity implements SearchRecyclerV
         searchTextWatcher = new SearchTextWatcher(querySubject);
         searchField.addTextChangedListener(searchTextWatcher);
 
-        Disposable speakersSubscription = searchService.speakers()
-                .map(speakers -> SearchResult.Companion.create(Collections.emptyList(), speakers))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(searchResult -> searchRecyclerView.updateWith(searchResult, this), Timber::e);
-
         Disposable searchSubscription = querySubject.throttleLast(QUERY_DEBOUNCE_TIMEOUT, TimeUnit.MILLISECONDS)
                 .doOnNext(this::updateSearchActionIcon)
+                .startWith("")
                 .flatMap(searchService::find)
-                .doOnNext(searchResult -> speakersSubscription.dispose())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onReceivedSearchResults, Timber::e);
+                .subscribe(this::onReceiveSearchResults, Timber::e);
 
-        subscriptions.add(speakersSubscription);
         subscriptions.add(searchSubscription);
 
         searchField.requestFocus();
@@ -120,12 +113,7 @@ public class SearchActivity extends AppCompatActivity implements SearchRecyclerV
             return;
         }
 
-        imm.showSoftInput(view, 0, new ResultReceiver(new Handler()) {
-            @Override
-            protected void onReceiveResult(int resultCode, Bundle resultData) {
-                super.onReceiveResult(resultCode, resultData);
-            }
-        });
+        imm.showSoftInput(view, 0, new ResultReceiver(new Handler()));
     }
 
     private void updateSearchActionIcon(String query) {
@@ -133,7 +121,15 @@ public class SearchActivity extends AppCompatActivity implements SearchRecyclerV
         supportInvalidateOptionsMenu();
     }
 
-    private void onReceivedSearchResults(SearchResult searchResult) {
+    private void onReceiveSearchResults(SearchResult searchResult) {
+        if (searchResult instanceof SearchResult.Error) {
+            // TODO handle error
+        } else {
+            onSearchSuccessful((SearchResult.Success) searchResult);
+        }
+    }
+
+    private void onSearchSuccessful(SearchResult.Success searchResult) {
         if (searchResult.isEmpty()) {
             searchRecyclerView.setVisibility(View.INVISIBLE);
             emptyView.setVisibility(View.VISIBLE);
