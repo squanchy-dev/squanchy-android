@@ -3,5 +3,6 @@
 
   <integer name="track_filters_appear_duration">300</integer>
   <integer name="track_filters_appear_delay">50</integer>
+  <integer name="track_filters_disappear_duration">200</integer>
 
 </resources>

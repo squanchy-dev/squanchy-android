@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.animation.AnimationUtils
 import android.view.animation.Interpolator
+import androidx.animation.doOnEnd
 import androidx.view.postOnAnimationDelayed
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxItemDecoration
@@ -20,6 +21,7 @@ import net.squanchy.R
 import net.squanchy.schedule.domain.view.Track
 import net.squanchy.service.repository.TracksRepository
 import net.squanchy.support.view.setAdapterIfNone
+import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.math.hypot
 
 class ScheduleTracksFilterActivity : AppCompatActivity() {
@@ -38,8 +40,8 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_track_filters)
 
-        backgroundDim.setOnClickListener { finish() }
-        closeButton.setOnClickListener { finish() }
+        backgroundDim.setOnClickListener { animateDisappearance() }
+        closeButton.setOnClickListener { animateDisappearance() }
 
         val component = tracksFilterComponent(this)
         tracksRepository = component.tracksRepository()
@@ -62,10 +64,40 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
     private fun Set<Track>.addOrRemove(track: Track, selected: Boolean): Set<Track> =
         if (selected) this + track else this - track
 
+    private fun animateDisappearance() {
+        backgroundDim.isEnabled = false
+
+        val centerX = closeButton.x + closeButton.width / 2
+        val centerY = closeButton.y + closeButton.height / 2
+
+        ViewAnimationUtils.createCircularReveal(
+            filtersRoot,
+            centerX.toInt(),
+            centerY.toInt(),
+            hypot(filtersRoot.width.toDouble(), filtersRoot.height.toDouble()).toFloat(),
+            0F
+        ).apply {
+            duration = resources.getInteger(R.integer.track_filters_disappear_duration).toLong()
+
+            doOnEnd {
+                filtersRoot.visibility = View.INVISIBLE
+                finish()
+            }
+
+            start()
+        }
+    }
+
     override fun onStart() {
         super.onStart()
 
+        if (needsAppearAnimation.getAndSet(false)) {
+            filtersRoot.postOnAnimation { animateAppearing() }
+        }
+
         subscription = Observable.combineLatest(tracksRepository.tracks(), tracksFilter.selectedTracks, combineIntoCheckableTracks())
+            .filter { it.isNotEmpty() }
+            .distinctUntilChanged()
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { checkableTracks ->
@@ -75,30 +107,9 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
             }
 
         prepareAppearanceAnimation()
-        filtersRoot.postOnAnimation { animateAppearing() }
     }
 
-    private fun prepareAppearanceAnimation() {
-        appearInterpolator = AnimationUtils.loadInterpolator(this, android.R.interpolator.linear_out_slow_in)
-
-        val titleDeltaY = resources.getDimension(R.dimen.track_filters_title_appear_delta_y)
-        dialogTitle.apply {
-            translationY = -titleDeltaY
-            alpha = 0F
-        }
-
-        val subtitleDeltaY = resources.getDimension(R.dimen.track_filters_subtitle_appear_delta_y)
-        dialogSubtitle.apply {
-            translationY = -subtitleDeltaY
-            alpha = 0F
-        }
-
-        val tracksDeltaY = resources.getDimension(R.dimen.track_filters_tracks_appear_delta_y)
-        trackFiltersList.apply {
-            translationY = -tracksDeltaY
-            alpha = 0F
-        }
-    }
+    private val needsAppearAnimation: AtomicBoolean = AtomicBoolean(true)
 
     @Suppress("MagicNumber") // Just animation code… needs a few magic numbers
     private fun animateAppearing() {
@@ -134,6 +145,29 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
         .setDuration(duration)
         .setStartDelay(delay)
         .start()
+
+    private fun prepareAppearanceAnimation() {
+        appearInterpolator = AnimationUtils.loadInterpolator(this, android.R.interpolator.linear_out_slow_in)
+        filtersRoot.visibility = View.VISIBLE
+
+        val titleDeltaY = resources.getDimension(R.dimen.track_filters_title_appear_delta_y)
+        dialogTitle.apply {
+            translationY = -titleDeltaY
+            alpha = 0F
+        }
+
+        val subtitleDeltaY = resources.getDimension(R.dimen.track_filters_subtitle_appear_delta_y)
+        dialogSubtitle.apply {
+            translationY = -subtitleDeltaY
+            alpha = 0F
+        }
+
+        val tracksDeltaY = resources.getDimension(R.dimen.track_filters_tracks_appear_delta_y)
+        trackFiltersList.apply {
+            translationY = -tracksDeltaY
+            alpha = 0F
+        }
+    }
 
     private fun combineIntoCheckableTracks(): BiFunction<List<Track>, Set<Track>, List<CheckableTrack>> {
         return BiFunction { tracks, selectedTracks ->
