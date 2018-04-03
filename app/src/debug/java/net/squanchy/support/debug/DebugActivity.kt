@@ -106,6 +106,7 @@ class DebugActivity : AppCompatActivity() {
 
     private fun createTrack() = Track(
         "0",
+        0,
         "UI",
         Optional.of(generateColor()),
         Optional.of(generateColor()),

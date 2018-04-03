@@ -78,12 +78,14 @@ fun aPlace(
 
 fun aTrack(
     id: String = "a track id",
+    numericId: Long = 0,
     name: String = "a track name",
     accentColor: Optional<String> = Optional.of("#ABCDEF"),
     textColor: Optional<String> = Optional.of("#FEDCBA"),
     iconUrl: Optional<String> = Optional.of("www.squanchy.net")
 ) = Track(
     id = id,
+    numericId = numericId,
     name = name,
     accentColor = accentColor,
     textColor = textColor,

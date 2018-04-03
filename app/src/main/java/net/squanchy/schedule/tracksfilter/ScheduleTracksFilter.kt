@@ -108,7 +108,7 @@ private class TracksFilterAdapter(
     }
 
     override fun getItemId(position: Int): Long {
-        return getItem(position).track().id.hashCode().toLong() // TODO this should use a proper checksum
+        return getItem(position).track().numericId
     }
 
     class DiffCallback : DiffUtil.ItemCallback<CheckableTrack>() {
