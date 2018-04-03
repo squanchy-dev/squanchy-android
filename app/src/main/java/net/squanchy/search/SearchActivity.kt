@@ -100,8 +100,7 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
 
     private fun onSearchSuccessful(searchResult: SearchResult.Success) {
         if (searchResult.isEmpty) {
-            emptyViewMessage.loadCompoundDrawableTop(R.drawable.ic_error_outline
-            )
+            emptyViewMessage.loadCompoundDrawableTop(R.drawable.ic_error_outline)
 
             searchRecyclerView.visibility = View.INVISIBLE
             emptyView.visibility = View.VISIBLE
