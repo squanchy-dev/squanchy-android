@@ -1,6 +1,8 @@
 package net.squanchy.search.algolia
 
 import com.squareup.moshi.Moshi
+import io.reactivex.plugins.RxJavaPlugins
+import io.reactivex.schedulers.Schedulers
 import net.squanchy.search.algolia.model.AlgoliaSearchResponse
 import net.squanchy.search.algolia.model.AlgoliaSearchResult
 import org.junit.Before
@@ -32,6 +34,8 @@ class AlgoliaSearchEngineTest {
     fun setup() {
         parser = MoshiResponseParser(Moshi.Builder().build().adapter(AlgoliaSearchResponse::class.java))
         algoliaSearchEngine = AlgoliaSearchEngine(eventIndex, speakerIndex)
+
+        RxJavaPlugins.setIoSchedulerHandler { Schedulers.trampoline() }
     }
 
     @Test
