@@ -125,7 +125,7 @@ class NotificationCreator(private val context: Context) {
 
     private fun getTrackColor(event: Event): Int {
         return event.track
-            .map { (_, _, accentColor) -> Color.parseColor(accentColor.or(ARGB_TRANSPARENT)) }
+            .map { (_, _, _, accentColor) -> Color.parseColor(accentColor.or(ARGB_TRANSPARENT)) }
             .or(Color.TRANSPARENT)
     }
 
