@@ -23,6 +23,7 @@ import net.squanchy.R
 import net.squanchy.schedule.domain.view.Track
 import net.squanchy.schedule.tracksfilter.widget.FilterChipView
 import net.squanchy.service.repository.TracksRepository
+import net.squanchy.support.view.setAdapterIfNone
 
 class ScheduleTracksFilterActivity : AppCompatActivity() {
 
@@ -56,7 +57,6 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
             setDrawable(resources.getDrawable(R.drawable.filters_separator, theme))
             setOrientation(FlexboxItemDecoration.BOTH)
         })
-        trackFiltersList.adapter = trackAdapter
         trackFiltersList.itemAnimator = null
     }
 
@@ -70,6 +70,7 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { checkableTracks ->
+                trackFiltersList.setAdapterIfNone(trackAdapter)
                 this.checkableTracks = checkableTracks
                 trackAdapter.submitList(checkableTracks)
             }
