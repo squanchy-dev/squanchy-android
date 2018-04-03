@@ -65,8 +65,19 @@ class AlgoliaSearchEngineTest {
             .assertValue(AlgoliaSearchResult.ErrorSearching)
     }
 
+    @Test
+    fun `should not count spaces when the query is long enough but contains them`() {
+        `when`(speakerIndex.search(SPACED_QUERY)).thenReturn(parser.parse(algoliaSpeakerResponse))
+        `when`(eventIndex.search(SPACED_QUERY)).thenThrow(IOException(":("))
+
+        algoliaSearchEngine.query(SPACED_QUERY)
+            .test()
+            .assertValue(AlgoliaSearchResult.QueryNotLongEnough)
+    }
+
     companion object {
         private const val VALID_QUERY = "sa"
         private const val INVALID_QUERY = "a"
+        private const val SPACED_QUERY = "a "
     }
 }
