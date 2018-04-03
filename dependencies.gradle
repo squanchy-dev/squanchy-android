@@ -50,7 +50,7 @@ ext {
         ],
 
         test: [
-            truth   : 'com.google.truth:truth:0.39',
+            truth   : 'com.google.truth:truth:0.40',
             jodaTime: 'joda-time:joda-time:2.9.9',
             jUnit4  : 'junit:junit:4.12',
             mockito : 'org.mockito:mockito-inline:2.17.0'
