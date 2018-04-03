@@ -40,6 +40,11 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_track_filters)
 
+        savedInstanceState?.apply {
+            val restoredNeedsAppearAnimation = getBoolean(EXTRA_NEEDS_APPEAR_ANIMATION, true)
+            needsAppearAnimation.set(restoredNeedsAppearAnimation)
+        }
+
         backgroundDim.setOnClickListener { animateDisappearance() }
         closeButton.setOnClickListener { animateDisappearance() }
 
@@ -92,6 +97,7 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
         super.onStart()
 
         if (needsAppearAnimation.getAndSet(false)) {
+            prepareAppearanceAnimation()
             filtersRoot.postOnAnimation { animateAppearing() }
         }
 
@@ -105,8 +111,6 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
                 this.checkableTracks = checkableTracks
                 trackAdapter.submitList(checkableTracks)
             }
-
-        prepareAppearanceAnimation()
     }
 
     private val needsAppearAnimation: AtomicBoolean = AtomicBoolean(true)
@@ -175,8 +179,17 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        outState?.putBoolean(EXTRA_NEEDS_APPEAR_ANIMATION, needsAppearAnimation.get())
+    }
+
     override fun onStop() {
         super.onStop()
         subscription?.dispose()
+    }
+
+    companion object {
+        private const val EXTRA_NEEDS_APPEAR_ANIMATION = "ScheduleTracksFilterActivity.EXTRA_NEEDS_APPEAR_ANIMATION"
     }
 }
