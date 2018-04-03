@@ -68,15 +68,11 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
         searchTextWatcher = SearchTextWatcher(querySubject)
         searchField.addTextChangedListener(searchTextWatcher)
 
-        val speakersSubscription = searchService.speakers()
-            .map { SearchResult.Success(emptyList(), it) }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ searchResult -> searchRecyclerView.updateWith(searchResult, this) }, Timber::e)
-
         val searchSubscription = querySubject.throttleLast(QUERY_DEBOUNCE_TIMEOUT.toLong(), TimeUnit.MILLISECONDS)
             .doOnNext(::updateSearchActionIcon)
+            .startWith(EMPTY_QUERY)
             .flatMap(searchService::find)
-            .doOnNext { speakersSubscription.dispose() }
+            .distinctUntilChanged()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(::onReceiveSearchResults, Timber::e)
@@ -85,12 +81,6 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
 
         searchField.requestFocus()
         searchField.postDelayed({ requestShowKeyboard(searchField) }, DELAY_ENOUGH_FOR_FOCUS_TO_HAPPEN_MILLIS)
-    }
-
-    private fun requestShowKeyboard(view: View) {
-        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-
-        imm.showSoftInput(view, 0, ResultReceiver(Handler()))
     }
 
     private fun updateSearchActionIcon(query: String) {
@@ -134,6 +124,12 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
         }
     }
 
+    private fun requestShowKeyboard(view: View) {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+        imm.showSoftInput(view, 0, ResultReceiver(Handler()))
+    }
+
     override fun onStop() {
         super.onStop()
 
@@ -156,18 +152,22 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_voice_search) {
-            onVoiceSearchClicked()
-            return true
-        } else if (item.itemId == R.id.action_clear_query) {
-            clearSearchQuery()
-            return true
-        } else if (item.itemId == android.R.id.home) {
-            finish()
-            overridePendingTransition(0, android.R.anim.fade_out)
-            return true
+        when {
+            item.itemId == R.id.action_voice_search -> {
+                onVoiceSearchClicked()
+                return true
+            }
+            item.itemId == R.id.action_clear_query -> {
+                clearSearchQuery()
+                return true
+            }
+            item.itemId == android.R.id.home -> {
+                finish()
+                overridePendingTransition(0, android.R.anim.fade_out)
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun onVoiceSearchClicked() {
@@ -224,5 +224,6 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
         private const val QUERY_DEBOUNCE_TIMEOUT = 250
         private const val DELAY_ENOUGH_FOR_FOCUS_TO_HAPPEN_MILLIS = 50L
         private const val MIN_QUERY_LENGTH = 2
+        private const val EMPTY_QUERY = ""
     }
 }
