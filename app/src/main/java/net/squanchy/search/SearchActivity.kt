@@ -13,7 +13,6 @@ import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.text.Editable
-import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
@@ -87,7 +86,7 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
     }
 
     private fun updateSearchActionIcon(query: String) {
-        hasQuery = !TextUtils.isEmpty(query)
+        hasQuery = query.isNotEmpty()
         supportInvalidateOptionsMenu()
     }
 
@@ -132,7 +131,6 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
 
     private fun requestShowKeyboard(view: View) {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-
         imm.showSoftInput(view, 0, ResultReceiver(Handler()))
     }
 
