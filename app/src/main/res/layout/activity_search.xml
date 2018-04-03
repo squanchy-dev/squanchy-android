@@ -46,11 +46,12 @@
     <TextView
       android:id="@+id/emptyViewMessage"
       style="@style/Search.EmptyMessage"
-      android:padding="@dimen/search_empty_state_padding"
-      android:textAlignment="center"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_gravity="center" />
+      android:layout_gravity="center"
+      android:padding="@dimen/search_empty_state_padding"
+      android:drawablePadding="@dimen/search_compound_drawable_padding"
+      android:textAlignment="center" />
   </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>

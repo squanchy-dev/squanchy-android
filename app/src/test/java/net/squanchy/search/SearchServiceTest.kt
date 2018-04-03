@@ -43,7 +43,7 @@ class SearchServiceTest {
     }
 
     @Test
-    fun `should not filter the results when the query is not long enough`() {
+    fun `should show only the speakers when the query is not long enough`() {
         val eventList = listOf(anEvent(), anEvent(id = "qwer"))
         val speakerList = listOf(aSpeaker(), aSpeaker(id = "qwer"))
         `when`(algoliaSearchEngine.query(QUERY)).thenReturn(Observable.just(AlgoliaSearchResult.QueryNotLongEnough))

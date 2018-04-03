@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.ResultReceiver
 import android.speech.RecognizerIntent
+import android.support.annotation.DrawableRes
+import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.text.Editable
@@ -17,6 +19,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -97,6 +100,9 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
 
     private fun onSearchSuccessful(searchResult: SearchResult.Success) {
         if (searchResult.isEmpty) {
+            emptyViewMessage.loadCompoundDrawableTop(R.drawable.ic_error_outline
+            )
+
             searchRecyclerView.visibility = View.INVISIBLE
             emptyView.visibility = View.VISIBLE
 
@@ -111,6 +117,7 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
     }
 
     private fun onSearchError() {
+        emptyViewMessage.loadCompoundDrawableTop(R.drawable.ic_cloud_off)
         emptyViewMessage.setText(R.string.search_error_message)
         searchRecyclerView.visibility = View.INVISIBLE
         emptyView.visibility = View.VISIBLE
@@ -128,6 +135,11 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
         imm.showSoftInput(view, 0, ResultReceiver(Handler()))
+    }
+
+    private fun TextView.loadCompoundDrawableTop(@DrawableRes drawableRes: Int) {
+        val drawable = ResourcesCompat.getDrawable(resources, drawableRes, theme)
+        setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
     }
 
     override fun onStop() {
