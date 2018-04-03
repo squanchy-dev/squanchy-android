@@ -2,6 +2,7 @@ package net.squanchy.search.algolia
 
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
+import io.reactivex.schedulers.Schedulers
 import net.squanchy.search.algolia.model.AlgoliaSearchResponse
 import net.squanchy.search.algolia.model.AlgoliaSearchResult
 import net.squanchy.search.algolia.model.AlgoliaSearchResult.ErrorSearching
@@ -22,6 +23,7 @@ class AlgoliaSearchEngine(
                 .map<AlgoliaSearchResult> { Matches(it.first.extractIds(), it.second.extractIds()) }
                 .doOnError(Timber::e)
                 .onErrorReturnItem(ErrorSearching)
+                .subscribeOn(Schedulers.io())
         }
     }
 

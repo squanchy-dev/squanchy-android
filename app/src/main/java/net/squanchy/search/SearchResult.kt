@@ -11,4 +11,11 @@ sealed class SearchResult {
     }
 
     object Error : SearchResult()
+
+    companion object {
+
+        private val emptySearch = SearchResult.Success(emptyList(), emptyList())
+
+        fun empty(): SearchResult = emptySearch
+    }
 }

@@ -34,7 +34,7 @@ class SearchService(
     private fun combineWithSearchResult(): Function3<List<Event>, List<Speaker>, AlgoliaSearchResult, SearchResult> {
         return Function3 { events, speakers, result ->
             when (result) {
-                is QueryNotLongEnough -> SearchResult.Success(emptyList(), speakers)
+                is QueryNotLongEnough -> SearchResult.empty()
                 is ErrorSearching -> SearchResult.Error
                 is Matches -> SearchResult.Success(
                     events.filter { result.eventIds.contains(it.id) },

@@ -177,14 +177,6 @@
     <item name="android:fontFamily">@font/default_typeface_light</item>
   </style>
 
-  <style name="Search.ErrorMessage" parent="TextAppearance.AppCompat.Body1">
-    <item name="android:text">@string/start_typing_to_search</item>
-    <item name="android:textColor">?android:textColorSecondary</item>
-    <item name="android:textSize">@dimen/search_empty_state_text</item>
-    <item name="fontFamily">@font/default_typeface_light</item>
-    <item name="android:fontFamily">@font/default_typeface_light</item>
-  </style>
-
   <style name="EventDetails.Header.Speaker.Names" parent="None">
     <item name="android:gravity">start|center_vertical</item>
     <item name="android:lineSpacingExtra">@dimen/event_details_speaker_line_spacing_extra</item>
