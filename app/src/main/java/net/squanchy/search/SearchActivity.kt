@@ -83,13 +83,19 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
 
         subscriptions.add(searchSubscription)
 
+        searchField.setOnFocusChangeListener { view, hasFocus ->
+            if (hasFocus) {
+                requestShowKeyboard(view)
+            }
+            view.onFocusChangeListener = null
+        }
+
         searchField.requestFocus()
-        searchField.postDelayed({ requestShowKeyboard(searchField) }, DELAY_ENOUGH_FOR_FOCUS_TO_HAPPEN_MILLIS)
     }
 
     private fun updateSearchActionIcon(query: String) {
         hasQuery = query.isNotEmpty()
-        supportInvalidateOptionsMenu()
+        invalidateOptionsMenu()
     }
 
     private fun onReceiveSearchResults(searchResult: SearchResult) {
@@ -233,7 +239,6 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
 
         private const val SPEECH_REQUEST_CODE = 100
         private const val QUERY_DEBOUNCE_TIMEOUT = 250L
-        private const val DELAY_ENOUGH_FOR_FOCUS_TO_HAPPEN_MILLIS = 50L
         private const val MIN_QUERY_LENGTH = 2
         private const val EMPTY_QUERY = ""
     }
