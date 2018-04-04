@@ -6,12 +6,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.view.children
 import kotlinx.android.synthetic.main.activity_event_details.view.*
 import net.squanchy.R
 import net.squanchy.imageloader.ImageLoader
 import net.squanchy.imageloader.imageLoaderComponent
 import net.squanchy.speaker.domain.view.Speaker
-import net.squanchy.support.kotlin.children
 import net.squanchy.support.unwrapToActivityContext
 
 abstract class SpeakerView @JvmOverloads constructor(
