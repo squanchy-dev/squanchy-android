@@ -28,12 +28,11 @@ internal class ItemsAdapter(private val searchResult: SearchResult.Success) {
         ensurePositionExists(position)
 
         val totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResult.events)
-        val isInLastPosition = totalItemsCount() - 1 == position
 
         val adjustedPosition: Int = if (position < totalEventItemsCount) position else position - totalEventItemsCount
 
         return when {
-            isInLastPosition -> SearchAdapter.ALGOLIA_LOGO
+            position.isLastAdapterPosition() -> SearchAdapter.ALGOLIA_LOGO
             adjustedPosition == 0 -> SearchAdapter.HEADER
             position < totalEventItemsCount -> SearchAdapter.EVENT
             else -> SearchAdapter.SPEAKER
@@ -43,8 +42,7 @@ internal class ItemsAdapter(private val searchResult: SearchResult.Success) {
     fun itemIdAtAbsolutePosition(position: Int): Long {
         ensurePositionExists(position)
 
-        val totalItemsCount = totalItemsCount()
-        if (totalItemsCount - 1 == position) {
+        if (position.isLastAdapterPosition()) {
             return ITEM_ID_ALGOLIA_LOGO
         }
         val totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResult.events)
@@ -56,6 +54,8 @@ internal class ItemsAdapter(private val searchResult: SearchResult.Success) {
             return if (adjustedPosition == 0) ITEM_ID_SPEAKERS_HEADER else searchResult.speakers[adjustedPosition - 1].numericId
         }
     }
+
+    private fun Int.isLastAdapterPosition() = this == totalItemsCount() - 1
 
     fun speakerAtAbsolutePosition(position: Int): Speaker {
         ensurePositionExists(position)
