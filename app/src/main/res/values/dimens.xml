@@ -45,7 +45,6 @@
   <dimen name="tweet_empty_view_drawable_padding">24dp</dimen>
 
   <dimen name="favorites_empty_margin_horizontal">32dp</dimen>
-  <dimen name="favorites_empty_image_size">80dp</dimen>
   <dimen name="favorites_empty_image_margin_bottom">16dp</dimen>
   <dimen name="favorites_empty_blurb_margin_bottom">24dp</dimen>
   <dimen name="favorites_empty_blurb_text">16sp</dimen>

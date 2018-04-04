@@ -52,12 +52,12 @@
       android:visibility="gone">
 
       <ImageView
-        android:layout_width="@dimen/favorites_empty_image_size"
-        android:layout_height="@dimen/favorites_empty_image_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/favorites_empty_image_margin_bottom"
         android:contentDescription="@null"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/empty_favorites_signed_out" />
+        app:srcCompat="@drawable/ic_favorites_empty_not_signed_in" />
 
       <TextView
         style="@style/Favorite.Empty.Blurb"
