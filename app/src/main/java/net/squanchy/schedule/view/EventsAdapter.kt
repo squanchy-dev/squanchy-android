@@ -10,7 +10,7 @@ import net.squanchy.schedule.domain.view.Event
 
 internal class EventsAdapter(
     context: Context
-) : ListAdapter<Event, EventViewHolder>(DiffCallback()) {
+) : ListAdapter<Event, EventViewHolder>(DiffCallback) {
 
     init {
         setHasStableIds(true)
@@ -42,15 +42,15 @@ internal class EventsAdapter(
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         holder.updateWith(getItem(position), eventClickListener)
     }
+}
 
-    internal class DiffCallback : DiffUtil.ItemCallback<Event>() {
-        override fun areItemsTheSame(oldItem: Event?, newItem: Event?): Boolean {
-            return oldItem?.numericId == newItem?.numericId
-        }
+private object DiffCallback : DiffUtil.ItemCallback<Event>() {
+    override fun areItemsTheSame(oldItem: Event?, newItem: Event?): Boolean {
+        return oldItem?.numericId == newItem?.numericId
+    }
 
-        override fun areContentsTheSame(oldItem: Event?, newItem: Event?): Boolean {
-            return oldItem == newItem
-        }
+    override fun areContentsTheSame(oldItem: Event?, newItem: Event?): Boolean {
+        return oldItem == newItem
     }
 }
 

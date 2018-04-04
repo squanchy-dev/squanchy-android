@@ -12,7 +12,7 @@ import net.squanchy.tweets.domain.view.TweetViewModel
 class TweetsAdapter(
     context: Context,
     private val linkClickedListener: OnTweetLinkClicked
-) : ListAdapter<TweetViewModel, TweetViewHolder>(DiffCallback()) {
+) : ListAdapter<TweetViewModel, TweetViewHolder>(DiffCallback) {
 
     init {
         setHasStableIds(true)
@@ -35,15 +35,15 @@ class TweetsAdapter(
     override fun getItemId(position: Int): Long {
         return getItem(position).id
     }
+}
 
-    class DiffCallback : DiffUtil.ItemCallback<TweetViewModel>() {
-        override fun areItemsTheSame(oldItem: TweetViewModel?, newItem: TweetViewModel?): Boolean {
-            return oldItem?.id == newItem?.id
-        }
+private object DiffCallback : DiffUtil.ItemCallback<TweetViewModel>() {
+    override fun areItemsTheSame(oldItem: TweetViewModel?, newItem: TweetViewModel?): Boolean {
+        return oldItem?.id == newItem?.id
+    }
 
-        override fun areContentsTheSame(oldItem: TweetViewModel?, newItem: TweetViewModel?): Boolean {
-            return oldItem == newItem
-        }
+    override fun areContentsTheSame(oldItem: TweetViewModel?, newItem: TweetViewModel?): Boolean {
+        return oldItem == newItem
     }
 }
 
