@@ -2,7 +2,6 @@ package net.squanchy.search
 
 import android.app.Activity
 import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -19,6 +18,9 @@ import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.content.systemService
+import androidx.view.isInvisible
+import androidx.view.isVisible
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -41,7 +43,7 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
     private lateinit var navigator: Navigator
     private lateinit var searchService: SearchService
 
-    private var searchTextWatcher: SearchTextWatcher? = null
+    private lateinit var searchTextWatcher: SearchTextWatcher
 
     private var hasQuery: Boolean = false
 
@@ -101,14 +103,14 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
         if (searchResult.isEmpty) {
             emptyViewMessage.loadCompoundDrawableTop(R.drawable.ic_error_outline)
 
-            searchRecyclerView.visibility = View.INVISIBLE
-            emptyView.visibility = View.VISIBLE
+            searchRecyclerView.isInvisible = true
+            emptyView.isVisible = true
 
             val query = searchField.text
             updateEmptyStateMessageFor(query)
         } else {
-            emptyView.visibility = View.INVISIBLE
-            searchRecyclerView.visibility = View.VISIBLE
+            emptyView.isInvisible = true
+            searchRecyclerView.isVisible = true
 
             searchRecyclerView.updateWith(searchResult, this)
         }
@@ -117,12 +119,12 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
     private fun onSearchError() {
         emptyViewMessage.loadCompoundDrawableTop(R.drawable.ic_cloud_off)
         emptyViewMessage.setText(R.string.search_error_message)
-        searchRecyclerView.visibility = View.INVISIBLE
-        emptyView.visibility = View.VISIBLE
+        searchRecyclerView.isInvisible = true
+        emptyView.isVisible = true
     }
 
     private fun updateEmptyStateMessageFor(query: CharSequence?) {
-        if (query?.length == null || query.length < MIN_QUERY_LENGTH) {
+        if (query?.length ?: 0 < MIN_QUERY_LENGTH) {
             emptyViewMessage.setText(R.string.start_typing_to_search)
         } else {
             emptyViewMessage.setText(R.string.no_results)
@@ -130,8 +132,8 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
     }
 
     private fun requestShowKeyboard(view: View) {
-        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.showSoftInput(view, 0, ResultReceiver(Handler()))
+        val imeManager: InputMethodManager = systemService()
+        imeManager.showSoftInput(view, 0, ResultReceiver(Handler()))
     }
 
     private fun TextView.loadCompoundDrawableTop(@DrawableRes drawableRes: Int) {
@@ -144,7 +146,7 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
 
         subscriptions.clear()
 
-        searchTextWatcher?.let(searchField::removeTextChangedListener)
+        searchField.removeTextChangedListener(searchTextWatcher)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
