@@ -4,6 +4,7 @@ import net.squanchy.support.lang.Optional
 
 data class Track(
     val id: String,
+    val numericId: Long,
     val name: String,
     val accentColor: Optional<String> = Optional.absent(),
     val textColor: Optional<String> = Optional.absent(),

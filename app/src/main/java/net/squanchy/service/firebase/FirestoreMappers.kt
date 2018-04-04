@@ -18,8 +18,9 @@ import org.joda.time.LocalDateTime
 
 fun FirestorePlace.toPlace(): Place = Place(id = id, name = name, floor = floor.optional())
 
-fun FirestoreTrack.toTrack() = Track(
+fun FirestoreTrack.toTrack(checksum: Checksum) = Track(
     id = id,
+    numericId = checksum.getChecksumOf(id),
     name = name,
     accentColor = accentColor.optional(),
     textColor = textColor.optional(),
@@ -60,7 +61,7 @@ fun FirestoreEvent.toEvent(checksum: Checksum, dateTime: DateTimeZone, isFavorit
     type = type.toEventType(),
     favorited = isFavorite,
     description = description.optional(),
-    track = track?.toTrack().optional(),
+    track = track?.toTrack(checksum).optional(),
     timeZone = dateTime
 )
 
