@@ -6,6 +6,7 @@ import android.support.v7.util.DiffUtil
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import net.squanchy.R
+import net.squanchy.favorites.view.EventViewHolder
 import net.squanchy.schedule.domain.view.Event
 
 internal class EventsAdapter(

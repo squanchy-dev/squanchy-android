@@ -1,14 +1,14 @@
 package net.squanchy.favorites
 
 import io.reactivex.Observable
-import net.squanchy.favorites.view.FavoriteListItem
+import net.squanchy.favorites.view.FavoritesItem
 import net.squanchy.schedule.ScheduleService
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.service.firebase.FirebaseAuthService
 
 interface FavoritesService {
 
-    fun favorites(): Observable<List<FavoriteListItem>>
+    fun favorites(): Observable<List<FavoritesItem>>
 
     fun currentUserIsSignedIn(): Observable<Boolean>
 }
@@ -18,13 +18,13 @@ internal class FirestoreFavoritesService(
     private val scheduleService: ScheduleService
 ) : FavoritesService {
 
-    override fun favorites(): Observable<List<FavoriteListItem>> {
+    override fun favorites(): Observable<List<FavoritesItem>> {
         return scheduleService.schedule(onlyFavorites = true)
             .map { schedule -> schedule.pages }
             .flatMap { pages ->
                 val flattenedItems = pages.map { page ->
                     val eventsAsFavoriteItems = page.events.map { it.toFavoriteItem() }
-                    listOf(FavoriteListItem.Header(page.date)) + eventsAsFavoriteItems
+                    listOf(FavoritesItem.Header(page.date)) + eventsAsFavoriteItems
                 }.flatten()
                 return@flatMap Observable.just(flattenedItems)
             }
@@ -36,5 +36,5 @@ internal class FirestoreFavoritesService(
     }
 }
 
-private fun Event.toFavoriteItem(): FavoriteListItem.Favorite =
-    FavoriteListItem.Favorite(this)
+private fun Event.toFavoriteItem(): FavoritesItem.Favorite =
+    FavoritesItem.Favorite(this)

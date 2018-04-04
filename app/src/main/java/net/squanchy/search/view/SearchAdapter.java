@@ -15,9 +15,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.Collections;
 
 import net.squanchy.R;
+import net.squanchy.favorites.view.EventViewHolder;
 import net.squanchy.imageloader.ImageLoader;
 import net.squanchy.schedule.view.EventItemView;
-import net.squanchy.schedule.view.EventViewHolder;
 import net.squanchy.search.SearchResults;
 
 import static net.squanchy.imageloader.ImageLoaderComponentKt.imageLoaderComponent;
