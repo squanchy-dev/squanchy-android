@@ -31,7 +31,8 @@ class ScheduleDayPageView @JvmOverloads constructor(
     }
 
     fun updateWith(newData: List<Event>, listener: (Event) -> Unit) {
-        setAdapterIfNone(adapter.apply { eventClickListener = listener })
+        adapter.eventClickListener = listener
+        setAdapterIfNone(adapter)
         adapter.submitList(newData)
     }
 
