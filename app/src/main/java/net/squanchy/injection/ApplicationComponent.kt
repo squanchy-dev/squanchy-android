@@ -16,7 +16,7 @@ import net.squanchy.service.repository.SpeakerRepository
 import net.squanchy.service.repository.TracksRepository
 import net.squanchy.service.repository.injection.RepositoryModule
 import net.squanchy.support.checksum.ChecksumModule
-import net.squanchy.support.checksum.CurrentTimeModule
+import net.squanchy.support.injection.CurrentTimeModule
 
 fun createApplicationComponent(application: Application): ApplicationComponent {
     return DaggerApplicationComponent.builder()

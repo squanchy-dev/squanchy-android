@@ -1,4 +1,4 @@
-package net.squanchy.support.checksum
+package net.squanchy.support.injection
 
 import dagger.Module
 import dagger.Provides
@@ -9,5 +9,5 @@ import net.squanchy.support.system.DebugCurrentTime
 class CurrentTimeModule {
 
     @Provides
-    internal fun provideCurrentTime(): CurrentTime = DebugCurrentTime()
+    internal fun currentTime(): CurrentTime = DebugCurrentTime()
 }

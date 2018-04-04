@@ -1,16 +1,15 @@
 package net.squanchy.home
 
 import android.support.v7.app.AppCompatActivity
+import dagger.Component
 import net.squanchy.analytics.Analytics
+import net.squanchy.injection.ActivityContextModule
 import net.squanchy.injection.ActivityLifecycle
 import net.squanchy.injection.ApplicationComponent
+import net.squanchy.injection.applicationComponent
 import net.squanchy.navigation.NavigationModule
 import net.squanchy.navigation.Navigator
-import net.squanchy.support.checksum.CurrentTimeModule
-
-import dagger.Component
-import net.squanchy.injection.ActivityContextModule
-import net.squanchy.injection.applicationComponent
+import net.squanchy.support.injection.CurrentTimeModule
 
 fun homeComponent(activity: AppCompatActivity) =
     DaggerHomeComponent.builder()
