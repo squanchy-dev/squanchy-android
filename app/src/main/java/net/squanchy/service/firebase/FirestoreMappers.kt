@@ -10,7 +10,7 @@ import net.squanchy.service.firebase.model.schedule.FirestorePlace
 import net.squanchy.service.firebase.model.schedule.FirestoreSpeaker
 import net.squanchy.service.firebase.model.schedule.FirestoreTrack
 import net.squanchy.speaker.domain.view.Speaker
-import net.squanchy.support.lang.Checksum
+import net.squanchy.support.checksum.Checksum
 import net.squanchy.support.lang.optional
 import net.squanchy.venue.domain.view.Venue
 import org.joda.time.DateTimeZone

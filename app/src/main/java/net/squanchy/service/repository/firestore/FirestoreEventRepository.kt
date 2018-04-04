@@ -11,7 +11,7 @@ import net.squanchy.service.firebase.model.schedule.FirestoreEvent
 import net.squanchy.service.firebase.model.schedule.FirestoreFavorite
 import net.squanchy.service.firebase.toEvent
 import net.squanchy.service.repository.EventRepository
-import net.squanchy.support.lang.Checksum
+import net.squanchy.support.checksum.Checksum
 import org.joda.time.DateTimeZone
 
 class FirestoreEventRepository(

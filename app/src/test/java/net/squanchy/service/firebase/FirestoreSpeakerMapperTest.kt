@@ -1,6 +1,6 @@
 package net.squanchy.service.firebase
 
-import net.squanchy.support.lang.Checksum
+import net.squanchy.support.checksum.Checksum
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule

@@ -3,7 +3,7 @@ package net.squanchy.service.firebase
 import com.google.common.truth.Truth.assertThat
 import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.schedule.domain.view.Event
-import net.squanchy.support.lang.Checksum
+import net.squanchy.support.checksum.Checksum
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDateTime
 import org.junit.Before

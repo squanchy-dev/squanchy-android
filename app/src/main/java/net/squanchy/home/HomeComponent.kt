@@ -6,7 +6,7 @@ import net.squanchy.injection.ActivityLifecycle
 import net.squanchy.injection.ApplicationComponent
 import net.squanchy.navigation.NavigationModule
 import net.squanchy.navigation.Navigator
-import net.squanchy.support.injection.CurrentTimeModule
+import net.squanchy.support.checksum.CurrentTimeModule
 
 import dagger.Component
 import net.squanchy.injection.ActivityContextModule

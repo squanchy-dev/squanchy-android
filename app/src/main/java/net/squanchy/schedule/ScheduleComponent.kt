@@ -11,7 +11,7 @@ import net.squanchy.navigation.NavigationModule
 import net.squanchy.navigation.Navigator
 import net.squanchy.schedule.tracksfilter.TracksFilter
 import net.squanchy.service.repository.TracksRepository
-import net.squanchy.support.injection.CurrentTimeModule
+import net.squanchy.support.checksum.CurrentTimeModule
 import net.squanchy.support.system.CurrentTime
 
 internal fun scheduleComponent(activity: AppCompatActivity): ScheduleComponent = DaggerScheduleComponent.builder()

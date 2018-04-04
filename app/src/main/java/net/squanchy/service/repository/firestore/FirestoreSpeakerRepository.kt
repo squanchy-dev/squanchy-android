@@ -5,7 +5,7 @@ import net.squanchy.service.firebase.FirestoreDbService
 import net.squanchy.service.firebase.toSpeaker
 import net.squanchy.service.repository.SpeakerRepository
 import net.squanchy.speaker.domain.view.Speaker
-import net.squanchy.support.lang.Checksum
+import net.squanchy.support.checksum.Checksum
 
 class FirestoreSpeakerRepository(
     private val dbService: FirestoreDbService,
