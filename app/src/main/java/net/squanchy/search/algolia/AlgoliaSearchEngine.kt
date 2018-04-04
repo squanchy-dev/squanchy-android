@@ -16,10 +16,15 @@ class AlgoliaSearchEngine(
 ) {
 
     fun query(key: String): Observable<AlgoliaSearchResult> {
-        if (key.length < QUERY_MIN_LENGTH) {
+        val trimmedQuery = key.trim()
+        if (trimmedQuery.length < QUERY_MIN_LENGTH) {
             return Observable.just(QueryNotLongEnough)
         } else {
-            return Observable.combineLatest(eventIndex.searchAsObservable(key), speakerIndex.searchAsObservable(key), combineInPair())
+            return Observable.combineLatest(
+                eventIndex.searchAsObservable(trimmedQuery),
+                speakerIndex.searchAsObservable(trimmedQuery),
+                combineInPair()
+            )
                 .map<AlgoliaSearchResult> { Matches(it.first.extractIds(), it.second.extractIds()) }
                 .doOnError(Timber::e)
                 .onErrorReturnItem(ErrorSearching)

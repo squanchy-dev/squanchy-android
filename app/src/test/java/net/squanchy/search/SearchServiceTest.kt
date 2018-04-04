@@ -67,7 +67,7 @@ class SearchServiceTest {
     }
 
     @Test
-    fun `should receive an error when the angolia search engine fails`() {
+    fun `should receive an error when the algolia search engine fails`() {
         val eventList = listOf(anEvent(), anEvent(id = "qwer"))
         val speakerList = listOf(aSpeaker(), aSpeaker(id = "qwer"))
         `when`(algoliaSearchEngine.query(QUERY)).thenReturn(Observable.just(AlgoliaSearchResult.ErrorSearching))
