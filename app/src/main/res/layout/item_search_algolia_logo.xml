@@ -9,7 +9,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center|end"
-    android:padding="8dp"
+    android:padding="@dimen/search_algolia_logo_padding"
     android:scaleType="center"
     app:srcCompat="@drawable/ic_algolia_logo" />
 </FrameLayout>
