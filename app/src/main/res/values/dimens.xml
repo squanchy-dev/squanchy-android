@@ -42,9 +42,9 @@
   <dimen name="tweet_footer_user_photo_margin">4dp</dimen>
   <dimen name="tweet_footer_margin_top">8dp</dimen>
   <dimen name="tweet_empty_view_margin">64dp</dimen>
+  <dimen name="tweet_empty_view_drawable_padding">24dp</dimen>
 
   <dimen name="favorites_empty_margin_horizontal">32dp</dimen>
-  <dimen name="favorites_empty_image_size">80dp</dimen>
   <dimen name="favorites_empty_image_margin_bottom">16dp</dimen>
   <dimen name="favorites_empty_blurb_margin_bottom">24dp</dimen>
   <dimen name="favorites_empty_blurb_text">16sp</dimen>
@@ -197,8 +197,11 @@
   <dimen name="track_filters_elevation">4dp</dimen>
   <dimen name="track_filters_title_margin_top">12dp</dimen>
   <dimen name="track_filters_title_margin_horizontal">16dp</dimen>
+  <dimen name="track_filters_title_appear_delta_y">32dp</dimen>
   <dimen name="track_filters_subtitle_margin_top">4dp</dimen>
+  <dimen name="track_filters_subtitle_appear_delta_y">27dp</dimen>
   <dimen name="track_filters_tracks_padding">16dp</dimen>
+  <dimen name="track_filters_tracks_appear_delta_y">22dp</dimen>
   <dimen name="track_filters_item_padding_vertical">8dp</dimen>
   <dimen name="track_filters_item_padding_horizontal">16dp</dimen>
   <dimen name="track_filters_close_button_size">48dp</dimen>
@@ -207,5 +210,6 @@
   <dimen name="track_filters_item_stroke_width">2dp</dimen>
 
   <dimen name="schedule_empty_view_text_size">16sp</dimen>
+  <dimen name="schedule_empty_view_drawable_padding">24dp</dimen>
 
 </resources>

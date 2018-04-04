@@ -10,7 +10,7 @@ import net.squanchy.service.firebase.model.schedule.FirestorePlace
 import net.squanchy.service.firebase.model.schedule.FirestoreSpeaker
 import net.squanchy.service.firebase.model.schedule.FirestoreTrack
 import net.squanchy.speaker.domain.view.Speaker
-import net.squanchy.support.lang.Checksum
+import net.squanchy.support.checksum.Checksum
 import net.squanchy.support.lang.optional
 import net.squanchy.venue.domain.view.Venue
 import org.joda.time.DateTimeZone
@@ -18,8 +18,9 @@ import org.joda.time.LocalDateTime
 
 fun FirestorePlace.toPlace(): Place = Place(id = id, name = name, floor = floor.optional())
 
-fun FirestoreTrack.toTrack() = Track(
+fun FirestoreTrack.toTrack(checksum: Checksum) = Track(
     id = id,
+    numericId = checksum.getChecksumOf(id),
     name = name,
     accentColor = accentColor.optional(),
     textColor = textColor.optional(),
@@ -60,7 +61,7 @@ fun FirestoreEvent.toEvent(checksum: Checksum, dateTime: DateTimeZone, isFavorit
     type = type.toEventType(),
     favorited = isFavorite,
     description = description.optional(),
-    track = track?.toTrack().optional(),
+    track = track?.toTrack(checksum).optional(),
     timeZone = dateTime
 )
 

@@ -10,13 +10,15 @@ import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.SchedulePage
 import java.util.Locale
 
-class ScheduleViewPagerAdapter(private val context: Context) : ViewPagerAdapter<ScheduleDayPageView>() {
+class ScheduleViewPagerAdapter(context: Context) : ViewPagerAdapter<ScheduleDayPageView>() {
 
     private lateinit var listener: (Event) -> Unit
 
     private var pages = emptyList<SchedulePage>()
     private var initialEventForPage = emptyArray<Event?>()
     private var triggerScrollForPage = emptyArray<((Event) -> Unit)?>()
+
+    private val inflater = LayoutInflater.from(context)
 
     fun updateWith(pages: List<SchedulePage>, initialEventForPage: Array<Event?>, listener: (Event) -> Unit) {
         this.pages = pages
@@ -29,16 +31,15 @@ class ScheduleViewPagerAdapter(private val context: Context) : ViewPagerAdapter<
     override fun getCount() = pages.size
 
     override fun createView(container: ViewGroup, position: Int): ScheduleDayPageView {
-        return LayoutInflater.from(context)
-            .inflate(R.layout.view_page_schedule_day, container, false) as ScheduleDayPageView
+        return inflater.inflate(R.layout.view_page_schedule_day, container, false) as ScheduleDayPageView
     }
 
     override fun bindView(view: ScheduleDayPageView, position: Int) {
         val events = pages[position].events
         val initialEvent = initialEventForPage[position]
-        triggerScrollForPage[position] = { view.scrollToEvent(events.indexOf(it), true) }
+        triggerScrollForPage[position] = { view.autoscrollToEvent(events.indexOf(it), true) }
         view.updateWith(events, listener)
-        initialEvent?.let { view.scrollToEvent(events.indexOf(it), false) }
+        initialEvent?.let { view.autoscrollToEvent(events.indexOf(it), false) }
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
@@ -52,11 +53,7 @@ class ScheduleViewPagerAdapter(private val context: Context) : ViewPagerAdapter<
         triggerScrollForPage[page]?.invoke(event)
     }
 
-    override fun isViewFromObject(view: View, `object`: Any) = view === `object`
-
-    interface OnEventClickedListener {
-        fun onEventClicked(event: Event)
-    }
+    override fun isViewFromObject(view: View, anObject: Any) = view === anObject
 
     companion object {
         private const val TITLE_FORMAT_TEMPLATE = "EEE d"

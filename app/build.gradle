@@ -124,6 +124,8 @@ project.afterEvaluate {
 }
 
 dependencies {
+    implementation project(':renderthread')
+
     implementation libraries.app.androidKtx
 
     implementation libraries.app.crashlytics

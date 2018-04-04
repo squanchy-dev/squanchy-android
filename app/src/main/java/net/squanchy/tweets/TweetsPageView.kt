@@ -3,7 +3,7 @@ package net.squanchy.tweets
 import android.content.Context
 import android.support.design.widget.CoordinatorLayout
 import android.util.AttributeSet
-import android.view.View
+import androidx.view.isVisible
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.view_page_tweets.view.*
@@ -11,6 +11,7 @@ import net.squanchy.R
 import net.squanchy.home.Loadable
 import net.squanchy.navigation.Navigator
 import net.squanchy.support.unwrapToActivityContext
+import net.squanchy.support.view.setAdapterIfNone
 import net.squanchy.tweets.domain.TweetLinkInfo
 import net.squanchy.tweets.domain.view.TwitterScreenViewModel
 import net.squanchy.tweets.service.TwitterService
@@ -23,13 +24,18 @@ class TweetsPageView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : CoordinatorLayout(context, attrs, defStyleAttr), Loadable {
 
-    private val component = twitterComponent(unwrapToActivityContext(context))
-    private val twitterService: TwitterService = component.service()
-    private val navigator: Navigator = component.navigator()
+    init {
+        with(twitterComponent(unwrapToActivityContext(context))) {
+            twitterService = service()
+            navigator = navigator()
+        }
+    }
+
+    private lateinit var twitterService: TwitterService
+    private lateinit var navigator: Navigator
 
     private val tweetClickListener: ((TweetLinkInfo) -> Unit) = { navigator.toTweet(it) }
-
-    private val tweetsAdapter = TweetsAdapter(context)
+    private val tweetsAdapter = TweetsAdapter(context, tweetClickListener)
 
     private lateinit var subscription: Disposable
 
@@ -37,16 +43,20 @@ class TweetsPageView @JvmOverloads constructor(
         super.onFinishInflate()
 
         setupToolbar()
-
-        tweetFeed.adapter = tweetsAdapter
     }
 
     private fun setupToolbar() {
         toolbar.inflateMenu(R.menu.homepage)
         toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
-                R.id.action_search -> { navigator.toSearch(); true }
-                R.id.action_settings -> { navigator.toSettings(); true }
+                R.id.action_search -> {
+                    navigator.toSearch()
+                    true
+                }
+                R.id.action_settings -> {
+                    navigator.toSettings()
+                    true
+                }
                 else -> false
             }
         }
@@ -55,31 +65,33 @@ class TweetsPageView @JvmOverloads constructor(
     override fun startLoading() {
         subscription = twitterService.refresh()
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(::onSuccess, ::onError)
+            .subscribe(::onTweetsFetched, ::onError)
     }
 
     override fun stopLoading() {
         subscription.dispose()
     }
 
-    private fun onSuccess(data: TwitterScreenViewModel) {
+    private fun onTweetsFetched(data: TwitterScreenViewModel) {
+        tweetFeed.setAdapterIfNone(tweetsAdapter)
+
         toolbar.title = data.hashtag
-        tweetsAdapter.updateWith(data.tweets, tweetClickListener)
-        onRefreshCompleted()
+        tweetsAdapter.submitList(data.tweets)
+        updateUi()
     }
 
     private fun onError(e: Throwable) {
         Timber.e(e, "Error refreshing the Twitter timeline")
-        onRefreshCompleted()
+        updateUi()
     }
 
-    private fun onRefreshCompleted() {
+    private fun updateUi() {
         if (tweetsAdapter.isEmpty) {
-            tweetEmptyView.visibility = View.VISIBLE
-            tweetFeed.visibility = View.GONE
+            tweetEmptyView.isVisible = true
+            tweetFeed.isVisible = false
         } else {
-            tweetEmptyView.visibility = View.GONE
-            tweetFeed.visibility = View.VISIBLE
+            tweetEmptyView.isVisible = false
+            tweetFeed.isVisible = true
         }
     }
 }

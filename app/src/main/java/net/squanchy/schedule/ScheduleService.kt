@@ -15,15 +15,13 @@ import net.squanchy.service.firebase.model.schedule.FirestoreFavorite
 import net.squanchy.service.firebase.model.schedule.FirestoreSchedulePage
 import net.squanchy.service.firebase.toEvent
 import net.squanchy.service.repository.AuthService
-import net.squanchy.support.lang.Checksum
+import net.squanchy.support.checksum.Checksum
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDate
 
 interface ScheduleService {
 
     fun schedule(onlyFavorites: Boolean = false): Observable<Schedule>
-
-    fun currentUserIsSignedIn(): Observable<Boolean>
 }
 
 class FirestoreScheduleService(
@@ -103,9 +101,4 @@ class FirestoreScheduleService(
     private fun FirestoreSchedulePage.toSortedDomainSchedulePage(checksum: Checksum, timeZone: DateTimeZone): SchedulePage =
         SchedulePage(day.id, LocalDate(day.date), events.map { it.toEvent(checksum, timeZone) }
             .sortedBy(Event::startTime))
-
-    override fun currentUserIsSignedIn(): Observable<Boolean> {
-        return authService.currentUser()
-            .map { optionalUser -> optionalUser.map { user -> !user.isAnonymous }.or(false) }
-    }
 }

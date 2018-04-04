@@ -8,6 +8,7 @@ import android.os.Build;
 import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -17,8 +18,8 @@ import java.lang.reflect.Method;
 import me.eugeniomarletti.renderthread.typeannotation.CanvasProperty;
 import me.eugeniomarletti.renderthread.typeannotation.DisplayListCanvas;
 import me.eugeniomarletti.renderthread.typeannotation.RenderNodeAnimator;
-import timber.log.Timber;
 
+@SuppressWarnings({"FieldNamingConvention", "MethodParameterNamingConvention", "LocalVariableNamingConvention"}) // Naming is weird here
 @SuppressLint("PrivateApi")     // This class wraps the private APIs we rely on
 final class RenderThreadMethods {
 
@@ -103,11 +104,12 @@ final class RenderThreadMethods {
                     renderNodeAnimator_paintField_strokeWidth,
                     renderNodeAnimator_paintField_alpha);
         } catch (Exception e) {
-            Timber.w(e, "Error while getting render thread methods.");
+            Log.w("RenderThread", "Error while getting render thread methods.", e);
             return null;
         }
     }
 
+    @SuppressWarnings("WeakerAccess") // Part of the public API
     public static boolean isSupportedAndroidVersion(int sdk) {
         return sdk >= MIN_SUPPORTED_ANDROID_VERSION && sdk <= MAX_SUPPORTED_ANDROID_VERSION;
     }
@@ -115,7 +117,7 @@ final class RenderThreadMethods {
     @NonNull
     private static Class<?> loadDisplayListCanvasClassOrEquivalent(int sdk, @NonNull ClassLoader classLoader) throws ClassNotFoundException {
         ClassNotFoundException error;
-        if (sdk >= 22) {
+        if (sdk >= Build.VERSION_CODES.LOLLIPOP_MR1) {
             try {
                 return loadDisplayListCanvasClass(classLoader);
             } catch (ClassNotFoundException e) {

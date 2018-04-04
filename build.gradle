@@ -48,7 +48,10 @@ subprojects {
 
     apply plugin: 'com.github.ben-manes.versions'
     apply plugin: 'io.gitlab.arturbosch.detekt'
-    apply from: teamPropsFile('static-analysis.gradle')
+
+    if (project.name != 'renderthread') {
+        apply from: teamPropsFile('static-analysis.gradle')
+    }
 }
 
 apply from: teamPropsFile('android-code-quality.gradle')

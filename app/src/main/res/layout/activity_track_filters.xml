@@ -19,7 +19,7 @@
     tools:ignore="KeyboardInaccessibleWidget">
 
     <TextView
-      android:id="@+id/title"
+      android:id="@+id/dialogTitle"
       style="@style/TrackFilters.Filters.Title"
       android:layout_width="@dimen/match_constraint"
       android:layout_height="wrap_content"
@@ -31,14 +31,14 @@
       app:layout_constraintEnd_toStartOf="@+id/closeButton" />
 
     <TextView
-      android:id="@+id/subtitle"
+      android:id="@+id/dialogSubtitle"
       style="@style/TrackFilters.Filters.Subtitle"
       android:layout_width="@dimen/match_constraint"
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/track_filters_subtitle_margin_top"
-      app:layout_constraintStart_toStartOf="@+id/title"
-      app:layout_constraintTop_toBottomOf="@+id/title"
-      app:layout_constraintEnd_toEndOf="@+id/title" />
+      app:layout_constraintStart_toStartOf="@+id/dialogTitle"
+      app:layout_constraintTop_toBottomOf="@+id/dialogTitle"
+      app:layout_constraintEnd_toEndOf="@+id/dialogTitle" />
 
     <ImageButton
       android:id="@+id/closeButton"
@@ -55,7 +55,7 @@
       android:layout_width="@dimen/match_constraint"
       android:layout_height="wrap_content"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/subtitle"
+      app:layout_constraintTop_toBottomOf="@+id/dialogSubtitle"
       app:layout_constraintEnd_toEndOf="parent" />
 
   </android.support.constraint.ConstraintLayout>

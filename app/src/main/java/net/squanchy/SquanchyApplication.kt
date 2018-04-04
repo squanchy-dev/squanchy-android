@@ -52,6 +52,7 @@ class SquanchyApplication : Application() {
     private fun initializeFirebase() {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true)
         preloadRemoteConfig()
+        preloadTracks()
     }
 
     @SuppressLint("CheckResult") // This is a fire-and-forget operation
@@ -62,6 +63,16 @@ class SquanchyApplication : Application() {
             .subscribe(
                 { Timber.i("Remote config prefetched") },
                 { throwable -> Timber.e(throwable, "Unable to preload the remote config") }
+            )
+    }
+
+    @SuppressLint("CheckResult") // This is a fire-and-forget operation
+    private fun preloadTracks() {
+        applicationComponent.tracksRepository()
+            .tracks()
+            .subscribe(
+                { Timber.d("Tracks prefetched: $it") },
+                { throwable -> Timber.e(throwable, "Unable to preload the tracks") }
             )
     }
 }

@@ -5,8 +5,8 @@ import dagger.Provides
 import net.squanchy.schedule.tracksfilter.TracksFilter
 import net.squanchy.service.firebase.FirestoreDbService
 import net.squanchy.service.repository.AuthService
-import net.squanchy.support.injection.ChecksumModule
-import net.squanchy.support.lang.Checksum
+import net.squanchy.support.checksum.ChecksumModule
+import net.squanchy.support.checksum.Checksum
 
 @Module(includes = [ChecksumModule::class])
 class ScheduleModule {

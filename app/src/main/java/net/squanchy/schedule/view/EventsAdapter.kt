@@ -1,38 +1,30 @@
 package net.squanchy.schedule.view
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import android.support.v7.recyclerview.extensions.ListAdapter
+import android.support.v7.util.DiffUtil
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import net.squanchy.R
+import net.squanchy.favorites.view.EventViewHolder
 import net.squanchy.schedule.domain.view.Event
 
-internal class EventsAdapter(context: Context) : RecyclerView.Adapter<EventViewHolder>() {
-
-    enum class ItemViewType {
-        TYPE_TALK,
-        TYPE_OTHER
-    }
-
-    private val layoutInflater: LayoutInflater
-    private lateinit var listener: (Event) -> Unit
-    private var _events = emptyList<Event>()
-    val events get() = _events
+internal class EventsAdapter(
+    context: Context
+) : ListAdapter<Event, EventViewHolder>(DiffCallback) {
 
     init {
         setHasStableIds(true)
-        layoutInflater = LayoutInflater.from(context)
     }
 
-    override fun getItemId(position: Int) = _events[position].numericId
+    private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
 
-    fun updateWith(events: List<Event>, listener: (Event) -> Unit) {
-        this._events = events
-        this.listener = listener
-    }
+    lateinit var eventClickListener: OnEventClickListener
+
+    override fun getItemId(position: Int) = getItem(position).numericId
 
     override fun getItemViewType(position: Int): Int {
-        val itemType = _events[position].type
+        val itemType = getItem(position).type
         return when (itemType) {
             Event.Type.KEYNOTE, Event.Type.TALK, Event.Type.WORKSHOP -> ItemViewType.TYPE_TALK.ordinal
             Event.Type.COFFEE_BREAK, Event.Type.LUNCH, Event.Type.OTHER, Event.Type.REGISTRATION, Event.Type.SOCIAL -> ItemViewType.TYPE_OTHER.ordinal
@@ -49,8 +41,23 @@ internal class EventsAdapter(context: Context) : RecyclerView.Adapter<EventViewH
     }
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
-        holder.updateWith(_events[position], listener)
+        holder.updateWith(getItem(position), eventClickListener)
+    }
+}
+
+private object DiffCallback : DiffUtil.ItemCallback<Event>() {
+    override fun areItemsTheSame(oldItem: Event?, newItem: Event?): Boolean {
+        return oldItem?.numericId == newItem?.numericId
     }
 
-    override fun getItemCount() = _events.size
+    override fun areContentsTheSame(oldItem: Event?, newItem: Event?): Boolean {
+        return oldItem == newItem
+    }
 }
+
+private enum class ItemViewType {
+    TYPE_TALK,
+    TYPE_OTHER
+}
+
+typealias OnEventClickListener = (Event) -> Unit
