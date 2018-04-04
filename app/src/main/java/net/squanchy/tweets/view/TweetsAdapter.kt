@@ -1,36 +1,50 @@
 package net.squanchy.tweets.view
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import android.support.v7.recyclerview.extensions.ListAdapter
+import android.support.v7.util.DiffUtil
 import android.view.LayoutInflater
 import android.view.ViewGroup
-
 import net.squanchy.R
 import net.squanchy.tweets.domain.TweetLinkInfo
 import net.squanchy.tweets.domain.view.TweetViewModel
 
-class TweetsAdapter(private val context: Context) : RecyclerView.Adapter<TweetViewHolder>() {
+class TweetsAdapter(
+    context: Context,
+    private val linkClickedListener: OnTweetLinkClicked
+) : ListAdapter<TweetViewModel, TweetViewHolder>(DiffCallback()) {
 
-    private var tweets: List<TweetViewModel> = emptyList()
-    private lateinit var listener: (TweetLinkInfo) -> Unit
+    init {
+        setHasStableIds(true)
+    }
 
-    val isEmpty: Boolean
-        get() = tweets.isEmpty()
+    private val inflater = LayoutInflater.from(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TweetViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.item_tweet, parent, false)
+        val view = inflater.inflate(R.layout.item_tweet, parent, false)
         return TweetViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: TweetViewHolder, position: Int) {
-        holder.updateWith(tweets[position], listener)
+        holder.updateWith(getItem(position), linkClickedListener)
     }
 
-    override fun getItemCount() = tweets.size
+    val isEmpty: Boolean
+        get() = itemCount == 0
 
-    fun updateWith(tweets: List<TweetViewModel>, listener: (TweetLinkInfo) -> Unit) {
-        this.tweets = tweets
-        this.listener = listener
-        notifyDataSetChanged()
+    override fun getItemId(position: Int): Long {
+        return getItem(position).id
+    }
+
+    class DiffCallback : DiffUtil.ItemCallback<TweetViewModel>() {
+        override fun areItemsTheSame(oldItem: TweetViewModel?, newItem: TweetViewModel?): Boolean {
+            return oldItem?.id == newItem?.id
+        }
+
+        override fun areContentsTheSame(oldItem: TweetViewModel?, newItem: TweetViewModel?): Boolean {
+            return oldItem == newItem
+        }
     }
 }
+
+typealias OnTweetLinkClicked = (TweetLinkInfo) -> Unit
