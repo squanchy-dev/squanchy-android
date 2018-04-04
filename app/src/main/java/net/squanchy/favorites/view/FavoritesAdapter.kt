@@ -25,9 +25,7 @@ internal class FavoritesAdapter(
         setHasStableIds(true)
     }
 
-    override fun getItemId(position: Int): Long {
-        return getItem(position).id
-    }
+    override fun getItemId(position: Int) = getItem(position).id
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position).type) {
