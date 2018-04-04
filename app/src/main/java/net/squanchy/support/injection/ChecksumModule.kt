@@ -1,13 +1,12 @@
 package net.squanchy.support.injection
 
-import net.squanchy.support.lang.Checksum
-
 import dagger.Module
 import dagger.Provides
+import net.squanchy.support.lang.Checksum
 
 @Module
 class ChecksumModule {
 
     @Provides
-    internal fun provideChecksum() = Checksum()
+    internal fun checksum() = Checksum()
 }
