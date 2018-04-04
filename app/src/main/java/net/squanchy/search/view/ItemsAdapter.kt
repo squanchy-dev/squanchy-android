@@ -29,12 +29,7 @@ internal class ItemsAdapter(private val searchResult: SearchResult.Success) {
 
         val totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResult.events)
 
-        val adjustedPosition: Int
-        if (position < totalEventItemsCount) {
-            adjustedPosition = position
-        } else {
-            adjustedPosition = position - totalEventItemsCount
-        }
+        val adjustedPosition: Int = if (position < totalEventItemsCount) position else position - totalEventItemsCount
 
         return when {
             adjustedPosition == 0 -> SearchAdapter.HEADER
@@ -129,8 +124,6 @@ internal class ItemsAdapter(private val searchResult: SearchResult.Success) {
         private const val ITEM_ID_EVENTS_HEADER: Long = -100
         private const val ITEM_ID_SPEAKERS_HEADER: Long = -101
 
-        private fun headersCountForSectionItemsCount(itemsCount: Int): Int {
-            return if (itemsCount > 0) 1 else 0
-        }
+        private fun headersCountForSectionItemsCount(itemsCount: Int): Int = if (itemsCount > 0) 1 else 0
     }
 }

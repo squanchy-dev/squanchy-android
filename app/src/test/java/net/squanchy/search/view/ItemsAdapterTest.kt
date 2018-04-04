@@ -4,7 +4,6 @@ import com.google.common.truth.Truth.assertThat
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.anEvent
 import net.squanchy.search.SearchResult
-import net.squanchy.search.view.SearchAdapter.ViewTypeId
 import net.squanchy.speaker.domain.view.Speaker
 import net.squanchy.speaker.domain.view.aSpeaker
 import org.junit.Rule
@@ -88,7 +87,7 @@ class ItemsAdapterTest {
 
             val viewType = itemsAdapter.viewTypeAtAbsolutePosition(0) // 0 = (1 header) - 1 [because zero-based]
 
-            assertThat(viewType).isEqualTo(ViewTypeId.HEADER)
+            assertThat(viewType).isEqualTo(SearchAdapter.HEADER)
         }
 
         @Test
@@ -97,7 +96,7 @@ class ItemsAdapterTest {
 
             val viewType = itemsAdapter.viewTypeAtAbsolutePosition(1) // 1 = (1 header + 1 event) - 1 [because zero-based]
 
-            assertThat(viewType).isEqualTo(ViewTypeId.EVENT)
+            assertThat(viewType).isEqualTo(SearchAdapter.EVENT)
         }
 
         @Test
@@ -106,7 +105,7 @@ class ItemsAdapterTest {
 
             val viewType = itemsAdapter.viewTypeAtAbsolutePosition(0) // 0 = (1 header) - 1 [because zero-based]
 
-            assertThat(viewType).isEqualTo(ViewTypeId.HEADER)
+            assertThat(viewType).isEqualTo(SearchAdapter.HEADER)
         }
 
         @Test
@@ -115,7 +114,7 @@ class ItemsAdapterTest {
 
             val viewType = itemsAdapter.viewTypeAtAbsolutePosition(1) // 1 = (1 header + 1 speaker) - 1 [because zero-based]
 
-            assertThat(viewType).isEqualTo(ViewTypeId.SPEAKER)
+            assertThat(viewType).isEqualTo(SearchAdapter.SPEAKER)
         }
 
         @Test
@@ -124,7 +123,7 @@ class ItemsAdapterTest {
 
             val viewType = itemsAdapter.viewTypeAtAbsolutePosition(0) // 0 = (1 header) - 1 [because zero-based]
 
-            assertThat(viewType).isEqualTo(ViewTypeId.HEADER)
+            assertThat(viewType).isEqualTo(SearchAdapter.HEADER)
         }
 
         @Test
@@ -133,7 +132,7 @@ class ItemsAdapterTest {
 
             val viewType = itemsAdapter.viewTypeAtAbsolutePosition(1) // 1 = (1 header + 1 event) - 1 [because zero-based]
 
-            assertThat(viewType).isEqualTo(ViewTypeId.EVENT)
+            assertThat(viewType).isEqualTo(SearchAdapter.EVENT)
         }
 
         @Test
@@ -142,7 +141,7 @@ class ItemsAdapterTest {
 
             val viewType = itemsAdapter.viewTypeAtAbsolutePosition(4) // 4 = (1 header + 3 events + 1 header) - 1 [because zero-based]
 
-            assertThat(viewType).isEqualTo(ViewTypeId.HEADER)
+            assertThat(viewType).isEqualTo(SearchAdapter.HEADER)
         }
 
         @Test
@@ -151,7 +150,7 @@ class ItemsAdapterTest {
 
             val viewType = itemsAdapter.viewTypeAtAbsolutePosition(5) // 5 = (1 header + 3 events + 1 header + 1 speaker) - 1 [because zero-based]
 
-            assertThat(viewType).isEqualTo(ViewTypeId.SPEAKER)
+            assertThat(viewType).isEqualTo(SearchAdapter.SPEAKER)
         }
     }
 
