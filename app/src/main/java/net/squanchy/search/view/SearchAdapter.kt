@@ -66,7 +66,7 @@ internal class SearchAdapter(activity: AppCompatActivity) : RecyclerView.Adapter
             SPEAKER -> (holder as SpeakerViewHolder).updateWith(itemsAdapter.speakerAtAbsolutePosition(position), imageLoader, listener)
             HEADER -> (holder as HeaderViewHolder).updateWith(itemsAdapter.headerTypeAtAbsolutePosition(position))
             EVENT -> (holder as EventViewHolder).updateWith(itemsAdapter.eventAtAbsolutePosition(position)) { listener.onEventClicked(it) }
-            ALGOLIA_LOGO -> Unit //Nothing to do
+            ALGOLIA_LOGO -> Unit // Nothing to do
             else -> throw IllegalArgumentException("Item type $viewType not supported")
         }
     }
