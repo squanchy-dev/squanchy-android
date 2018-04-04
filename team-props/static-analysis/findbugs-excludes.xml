@@ -14,8 +14,4 @@
     <Source name="~.*\.kt" />
   </Match>
 
-  <Match>
-    <Class name="~.*me\.eugeniomarletti\.renderthread.*" />
-  </Match>
-
 </FindBugsFilter>
