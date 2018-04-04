@@ -1,6 +1,8 @@
 package net.squanchy.search.algolia
 
 import com.squareup.moshi.Moshi
+import io.reactivex.plugins.RxJavaPlugins
+import io.reactivex.schedulers.Schedulers
 import net.squanchy.search.algolia.model.AlgoliaSearchResponse
 import net.squanchy.search.algolia.model.AlgoliaSearchResult
 import org.junit.Before
@@ -32,6 +34,8 @@ class AlgoliaSearchEngineTest {
     fun setup() {
         parser = MoshiResponseParser(Moshi.Builder().build().adapter(AlgoliaSearchResponse::class.java))
         algoliaSearchEngine = AlgoliaSearchEngine(eventIndex, speakerIndex)
+
+        RxJavaPlugins.setIoSchedulerHandler { Schedulers.trampoline() }
     }
 
     @Test
@@ -61,8 +65,19 @@ class AlgoliaSearchEngineTest {
             .assertValue(AlgoliaSearchResult.ErrorSearching)
     }
 
+    @Test
+    fun `should not count spaces when determining if the query is long enough`() {
+        `when`(speakerIndex.search(SPACED_QUERY)).thenReturn(parser.parse(algoliaSpeakerResponse))
+        `when`(eventIndex.search(SPACED_QUERY)).thenThrow(IOException(":("))
+
+        algoliaSearchEngine.query(SPACED_QUERY)
+            .test()
+            .assertValue(AlgoliaSearchResult.QueryNotLongEnough)
+    }
+
     companion object {
         private const val VALID_QUERY = "sa"
         private const val INVALID_QUERY = "a"
+        private const val SPACED_QUERY = "a "
     }
 }

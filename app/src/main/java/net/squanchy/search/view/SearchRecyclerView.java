@@ -49,7 +49,7 @@ public class SearchRecyclerView extends RecyclerView {
         setClipToPadding(false);
     }
 
-    public void updateWith(SearchResult searchResult, OnSearchResultClickListener listener) {
+    public void updateWith(SearchResult.Success searchResult, OnSearchResultClickListener listener) {
         if (getAdapter() == null) {
             super.setAdapter(adapter);
         }

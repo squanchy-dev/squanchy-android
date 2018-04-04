@@ -43,7 +43,7 @@ class SearchServiceTest {
     }
 
     @Test
-    fun `should not filter the results when the query is not long enough`() {
+    fun `should show only the speakers when the query is not long enough`() {
         val eventList = listOf(anEvent(), anEvent(id = "qwer"))
         val speakerList = listOf(aSpeaker(), aSpeaker(id = "qwer"))
         `when`(algoliaSearchEngine.query(QUERY)).thenReturn(Observable.just(AlgoliaSearchResult.QueryNotLongEnough))
@@ -51,7 +51,7 @@ class SearchServiceTest {
         `when`(speakerRepository.speakers()).thenReturn(Observable.just(speakerList))
         searchService.find(QUERY)
             .test()
-            .assertValue(SearchResult(eventList, speakerList))
+            .assertValue(SearchResult.Success(emptyList(), speakerList))
     }
 
     @Test
@@ -63,7 +63,19 @@ class SearchServiceTest {
         `when`(speakerRepository.speakers()).thenReturn(Observable.just(speakerList))
         searchService.find(QUERY)
             .test()
-            .assertValue(SearchResult(listOf(anEvent(id = "qwer")), emptyList()))
+            .assertValue(SearchResult.Success(listOf(anEvent(id = "qwer")), emptyList()))
+    }
+
+    @Test
+    fun `should receive an error when the algolia search engine fails`() {
+        val eventList = listOf(anEvent(), anEvent(id = "qwer"))
+        val speakerList = listOf(aSpeaker(), aSpeaker(id = "qwer"))
+        `when`(algoliaSearchEngine.query(QUERY)).thenReturn(Observable.just(AlgoliaSearchResult.ErrorSearching))
+        `when`(eventRepository.events(UID)).thenReturn(Observable.just(eventList))
+        `when`(speakerRepository.speakers()).thenReturn(Observable.just(speakerList))
+        searchService.find(QUERY)
+            .test()
+            .assertValue(SearchResult.Error)
     }
 
     companion object {

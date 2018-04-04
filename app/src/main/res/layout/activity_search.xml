@@ -19,7 +19,7 @@
 
       <!-- We don't need a label for this text field -->
       <EditText
-        android:id="@+id/search_field"
+        android:id="@+id/searchField"
         style="@style/Search.EditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,13 +30,13 @@
   </android.support.design.widget.AppBarLayout>
 
   <net.squanchy.search.view.SearchRecyclerView
-    android:id="@+id/speakers_view"
+    android:id="@+id/searchRecyclerView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
   <FrameLayout
-    android:id="@+id/empty_view"
+    android:id="@+id/emptyView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="invisible"
@@ -44,11 +44,14 @@
     tools:visibility="visible">
 
     <TextView
-      android:id="@+id/empty_view_message"
+      android:id="@+id/emptyViewMessage"
       style="@style/Search.EmptyMessage"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_gravity="center" />
+      android:layout_gravity="center"
+      android:padding="@dimen/search_empty_state_padding"
+      android:drawablePadding="@dimen/search_compound_drawable_padding"
+      android:textAlignment="center" />
   </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>

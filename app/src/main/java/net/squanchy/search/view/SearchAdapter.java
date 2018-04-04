@@ -30,7 +30,7 @@ class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Nullable
     private SearchRecyclerView.OnSearchResultClickListener listener;
 
-    private SearchResult searchResult = SearchResult.Companion.create(Collections.emptyList(), Collections.emptyList());
+    private SearchResult.Success searchResult = new SearchResult.Success(Collections.emptyList(), Collections.emptyList());
     private ItemsAdapter itemsAdapter = new ItemsAdapter(searchResult);
 
     @IntDef({ViewTypeId.HEADER, ViewTypeId.SPEAKER, ViewTypeId.EVENT})
@@ -109,7 +109,7 @@ class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return itemsAdapter.totalItemsCount();
     }
 
-    public void updateWith(SearchResult searchResult, SearchRecyclerView.OnSearchResultClickListener listener) {
+    public void updateWith(SearchResult.Success searchResult, SearchRecyclerView.OnSearchResultClickListener listener) {
         this.searchResult = searchResult;
         this.itemsAdapter = new ItemsAdapter(searchResult);
         this.listener = listener;
