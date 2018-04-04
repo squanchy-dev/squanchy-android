@@ -90,16 +90,14 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
                 filtersRoot.visibility = View.INVISIBLE
                 finish()
             }
-
-            start()
-        }
+        }.start()
     }
 
     override fun onStart() {
         super.onStart()
 
         if (needsAppearAnimation.getAndSet(false)) {
-            prepareAppearanceAnimation()
+            prepareAppearAnimation()
             filtersRoot.postOnAnimation { animateAppearing() }
         }
 
@@ -137,9 +135,7 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
                 dialogSubtitle.slideDownAndFadeIn(duration = totalDuration - 2 * delay, delay = delay)
                 trackFiltersList.slideDownAndFadeIn(duration = totalDuration - 3 * delay, delay = 2 * delay)
             }
-
-            start()
-        }
+        }.start()
     }
 
     private fun View.slideDownAndFadeIn(duration: Long, delay: Long = 0) = this.animate()
@@ -150,7 +146,7 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
         .setStartDelay(delay)
         .start()
 
-    private fun prepareAppearanceAnimation() {
+    private fun prepareAppearAnimation() {
         appearInterpolator = AnimationUtils.loadInterpolator(this, android.R.interpolator.linear_out_slow_in)
         filtersRoot.visibility = View.VISIBLE
 
