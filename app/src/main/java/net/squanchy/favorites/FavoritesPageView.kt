@@ -4,7 +4,7 @@ import android.content.Context
 import android.support.design.widget.CoordinatorLayout
 import android.util.AttributeSet
 import android.view.MenuItem
-import android.view.View
+import androidx.view.isVisible
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -13,12 +13,11 @@ import kotlinx.android.synthetic.main.view_page_favorites.view.*
 import net.squanchy.R
 import net.squanchy.analytics.Analytics
 import net.squanchy.analytics.ContentType
+import net.squanchy.favorites.view.FavoritesItem
 import net.squanchy.home.HomeActivity
 import net.squanchy.home.Loadable
 import net.squanchy.navigation.Navigator
-import net.squanchy.schedule.ScheduleService
 import net.squanchy.schedule.domain.view.Event
-import net.squanchy.schedule.domain.view.Schedule
 import net.squanchy.support.unwrapToActivityContext
 
 class FavoritesPageView @JvmOverloads constructor(
@@ -27,11 +26,19 @@ class FavoritesPageView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : CoordinatorLayout(context, attrs, defStyleAttr), Loadable {
 
-    private val favoritesComponent = favoritesComponent(unwrapToActivityContext(context))
-    private val scheduleService: ScheduleService = favoritesComponent.scheduleService()
-    private val navigator: Navigator = favoritesComponent.navigator()
-    private val analytics: Analytics = favoritesComponent.analytics()
+    private lateinit var favoritesService: FavoritesService
+    private lateinit var navigator: Navigator
+    private lateinit var analytics: Analytics
+
     private val disposable = CompositeDisposable()
+
+    init {
+        with(favoritesComponent(unwrapToActivityContext(context))) {
+            favoritesService = favoritesService()
+            navigator = navigator()
+            analytics = analytics()
+        }
+    }
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -52,9 +59,9 @@ class FavoritesPageView @JvmOverloads constructor(
     override fun startLoading() {
         disposable.add(
             Observable.combineLatest(
-                scheduleService.schedule(onlyFavorites = true),
-                scheduleService.currentUserIsSignedIn(),
-                BiFunction<Schedule, Boolean, LoadScheduleResult>(::LoadScheduleResult)
+                favoritesService.favorites(),
+                favoritesService.currentUserIsSignedIn(),
+                BiFunction<List<FavoritesItem>, Boolean, LoadResult>(::LoadResult)
             )
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(::handleLoadSchedule)
@@ -65,48 +72,54 @@ class FavoritesPageView @JvmOverloads constructor(
 
     private fun onMenuItemClickListener(menuItem: MenuItem): Boolean {
         return when (menuItem.itemId) {
-            R.id.action_search -> { showSearch(); true }
-            R.id.action_settings -> { showSettings(); true }
-            R.id.action_filter -> { navigator.toScheduleFiltering(context); true }
+            R.id.action_search -> {
+                showSearch()
+                true
+            }
+            R.id.action_settings -> {
+                showSettings()
+                true
+            }
+            R.id.action_filter -> {
+                navigator.toScheduleFiltering(context)
+                true
+            }
             else -> false
         }
     }
 
-    private fun handleLoadSchedule(result: LoadScheduleResult) {
+    private fun handleLoadSchedule(result: LoadResult) {
         when {
-            result.schedule.hasFavorites -> showSchedule(result.schedule)
+            result.favoriteItems.isNotEmpty() -> showFavorites(result.favoriteItems)
             result.signedIn -> promptToFavorite()
             else -> promptToSign()
         }
     }
 
-    private val Schedule.hasFavorites
-        get() = !isEmpty
-
-    private fun showSchedule(schedule: Schedule) {
-        favoritesListView.updateWith(schedule, ::showEventDetails)
-        favoritesListView.visibility = View.VISIBLE
-        emptyViewSignedIn.visibility = View.GONE
-        emptyViewSignedOut.visibility = View.GONE
+    private fun showFavorites(favorites: List<FavoritesItem>) {
+        favoritesListView.updateWith(favorites, ::navigateToEventDetails)
+        favoritesListView.isVisible = true
+        emptyViewSignedIn.isVisible = false
+        emptyViewSignedOut.isVisible = false
     }
 
-    private fun showEventDetails(event: Event) {
+    private fun navigateToEventDetails(event: Event) {
         analytics.trackItemSelected(ContentType.FAVORITES_ITEM, event.id)
         navigator.toEventDetails(event.id)
     }
 
     private fun promptToSign() {
-        emptyViewSignedOut.visibility = View.VISIBLE
-        favoritesListView.visibility = View.GONE
-        progressBar.visibility = View.GONE
-        emptyViewSignedIn.visibility = View.GONE
+        emptyViewSignedOut.isVisible = true
+        favoritesListView.isVisible = false
+        progressBar.isVisible = false
+        emptyViewSignedIn.isVisible = false
     }
 
     private fun promptToFavorite() {
-        emptyViewSignedIn.visibility = View.VISIBLE
-        favoritesListView.visibility = View.GONE
-        progressBar.visibility = View.GONE
-        emptyViewSignedOut.visibility = View.GONE
+        emptyViewSignedIn.isVisible = true
+        favoritesListView.isVisible = false
+        progressBar.isVisible = false
+        emptyViewSignedOut.isVisible = false
     }
 
     private fun showSignIn() {
@@ -121,5 +134,5 @@ class FavoritesPageView @JvmOverloads constructor(
 
     private fun showSettings() = navigator.toSettings()
 
-    private data class LoadScheduleResult(val schedule: Schedule, val signedIn: Boolean)
+    private data class LoadResult(val favoriteItems: List<FavoritesItem>, val signedIn: Boolean)
 }

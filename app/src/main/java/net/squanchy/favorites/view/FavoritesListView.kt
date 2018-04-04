@@ -5,9 +5,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import net.squanchy.R
-import net.squanchy.schedule.domain.view.Event
-import net.squanchy.schedule.domain.view.Schedule
 import net.squanchy.support.view.CardSpacingItemDecorator
+import net.squanchy.support.view.setAdapterIfNone
 
 internal class FavoritesListView @JvmOverloads constructor(
     context: Context,
@@ -23,14 +22,15 @@ internal class FavoritesListView @JvmOverloads constructor(
         val layoutManager = LinearLayoutManager(context)
         setLayoutManager(layoutManager)
 
-        setAdapter(adapter)
-
         val horizontalSpacing = getResources().getDimensionPixelSize(R.dimen.card_horizontal_margin)
         val verticalSpacing = getResources().getDimensionPixelSize(R.dimen.card_vertical_margin)
         addItemDecoration(CardSpacingItemDecorator(horizontalSpacing, verticalSpacing))
     }
 
-    fun updateWith(newData: Schedule, listener: (Event) -> Unit) {
-        adapter.updateWith(newData, listener)
+    fun updateWith(newData: List<FavoritesItem>, listener: OnFavoriteClickListener) {
+        adapter.favoriteClickListener = listener
+        setAdapterIfNone(adapter)
+
+        adapter.submitList(newData)
     }
 }
