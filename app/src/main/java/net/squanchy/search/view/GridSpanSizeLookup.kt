@@ -1,8 +1,7 @@
 package net.squanchy.search.view
 
 import android.support.v7.widget.GridLayoutManager
-
-import net.squanchy.search.view.SearchAdapter.ViewTypeId
+import net.squanchy.search.view.SearchAdapter.Companion.ViewTypeId
 
 internal class GridSpanSizeLookup(private val itemsAdapter: ItemsAdapter, private val columnCount: Int) : GridLayoutManager.SpanSizeLookup() {
 
@@ -16,9 +15,9 @@ internal class GridSpanSizeLookup(private val itemsAdapter: ItemsAdapter, privat
 
     private fun getSpanSizeFor(@ViewTypeId viewTypeId: Int): Int =
         when (viewTypeId) {
-            ViewTypeId.HEADER -> columnCount
-            ViewTypeId.EVENT -> columnCount
-            ViewTypeId.SPEAKER -> SINGLE_COLUMN_SPAN_SIZE
+            SearchAdapter.HEADER -> columnCount
+            SearchAdapter.EVENT -> columnCount
+            SearchAdapter.SPEAKER -> SINGLE_COLUMN_SPAN_SIZE
             else -> error("Invalid ViewTypeId $viewTypeId")
         }
 
