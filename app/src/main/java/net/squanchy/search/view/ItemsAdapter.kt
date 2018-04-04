@@ -20,7 +20,7 @@ internal class ItemsAdapter(private val searchResult: SearchResult.Success) {
         val totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResult.events)
         val totalSpeakerItemsCount = totalCountForSectionIncludingHeaders(searchResult.speakers)
 
-        return totalEventItemsCount + totalSpeakerItemsCount
+        return totalEventItemsCount + totalSpeakerItemsCount + 1 // 1 is the algolia logo
     }
 
     @ViewTypeId
@@ -28,10 +28,12 @@ internal class ItemsAdapter(private val searchResult: SearchResult.Success) {
         ensurePositionExists(position)
 
         val totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResult.events)
+        val isInLastPosition = totalItemsCount() - 1 == position
 
         val adjustedPosition: Int = if (position < totalEventItemsCount) position else position - totalEventItemsCount
 
         return when {
+            isInLastPosition -> SearchAdapter.ALGOLIA_LOGO
             adjustedPosition == 0 -> SearchAdapter.HEADER
             position < totalEventItemsCount -> SearchAdapter.EVENT
             else -> SearchAdapter.SPEAKER
