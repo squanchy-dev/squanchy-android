@@ -66,7 +66,7 @@ class AlgoliaSearchEngineTest {
     }
 
     @Test
-    fun `should not count spaces when the query is long enough but contains them`() {
+    fun `should not count spaces when determining if the query is long enough`() {
         `when`(speakerIndex.search(SPACED_QUERY)).thenReturn(parser.parse(algoliaSpeakerResponse))
         `when`(eventIndex.search(SPACED_QUERY)).thenThrow(IOException(":("))
 
