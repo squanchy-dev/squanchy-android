@@ -10,7 +10,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import net.squanchy.R;
-import net.squanchy.schedule.view.ScheduleViewPagerAdapter;
+import net.squanchy.schedule.domain.view.Event;
 import net.squanchy.search.SearchResults;
 import net.squanchy.speaker.domain.view.Speaker;
 import net.squanchy.support.widget.CardLayout;
@@ -61,7 +61,9 @@ public class SearchRecyclerView extends RecyclerView {
         layoutManager.setSpanSizeLookup(spanSizeLookup);
     }
 
-    public interface OnSearchResultClickListener extends ScheduleViewPagerAdapter.OnEventClickedListener {
+    public interface OnSearchResultClickListener {
+
+        void onEventClicked(Event event);
 
         void onSpeakerClicked(Speaker speaker);
     }
