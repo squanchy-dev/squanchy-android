@@ -35,6 +35,8 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
     private var subscription: Disposable? = null
     private var checkableTracks: List<CheckableTrack> = emptyList()
 
+    private val needsAppearAnimation: AtomicBoolean = AtomicBoolean(true)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -112,8 +114,6 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
                 trackAdapter.submitList(checkableTracks)
             }
     }
-
-    private val needsAppearAnimation: AtomicBoolean = AtomicBoolean(true)
 
     @Suppress("MagicNumber") // Just animation code… needs a few magic numbers
     private fun animateAppearing() {
