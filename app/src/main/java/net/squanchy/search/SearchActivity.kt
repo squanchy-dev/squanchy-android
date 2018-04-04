@@ -70,7 +70,7 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
         searchTextWatcher = SearchTextWatcher(querySubject)
         searchField.addTextChangedListener(searchTextWatcher)
 
-        val searchSubscription = querySubject.throttleLast(QUERY_DEBOUNCE_TIMEOUT.toLong(), TimeUnit.MILLISECONDS)
+        val searchSubscription = querySubject.throttleLast(QUERY_DEBOUNCE_TIMEOUT, TimeUnit.MILLISECONDS)
             .doOnNext(::updateSearchActionIcon)
             .startWith(EMPTY_QUERY)
             .flatMap(searchService::find)
@@ -230,7 +230,7 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
     companion object {
 
         private const val SPEECH_REQUEST_CODE = 100
-        private const val QUERY_DEBOUNCE_TIMEOUT = 250
+        private const val QUERY_DEBOUNCE_TIMEOUT = 250L
         private const val DELAY_ENOUGH_FOR_FOCUS_TO_HAPPEN_MILLIS = 50L
         private const val MIN_QUERY_LENGTH = 2
         private const val EMPTY_QUERY = ""
