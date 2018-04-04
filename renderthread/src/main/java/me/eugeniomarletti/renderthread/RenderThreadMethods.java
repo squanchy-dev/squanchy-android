@@ -8,6 +8,7 @@ import android.os.Build;
 import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -17,7 +18,6 @@ import java.lang.reflect.Method;
 import me.eugeniomarletti.renderthread.typeannotation.CanvasProperty;
 import me.eugeniomarletti.renderthread.typeannotation.DisplayListCanvas;
 import me.eugeniomarletti.renderthread.typeannotation.RenderNodeAnimator;
-import timber.log.Timber;
 
 @SuppressLint("PrivateApi")     // This class wraps the private APIs we rely on
 final class RenderThreadMethods {
@@ -103,7 +103,7 @@ final class RenderThreadMethods {
                     renderNodeAnimator_paintField_strokeWidth,
                     renderNodeAnimator_paintField_alpha);
         } catch (Exception e) {
-            Timber.w(e, "Error while getting render thread methods.");
+            Log.w("RenderThread", "Error while getting render thread methods.", e);
             return null;
         }
     }
