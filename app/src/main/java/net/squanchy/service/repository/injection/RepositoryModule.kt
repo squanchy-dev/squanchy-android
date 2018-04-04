@@ -9,8 +9,8 @@ import net.squanchy.service.repository.TracksRepository
 import net.squanchy.service.repository.firestore.FirestoreEventRepository
 import net.squanchy.service.repository.firestore.FirestoreSpeakerRepository
 import net.squanchy.service.repository.firestore.FirestoreTracksRepository
-import net.squanchy.support.injection.ChecksumModule
-import net.squanchy.support.lang.Checksum
+import net.squanchy.support.checksum.ChecksumModule
+import net.squanchy.support.checksum.Checksum
 
 @Module(includes = [ChecksumModule::class])
 class RepositoryModule {

@@ -7,7 +7,7 @@ import net.squanchy.schedule.domain.view.aTrack
 import net.squanchy.service.firebase.FirestoreDbService
 import net.squanchy.service.firebase.aFirestoreTrack
 import net.squanchy.service.repository.firestore.FirestoreTracksRepository
-import net.squanchy.support.lang.Checksum
+import net.squanchy.support.checksum.Checksum
 import net.squanchy.support.lang.Optional
 import org.junit.Before
 import org.junit.Rule

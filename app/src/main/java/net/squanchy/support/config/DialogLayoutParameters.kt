@@ -1,16 +1,18 @@
 package net.squanchy.support.config
 
 import android.app.Activity
+import android.content.Context
 import android.view.ViewGroup
 import android.view.Window
+import net.squanchy.R
 
 class DialogLayoutParameters private constructor(
-    private val formFactorChecker: FormFactorChecker,
+    private val context: Context,
     private val height: Int
 ) {
 
     fun applyTo(window: Window) {
-        if (formFactorChecker.isTablet) {
+        if (context.isTablet) {
             window.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, height)
         } else {
             window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, height)
@@ -20,17 +22,14 @@ class DialogLayoutParameters private constructor(
     companion object {
 
         fun fullHeight(activity: Activity): DialogLayoutParameters {
-            return DialogLayoutParameters(
-                    FormFactorChecker(activity),
-                    ViewGroup.LayoutParams.MATCH_PARENT
-            )
+            return DialogLayoutParameters(activity, ViewGroup.LayoutParams.MATCH_PARENT)
         }
 
         fun wrapHeight(activity: Activity): DialogLayoutParameters {
-            return DialogLayoutParameters(
-                    FormFactorChecker(activity),
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-            )
+            return DialogLayoutParameters(activity, ViewGroup.LayoutParams.WRAP_CONTENT)
         }
     }
+
+    private val Context.isTablet: Boolean
+        get() = resources.getBoolean(R.bool.isTablet)
 }

@@ -9,5 +9,5 @@ import net.squanchy.support.system.CurrentTime
 class CurrentTimeModule {
 
     @Provides
-    internal fun provideCurrentTime(): CurrentTime = AndroidCurrentTime()
+    internal fun currentTime(): CurrentTime = AndroidCurrentTime()
 }

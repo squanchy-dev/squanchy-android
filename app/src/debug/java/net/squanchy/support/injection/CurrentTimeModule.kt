@@ -9,5 +9,5 @@ import net.squanchy.support.system.DebugCurrentTime
 class CurrentTimeModule {
 
     @Provides
-    internal fun provideCurrentTime(): CurrentTime = DebugCurrentTime()
+    internal fun currentTime(): CurrentTime = DebugCurrentTime()
 }

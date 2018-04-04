@@ -1,4 +1,4 @@
-package net.squanchy.support.lang
+package net.squanchy.support.checksum
 
 import java.io.UnsupportedEncodingException
 import java.util.zip.CRC32

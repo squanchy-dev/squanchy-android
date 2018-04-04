@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewOutlineProvider
 import android.widget.FrameLayout
+import androidx.content.res.use
 
 import net.squanchy.R
 
@@ -22,18 +23,17 @@ open class CardLayout @JvmOverloads constructor(
         super.setClipToOutline(false)
 
         val a = context.obtainStyledAttributes(attrs, R.styleable.CardLayout, defStyleAttr, defStyleRes)
-        val insetHorizontal: Int
-        val insetTop: Int
-        val insetBottom: Int
-        val radius: Int
-        try {
+        var insetHorizontal = 0
+        var insetTop = 0
+        var insetBottom = 0
+        var radius = 0
+
+        a.use {
             ensureHasNecessaryAttributes(a)
             insetHorizontal = a.getDimensionPixelSize(R.styleable.CardLayout_cardInsetHorizontal, 0)
             insetTop = a.getDimensionPixelSize(R.styleable.CardLayout_cardInsetTop, 0)
             insetBottom = a.getDimensionPixelSize(R.styleable.CardLayout_cardInsetBottom, 0)
             radius = a.getDimensionPixelSize(R.styleable.CardLayout_cardCornerRadius, 0)
-        } finally {
-            a.recycle()
         }
 
         applyInsetsAndRadius(insetHorizontal, insetTop, insetBottom, radius)

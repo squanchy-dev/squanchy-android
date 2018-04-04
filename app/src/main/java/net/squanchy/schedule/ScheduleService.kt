@@ -15,7 +15,7 @@ import net.squanchy.service.firebase.model.schedule.FirestoreEvent
 import net.squanchy.service.firebase.model.schedule.FirestoreFavorite
 import net.squanchy.service.firebase.model.schedule.FirestoreSchedulePage
 import net.squanchy.service.firebase.toEvent
-import net.squanchy.support.lang.Checksum
+import net.squanchy.support.checksum.Checksum
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDate
 
