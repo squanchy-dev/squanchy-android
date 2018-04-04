@@ -20,7 +20,7 @@ internal class ItemsAdapter(private val searchResult: SearchResult.Success) {
         val totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResult.events)
         val totalSpeakerItemsCount = totalCountForSectionIncludingHeaders(searchResult.speakers)
 
-        return totalEventItemsCount + totalSpeakerItemsCount + 1 // 1 is the algolia logo
+        return totalEventItemsCount + totalSpeakerItemsCount + ALGOLIA_LOGO_OFFSET
     }
 
     @ViewTypeId
@@ -130,6 +130,8 @@ internal class ItemsAdapter(private val searchResult: SearchResult.Success) {
         private const val ITEM_ID_EVENTS_HEADER: Long = -100
         private const val ITEM_ID_SPEAKERS_HEADER: Long = -101
         private const val ITEM_ID_ALGOLIA_LOGO: Long = -102
+
+        private const val ALGOLIA_LOGO_OFFSET = 1
 
         private fun headersCountForSectionItemsCount(itemsCount: Int): Int = if (itemsCount > 0) 1 else 0
     }

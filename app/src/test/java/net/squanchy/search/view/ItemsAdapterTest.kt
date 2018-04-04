@@ -79,7 +79,7 @@ class ItemsAdapterTest {
             thrown.expect(IndexOutOfBoundsException::class.java)
 
             itemsAdapter.viewTypeAtAbsolutePosition(8)
-            // 8 = (1 header + 3 events + 1 header + 2 speakers + logo + 1 off-by-one) - 1 [because // zero-based]
+            // 8 = (1 header + 3 events + 1 header + 2 speakers + logo + 1 off-by-one) - 1 [because zero-based]
         }
 
         @Test
@@ -159,7 +159,7 @@ class ItemsAdapterTest {
             givenSearchResultsWith(ItemsAdapterTest.BaseTest.ANY_THREE_EVENTS, ItemsAdapterTest.BaseTest.ANY_TWO_SPEAKERS)
 
             val viewType = itemsAdapter.viewTypeAtAbsolutePosition(7)
-            // 7 = (2 header + 3 events + 1 header + 1 logo + 1 speaker) - 1 [because // zero-based]
+            // 7 = (2 header + 3 events + 1 header + 1 logo + 1 speaker) - 1 [because zero-based]
 
             assertThat(viewType).isEqualTo(SearchAdapter.ALGOLIA_LOGO)
         }
@@ -169,7 +169,7 @@ class ItemsAdapterTest {
             givenSearchResultsWith(ItemsAdapterTest.BaseTest.ANY_THREE_EVENTS, ItemsAdapterTest.BaseTest.NO_SPEAKERS)
 
             val viewType = itemsAdapter.viewTypeAtAbsolutePosition(4)
-            // 4 = (1 header + 3 events + 1 logo ) - 1 [because // zero-based]
+            // 4 = (1 header + 3 events + 1 logo ) - 1 [because zero-based]
 
             assertThat(viewType).isEqualTo(SearchAdapter.ALGOLIA_LOGO)
         }
@@ -179,7 +179,7 @@ class ItemsAdapterTest {
             givenSearchResultsWith(ItemsAdapterTest.BaseTest.NO_EVENTS, ItemsAdapterTest.BaseTest.ANY_TWO_SPEAKERS)
 
             val viewType = itemsAdapter.viewTypeAtAbsolutePosition(3)
-            // 4 = (1 header + 2 speakers + 1 logo ) - 1 [because // zero-based]
+            // 4 = (1 header + 2 speakers + 1 logo ) - 1 [because zero-based]
 
             assertThat(viewType).isEqualTo(SearchAdapter.ALGOLIA_LOGO)
         }
@@ -209,7 +209,7 @@ class ItemsAdapterTest {
             thrown.expect(IndexOutOfBoundsException::class.java)
 
             itemsAdapter.itemIdAtAbsolutePosition(8)
-            // 8 = (1 header + 3 events + 1 header + 2 speakers + 1 logo + 1 off-by-one) - 1 [because // zero-based]
+            // 8 = (1 header + 3 events + 1 header + 2 speakers + 1 logo + 1 off-by-one) - 1 [because zero-based]
         }
 
         @Test
