@@ -28,7 +28,7 @@ class ItemsAdapterTest {
         }
 
         @Test
-        fun givenSearchResultsWithOnlyEvents_whenGettingTotalItemsCount_thenReturnsTheNumberOfSpeakersPlusOne() {
+        fun givenSearchResultsWithOnlyEvents_whenGettingTotalItemsCount_thenReturnsTheNumberOfEventsPlusOne() {
             givenSearchResultsWith(ItemsAdapterTest.BaseTest.ANY_THREE_EVENTS, ItemsAdapterTest.BaseTest.NO_SPEAKERS)
 
             val totalItemsCount = itemsAdapter.totalItemsCount()
