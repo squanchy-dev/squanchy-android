@@ -39,7 +39,8 @@ class FirestoreFavoritesServiceTest {
 
     @Test
     fun `should return an empty list when there are no favorite events`() {
-        `when`(scheduleService.schedule(onlyFavorites = true)).thenReturn(Observable.just(aSchedule(emptyList())))
+        val schedule = aSchedule(pages = emptyList())
+        `when`(scheduleService.schedule(onlyFavorites = true)).thenReturn(Observable.just(schedule))
 
         favoritesService.favorites()
             .test()
@@ -49,7 +50,7 @@ class FirestoreFavoritesServiceTest {
     @Test
     fun `should return a header item for each day followed by the days' events`() {
         val schedule = aSchedule(
-            listOf(
+            pages = listOf(
                 aSchedulePage(
                     date = aDay().date,
                     events = listOf(anEvent(id = "day 1 event 1"), anEvent(id = "day 1 event 2"))
@@ -73,6 +74,20 @@ class FirestoreFavoritesServiceTest {
                     aFavoriteItemListItem(anEvent(id = "day 2 event 1"))
                 )
             )
+    }
+
+    @Test
+    fun `should not add a header item for a page with no favourites`() {
+        val schedule = aSchedule(
+            pages = listOf(
+                aSchedulePage(events = emptyList())
+            )
+        )
+        `when`(scheduleService.schedule(onlyFavorites = true)).thenReturn(Observable.just(schedule))
+
+        favoritesService.favorites()
+            .test()
+            .assertValue(emptyList())
     }
 
     @Test

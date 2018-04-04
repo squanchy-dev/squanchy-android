@@ -24,8 +24,14 @@ internal class FirestoreFavoritesService(
             .flatMap { pages ->
                 val flattenedItems = pages.map { page ->
                     val eventsAsFavoriteItems = page.events.map { it.toFavoriteItem() }
-                    listOf(FavoritesItem.Header(page.date)) + eventsAsFavoriteItems
+
+                    if (eventsAsFavoriteItems.isNotEmpty()) {
+                        return@map listOf(FavoritesItem.Header(page.date)) + eventsAsFavoriteItems
+                    } else {
+                        return@map emptyList<FavoritesItem>()
+                    }
                 }.flatten()
+
                 return@flatMap Observable.just(flattenedItems)
             }
     }
@@ -34,7 +40,6 @@ internal class FirestoreFavoritesService(
         return authService.currentUser()
             .map { optionalUser -> optionalUser.map { user -> !user.isAnonymous }.or(false) }
     }
-}
 
-private fun Event.toFavoriteItem(): FavoritesItem.Favorite =
-    FavoritesItem.Favorite(this)
+    private fun Event.toFavoriteItem(): FavoritesItem.Favorite = FavoritesItem.Favorite(this)
+}
