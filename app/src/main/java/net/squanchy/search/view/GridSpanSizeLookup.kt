@@ -18,6 +18,7 @@ internal class GridSpanSizeLookup(private val itemsAdapter: ItemsAdapter, privat
             SearchAdapter.HEADER -> columnCount
             SearchAdapter.EVENT -> columnCount
             SearchAdapter.SPEAKER -> SINGLE_COLUMN_SPAN_SIZE
+            SearchAdapter.ALGOLIA_LOGO -> columnCount
             else -> error("Invalid ViewTypeId $viewTypeId")
         }
 

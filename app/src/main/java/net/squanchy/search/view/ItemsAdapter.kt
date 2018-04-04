@@ -20,7 +20,7 @@ internal class ItemsAdapter(private val searchResult: SearchResult.Success) {
         val totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResult.events)
         val totalSpeakerItemsCount = totalCountForSectionIncludingHeaders(searchResult.speakers)
 
-        return totalEventItemsCount + totalSpeakerItemsCount
+        return totalEventItemsCount + totalSpeakerItemsCount + ALGOLIA_LOGO_OFFSET
     }
 
     @ViewTypeId
@@ -32,6 +32,7 @@ internal class ItemsAdapter(private val searchResult: SearchResult.Success) {
         val adjustedPosition: Int = if (position < totalEventItemsCount) position else position - totalEventItemsCount
 
         return when {
+            position.isLastAdapterPosition() -> SearchAdapter.ALGOLIA_LOGO
             adjustedPosition == 0 -> SearchAdapter.HEADER
             position < totalEventItemsCount -> SearchAdapter.EVENT
             else -> SearchAdapter.SPEAKER
@@ -41,6 +42,9 @@ internal class ItemsAdapter(private val searchResult: SearchResult.Success) {
     fun itemIdAtAbsolutePosition(position: Int): Long {
         ensurePositionExists(position)
 
+        if (position.isLastAdapterPosition()) {
+            return ITEM_ID_ALGOLIA_LOGO
+        }
         val totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResult.events)
         if (totalEventItemsCount > 0 && position < totalEventItemsCount) {
             return if (position == 0) ITEM_ID_EVENTS_HEADER else searchResult.events[position - 1].numericId
@@ -50,6 +54,8 @@ internal class ItemsAdapter(private val searchResult: SearchResult.Success) {
             return if (adjustedPosition == 0) ITEM_ID_SPEAKERS_HEADER else searchResult.speakers[adjustedPosition - 1].numericId
         }
     }
+
+    private fun Int.isLastAdapterPosition() = this == totalItemsCount() - 1
 
     fun speakerAtAbsolutePosition(position: Int): Speaker {
         ensurePositionExists(position)
@@ -123,6 +129,9 @@ internal class ItemsAdapter(private val searchResult: SearchResult.Success) {
         // In addition, the CRC32 values we use as numeric IDs are always positive.
         private const val ITEM_ID_EVENTS_HEADER: Long = -100
         private const val ITEM_ID_SPEAKERS_HEADER: Long = -101
+        private const val ITEM_ID_ALGOLIA_LOGO: Long = -102
+
+        private const val ALGOLIA_LOGO_OFFSET = 1
 
         private fun headersCountForSectionItemsCount(itemsCount: Int): Int = if (itemsCount > 0) 1 else 0
     }

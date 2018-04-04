@@ -51,6 +51,10 @@ internal class SearchAdapter(activity: AppCompatActivity) : RecyclerView.Adapter
                 val view = LayoutInflater.from(activity).inflate(R.layout.item_schedule_event_talk, parent, false)
                 return EventViewHolder(view as EventItemView)
             }
+            ALGOLIA_LOGO -> {
+                val view = LayoutInflater.from(activity).inflate(R.layout.item_search_algolia_logo, parent, false)
+                return AlgoliaLogoViewHolder(view)
+            }
             else -> throw IllegalArgumentException("Item type $viewType not supported")
         }
     }
@@ -62,6 +66,7 @@ internal class SearchAdapter(activity: AppCompatActivity) : RecyclerView.Adapter
             SPEAKER -> (holder as SpeakerViewHolder).updateWith(itemsAdapter.speakerAtAbsolutePosition(position), imageLoader, listener)
             HEADER -> (holder as HeaderViewHolder).updateWith(itemsAdapter.headerTypeAtAbsolutePosition(position))
             EVENT -> (holder as EventViewHolder).updateWith(itemsAdapter.eventAtAbsolutePosition(position)) { listener.onEventClicked(it) }
+            ALGOLIA_LOGO -> Unit // Nothing to do
             else -> throw IllegalArgumentException("Item type $viewType not supported")
         }
     }
@@ -86,8 +91,9 @@ internal class SearchAdapter(activity: AppCompatActivity) : RecyclerView.Adapter
         const val HEADER = 1
         const val SPEAKER = 2
         const val EVENT = 3
+        const val ALGOLIA_LOGO = 4
 
-        @IntDef(HEADER, SPEAKER, EVENT)
+        @IntDef(HEADER, SPEAKER, EVENT, ALGOLIA_LOGO)
         @Retention(AnnotationRetention.SOURCE)
         annotation class ViewTypeId
     }
