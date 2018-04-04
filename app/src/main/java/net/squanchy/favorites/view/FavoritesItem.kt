@@ -11,20 +11,16 @@ sealed class FavoritesItem {
 
     data class Header(val date: LocalDate) : FavoritesItem() {
 
-        override val id: Long
-            get() = date.toDateTimeAtCurrentTime().millis // We're relatively sure this won't clash with event IDs
+        override val id = date.toDateTimeAtCurrentTime().millis // We're relatively sure this won't clash with event IDs
 
-        override val type: Type
-            get() = Type.HEADER
+        override val type = Type.HEADER
     }
 
     data class Favorite(val event: Event) : FavoritesItem() {
 
-        override val id: Long
-            get() = event.numericId
+        override val id = event.numericId
 
-        override val type: Type
-            get() = Type.FAVOURITE
+        override val type = Type.FAVOURITE
     }
 
     enum class Type {
