@@ -43,6 +43,10 @@ internal class ItemsAdapter(private val searchResult: SearchResult.Success) {
     fun itemIdAtAbsolutePosition(position: Int): Long {
         ensurePositionExists(position)
 
+        val totalItemsCount = totalItemsCount()
+        if (totalItemsCount - 1 == position) {
+            return ITEM_ID_ALGOLIA_LOGO
+        }
         val totalEventItemsCount = totalCountForSectionIncludingHeaders(searchResult.events)
         if (totalEventItemsCount > 0 && position < totalEventItemsCount) {
             return if (position == 0) ITEM_ID_EVENTS_HEADER else searchResult.events[position - 1].numericId
@@ -125,6 +129,7 @@ internal class ItemsAdapter(private val searchResult: SearchResult.Success) {
         // In addition, the CRC32 values we use as numeric IDs are always positive.
         private const val ITEM_ID_EVENTS_HEADER: Long = -100
         private const val ITEM_ID_SPEAKERS_HEADER: Long = -101
+        private const val ITEM_ID_ALGOLIA_LOGO: Long = -102
 
         private fun headersCountForSectionItemsCount(itemsCount: Int): Int = if (itemsCount > 0) 1 else 0
     }

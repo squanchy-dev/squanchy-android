@@ -208,7 +208,8 @@ class ItemsAdapterTest {
             givenSearchResultsWith(ItemsAdapterTest.BaseTest.ANY_THREE_EVENTS, ItemsAdapterTest.BaseTest.ANY_TWO_SPEAKERS)
             thrown.expect(IndexOutOfBoundsException::class.java)
 
-            itemsAdapter.itemIdAtAbsolutePosition(7) // 7 = (1 header + 3 events + 1 header + 2 speakers + 1 off-by-one) - 1 [because zero-based]
+            itemsAdapter.itemIdAtAbsolutePosition(8)
+            // 8 = (1 header + 3 events + 1 header + 2 speakers + 1 logo + 1 off-by-one) - 1 [because // zero-based]
         }
 
         @Test
@@ -254,6 +255,16 @@ class ItemsAdapterTest {
             val itemId = itemsAdapter.itemIdAtAbsolutePosition(0) // 0 = (1 header) - 1 [because zero-based]
 
             assertThat(itemId).isEqualTo(-100)
+        }
+
+        @Test
+        fun givenSearchResultsWithEventsAndSpeakers_whenGettingItemIdAtLastPosition_thenReturnsAlgoliaLogoId() {
+            givenSearchResultsWith(ItemsAdapterTest.BaseTest.ANY_THREE_EVENTS, ItemsAdapterTest.BaseTest.ANY_TWO_SPEAKERS)
+
+            val itemId = itemsAdapter.itemIdAtAbsolutePosition(7)
+            // 7 = (2 header + 3 events + 2 speakers + 1 logo) - 1 [because zero-based]
+
+            assertThat(itemId).isEqualTo(-102)
         }
 
         @Test
