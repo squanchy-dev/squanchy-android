@@ -55,10 +55,9 @@ internal class TrackViewHolder(val item: FilterChipView) : RecyclerView.ViewHold
         item.apply {
             text = track.name
 
-            color = when {
-                track.accentColor.isPresent -> Color.parseColor(track.accentColor.get())
-                else -> ContextCompat.getColor(context, R.color.chip_default_background_tint)
-            }
+            color = track.accentColor
+                .map { Color.parseColor(track.accentColor.get()) }
+                .or(ContextCompat.getColor(context, R.color.chip_default_background_tint))
 
             onCheckedChangeListener = { _, checked -> listener.invoke(track, checked) }
             isChecked = selected
