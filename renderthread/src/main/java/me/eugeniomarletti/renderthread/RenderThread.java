@@ -17,26 +17,26 @@ public final class RenderThread {
     private RenderThread() {
     }
 
-    private static RenderThreadDelegate DELEGATE;
+    private static RenderThreadDelegate delegate;
 
     static {
         init(false);
     }
 
     public static void init(boolean skipAndroidVersionCheck) {
-        RenderThreadDelegate delegate = DELEGATE;
+        RenderThreadDelegate delegate = RenderThread.delegate;
         if (delegate == null || !delegate.isSupported()) {
             RenderThreadMethods methods = RenderThreadMethods.create(skipAndroidVersionCheck);
             if (methods != null) {
-                DELEGATE = new RenderThreadDelegateHw(methods);
+                RenderThread.delegate = new RenderThreadDelegateHw(methods);
             } else {
-                DELEGATE = new RenderThreadDelegate();
+                RenderThread.delegate = new RenderThreadDelegate();
             }
         }
     }
 
     public static boolean isSupported() {
-        return DELEGATE.isSupported();
+        return delegate.isSupported();
     }
 
     @NonNull
@@ -45,8 +45,8 @@ public final class RenderThread {
     }
 
     @NonNull
-    public static CanvasProperty<Float> createCanvasProperty(@NonNull Canvas canvas, float initialValue, boolean useRenderThread) {
-        return DELEGATE.createCanvasProperty(canvas, initialValue, useRenderThread);
+    private static CanvasProperty<Float> createCanvasProperty(@NonNull Canvas canvas, float initialValue, boolean useRenderThread) {
+        return delegate.createCanvasProperty(canvas, initialValue, useRenderThread);
     }
 
     @NonNull
@@ -55,16 +55,16 @@ public final class RenderThread {
     }
 
     @NonNull
-    public static CanvasProperty<Paint> createCanvasProperty(@NonNull Canvas canvas, @NonNull Paint initialValue, boolean useRenderThread) {
-        return DELEGATE.createCanvasProperty(canvas, initialValue, useRenderThread);
+    private static CanvasProperty<Paint> createCanvasProperty(@NonNull Canvas canvas, @NonNull Paint initialValue, boolean useRenderThread) {
+        return delegate.createCanvasProperty(canvas, initialValue, useRenderThread);
     }
 
     public static boolean isDisplayListCanvas(@NonNull Canvas canvas) {
-        return DELEGATE.isDisplayListCanvas(canvas);
+        return delegate.isDisplayListCanvas(canvas);
     }
 
     public static void setAnimatorTarget(@RenderNodeAnimator @NonNull Animator animator, @DisplayListCanvas @NonNull Canvas target) {
-        DELEGATE.setTarget(animator, target);
+        delegate.setTarget(animator, target);
     }
 
     public static void drawCircle(
@@ -74,7 +74,7 @@ public final class RenderThread {
             @NonNull CanvasProperty<Float> radius,
             @NonNull CanvasProperty<Paint> paint) {
 
-        DELEGATE.drawCircle(canvas, cx, cy, radius, paint);
+        delegate.drawCircle(canvas, cx, cy, radius, paint);
     }
 
     public static void drawRoundRect(
@@ -87,7 +87,7 @@ public final class RenderThread {
             @NonNull CanvasProperty<Float> ry,
             @NonNull CanvasProperty<Paint> paint) {
 
-        DELEGATE.drawRoundRect(canvas, left, top, right, bottom, rx, ry, paint);
+        delegate.drawRoundRect(canvas, left, top, right, bottom, rx, ry, paint);
     }
 
     @NonNull
@@ -97,7 +97,7 @@ public final class RenderThread {
             @NonNull CanvasProperty<Float> property,
             float targetValue) {
 
-        return DELEGATE.createFloatAnimator(drawable, canvas, property, targetValue);
+        return delegate.createFloatAnimator(drawable, canvas, property, targetValue);
     }
 
     @NonNull
@@ -107,7 +107,7 @@ public final class RenderThread {
             @NonNull CanvasProperty<Paint> property,
             @FloatRange(from = 0f, to = 255f) float targetValue) {
 
-        return DELEGATE.createPaintAlphaAnimator(drawable, canvas, property, targetValue);
+        return delegate.createPaintAlphaAnimator(drawable, canvas, property, targetValue);
     }
 
     @NonNull
@@ -117,6 +117,6 @@ public final class RenderThread {
             @NonNull CanvasProperty<Paint> property,
             float targetValue) {
 
-        return DELEGATE.createPaintStrokeWidthAnimator(drawable, canvas, property, targetValue);
+        return delegate.createPaintStrokeWidthAnimator(drawable, canvas, property, targetValue);
     }
 }

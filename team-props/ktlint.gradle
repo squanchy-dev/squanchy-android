@@ -12,7 +12,7 @@ task ktlint(type: JavaExec, group: 'verification') {
     description = 'Check Kotlin code style.'
     classpath = configurations.ktlint
     main = 'com.github.shyiko.ktlint.Main'
-    args '--reporter=plain', "--reporter=checkstyle,output=${buildDir}/ktlint.xml", '--android', 'src/**/*.kt'
+    args '--reporter=plain', "--reporter=checkstyle,output=${buildDir}/reports/ktlint.xml", '--android', 'src/**/*.kt'
 }
 
 project.afterEvaluate {
