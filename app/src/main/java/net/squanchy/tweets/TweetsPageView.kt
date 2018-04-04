@@ -24,9 +24,15 @@ class TweetsPageView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : CoordinatorLayout(context, attrs, defStyleAttr), Loadable {
 
-    private val component = twitterComponent(unwrapToActivityContext(context))
-    private val twitterService: TwitterService = component.service()
-    private val navigator: Navigator = component.navigator()
+    init {
+        with(twitterComponent(unwrapToActivityContext(context))) {
+            twitterService = service()
+            navigator = navigator()
+        }
+    }
+
+    private lateinit var twitterService: TwitterService
+    private lateinit var navigator: Navigator
 
     private val tweetClickListener: ((TweetLinkInfo) -> Unit) = { navigator.toTweet(it) }
     private val tweetsAdapter = TweetsAdapter(context, tweetClickListener)

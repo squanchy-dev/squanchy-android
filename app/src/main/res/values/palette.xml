@@ -36,6 +36,7 @@
   <color name="hint_text">#bfbfbf</color>
 
   <color name="tweet_text">#6a6a6a</color>
+  <color name="tweet_footer_text">#9e9e9e</color>
   <color name="tweet_link">#1d8dee</color>
 
   <color name="text_inverse">#ffffff</color>
