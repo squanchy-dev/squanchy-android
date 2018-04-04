@@ -66,6 +66,7 @@
   <style name="Schedule.EmptyView" parent="None">
     <item name="android:gravity">center_horizontal</item>
     <item name="android:drawableTop">@drawable/empty_schedule</item>
+    <item name="android:drawablePadding">@dimen/schedule_empty_view_drawable_padding</item>
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.Schedule.EmptyView</item>
     <item name="android:text">@string/schedule_empty_view_text</item>
   </style>
@@ -263,6 +264,16 @@
     <item name="android:foreground">@drawable/white_circle_bound_touch_feedback</item>
     <item name="android:src">@drawable/ic_favorite_empty</item>
   </style>
+
+  <style name="Tweets.EmptyView" parent="None">
+    <item name="android:drawableTop">@drawable/ic_twitter_empty</item>
+    <item name="android:drawablePadding">@dimen/tweet_empty_view_drawable_padding</item>
+    <item name="android:gravity">center</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.Tweets.EmptyView</item>
+    <item name="android:visibility">gone</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.Tweets.EmptyView" parent="TextAppearance.Squanchy.Schedule.EmptyView" />
 
   <style name="Tweet.Title" parent="None">
     <item name="android:lineSpacingExtra">@dimen/tweet_line_spacing_extra</item>

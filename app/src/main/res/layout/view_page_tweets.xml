@@ -27,14 +27,12 @@
 
     <TextView
       android:id="@+id/tweetEmptyView"
+      style="@style/Tweets.EmptyView"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
       android:layout_margin="@dimen/tweet_empty_view_margin"
-      android:gravity="center"
       android:text="@string/no_tweets_for_query"
-      android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-      android:visibility="gone"
       tools:visibility="visible" />
 
     <net.squanchy.tweets.view.TweetFeedView
