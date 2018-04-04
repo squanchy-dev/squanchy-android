@@ -7,7 +7,7 @@ import android.widget.TextView
 class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun updateWith(headerType: HeaderType) {
-        (itemView as TextView).setText(headerType.headerTextResourceId())
+        (itemView as TextView).setText(headerType.headerTextResourceId)
     }
 
     fun updateWith(label: CharSequence) {
