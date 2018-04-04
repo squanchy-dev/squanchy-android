@@ -284,7 +284,7 @@
   <style name="TextAppearance.Squanchy.Tweet.Title" parent="None">
     <item name="android:textColor">@color/tweet_text</item>
     <item name="android:textSize">@dimen/tweet_text</item>
-    <item name="fontFamily">@font/title_typeface</item>
+    <item name="fontFamily">@font/default_typeface_medium</item>
   </style>
 
   <style name="Tweet.Photo" parent="None">
@@ -301,9 +301,9 @@
   </style>
 
   <style name="TextAppearance.Squanchy.Tweet.Footer.Text" parent="None">
-    <item name="android:textColor">?android:textColorSecondary</item>
+    <item name="android:textColor">@color/tweet_footer_text</item>
     <item name="android:textSize">@dimen/tweet_footer_text</item>
-    <item name="fontFamily">@font/default_typeface_medium</item>
+    <item name="fontFamily">@font/default_typeface_bold</item>
   </style>
 
   <style name="SpeakerDetails.Header.Speaker.Photo" parent="None" />
