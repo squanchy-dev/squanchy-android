@@ -15,7 +15,7 @@ import net.squanchy.schedule.tracksfilter.widget.FilterChipView
 internal class TracksFilterAdapter(
     context: Context,
     private val trackStateChangeListener: OnTrackSelectedChangeListener
-) : ListAdapter<CheckableTrack, TrackViewHolder>(DiffCallback()) {
+) : ListAdapter<CheckableTrack, TrackViewHolder>(DiffCallback) {
 
     init {
         setHasStableIds(true)
@@ -35,15 +35,15 @@ internal class TracksFilterAdapter(
     override fun getItemId(position: Int): Long {
         return getItem(position).track().numericId
     }
+}
 
-    class DiffCallback : DiffUtil.ItemCallback<CheckableTrack>() {
-        override fun areItemsTheSame(oldItem: CheckableTrack?, newItem: CheckableTrack?): Boolean {
-            return oldItem?.track()?.id == newItem?.track()?.id
-        }
+private object DiffCallback : DiffUtil.ItemCallback<CheckableTrack>() {
+    override fun areItemsTheSame(oldItem: CheckableTrack?, newItem: CheckableTrack?): Boolean {
+        return oldItem?.track()?.id == newItem?.track()?.id
+    }
 
-        override fun areContentsTheSame(oldItem: CheckableTrack?, newItem: CheckableTrack?): Boolean {
-            return oldItem == newItem
-        }
+    override fun areContentsTheSame(oldItem: CheckableTrack?, newItem: CheckableTrack?): Boolean {
+        return oldItem == newItem
     }
 }
 
