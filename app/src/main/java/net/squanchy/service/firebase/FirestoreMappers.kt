@@ -49,11 +49,11 @@ fun FirestoreVenue.toVenue() = Venue(
     timeZone = DateTimeZone.forID(timezone)
 )
 
-fun FirestoreEvent.toEvent(checksum: Checksum, dateTime: DateTimeZone, isFavorite: Boolean = false) = Event(
+fun FirestoreEvent.toEvent(checksum: Checksum, timeZone: DateTimeZone, isFavorite: Boolean = false) = Event(
     id = id,
     numericId = checksum.getChecksumOf(id),
-    startTime = LocalDateTime(startTime),
-    endTime = LocalDateTime(endTime),
+    startTime = LocalDateTime(startTime, timeZone),
+    endTime = LocalDateTime(endTime, timeZone),
     title = title,
     place = place?.toPlace().optional(),
     experienceLevel = experienceLevel.toExperienceLevel(),
@@ -62,7 +62,7 @@ fun FirestoreEvent.toEvent(checksum: Checksum, dateTime: DateTimeZone, isFavorit
     favorited = isFavorite,
     description = description.optional(),
     track = track?.toTrack(checksum).optional(),
-    timeZone = dateTime
+    timeZone = timeZone
 )
 
 private fun String?.toExperienceLevel() = ExperienceLevel.tryParsingFrom(this)
