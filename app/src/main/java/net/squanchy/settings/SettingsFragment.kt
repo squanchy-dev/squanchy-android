@@ -63,6 +63,16 @@ class SettingsFragment : PreferenceFragment() {
             navigator.toAboutSquanchy()
             true
         }
+
+        val notificationsPreference = findPreference(getString(R.string.about_to_start_notification_preference_key))
+        notificationsPreference.setOnPreferenceChangeListener { _, enabled ->
+            if (enabled as Boolean) {
+                analytics.trackNotificationsEnabled()
+            } else {
+                analytics.trackNotificationsDisabled()
+            }
+            true
+        }
     }
 
     private fun displayBuildVersion() {
