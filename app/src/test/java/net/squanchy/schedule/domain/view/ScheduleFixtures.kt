@@ -39,8 +39,8 @@ fun aDay(
 fun anEvent(
     id: String = "banana",
     numericId: Long = 1234,
-    startTime: LocalDateTime = LocalDateTime(123456789),
-    endTime: LocalDateTime = LocalDateTime(123459999),
+    startTime: LocalDateTime = LocalDateTime(123456789, A_TIMEZONE),
+    endTime: LocalDateTime = LocalDateTime(123459999, A_TIMEZONE),
     title: String = "Hello \uD83C\uDF4C", // Yes, that's a banana emoji. You never know
     place: Optional<Place> = Optional.of(aPlace()),
     experienceLevel: Optional<ExperienceLevel> = Optional.of(ExperienceLevel.BEGINNER),
@@ -48,7 +48,7 @@ fun anEvent(
     type: Event.Type = Event.Type.KEYNOTE,
     description: Optional<String> = Optional.of("Now this is the story all about how\nMy life got flipped, turned upside down"),
     track: Optional<Track> = Optional.of(aTrack()),
-    timeZone: DateTimeZone = DateTimeZone.forID("Europe/Rome"),
+    timeZone: DateTimeZone = A_TIMEZONE,
     favorited: Boolean = false
 ) = Event(
     id = id,

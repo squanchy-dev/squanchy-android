@@ -81,7 +81,7 @@ class FirestoreScheduleServiceTest {
             .test()
             .assertValue(
                 aSchedule(
-                    listOf(
+                    pages = listOf(
                         aSchedulePage(dayId = "1", date = LocalDate(A_START_TIME.dateOnly())),
                         aSchedulePage(dayId = "2", date = LocalDate(A_START_TIME.plusOneDay().dateOnly()))
                     )
@@ -121,7 +121,7 @@ class FirestoreScheduleServiceTest {
             .test()
             .assertValue(
                 aSchedule(
-                    listOf(
+                    pages = listOf(
                         aSchedulePage(
                             dayId = "1",
                             date = LocalDate(A_START_TIME.dateOnly()),
@@ -185,7 +185,7 @@ class FirestoreScheduleServiceTest {
             .test()
             .assertValue(
                 aSchedule(
-                    listOf(
+                    pages = listOf(
                         aSchedulePage(
                             events = listOf(
                                 anEvent(id = "1", numericId = 1, track = Optional.absent()),
@@ -218,7 +218,7 @@ class FirestoreScheduleServiceTest {
             .test()
             .assertValue(
                 aSchedule(
-                    listOf(
+                    pages = listOf(
                         aSchedulePage(
                             events = listOf(
                                 anEvent(id = "A", numericId = 0)
@@ -246,7 +246,7 @@ class FirestoreScheduleServiceTest {
             .test()
             .assertValue(
                 aSchedule(
-                    listOf(
+                    pages = listOf(
                         aSchedulePage(
                             events = listOf(
                                 anEvent(track = Optional.absent(), numericId = 1),
@@ -275,7 +275,7 @@ class FirestoreScheduleServiceTest {
             .test()
             .assertValue(
                 aSchedule(
-                    listOf(
+                    pages = listOf(
                         aSchedulePage(
                             events = listOf(
                                 anEvent(track = Optional.absent(), numericId = 1),
@@ -302,7 +302,7 @@ class FirestoreScheduleServiceTest {
             .test()
             .assertValue(
                 aSchedule(
-                    listOf(
+                    pages = listOf(
                         aSchedulePage(events = emptyList())
                     )
                 )
@@ -326,7 +326,7 @@ class FirestoreScheduleServiceTest {
             .test()
             .assertValue(
                 aSchedule(
-                    listOf(
+                    pages = listOf(
                         aSchedulePage(
                             events = listOf(
                                 anEvent(track = Optional.of(aTrack(id = "A")), numericId = 1),
@@ -356,7 +356,7 @@ class FirestoreScheduleServiceTest {
             .test()
             .assertValue(
                 aSchedule(
-                    listOf(
+                    pages = listOf(
                         aSchedulePage(
                             events = listOf(
                                 anEvent(track = Optional.absent(), numericId = 1)
