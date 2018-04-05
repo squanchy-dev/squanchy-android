@@ -1,16 +1,14 @@
 package net.squanchy.schedule.domain.view
 
+import net.squanchy.A_DATE
+import net.squanchy.A_TIMEZONE
 import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.speaker.domain.view.Speaker
 import net.squanchy.speaker.domain.view.aSpeaker
 import net.squanchy.support.lang.Optional
-import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDate
 import org.joda.time.LocalDateTime
-
-private val A_DATE = DateTime("2018-04-19T02:20:00Z")
-private val A_TIMEZONE = DateTimeZone.forID("Europe/Rome")
 
 fun aSchedule(
     pages: List<SchedulePage> = listOf(aSchedulePage()),

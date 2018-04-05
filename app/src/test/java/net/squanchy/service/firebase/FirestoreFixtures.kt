@@ -1,6 +1,7 @@
 package net.squanchy.service.firebase
 
 import com.google.firebase.firestore.GeoPoint
+import net.squanchy.A_DATE
 import net.squanchy.service.firebase.model.conferenceinfo.FirestoreConferenceInfo
 import net.squanchy.service.firebase.model.conferenceinfo.FirestoreVenue
 import net.squanchy.service.firebase.model.schedule.FirestoreDay
@@ -9,10 +10,7 @@ import net.squanchy.service.firebase.model.schedule.FirestorePlace
 import net.squanchy.service.firebase.model.schedule.FirestoreSchedulePage
 import net.squanchy.service.firebase.model.schedule.FirestoreSpeaker
 import net.squanchy.service.firebase.model.schedule.FirestoreTrack
-import org.joda.time.DateTime
 import java.util.Date
-
-private val A_DATE = DateTime("2018-04-19T02:20:00Z")
 
 fun aFirestoreTrack(
     id: String = "a track id",
