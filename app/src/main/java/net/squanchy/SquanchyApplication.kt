@@ -30,6 +30,7 @@ class SquanchyApplication : Application() {
             enableExceptionLogging()
             initializeStaticUserProperties()
             trackFirstStartUserNotLoggedIn()
+            trackFirstStartNotificationsEnabled()
         }
 
         if (BuildConfig.DEBUG) {

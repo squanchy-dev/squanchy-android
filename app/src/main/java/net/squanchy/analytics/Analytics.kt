@@ -70,6 +70,22 @@ class Analytics internal constructor(
         firstStartDetector.setFirstStartNotLoggedInStatusTracked()
     }
 
+    fun trackFirstStartNotificationsEnabled() {
+        if (firstStartDetector.isFirstStartNotificationsEnabledTracked()) {
+            return
+        }
+        trackNotificationsEnabled()
+        firstStartDetector.setFirstStartNotificationsEnabledTracked()
+    }
+
+    fun trackNotificationsEnabled() {
+        firebaseAnalytics.setUserProperty("notifications_status", "enabled")
+    }
+
+    fun trackNotificationsDisabled() {
+        firebaseAnalytics.setUserProperty("notifications_status", "disabled")
+    }
+
     fun trackUserNotLoggedIn() {
         setUserLoginProperty(LoginStatus.NOT_LOGGED_IN)
     }

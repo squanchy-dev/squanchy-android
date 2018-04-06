@@ -1,5 +1,7 @@
 package net.squanchy.schedule.domain.view
 
+import net.squanchy.A_DATE
+import net.squanchy.A_TIMEZONE
 import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.speaker.domain.view.Speaker
 import net.squanchy.speaker.domain.view.aSpeaker
@@ -7,8 +9,6 @@ import net.squanchy.support.lang.Optional
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDate
 import org.joda.time.LocalDateTime
-
-private val A_TIMEZONE = DateTimeZone.forID("Europe/Rome")
 
 fun aSchedule(
     pages: List<SchedulePage> = listOf(aSchedulePage()),
@@ -30,7 +30,7 @@ fun aSchedulePage(
 
 fun aDay(
     id: String = "dayId",
-    date: LocalDate = LocalDate(123456789, A_TIMEZONE)
+    date: LocalDate = A_DATE.toDateTime(A_TIMEZONE).toLocalDate()
 ) = Day(
     id = id,
     date = date
@@ -39,8 +39,8 @@ fun aDay(
 fun anEvent(
     id: String = "banana",
     numericId: Long = 1234,
-    startTime: LocalDateTime = LocalDateTime(123456789),
-    endTime: LocalDateTime = LocalDateTime(123459999),
+    startTime: LocalDateTime = A_DATE.toDateTime(A_TIMEZONE).toLocalDateTime(),
+    endTime: LocalDateTime = A_DATE.plusMinutes(1).toDateTime(A_TIMEZONE).toLocalDateTime(),
     title: String = "Hello \uD83C\uDF4C", // Yes, that's a banana emoji. You never know
     place: Optional<Place> = Optional.of(aPlace()),
     experienceLevel: Optional<ExperienceLevel> = Optional.of(ExperienceLevel.BEGINNER),
@@ -48,7 +48,7 @@ fun anEvent(
     type: Event.Type = Event.Type.KEYNOTE,
     description: Optional<String> = Optional.of("Now this is the story all about how\nMy life got flipped, turned upside down"),
     track: Optional<Track> = Optional.of(aTrack()),
-    timeZone: DateTimeZone = DateTimeZone.forID("Europe/Rome"),
+    timeZone: DateTimeZone = A_TIMEZONE,
     favorited: Boolean = false
 ) = Event(
     id = id,

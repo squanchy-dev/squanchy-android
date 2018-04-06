@@ -3,6 +3,8 @@ package net.squanchy.schedule
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
+import net.squanchy.A_DATE
+import net.squanchy.A_TIMEZONE
 import net.squanchy.schedule.domain.view.Track
 import net.squanchy.schedule.domain.view.aSchedule
 import net.squanchy.schedule.domain.view.aSchedulePage
@@ -19,8 +21,6 @@ import net.squanchy.service.firebase.aFirestoreTrack
 import net.squanchy.service.firebase.model.schedule.FirestoreFavorite
 import net.squanchy.support.checksum.Checksum
 import net.squanchy.support.lang.Optional
-import org.joda.time.LocalDate
-import org.joda.time.LocalDateTime
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -28,19 +28,14 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnit
 import org.mockito.junit.MockitoRule
-import java.util.Calendar
-import java.util.Date
-import java.util.TimeZone
 
 class FirestoreScheduleServiceTest {
 
     companion object {
-        private val CALENDAR = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"))
-
-        private val A_START_TIME = Date(123456)
-        private val AN_END_TIME = Date(123999)
-        private val A_LATER_START_TIME = Date(124000)
-        private val A_LATER_END_TIME = Date(124999)
+        private val A_START_TIME = A_DATE
+        private val AN_END_TIME = A_START_TIME.plusMinutes(1)
+        private val A_LATER_START_TIME = A_START_TIME.plusMinutes(10)
+        private val A_LATER_END_TIME = A_LATER_START_TIME.plusMinutes(1)
     }
 
     @Rule
@@ -64,14 +59,14 @@ class FirestoreScheduleServiceTest {
     @Before
     fun init() {
         scheduleService = FirestoreScheduleService(authService, dbService, tracksFilter, checksum)
-        `when`(dbService.timezone()).thenReturn(Observable.just(aSchedule().timeZone))
+        `when`(dbService.timezone()).thenReturn(Observable.just(A_TIMEZONE))
         `when`(checksum.getChecksumOf(aFirestoreSpeaker().id)).thenReturn(5466)
     }
 
     @Test
     fun `should sort schedule pages by date`() {
-        val firstDaySchedulePage = aFirestoreSchedulePage(day = aFirestoreDay(id = "1", date = A_START_TIME.dateOnly()))
-        val secondDaySchedulePage = aFirestoreSchedulePage(day = aFirestoreDay(id = "2", date = A_START_TIME.plusOneDay().dateOnly()))
+        val firstDaySchedulePage = aFirestoreSchedulePage(day = aFirestoreDay(id = "1", date = A_START_TIME.toDate()))
+        val secondDaySchedulePage = aFirestoreSchedulePage(day = aFirestoreDay(id = "2", date = A_START_TIME.plusDays(1).toDate()))
         `when`(dbService.scheduleView()).thenReturn(Observable.just(listOf(firstDaySchedulePage, secondDaySchedulePage)))
         val allowedTracks = setOf(aTrack())
         `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
@@ -81,9 +76,9 @@ class FirestoreScheduleServiceTest {
             .test()
             .assertValue(
                 aSchedule(
-                    listOf(
-                        aSchedulePage(dayId = "1", date = LocalDate(A_START_TIME.dateOnly())),
-                        aSchedulePage(dayId = "2", date = LocalDate(A_START_TIME.plusOneDay().dateOnly()))
+                    pages = listOf(
+                        aSchedulePage(dayId = "1", date = A_START_TIME.toDateTime(A_TIMEZONE).toLocalDate()),
+                        aSchedulePage(dayId = "2", date = A_START_TIME.plusDays(1).toDateTime(A_TIMEZONE).toLocalDate())
                     )
                 )
             )
@@ -92,19 +87,31 @@ class FirestoreScheduleServiceTest {
     @Test
     fun `should sort events in each schedule page by start time`() {
         val firstDaySchedulePage = aFirestoreSchedulePage(
-            day = aFirestoreDay(id = "1", date = A_START_TIME.dateOnly()),
+            day = aFirestoreDay(id = "1", date = A_START_TIME.toDate()),
             events = listOf(
-                aFirestoreEvent(id = "1", startTime = A_START_TIME, endTime = AN_END_TIME),
-                aFirestoreEvent(id = "2", startTime = A_LATER_START_TIME, endTime = A_LATER_END_TIME),
-                aFirestoreEvent(id = "3", startTime = A_START_TIME, endTime = AN_END_TIME)
+                aFirestoreEvent(id = "1", startTime = A_START_TIME.toDate(), endTime = AN_END_TIME.toDate()),
+                aFirestoreEvent(id = "2", startTime = A_LATER_START_TIME.toDate(), endTime = A_LATER_END_TIME.toDate()),
+                aFirestoreEvent(id = "3", startTime = A_START_TIME.toDate(), endTime = AN_END_TIME.toDate())
             )
         )
         val secondDaySchedulePage = aFirestoreSchedulePage(
-            day = aFirestoreDay(id = "2", date = A_START_TIME.plusOneDay().dateOnly()),
+            day = aFirestoreDay(id = "2", date = A_START_TIME.plusDays(1).toDate()),
             events = listOf(
-                aFirestoreEvent(id = "4", startTime = A_START_TIME.plusOneDay(), endTime = AN_END_TIME.plusOneDay()),
-                aFirestoreEvent(id = "6", startTime = A_LATER_START_TIME.plusOneDay(), endTime = A_LATER_END_TIME.plusOneDay()),
-                aFirestoreEvent(id = "5", startTime = A_START_TIME.plusOneDay(), endTime = AN_END_TIME.plusOneDay())
+                aFirestoreEvent(
+                    id = "4",
+                    startTime = A_START_TIME.plusDays(1).toDate(),
+                    endTime = AN_END_TIME.plusDays(1).toDate()
+                ),
+                aFirestoreEvent(
+                    id = "6",
+                    startTime = A_LATER_START_TIME.plusDays(1).toDate(),
+                    endTime = A_LATER_END_TIME.plusDays(1).toDate()
+                ),
+                aFirestoreEvent(
+                    id = "5",
+                    startTime = A_START_TIME.plusDays(1).toDate(),
+                    endTime = AN_END_TIME.plusDays(1).toDate()
+                )
             )
         )
         `when`(dbService.scheduleView()).thenReturn(Observable.just(listOf(firstDaySchedulePage, secondDaySchedulePage)))
@@ -121,42 +128,52 @@ class FirestoreScheduleServiceTest {
             .test()
             .assertValue(
                 aSchedule(
-                    listOf(
+                    pages = listOf(
                         aSchedulePage(
                             dayId = "1",
-                            date = LocalDate(A_START_TIME.dateOnly()),
+                            date = A_START_TIME.toDateTime(A_TIMEZONE).toLocalDate(),
                             events = listOf(
-                                anEvent(id = "1", numericId = 1, startTime = A_START_TIME.toLocalDateTime(), endTime = AN_END_TIME.toLocalDateTime()),
-                                anEvent(id = "3", numericId = 3, startTime = A_START_TIME.toLocalDateTime(), endTime = AN_END_TIME.toLocalDateTime()),
+                                anEvent(
+                                    id = "1",
+                                    numericId = 1,
+                                    startTime = A_START_TIME.toDateTime(A_TIMEZONE).toLocalDateTime(),
+                                    endTime = AN_END_TIME.toDateTime(A_TIMEZONE).toLocalDateTime()
+                                ),
+                                anEvent(
+                                    id = "3",
+                                    numericId = 3,
+                                    startTime = A_START_TIME.toDateTime(A_TIMEZONE).toLocalDateTime(),
+                                    endTime = AN_END_TIME.toDateTime(A_TIMEZONE).toLocalDateTime()
+                                ),
                                 anEvent(
                                     id = "2",
                                     numericId = 2,
-                                    startTime = A_LATER_START_TIME.toLocalDateTime(),
-                                    endTime = A_LATER_END_TIME.toLocalDateTime()
+                                    startTime = A_LATER_START_TIME.toDateTime(A_TIMEZONE).toLocalDateTime(),
+                                    endTime = A_LATER_END_TIME.toDateTime(A_TIMEZONE).toLocalDateTime()
                                 )
                             )
                         ),
                         aSchedulePage(
                             dayId = "2",
-                            date = LocalDate(A_START_TIME.plusOneDay().dateOnly()),
+                            date = A_START_TIME.plusDays(1).toDateTime(A_TIMEZONE).toLocalDate(),
                             events = listOf(
                                 anEvent(
                                     id = "4",
                                     numericId = 4,
-                                    startTime = A_START_TIME.plusOneDay().toLocalDateTime(),
-                                    endTime = AN_END_TIME.plusOneDay().toLocalDateTime()
+                                    startTime = A_START_TIME.plusDays(1).toDateTime(A_TIMEZONE).toLocalDateTime(),
+                                    endTime = AN_END_TIME.plusDays(1).toDateTime(A_TIMEZONE).toLocalDateTime()
                                 ),
                                 anEvent(
                                     id = "5",
                                     numericId = 5,
-                                    startTime = A_START_TIME.plusOneDay().toLocalDateTime(),
-                                    endTime = AN_END_TIME.plusOneDay().toLocalDateTime()
+                                    startTime = A_START_TIME.plusDays(1).toDateTime(A_TIMEZONE).toLocalDateTime(),
+                                    endTime = AN_END_TIME.plusDays(1).toDateTime(A_TIMEZONE).toLocalDateTime()
                                 ),
                                 anEvent(
                                     id = "6",
                                     numericId = 6,
-                                    startTime = A_LATER_START_TIME.plusOneDay().toLocalDateTime(),
-                                    endTime = A_LATER_END_TIME.plusOneDay().toLocalDateTime()
+                                    startTime = A_LATER_START_TIME.plusDays(1).toDateTime(A_TIMEZONE).toLocalDateTime(),
+                                    endTime = A_LATER_END_TIME.plusDays(1).toDateTime(A_TIMEZONE).toLocalDateTime()
                                 )
                             )
                         )
@@ -185,7 +202,7 @@ class FirestoreScheduleServiceTest {
             .test()
             .assertValue(
                 aSchedule(
-                    listOf(
+                    pages = listOf(
                         aSchedulePage(
                             events = listOf(
                                 anEvent(id = "1", numericId = 1, track = Optional.absent()),
@@ -218,7 +235,7 @@ class FirestoreScheduleServiceTest {
             .test()
             .assertValue(
                 aSchedule(
-                    listOf(
+                    pages = listOf(
                         aSchedulePage(
                             events = listOf(
                                 anEvent(id = "A", numericId = 0)
@@ -246,7 +263,7 @@ class FirestoreScheduleServiceTest {
             .test()
             .assertValue(
                 aSchedule(
-                    listOf(
+                    pages = listOf(
                         aSchedulePage(
                             events = listOf(
                                 anEvent(track = Optional.absent(), numericId = 1),
@@ -275,7 +292,7 @@ class FirestoreScheduleServiceTest {
             .test()
             .assertValue(
                 aSchedule(
-                    listOf(
+                    pages = listOf(
                         aSchedulePage(
                             events = listOf(
                                 anEvent(track = Optional.absent(), numericId = 1),
@@ -302,7 +319,7 @@ class FirestoreScheduleServiceTest {
             .test()
             .assertValue(
                 aSchedule(
-                    listOf(
+                    pages = listOf(
                         aSchedulePage(events = emptyList())
                     )
                 )
@@ -326,7 +343,7 @@ class FirestoreScheduleServiceTest {
             .test()
             .assertValue(
                 aSchedule(
-                    listOf(
+                    pages = listOf(
                         aSchedulePage(
                             events = listOf(
                                 anEvent(track = Optional.of(aTrack(id = "A")), numericId = 1),
@@ -356,7 +373,7 @@ class FirestoreScheduleServiceTest {
             .test()
             .assertValue(
                 aSchedule(
-                    listOf(
+                    pages = listOf(
                         aSchedulePage(
                             events = listOf(
                                 anEvent(track = Optional.absent(), numericId = 1)
@@ -366,21 +383,4 @@ class FirestoreScheduleServiceTest {
                 )
             )
     }
-
-    private fun Date.plusOneDay(): Date = CALENDAR.apply {
-        clear()
-        time = this@plusOneDay
-        add(Calendar.DAY_OF_YEAR, 1)
-    }.time
-
-    private fun Date.dateOnly(): Date = CALENDAR.apply {
-        clear()
-        time = this@dateOnly
-        set(Calendar.HOUR, 0)
-        set(Calendar.MINUTE, 0)
-        set(Calendar.SECOND, 0)
-        set(Calendar.MILLISECOND, 0)
-    }.time
-
-    private fun Date.toLocalDateTime() = LocalDateTime(this)
 }
