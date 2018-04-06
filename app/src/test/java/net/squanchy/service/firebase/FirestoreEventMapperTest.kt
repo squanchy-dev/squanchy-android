@@ -13,6 +13,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnit
 import org.mockito.junit.MockitoRule
+import java.util.Date
 
 private const val A_VALUE = "whatever"
 private const val A_CHECKSUM = 1000L
@@ -53,7 +54,7 @@ class FirestoreEventMapperTest {
     fun `event end date should match when mapped`() {
         val date = Date(1518471471)
         val firestoreEvent = aFirestoreEvent(endTime = date)
-        val event = firestoreEvent.toEvent(checksum, timeZone)
+        val event = firestoreEvent.toEvent(checksum, A_TIMEZONE)
         assertThat(event.endTime).isEqualTo(A_DATE.toDateTime(A_TIMEZONE).toLocalDateTime())
     }
 
