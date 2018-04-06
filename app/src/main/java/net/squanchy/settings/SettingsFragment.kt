@@ -1,5 +1,6 @@
 package net.squanchy.settings
 
+import android.content.Context
 import android.os.Bundle
 import android.preference.Preference
 import android.preference.PreferenceCategory
@@ -8,13 +9,17 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.ListView
+import android.widget.TextView
 import com.google.firebase.auth.FirebaseUser
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.functions.BiFunction
 import net.squanchy.BuildConfig
 import net.squanchy.R
 import net.squanchy.analytics.Analytics
 import net.squanchy.navigation.Navigator
+import net.squanchy.remoteconfig.RemoteConfig
 import net.squanchy.signin.SignInOrigin
 import net.squanchy.signin.SignInService
 import net.squanchy.support.lang.Optional
@@ -23,9 +28,11 @@ class SettingsFragment : PreferenceFragment() {
 
     private val subscriptions = CompositeDisposable()
 
+    private lateinit var wifiManager: WifiManager
     private lateinit var signInService: SignInService
     private lateinit var navigator: Navigator
     private lateinit var analytics: Analytics
+    private lateinit var remoteConfig: RemoteConfig
 
     private lateinit var accountCategory: PreferenceCategory
     private lateinit var accountEmailPreference: Preference
@@ -51,6 +58,7 @@ class SettingsFragment : PreferenceFragment() {
             signInService = signInService()
             navigator = navigator()
             analytics = analytics()
+            remoteConfig = remoteConfig()
         }
 
         accountCategory = findPreference(getString(R.string.account_category_key)) as PreferenceCategory
@@ -73,6 +81,8 @@ class SettingsFragment : PreferenceFragment() {
             }
             true
         }
+
+        setupWifiConfigPreference()
     }
 
     private fun displayBuildVersion() {
@@ -86,6 +96,17 @@ class SettingsFragment : PreferenceFragment() {
         val debugCategoryKey = getString(R.string.debug_category_preference_key)
         val debugCategory = findPreference(debugCategoryKey)
         preferenceScreen.removePreference(debugCategory)
+    }
+
+    private fun setupWifiConfigPreference() {
+        val wifiPreference = findPreference(getString(R.string.auto_wifi_preference_key))
+
+        if (remoteConfig.wifiAutoConfigEnabledNow()) {
+            // TODO setup preference click listener
+        } else {
+            val settingsCategory = findPreference(getString(R.string.settings_category_key)) as PreferenceCategory
+            settingsCategory.removePreference(wifiPreference)
+        }
     }
 
     override fun onStart() {

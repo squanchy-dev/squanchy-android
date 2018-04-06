@@ -14,6 +14,10 @@ class RemoteConfig(
     private val cacheExpiryInSeconds: Long
         get() = if (debugMode) EXPIRY_IMMEDIATELY else EXPIRY_ONE_HOUR
 
+    fun wifiAutoConfigEnabledNow(): Boolean {
+        return firebaseRemoteConfig.getBoolean(KEY_WIFI_CONFIG_ENABLED)
+    }
+
     private fun <T> getConfigValue(action: () -> T): Single<T> {
         return fetchAndActivate(cacheExpiryInSeconds)
             .andThen(Single.fromCallable { action() })
@@ -44,5 +48,6 @@ class RemoteConfig(
 
         private val EXPIRY_IMMEDIATELY = TimeUnit.HOURS.toSeconds(0)
         private val EXPIRY_ONE_HOUR = TimeUnit.HOURS.toSeconds(1)
+        private val KEY_WIFI_CONFIG_ENABLED = "wifi_config_enabled"
     }
 }
