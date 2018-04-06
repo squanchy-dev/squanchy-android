@@ -15,7 +15,7 @@ Tu eres, ¡oh Banana na na Joe!
 Un gran marinero con puños de acero""",
     photoUrl: Optional<String> = Optional.of("https://i.ytimg.com/vi/-1HB26ko2H8/hqdefault.jpg"),
     companyName: Optional<String> = Optional.of("Amantido"),
-    companyUrl: Optional<String> = Optional.of<String>("http://banana.joe"),
+    companyUrl: Optional<String> = Optional.of("http://banana.joe"),
     personalUrl: Optional<String> = Optional.of("https://en.wikipedia.org/wiki/Banana_Joe_(film)"),
     twitterUsername: Optional<String> = Optional.of("@bananaJoe1982")
 ) = Speaker(

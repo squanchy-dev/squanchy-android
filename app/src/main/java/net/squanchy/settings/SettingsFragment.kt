@@ -8,7 +8,6 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.ListView
-import com.google.firebase.auth.FirebaseUser
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import net.squanchy.BuildConfig
@@ -16,6 +15,7 @@ import net.squanchy.R
 import net.squanchy.analytics.Analytics
 import net.squanchy.navigation.Navigator
 import net.squanchy.signin.SignInOrigin
+import net.squanchy.service.repository.User
 import net.squanchy.signin.SignInService
 import net.squanchy.support.lang.Optional
 
@@ -96,7 +96,7 @@ class SettingsFragment : PreferenceFragment() {
         subscriptions.add(
             signInService.currentUser()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { onUserChanged(it) }
+                .subscribe(::onUserChanged)
         )
     }
 
@@ -106,7 +106,7 @@ class SettingsFragment : PreferenceFragment() {
         list.dividerHeight = 0
     }
 
-    private fun onUserChanged(user: Optional<FirebaseUser>) {
+    private fun onUserChanged(user: Optional<User>) {
         if (user.isPresent && !user.get().isAnonymous) {
             onSignedInWith(user.get())
         } else {
@@ -114,9 +114,9 @@ class SettingsFragment : PreferenceFragment() {
         }
     }
 
-    private fun onSignedInWith(firebaseUser: FirebaseUser) {
+    private fun onSignedInWith(user: User) {
         accountCategory.addPreference(accountEmailPreference)
-        accountEmailPreference.title = firebaseUser.email
+        accountEmailPreference.title = user.email
 
         accountSignInSignOutPreference.setTitle(R.string.sign_out_title)
         accountSignInSignOutPreference.setOnPreferenceClickListener {

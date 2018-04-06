@@ -9,12 +9,12 @@ import net.squanchy.schedule.domain.view.Schedule
 import net.squanchy.schedule.domain.view.SchedulePage
 import net.squanchy.schedule.domain.view.Track
 import net.squanchy.schedule.tracksfilter.TracksFilter
-import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.firebase.FirestoreDbService
 import net.squanchy.service.firebase.model.schedule.FirestoreEvent
 import net.squanchy.service.firebase.model.schedule.FirestoreFavorite
 import net.squanchy.service.firebase.model.schedule.FirestoreSchedulePage
 import net.squanchy.service.firebase.toEvent
+import net.squanchy.service.repository.AuthService
 import net.squanchy.support.checksum.Checksum
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDate
@@ -25,7 +25,7 @@ interface ScheduleService {
 }
 
 class FirestoreScheduleService(
-    private val authService: FirebaseAuthService,
+    private val authService: AuthService,
     private val dbService: FirestoreDbService,
     private val tracksFilter: TracksFilter,
     private val checksum: Checksum

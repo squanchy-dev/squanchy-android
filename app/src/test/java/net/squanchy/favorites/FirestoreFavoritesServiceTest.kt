@@ -1,6 +1,5 @@
 package net.squanchy.favorites
 
-import com.google.firebase.auth.FirebaseUser
 import io.reactivex.Observable
 import net.squanchy.schedule.ScheduleService
 import net.squanchy.schedule.domain.view.aDay
@@ -8,6 +7,7 @@ import net.squanchy.schedule.domain.view.aSchedule
 import net.squanchy.schedule.domain.view.aSchedulePage
 import net.squanchy.schedule.domain.view.anEvent
 import net.squanchy.service.firebase.FirebaseAuthService
+import net.squanchy.service.repository.User
 import net.squanchy.support.lang.Optional
 import org.junit.Before
 import org.junit.Rule
@@ -101,7 +101,7 @@ class FirestoreFavoritesServiceTest {
 
     @Test
     fun `should return true when the user is signed in`() {
-        `when`(authService.currentUser()).thenReturn(Observable.just(Optional.of(mock(FirebaseUser::class.java))))
+        `when`(authService.currentUser()).thenReturn(Observable.just(Optional.of(mock(User::class.java))))
 
         favoritesService.currentUserIsSignedIn()
             .test()

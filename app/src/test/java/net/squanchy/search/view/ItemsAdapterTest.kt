@@ -3,8 +3,7 @@ package net.squanchy.search.view
 import com.google.common.truth.Truth.assertThat
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.anEvent
-import net.squanchy.search.SearchResults
-import net.squanchy.search.view.SearchAdapter.ViewTypeId
+import net.squanchy.search.SearchResult
 import net.squanchy.speaker.domain.view.Speaker
 import net.squanchy.speaker.domain.view.aSpeaker
 import org.junit.Rule
@@ -29,21 +28,21 @@ class ItemsAdapterTest {
         }
 
         @Test
-        fun givenSearchResultsWithOnlyEvents_whenGettingTotalItemsCount_thenReturnsTheNumberOfSpeakersPlusOne() {
+        fun givenSearchResultsWithOnlyEvents_whenGettingTotalItemsCount_thenReturnsTheNumberOfEventsPlusTwp() {
             givenSearchResultsWith(ItemsAdapterTest.BaseTest.ANY_THREE_EVENTS, ItemsAdapterTest.BaseTest.NO_SPEAKERS)
 
             val totalItemsCount = itemsAdapter.totalItemsCount()
 
-            assertThat(totalItemsCount).isEqualTo(4) // 4 = 1 header + 3 events
+            assertThat(totalItemsCount).isEqualTo(5) // 5 = 1 header + 3 events + Algolia logo
         }
 
         @Test
-        fun givenSearchResultsWithOnlySpeakers_whenGettingTotalItemsCount_thenReturnsTheNumberOfSpeakersPlusOne() {
+        fun givenSearchResultsWithOnlySpeakers_whenGettingTotalItemsCount_thenReturnsTheNumberOfSpeakersPlusTwo() {
             givenSearchResultsWith(ItemsAdapterTest.BaseTest.NO_EVENTS, ItemsAdapterTest.BaseTest.ANY_TWO_SPEAKERS)
 
             val totalItemsCount = itemsAdapter.totalItemsCount()
 
-            assertThat(totalItemsCount).isEqualTo(3) // 3 = 1 header + 2 speakers
+            assertThat(totalItemsCount).isEqualTo(4) // 4 = 1 header + 2 speakers + Algolia logo
         }
 
         @Test
@@ -52,7 +51,7 @@ class ItemsAdapterTest {
 
             val totalItemsCount = itemsAdapter.totalItemsCount()
 
-            assertThat(totalItemsCount).isEqualTo(7) // 7 = 1 header + 3 events + 1 header + 2 speakers
+            assertThat(totalItemsCount).isEqualTo(8) // 8 = 2 header + 3 events + 2 speakers + 1 logo
         }
     }
 
@@ -79,7 +78,8 @@ class ItemsAdapterTest {
             givenSearchResultsWith(ItemsAdapterTest.BaseTest.ANY_THREE_EVENTS, ItemsAdapterTest.BaseTest.ANY_TWO_SPEAKERS)
             thrown.expect(IndexOutOfBoundsException::class.java)
 
-            itemsAdapter.viewTypeAtAbsolutePosition(7) // 7 = (1 header + 3 events + 1 header + 2 speakers + 1 off-by-one) - 1 [because zero-based]
+            itemsAdapter.viewTypeAtAbsolutePosition(8)
+            // 8 = (1 header + 3 events + 1 header + 2 speakers + logo + 1 off-by-one) - 1 [because zero-based]
         }
 
         @Test
@@ -88,7 +88,7 @@ class ItemsAdapterTest {
 
             val viewType = itemsAdapter.viewTypeAtAbsolutePosition(0) // 0 = (1 header) - 1 [because zero-based]
 
-            assertThat(viewType).isEqualTo(ViewTypeId.HEADER)
+            assertThat(viewType).isEqualTo(SearchAdapter.HEADER)
         }
 
         @Test
@@ -97,7 +97,7 @@ class ItemsAdapterTest {
 
             val viewType = itemsAdapter.viewTypeAtAbsolutePosition(1) // 1 = (1 header + 1 event) - 1 [because zero-based]
 
-            assertThat(viewType).isEqualTo(ViewTypeId.EVENT)
+            assertThat(viewType).isEqualTo(SearchAdapter.EVENT)
         }
 
         @Test
@@ -106,7 +106,7 @@ class ItemsAdapterTest {
 
             val viewType = itemsAdapter.viewTypeAtAbsolutePosition(0) // 0 = (1 header) - 1 [because zero-based]
 
-            assertThat(viewType).isEqualTo(ViewTypeId.HEADER)
+            assertThat(viewType).isEqualTo(SearchAdapter.HEADER)
         }
 
         @Test
@@ -115,7 +115,7 @@ class ItemsAdapterTest {
 
             val viewType = itemsAdapter.viewTypeAtAbsolutePosition(1) // 1 = (1 header + 1 speaker) - 1 [because zero-based]
 
-            assertThat(viewType).isEqualTo(ViewTypeId.SPEAKER)
+            assertThat(viewType).isEqualTo(SearchAdapter.SPEAKER)
         }
 
         @Test
@@ -124,7 +124,7 @@ class ItemsAdapterTest {
 
             val viewType = itemsAdapter.viewTypeAtAbsolutePosition(0) // 0 = (1 header) - 1 [because zero-based]
 
-            assertThat(viewType).isEqualTo(ViewTypeId.HEADER)
+            assertThat(viewType).isEqualTo(SearchAdapter.HEADER)
         }
 
         @Test
@@ -133,7 +133,7 @@ class ItemsAdapterTest {
 
             val viewType = itemsAdapter.viewTypeAtAbsolutePosition(1) // 1 = (1 header + 1 event) - 1 [because zero-based]
 
-            assertThat(viewType).isEqualTo(ViewTypeId.EVENT)
+            assertThat(viewType).isEqualTo(SearchAdapter.EVENT)
         }
 
         @Test
@@ -142,7 +142,7 @@ class ItemsAdapterTest {
 
             val viewType = itemsAdapter.viewTypeAtAbsolutePosition(4) // 4 = (1 header + 3 events + 1 header) - 1 [because zero-based]
 
-            assertThat(viewType).isEqualTo(ViewTypeId.HEADER)
+            assertThat(viewType).isEqualTo(SearchAdapter.HEADER)
         }
 
         @Test
@@ -151,7 +151,37 @@ class ItemsAdapterTest {
 
             val viewType = itemsAdapter.viewTypeAtAbsolutePosition(5) // 5 = (1 header + 3 events + 1 header + 1 speaker) - 1 [because zero-based]
 
-            assertThat(viewType).isEqualTo(ViewTypeId.SPEAKER)
+            assertThat(viewType).isEqualTo(SearchAdapter.SPEAKER)
+        }
+
+        @Test
+        fun givenSearchResultsWithEventsAndSpeakers_whenGettingLastViewType_thenReturnsAlgoliaLogo() {
+            givenSearchResultsWith(ItemsAdapterTest.BaseTest.ANY_THREE_EVENTS, ItemsAdapterTest.BaseTest.ANY_TWO_SPEAKERS)
+
+            val viewType = itemsAdapter.viewTypeAtAbsolutePosition(7)
+            // 7 = (2 header + 3 events + 1 header + 1 logo + 1 speaker) - 1 [because zero-based]
+
+            assertThat(viewType).isEqualTo(SearchAdapter.ALGOLIA_LOGO)
+        }
+
+        @Test
+        fun givenSearchResultsWithOnlyEvents_whenGettingLastViewType_thenReturnsAlgoliaLogo() {
+            givenSearchResultsWith(ItemsAdapterTest.BaseTest.ANY_THREE_EVENTS, ItemsAdapterTest.BaseTest.NO_SPEAKERS)
+
+            val viewType = itemsAdapter.viewTypeAtAbsolutePosition(4)
+            // 4 = (1 header + 3 events + 1 logo ) - 1 [because zero-based]
+
+            assertThat(viewType).isEqualTo(SearchAdapter.ALGOLIA_LOGO)
+        }
+
+        @Test
+        fun givenSearchResultsWithOnlySpeakers_whenGettingLastViewType_thenReturnsAlgoliaLogo() {
+            givenSearchResultsWith(ItemsAdapterTest.BaseTest.NO_EVENTS, ItemsAdapterTest.BaseTest.ANY_TWO_SPEAKERS)
+
+            val viewType = itemsAdapter.viewTypeAtAbsolutePosition(3)
+            // 4 = (1 header + 2 speakers + 1 logo ) - 1 [because zero-based]
+
+            assertThat(viewType).isEqualTo(SearchAdapter.ALGOLIA_LOGO)
         }
     }
 
@@ -178,7 +208,8 @@ class ItemsAdapterTest {
             givenSearchResultsWith(ItemsAdapterTest.BaseTest.ANY_THREE_EVENTS, ItemsAdapterTest.BaseTest.ANY_TWO_SPEAKERS)
             thrown.expect(IndexOutOfBoundsException::class.java)
 
-            itemsAdapter.itemIdAtAbsolutePosition(7) // 7 = (1 header + 3 events + 1 header + 2 speakers + 1 off-by-one) - 1 [because zero-based]
+            itemsAdapter.itemIdAtAbsolutePosition(8)
+            // 8 = (1 header + 3 events + 1 header + 2 speakers + 1 logo + 1 off-by-one) - 1 [because zero-based]
         }
 
         @Test
@@ -224,6 +255,16 @@ class ItemsAdapterTest {
             val itemId = itemsAdapter.itemIdAtAbsolutePosition(0) // 0 = (1 header) - 1 [because zero-based]
 
             assertThat(itemId).isEqualTo(-100)
+        }
+
+        @Test
+        fun givenSearchResultsWithEventsAndSpeakers_whenGettingItemIdAtLastPosition_thenReturnsAlgoliaLogoId() {
+            givenSearchResultsWith(ItemsAdapterTest.BaseTest.ANY_THREE_EVENTS, ItemsAdapterTest.BaseTest.ANY_TWO_SPEAKERS)
+
+            val itemId = itemsAdapter.itemIdAtAbsolutePosition(7)
+            // 7 = (2 header + 3 events + 2 speakers + 1 logo) - 1 [because zero-based]
+
+            assertThat(itemId).isEqualTo(-102)
         }
 
         @Test
@@ -544,7 +585,7 @@ class ItemsAdapterTest {
         }
 
         internal fun givenSearchResultsWith(events: List<Event>, speakers: List<Speaker>) {
-            val searchResults = SearchResults.create(events, speakers)
+            val searchResults = SearchResult.Success(events, speakers)
             itemsAdapter = ItemsAdapter(searchResults)
         }
 
