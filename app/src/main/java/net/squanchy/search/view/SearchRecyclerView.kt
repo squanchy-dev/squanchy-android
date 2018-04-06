@@ -9,6 +9,7 @@ import android.util.AttributeSet
 import android.view.View
 
 import net.squanchy.R
+import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter
 import net.squanchy.search.SearchResult
 import net.squanchy.speaker.domain.view.Speaker
@@ -55,7 +56,9 @@ class SearchRecyclerView @JvmOverloads constructor(
         layoutManager.spanSizeLookup = spanSizeLookup
     }
 
-    interface OnSearchResultClickListener : ScheduleViewPagerAdapter.OnEventClickedListener {
+    interface OnSearchResultClickListener {
+
+        fun onEventClicked(event: Event)
 
         fun onSpeakerClicked(speaker: Speaker)
     }
