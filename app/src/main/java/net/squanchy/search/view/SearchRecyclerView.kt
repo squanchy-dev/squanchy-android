@@ -10,7 +10,6 @@ import android.view.View
 
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Event
-import net.squanchy.schedule.view.ScheduleViewPagerAdapter
 import net.squanchy.search.SearchResult
 import net.squanchy.speaker.domain.view.Speaker
 import net.squanchy.support.widget.CardLayout
