@@ -1,6 +1,8 @@
 package net.squanchy.settings
 
 import android.content.Context
+import android.net.wifi.WifiConfiguration
+import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.preference.Preference
 import android.preference.PreferenceCategory
@@ -9,12 +11,9 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.ListView
-import android.widget.TextView
 import com.google.firebase.auth.FirebaseUser
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.functions.BiFunction
 import net.squanchy.BuildConfig
 import net.squanchy.R
 import net.squanchy.analytics.Analytics
@@ -61,6 +60,8 @@ class SettingsFragment : PreferenceFragment() {
             remoteConfig = remoteConfig()
         }
 
+        wifiManager = activity.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+
         accountCategory = findPreference(getString(R.string.account_category_key)) as PreferenceCategory
         accountEmailPreference = findPreference(getString(R.string.account_email_preference_key))
         accountCategory.removePreference(accountEmailPreference)
@@ -102,10 +103,28 @@ class SettingsFragment : PreferenceFragment() {
         val wifiPreference = findPreference(getString(R.string.auto_wifi_preference_key))
 
         if (remoteConfig.wifiAutoConfigEnabledNow()) {
-            // TODO setup preference click listener
+            wifiPreference.setOnPreferenceClickListener { setupWifi(); true }
         } else {
             val settingsCategory = findPreference(getString(R.string.settings_category_key)) as PreferenceCategory
             settingsCategory.removePreference(wifiPreference)
+        }
+    }
+
+    private fun setupWifi() {
+        val ssid = remoteConfig.wifiSsid()
+        val password = remoteConfig.wifiPassword()
+        val wifiConfig = WifiConfiguration()
+        wifiConfig.SSID = "\"$ssid\""
+        wifiConfig.preSharedKey = "\"$password\""
+        val netId = wifiManager.addNetwork(wifiConfig)
+        wifiManager.disconnect()
+        val networkEnabled = wifiManager.enableNetwork(netId, true)
+        wifiManager.reconnect()
+
+        if (networkEnabled) {
+            Snackbar.make(viewOrThrow, R.string.settings_message_wifi_success, Snackbar.LENGTH_INDEFINITE).show()
+        } else {
+            // TODO: display the error in a better way
         }
     }
 
