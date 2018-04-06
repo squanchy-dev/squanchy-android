@@ -1,8 +1,8 @@
 package net.squanchy.service.firebase
 
+import com.google.common.truth.Truth.assertThat
 import net.squanchy.A_DATE
 import net.squanchy.A_TIMEZONE
-import com.google.common.truth.Truth.assertThat
 import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.support.checksum.Checksum
@@ -13,7 +13,6 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnit
 import org.mockito.junit.MockitoRule
-import java.util.Date
 
 private const val A_VALUE = "whatever"
 private const val A_CHECKSUM = 1000L
@@ -44,16 +43,14 @@ class FirestoreEventMapperTest {
 
     @Test
     fun `event start date should match when mapped`() {
-        val date = Date(1518471471)
-        val firestoreEvent = aFirestoreEvent(startTime = date)
+        val firestoreEvent = aFirestoreEvent(startTime = A_DATE.toDate())
         val event = firestoreEvent.toEvent(checksum, A_TIMEZONE)
         assertThat(event.startTime).isEqualTo(A_DATE.toDateTime(A_TIMEZONE).toLocalDateTime())
     }
 
     @Test
     fun `event end date should match when mapped`() {
-        val date = Date(1518471471)
-        val firestoreEvent = aFirestoreEvent(endTime = date)
+        val firestoreEvent = aFirestoreEvent(endTime = A_DATE.toDate())
         val event = firestoreEvent.toEvent(checksum, A_TIMEZONE)
         assertThat(event.endTime).isEqualTo(A_DATE.toDateTime(A_TIMEZONE).toLocalDateTime())
     }
@@ -120,7 +117,7 @@ class FirestoreEventMapperTest {
     fun `event description should match when mapped`() {
         val firestoreEvent = aFirestoreEvent(description = A_VALUE)
         val event = firestoreEvent.toEvent(checksum, A_TIMEZONE)
-        assertThat(A_VALUE).isEqualTo(event.description.get())
+        assertThat(event.description.get()).isEqualTo(A_VALUE)
     }
 
     @Test
