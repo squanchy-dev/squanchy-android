@@ -22,10 +22,10 @@ ext {
         app : [
             algolia            : 'com.algolia:algoliasearch-android:3.14.1',
             androidKtx         : 'androidx.core:core-ktx:0.2',
+            arrowCore          : 'io.arrow-kt:arrow-core:0.6.1',
             crashlytics        : 'com.crashlytics.sdk.android:crashlytics:2.9.1',
             dagger             : "com.google.dagger:dagger:${daggerVersion}",
             daggerCompiler     : "com.google.dagger:dagger-compiler:${daggerVersion}",
-            findbugsAnnotations: "com.google.code.findbugs:annotations:3.0.1u2",
             firebase           : "com.google.firebase:firebase-core:${playServicesVersion}",
             firebaseAuth       : "com.google.firebase:firebase-auth:${playServicesVersion}",
             firebaseConfig     : "com.google.firebase:firebase-config:${playServicesVersion}",

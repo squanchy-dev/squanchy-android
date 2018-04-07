@@ -1,5 +1,6 @@
 package net.squanchy.schedule
 
+import arrow.core.Option
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
@@ -20,7 +21,6 @@ import net.squanchy.service.firebase.aFirestoreSpeaker
 import net.squanchy.service.firebase.aFirestoreTrack
 import net.squanchy.service.firebase.model.schedule.FirestoreFavorite
 import net.squanchy.support.checksum.Checksum
-import net.squanchy.support.lang.Optional
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -205,8 +205,8 @@ class FirestoreScheduleServiceTest {
                     pages = listOf(
                         aSchedulePage(
                             events = listOf(
-                                anEvent(id = "1", numericId = 1, track = Optional.absent()),
-                                anEvent(id = "2", numericId = 2, track = Optional.absent())
+                                anEvent(id = "1", numericId = 1, track = Option.empty()),
+                                anEvent(id = "2", numericId = 2, track = Option.empty())
                             )
                         )
                     )
@@ -266,8 +266,8 @@ class FirestoreScheduleServiceTest {
                     pages = listOf(
                         aSchedulePage(
                             events = listOf(
-                                anEvent(track = Optional.absent(), numericId = 1),
-                                anEvent(track = Optional.absent(), numericId = 1)
+                                anEvent(track = Option.empty(), numericId = 1),
+                                anEvent(track = Option.empty(), numericId = 1)
                             )
                         )
                     )
@@ -295,8 +295,8 @@ class FirestoreScheduleServiceTest {
                     pages = listOf(
                         aSchedulePage(
                             events = listOf(
-                                anEvent(track = Optional.absent(), numericId = 1),
-                                anEvent(track = Optional.absent(), numericId = 1)
+                                anEvent(track = Option.empty(), numericId = 1),
+                                anEvent(track = Option.empty(), numericId = 1)
                             )
                         )
                     )
@@ -346,8 +346,8 @@ class FirestoreScheduleServiceTest {
                     pages = listOf(
                         aSchedulePage(
                             events = listOf(
-                                anEvent(track = Optional.of(aTrack(id = "A")), numericId = 1),
-                                anEvent(track = Optional.of(aTrack(id = "C")), numericId = 1)
+                                anEvent(track = Option(aTrack(id = "A")), numericId = 1),
+                                anEvent(track = Option(aTrack(id = "C")), numericId = 1)
                             )
                         )
                     )
@@ -376,7 +376,7 @@ class FirestoreScheduleServiceTest {
                     pages = listOf(
                         aSchedulePage(
                             events = listOf(
-                                anEvent(track = Optional.absent(), numericId = 1)
+                                anEvent(track = Option.empty(), numericId = 1)
                             )
                         )
                     )

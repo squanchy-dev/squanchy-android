@@ -5,6 +5,7 @@ import net.squanchy.favorites.view.FavoritesItem
 import net.squanchy.schedule.ScheduleService
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.service.repository.AuthService
+import net.squanchy.support.lang.or
 
 interface FavoritesService {
 

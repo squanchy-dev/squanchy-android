@@ -19,7 +19,7 @@ jobs:
 
       # Restore cached dependencies (if any)
       - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
 
       # Prepare the container for the build
       - run:
@@ -47,7 +47,7 @@ jobs:
 
             # Gradle dependencies
             - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
 
       # Collect static analysis reports as build artifacts
       - store_artifacts:

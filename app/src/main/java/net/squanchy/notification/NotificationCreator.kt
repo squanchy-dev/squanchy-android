@@ -19,6 +19,8 @@ import net.squanchy.home.HomeActivity
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.speaker.domain.view.Speaker
 import net.squanchy.support.android
+import net.squanchy.support.lang.getOrThrow
+import net.squanchy.support.lang.or
 
 class NotificationCreator(private val context: Context) {
 
@@ -120,7 +122,7 @@ class NotificationCreator(private val context: Context) {
     }
 
     private fun getPlaceName(event: Event): String? {
-        return if (event.place.isPresent) event.place.get().name else null
+        return event.place.orNull()?.name
     }
 
     private fun getTrackColor(event: Event): Int {
@@ -172,11 +174,11 @@ class NotificationCreator(private val context: Context) {
             .setBigContentTitle(bigContentTitle)
 
         for (event in events) {
-            if (event.place.isPresent) {
+            if (event.place.isDefined()) {
                 richNotification.addLine(
                     context.getString(
                         R.string.room_event_notification,
-                        event.place.get().name,
+                        event.place.getOrThrow().name,
                         event.title
                     )
                 )
@@ -189,8 +191,7 @@ class NotificationCreator(private val context: Context) {
     }
 
     private fun createSummaryTitle(talksCount: Int): String {
-        val quantityString = context.resources
-            .getQuantityString(R.plurals.event_notification_count_starting, talksCount)
+        val quantityString = context.resources.getQuantityString(R.plurals.event_notification_count_starting, talksCount)
         return String.format(quantityString, talksCount)
     }
 

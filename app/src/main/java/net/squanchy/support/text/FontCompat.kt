@@ -1,6 +1,6 @@
 @file:JvmName("FontCompat")
 
-package net.squanchy.support.font
+package net.squanchy.support.text
 
 import android.content.Context
 import android.content.res.TypedArray

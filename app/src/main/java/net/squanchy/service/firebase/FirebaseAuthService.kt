@@ -1,5 +1,6 @@
 package net.squanchy.service.firebase
 
+import arrow.core.Option
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
@@ -11,8 +12,8 @@ import io.reactivex.CompletableSource
 import io.reactivex.Observable
 import net.squanchy.service.repository.AuthService
 import net.squanchy.service.repository.User
-import net.squanchy.support.lang.Optional
-import net.squanchy.support.lang.optional
+import net.squanchy.support.lang.getOrThrow
+import net.squanchy.support.lang.option
 
 class FirebaseAuthService(private val auth: FirebaseAuth) : AuthService {
 
@@ -21,8 +22,8 @@ class FirebaseAuthService(private val auth: FirebaseAuth) : AuthService {
             .firstOrError()
             .flatMapCompletable {
                 val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-                if (it.isPresent) {
-                    linkAccountWithGoogleCredential(it.get(), credential)
+                return@flatMapCompletable if (it.isDefined()) {
+                    linkAccountWithGoogleCredential(it.getOrThrow(), credential)
                 } else {
                     signInWithGoogleCredential(credential)
                 }
@@ -72,13 +73,13 @@ class FirebaseAuthService(private val auth: FirebaseAuth) : AuthService {
 
     private fun ifUserSignedIn(): Observable<FirebaseUser> {
         return currentFirebaseUser()
-            .filter { it.isPresent }
-            .map { it.get() }
+            .filter { it.isDefined() }
+            .map { it.getOrThrow() }
     }
 
-    private fun currentFirebaseUser(): Observable<Optional<FirebaseUser>> {
+    private fun currentFirebaseUser(): Observable<Option<FirebaseUser>> {
         return Observable.create { e ->
-            val listener = { firebaseAuth: FirebaseAuth -> e.onNext(firebaseAuth.currentUser.optional()) }
+            val listener = { firebaseAuth: FirebaseAuth -> e.onNext(firebaseAuth.currentUser.option()) }
 
             auth.addAuthStateListener(listener)
 
@@ -86,7 +87,7 @@ class FirebaseAuthService(private val auth: FirebaseAuth) : AuthService {
         }
     }
 
-    override fun currentUser(): Observable<Optional<User>> {
+    override fun currentUser(): Observable<Option<User>> {
         return currentFirebaseUser().map { it.map { it.toUser() } }
     }
 

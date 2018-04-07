@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import arrow.core.Option
 import net.squanchy.R
 import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.notification.NotificationCreator
@@ -15,7 +16,6 @@ import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Place
 import net.squanchy.schedule.domain.view.Track
 import net.squanchy.speaker.domain.view.Speaker
-import net.squanchy.support.lang.Optional
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDateTime
 import java.util.ArrayList
@@ -72,18 +72,18 @@ class DebugActivity : AppCompatActivity() {
             endTime = end,
             title = "A very interesting talk",
             place = createPlace(),
-            experienceLevel = Optional.of(ExperienceLevel.ADVANCED),
+            experienceLevel = Option(ExperienceLevel.ADVANCED),
             speakers = createTalkSpeakers(),
             type = Event.Type.TALK,
             favorited = true,
-            description = Optional.absent(),
-            track = Optional.of(createTrack()),
+            description = Option.empty(),
+            track = Option(createTrack()),
             timeZone = DateTimeZone.forID("Europe/Rome")
         )
     }
 
-    private fun createPlace(): Optional<Place> = Optional.of(
-        Place("1", "That room over there", Optional.absent())
+    private fun createPlace(): Option<Place> = Option(
+        Place("1", "That room over there", Option.empty())
     )
 
     private fun createTalkSpeakers(): List<Speaker> {
@@ -94,11 +94,11 @@ class DebugActivity : AppCompatActivity() {
                 numericId = 101L,
                 name = "Ajeje Brazorf",
                 bio = "An Android dev",
-                companyName = Optional.absent(),
-                companyUrl = Optional.absent(),
-                personalUrl = Optional.absent(),
-                photoUrl = Optional.of("https://yt3.ggpht.com/-d35Rq8vqvmE/AAAAAAAAAAAA/zy1VyiRTNec/s900-c-k-no-mo-rj-c0xffffff/photo.jpg"),
-                twitterUsername = Optional.absent()
+                companyName = Option.empty(),
+                companyUrl = Option.empty(),
+                personalUrl = Option.empty(),
+                photoUrl = Option("https://yt3.ggpht.com/-d35Rq8vqvmE/AAAAAAAAAAAA/zy1VyiRTNec/s900-c-k-no-mo-rj-c0xffffff/photo.jpg"),
+                twitterUsername = Option.empty()
             )
         )
         return speakers
@@ -108,9 +108,9 @@ class DebugActivity : AppCompatActivity() {
         "0",
         0,
         "UI",
-        Optional.of(generateColor()),
-        Optional.of(generateColor()),
-        Optional.of("gs://droidcon-italy-2017.appspot.com/tracks/0.webp")
+        Option(generateColor()),
+        Option(generateColor()),
+        Option("gs://droidcon-italy-2017.appspot.com/tracks/0.webp")
     )
 
     private fun generateColor(): String {

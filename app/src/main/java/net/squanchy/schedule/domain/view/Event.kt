@@ -1,8 +1,8 @@
 package net.squanchy.schedule.domain.view
 
+import arrow.core.Option
 import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.speaker.domain.view.Speaker
-import net.squanchy.support.lang.Optional
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDateTime
 
@@ -13,13 +13,13 @@ data class Event(
     val startTime: LocalDateTime,
     val endTime: LocalDateTime,
     val title: String,
-    val place: Optional<Place>,
-    val track: Optional<Track>,
+    val place: Option<Place>,
+    val track: Option<Track>,
     val speakers: List<Speaker>,
-    val experienceLevel: Optional<ExperienceLevel>,
+    val experienceLevel: Option<ExperienceLevel>,
     val type: Type,
     val favorited: Boolean,
-    val description: Optional<String>,
+    val description: Option<String>,
     val timeZone: DateTimeZone
 ) {
 

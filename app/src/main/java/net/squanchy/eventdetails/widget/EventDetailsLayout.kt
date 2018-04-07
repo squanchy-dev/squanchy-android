@@ -1,13 +1,10 @@
 package net.squanchy.eventdetails.widget
 
-import android.annotation.TargetApi
 import android.content.Context
 import android.content.res.Resources
-import android.os.Build
 import android.support.annotation.AttrRes
 import android.support.annotation.ColorInt
 import android.support.v4.content.ContextCompat
-import android.text.Html
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
@@ -15,12 +12,14 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
 import android.widget.LinearLayout
+import arrow.core.Option
 import kotlinx.android.synthetic.main.merge_event_details_layout.view.*
 import net.squanchy.R
 import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Place
-import net.squanchy.support.lang.Optional
+import net.squanchy.support.lang.getOrThrow
+import net.squanchy.support.text.parseHtml
 import org.joda.time.format.DateTimeFormat
 
 // TODO flatten this layout as a ConstraintLayout
@@ -58,9 +57,9 @@ class EventDetailsLayout @JvmOverloads constructor(
     }
 
     private fun updateWhere(event: Event) {
-        if (event.place.isPresent) {
+        if (event.place.isDefined()) {
             whereContainer.visibility = View.VISIBLE
-            whereTextView.text = placeTextFrom(event.place.get())
+            whereTextView.text = placeTextFrom(event.place.getOrThrow())
         } else {
             whereContainer.visibility = View.GONE
         }
@@ -68,8 +67,8 @@ class EventDetailsLayout @JvmOverloads constructor(
 
     private fun placeTextFrom(place: Place): CharSequence {
         val builder = SpannableStringBuilder(place.name)
-        if (place.floor.isPresent) {
-            val floorLabel = place.floor.get()
+        if (place.floor.isDefined()) {
+            val floorLabel = place.floor.getOrThrow()
             builder.append("   ")
                 .append(floorLabel)
                 .setSpan(
@@ -82,11 +81,11 @@ class EventDetailsLayout @JvmOverloads constructor(
         return builder
     }
 
-    private fun updateLevel(level: Optional<ExperienceLevel>) {
-        if (level.isPresent) {
+    private fun updateLevel(level: Option<ExperienceLevel>) {
+        if (level.isDefined()) {
             levelContainer.visibility = View.VISIBLE
 
-            val experienceLevel = level.get()
+            val experienceLevel = level.getOrThrow()
             levelTextView.setText(experienceLevel.labelStringResId)
             tintCompoundDrawableEnd(experienceLevel)
         } else {
@@ -112,25 +111,14 @@ class EventDetailsLayout @JvmOverloads constructor(
         return typedValue.data
     }
 
-    private fun updateDescription(description: Optional<String>) {
-        if (description.isPresent) {
+    private fun updateDescription(description: Option<String>) {
+        if (description.isDefined()) {
             descriptionHeader.visibility = View.VISIBLE
             descriptionTextView.visibility = View.VISIBLE
-            descriptionTextView.text = parseHtml(description.get())
+            descriptionTextView.text = parseHtml(description.getOrThrow())
         } else {
             descriptionHeader.visibility = View.GONE
             descriptionTextView.visibility = View.GONE
-        }
-    }
-
-    @TargetApi(Build.VERSION_CODES.N) // The older fromHtml() is only called pre-24
-    private fun parseHtml(description: String): Spanned {
-        // TODO handle this properly
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY)
-        } else {
-            @Suppress("DEPRECATION") // This is a "compat" method call, we only use this on pre-N
-            Html.fromHtml(description)
         }
     }
 

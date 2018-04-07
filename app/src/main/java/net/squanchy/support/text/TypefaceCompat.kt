@@ -1,6 +1,6 @@
 @file:JvmName("TypefaceCompat")
 
-package net.squanchy.support.font
+package net.squanchy.support.text
 
 import android.graphics.Typeface
 import android.text.Spannable
