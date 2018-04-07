@@ -6,7 +6,6 @@ import android.support.design.widget.Snackbar
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import arrow.core.None
 import arrow.core.Option
 import net.squanchy.R
 import net.squanchy.eventdetails.domain.view.ExperienceLevel
@@ -77,7 +76,7 @@ class DebugActivity : AppCompatActivity() {
             speakers = createTalkSpeakers(),
             type = Event.Type.TALK,
             favorited = true,
-            description = None,
+            description = Option.empty(),
             track = Option(createTrack()),
             timeZone = DateTimeZone.forID("Europe/Rome")
         )
@@ -95,11 +94,11 @@ class DebugActivity : AppCompatActivity() {
                 numericId = 101L,
                 name = "Ajeje Brazorf",
                 bio = "An Android dev",
-                companyName = None,
-                companyUrl = None,
-                personalUrl = None,
+                companyName = Option.empty(),
+                companyUrl = Option.empty(),
+                personalUrl = Option.empty(),
                 photoUrl = Option("https://yt3.ggpht.com/-d35Rq8vqvmE/AAAAAAAAAAAA/zy1VyiRTNec/s900-c-k-no-mo-rj-c0xffffff/photo.jpg"),
-                twitterUsername = None
+                twitterUsername = Option.empty()
             )
         )
         return speakers

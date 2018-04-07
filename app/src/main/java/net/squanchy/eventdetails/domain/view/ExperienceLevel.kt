@@ -2,7 +2,6 @@ package net.squanchy.eventdetails.domain.view
 
 import android.support.annotation.ColorRes
 import android.support.annotation.StringRes
-import arrow.core.None
 import arrow.core.Option
 import net.squanchy.R
 import timber.log.Timber
@@ -25,9 +24,9 @@ enum class ExperienceLevel(
                     Option(fromRawLevel(it))
                 } catch (e: IllegalArgumentException) {
                     Timber.d(e)
-                    None
+                    null
                 }
-            } ?: None
+            } ?: Option.empty()
 
         private fun fromRawLevel(rawLevel: String) =
             when (rawLevel.toLowerCase(Locale.US)) {

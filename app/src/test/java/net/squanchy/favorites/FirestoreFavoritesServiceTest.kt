@@ -1,6 +1,5 @@
 package net.squanchy.favorites
 
-import arrow.core.None
 import arrow.core.Option
 import io.reactivex.Observable
 import net.squanchy.schedule.ScheduleService
@@ -93,7 +92,7 @@ class FirestoreFavoritesServiceTest {
 
     @Test
     fun `should return false when the user is not signed in`() {
-        `when`(authService.currentUser()).thenReturn(Observable.just(None))
+        `when`(authService.currentUser()).thenReturn(Observable.just(Option.empty()))
 
         favoritesService.currentUserIsSignedIn()
             .test()

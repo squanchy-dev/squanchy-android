@@ -1,6 +1,5 @@
 package net.squanchy.signin
 
-import arrow.core.None
 import arrow.core.Option
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import io.reactivex.Completable
@@ -15,7 +14,7 @@ class SignInService(private val authService: AuthService) {
 
     fun isSignedInToGoogle(): Maybe<Boolean> =
         currentUser()
-            .first(None)
+            .first(Option.empty())
             .filter { it.isDefined() }
             .map { it.getOrThrow() }
             .map { firebaseUser -> !firebaseUser.isAnonymous }

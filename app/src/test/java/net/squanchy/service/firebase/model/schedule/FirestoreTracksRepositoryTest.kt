@@ -1,6 +1,6 @@
 package net.squanchy.service.firebase.model.schedule
 
-import arrow.core.None
+import arrow.core.Option
 import io.reactivex.Observable
 import net.squanchy.schedule.domain.view.aTrack
 import net.squanchy.service.firebase.FirestoreDbService
@@ -46,7 +46,7 @@ class FirestoreTracksRepositoryTest {
     }
 
     @Test
-    fun `should map nulls in the DB events it receives to absent()s in the domain events it emits`() {
+    fun `should map nulls in the DB events it receives to empty()s in the domain events it emits`() {
         val trackService = FirestoreTracksRepository(firestoreDbService, checksum)
         val firestoreTracks = listOf(aFirestoreTrack(accentColor = null, iconUrl = null, textColor = null))
         `when`(firestoreDbService.tracks()).thenReturn(Observable.just(firestoreTracks))
@@ -54,7 +54,7 @@ class FirestoreTracksRepositoryTest {
         trackService.tracks()
             .test()
             .assertValue(
-                listOf(aTrack(accentColor = None, iconUrl = None, textColor = None))
+                listOf(aTrack(accentColor = Option.empty(), iconUrl = Option.empty(), textColor = Option.empty()))
             )
     }
 
