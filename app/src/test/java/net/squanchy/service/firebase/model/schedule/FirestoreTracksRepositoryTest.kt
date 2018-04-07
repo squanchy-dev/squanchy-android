@@ -2,8 +2,6 @@ package net.squanchy.service.firebase.model.schedule
 
 import arrow.core.None
 import io.reactivex.Observable
-import io.reactivex.observers.TestObserver
-import net.squanchy.schedule.domain.view.Track
 import net.squanchy.schedule.domain.view.aTrack
 import net.squanchy.service.firebase.FirestoreDbService
 import net.squanchy.service.firebase.aFirestoreTrack
@@ -40,46 +38,34 @@ class FirestoreTracksRepositoryTest {
     @Test
     fun `should emit an empty list of tracks when there are no tracks on the DB`() {
         val trackService = FirestoreTracksRepository(firestoreDbService, checksum)
-        val subscription = TestObserver<List<Track>>()
         `when`(firestoreDbService.tracks()).thenReturn(Observable.just(emptyList()))
 
         trackService.tracks()
-            .subscribe(subscription)
-
-        subscription.assertValue(emptyList())
+            .test()
+            .assertValue(emptyList())
     }
 
     @Test
     fun `should map nulls in the DB events it receives to absent()s in the domain events it emits`() {
         val trackService = FirestoreTracksRepository(firestoreDbService, checksum)
-        val subscription = TestObserver<List<Track>>()
         val firestoreTracks = listOf(aFirestoreTrack(accentColor = null, iconUrl = null, textColor = null))
         `when`(firestoreDbService.tracks()).thenReturn(Observable.just(firestoreTracks))
 
         trackService.tracks()
-            .subscribe(subscription)
-
-        val tracks = listOf(
-            aTrack(
-                accentColor = None,
-                iconUrl = None,
-                textColor = None
+            .test()
+            .assertValue(
+                listOf(aTrack(accentColor = None, iconUrl = None, textColor = None))
             )
-        )
-        subscription.assertValue(tracks)
     }
 
     @Test
     fun `should map all values in the DB events it receives to optionals in the domain events it emits`() {
         val trackService = FirestoreTracksRepository(firestoreDbService, checksum)
-        val subscription = TestObserver<List<Track>>()
         val firestoreTracks = listOf(aFirestoreTrack())
         `when`(firestoreDbService.tracks()).thenReturn(Observable.just(firestoreTracks))
 
         trackService.tracks()
-            .subscribe(subscription)
-
-        val tracks = listOf(aTrack())
-        subscription.assertValue(tracks)
+            .test()
+            .assertValue(listOf(aTrack()))
     }
 }
