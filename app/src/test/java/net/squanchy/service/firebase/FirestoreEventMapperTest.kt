@@ -6,6 +6,7 @@ import net.squanchy.A_TIMEZONE
 import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.support.checksum.Checksum
+import net.squanchy.support.lang.getOrThrow
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -67,14 +68,14 @@ class FirestoreEventMapperTest {
         val firestorePlace = aFirestorePlace()
         val firestoreEvent = aFirestoreEvent(place = firestorePlace)
         val event = firestoreEvent.toEvent(checksum, A_TIMEZONE)
-        assertThat(firestorePlace.toPlace()).isEqualTo(event.place.get())
+        assertThat(firestorePlace.toPlace()).isEqualTo(event.place.getOrThrow())
     }
 
     @Test
-    fun `event place should be absent when mapping null`() {
+    fun `event place should be empty when mapping null`() {
         val firestoreEvent = aFirestoreEvent(place = null)
         val event = firestoreEvent.toEvent(checksum, A_TIMEZONE)
-        assertThat(event.place.isPresent).isFalse()
+        assertThat(event.place.isEmpty()).isTrue()
     }
 
     @Test
@@ -82,14 +83,14 @@ class FirestoreEventMapperTest {
         val firestoreTrack = aFirestoreTrack()
         val firestoreEvent = aFirestoreEvent(track = firestoreTrack)
         val event = firestoreEvent.toEvent(checksum, A_TIMEZONE)
-        assertThat(firestoreTrack.toTrack(checksum)).isEqualTo(event.track.get())
+        assertThat(firestoreTrack.toTrack(checksum)).isEqualTo(event.track.getOrThrow())
     }
 
     @Test
-    fun `event track should be absent when mapping null`() {
+    fun `event track should be empty when mapping null`() {
         val firestoreEvent = aFirestoreEvent(track = null)
         val event = firestoreEvent.toEvent(checksum, A_TIMEZONE)
-        assertThat(event.track.isPresent).isFalse()
+        assertThat(event.track.isEmpty()).isTrue()
     }
 
     @Test
@@ -100,10 +101,10 @@ class FirestoreEventMapperTest {
     }
 
     @Test
-    fun `event experience level should be absent when mapping null`() {
+    fun `event experience level should be empty when mapping null`() {
         val firestoreEvent = aFirestoreEvent(experienceLevel = null)
         val event = firestoreEvent.toEvent(checksum, A_TIMEZONE)
-        assertThat(event.experienceLevel.isPresent).isFalse()
+        assertThat(event.experienceLevel.isEmpty()).isTrue()
     }
 
     @Test
@@ -117,14 +118,14 @@ class FirestoreEventMapperTest {
     fun `event description should match when mapped`() {
         val firestoreEvent = aFirestoreEvent(description = A_VALUE)
         val event = firestoreEvent.toEvent(checksum, A_TIMEZONE)
-        assertThat(event.description.get()).isEqualTo(A_VALUE)
+        assertThat(event.description.getOrThrow()).isEqualTo(A_VALUE)
     }
 
     @Test
-    fun `event description should be absent when mapping null`() {
+    fun `event description should be empty when mapping null`() {
         val firestoreEvent = aFirestoreEvent(description = null)
         val event = firestoreEvent.toEvent(checksum, A_TIMEZONE)
-        assertThat(event.description.isPresent).isFalse()
+        assertThat(event.description.isEmpty()).isTrue()
     }
 
     @Test
@@ -138,14 +139,14 @@ class FirestoreEventMapperTest {
     fun `place floor should match when mapped`() {
         val firestorePlace = aFirestorePlace()
         val place = firestorePlace.toPlace()
-        assertThat(place.floor.get()).isEqualTo(firestorePlace.floor)
+        assertThat(place.floor.getOrThrow()).isEqualTo(firestorePlace.floor)
     }
 
     @Test
-    fun `place floor should be absent when mapping null`() {
+    fun `place floor should be empty when mapping null`() {
         val firestorePlace = aFirestorePlace(floor = null)
         val place = firestorePlace.toPlace()
-        assertThat(place.floor.isPresent).isFalse()
+        assertThat(place.floor.isEmpty()).isTrue()
     }
 
     @Test

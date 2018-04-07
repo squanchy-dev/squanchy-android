@@ -12,6 +12,7 @@ import net.squanchy.R
 import net.squanchy.imageloader.ImageLoader
 import net.squanchy.imageloader.imageLoaderComponent
 import net.squanchy.speaker.domain.view.Speaker
+import net.squanchy.support.lang.getOrThrow
 import net.squanchy.support.unwrapToActivityContext
 
 abstract class SpeakerView @JvmOverloads constructor(
@@ -21,7 +22,7 @@ abstract class SpeakerView @JvmOverloads constructor(
     defStyleRes: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr, defStyleRes) {
 
-    private lateinit var imageLoader: ImageLoader
+    private var imageLoader: ImageLoader? = null
     val layoutInflater: LayoutInflater = LayoutInflater.from(context)
 
     init {
@@ -38,16 +39,12 @@ abstract class SpeakerView @JvmOverloads constructor(
 
     fun updateWith(speakers: List<Speaker>, listener: OnSpeakerClickListener?) {
         speakerName.text = toCommaSeparatedNames(speakers)
-        updateSpeakerPhotos(speakers, listener)
+        updateSpeakerPhotos(speakers, listener, imageLoader)
     }
 
     private fun toCommaSeparatedNames(speakers: List<Speaker>) = speakers.joinToString(", ") { it.name }
 
-    private fun updateSpeakerPhotos(speakers: List<Speaker>, listener: OnSpeakerClickListener?) {
-        if (!::imageLoader.isInitialized) {
-            throw IllegalStateException("Unable to access the ImageLoader, it hasn't been initialized yet")
-        }
-
+    private fun updateSpeakerPhotos(speakers: List<Speaker>, listener: OnSpeakerClickListener?, imageLoader: ImageLoader?) {
         val photoViews: List<ImageView>
         if (speakerPhotosContainer.childCount > 0) {
             photoViews = getAllImageViewsContainedIn(speakerPhotosContainer)
@@ -61,8 +58,8 @@ abstract class SpeakerView @JvmOverloads constructor(
             speakerPhotosContainer.addView(photoView)
             setClickListenerOrNotClickable(photoView, listener, speaker)
 
-            if (speaker.photoUrl.isPresent) {
-                loadSpeakerPhoto(photoView, speaker.photoUrl.get(), imageLoader)
+            if (speaker.photoUrl.isDefined()) {
+                loadSpeakerPhoto(photoView, speaker.photoUrl.getOrThrow(), imageLoader)
             } else {
                 photoView.setImageResource(R.drawable.ic_no_avatar)
             }
@@ -95,7 +92,11 @@ abstract class SpeakerView @JvmOverloads constructor(
 
     protected abstract fun inflatePhotoView(speakerPhotoContainer: ViewGroup): ImageView
 
-    private fun loadSpeakerPhoto(photoView: ImageView, photoUrl: String, imageLoader: ImageLoader) {
+    private fun loadSpeakerPhoto(photoView: ImageView, photoUrl: String, imageLoader: ImageLoader?) {
+        if (imageLoader == null) {
+            throw IllegalStateException("Unable to access the ImageLoader, it hasn't been initialized yet")
+        }
+
         photoView.setImageDrawable(null)
         imageLoader.load(photoUrl)
             .into(photoView)

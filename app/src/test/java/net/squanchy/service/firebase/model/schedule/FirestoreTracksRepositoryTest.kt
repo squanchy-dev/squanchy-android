@@ -8,7 +8,6 @@ import net.squanchy.service.firebase.FirestoreDbService
 import net.squanchy.service.firebase.aFirestoreTrack
 import net.squanchy.service.repository.firestore.FirestoreTracksRepository
 import net.squanchy.support.checksum.Checksum
-import net.squanchy.support.lang.Optional
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -61,9 +60,9 @@ class FirestoreTracksRepositoryTest {
 
         val tracks = listOf(
             aTrack(
-                accentColor = Optional.absent(),
-                iconUrl = Optional.absent(),
-                textColor = Optional.absent()
+                accentColor = None,
+                iconUrl = None,
+                textColor = None
             )
         )
         subscription.assertValue(tracks)

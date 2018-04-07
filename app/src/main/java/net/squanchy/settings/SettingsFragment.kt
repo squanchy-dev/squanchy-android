@@ -8,16 +8,17 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.ListView
+import arrow.core.Option
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import net.squanchy.BuildConfig
 import net.squanchy.R
 import net.squanchy.analytics.Analytics
 import net.squanchy.navigation.Navigator
-import net.squanchy.signin.SignInOrigin
 import net.squanchy.service.repository.User
+import net.squanchy.signin.SignInOrigin
 import net.squanchy.signin.SignInService
-import net.squanchy.support.lang.Optional
+import net.squanchy.support.lang.getOrThrow
 
 class SettingsFragment : PreferenceFragment() {
 
@@ -106,9 +107,9 @@ class SettingsFragment : PreferenceFragment() {
         list.dividerHeight = 0
     }
 
-    private fun onUserChanged(user: Optional<User>) {
-        if (user.isPresent && !user.get().isAnonymous) {
-            onSignedInWith(user.get())
+    private fun onUserChanged(user: Option<User>) {
+        if (user.isDefined() && !user.getOrThrow().isAnonymous) {
+            onSignedInWith(user.getOrThrow())
         } else {
             onSignedOut()
         }

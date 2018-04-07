@@ -1,53 +1,53 @@
 package net.squanchy.service.firebase
 
+import com.google.common.truth.Truth.assertThat
 import com.google.firebase.firestore.GeoPoint
-import org.junit.Assert
 import org.junit.Test
 
-private const val FAKE_STRING = "Fake Something"
-private const val FAKE_COORDINATE = 5.87654
+private const val A_STRING = "Whatever"
+private const val A_COORDINATE = 5.87654
 
 class FirestoreVenueMapperTest {
 
     @Test
     fun `venue name should match when mapped`() {
-        val firestoreVenue = aFirestoreVenue(name = FAKE_STRING)
+        val firestoreVenue = aFirestoreVenue(name = A_STRING)
         val venue = firestoreVenue.toVenue()
-        Assert.assertEquals(FAKE_STRING, venue.name)
+        assertThat(venue.name).isEqualTo(A_STRING)
     }
 
     @Test
     fun `venue address should match when mapped`() {
-        val firestoreVenue = aFirestoreVenue(address = FAKE_STRING)
+        val firestoreVenue = aFirestoreVenue(address = A_STRING)
         val venue = firestoreVenue.toVenue()
-        Assert.assertEquals(FAKE_STRING, venue.address)
+        assertThat(venue.address).isEqualTo(A_STRING)
     }
 
     @Test
     fun `venue description should match when mapped`() {
-        val firestoreVenue = aFirestoreVenue(description = FAKE_STRING)
+        val firestoreVenue = aFirestoreVenue(description = A_STRING)
         val venue = firestoreVenue.toVenue()
-        Assert.assertEquals(FAKE_STRING, venue.description)
+        assertThat(venue.description).isEqualTo(A_STRING)
     }
 
     @Test
     fun `venue mapUrl should match when mapped`() {
-        val firestoreVenue = aFirestoreVenue(mapUrl = FAKE_STRING)
+        val firestoreVenue = aFirestoreVenue(mapUrl = A_STRING)
         val venue = firestoreVenue.toVenue()
-        Assert.assertEquals(FAKE_STRING, venue.mapUrl)
+        assertThat(venue.mapUrl).isEqualTo(A_STRING)
     }
 
     @Test
     fun `venue lat should match when mapped`() {
-        val firestoreVenue = aFirestoreVenue(latLon = GeoPoint(FAKE_COORDINATE, 0.0))
+        val firestoreVenue = aFirestoreVenue(latLon = GeoPoint(A_COORDINATE, 0.0))
         val venue = firestoreVenue.toVenue()
-        Assert.assertEquals(FAKE_COORDINATE, venue.latitude, 0.1)
+        assertThat(venue.latitude).isWithin(0.1).of(A_COORDINATE)
     }
 
     @Test
     fun `venue long should match when mapped`() {
-        val firestoreVenue = aFirestoreVenue(latLon = GeoPoint(0.0, FAKE_COORDINATE))
+        val firestoreVenue = aFirestoreVenue(latLon = GeoPoint(0.0, A_COORDINATE))
         val venue = firestoreVenue.toVenue()
-        Assert.assertEquals(FAKE_COORDINATE, venue.longitude, 0.1)
+        assertThat(venue.longitude).isWithin(0.1).of(A_COORDINATE)
     }
 }

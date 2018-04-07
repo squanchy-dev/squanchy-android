@@ -1,6 +1,7 @@
 package net.squanchy.service.firebase
 
-import org.junit.Assert
+import com.google.common.truth.Truth.assertThat
+import net.squanchy.support.lang.getOrThrow
 import org.junit.Test
 
 private const val FAKE_ID = "ABC"
@@ -13,27 +14,27 @@ class FirestorePlaceMapperTest {
     fun `place id should match when mapped`() {
         val firestorePlace = aFirestorePlace(id = FAKE_ID)
         val place = firestorePlace.toPlace()
-        Assert.assertEquals(FAKE_ID, place.id)
+        assertThat(place.id).isEqualTo(FAKE_ID)
     }
 
     @Test
     fun `place name should match when mapped`() {
         val firestorePlace = aFirestorePlace(name = FAKE_NAME)
         val place = firestorePlace.toPlace()
-        Assert.assertEquals(FAKE_NAME, place.name)
+        assertThat(place.name).isEqualTo(FAKE_NAME)
     }
 
     @Test
     fun `place floor should match when mapped`() {
         val firestorePlace = aFirestorePlace(floor = FAKE_FLOOR)
         val place = firestorePlace.toPlace()
-        Assert.assertEquals(FAKE_FLOOR, place.floor.get())
+        assertThat(place.floor.getOrThrow()).isEqualTo(FAKE_FLOOR)
     }
 
     @Test
-    fun `place floor should be absent when mapping null`() {
+    fun `place floor should be empty when mapping null`() {
         val firestorePlace = aFirestorePlace(floor = null)
         val place = firestorePlace.toPlace()
-        Assert.assertFalse(place.floor.isPresent)
+        assertThat(place.floor.isEmpty()).isTrue()
     }
 }

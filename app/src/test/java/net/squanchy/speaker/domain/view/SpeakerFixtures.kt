@@ -1,6 +1,6 @@
 package net.squanchy.speaker.domain.view
 
-import net.squanchy.support.lang.Optional
+import arrow.core.Option
 
 fun aSpeaker(
     id: String = "bananana",
@@ -13,11 +13,11 @@ Corazón gigante y alma soñan,te
 Joe ¡oh Banana Joe!
 Tu eres, ¡oh Banana na na Joe!
 Un gran marinero con puños de acero""",
-    photoUrl: Optional<String> = Optional.of("https://i.ytimg.com/vi/-1HB26ko2H8/hqdefault.jpg"),
-    companyName: Optional<String> = Optional.of("Amantido"),
-    companyUrl: Optional<String> = Optional.of("http://banana.joe"),
-    personalUrl: Optional<String> = Optional.of("https://en.wikipedia.org/wiki/Banana_Joe_(film)"),
-    twitterUsername: Optional<String> = Optional.of("@bananaJoe1982")
+    photoUrl: Option<String> = Option("https://i.ytimg.com/vi/-1HB26ko2H8/hqdefault.jpg"),
+    companyName: Option<String> = Option("Amantido"),
+    companyUrl: Option<String> = Option("http://banana.joe"),
+    personalUrl: Option<String> = Option("https://en.wikipedia.org/wiki/Banana_Joe_(film)"),
+    twitterUsername: Option<String> = Option("@bananaJoe1982")
 ) = Speaker(
     id = id,
     numericId = numericId,

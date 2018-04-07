@@ -28,8 +28,8 @@ class VenueInfoPageView @JvmOverloads constructor(
 
     private lateinit var navigator: Navigator
     private lateinit var service: VenueInfoService
-    private lateinit var imageLoader: ImageLoader
 
+    private var imageLoader: ImageLoader? = null
     private var subscription: Disposable? = null
 
     init {
@@ -91,7 +91,11 @@ class VenueInfoPageView @JvmOverloads constructor(
         }
     }
 
-    private fun loadMap(imageView: ImageView, mapUrl: String, imageLoader: ImageLoader) {
+    private fun loadMap(imageView: ImageView, mapUrl: String, imageLoader: ImageLoader?) {
+        if (imageLoader == null) {
+            throw IllegalStateException("Unable to access the ImageLoader, it hasn't been initialized yet")
+        }
+
         imageLoader.load(mapUrl).into(imageView)
     }
 
