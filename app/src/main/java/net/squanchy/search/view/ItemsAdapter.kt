@@ -1,7 +1,5 @@
 package net.squanchy.search.view
 
-import java.util.Locale
-
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.search.SearchResult
 import net.squanchy.search.view.SearchAdapter.Companion.ViewTypeId
@@ -111,8 +109,7 @@ internal class ItemsAdapter(private val searchResult: SearchResult.Success) {
     private fun ensurePositionExists(position: Int) {
         val totalItemsCount = totalItemsCount()
         if (position < 0 || position >= totalItemsCount) {
-            val message = String.format(Locale.ROOT, "Position %1\$d is not valid, must be [0, %2\$d)", position, totalItemsCount)
-            throw IndexOutOfBoundsException(message)
+            throw IndexOutOfBoundsException("Position $position is not valid, must be [0, $totalItemsCount)")
         }
     }
 

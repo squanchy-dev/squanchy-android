@@ -52,7 +52,7 @@ class TweetUrlSpanFactory(private val context: Context) {
     }
 
     private fun FirestoreTwitterHashtag.createUrlSpanWith(spanFactory: TweetUrlSpanFactory): TweetUrlSpan =
-        spanFactory.createFor(String.format(QUERY_URL_TEMPLATE, text))
+        spanFactory.createFor("https://twitter.com/search?q=$text")
 
     private fun createFor(url: String): TweetUrlSpan {
         val linkColor = getColorFromTheme(context.theme, R.attr.tweetLinkTextColor)
@@ -73,7 +73,7 @@ class TweetUrlSpanFactory(private val context: Context) {
     }
 
     private fun FirestoreTwitterMention.createUrlSpanWith(spanFactory: TweetUrlSpanFactory): TweetUrlSpan =
-        spanFactory.createFor(String.format(MENTION_URL_TEMPLATE, screenName))
+        spanFactory.createFor("https://twitter.com/$screenName")
 
     private fun offsetStart(entity: FirestoreTwitterUrl, startIndex: Int): FirestoreTwitterUrl {
         entity.start = entity.start - startIndex
@@ -97,9 +97,6 @@ class TweetUrlSpanFactory(private val context: Context) {
     }
 
     companion object {
-        private const val BASE_TWITTER_URL = "https://twitter.com/"
-        private const val MENTION_URL_TEMPLATE = BASE_TWITTER_URL + "%s"
-        private const val QUERY_URL_TEMPLATE = BASE_TWITTER_URL + "search?q=%s"
 
         private val HTML_ENTITY_PATTERN = Pattern.compile("&#?\\w+;")
     }

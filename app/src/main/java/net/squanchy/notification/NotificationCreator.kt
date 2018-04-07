@@ -191,8 +191,7 @@ class NotificationCreator(private val context: Context) {
     }
 
     private fun createSummaryTitle(talksCount: Int): String {
-        val quantityString = context.resources
-            .getQuantityString(R.plurals.event_notification_count_starting, talksCount)
+        val quantityString = context.resources.getQuantityString(R.plurals.event_notification_count_starting, talksCount)
         return String.format(quantityString, talksCount)
     }
 

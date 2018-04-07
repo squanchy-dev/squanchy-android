@@ -47,7 +47,7 @@ class SettingsFragment : PreferenceFragment() {
             removeDebugCategory()
         }
 
-        val activity = activity as AppCompatActivity // TODO UNYOLO
+        val activity = activity as AppCompatActivity
         with(settingsFragmentComponent(activity)) {
             signInService = signInService()
             navigator = navigator()
@@ -79,7 +79,7 @@ class SettingsFragment : PreferenceFragment() {
     private fun displayBuildVersion() {
         val buildVersionKey = getString(R.string.build_version_preference_key)
         val buildVersionPreference = findPreference(buildVersionKey)
-        val buildVersion = String.format(getString(R.string.version_x), BuildConfig.VERSION_NAME)
+        val buildVersion = getString(R.string.version_x, BuildConfig.VERSION_NAME)
         buildVersionPreference.title = buildVersion
     }
 
