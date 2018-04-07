@@ -1,5 +1,6 @@
 package net.squanchy.schedule
 
+import arrow.core.None
 import arrow.core.Option
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
@@ -205,8 +206,8 @@ class FirestoreScheduleServiceTest {
                     pages = listOf(
                         aSchedulePage(
                             events = listOf(
-                                anEvent(id = "1", numericId = 1, track = Option.absent()),
-                                anEvent(id = "2", numericId = 2, track = Option.absent())
+                                anEvent(id = "1", numericId = 1, track = None),
+                                anEvent(id = "2", numericId = 2, track = None)
                             )
                         )
                     )
