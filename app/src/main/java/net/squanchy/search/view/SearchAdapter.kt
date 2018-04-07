@@ -13,7 +13,7 @@ import net.squanchy.imageloader.imageLoaderComponent
 import net.squanchy.schedule.view.EventItemView
 import net.squanchy.schedule.view.EventViewHolder
 import net.squanchy.search.SearchResult
-import net.squanchy.search.domain.view.SearchListResult
+import net.squanchy.search.domain.view.SearchListElement
 
 internal class SearchAdapter(activity: AppCompatActivity) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -22,8 +22,7 @@ internal class SearchAdapter(activity: AppCompatActivity) : RecyclerView.Adapter
 
     private lateinit var listener: SearchRecyclerView.OnSearchResultClickListener
 
-    private var searchResult = SearchResult.Success(SearchListResult(emptyList()))
-    private var itemsAdapter = ItemsAdapter(searchResult)
+    private var searchResult = SearchResult.Success(emptyList())
 
     init {
         this.activity = activity
@@ -34,11 +33,24 @@ internal class SearchAdapter(activity: AppCompatActivity) : RecyclerView.Adapter
 
     @ViewTypeId
     override fun getItemViewType(position: Int): Int {
-        return itemsAdapter.viewTypeAtAbsolutePosition(position)
+        return when (searchResult.elements[position]) {
+            is SearchListElement.EventHeader -> HEADER
+            is SearchListElement.SpeakerHeader -> HEADER
+            is SearchListElement.EventElement -> EVENT
+            is SearchListElement.SpeakerElement -> SPEAKER
+            is SearchListElement.AlgoliaLogo -> ALGOLIA_LOGO
+        }
     }
 
     override fun getItemId(position: Int): Long {
-        return itemsAdapter.itemIdAtAbsolutePosition(position)
+        val item = searchResult.elements[position]
+        return when (item) {
+            is SearchListElement.EventHeader -> ITEM_ID_EVENTS_HEADER
+            is SearchListElement.SpeakerHeader -> ITEM_ID_SPEAKERS_HEADER
+            is SearchListElement.EventElement -> item.event.numericId
+            is SearchListElement.SpeakerElement -> item.speaker.numericId
+            is SearchListElement.AlgoliaLogo -> ITEM_ID_ALGOLIA_LOGO
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, @ViewTypeId viewType: Int): RecyclerView.ViewHolder {
@@ -61,28 +73,24 @@ internal class SearchAdapter(activity: AppCompatActivity) : RecyclerView.Adapter
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val viewType = itemsAdapter.viewTypeAtAbsolutePosition(position)
-
-        when (viewType) {
-            SPEAKER -> (holder as SpeakerViewHolder).updateWith(itemsAdapter.speakerAtAbsolutePosition(position), imageLoader, listener)
-            HEADER -> (holder as HeaderViewHolder).updateWith(itemsAdapter.headerTypeAtAbsolutePosition(position))
-            EVENT -> (holder as EventViewHolder).updateWith(itemsAdapter.eventAtAbsolutePosition(position)) { listener.onEventClicked(it) }
-            ALGOLIA_LOGO -> Unit // Nothing to do
-            else -> throw IllegalArgumentException("Item type $viewType not supported")
+        val item = searchResult.elements[position]
+        when (item) {
+            is SearchListElement.EventHeader -> (holder as HeaderViewHolder).updateWith(HeaderType.EVENTS)
+            is SearchListElement.SpeakerHeader -> (holder as HeaderViewHolder).updateWith(HeaderType.SPEAKERS)
+            is SearchListElement.EventElement -> (holder as EventViewHolder).updateWith(item.event) { listener.onEventClicked(it) }
+            is SearchListElement.SpeakerElement -> (holder as SpeakerViewHolder).updateWith(item.speaker, imageLoader, listener)
+            is SearchListElement.AlgoliaLogo -> Unit // Nothing to do
         }
     }
 
     fun createSpanSizeLookup(columnsCount: Int): GridLayoutManager.SpanSizeLookup {
-        return GridSpanSizeLookup(itemsAdapter, columnsCount)
+        return GridSpanSizeLookup(searchResult.elements, columnsCount)
     }
 
-    override fun getItemCount(): Int {
-        return itemsAdapter.totalItemsCount()
-    }
+    override fun getItemCount(): Int = searchResult.elements.size
 
     fun updateWith(searchResult: SearchResult.Success, listener: SearchRecyclerView.OnSearchResultClickListener) {
         this.searchResult = searchResult
-        this.itemsAdapter = ItemsAdapter(searchResult)
         this.listener = listener
 
         notifyDataSetChanged()
@@ -97,5 +105,13 @@ internal class SearchAdapter(activity: AppCompatActivity) : RecyclerView.Adapter
         @IntDef(HEADER, SPEAKER, EVENT, ALGOLIA_LOGO)
         @Retention(AnnotationRetention.SOURCE)
         annotation class ViewTypeId
+
+        // These values are "random", we count on them not clashing with the other
+        // random values that are used for non-hardcoded numeric IDs (for events
+        // and speakers). This is a reasonable assumption in the Long range.
+        // In addition, the CRC32 values we use as numeric IDs are always positive.
+        private const val ITEM_ID_EVENTS_HEADER: Long = -100
+        private const val ITEM_ID_SPEAKERS_HEADER: Long = -101
+        private const val ITEM_ID_ALGOLIA_LOGO: Long = -102
     }
 }

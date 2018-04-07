@@ -1,25 +1,25 @@
 package net.squanchy.search.view
 
 import android.support.v7.widget.GridLayoutManager
-import net.squanchy.search.view.SearchAdapter.Companion.ViewTypeId
+import net.squanchy.search.domain.view.SearchListElement
 
-internal class GridSpanSizeLookup(private val itemsAdapter: ItemsAdapter, private val columnCount: Int) : GridLayoutManager.SpanSizeLookup() {
+internal class GridSpanSizeLookup(private val items: List<SearchListElement>, private val columnCount: Int) : GridLayoutManager.SpanSizeLookup() {
 
     init {
         super.setSpanIndexCacheEnabled(true)
     }
 
     override fun getSpanSize(position: Int): Int {
-        return if (itemsAdapter.isEmpty) SINGLE_COLUMN_SPAN_SIZE else getSpanSizeFor(itemsAdapter.viewTypeAtAbsolutePosition(position))
+        return if (items.isEmpty()) SINGLE_COLUMN_SPAN_SIZE else getSpanSizeFor(items[position])
     }
 
-    private fun getSpanSizeFor(@ViewTypeId viewTypeId: Int): Int =
-        when (viewTypeId) {
-            SearchAdapter.HEADER -> columnCount
-            SearchAdapter.EVENT -> columnCount
-            SearchAdapter.SPEAKER -> SINGLE_COLUMN_SPAN_SIZE
-            SearchAdapter.ALGOLIA_LOGO -> columnCount
-            else -> error("Invalid ViewTypeId $viewTypeId")
+    private fun getSpanSizeFor(element: SearchListElement): Int =
+        when (element) {
+            is SearchListElement.EventHeader -> columnCount
+            is SearchListElement.SpeakerHeader -> columnCount
+            is SearchListElement.EventElement -> columnCount
+            is SearchListElement.SpeakerElement -> SINGLE_COLUMN_SPAN_SIZE
+            is SearchListElement.AlgoliaLogo -> columnCount
         }
 
     companion object {

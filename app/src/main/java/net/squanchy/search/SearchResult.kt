@@ -1,19 +1,19 @@
 package net.squanchy.search
 
-import net.squanchy.search.domain.view.SearchListResult
+import net.squanchy.search.domain.view.SearchListElement
 
 sealed class SearchResult {
 
-    data class Success(val result: SearchListResult) : SearchResult() {
+    data class Success(val elements: List<SearchListElement>) : SearchResult() {
         val isEmpty: Boolean
-            get() = result.elements.isEmpty()
+            get() = elements.isEmpty()
     }
 
     object Error : SearchResult()
 
     companion object {
 
-        private val emptySearch = SearchResult.Success(SearchListResult(emptyList()))
+        private val emptySearch = SearchResult.Success(emptyList())
 
         fun empty(): SearchResult = emptySearch
     }

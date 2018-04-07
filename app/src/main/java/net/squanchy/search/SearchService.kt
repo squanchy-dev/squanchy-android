@@ -14,7 +14,6 @@ import net.squanchy.search.domain.view.SearchListElement.EventHeader
 import net.squanchy.search.domain.view.SearchListElement.SpeakerElement
 import net.squanchy.search.domain.view.SearchListElement.AlgoliaLogo
 import net.squanchy.search.domain.view.SearchListElement.EventElement
-import net.squanchy.search.domain.view.SearchListResult
 import net.squanchy.service.repository.AuthService
 import net.squanchy.service.repository.EventRepository
 import net.squanchy.service.repository.SpeakerRepository
@@ -52,13 +51,13 @@ class SearchService(
         }
     }
 
-    private fun createResultForQueryNotLongEnough(speakers: List<Speaker>): SearchListResult {
-        return SearchListResult(listOf(SpeakerHeader) + speakers.map(::SpeakerElement))
+    private fun createResultForQueryNotLongEnough(speakers: List<Speaker>): List<SearchListElement> {
+        return listOf(SpeakerHeader) + speakers.map(::SpeakerElement)
     }
 
-    private fun createResultForSuccessfulSearch(events: List<Event>, speakers: List<Speaker>): SearchListResult {
+    private fun createResultForSuccessfulSearch(events: List<Event>, speakers: List<Speaker>): List<SearchListElement> {
         if (speakers.isEmpty() && events.isEmpty()) {
-            return SearchListResult(emptyList())
+            return emptyList()
         }
         val list = ArrayList<SearchListElement>(events.size + speakers.size)
         if (events.isNotEmpty()) {
@@ -70,7 +69,7 @@ class SearchService(
             list.addAll(speakers.map(::SpeakerElement))
         }
         list.add(AlgoliaLogo)
-        return SearchListResult(list)
+        return list
     }
 
     fun speakers(): Observable<List<Speaker>> {

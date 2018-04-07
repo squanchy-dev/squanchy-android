@@ -9,7 +9,6 @@ import net.squanchy.search.algolia.model.AlgoliaSearchResult
 import net.squanchy.search.domain.view.SearchListElement
 import net.squanchy.search.domain.view.SearchListElement.EventElement
 import net.squanchy.search.domain.view.SearchListElement.SpeakerElement
-import net.squanchy.search.domain.view.SearchListResult
 import net.squanchy.service.repository.AuthService
 import net.squanchy.service.repository.EventRepository
 import net.squanchy.service.repository.SpeakerRepository
@@ -57,12 +56,10 @@ class SearchServiceTest {
             .test()
             .assertValue(
                 SearchResult.Success(
-                    SearchListResult(
-                        mutableListOf<SearchListElement>().apply {
-                            add(SearchListElement.SpeakerHeader)
-                            addAll(speakerList.map(::SpeakerElement))
-                        }
-                    )
+                    mutableListOf<SearchListElement>().apply {
+                        add(SearchListElement.SpeakerHeader)
+                        addAll(speakerList.map(::SpeakerElement))
+                    }
                 )
             )
     }
@@ -78,13 +75,11 @@ class SearchServiceTest {
             .test()
             .assertValue(
                 SearchResult.Success(
-                    SearchListResult(
-                        mutableListOf<SearchListElement>().apply {
-                            add(SearchListElement.EventHeader)
-                            addAll(listOf(anEvent(id = "qwer")).map(::EventElement))
-                            add(SearchListElement.AlgoliaLogo)
-                        }
-                    )
+                    mutableListOf<SearchListElement>().apply {
+                        add(SearchListElement.EventHeader)
+                        addAll(listOf(anEvent(id = "qwer")).map(::EventElement))
+                        add(SearchListElement.AlgoliaLogo)
+                    }
                 )
             )
     }
