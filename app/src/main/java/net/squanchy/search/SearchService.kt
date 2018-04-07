@@ -8,6 +8,13 @@ import net.squanchy.search.algolia.model.AlgoliaSearchResult
 import net.squanchy.search.algolia.model.AlgoliaSearchResult.QueryNotLongEnough
 import net.squanchy.search.algolia.model.AlgoliaSearchResult.ErrorSearching
 import net.squanchy.search.algolia.model.AlgoliaSearchResult.Matches
+import net.squanchy.search.domain.view.SearchListElement
+import net.squanchy.search.domain.view.SearchListElement.SpeakerHeader
+import net.squanchy.search.domain.view.SearchListElement.EventHeader
+import net.squanchy.search.domain.view.SearchListElement.SpeakerElement
+import net.squanchy.search.domain.view.SearchListElement.AlgoliaLogo
+import net.squanchy.search.domain.view.SearchListElement.EventElement
+import net.squanchy.search.domain.view.SearchListResult
 import net.squanchy.service.repository.AuthService
 import net.squanchy.service.repository.EventRepository
 import net.squanchy.service.repository.SpeakerRepository
@@ -34,14 +41,36 @@ class SearchService(
     private fun combineWithSearchResult(): Function3<List<Event>, List<Speaker>, AlgoliaSearchResult, SearchResult> {
         return Function3 { events, speakers, result ->
             when (result) {
-                is QueryNotLongEnough -> SearchResult.Success(emptyList(), speakers)
+                is QueryNotLongEnough -> SearchResult.Success(createResultForQueryNotLongEnough(speakers))
                 is ErrorSearching -> SearchResult.Error
-                is Matches -> SearchResult.Success(
-                    events.filter { result.eventIds.contains(it.id) },
-                    speakers.filter { result.speakerIds.contains(it.id) }
-                )
+                is Matches -> {
+                    val filteredEvents = events.filter { result.eventIds.contains(it.id) }
+                    val filteredSpeakers = speakers.filter { result.speakerIds.contains(it.id) }
+                    SearchResult.Success(createResultForSuccessfulSearch(filteredEvents, filteredSpeakers))
+                }
             }
         }
+    }
+
+    private fun createResultForQueryNotLongEnough(speakers: List<Speaker>): SearchListResult {
+        return SearchListResult(listOf(SpeakerHeader) + speakers.map(::SpeakerElement))
+    }
+
+    private fun createResultForSuccessfulSearch(events: List<Event>, speakers: List<Speaker>): SearchListResult {
+        if (speakers.isEmpty() && events.isEmpty()) {
+            return SearchListResult(emptyList())
+        }
+        val list = ArrayList<SearchListElement>(events.size + speakers.size)
+        if (events.isNotEmpty()) {
+            list.add(EventHeader)
+            list.addAll(events.map(::EventElement))
+        }
+        if (speakers.isNotEmpty()) {
+            list.add(SpeakerHeader)
+            list.addAll(speakers.map(::SpeakerElement))
+        }
+        list.add(AlgoliaLogo)
+        return SearchListResult(list)
     }
 
     fun speakers(): Observable<List<Speaker>> {

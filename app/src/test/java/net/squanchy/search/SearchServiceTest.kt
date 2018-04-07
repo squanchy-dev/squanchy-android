@@ -6,6 +6,10 @@ import io.reactivex.Observable
 import net.squanchy.schedule.domain.view.anEvent
 import net.squanchy.search.algolia.AlgoliaSearchEngine
 import net.squanchy.search.algolia.model.AlgoliaSearchResult
+import net.squanchy.search.domain.view.SearchListElement
+import net.squanchy.search.domain.view.SearchListElement.EventElement
+import net.squanchy.search.domain.view.SearchListElement.SpeakerElement
+import net.squanchy.search.domain.view.SearchListResult
 import net.squanchy.service.repository.AuthService
 import net.squanchy.service.repository.EventRepository
 import net.squanchy.service.repository.SpeakerRepository
@@ -51,7 +55,16 @@ class SearchServiceTest {
         `when`(speakerRepository.speakers()).thenReturn(Observable.just(speakerList))
         searchService.find(QUERY)
             .test()
-            .assertValue(SearchResult.Success(emptyList(), speakerList))
+            .assertValue(
+                SearchResult.Success(
+                    SearchListResult(
+                        mutableListOf<SearchListElement>().apply {
+                            add(SearchListElement.SpeakerHeader)
+                            addAll(speakerList.map(::SpeakerElement))
+                        }
+                    )
+                )
+            )
     }
 
     @Test
@@ -63,7 +76,17 @@ class SearchServiceTest {
         `when`(speakerRepository.speakers()).thenReturn(Observable.just(speakerList))
         searchService.find(QUERY)
             .test()
-            .assertValue(SearchResult.Success(listOf(anEvent(id = "qwer")), emptyList()))
+            .assertValue(
+                SearchResult.Success(
+                    SearchListResult(
+                        mutableListOf<SearchListElement>().apply {
+                            add(SearchListElement.EventHeader)
+                            addAll(listOf(anEvent(id = "qwer")).map(::EventElement))
+                            add(SearchListElement.AlgoliaLogo)
+                        }
+                    )
+                )
+            )
     }
 
     @Test

@@ -13,6 +13,7 @@ import net.squanchy.imageloader.imageLoaderComponent
 import net.squanchy.schedule.view.EventItemView
 import net.squanchy.schedule.view.EventViewHolder
 import net.squanchy.search.SearchResult
+import net.squanchy.search.domain.view.SearchListResult
 
 internal class SearchAdapter(activity: AppCompatActivity) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -21,7 +22,7 @@ internal class SearchAdapter(activity: AppCompatActivity) : RecyclerView.Adapter
 
     private lateinit var listener: SearchRecyclerView.OnSearchResultClickListener
 
-    private var searchResult = SearchResult.Success(emptyList(), emptyList())
+    private var searchResult = SearchResult.Success(SearchListResult(emptyList()))
     private var itemsAdapter = ItemsAdapter(searchResult)
 
     init {
