@@ -1,7 +1,7 @@
 package net.squanchy.search.view
 
 import android.support.v7.widget.GridLayoutManager
-import net.squanchy.search.domain.view.SearchListElement
+import net.squanchy.search.SearchListElement
 
 internal class GridSpanSizeLookup(private val items: List<SearchListElement>, private val columnCount: Int) : GridLayoutManager.SpanSizeLookup() {
 

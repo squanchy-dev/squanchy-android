@@ -13,7 +13,7 @@ import net.squanchy.imageloader.imageLoaderComponent
 import net.squanchy.schedule.view.EventItemView
 import net.squanchy.schedule.view.EventViewHolder
 import net.squanchy.search.SearchResult
-import net.squanchy.search.domain.view.SearchListElement
+import net.squanchy.search.SearchListElement
 
 internal class SearchAdapter(activity: AppCompatActivity) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

@@ -6,9 +6,8 @@ import io.reactivex.Observable
 import net.squanchy.schedule.domain.view.anEvent
 import net.squanchy.search.algolia.AlgoliaSearchEngine
 import net.squanchy.search.algolia.model.AlgoliaSearchResult
-import net.squanchy.search.domain.view.SearchListElement
-import net.squanchy.search.domain.view.SearchListElement.EventElement
-import net.squanchy.search.domain.view.SearchListElement.SpeakerElement
+import net.squanchy.search.SearchListElement.EventElement
+import net.squanchy.search.SearchListElement.SpeakerElement
 import net.squanchy.service.repository.AuthService
 import net.squanchy.service.repository.EventRepository
 import net.squanchy.service.repository.SpeakerRepository

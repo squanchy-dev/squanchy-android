@@ -1,6 +1,7 @@
 package net.squanchy.search
 
-import net.squanchy.search.domain.view.SearchListElement
+import net.squanchy.schedule.domain.view.Event
+import net.squanchy.speaker.domain.view.Speaker
 
 sealed class SearchResult {
 
@@ -17,4 +18,12 @@ sealed class SearchResult {
 
         fun empty(): SearchResult = emptySearch
     }
+}
+
+sealed class SearchListElement {
+    object EventHeader : SearchListElement()
+    data class EventElement(val event: Event) : SearchListElement()
+    object SpeakerHeader : SearchListElement()
+    data class SpeakerElement(val speaker: Speaker) : SearchListElement()
+    object AlgoliaLogo : SearchListElement()
 }

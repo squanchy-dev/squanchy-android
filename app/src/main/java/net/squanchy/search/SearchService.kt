@@ -8,12 +8,11 @@ import net.squanchy.search.algolia.model.AlgoliaSearchResult
 import net.squanchy.search.algolia.model.AlgoliaSearchResult.QueryNotLongEnough
 import net.squanchy.search.algolia.model.AlgoliaSearchResult.ErrorSearching
 import net.squanchy.search.algolia.model.AlgoliaSearchResult.Matches
-import net.squanchy.search.domain.view.SearchListElement
-import net.squanchy.search.domain.view.SearchListElement.SpeakerHeader
-import net.squanchy.search.domain.view.SearchListElement.EventHeader
-import net.squanchy.search.domain.view.SearchListElement.SpeakerElement
-import net.squanchy.search.domain.view.SearchListElement.AlgoliaLogo
-import net.squanchy.search.domain.view.SearchListElement.EventElement
+import net.squanchy.search.SearchListElement.SpeakerHeader
+import net.squanchy.search.SearchListElement.EventHeader
+import net.squanchy.search.SearchListElement.SpeakerElement
+import net.squanchy.search.SearchListElement.AlgoliaLogo
+import net.squanchy.search.SearchListElement.EventElement
 import net.squanchy.service.repository.AuthService
 import net.squanchy.service.repository.EventRepository
 import net.squanchy.service.repository.SpeakerRepository
