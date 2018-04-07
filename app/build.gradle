@@ -127,6 +127,7 @@ dependencies {
     implementation project(':renderthread')
 
     implementation libraries.app.androidKtx
+    implementation libraries.app.arrowCore
 
     implementation libraries.app.crashlytics
     implementation(libraries.app.findbugsAnnotations) {
