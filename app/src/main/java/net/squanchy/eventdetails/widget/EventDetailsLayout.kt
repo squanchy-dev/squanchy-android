@@ -1,13 +1,10 @@
 package net.squanchy.eventdetails.widget
 
-import android.annotation.TargetApi
 import android.content.Context
 import android.content.res.Resources
-import android.os.Build
 import android.support.annotation.AttrRes
 import android.support.annotation.ColorInt
 import android.support.v4.content.ContextCompat
-import android.text.Html
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
@@ -22,6 +19,7 @@ import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Place
 import net.squanchy.support.lang.getOrThrow
+import net.squanchy.support.text.parseHtml
 import org.joda.time.format.DateTimeFormat
 
 // TODO flatten this layout as a ConstraintLayout
@@ -121,17 +119,6 @@ class EventDetailsLayout @JvmOverloads constructor(
         } else {
             descriptionHeader.visibility = View.GONE
             descriptionTextView.visibility = View.GONE
-        }
-    }
-
-    @TargetApi(Build.VERSION_CODES.N) // The older fromHtml() is only called pre-24
-    private fun parseHtml(description: String): Spanned {
-        // TODO handle this properly
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY)
-        } else {
-            @Suppress("DEPRECATION") // This is a "compat" method call, we only use this on pre-N
-            Html.fromHtml(description)
         }
     }
 

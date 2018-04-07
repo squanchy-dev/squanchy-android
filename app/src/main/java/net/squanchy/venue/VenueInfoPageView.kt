@@ -1,12 +1,8 @@
 package net.squanchy.venue
 
-import android.annotation.TargetApi
 import android.content.Context
-import android.os.Build
 import android.support.design.widget.CoordinatorLayout
 import android.support.v7.widget.Toolbar
-import android.text.Html
-import android.text.Spanned
 import android.util.AttributeSet
 import android.widget.ImageView
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -17,6 +13,7 @@ import net.squanchy.home.Loadable
 import net.squanchy.imageloader.ImageLoader
 import net.squanchy.imageloader.imageLoaderComponent
 import net.squanchy.navigation.Navigator
+import net.squanchy.support.text.parseHtml
 import net.squanchy.support.unwrapToActivityContext
 import net.squanchy.venue.domain.view.Venue
 
@@ -78,17 +75,6 @@ class VenueInfoPageView @JvmOverloads constructor(
         venueDescription.text = parseHtml(venue.description)
         loadMap(venueMap, venue.mapUrl, imageLoader)
         updateMapClickListenerWith(venue)
-    }
-
-    @TargetApi(Build.VERSION_CODES.N) // The older fromHtml() is only called pre-24
-    private fun parseHtml(description: String): Spanned {
-        // TODO handle this properly
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY)
-        } else {
-            @Suppress("DEPRECATION") // This is a "compat" method call, we only use this on pre-N
-            Html.fromHtml(description)
-        }
     }
 
     private fun loadMap(imageView: ImageView, mapUrl: String, imageLoader: ImageLoader?) {
