@@ -3,9 +3,8 @@ package net.squanchy.search.view
 import android.app.Activity
 import android.support.annotation.IntDef
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.recyclerview.extensions.ListAdapter
-import android.support.v7.util.DiffUtil
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import net.squanchy.R
@@ -21,7 +20,7 @@ import net.squanchy.search.view.SearchItemViewHolder.HeaderViewHolder
 import net.squanchy.search.view.SearchItemViewHolder.SearchEventViewHolder
 import net.squanchy.search.view.SearchItemViewHolder.SpeakerViewHolder
 
-internal class SearchAdapter(activity: AppCompatActivity) : ListAdapter<SearchListElement, SearchItemViewHolder>(DiffCallback) {
+internal class SearchAdapter(activity: AppCompatActivity) : RecyclerView.Adapter<SearchItemViewHolder>() {
 
     private val imageLoader: ImageLoader
     private val activity: Activity
@@ -51,10 +50,10 @@ internal class SearchAdapter(activity: AppCompatActivity) : ListAdapter<SearchLi
     override fun getItemId(position: Int): Long {
         val item = searchResult.elements[position]
         return when (item) {
-            is SearchListElement.EventHeader -> ITEM_ID_EVENTS_HEADER
-            is SearchListElement.SpeakerHeader -> ITEM_ID_SPEAKERS_HEADER
             is EventElement -> item.event.numericId
             is SpeakerElement -> item.speaker.numericId
+            is SearchListElement.EventHeader -> ITEM_ID_EVENTS_HEADER
+            is SearchListElement.SpeakerHeader -> ITEM_ID_SPEAKERS_HEADER
             is SearchListElement.AlgoliaLogo -> ITEM_ID_ALGOLIA_LOGO
         }
     }
@@ -89,16 +88,17 @@ internal class SearchAdapter(activity: AppCompatActivity) : ListAdapter<SearchLi
         }
     }
 
+    override fun getItemCount(): Int = searchResult.elements.size
+
     fun createSpanSizeLookup(columnsCount: Int): GridLayoutManager.SpanSizeLookup {
         return GridSpanSizeLookup(searchResult.elements, columnsCount)
     }
 
-    override fun getItemCount(): Int = searchResult.elements.size
-
     fun updateWith(searchResult: SearchResult.Success, listener: SearchRecyclerView.OnSearchResultClickListener) {
         this.searchResult = searchResult
         this.listener = listener
-        submitList(searchResult.elements)
+
+        notifyDataSetChanged()
     }
 
     companion object {
@@ -118,22 +118,5 @@ internal class SearchAdapter(activity: AppCompatActivity) : ListAdapter<SearchLi
         private const val ITEM_ID_EVENTS_HEADER: Long = -100
         private const val ITEM_ID_SPEAKERS_HEADER: Long = -101
         private const val ITEM_ID_ALGOLIA_LOGO: Long = -102
-    }
-}
-
-private object DiffCallback : DiffUtil.ItemCallback<SearchListElement>() {
-
-    override fun areItemsTheSame(oldItem: SearchListElement?, newItem: SearchListElement?): Boolean {
-        if (oldItem is EventElement && newItem is EventElement) {
-            return oldItem.event.id == newItem.event.id
-        }
-        if (oldItem is SpeakerElement && newItem is SpeakerElement) {
-            return oldItem.speaker.id == newItem.speaker.id
-        }
-        return oldItem == newItem
-    }
-
-    override fun areContentsTheSame(oldItem: SearchListElement?, newItem: SearchListElement?): Boolean {
-        return oldItem == newItem
     }
 }

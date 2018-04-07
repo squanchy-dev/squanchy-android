@@ -58,17 +58,20 @@ class SearchService(
         if (speakers.isEmpty() && events.isEmpty()) {
             return emptyList()
         }
-        val list = ArrayList<SearchListElement>(events.size + speakers.size)
-        if (events.isNotEmpty()) {
-            list.add(EventHeader)
-            list.addAll(events.map(::EventElement))
+
+        return ArrayList<SearchListElement>(events.size + speakers.size).apply {
+            if (events.isNotEmpty()) {
+                add(EventHeader)
+                addAll(events.map(::EventElement))
+            }
+
+            if (speakers.isNotEmpty()) {
+                add(SpeakerHeader)
+                addAll(speakers.map(::SpeakerElement))
+            }
+
+            add(AlgoliaLogo)
         }
-        if (speakers.isNotEmpty()) {
-            list.add(SpeakerHeader)
-            list.addAll(speakers.map(::SpeakerElement))
-        }
-        list.add(AlgoliaLogo)
-        return list
     }
 
     fun speakers(): Observable<List<Speaker>> {
