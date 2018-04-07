@@ -3,19 +3,25 @@ package net.squanchy.search.view
 import android.app.Activity
 import android.support.annotation.IntDef
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.recyclerview.extensions.ListAdapter
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import net.squanchy.R
 import net.squanchy.imageloader.ImageLoader
 import net.squanchy.imageloader.imageLoaderComponent
 import net.squanchy.schedule.view.EventItemView
-import net.squanchy.schedule.view.EventViewHolder
 import net.squanchy.search.SearchResult
 import net.squanchy.search.SearchListElement
+import net.squanchy.search.SearchListElement.EventElement
+import net.squanchy.search.SearchListElement.SpeakerElement
+import net.squanchy.search.view.SearchItemViewHolder.AlgoliaLogoViewHolder
+import net.squanchy.search.view.SearchItemViewHolder.HeaderViewHolder
+import net.squanchy.search.view.SearchItemViewHolder.SearchEventViewHolder
+import net.squanchy.search.view.SearchItemViewHolder.SpeakerViewHolder
 
-internal class SearchAdapter(activity: AppCompatActivity) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+internal class SearchAdapter(activity: AppCompatActivity) : ListAdapter<SearchListElement, SearchItemViewHolder>(DiffCallback) {
 
     private val imageLoader: ImageLoader
     private val activity: Activity
@@ -36,8 +42,8 @@ internal class SearchAdapter(activity: AppCompatActivity) : RecyclerView.Adapter
         return when (searchResult.elements[position]) {
             is SearchListElement.EventHeader -> HEADER
             is SearchListElement.SpeakerHeader -> HEADER
-            is SearchListElement.EventElement -> EVENT
-            is SearchListElement.SpeakerElement -> SPEAKER
+            is EventElement -> EVENT
+            is SpeakerElement -> SPEAKER
             is SearchListElement.AlgoliaLogo -> ALGOLIA_LOGO
         }
     }
@@ -47,13 +53,13 @@ internal class SearchAdapter(activity: AppCompatActivity) : RecyclerView.Adapter
         return when (item) {
             is SearchListElement.EventHeader -> ITEM_ID_EVENTS_HEADER
             is SearchListElement.SpeakerHeader -> ITEM_ID_SPEAKERS_HEADER
-            is SearchListElement.EventElement -> item.event.numericId
-            is SearchListElement.SpeakerElement -> item.speaker.numericId
+            is EventElement -> item.event.numericId
+            is SpeakerElement -> item.speaker.numericId
             is SearchListElement.AlgoliaLogo -> ITEM_ID_ALGOLIA_LOGO
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, @ViewTypeId viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, @ViewTypeId viewType: Int): SearchItemViewHolder {
         when (viewType) {
             HEADER -> return HeaderViewHolder(LayoutInflater.from(activity).inflate(R.layout.item_search_header, parent, false))
             SPEAKER -> {
@@ -62,7 +68,7 @@ internal class SearchAdapter(activity: AppCompatActivity) : RecyclerView.Adapter
             }
             EVENT -> {
                 val view = LayoutInflater.from(activity).inflate(R.layout.item_schedule_event_talk, parent, false)
-                return EventViewHolder(view as EventItemView)
+                return SearchEventViewHolder(view as EventItemView)
             }
             ALGOLIA_LOGO -> {
                 val view = LayoutInflater.from(activity).inflate(R.layout.item_search_algolia_logo, parent, false)
@@ -72,13 +78,13 @@ internal class SearchAdapter(activity: AppCompatActivity) : RecyclerView.Adapter
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SearchItemViewHolder, position: Int) {
         val item = searchResult.elements[position]
         when (item) {
             is SearchListElement.EventHeader -> (holder as HeaderViewHolder).updateWith(HeaderType.EVENTS)
             is SearchListElement.SpeakerHeader -> (holder as HeaderViewHolder).updateWith(HeaderType.SPEAKERS)
-            is SearchListElement.EventElement -> (holder as EventViewHolder).updateWith(item.event) { listener.onEventClicked(it) }
-            is SearchListElement.SpeakerElement -> (holder as SpeakerViewHolder).updateWith(item.speaker, imageLoader, listener)
+            is EventElement -> (holder as SearchEventViewHolder).updateWith(item.event) { listener.onEventClicked(it) }
+            is SpeakerElement -> (holder as SpeakerViewHolder).updateWith(item.speaker, imageLoader, listener)
             is SearchListElement.AlgoliaLogo -> Unit // Nothing to do
         }
     }
@@ -92,8 +98,7 @@ internal class SearchAdapter(activity: AppCompatActivity) : RecyclerView.Adapter
     fun updateWith(searchResult: SearchResult.Success, listener: SearchRecyclerView.OnSearchResultClickListener) {
         this.searchResult = searchResult
         this.listener = listener
-
-        notifyDataSetChanged()
+        submitList(searchResult.elements)
     }
 
     companion object {
@@ -113,5 +118,22 @@ internal class SearchAdapter(activity: AppCompatActivity) : RecyclerView.Adapter
         private const val ITEM_ID_EVENTS_HEADER: Long = -100
         private const val ITEM_ID_SPEAKERS_HEADER: Long = -101
         private const val ITEM_ID_ALGOLIA_LOGO: Long = -102
+    }
+}
+
+private object DiffCallback : DiffUtil.ItemCallback<SearchListElement>() {
+
+    override fun areItemsTheSame(oldItem: SearchListElement?, newItem: SearchListElement?): Boolean {
+        if (oldItem is EventElement && newItem is EventElement) {
+            return oldItem.event.id == newItem.event.id
+        }
+        if (oldItem is SpeakerElement && newItem is SpeakerElement) {
+            return oldItem.speaker.id == newItem.speaker.id
+        }
+        return oldItem == newItem
+    }
+
+    override fun areContentsTheSame(oldItem: SearchListElement?, newItem: SearchListElement?): Boolean {
+        return oldItem == newItem
     }
 }
