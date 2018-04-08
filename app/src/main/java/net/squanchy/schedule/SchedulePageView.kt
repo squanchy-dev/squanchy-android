@@ -5,7 +5,7 @@ import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.TabLayout
 import android.text.Spanned
 import android.util.AttributeSet
-import android.view.View
+import androidx.view.isVisible
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -125,24 +125,24 @@ class SchedulePageView @JvmOverloads constructor(
     private fun hasTypefaceSpan(text: CharSequence?) = (text as? Spanned)?.hasTypefaceSpan() ?: false
 
     fun updateWith(schedule: Schedule, showRoom: Boolean, onEventClicked: (Event) -> Unit) {
-        progressbar.visibility = View.GONE
+        progressbar.isVisible = false
 
         if (schedule.isEmpty) {
-            viewpager.visibility = GONE
-            tabstrip.visibility = GONE
-            emptyView.visibility = VISIBLE
+            viewpager.isVisible = false
+            tabstrip.isVisible = false
+            emptyView.isVisible = true
             return
         }
 
-        viewpager.visibility = VISIBLE
-        tabstrip.visibility = VISIBLE
-        emptyView.visibility = GONE
+        viewpager.isVisible = true
+        tabstrip.isVisible = true
+        emptyView.isVisible = false
 
         viewPagerAdapter.updateWith(schedule.pages, showRoom, onEventClicked)
         if (viewpager.adapter == null) {
             viewpager.adapter = viewPagerAdapter
         }
 
-        progressbar.visibility = View.GONE
+        progressbar.isVisible = false
     }
 }
