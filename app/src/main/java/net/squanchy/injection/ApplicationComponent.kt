@@ -4,6 +4,7 @@ import android.app.Application
 import dagger.Component
 import net.squanchy.analytics.Analytics
 import net.squanchy.analytics.AnalyticsModule
+import net.squanchy.remoteconfig.FeatureFlags
 import net.squanchy.remoteconfig.RemoteConfig
 import net.squanchy.remoteconfig.RemoteConfigModule
 import net.squanchy.schedule.tracksfilter.TracksFilter
@@ -64,6 +65,8 @@ interface ApplicationComponent {
     fun analytics(): Analytics
 
     fun remoteConfig(): RemoteConfig
+
+    fun featureFlags(): FeatureFlags
 
     fun application(): Application
 
