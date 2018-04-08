@@ -111,12 +111,10 @@ internal class SearchAdapter(activity: AppCompatActivity) : RecyclerView.Adapter
         @Retention(AnnotationRetention.SOURCE)
         annotation class ViewTypeId
 
-        // These values are "random", we count on them not clashing with the other
-        // random values that are used for non-hardcoded numeric IDs (for events
-        // and speakers). This is a reasonable assumption in the Long range.
-        // In addition, the CRC32 values we use as numeric IDs are always positive.
-        private const val ITEM_ID_EVENTS_HEADER: Long = -1
-        private const val ITEM_ID_SPEAKERS_HEADER: Long = -2
-        private const val ITEM_ID_ALGOLIA_LOGO: Long = -3
+        // These values have been calculated manually using crc32, and they are never going to overlap
+        // with the ones from speakers, events or tracks.
+        private const val ITEM_ID_EVENTS_HEADER: Long = 3128461027
+        private const val ITEM_ID_SPEAKERS_HEADER: Long = 1574748858
+        private const val ITEM_ID_ALGOLIA_LOGO: Long = 3230264564
     }
 }
