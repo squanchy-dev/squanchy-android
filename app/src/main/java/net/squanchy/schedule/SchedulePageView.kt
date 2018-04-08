@@ -6,14 +6,17 @@ import android.support.design.widget.TabLayout
 import android.text.Spanned
 import android.util.AttributeSet
 import android.view.View
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.functions.BiFunction
 import kotlinx.android.synthetic.main.view_page_schedule.view.*
 import net.squanchy.R
 import net.squanchy.analytics.Analytics
 import net.squanchy.analytics.ContentType
 import net.squanchy.home.Loadable
 import net.squanchy.navigation.Navigator
+import net.squanchy.remoteconfig.FeatureFlags
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Schedule
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter
@@ -35,6 +38,7 @@ class SchedulePageView @JvmOverloads constructor(
     private val navigate: Navigator
     private val analytics: Analytics
     private val currentTime: CurrentTime
+    private val featureFlags: FeatureFlags
     private var subscriptions = CompositeDisposable()
 
     init {
@@ -45,6 +49,7 @@ class SchedulePageView @JvmOverloads constructor(
         analytics = component.analytics()
         viewPagerAdapter = ScheduleViewPagerAdapter(activity)
         currentTime = component.currentTime()
+        featureFlags = component.featureFlags()
     }
 
     override fun onFinishInflate() {
@@ -84,14 +89,16 @@ class SchedulePageView @JvmOverloads constructor(
 
     override fun startLoading() {
         subscriptions.add(
-            service.schedule()
+            Observable.combineLatest(service.schedule(), featureFlags.showEventRoomInSchedule.toObservable(), combineInPair())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                    { updateWith(it, { event -> onEventClicked(event) }) },
-                    { Timber.e(it) }
+                    { updateWith(it.first, { event -> onEventClicked(event) }) },
+                    Timber::e
                 )
         )
     }
+
+    private fun combineInPair(): BiFunction<Schedule, Boolean, Pair<Schedule, Boolean>> = BiFunction(::Pair)
 
     private fun onEventClicked(event: Event) {
         analytics.trackItemSelected(ContentType.SCHEDULE_ITEM, event.id)
