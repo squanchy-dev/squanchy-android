@@ -15,7 +15,7 @@ class TalkEventItemView @JvmOverloads constructor(
     defStyleAttr: Int = R.attr.cardViewDefaultStyle
 ) : EventItemView(context, attrs, defStyleAttr) {
 
-    override fun updateWith(event: Event) {
+    override fun updateWith(event: Event, showRoom: Boolean) {
         ensureSupportedType(event.type)
 
         timestamp.text = startTimeAsFormattedString(event)

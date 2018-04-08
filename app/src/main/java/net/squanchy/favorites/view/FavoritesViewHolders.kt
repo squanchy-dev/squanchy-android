@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.TextView
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.view.EventItemView
+import net.squanchy.schedule.view.OnEventClickListener
 import org.joda.time.LocalDate
 
 fun favoriteItemViewHolderFor(itemView: View) = when (itemView) {
@@ -17,9 +18,9 @@ sealed class FavoritesViewHolder<T : View>(itemView: T) : RecyclerView.ViewHolde
 
 class EventViewHolder(itemView: EventItemView) : FavoritesViewHolder<EventItemView>(itemView) {
 
-    fun updateWith(event: Event, listener: (Event) -> Unit) {
-        (itemView as EventItemView).updateWith(event)
-        itemView.setOnClickListener { listener(event) }
+    fun updateWith(event: Event, listener: OnEventClickListener?) {
+        (itemView as EventItemView).updateWith(event, false) // TODO import the feature flag here as well
+        itemView.setOnClickListener { listener?.invoke(event) }
     }
 }
 

@@ -14,24 +14,24 @@ class OtherEventItemView @JvmOverloads constructor(
     defStyleAttr: Int = R.attr.cardViewDefaultStyle
 ) : EventItemView(context, attrs, defStyleAttr) {
 
-    override fun updateWith(event: Event) {
-        ensureSupportedType(event.type)
+    override fun updateWith(event: Event, showRoom: Boolean) {
+        event.type.ensureSupported()
 
         timestamp.text = startTimeAsFormattedString(event)
         title.text = event.title
         illustration.setImageResource(illustrationFor(event.type))
     }
 
-    @Suppress("ComplexCondition")
-    private fun ensureSupportedType(type: Event.Type) {
-        if (type === Event.Type.COFFEE_BREAK ||
-            type === Event.Type.LUNCH ||
-            type === Event.Type.OTHER ||
-            type === Event.Type.REGISTRATION ||
-            type === Event.Type.SOCIAL) {
-            return
+    private fun Event.Type.ensureSupported() {
+        when (this) {
+            Event.Type.COFFEE_BREAK,
+            Event.Type.LUNCH,
+            Event.Type.OTHER,
+            Event.Type.REGISTRATION,
+            Event.Type.SOCIAL -> return
+
+            else -> throw IllegalArgumentException("Event with type $name is not supported by this view")
         }
-        throw IllegalArgumentException("Event with type ${type.name} is not supported by this view")
     }
 
     private fun startTimeAsFormattedString(event: Event): String {

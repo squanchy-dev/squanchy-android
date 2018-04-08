@@ -17,14 +17,16 @@ class ScheduleViewPagerAdapter(context: Context) : ViewPagerAdapter<ScheduleDayP
     private var pages = emptyList<SchedulePage>()
     private var initialEventForPage = emptyArray<Event?>()
     private var triggerScrollForPage = emptyArray<((Event) -> Unit)?>()
+    private var showRoom: Boolean = false
 
     private val inflater = LayoutInflater.from(context)
 
-    fun updateWith(pages: List<SchedulePage>, initialEventForPage: Array<Event?>, listener: (Event) -> Unit) {
+    fun updateWith(pages: List<SchedulePage>, showRoom: Boolean, initialEventForPage: Array<Event?>, listener: (Event) -> Unit) {
         this.pages = pages
         this.initialEventForPage = initialEventForPage
         this.listener = listener
         this.triggerScrollForPage = arrayOfNulls(pages.size)
+        this.showRoom = showRoom
         notifyDataSetChanged()
     }
 
@@ -38,7 +40,7 @@ class ScheduleViewPagerAdapter(context: Context) : ViewPagerAdapter<ScheduleDayP
         val events = pages[position].events
         val initialEvent = initialEventForPage[position]
         triggerScrollForPage[position] = { view.autoscrollToEvent(events.indexOf(it), true) }
-        view.updateWith(events, listener)
+        view.updateWith(events, showRoom, listener)
         initialEvent?.let { view.autoscrollToEvent(events.indexOf(it), false) }
     }
 

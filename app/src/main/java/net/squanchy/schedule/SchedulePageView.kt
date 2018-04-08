@@ -92,7 +92,7 @@ class SchedulePageView @JvmOverloads constructor(
             Observable.combineLatest(service.schedule(), featureFlags.showEventRoomInSchedule.toObservable(), combineInPair())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                    { updateWith(it.first, { event -> onEventClicked(event) }) },
+                    { updateWith(it.first, it.second, { event -> onEventClicked(event) }) },
                     Timber::e
                 )
         )
@@ -126,9 +126,9 @@ class SchedulePageView @JvmOverloads constructor(
         }
     }
 
-    private fun hasTypefaceSpan(text: CharSequence?) = if (text !is Spanned) false else text.hasTypefaceSpan()
+    private fun hasTypefaceSpan(text: CharSequence?) = (text as? Spanned)?.hasTypefaceSpan() ?: false
 
-    fun updateWith(schedule: Schedule, onEventClicked: (Event) -> Unit) {
+    fun updateWith(schedule: Schedule, showRoom: Boolean, onEventClicked: (Event) -> Unit) {
         progressbar.visibility = View.GONE
 
         if (schedule.isEmpty) {
@@ -143,7 +143,7 @@ class SchedulePageView @JvmOverloads constructor(
         emptyView.visibility = GONE
 
         val initialEventForPage = schedule.pages.map { schedule.findNextEventForPage(it, currentTime) }.toTypedArray()
-        viewPagerAdapter.updateWith(schedule.pages, initialEventForPage, onEventClicked)
+        viewPagerAdapter.updateWith(schedule.pages, showRoom, initialEventForPage, onEventClicked)
 
         val todayPageIndex = schedule.findTodayIndexOrDefault(currentTime)
         viewpager.setCurrentItem(todayPageIndex, false)

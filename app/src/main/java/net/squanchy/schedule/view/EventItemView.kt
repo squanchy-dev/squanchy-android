@@ -12,5 +12,5 @@ abstract class EventItemView : CardLayout {
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    abstract fun updateWith(event: Event)
+    abstract fun updateWith(event: Event, showRoom: Boolean = false)
 }
