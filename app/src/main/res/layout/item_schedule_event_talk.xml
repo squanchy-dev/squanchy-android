@@ -77,7 +77,8 @@
       app:layout_constraintStart_toEndOf="@+id/timestamp"
       app:layout_constraintTop_toTopOf="@+id/timestamp"
       app:layout_constraintBottom_toBottomOf="@+id/timestamp"
-      tools:text="12:00" />
+      tools:text=" • Main room"
+      tools:visibility="visible" />
 
   </android.support.constraint.ConstraintLayout>
 

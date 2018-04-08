@@ -91,6 +91,7 @@
   <style name="Schedule.Card.Room" parent="None">
     <item name="android:gravity">start|center_vertical</item>
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.Card.Room</item>
+    <item name="android:visibility">gone</item>
   </style>
 
   <style name="TextAppearance.Squanchy.Card.Room" parent="None">
