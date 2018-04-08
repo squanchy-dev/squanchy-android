@@ -1,14 +1,15 @@
 @file:JvmName("ContextUnwrapper")
+
 package net.squanchy.support
 
 import android.content.Context
 import android.content.ContextWrapper
 import android.support.v7.app.AppCompatActivity
 
-tailrec fun unwrapToActivityContext(context: Context?): AppCompatActivity =
-    when (context) {
+tailrec fun Context?.unwrapToActivityContext(): AppCompatActivity =
+    when (this) {
         null -> throw IllegalArgumentException("Context must not be null")
-        is AppCompatActivity -> context
-        is ContextWrapper -> unwrapToActivityContext(context.baseContext)
-        else -> throw IllegalArgumentException("Context type not supported: ${context.javaClass.canonicalName}")
+        is AppCompatActivity -> this
+        is ContextWrapper -> this.baseContext.unwrapToActivityContext()
+        else -> throw IllegalArgumentException("Context type not supported: ${this.javaClass.canonicalName}")
     }

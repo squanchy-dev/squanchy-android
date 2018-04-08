@@ -38,7 +38,7 @@ class SchedulePageView @JvmOverloads constructor(
     private var subscriptions = CompositeDisposable()
 
     init {
-        val activity = unwrapToActivityContext(getContext())
+        val activity = context.unwrapToActivityContext()
         val component = scheduleComponent(activity)
         service = component.scheduleService()
         navigate = component.navigator()

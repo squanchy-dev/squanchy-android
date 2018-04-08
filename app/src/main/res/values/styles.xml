@@ -88,6 +88,17 @@
     <item name="fontFamily">@font/default_typeface_bold</item>
   </style>
 
+  <style name="Schedule.Card.Room" parent="None">
+    <item name="android:gravity">start|center_vertical</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.Card.Room</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.Card.Room" parent="None">
+    <item name="android:textColor">?android:textColorSecondary</item>
+    <item name="android:textSize">@dimen/card_timestamp</item>
+    <item name="fontFamily">@font/default_typeface_regular</item>
+  </style>
+
   <style name="Schedule.Card.ExperienceLevel" parent="None">
     <item name="android:background">@drawable/experience_level_background</item>
     <item name="android:gravity">center</item>

@@ -69,6 +69,16 @@
       app:layout_constraintTop_toBottomOf="@+id/title"
       tools:text="12:00" />
 
+    <TextView
+      android:id="@+id/room"
+      style="@style/Schedule.Card.Room"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:layout_constraintStart_toEndOf="@+id/timestamp"
+      app:layout_constraintTop_toTopOf="@+id/timestamp"
+      app:layout_constraintBottom_toBottomOf="@+id/timestamp"
+      tools:text="12:00" />
+
   </android.support.constraint.ConstraintLayout>
 
 </net.squanchy.schedule.view.TalkEventItemView>

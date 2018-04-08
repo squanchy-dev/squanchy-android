@@ -7,14 +7,12 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.View
-
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.search.SearchResult
 import net.squanchy.speaker.domain.view.Speaker
-import net.squanchy.support.widget.CardLayout
-
 import net.squanchy.support.unwrapToActivityContext
+import net.squanchy.support.widget.CardLayout
 
 class SearchRecyclerView @JvmOverloads constructor(
     context: Context,
@@ -38,7 +36,7 @@ class SearchRecyclerView @JvmOverloads constructor(
         val verticalSpacing = resources.getDimensionPixelSize(R.dimen.card_vertical_margin)
         addItemDecoration(CardOnlySpacingItemDecorator(horizontalSpacing, verticalSpacing))
 
-        adapter = SearchAdapter(unwrapToActivityContext(context))
+        adapter = SearchAdapter(context.unwrapToActivityContext())
         setAdapter(adapter)
         clipToPadding = false
     }

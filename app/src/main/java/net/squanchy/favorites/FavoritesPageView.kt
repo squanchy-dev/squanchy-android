@@ -33,7 +33,7 @@ class FavoritesPageView @JvmOverloads constructor(
     private val disposable = CompositeDisposable()
 
     init {
-        with(favoritesComponent(unwrapToActivityContext(context))) {
+        with(favoritesComponent(context.unwrapToActivityContext())) {
             favoritesService = favoritesService()
             navigator = navigator()
             analytics = analytics()
@@ -126,7 +126,7 @@ class FavoritesPageView @JvmOverloads constructor(
         // ⚠️ HACK this is DIRTY and HORRIBLE but it's the only way we can ship this
         // without rewriting the whole data layer. Sorry. I swear, we know it sucks
         // and we want to fix this ASAP.
-        val activity: HomeActivity = unwrapToActivityContext(context) as HomeActivity
+        val activity: HomeActivity = context.unwrapToActivityContext() as HomeActivity
         activity.requestSignIn()
     }
 
