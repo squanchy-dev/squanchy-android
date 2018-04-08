@@ -4,7 +4,6 @@ import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
-import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Schedule
 import net.squanchy.schedule.domain.view.SchedulePage
 import net.squanchy.schedule.domain.view.Track
@@ -99,6 +98,10 @@ class FirestoreScheduleService(
             .sortedBy(SchedulePage::date)
 
     private fun FirestoreSchedulePage.toSortedDomainSchedulePage(checksum: Checksum, timeZone: DateTimeZone): SchedulePage =
-        SchedulePage(day.id, LocalDate(day.date, timeZone), events.map { it.toEvent(checksum, timeZone) }
-            .sortedBy(Event::startTime))
+        SchedulePage(
+            day.id,
+            LocalDate(day.date, timeZone),
+            events.map { it.toEvent(checksum, timeZone) }
+                .sortedWith(compareBy({ it.startTime }, { it.place.orNull()?.position ?: -1 }))
+        )
 }
