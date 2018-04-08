@@ -122,6 +122,6 @@ internal class SearchAdapter(activity: AppCompatActivity) : RecyclerView.Adapter
         // As we cannot guarantee that the speaker ids are going to be unique compared
         // to the ones for the events, we are making them negatives and offsetting them by 4,
         // to be sure they do not overlap the ids for the two headers and the logo
-        private val speakerIdOffsetter: (Long) -> Long = { (it * -1) - 4 }
+        private val speakerIdOffsetter: (Long) -> Long = { -it - 4 }
     }
 }
