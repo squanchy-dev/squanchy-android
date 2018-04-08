@@ -16,11 +16,12 @@
 
     <net.squanchy.schedule.view.ScheduleSpeakerView
       android:id="@+id/speaker_container"
-      android:layout_width="match_parent"
+      android:layout_width="@dimen/match_constraint"
       android:layout_height="wrap_content"
       android:layout_marginBottom="@dimen/card_title_margin_top"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent">
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintEnd_toEndOf="parent">
 
       <LinearLayout
         android:id="@+id/speakerPhotosContainer"
@@ -52,7 +53,7 @@
     <TextView
       android:id="@+id/title"
       style="@style/Schedule.Card.Title"
-      android:layout_width="match_parent"
+      android:layout_width="@dimen/match_constraint"
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/card_title_margin_top"
       app:layout_constraintStart_toStartOf="parent"
