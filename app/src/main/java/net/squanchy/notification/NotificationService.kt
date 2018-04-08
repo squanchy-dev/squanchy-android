@@ -11,10 +11,10 @@ internal class NotificationService(private val authService: AuthService, private
     fun sortedFavourites(): Observable<List<Event>> {
         return authService.ifUserSignedInThenObservableFrom { userId ->
             eventRepository.events(userId)
-                    .map { it.filter { it.favorited } }
-                    .map { it.sortedBy { it.startTime } }
-                    .take(1)
-                    .subscribeOn(Schedulers.io())
+                .map { it.filter { it.favorited } }
+                .map { it.sortedBy { it.startTime } }
+                .take(1)
+                .subscribeOn(Schedulers.io())
         }
     }
 }
