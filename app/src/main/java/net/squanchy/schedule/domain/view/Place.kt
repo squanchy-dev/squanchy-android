@@ -5,5 +5,6 @@ import arrow.core.Option
 data class Place(
     val id: String,
     val name: String,
-    val floor: Option<String>
+    val floor: Option<String>,
+    val position: Int
 )
