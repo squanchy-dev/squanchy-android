@@ -1,3 +1,5 @@
+##### Sample release config #####
+
 # The path of the release keystore file (inside the team-props folder)
 storeFile=signing/release.keystore
 
