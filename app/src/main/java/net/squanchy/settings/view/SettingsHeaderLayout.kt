@@ -4,14 +4,14 @@ import android.content.Context
 import android.support.design.widget.AppBarLayout
 import android.util.AttributeSet
 import android.widget.LinearLayout
-import kotlinx.android.synthetic.main.activity_settings.view.userCirclePhotoView
-import kotlinx.android.synthetic.main.activity_settings.view.usernameTextView
+import arrow.core.Option
+import kotlinx.android.synthetic.main.activity_settings.view.*
 import net.squanchy.R
 import net.squanchy.imageloader.ImageLoader
 import net.squanchy.imageloader.imageLoaderComponent
 import net.squanchy.service.repository.GoogleData
 import net.squanchy.service.repository.User
-import net.squanchy.support.lang.Optional
+import net.squanchy.support.lang.getOrThrow
 import net.squanchy.support.unwrapToActivityContext
 
 class SettingsHeaderLayout(context: Context, attrs: AttributeSet?) : AppBarLayout(context, attrs) {
@@ -27,9 +27,9 @@ class SettingsHeaderLayout(context: Context, attrs: AttributeSet?) : AppBarLayou
         super.setOrientation(LinearLayout.VERTICAL)
     }
 
-    fun updateWith(user: Optional<User>) {
-        if (user.isPresent && !user.get().isAnonymous) {
-            updateWithAuthenticatedUser(user.get())
+    fun updateWith(user: Option<User>) {
+        if (user.isDefined() && !user.getOrThrow().isAnonymous) {
+            updateWithAuthenticatedUser(user.getOrThrow())
         } else {
             updateWithNoOrAnonymousUser()
         }
@@ -38,18 +38,18 @@ class SettingsHeaderLayout(context: Context, attrs: AttributeSet?) : AppBarLayou
     private fun updateWithAuthenticatedUser(user: User) {
         val googleUserInfo = user.googleData
         if (googleUserInfo != null) {
-            updateUserPhotoFrom(googleUserInfo)
+            updateUserPhotoFrom(googleUserInfo, imageLoader)
             usernameTextView.text = googleUserInfo.displayName
         }
     }
 
-    private fun updateUserPhotoFrom(userInfo: GoogleData) {
+    private fun updateUserPhotoFrom(userInfo: GoogleData, imageLoader: ImageLoader?) {
         if (imageLoader == null) {
-            return
+            throw IllegalStateException("Unable to access the ImageLoader, it hasn't been initialized yet")
         }
 
         if (userInfo.photoUrl != null) {
-            imageLoader!!.load(userInfo.photoUrl)
+            imageLoader.load(userInfo.photoUrl)
                 .error(R.drawable.ic_no_avatar)
                 .into(userCirclePhotoView)
         } else {

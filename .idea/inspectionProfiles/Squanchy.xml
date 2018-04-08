@@ -130,6 +130,7 @@
       <option name="m_minLength" value="0" />
       <option name="m_maxLength" value="0" />
     </inspection_tool>
+    <inspection_tool class="LiftReturnOrAssignment" enabled="true" level="INFORMATION" enabled_by_default="true" />
     <inspection_tool class="ListIndexOfReplaceableByContains" enabled="true" level="INFO" enabled_by_default="true" />
     <inspection_tool class="LiteralAsArgToStringEquals" enabled="true" level="INFO" enabled_by_default="true" />
     <inspection_tool class="LocalCanBeFinal" enabled="false" level="WEAK WARNING" enabled_by_default="false">

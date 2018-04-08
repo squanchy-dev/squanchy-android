@@ -8,6 +8,7 @@ import net.squanchy.R
 import net.squanchy.imageloader.ImageLoader
 import net.squanchy.search.view.SearchRecyclerView.OnSearchResultClickListener
 import net.squanchy.speaker.domain.view.Speaker
+import net.squanchy.support.lang.getOrThrow
 
 class SearchItemView @JvmOverloads constructor(
     context: Context,
@@ -36,8 +37,8 @@ class SearchItemView @JvmOverloads constructor(
         }
 
         val avatarImageURL = speaker.photoUrl
-        if (avatarImageURL.isPresent) {
-            imageLoader.load(avatarImageURL.get()).into(speakerPhoto)
+        if (avatarImageURL.isDefined()) {
+            imageLoader.load(avatarImageURL.getOrThrow()).into(speakerPhoto)
         } else {
             speakerPhoto.setImageResource(R.drawable.ic_no_avatar)
         }

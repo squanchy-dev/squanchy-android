@@ -6,6 +6,7 @@ import android.view.View
 import kotlinx.android.synthetic.main.item_schedule_event_talk.view.*
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Event
+import net.squanchy.support.lang.getOrThrow
 import org.joda.time.format.DateTimeFormat
 
 class TalkEventItemView @JvmOverloads constructor(
@@ -20,8 +21,8 @@ class TalkEventItemView @JvmOverloads constructor(
         timestamp.text = startTimeAsFormattedString(event)
         title.text = event.title
 
-        if (event.experienceLevel.isPresent) {
-            experience_level.setExperienceLevel(event.experienceLevel.get())
+        if (event.experienceLevel.isDefined()) {
+            experience_level.setExperienceLevel(event.experienceLevel.getOrThrow())
             experience_level.visibility = View.VISIBLE
         } else {
             experience_level.visibility = View.INVISIBLE

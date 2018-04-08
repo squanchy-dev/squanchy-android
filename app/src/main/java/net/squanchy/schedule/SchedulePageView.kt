@@ -17,10 +17,10 @@ import net.squanchy.navigation.Navigator
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Schedule
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter
-import net.squanchy.support.font.applyTypeface
-import net.squanchy.support.font.getFontFor
-import net.squanchy.support.font.hasTypefaceSpan
 import net.squanchy.support.system.CurrentTime
+import net.squanchy.support.text.applyTypeface
+import net.squanchy.support.text.getFontFor
+import net.squanchy.support.text.hasTypefaceSpan
 import net.squanchy.support.unwrapToActivityContext
 import timber.log.Timber
 

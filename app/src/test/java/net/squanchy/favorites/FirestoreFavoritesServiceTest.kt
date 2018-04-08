@@ -1,5 +1,6 @@
 package net.squanchy.favorites
 
+import arrow.core.Option
 import io.reactivex.Observable
 import net.squanchy.schedule.ScheduleService
 import net.squanchy.schedule.domain.view.aDay
@@ -8,7 +9,6 @@ import net.squanchy.schedule.domain.view.aSchedulePage
 import net.squanchy.schedule.domain.view.anEvent
 import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.repository.User
-import net.squanchy.support.lang.Optional
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -92,7 +92,7 @@ class FirestoreFavoritesServiceTest {
 
     @Test
     fun `should return false when the user is not signed in`() {
-        `when`(authService.currentUser()).thenReturn(Observable.just(Optional.absent()))
+        `when`(authService.currentUser()).thenReturn(Observable.just(Option.empty()))
 
         favoritesService.currentUserIsSignedIn()
             .test()
@@ -101,7 +101,7 @@ class FirestoreFavoritesServiceTest {
 
     @Test
     fun `should return true when the user is signed in`() {
-        `when`(authService.currentUser()).thenReturn(Observable.just(Optional.of(mock(User::class.java))))
+        `when`(authService.currentUser()).thenReturn(Observable.just(Option(mock(User::class.java))))
 
         favoritesService.currentUserIsSignedIn()
             .test()

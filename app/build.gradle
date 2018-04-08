@@ -127,12 +127,9 @@ dependencies {
     implementation project(':renderthread')
 
     implementation libraries.app.androidKtx
+    implementation libraries.app.arrowCore
 
     implementation libraries.app.crashlytics
-    implementation(libraries.app.findbugsAnnotations) {
-        exclude group: 'net.jcip'
-        exclude group: 'com.google.code.findbugs'
-    }
     implementation(libraries.app.firebase) {
         exclude group: 'com.android.support'
     }
@@ -150,7 +147,6 @@ dependencies {
 
     implementation libraries.app.flexbox
 
-    annotationProcessor libraries.app.glideCompiler
     kapt libraries.app.glideCompiler
     implementation libraries.app.glide
     implementation libraries.app.glideOkHttp3
@@ -170,7 +166,6 @@ dependencies {
     implementation libraries.app.moshi
     implementation libraries.app.moshiKotlin
 
-    annotationProcessor libraries.app.daggerCompiler
     kapt libraries.app.daggerCompiler
     implementation libraries.app.dagger
 

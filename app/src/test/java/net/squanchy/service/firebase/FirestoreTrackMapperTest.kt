@@ -1,7 +1,8 @@
 package net.squanchy.service.firebase
 
+import com.google.common.truth.Truth.assertThat
 import net.squanchy.support.checksum.Checksum
-import org.junit.Assert
+import net.squanchy.support.lang.getOrThrow
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -10,9 +11,9 @@ import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnit
 import org.mockito.junit.MockitoRule
 
-private const val FAKE_ID = "ABC123"
-private const val FAKE_NAME = "ABCD"
-private const val FAKE_COLOR = "#ABCDEF"
+private const val AN_ID = "ABC123"
+private const val A_NAME = "ABCD"
+private const val A_COLOR = "#AB0123"
 
 private const val A_VALUE = "whatever"
 private const val A_CHECKSUM = 1000L
@@ -33,57 +34,57 @@ class FirestoreTrackMapperTest {
 
     @Test
     fun `track id should match when mapped`() {
-        val firestoreTrack = aFirestoreTrack(id = FAKE_ID)
+        val firestoreTrack = aFirestoreTrack(id = AN_ID)
         val track = firestoreTrack.toTrack(checksum)
-        Assert.assertEquals(FAKE_ID, track.id)
+        assertThat(track.id).isEqualTo(AN_ID)
     }
 
     @Test
     fun `track name should match when mapped`() {
-        val firestoreTrack = aFirestoreTrack(name = FAKE_NAME)
+        val firestoreTrack = aFirestoreTrack(name = A_NAME)
         val track = firestoreTrack.toTrack(checksum)
-        Assert.assertEquals(FAKE_NAME, track.name)
+        assertThat(track.name).isEqualTo(A_NAME)
     }
 
     @Test
     fun `track url should match when mapped`() {
-        val firestoreTrack = aFirestoreTrack(iconUrl = FAKE_NAME)
+        val firestoreTrack = aFirestoreTrack(iconUrl = A_NAME)
         val track = firestoreTrack.toTrack(checksum)
-        Assert.assertEquals(FAKE_NAME, track.iconUrl.get())
+        assertThat(track.iconUrl.getOrThrow()).isEqualTo(A_NAME)
     }
 
     @Test
-    fun `track url should be absent when mapping null`() {
+    fun `track url should be empty when mapping null`() {
         val firestoreTrack = aFirestoreTrack(iconUrl = null)
         val track = firestoreTrack.toTrack(checksum)
-        Assert.assertFalse(track.iconUrl.isPresent)
+        assertThat(track.iconUrl.isEmpty()).isTrue()
     }
 
     @Test
     fun `accent color should match when mapped`() {
-        val firestoreTrack = aFirestoreTrack(accentColor = FAKE_COLOR)
+        val firestoreTrack = aFirestoreTrack(accentColor = A_COLOR)
         val track = firestoreTrack.toTrack(checksum)
-        Assert.assertEquals(FAKE_COLOR, track.accentColor.get())
+        assertThat(track.accentColor.getOrThrow()).isEqualTo(A_COLOR)
     }
 
     @Test
-    fun `accent color should be absent when mapping null`() {
+    fun `accent color should be empty when mapping null`() {
         val firestoreTrack = aFirestoreTrack(accentColor = null)
         val track = firestoreTrack.toTrack(checksum)
-        Assert.assertFalse(track.accentColor.isPresent)
+        assertThat(track.accentColor.isEmpty()).isTrue()
     }
 
     @Test
     fun `text color should match when mapped`() {
-        val firestoreTrack = aFirestoreTrack(textColor = FAKE_COLOR)
+        val firestoreTrack = aFirestoreTrack(textColor = A_COLOR)
         val track = firestoreTrack.toTrack(checksum)
-        Assert.assertEquals(FAKE_COLOR, track.textColor.get())
+        assertThat(track.textColor.getOrThrow()).isEqualTo(A_COLOR)
     }
 
     @Test
-    fun `text color should be absent when mapping null`() {
+    fun `text color should be empty when mapping null`() {
         val firestoreTrack = aFirestoreTrack(textColor = null)
         val track = firestoreTrack.toTrack(checksum)
-        Assert.assertFalse(track.textColor.isPresent)
+        assertThat(track.textColor.isEmpty()).isTrue()
     }
 }

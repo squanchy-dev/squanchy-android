@@ -12,7 +12,7 @@ detailed instructions.
 
 Please note that this app uses some third party services:
  * Firebase (Firestore, Push messages, etc.)
- * Fabric: Crashlytics and Twitter
+ * Fabric: Crashlytics
  
 While not all of them are strictly necessary for the app to work (with the exception of Firebase's RTDB), it is currently not possible for the code to
 work without them. We plan on eventually abstracting away the implementations so that they would simply be disabled if there is no API configured, but

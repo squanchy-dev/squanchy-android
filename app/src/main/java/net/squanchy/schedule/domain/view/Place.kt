@@ -1,9 +1,9 @@
 package net.squanchy.schedule.domain.view
 
-import net.squanchy.support.lang.Optional
+import arrow.core.Option
 
 data class Place(
     val id: String,
     val name: String,
-    val floor: Optional<String>
+    val floor: Option<String>
 )

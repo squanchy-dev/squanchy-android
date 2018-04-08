@@ -1,20 +1,17 @@
 package net.squanchy.tweets.view
 
-import android.annotation.TargetApi
 import android.content.Context
 import android.content.res.Resources
-import android.os.Build
 import android.support.annotation.AttrRes
 import android.support.annotation.ColorInt
-import android.text.Html
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.util.TypedValue
-
 import net.squanchy.R
 import net.squanchy.service.firebase.model.twitter.FirestoreTwitterHashtag
 import net.squanchy.service.firebase.model.twitter.FirestoreTwitterMention
 import net.squanchy.service.firebase.model.twitter.FirestoreTwitterUrl
+import net.squanchy.support.text.parseHtml
 import java.util.regex.Pattern
 
 class TweetUrlSpanFactory(private val context: Context) {
@@ -55,7 +52,7 @@ class TweetUrlSpanFactory(private val context: Context) {
     }
 
     private fun FirestoreTwitterHashtag.createUrlSpanWith(spanFactory: TweetUrlSpanFactory): TweetUrlSpan =
-        spanFactory.createFor(String.format(QUERY_URL_TEMPLATE, text))
+        spanFactory.createFor("https://twitter.com/search?q=$text")
 
     private fun createFor(url: String): TweetUrlSpan {
         val linkColor = getColorFromTheme(context.theme, R.attr.tweetLinkTextColor)
@@ -76,7 +73,7 @@ class TweetUrlSpanFactory(private val context: Context) {
     }
 
     private fun FirestoreTwitterMention.createUrlSpanWith(spanFactory: TweetUrlSpanFactory): TweetUrlSpan =
-        spanFactory.createFor(String.format(MENTION_URL_TEMPLATE, screenName))
+        spanFactory.createFor("https://twitter.com/$screenName")
 
     private fun offsetStart(entity: FirestoreTwitterUrl, startIndex: Int): FirestoreTwitterUrl {
         entity.start = entity.start - startIndex
@@ -99,21 +96,7 @@ class TweetUrlSpanFactory(private val context: Context) {
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.N) // The older fromHtml() is only called pre-24
-    private fun parseHtml(description: String): Spanned {
-        // TODO handle this properly
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY)
-        } else {
-            @Suppress("DEPRECATION") // This is a "compat" method call, we only use this on pre-N
-            Html.fromHtml(description)
-        }
-    }
-
     companion object {
-        private const val BASE_TWITTER_URL = "https://twitter.com/"
-        private const val MENTION_URL_TEMPLATE = BASE_TWITTER_URL + "%s"
-        private const val QUERY_URL_TEMPLATE = BASE_TWITTER_URL + "search?q=%s"
 
         private val HTML_ENTITY_PATTERN = Pattern.compile("&#?\\w+;")
     }

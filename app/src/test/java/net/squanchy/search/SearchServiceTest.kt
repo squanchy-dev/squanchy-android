@@ -1,5 +1,6 @@
 package net.squanchy.search
 
+import arrow.core.Option
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -13,7 +14,6 @@ import net.squanchy.service.repository.EventRepository
 import net.squanchy.service.repository.SpeakerRepository
 import net.squanchy.service.repository.User
 import net.squanchy.speaker.domain.view.aSpeaker
-import net.squanchy.support.lang.Optional
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -114,7 +114,7 @@ class SearchServiceTest {
             TODO("not implemented")
         }
 
-        override fun currentUser(): Observable<Optional<User>> {
+        override fun currentUser(): Observable<Option<User>> {
             TODO("not implemented")
         }
 
