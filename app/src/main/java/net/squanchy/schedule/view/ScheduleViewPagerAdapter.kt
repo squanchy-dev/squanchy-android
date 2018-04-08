@@ -1,6 +1,7 @@
 package net.squanchy.schedule.view
 
 import android.content.Context
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ class ScheduleViewPagerAdapter(context: Context) : ViewPagerAdapter<ScheduleDayP
     private var pages = emptyList<SchedulePage>()
 
     private val inflater = LayoutInflater.from(context)
+    private val viewPool = RecyclerView.RecycledViewPool()
 
     fun updateWith(pages: List<SchedulePage>, listener: (Event) -> Unit) {
         this.pages = pages
@@ -27,7 +29,9 @@ class ScheduleViewPagerAdapter(context: Context) : ViewPagerAdapter<ScheduleDayP
     override fun getCount() = pages.size
 
     override fun createView(container: ViewGroup, position: Int): ScheduleDayPageView {
-        return inflater.inflate(R.layout.view_page_schedule_day, container, false) as ScheduleDayPageView
+        val recyclerView = inflater.inflate(R.layout.view_page_schedule_day, container, false) as ScheduleDayPageView
+        recyclerView.recycledViewPool = viewPool
+        return recyclerView
     }
 
     override fun bindView(view: ScheduleDayPageView, position: Int) {
