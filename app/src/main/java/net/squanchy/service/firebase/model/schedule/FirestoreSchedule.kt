@@ -29,6 +29,7 @@ class FirestorePlace {
     lateinit var id: String
     lateinit var name: String
     var floor: String? = null
+    var position: Int = -1
 }
 
 class FirestoreTrack {

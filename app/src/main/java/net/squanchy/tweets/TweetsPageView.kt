@@ -25,7 +25,7 @@ class TweetsPageView @JvmOverloads constructor(
 ) : CoordinatorLayout(context, attrs, defStyleAttr), Loadable {
 
     init {
-        with(twitterComponent(unwrapToActivityContext(context))) {
+        with(twitterComponent(context.unwrapToActivityContext())) {
             twitterService = service()
             navigator = navigator()
         }

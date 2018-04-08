@@ -20,7 +20,7 @@ class SettingsHeaderLayout(context: Context, attrs: AttributeSet?) : AppBarLayou
 
     init {
         if (!isInEditMode) {
-            imageLoader = imageLoaderComponent(unwrapToActivityContext(context))
+            imageLoader = imageLoaderComponent(context.unwrapToActivityContext())
                 .imageLoader()
         }
 

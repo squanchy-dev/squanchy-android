@@ -19,10 +19,12 @@ class ScheduleViewPagerAdapter(context: Context) : ViewPagerAdapter<ScheduleDayP
 
     private val inflater = LayoutInflater.from(context)
     private val viewPool = RecyclerView.RecycledViewPool()
+    private var showRoom: Boolean = false
 
-    fun updateWith(pages: List<SchedulePage>, listener: (Event) -> Unit) {
+    fun updateWith(pages: List<SchedulePage>, showRoom: Boolean, listener: (Event) -> Unit) {
         this.pages = pages
         this.listener = listener
+        this.showRoom = showRoom
         notifyDataSetChanged()
     }
 
@@ -36,7 +38,7 @@ class ScheduleViewPagerAdapter(context: Context) : ViewPagerAdapter<ScheduleDayP
 
     override fun bindView(view: ScheduleDayPageView, position: Int) {
         val events = pages[position].events
-        view.updateWith(events, listener)
+        view.updateWith(events, showRoom, listener)
     }
 
     override fun getPageTitle(position: Int): CharSequence? {

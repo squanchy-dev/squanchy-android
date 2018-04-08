@@ -31,7 +31,7 @@ class VenueInfoPageView @JvmOverloads constructor(
 
     init {
         if (!isInEditMode) {
-            val activity = unwrapToActivityContext(getContext())
+            val activity = context.unwrapToActivityContext()
             val component = venueInfoComponent(activity)
             navigator = component.navigator()
             service = component.service()

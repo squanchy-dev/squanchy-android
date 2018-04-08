@@ -29,9 +29,8 @@ class ScheduleDayPageView @JvmOverloads constructor(
         addItemDecoration(CardSpacingItemDecorator(horizontalSpacing, verticalSpacing))
     }
 
-    fun updateWith(newData: List<Event>, listener: (Event) -> Unit) {
-        adapter.eventClickListener = listener
+    fun updateWith(newData: List<Event>, showRoom: Boolean, listener: (Event) -> Unit) {
         setAdapterIfNone(adapter)
-        adapter.submitList(newData)
+        adapter.updateWith(newData, showRoom, listener)
     }
 }

@@ -3,31 +3,42 @@ package net.squanchy.schedule.view
 import android.content.Context
 import android.support.v7.recyclerview.extensions.ListAdapter
 import android.support.v7.util.DiffUtil
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import net.squanchy.R
-import net.squanchy.favorites.view.EventViewHolder
 import net.squanchy.schedule.domain.view.Event
 
-internal class EventsAdapter(
-    context: Context
-) : ListAdapter<Event, EventViewHolder>(DiffCallback) {
+internal class EventsAdapter(context: Context) : ListAdapter<Event, EventViewHolder>(DiffCallback) {
 
     init {
         setHasStableIds(true)
     }
 
     private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
+    private var showRoom = false
+    private var eventClickListener: OnEventClickListener? = null
 
-    lateinit var eventClickListener: OnEventClickListener
+    fun updateWith(list: List<Event>, showRoom: Boolean, listener: OnEventClickListener) {
+        this.showRoom = showRoom
+        this.eventClickListener = listener
+        super.submitList(list)
+    }
 
     override fun getItemId(position: Int) = getItem(position).numericId
 
     override fun getItemViewType(position: Int): Int {
         val itemType = getItem(position).type
         return when (itemType) {
-            Event.Type.KEYNOTE, Event.Type.TALK, Event.Type.WORKSHOP -> ItemViewType.TYPE_TALK.ordinal
-            Event.Type.COFFEE_BREAK, Event.Type.LUNCH, Event.Type.OTHER, Event.Type.REGISTRATION, Event.Type.SOCIAL -> ItemViewType.TYPE_OTHER.ordinal
+            Event.Type.KEYNOTE,
+            Event.Type.TALK,
+            Event.Type.WORKSHOP -> ItemViewType.TYPE_TALK.ordinal
+
+            Event.Type.COFFEE_BREAK,
+            Event.Type.LUNCH,
+            Event.Type.OTHER,
+            Event.Type.REGISTRATION,
+            Event.Type.SOCIAL -> ItemViewType.TYPE_OTHER.ordinal
         }
     }
 
@@ -41,7 +52,24 @@ internal class EventsAdapter(
     }
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
-        holder.updateWith(getItem(position), eventClickListener)
+        holder.updateWith(getItem(position), showRoom, eventClickListener)
+    }
+
+    @Deprecated(
+        message = "Use updateWith() instead",
+        replaceWith = ReplaceWith("updateWith(list, showRoom, eventClickListener)"),
+        level = DeprecationLevel.ERROR
+    )
+    override fun submitList(list: MutableList<Event>?) {
+        throw UnsupportedOperationException("Use updateWith() instead")
+    }
+}
+
+internal class EventViewHolder(itemView: EventItemView) : RecyclerView.ViewHolder(itemView) {
+
+    fun updateWith(event: Event, showRoom: Boolean, listener: OnEventClickListener?) {
+        (itemView as EventItemView).updateWith(event, showRoom)
+        itemView.setOnClickListener { listener?.invoke(event) }
     }
 }
 
