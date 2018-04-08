@@ -2,7 +2,6 @@ package net.squanchy.schedule.view
 
 import android.content.Context
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.LinearSmoothScroller
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import net.squanchy.R
@@ -21,7 +20,7 @@ class ScheduleDayPageView @JvmOverloads constructor(
     override fun onFinishInflate() {
         super.onFinishInflate()
 
-        val layoutManager = SnappingLinearLayoutManager(context)
+        val layoutManager = LinearLayoutManager(context)
         setLayoutManager(layoutManager)
         adapter = EventsAdapter(context)
 
@@ -33,32 +32,5 @@ class ScheduleDayPageView @JvmOverloads constructor(
     fun updateWith(newData: List<Event>, showRoom: Boolean, listener: (Event) -> Unit) {
         setAdapterIfNone(adapter)
         adapter.updateWith(newData, showRoom, listener)
-    }
-
-    private var userHasScrolled: Boolean = false
-
-    override fun onScrolled(dx: Int, dy: Int) {
-        userHasScrolled = true
-        super.onScrolled(dx, dy)
-    }
-
-    fun autoscrollToEvent(eventPosition: Int, animate: Boolean) {
-        if (userHasScrolled) return // TODO only do it if it's an actual autoscroll (i.e., not because user has tapped the tab)
-
-        when {
-            animate -> smoothScrollToPosition(eventPosition)
-            else -> scrollToPosition(eventPosition)
-        }
-    }
-
-    private class SnappingLinearLayoutManager(context: Context) : LinearLayoutManager(context) {
-
-        override fun smoothScrollToPosition(recyclerView: RecyclerView, state: RecyclerView.State?, position: Int) {
-            val smoothScroller = object : LinearSmoothScroller(recyclerView.context) {
-                override fun getVerticalSnapPreference() = SNAP_TO_START
-            }
-            smoothScroller.targetPosition = position
-            startSmoothScroll(smoothScroller)
-        }
     }
 }

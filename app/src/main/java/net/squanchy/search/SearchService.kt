@@ -60,22 +60,17 @@ class SearchService(
         }
 
         return ArrayList<SearchListElement>(events.size + speakers.size).apply {
-            if (events.isNotEmpty()) {
-                add(EventHeader)
-                addAll(events.map(::EventElement))
-            }
-
             if (speakers.isNotEmpty()) {
                 add(SpeakerHeader)
                 addAll(speakers.map(::SpeakerElement))
             }
 
+            if (events.isNotEmpty()) {
+                add(EventHeader)
+                addAll(events.map(::EventElement))
+            }
+
             add(AlgoliaLogo)
         }
-    }
-
-    fun speakers(): Observable<List<Speaker>> {
-        return speakerRepository.speakers()
-            .map { it.sortedBy(Speaker::name) }
     }
 }

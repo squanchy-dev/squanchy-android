@@ -58,10 +58,6 @@ class SchedulePageView @JvmOverloads constructor(
         tabstrip.setupWithViewPager(viewpager)
         hackToApplyTypefaces(tabstrip)
 
-        viewpager.adapter = viewPagerAdapter
-
-        tabstrip.addOnTabSelectedListener(TrackingOnTabSelectedListener(analytics, viewPagerAdapter))
-
         setupToolbar()
     }
 
@@ -92,7 +88,7 @@ class SchedulePageView @JvmOverloads constructor(
             Observable.combineLatest(service.schedule(), featureFlags.showEventRoomInSchedule.toObservable(), combineInPair())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                    { updateWith(it.first, it.second, { event -> onEventClicked(event) }) },
+                    { updateWith(it.first, it.second, ::onEventClicked) },
                     Timber::e
                 )
         )
@@ -142,42 +138,11 @@ class SchedulePageView @JvmOverloads constructor(
         tabstrip.visibility = VISIBLE
         emptyView.visibility = GONE
 
-        val initialEventForPage = schedule.pages.map { schedule.findNextEventForPage(it, currentTime) }.toTypedArray()
-        viewPagerAdapter.updateWith(schedule.pages, showRoom, initialEventForPage, onEventClicked)
+        viewPagerAdapter.updateWith(schedule.pages, showRoom, onEventClicked)
+        if (viewpager.adapter == null) {
+            viewpager.adapter = viewPagerAdapter
+        }
 
-        val todayPageIndex = schedule.findTodayIndexOrDefault(currentTime)
-        viewpager.setCurrentItem(todayPageIndex, false)
-
-        tabstrip.addOnTabSelectedListener(ScrollingOnTabSelectedListener(schedule, viewPagerAdapter, currentTime))
         progressbar.visibility = View.GONE
-    }
-
-    private interface OnTabSelectedListener : TabLayout.OnTabSelectedListener {
-
-        override fun onTabReselected(tab: TabLayout.Tab) {}
-        override fun onTabUnselected(tab: TabLayout.Tab) {}
-        override fun onTabSelected(tab: TabLayout.Tab) {}
-    }
-
-    private class ScrollingOnTabSelectedListener(
-        private val schedule: Schedule,
-        private val viewPagerAdapter: ScheduleViewPagerAdapter,
-        private val currentTime: CurrentTime
-    ) : OnTabSelectedListener {
-
-        override fun onTabReselected(tab: TabLayout.Tab) {
-            val page = schedule.pages[tab.position]
-            schedule.findNextEventForPage(page, currentTime)?.let { viewPagerAdapter.refresh(tab.position, it) }
-        }
-    }
-
-    private class TrackingOnTabSelectedListener(
-        private val analytics: Analytics,
-        private val viewPagerAdapter: ScheduleViewPagerAdapter
-    ) : OnTabSelectedListener {
-
-        override fun onTabSelected(tab: TabLayout.Tab) {
-            analytics.trackItemSelected(ContentType.SCHEDULE_DAY, viewPagerAdapter.getPageDayId(tab.position))
-        }
     }
 }
