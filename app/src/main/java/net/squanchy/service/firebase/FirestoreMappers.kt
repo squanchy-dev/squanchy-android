@@ -20,7 +20,7 @@ fun FirestorePlace.toPlace(): Place = Place(id = id, name = name, floor = floor.
 
 fun FirestoreTrack.toTrack(checksum: Checksum) = Track(
     id = id,
-    numericId = checksum.getChecksumOf(id),
+    numericId = checksum.getChecksumOf("track_$id"),
     name = name,
     accentColor = accentColor.option(),
     textColor = textColor.option(),
@@ -28,7 +28,7 @@ fun FirestoreTrack.toTrack(checksum: Checksum) = Track(
 )
 
 fun FirestoreSpeaker.toSpeaker(checksum: Checksum) = Speaker(
-    numericId = checksum.getChecksumOf(id),
+    numericId = checksum.getChecksumOf("speaker_$id"),
     id = id,
     name = name,
     bio = bio,
@@ -51,7 +51,7 @@ fun FirestoreVenue.toVenue() = Venue(
 
 fun FirestoreEvent.toEvent(checksum: Checksum, timeZone: DateTimeZone, isFavorite: Boolean = false) = Event(
     id = id,
-    numericId = checksum.getChecksumOf(id),
+    numericId = checksum.getChecksumOf("event_$id"),
     startTime = LocalDateTime(startTime, timeZone),
     endTime = LocalDateTime(endTime, timeZone),
     title = title,

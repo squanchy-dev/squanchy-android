@@ -51,7 +51,7 @@ internal class SearchAdapter(activity: AppCompatActivity) : RecyclerView.Adapter
         val item = searchResult.elements[position]
         return when (item) {
             is EventElement -> item.event.numericId
-            is SpeakerElement -> speakerIdOffsetter(item.speaker.numericId)
+            is SpeakerElement -> item.speaker.numericId
             is SearchListElement.EventHeader -> ITEM_ID_EVENTS_HEADER
             is SearchListElement.SpeakerHeader -> ITEM_ID_SPEAKERS_HEADER
             is SearchListElement.AlgoliaLogo -> ITEM_ID_ALGOLIA_LOGO
@@ -118,10 +118,5 @@ internal class SearchAdapter(activity: AppCompatActivity) : RecyclerView.Adapter
         private const val ITEM_ID_EVENTS_HEADER: Long = -1
         private const val ITEM_ID_SPEAKERS_HEADER: Long = -2
         private const val ITEM_ID_ALGOLIA_LOGO: Long = -3
-
-        // As we cannot guarantee that the speaker ids are going to be unique compared
-        // to the ones for the events, we are making them negatives and offsetting them by 4,
-        // to be sure they do not overlap the ids for the two headers and the logo
-        private val speakerIdOffsetter: (Long) -> Long = { -it - 4 }
     }
 }
