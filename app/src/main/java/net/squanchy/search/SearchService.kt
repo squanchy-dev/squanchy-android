@@ -73,9 +73,4 @@ class SearchService(
             add(AlgoliaLogo)
         }
     }
-
-    fun speakers(): Observable<List<Speaker>> {
-        return speakerRepository.speakers()
-            .map { it.sortedBy(Speaker::name) }
-    }
 }
