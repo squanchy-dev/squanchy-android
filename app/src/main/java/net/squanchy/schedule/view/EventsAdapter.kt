@@ -55,6 +55,11 @@ internal class EventsAdapter(context: Context) : ListAdapter<Event, EventViewHol
         holder.updateWith(getItem(position), showRoom, eventClickListener)
     }
 
+    @Deprecated(
+        message = "Use updateWith() instead",
+        replaceWith = ReplaceWith("updateWith(list, showRoom, eventClickListener)"),
+        level = DeprecationLevel.ERROR
+    )
     override fun submitList(list: MutableList<Event>?) {
         throw UnsupportedOperationException("Use updateWith() instead")
     }
