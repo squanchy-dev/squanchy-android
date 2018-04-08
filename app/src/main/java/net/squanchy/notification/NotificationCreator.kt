@@ -160,7 +160,7 @@ class NotificationCreator(private val context: Context) {
     }
 
     private fun getSpeakerNamesFrom(speakers: List<Speaker>): String {
-        val speakerNames = speakers.joinToString(prefix = ", ", transform = { it.name })
+        val speakerNames = speakers.joinToString(separator = ", ", transform = { it.name })
 
         return context.getString(R.string.event_notification_starting_by, speakerNames)
     }
