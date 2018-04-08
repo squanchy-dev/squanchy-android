@@ -74,7 +74,7 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
 
         val searchSubscription = querySubject.throttleLast(QUERY_DEBOUNCE_TIMEOUT, TimeUnit.MILLISECONDS)
             .doOnNext(::updateSearchActionIcon)
-            .startWith(EMPTY_QUERY)
+            .startWith(getInitialQuery())
             .flatMap(searchService::find)
             .distinctUntilChanged()
             .subscribeOn(Schedulers.io())
@@ -91,6 +91,11 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
         }
 
         searchField.requestFocus()
+    }
+
+    private fun getInitialQuery(): String {
+        val text = searchField.text
+        return text?.toString() ?: EMPTY_QUERY
     }
 
     private fun updateSearchActionIcon(query: String) {
