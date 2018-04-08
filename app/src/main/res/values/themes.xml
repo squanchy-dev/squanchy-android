@@ -102,7 +102,9 @@
 
   <style name="Theme.Squanchy.SignIn" parent="Theme.Squanchy.BottomSheet" />
 
-  <style name="Theme.Squanchy.Search" parent="Theme.Squanchy.MostlyWhite" />
+  <style name="Theme.Squanchy.Search" parent="Theme.Squanchy.MostlyWhite">
+    <item name="android:windowBackground">@color/window_background</item>
+  </style>
 
   <style name="Theme.Squanchy.Settings" parent="Theme.Squanchy.PrimaryStatusBar">
     <item name="colorAccent">?attr/colorPrimary</item>
