@@ -110,7 +110,7 @@ class DebugActivity : AppCompatActivity() {
         "UI",
         Option(generateColor()),
         Option(generateColor()),
-        Option("gs://droidcon-italy-2017.appspot.com/tracks/0.webp")
+        Option.empty()
     )
 
     private fun generateColor(): String {
