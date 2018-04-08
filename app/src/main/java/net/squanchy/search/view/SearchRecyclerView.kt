@@ -24,10 +24,6 @@ class SearchRecyclerView @JvmOverloads constructor(
 
     private lateinit var adapter: SearchAdapter
 
-    init {
-        itemAnimator = null
-    }
-
     override fun onFinishInflate() {
         super.onFinishInflate()
 
