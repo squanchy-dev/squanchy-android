@@ -54,12 +54,28 @@
         android:labelFor="@+id/textPassword"
         android:text="@string/wifi_config_error_password" />
 
-      <TextView
-        android:id="@+id/textPassword"
-        style="@style/WifiConfigError.NetworkValue"
+      <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="password" />
+        android:layout_height="wrap_content">
+
+        <TextView
+          android:id="@+id/textPassword"
+          style="@style/WifiConfigError.NetworkValue"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentStart="true"
+          android:layout_toStartOf="@id/labelCopyPassword"
+          tools:text="password" />
+
+        <TextView
+          android:id="@+id/labelCopyPassword"
+          style="@style/WifiConfigError.CopyPassword"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:text="@string/wifi_config_error_copy" />
+
+      </RelativeLayout>
     </LinearLayout>
 
   </net.squanchy.support.widget.CardLayout>
@@ -68,10 +84,10 @@
     android:id="@+id/imageView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/wifi_config_error_image_margin_top"
     app:layout_constraintEnd_toEndOf="@+id/textView2"
     app:layout_constraintStart_toStartOf="@+id/textView2"
     app:layout_constraintTop_toBottomOf="@+id/textView3"
-    android:layout_marginTop="@dimen/wifi_config_error_image_margin_top"
     app:srcCompat="@drawable/ic_wifi_error" />
 
   <TextView

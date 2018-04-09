@@ -128,5 +128,7 @@
   <string name="wifi_config_error_subtitle">Configure it with these details</string>
   <string name="wifi_config_error_cancel">Cancel</string>
   <string name="wifi_config_error_open_settings">Open settings</string>
+  <string name="wifi_config_error_copy">COPY</string>
+  <string name="wifi_config_error_password_copied">Network password copied to clipboard</string>
 
 </resources>

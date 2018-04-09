@@ -764,6 +764,17 @@
     <item name="fontFamily">@font/default_typeface_medium</item>
   </style>
 
+  <style name="WifiConfigError.CopyPassword" parent="None">
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.WifiConfigError.CopyPassword</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.WifiConfigError.CopyPassword"
+    parent="None">
+    <item name="android:textColor">?colorPrimary</item>
+    <item name="android:textSize">@dimen/wifi_config_error_copy_text</item>
+    <item name="fontFamily">@font/title_typeface</item>
+  </style>
+
   <style name="WifiConfigError.Button" parent="Button.Colored">
     <item name="android:backgroundTint">?colorPrimary</item>
     <item name="android:minHeight">@dimen/wifi_config_error_button_min_height</item>

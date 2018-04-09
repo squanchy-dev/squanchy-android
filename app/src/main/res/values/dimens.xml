@@ -210,7 +210,7 @@
   <dimen name="schedule_empty_view_text_size">16sp</dimen>
   <dimen name="schedule_empty_view_drawable_padding">24dp</dimen>
 
-  <dimen name="wifi_config_error_button_width">148dp</dimen>
+  <dimen name="wifi_config_error_button_width">160dp</dimen>
   <dimen name="wifi_config_error_button_min_height">56dp</dimen>
   <dimen name="wifi_config_error_button_padding_horizontal">24dp</dimen>
   <dimen name="wifi_config_error_button_margin_bottom">16dp</dimen>
@@ -226,5 +226,6 @@
   <dimen name="wifi_config_error_metword_details_separator_height">1dp</dimen>
   <dimen name="wifi_config_error_metword_details_separator_margin">16dp</dimen>
   <dimen name="wifi_config_error_image_margin_top">32dp</dimen>
+  <dimen name="wifi_config_error_copy_text">14sp</dimen>
 
 </resources>
