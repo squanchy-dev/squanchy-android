@@ -8,6 +8,8 @@ import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP
 import android.net.Uri
+import android.provider.Settings
+import android.support.v4.content.ContextCompat.startActivity
 import net.squanchy.BuildConfig
 import net.squanchy.about.AboutActivity
 import net.squanchy.about.licenses.LicensesActivity
@@ -174,6 +176,10 @@ class Navigator(
 
     fun toWifiConfigError(ssid: String, password: String) {
         start(WifiConfigErrorActivity.createIntent(activity, ssid, password))
+    }
+
+    fun toWifiSystemSettings() {
+        start(Intent(Settings.ACTION_WIFI_SETTINGS))
     }
 
     private fun startForResult(intent: Intent, requestCode: Int) {

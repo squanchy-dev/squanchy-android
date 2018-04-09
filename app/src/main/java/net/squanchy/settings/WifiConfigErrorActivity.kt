@@ -25,6 +25,10 @@ class WifiConfigErrorActivity : AppCompatActivity() {
             Toast.makeText(this, R.string.wifi_config_error_password_copied, Toast.LENGTH_SHORT).show()
         }
         buttonCancel.setOnClickListener { finish() }
+
+        val component = wifiConfigErrorActivityComponent(this)
+        val navigator = component.navigator()
+        buttonSettings.setOnClickListener { navigator.toWifiSystemSettings(); finish() }
     }
 
     private fun copyToClipboard(password: String) {
