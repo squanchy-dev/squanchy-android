@@ -109,6 +109,11 @@
     <item name="fontFamily">@font/default_typeface_regular</item>
   </style>
 
+  <style name="Theme.Squanchy.WifiConfig" parent="Theme.Squanchy">
+    <item name="colorAccent">?attr/colorPrimary</item>
+    <item name="fontFamily">@font/default_typeface_regular</item>
+  </style>
+
   <style name="Theme.Squanchy.About" parent="Theme.Squanchy.MostlyWhite" />
 
   <style name="Theme.Squanchy.Licenses" parent="Theme.Squanchy.PrimaryStatusBar" />

@@ -18,6 +18,7 @@ import net.squanchy.onboarding.OnboardingPage
 import net.squanchy.schedule.tracksfilter.ScheduleTracksFilterActivity
 import net.squanchy.search.SearchActivity
 import net.squanchy.settings.SettingsActivity
+import net.squanchy.settings.WifiConfigErrorActivity
 import net.squanchy.signin.SignInActivity
 import net.squanchy.signin.SignInOrigin
 import net.squanchy.speaker.SpeakerDetailsActivity
@@ -169,6 +170,10 @@ class Navigator(
     fun toOnboardingForResult(page: OnboardingPage, requestCode: Int) {
         val intent = Intent(activity, page.activityClass)
         startForResult(intent, requestCode)
+    }
+
+    fun toWifiConfigError(ssid: String, password: String) {
+        start(WifiConfigErrorActivity.createIntent(activity, ssid, password))
     }
 
     private fun startForResult(intent: Intent, requestCode: Int) {

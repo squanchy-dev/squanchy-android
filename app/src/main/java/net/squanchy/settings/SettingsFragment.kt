@@ -124,7 +124,7 @@ class SettingsFragment : PreferenceFragment() {
         if (networkEnabled) {
             Snackbar.make(viewOrThrow, R.string.settings_message_wifi_success, Snackbar.LENGTH_INDEFINITE).show()
         } else {
-            // TODO: display the error in a better way
+            navigator.toWifiConfigError(ssid, password)
         }
     }
 

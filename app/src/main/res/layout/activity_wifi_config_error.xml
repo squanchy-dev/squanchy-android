@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  style="@style/WifiConfigError"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context="net.squanchy.settings.WifiConfigErrorActivity">
+
+  <net.squanchy.support.widget.CardLayout
+    android:id="@+id/linearLayout"
+    android:layout_width="@dimen/match_constraint"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/wifi_config_error_card_margin_bottom"
+    android:layout_marginEnd="@dimen/wifi_config_error_card_margin_side"
+    android:layout_marginStart="@dimen/wifi_config_error_card_margin_side"
+    android:background="@color/white"
+    android:padding="@dimen/wifi_config_error_card_padding"
+    app:layout_constraintBottom_toTopOf="@+id/buttonCancel"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical">
+
+      <TextView
+        style="@style/WifiConfigError.NetworkValue.Label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:labelFor="@+id/textSsid"
+        android:text="@string/wifi_config_error_access_point_name" />
+
+      <TextView
+        android:id="@+id/textSsid"
+        style="@style/WifiConfigError.NetworkValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/textPassword"
+        tools:text="networkSsid" />
+
+      <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/wifi_config_error_metword_details_separator_height"
+        android:layout_margin="@dimen/wifi_config_error_metword_details_separator_margin"
+        android:background="@color/grey" />
+
+      <TextView
+        style="@style/WifiConfigError.NetworkValue.Label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:labelFor="@+id/textPassword"
+        android:text="@string/wifi_config_error_password" />
+
+      <TextView
+        android:id="@+id/textPassword"
+        style="@style/WifiConfigError.NetworkValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="password" />
+    </LinearLayout>
+
+  </net.squanchy.support.widget.CardLayout>
+
+  <ImageView
+    android:id="@+id/imageView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintEnd_toEndOf="@+id/textView2"
+    app:layout_constraintStart_toStartOf="@+id/textView2"
+    app:layout_constraintTop_toBottomOf="@+id/textView3"
+    android:layout_marginTop="@dimen/wifi_config_error_image_margin_top"
+    app:srcCompat="@drawable/ic_wifi_error" />
+
+  <TextView
+    android:id="@+id/textView2"
+    style="@style/WifiConfigError.Subtitle"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/wifi_config_error_subtitle_margin_bottom"
+    android:text="@string/wifi_config_error_subtitle"
+    app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+    app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+    app:layout_constraintStart_toStartOf="@+id/linearLayout" />
+
+  <TextView
+    android:id="@+id/textView3"
+    style="@style/WifiConfigError.Title"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/wifi_config_error_title_margin_top"
+    android:text="@string/wifi_config_error_title"
+    app:layout_constraintEnd_toEndOf="@+id/imageView"
+    app:layout_constraintStart_toStartOf="@+id/imageView"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <Button
+    android:id="@+id/buttonSettings"
+    style="@style/WifiConfigError.Button"
+    android:layout_width="@dimen/wifi_config_error_button_width"
+    android:layout_height="wrap_content"
+    android:text="@string/wifi_config_error_open_settings"
+    app:layout_constraintBaseline_toBaselineOf="@+id/buttonCancel"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.5"
+    app:layout_constraintStart_toEndOf="@+id/buttonCancel" />
+
+  <Button
+    android:id="@+id/buttonCancel"
+    style="@style/WifiConfigError.Button"
+    android:layout_width="@dimen/wifi_config_error_button_width"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/wifi_config_error_button_margin_bottom"
+    android:text="@string/wifi_config_error_cancel"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toStartOf="@+id/buttonSettings"
+    app:layout_constraintHorizontal_bias="0.5"
+    app:layout_constraintHorizontal_chainStyle="spread"
+    app:layout_constraintStart_toStartOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>

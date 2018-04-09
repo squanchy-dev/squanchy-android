@@ -74,6 +74,10 @@
       android:label="@string/settings_label" />
 
     <activity
+      android:name="net.squanchy.settings.WifiConfigErrorActivity"
+      android:theme="@style/Theme.Squanchy.WifiConfig" />
+
+    <activity
       android:name="net.squanchy.about.AboutActivity"
       android:theme="@style/Theme.Squanchy.About"
       android:label="@string/about_label" />
