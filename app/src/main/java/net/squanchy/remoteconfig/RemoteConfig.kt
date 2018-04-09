@@ -14,6 +14,9 @@ class RemoteConfig(
     private val cacheExpiryInSeconds: Long
         get() = if (debugMode) EXPIRY_IMMEDIATELY else EXPIRY_ONE_HOUR
 
+    fun getBoolean(key: String): Single<Boolean> =
+        getConfigValue { firebaseRemoteConfig.getBoolean(key) }
+
     private fun <T> getConfigValue(action: () -> T): Single<T> {
         return fetchAndActivate(cacheExpiryInSeconds)
             .andThen(Single.fromCallable { action() })

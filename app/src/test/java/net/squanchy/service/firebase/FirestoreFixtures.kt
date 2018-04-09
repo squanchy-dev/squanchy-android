@@ -55,11 +55,13 @@ Un gran marinero con puños de acero""",
 fun aFirestorePlace(
     id: String = "banana-room",
     name: String = "The banana room™",
-    floor: String? = "Banana floor"
+    floor: String? = "Banana floor",
+    position: Int = 0
 ) = FirestorePlace().apply {
     this.id = id
     this.name = name
     this.floor = floor
+    this.position = position
 }
 
 fun aFirestoreDay(

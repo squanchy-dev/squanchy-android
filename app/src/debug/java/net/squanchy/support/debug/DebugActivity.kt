@@ -83,7 +83,7 @@ class DebugActivity : AppCompatActivity() {
     }
 
     private fun createPlace(): Option<Place> = Option(
-        Place("1", "That room over there", Option.empty())
+        Place("1", "That room over there", Option.empty(), -1)
     )
 
     private fun createTalkSpeakers(): List<Speaker> {

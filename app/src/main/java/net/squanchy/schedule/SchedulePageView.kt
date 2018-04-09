@@ -5,15 +5,18 @@ import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.TabLayout
 import android.text.Spanned
 import android.util.AttributeSet
-import android.view.View
+import androidx.view.isVisible
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.functions.BiFunction
 import kotlinx.android.synthetic.main.view_page_schedule.view.*
 import net.squanchy.R
 import net.squanchy.analytics.Analytics
 import net.squanchy.analytics.ContentType
 import net.squanchy.home.Loadable
 import net.squanchy.navigation.Navigator
+import net.squanchy.remoteconfig.FeatureFlags
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Schedule
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter
@@ -35,16 +38,18 @@ class SchedulePageView @JvmOverloads constructor(
     private val navigate: Navigator
     private val analytics: Analytics
     private val currentTime: CurrentTime
+    private val featureFlags: FeatureFlags
     private var subscriptions = CompositeDisposable()
 
     init {
-        val activity = unwrapToActivityContext(getContext())
+        val activity = context.unwrapToActivityContext()
         val component = scheduleComponent(activity)
         service = component.scheduleService()
         navigate = component.navigator()
         analytics = component.analytics()
         viewPagerAdapter = ScheduleViewPagerAdapter(activity)
         currentTime = component.currentTime()
+        featureFlags = component.featureFlags()
     }
 
     override fun onFinishInflate() {
@@ -52,10 +57,6 @@ class SchedulePageView @JvmOverloads constructor(
 
         tabstrip.setupWithViewPager(viewpager)
         hackToApplyTypefaces(tabstrip)
-
-        viewpager.adapter = viewPagerAdapter
-
-        tabstrip.addOnTabSelectedListener(TrackingOnTabSelectedListener(analytics, viewPagerAdapter))
 
         setupToolbar()
     }
@@ -84,14 +85,16 @@ class SchedulePageView @JvmOverloads constructor(
 
     override fun startLoading() {
         subscriptions.add(
-            service.schedule()
+            Observable.combineLatest(service.schedule(), featureFlags.showEventRoomInSchedule.toObservable(), combineInPair())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                    { updateWith(it, { event -> onEventClicked(event) }) },
-                    { Timber.e(it) }
+                    { updateWith(it.first, it.second, ::onEventClicked) },
+                    Timber::e
                 )
         )
     }
+
+    private fun combineInPair(): BiFunction<Schedule, Boolean, Pair<Schedule, Boolean>> = BiFunction(::Pair)
 
     private fun onEventClicked(event: Event) {
         analytics.trackItemSelected(ContentType.SCHEDULE_ITEM, event.id)
@@ -119,58 +122,27 @@ class SchedulePageView @JvmOverloads constructor(
         }
     }
 
-    private fun hasTypefaceSpan(text: CharSequence?) = if (text !is Spanned) false else text.hasTypefaceSpan()
+    private fun hasTypefaceSpan(text: CharSequence?) = (text as? Spanned)?.hasTypefaceSpan() ?: false
 
-    fun updateWith(schedule: Schedule, onEventClicked: (Event) -> Unit) {
-        progressbar.visibility = View.GONE
+    fun updateWith(schedule: Schedule, showRoom: Boolean, onEventClicked: (Event) -> Unit) {
+        progressbar.isVisible = false
 
         if (schedule.isEmpty) {
-            viewpager.visibility = GONE
-            tabstrip.visibility = GONE
-            emptyView.visibility = VISIBLE
+            viewpager.isVisible = false
+            tabstrip.isVisible = false
+            emptyView.isVisible = true
             return
         }
 
-        viewpager.visibility = VISIBLE
-        tabstrip.visibility = VISIBLE
-        emptyView.visibility = GONE
+        viewpager.isVisible = true
+        tabstrip.isVisible = true
+        emptyView.isVisible = false
 
-        val initialEventForPage = schedule.pages.map { schedule.findNextEventForPage(it, currentTime) }.toTypedArray()
-        viewPagerAdapter.updateWith(schedule.pages, initialEventForPage, onEventClicked)
-
-        val todayPageIndex = schedule.findTodayIndexOrDefault(currentTime)
-        viewpager.setCurrentItem(todayPageIndex, false)
-
-        tabstrip.addOnTabSelectedListener(ScrollingOnTabSelectedListener(schedule, viewPagerAdapter, currentTime))
-        progressbar.visibility = View.GONE
-    }
-
-    private interface OnTabSelectedListener : TabLayout.OnTabSelectedListener {
-
-        override fun onTabReselected(tab: TabLayout.Tab) {}
-        override fun onTabUnselected(tab: TabLayout.Tab) {}
-        override fun onTabSelected(tab: TabLayout.Tab) {}
-    }
-
-    private class ScrollingOnTabSelectedListener(
-        private val schedule: Schedule,
-        private val viewPagerAdapter: ScheduleViewPagerAdapter,
-        private val currentTime: CurrentTime
-    ) : OnTabSelectedListener {
-
-        override fun onTabReselected(tab: TabLayout.Tab) {
-            val page = schedule.pages[tab.position]
-            schedule.findNextEventForPage(page, currentTime)?.let { viewPagerAdapter.refresh(tab.position, it) }
+        viewPagerAdapter.updateWith(schedule.pages, showRoom, onEventClicked)
+        if (viewpager.adapter == null) {
+            viewpager.adapter = viewPagerAdapter
         }
-    }
 
-    private class TrackingOnTabSelectedListener(
-        private val analytics: Analytics,
-        private val viewPagerAdapter: ScheduleViewPagerAdapter
-    ) : OnTabSelectedListener {
-
-        override fun onTabSelected(tab: TabLayout.Tab) {
-            analytics.trackItemSelected(ContentType.SCHEDULE_DAY, viewPagerAdapter.getPageDayId(tab.position))
-        }
+        progressbar.isVisible = false
     }
 }

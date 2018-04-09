@@ -69,11 +69,13 @@ fun anEvent(
 fun aPlace(
     id: String = "banana-room",
     name: String = "The banana room™",
-    floor: Option<String> = Option("Banana floor")
+    floor: Option<String> = Option("Banana floor"),
+    position: Int = 0
 ) = Place(
     id = id,
     name = name,
-    floor = floor
+    floor = floor,
+    position = position
 )
 
 fun aTrack(

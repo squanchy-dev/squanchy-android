@@ -24,7 +24,7 @@ class SpeakerHeaderView @JvmOverloads constructor(
 
     init {
         if (!isInEditMode) {
-            val activity = unwrapToActivityContext(context)
+            val activity = context.unwrapToActivityContext()
             imageLoader = imageLoaderComponent(activity).imageLoader()
         }
 

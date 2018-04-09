@@ -99,6 +99,10 @@ class FirestoreScheduleService(
             .sortedBy(SchedulePage::date)
 
     private fun FirestoreSchedulePage.toSortedDomainSchedulePage(checksum: Checksum, timeZone: DateTimeZone): SchedulePage =
-        SchedulePage(day.id, LocalDate(day.date, timeZone), events.map { it.toEvent(checksum, timeZone) }
-            .sortedBy(Event::startTime))
+        SchedulePage(
+            day.id,
+            LocalDate(day.date, timeZone),
+            events.map { it.toEvent(checksum, timeZone) }
+                .sortedWith(compareBy(Event::startTime, { it.place.orNull()?.position ?: -1 }))
+        )
 }

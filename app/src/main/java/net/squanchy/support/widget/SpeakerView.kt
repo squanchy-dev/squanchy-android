@@ -27,7 +27,7 @@ abstract class SpeakerView @JvmOverloads constructor(
 
     init {
         if (!isInEditMode) {
-            val activity = unwrapToActivityContext(context)
+            val activity = context.unwrapToActivityContext()
             imageLoader = imageLoaderComponent(activity).imageLoader()
         }
         super.setOrientation(LinearLayout.VERTICAL)
