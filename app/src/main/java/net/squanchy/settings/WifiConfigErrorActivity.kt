@@ -24,6 +24,7 @@ class WifiConfigErrorActivity : AppCompatActivity() {
             copyToClipboard(password)
             Toast.makeText(this, R.string.wifi_config_error_password_copied, Toast.LENGTH_SHORT).show()
         }
+        buttonCancel.setOnClickListener { finish() }
     }
 
     private fun copyToClipboard(password: String) {
