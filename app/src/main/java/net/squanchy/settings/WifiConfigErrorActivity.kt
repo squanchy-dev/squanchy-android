@@ -17,10 +17,10 @@ class WifiConfigErrorActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_wifi_config_error)
 
-        textSsid.text = intent.getSerializableExtra(EXTRA_WIFI_SSID).toString()
+        ssidValue.text = intent.getSerializableExtra(EXTRA_WIFI_SSID).toString()
         val password = intent.getSerializableExtra(EXTRA_WIFI_PASSWORD).toString()
-        textPassword.text = password
-        labelCopyPassword.setOnClickListener {
+        passwordValue.text = password
+        copyPasswordButton.setOnClickListener {
             copyToClipboard(password)
             Toast.makeText(this, R.string.wifi_config_error_password_copied, Toast.LENGTH_SHORT).show()
         }
