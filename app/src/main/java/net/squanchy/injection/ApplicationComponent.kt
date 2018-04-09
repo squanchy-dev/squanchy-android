@@ -4,13 +4,16 @@ import android.app.Application
 import dagger.Component
 import net.squanchy.analytics.Analytics
 import net.squanchy.analytics.AnalyticsModule
+import net.squanchy.remoteconfig.FeatureFlags
 import net.squanchy.remoteconfig.RemoteConfig
 import net.squanchy.remoteconfig.RemoteConfigModule
 import net.squanchy.schedule.tracksfilter.TracksFilter
 import net.squanchy.schedule.tracksfilter.TracksFilterModule
-import net.squanchy.service.firebase.FirebaseAuthService
+import net.squanchy.search.algolia.AlgoliaModule
+import net.squanchy.search.algolia.AlgoliaSearchEngine
 import net.squanchy.service.firebase.FirestoreDbService
 import net.squanchy.service.firebase.injection.FirestoreModule
+import net.squanchy.service.repository.AuthService
 import net.squanchy.service.repository.EventRepository
 import net.squanchy.service.repository.SpeakerRepository
 import net.squanchy.service.repository.TracksRepository
@@ -24,6 +27,7 @@ fun createApplicationComponent(application: Application): ApplicationComponent {
         .repositoryModule(RepositoryModule())
         .checksumModule(ChecksumModule())
         .applicationContextModule(ApplicationContextModule(application))
+        .algoliaModule(AlgoliaModule())
         .analyticsModule(AnalyticsModule(application))
         .remoteConfigModule(RemoteConfigModule())
         .tracksFilterModule(TracksFilterModule())
@@ -33,6 +37,7 @@ fun createApplicationComponent(application: Application): ApplicationComponent {
 @ApplicationLifecycle
 @Component(
     modules = [
+        AlgoliaModule::class,
         ApplicationContextModule::class,
         FirestoreModule::class,
         ChecksumModule::class,
@@ -47,7 +52,7 @@ interface ApplicationComponent {
 
     fun firestoreDbService(): FirestoreDbService
 
-    fun firebaseAuthService(): FirebaseAuthService
+    fun firebaseAuthService(): AuthService
 
     fun eventRepository(): EventRepository
 
@@ -61,5 +66,9 @@ interface ApplicationComponent {
 
     fun remoteConfig(): RemoteConfig
 
+    fun featureFlags(): FeatureFlags
+
     fun application(): Application
+
+    fun algoliaSearchEngine(): AlgoliaSearchEngine
 }

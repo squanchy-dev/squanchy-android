@@ -7,6 +7,7 @@ import dagger.Provides
 import net.squanchy.injection.ApplicationLifecycle
 import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.firebase.FirestoreDbService
+import net.squanchy.service.repository.AuthService
 
 @Module
 class FirestoreModule {
@@ -25,7 +26,5 @@ class FirestoreModule {
 
     @ApplicationLifecycle
     @Provides
-    internal fun firebaseAuthService(firebaseAuth: FirebaseAuth): FirebaseAuthService = FirebaseAuthService(
-        firebaseAuth
-    )
+    internal fun firebaseAuthService(firebaseAuth: FirebaseAuth): AuthService = FirebaseAuthService(firebaseAuth)
 }

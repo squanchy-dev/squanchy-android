@@ -1,15 +1,14 @@
 package net.squanchy.speaker
 
-import net.squanchy.service.firebase.FirebaseAuthService
-
 import dagger.Module
 import dagger.Provides
+import net.squanchy.service.repository.AuthService
 import net.squanchy.service.repository.SpeakerRepository
 
 @Module
 internal class SpeakerDetailsModule {
 
     @Provides
-    fun scheduleService(speakerRepository: SpeakerRepository, authService: FirebaseAuthService) =
+    fun scheduleService(speakerRepository: SpeakerRepository, authService: AuthService) =
         SpeakerDetailsService(speakerRepository, authService)
 }

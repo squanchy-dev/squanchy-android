@@ -14,7 +14,8 @@ import net.squanchy.R
 import net.squanchy.navigation.Navigator
 import net.squanchy.speaker.domain.view.Speaker
 import net.squanchy.support.config.DialogLayoutParameters
-import net.squanchy.support.lang.Optional
+import net.squanchy.support.lang.getOrThrow
+import timber.log.Timber
 
 class SpeakerDetailsActivity : AppCompatActivity() {
 
@@ -22,7 +23,7 @@ class SpeakerDetailsActivity : AppCompatActivity() {
     private lateinit var service: SpeakerDetailsService
     private lateinit var navigator: Navigator
 
-    private var speaker = Optional.absent<Speaker>()
+    private var speaker: Speaker? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,9 +43,11 @@ class SpeakerDetailsActivity : AppCompatActivity() {
 
     private fun setupToolbar(toolbar: Toolbar) {
         setSupportActionBar(toolbar)
-        supportActionBar!!.setDisplayShowTitleEnabled(false)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_close)
+        supportActionBar?.apply {
+            setDisplayShowTitleEnabled(false)
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.ic_close)
+        }
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -66,14 +69,17 @@ class SpeakerDetailsActivity : AppCompatActivity() {
         subscriptions.add(
             service.speaker(speakerId)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { onSpeakerRetrieved(it) }
+                .subscribe(
+                    ::onSpeakerRetrieved,
+                    { e -> Timber.e(e, "Error retrieving the speaker") }
+                )
         )
     }
 
     private fun onSpeakerRetrieved(speaker: Speaker) {
         speakerDetailsLayout.updateWith(speaker)
 
-        this.speaker = Optional.of(speaker)
+        this.speaker = speaker
         invalidateOptionsMenu()
     }
 
@@ -86,37 +92,33 @@ class SpeakerDetailsActivity : AppCompatActivity() {
         val twitterItem = menu.findItem(R.id.action_speaker_twitter)
         val websiteItem = menu.findItem(R.id.action_speaker_website)
 
-        if (speaker.isPresent) {
-            val speaker = this.speaker.get()
-
-            twitterItem.isVisible = speaker.twitterUsername.isPresent
-            websiteItem.isVisible = speaker.personalUrl.isPresent
-        } else {
-            twitterItem.isVisible = false
-            websiteItem.isVisible = false
-        }
+        twitterItem.isVisible = speaker?.twitterUsername?.isDefined() ?: false
+        websiteItem.isVisible = speaker?.personalUrl?.isDefined() ?: false
 
         return super.onPrepareOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val itemId = item.itemId
-        return when (itemId) {
+        when (itemId) {
             android.R.id.home -> {
                 finish()
-                true
+                return true
             }
             R.id.action_speaker_twitter -> {
-                navigator.toTwitterProfile(speaker.get().twitterUsername.get())
-                true
+                navigator.toTwitterProfile(assumeNonNull(speaker?.twitterUsername?.getOrThrow()))
+                return true
             }
             R.id.action_speaker_website -> {
-                navigator.toExternalUrl(speaker.get().personalUrl.get())
-                true
+                navigator.toExternalUrl(assumeNonNull(speaker?.personalUrl?.getOrThrow()))
+                return true
             }
-            else -> super.onOptionsItemSelected(item)
+            else -> return super.onOptionsItemSelected(item)
         }
     }
+
+    private fun <T> assumeNonNull(value: T?): T =
+        value ?: throw IllegalStateException("Trying to access a null value assuming it was non-nullable")
 
     override fun onStop() {
         super.onStop()

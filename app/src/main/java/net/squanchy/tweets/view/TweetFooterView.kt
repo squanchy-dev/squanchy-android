@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.item_tweet.view.*
 import net.squanchy.R
+import net.squanchy.imageloader.ImageLoader
 import net.squanchy.imageloader.imageLoaderComponent
 import net.squanchy.support.unwrapToActivityContext
 
@@ -15,9 +16,13 @@ class TweetFooterView @JvmOverloads constructor(
     defStyleRes: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr, defStyleRes) {
 
-    private val imageLoader = imageLoaderComponent(unwrapToActivityContext(context)).imageLoader()
+    private var imageLoader: ImageLoader? = null
 
     init {
+        if (!isInEditMode) {
+            val activity = context.unwrapToActivityContext()
+            imageLoader = imageLoaderComponent(activity).imageLoader()
+        }
         super.setOrientation(LinearLayout.HORIZONTAL)
     }
 
@@ -27,10 +32,14 @@ class TweetFooterView @JvmOverloads constructor(
 
     fun updateWith(url: String, formattedRecap: String) {
         tweetFooterText.text = formattedRecap
-        updateUserPhoto(url)
+        updateUserPhoto(url, imageLoader)
     }
 
-    private fun updateUserPhoto(url: String) {
+    private fun updateUserPhoto(url: String, imageLoader: ImageLoader?) {
+        if (imageLoader == null) {
+            throw IllegalStateException("Unable to access the ImageLoader, it hasn't been initialized yet")
+        }
+
         tweetUserPhoto.setImageDrawable(null)
         imageLoader.load(url)
             .error(R.drawable.ic_no_avatar)

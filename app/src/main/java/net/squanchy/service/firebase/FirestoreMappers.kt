@@ -11,32 +11,32 @@ import net.squanchy.service.firebase.model.schedule.FirestoreSpeaker
 import net.squanchy.service.firebase.model.schedule.FirestoreTrack
 import net.squanchy.speaker.domain.view.Speaker
 import net.squanchy.support.checksum.Checksum
-import net.squanchy.support.lang.optional
+import net.squanchy.support.lang.option
 import net.squanchy.venue.domain.view.Venue
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDateTime
 
-fun FirestorePlace.toPlace(): Place = Place(id = id, name = name, floor = floor.optional())
+fun FirestorePlace.toPlace(): Place = Place(id = id, name = name, floor = floor.option(), position = position)
 
 fun FirestoreTrack.toTrack(checksum: Checksum) = Track(
     id = id,
-    numericId = checksum.getChecksumOf(id),
+    numericId = checksum.getChecksumOf("track_$id"),
     name = name,
-    accentColor = accentColor.optional(),
-    textColor = textColor.optional(),
-    iconUrl = iconUrl.optional()
+    accentColor = accentColor.option(),
+    textColor = textColor.option(),
+    iconUrl = iconUrl.option()
 )
 
 fun FirestoreSpeaker.toSpeaker(checksum: Checksum) = Speaker(
-    numericId = checksum.getChecksumOf(id),
+    numericId = checksum.getChecksumOf("speaker_$id"),
     id = id,
     name = name,
     bio = bio,
-    companyName = companyName.optional(),
-    companyUrl = companyUrl.optional(),
-    personalUrl = personalUrl.optional(),
-    photoUrl = photoUrl.optional(),
-    twitterUsername = twitterUsername.optional()
+    companyName = companyName.option(),
+    companyUrl = companyUrl.option(),
+    personalUrl = personalUrl.option(),
+    photoUrl = photoUrl.option(),
+    twitterUsername = twitterUsername.option()
 )
 
 fun FirestoreVenue.toVenue() = Venue(
@@ -51,17 +51,17 @@ fun FirestoreVenue.toVenue() = Venue(
 
 fun FirestoreEvent.toEvent(checksum: Checksum, timeZone: DateTimeZone, isFavorite: Boolean = false) = Event(
     id = id,
-    numericId = checksum.getChecksumOf(id),
+    numericId = checksum.getChecksumOf("event_$id"),
     startTime = LocalDateTime(startTime, timeZone),
     endTime = LocalDateTime(endTime, timeZone),
     title = title,
-    place = place?.toPlace().optional(),
+    place = place?.toPlace().option(),
     experienceLevel = experienceLevel.toExperienceLevel(),
     speakers = speakers.map { it.toSpeaker(checksum) },
     type = type.toEventType(),
     favorited = isFavorite,
-    description = description.optional(),
-    track = track?.toTrack(checksum).optional(),
+    description = description.option(),
+    track = track?.toTrack(checksum).option(),
     timeZone = timeZone
 )
 

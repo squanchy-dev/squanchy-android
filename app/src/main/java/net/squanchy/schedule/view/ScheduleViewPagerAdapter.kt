@@ -1,6 +1,7 @@
 package net.squanchy.schedule.view
 
 import android.content.Context
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,42 +16,34 @@ class ScheduleViewPagerAdapter(context: Context) : ViewPagerAdapter<ScheduleDayP
     private lateinit var listener: (Event) -> Unit
 
     private var pages = emptyList<SchedulePage>()
-    private var initialEventForPage = emptyArray<Event?>()
-    private var triggerScrollForPage = emptyArray<((Event) -> Unit)?>()
 
     private val inflater = LayoutInflater.from(context)
+    private val viewPool = RecyclerView.RecycledViewPool()
+    private var showRoom: Boolean = false
 
-    fun updateWith(pages: List<SchedulePage>, initialEventForPage: Array<Event?>, listener: (Event) -> Unit) {
+    fun updateWith(pages: List<SchedulePage>, showRoom: Boolean, listener: (Event) -> Unit) {
         this.pages = pages
-        this.initialEventForPage = initialEventForPage
         this.listener = listener
-        this.triggerScrollForPage = arrayOfNulls(pages.size)
+        this.showRoom = showRoom
         notifyDataSetChanged()
     }
 
     override fun getCount() = pages.size
 
     override fun createView(container: ViewGroup, position: Int): ScheduleDayPageView {
-        return inflater.inflate(R.layout.view_page_schedule_day, container, false) as ScheduleDayPageView
+        val recyclerView = inflater.inflate(R.layout.view_page_schedule_day, container, false) as ScheduleDayPageView
+        recyclerView.recycledViewPool = viewPool
+        return recyclerView
     }
 
     override fun bindView(view: ScheduleDayPageView, position: Int) {
         val events = pages[position].events
-        val initialEvent = initialEventForPage[position]
-        triggerScrollForPage[position] = { view.autoscrollToEvent(events.indexOf(it), true) }
-        view.updateWith(events, listener)
-        initialEvent?.let { view.autoscrollToEvent(events.indexOf(it), false) }
+        view.updateWith(events, showRoom, listener)
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
         val date = pages[position].date
         return date.toString(TITLE_FORMAT_TEMPLATE).toUpperCase(Locale.getDefault())
-    }
-
-    fun getPageDayId(position: Int) = pages[position].dayId
-
-    fun refresh(page: Int, event: Event) {
-        triggerScrollForPage[page]?.invoke(event)
     }
 
     override fun isViewFromObject(view: View, anObject: Any) = view === anObject

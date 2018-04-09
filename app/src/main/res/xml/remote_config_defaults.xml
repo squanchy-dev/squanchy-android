@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<defaultsMap />
+<defaultsMap>
+
+  <entry>
+    <key>show_event_room_in_schedule</key>
+    <value>true</value>
+  </entry>
+
+</defaultsMap>

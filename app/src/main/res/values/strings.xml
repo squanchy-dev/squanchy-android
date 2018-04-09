@@ -40,6 +40,9 @@
   <string name="menu_clear_query">Clear query</string>
   <string name="no_results">No results for this query</string>
   <string name="start_typing_to_search">Start typing to search</string>
+  <string name="search_no_result_found">No result found</string>
+  <string name="search_error_message">Error while searching, please check your internet connection</string>
+
   <string name="speaker_list_title">Speakers</string>
   <string name="talks_list_title">Talks</string>
 

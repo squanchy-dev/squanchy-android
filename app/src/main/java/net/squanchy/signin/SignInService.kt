@@ -1,28 +1,29 @@
 package net.squanchy.signin
 
+import arrow.core.Option
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.firebase.auth.FirebaseUser
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
-import net.squanchy.service.firebase.FirebaseAuthService
-import net.squanchy.support.lang.Optional
+import net.squanchy.service.repository.AuthService
+import net.squanchy.service.repository.User
+import net.squanchy.support.lang.getOrThrow
 
-class SignInService(private val authService: FirebaseAuthService) {
+class SignInService(private val authService: AuthService) {
 
     fun isSignedInToGoogle(): Maybe<Boolean> =
         currentUser()
-            .first(Optional.absent())
-            .filter { it.isPresent }
-            .map { it.get() }
+            .first(Option.empty())
+            .filter { it.isDefined() }
+            .map { it.getOrThrow() }
             .map { firebaseUser -> !firebaseUser.isAnonymous }
 
     fun signInAnonymouslyIfNecessary(): Completable {
         return authService.currentUser()
             .firstOrError()
             .flatMapCompletable { user ->
-                if (user.isPresent) {
+                if (user.isDefined()) {
                     currentUser().firstOrError()
                         .flatMapCompletable { Completable.complete() }
                 } else {
@@ -31,7 +32,7 @@ class SignInService(private val authService: FirebaseAuthService) {
             }
     }
 
-    fun currentUser(): Observable<Optional<FirebaseUser>> {
+    fun currentUser(): Observable<Option<User>> {
         return authService.currentUser()
             .subscribeOn(Schedulers.io())
     }

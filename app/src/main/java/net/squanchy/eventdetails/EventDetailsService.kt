@@ -1,17 +1,18 @@
 package net.squanchy.eventdetails
 
-import com.google.firebase.auth.FirebaseUser
+import arrow.core.Option
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 import net.squanchy.schedule.domain.view.Event
-import net.squanchy.service.firebase.FirebaseAuthService
+import net.squanchy.service.repository.AuthService
 import net.squanchy.service.repository.EventRepository
-import net.squanchy.support.lang.Optional
+import net.squanchy.service.repository.User
+import net.squanchy.support.lang.or
 
 internal class EventDetailsService(
     private val eventRepository: EventRepository,
-    private val authService: FirebaseAuthService
+    private val authService: AuthService
 ) {
 
     fun event(eventId: String): Observable<Event> {
@@ -21,15 +22,13 @@ internal class EventDetailsService(
     fun toggleFavorite(event: Event): Single<FavoriteResult> {
         return currentUser()
             .flatMap { optionalUser ->
-                optionalUser
-                    .map {
-                        if (it.isAnonymous) {
-                            Single.just(FavoriteResult.MUST_AUTHENTICATE)
-                        } else {
-                            toggleFavoriteOn(event).andThen(Single.just(FavoriteResult.SUCCESS))
-                        }
+                optionalUser.map { user ->
+                    if (user.isAnonymous) {
+                        Single.just(FavoriteResult.MUST_AUTHENTICATE)
+                    } else {
+                        toggleFavoriteOn(event).andThen(Single.just(FavoriteResult.SUCCESS))
                     }
-                    .or(Single.just(FavoriteResult.MUST_AUTHENTICATE))
+                }.or(Single.just(FavoriteResult.MUST_AUTHENTICATE))
             }
     }
 
@@ -49,7 +48,7 @@ internal class EventDetailsService(
         return authService.ifUserSignedInThenCompletableFrom { userId -> eventRepository.addFavorite(eventId, userId) }
     }
 
-    private fun currentUser(): Single<Optional<FirebaseUser>> = authService.currentUser().firstOrError()
+    private fun currentUser(): Single<Option<User>> = authService.currentUser().firstOrError()
 
     internal enum class FavoriteResult {
         SUCCESS,

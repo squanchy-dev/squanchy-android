@@ -2,8 +2,8 @@ package net.squanchy.eventdetails.domain.view
 
 import android.support.annotation.ColorRes
 import android.support.annotation.StringRes
+import arrow.core.Option
 import net.squanchy.R
-import net.squanchy.support.lang.Optional
 import timber.log.Timber
 import java.util.Locale
 
@@ -18,22 +18,22 @@ enum class ExperienceLevel(
 
     companion object {
 
-        fun tryParsingFrom(rawLevel: String?): Optional<ExperienceLevel> =
+        fun tryParsingFrom(rawLevel: String?): Option<ExperienceLevel> =
             rawLevel?.let {
                 try {
-                    Optional.of(fromRawLevel(it))
+                    Option(fromRawLevel(it))
                 } catch (e: IllegalArgumentException) {
                     Timber.d(e)
-                    Optional.absent<ExperienceLevel>()
+                    null
                 }
-            } ?: Optional.absent()
+            } ?: Option.empty()
 
         private fun fromRawLevel(rawLevel: String) =
             when (rawLevel.toLowerCase(Locale.US)) {
                 BEGINNER.rawLevel -> BEGINNER
                 INTERMEDIATE.rawLevel -> INTERMEDIATE
                 ADVANCED.rawLevel -> ADVANCED
-                else -> throw IllegalArgumentException("Invalid raw level description: " + rawLevel)
+                else -> throw IllegalArgumentException("Invalid raw level description: $rawLevel")
             }
     }
 }

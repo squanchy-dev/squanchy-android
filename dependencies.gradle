@@ -1,9 +1,10 @@
 ext {
     daggerVersion = '2.15'
     glideVersion = '4.6.1'
-    supportLibVersion = '27.1.0'
+    supportLibVersion = '27.1.1'
     playServicesVersion = '12.0.1'
     kotlinVersion = '1.2.31'
+    moshiVersion = '1.5.0'
 
     checkstyleVersion = '8.8'
     findbugsVersion = '3.0.1'
@@ -19,11 +20,12 @@ ext {
 
     libraries = [
         app : [
+            algolia            : 'com.algolia:algoliasearch-android:3.14.1',
             androidKtx         : 'androidx.core:core-ktx:0.2',
+            arrowCore          : 'io.arrow-kt:arrow-core:0.6.1',
             crashlytics        : 'com.crashlytics.sdk.android:crashlytics:2.9.1',
             dagger             : "com.google.dagger:dagger:${daggerVersion}",
             daggerCompiler     : "com.google.dagger:dagger-compiler:${daggerVersion}",
-            findbugsAnnotations: "com.google.code.findbugs:annotations:3.0.1u2",
             firebase           : "com.google.firebase:firebase-core:${playServicesVersion}",
             firebaseAuth       : "com.google.firebase:firebase-auth:${playServicesVersion}",
             firebaseConfig     : "com.google.firebase:firebase-config:${playServicesVersion}",
@@ -39,6 +41,8 @@ ext {
             glideOkHttp3       : "com.github.bumptech.glide:okhttp3-integration:${glideVersion}",
             jodaTimeAndroid    : 'net.danlew:android.joda:2.9.9.3',
             kotlin             : "org.jetbrains.kotlin:kotlin-stdlib-jre7:${kotlinVersion}",
+            moshi              : "com.squareup.moshi:moshi:${moshiVersion}",
+            moshiKotlin        : "com.squareup.moshi:moshi-kotlin:${moshiVersion}",
             playServicesAuth   : "com.google.android.gms:play-services-auth:${playServicesVersion}",
             rxJava             : 'io.reactivex.rxjava2:rxjava:2.1.12',
             rxAndroid          : 'io.reactivex.rxjava2:rxandroid:2.0.2',

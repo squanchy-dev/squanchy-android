@@ -1,12 +1,8 @@
 package net.squanchy.venue
 
-import android.annotation.TargetApi
 import android.content.Context
-import android.os.Build
 import android.support.design.widget.CoordinatorLayout
 import android.support.v7.widget.Toolbar
-import android.text.Html
-import android.text.Spanned
 import android.util.AttributeSet
 import android.widget.ImageView
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -17,6 +13,7 @@ import net.squanchy.home.Loadable
 import net.squanchy.imageloader.ImageLoader
 import net.squanchy.imageloader.imageLoaderComponent
 import net.squanchy.navigation.Navigator
+import net.squanchy.support.text.parseHtml
 import net.squanchy.support.unwrapToActivityContext
 import net.squanchy.venue.domain.view.Venue
 
@@ -28,13 +25,13 @@ class VenueInfoPageView @JvmOverloads constructor(
 
     private lateinit var navigator: Navigator
     private lateinit var service: VenueInfoService
-    private lateinit var imageLoader: ImageLoader
 
+    private var imageLoader: ImageLoader? = null
     private var subscription: Disposable? = null
 
     init {
         if (!isInEditMode) {
-            val activity = unwrapToActivityContext(getContext())
+            val activity = context.unwrapToActivityContext()
             val component = venueInfoComponent(activity)
             navigator = component.navigator()
             service = component.service()
@@ -80,18 +77,11 @@ class VenueInfoPageView @JvmOverloads constructor(
         updateMapClickListenerWith(venue)
     }
 
-    @TargetApi(Build.VERSION_CODES.N) // The older fromHtml() is only called pre-24
-    private fun parseHtml(description: String): Spanned {
-        // TODO handle this properly
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY)
-        } else {
-            @Suppress("DEPRECATION") // This is a "compat" method call, we only use this on pre-N
-            Html.fromHtml(description)
+    private fun loadMap(imageView: ImageView, mapUrl: String, imageLoader: ImageLoader?) {
+        if (imageLoader == null) {
+            throw IllegalStateException("Unable to access the ImageLoader, it hasn't been initialized yet")
         }
-    }
 
-    private fun loadMap(imageView: ImageView, mapUrl: String, imageLoader: ImageLoader) {
         imageLoader.load(mapUrl).into(imageView)
     }
 

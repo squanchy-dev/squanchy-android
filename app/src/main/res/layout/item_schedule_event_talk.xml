@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <net.squanchy.schedule.view.TalkEventItemView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
@@ -9,15 +10,18 @@
   android:paddingBottom="@dimen/card_padding_bottom"
   tools:layout_margin="16dp">
 
-  <RelativeLayout
+  <android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <net.squanchy.schedule.view.ScheduleSpeakerView
       android:id="@+id/speaker_container"
-      android:layout_width="match_parent"
+      android:layout_width="@dimen/match_constraint"
       android:layout_height="wrap_content"
-      android:layout_marginBottom="@dimen/card_title_margin_top">
+      android:layout_marginBottom="@dimen/card_title_margin_top"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintEnd_toEndOf="parent">
 
       <LinearLayout
         android:id="@+id/speakerPhotosContainer"
@@ -37,22 +41,23 @@
     </net.squanchy.schedule.view.ScheduleSpeakerView>
 
     <net.squanchy.eventdetails.widget.ExperienceLevelView
-      style="@style/Schedule.Card.ExperienceLevel"
       android:id="@+id/experience_level"
+      style="@style/Schedule.Card.ExperienceLevel"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_alignParentEnd="true"
-      android:layout_alignParentTop="true"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
       tools:text="@string/experience_level_beginner"
       tools:backgroundTint="@color/experience_level_beginner" />
 
     <TextView
       android:id="@+id/title"
       style="@style/Schedule.Card.Title"
-      android:layout_width="match_parent"
+      android:layout_width="@dimen/match_constraint"
       android:layout_height="wrap_content"
-      android:layout_alignParentStart="true"
-      android:layout_below="@+id/speaker_container"
+      android:layout_marginTop="@dimen/card_title_margin_top"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/speaker_container"
       tools:text="Designing for an Android future" />
 
     <TextView
@@ -60,11 +65,22 @@
       style="@style/Schedule.Card.Timestamp"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_alignParentStart="true"
-      android:layout_below="@+id/title"
       android:layout_marginTop="@dimen/card_timestamp_margin_top"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/title"
       tools:text="12:00" />
 
-  </RelativeLayout>
+    <TextView
+      android:id="@+id/room"
+      style="@style/Schedule.Card.Room"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:layout_constraintStart_toEndOf="@+id/timestamp"
+      app:layout_constraintTop_toTopOf="@+id/timestamp"
+      app:layout_constraintBottom_toBottomOf="@+id/timestamp"
+      tools:text=" • Main room"
+      tools:visibility="visible" />
+
+  </android.support.constraint.ConstraintLayout>
 
 </net.squanchy.schedule.view.TalkEventItemView>

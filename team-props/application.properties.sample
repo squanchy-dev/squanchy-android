@@ -1,11 +1,11 @@
-# The application's package name
+##### Sample app settings #####
+
+# Application package name and label
 applicationId=net.squanchy.example
+applicationName=Squanchy
 
-# The application label, that is, its displayed name (e.g., in the launcher)
-applicationName="Squanchy"
-
-# The query to use for the social feed (i.e., the search terms to use)
-socialQuery=#squanchy
-
-# The deeplinking scheme to use; e.g., in this case: squanchy://...
+# Scheme used for deeplinks into content
 deeplinkScheme=squanchy
+
+# Algolia App ID (used for search)
+algoliaId=

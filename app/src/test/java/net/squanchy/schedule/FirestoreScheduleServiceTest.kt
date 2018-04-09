@@ -1,5 +1,6 @@
 package net.squanchy.schedule
 
+import arrow.core.Option
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
@@ -20,7 +21,6 @@ import net.squanchy.service.firebase.aFirestoreSpeaker
 import net.squanchy.service.firebase.aFirestoreTrack
 import net.squanchy.service.firebase.model.schedule.FirestoreFavorite
 import net.squanchy.support.checksum.Checksum
-import net.squanchy.support.lang.Optional
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -60,7 +60,7 @@ class FirestoreScheduleServiceTest {
     fun init() {
         scheduleService = FirestoreScheduleService(authService, dbService, tracksFilter, checksum)
         `when`(dbService.timezone()).thenReturn(Observable.just(A_TIMEZONE))
-        `when`(checksum.getChecksumOf(aFirestoreSpeaker().id)).thenReturn(5466)
+        `when`(checksum.getChecksumOf("speaker_${aFirestoreSpeaker().id}")).thenReturn(5466)
     }
 
     @Test
@@ -70,7 +70,7 @@ class FirestoreScheduleServiceTest {
         `when`(dbService.scheduleView()).thenReturn(Observable.just(listOf(firstDaySchedulePage, secondDaySchedulePage)))
         val allowedTracks = setOf(aTrack())
         `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
-        `when`(checksum.getChecksumOf(anEvent().id)).thenReturn(1234)
+        `when`(checksum.getChecksumOf("event_${aFirestoreEvent().id}")).thenReturn(1234)
 
         scheduleService.schedule(onlyFavorites = false, observeScheduler = Schedulers.trampoline())
             .test()
@@ -117,12 +117,12 @@ class FirestoreScheduleServiceTest {
         `when`(dbService.scheduleView()).thenReturn(Observable.just(listOf(firstDaySchedulePage, secondDaySchedulePage)))
         val allowedTracks = setOf(aTrack(id = "a track id"))
         `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
-        `when`(checksum.getChecksumOf("1")).thenReturn(1)
-        `when`(checksum.getChecksumOf("2")).thenReturn(2)
-        `when`(checksum.getChecksumOf("3")).thenReturn(3)
-        `when`(checksum.getChecksumOf("4")).thenReturn(4)
-        `when`(checksum.getChecksumOf("5")).thenReturn(5)
-        `when`(checksum.getChecksumOf("6")).thenReturn(6)
+        `when`(checksum.getChecksumOf("event_1")).thenReturn(1)
+        `when`(checksum.getChecksumOf("event_2")).thenReturn(2)
+        `when`(checksum.getChecksumOf("event_3")).thenReturn(3)
+        `when`(checksum.getChecksumOf("event_4")).thenReturn(4)
+        `when`(checksum.getChecksumOf("event_5")).thenReturn(5)
+        `when`(checksum.getChecksumOf("event_6")).thenReturn(6)
 
         scheduleService.schedule(onlyFavorites = false, observeScheduler = Schedulers.trampoline())
             .test()
@@ -193,8 +193,8 @@ class FirestoreScheduleServiceTest {
         `when`(dbService.scheduleView()).thenReturn(Observable.just(listOf(schedulePage)))
         val allowedTracks = setOf(aTrack(id = "a track id"))
         `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
-        `when`(checksum.getChecksumOf("1")).thenReturn(1)
-        `when`(checksum.getChecksumOf("2")).thenReturn(2)
+        `when`(checksum.getChecksumOf("event_1")).thenReturn(1)
+        `when`(checksum.getChecksumOf("event_2")).thenReturn(2)
         `when`(authService.ifUserSignedInThenObservableFrom(dbService::favorites))
             .thenReturn(Observable.just(listOf(FirestoreFavorite().apply { id = "1" })))
 
@@ -205,8 +205,8 @@ class FirestoreScheduleServiceTest {
                     pages = listOf(
                         aSchedulePage(
                             events = listOf(
-                                anEvent(id = "1", numericId = 1, track = Optional.absent()),
-                                anEvent(id = "2", numericId = 2, track = Optional.absent())
+                                anEvent(id = "1", numericId = 1, track = Option.empty()),
+                                anEvent(id = "2", numericId = 2, track = Option.empty())
                             )
                         )
                     )
@@ -257,7 +257,7 @@ class FirestoreScheduleServiceTest {
         `when`(dbService.scheduleView()).thenReturn(Observable.just(listOf(schedulePage)))
         val allowedTracks = setOf(aTrack(id = "A"), aTrack("C"))
         `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
-        `when`(checksum.getChecksumOf(aFirestoreEvent().id)).thenReturn(1)
+        `when`(checksum.getChecksumOf("event_${aFirestoreEvent().id}")).thenReturn(1)
 
         scheduleService.schedule(onlyFavorites = false, observeScheduler = Schedulers.trampoline())
             .test()
@@ -266,8 +266,8 @@ class FirestoreScheduleServiceTest {
                     pages = listOf(
                         aSchedulePage(
                             events = listOf(
-                                anEvent(track = Optional.absent(), numericId = 1),
-                                anEvent(track = Optional.absent(), numericId = 1)
+                                anEvent(track = Option.empty(), numericId = 1),
+                                anEvent(track = Option.empty(), numericId = 1)
                             )
                         )
                     )
@@ -286,7 +286,7 @@ class FirestoreScheduleServiceTest {
         `when`(dbService.scheduleView()).thenReturn(Observable.just(listOf(schedulePage)))
         val allowedTracks = emptySet<Track>()
         `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
-        `when`(checksum.getChecksumOf(aFirestoreEvent().id)).thenReturn(1)
+        `when`(checksum.getChecksumOf("event_${aFirestoreEvent().id}")).thenReturn(1)
 
         scheduleService.schedule(onlyFavorites = false, observeScheduler = Schedulers.trampoline())
             .test()
@@ -295,8 +295,8 @@ class FirestoreScheduleServiceTest {
                     pages = listOf(
                         aSchedulePage(
                             events = listOf(
-                                anEvent(track = Optional.absent(), numericId = 1),
-                                anEvent(track = Optional.absent(), numericId = 1)
+                                anEvent(track = Option.empty(), numericId = 1),
+                                anEvent(track = Option.empty(), numericId = 1)
                             )
                         )
                     )
@@ -337,7 +337,7 @@ class FirestoreScheduleServiceTest {
         `when`(dbService.scheduleView()).thenReturn(Observable.just(listOf(schedulePage)))
         val allowedTracks = setOf(aTrack(id = "A"), aTrack("C"))
         `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
-        `when`(checksum.getChecksumOf(aFirestoreEvent().id)).thenReturn(1)
+        `when`(checksum.getChecksumOf("event_${aFirestoreEvent().id}")).thenReturn(1)
 
         scheduleService.schedule(onlyFavorites = false, observeScheduler = Schedulers.trampoline())
             .test()
@@ -346,8 +346,8 @@ class FirestoreScheduleServiceTest {
                     pages = listOf(
                         aSchedulePage(
                             events = listOf(
-                                anEvent(track = Optional.of(aTrack(id = "A")), numericId = 1),
-                                anEvent(track = Optional.of(aTrack(id = "C")), numericId = 1)
+                                anEvent(track = Option(aTrack(id = "A")), numericId = 1),
+                                anEvent(track = Option(aTrack(id = "C")), numericId = 1)
                             )
                         )
                     )
@@ -367,7 +367,7 @@ class FirestoreScheduleServiceTest {
         `when`(dbService.scheduleView()).thenReturn(Observable.just(listOf(schedulePage)))
         val allowedTracks = emptySet<Track>()
         `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
-        `when`(checksum.getChecksumOf(aFirestoreEvent().id)).thenReturn(1)
+        `when`(checksum.getChecksumOf("event_${aFirestoreEvent().id}")).thenReturn(1)
 
         scheduleService.schedule(onlyFavorites = false, observeScheduler = Schedulers.trampoline())
             .test()
@@ -376,7 +376,7 @@ class FirestoreScheduleServiceTest {
                     pages = listOf(
                         aSchedulePage(
                             events = listOf(
-                                anEvent(track = Optional.absent(), numericId = 1)
+                                anEvent(track = Option.empty(), numericId = 1)
                             )
                         )
                     )

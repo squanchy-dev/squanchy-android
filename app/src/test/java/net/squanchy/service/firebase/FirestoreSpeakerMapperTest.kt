@@ -1,7 +1,8 @@
 package net.squanchy.service.firebase
 
+import com.google.common.truth.Truth.assertThat
 import net.squanchy.support.checksum.Checksum
-import org.junit.Assert
+import net.squanchy.support.lang.getOrThrow
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -32,97 +33,97 @@ class FirestoreSpeakerMapperTest {
     fun `verify numeric id is assigned through checksum when mapped`() {
         val firestoreSpeaker = aFirestoreSpeaker()
         val speaker = firestoreSpeaker.toSpeaker(checksum)
-        Assert.assertEquals(CHECKSUM_RESULT, speaker.numericId)
+        assertThat(speaker.numericId).isEqualTo(CHECKSUM_RESULT)
     }
 
     @Test
     fun `speaker id should match when mapped`() {
         val firestoreSpeaker = aFirestoreSpeaker(id = FAKE_SPEAKER_STRING)
         val speaker = firestoreSpeaker.toSpeaker(checksum)
-        Assert.assertEquals(FAKE_SPEAKER_STRING, speaker.id)
+        assertThat(speaker.id).isEqualTo(FAKE_SPEAKER_STRING)
     }
 
     @Test
     fun `speaker name should match when mapped`() {
         val firestoreSpeaker = aFirestoreSpeaker(name = FAKE_SPEAKER_STRING)
         val speaker = firestoreSpeaker.toSpeaker(checksum)
-        Assert.assertEquals(FAKE_SPEAKER_STRING, speaker.name)
+        assertThat(speaker.name).isEqualTo(FAKE_SPEAKER_STRING)
     }
 
     @Test
     fun `speaker bio should match when mapped`() {
         val firestoreSpeaker = aFirestoreSpeaker(bio = FAKE_SPEAKER_STRING)
         val speaker = firestoreSpeaker.toSpeaker(checksum)
-        Assert.assertEquals(FAKE_SPEAKER_STRING, speaker.bio)
+        assertThat(speaker.bio).isEqualTo(FAKE_SPEAKER_STRING)
     }
 
     @Test
     fun `speaker company should match when mapped`() {
         val firestoreSpeaker = aFirestoreSpeaker(companyName = FAKE_SPEAKER_STRING)
         val speaker = firestoreSpeaker.toSpeaker(checksum)
-        Assert.assertEquals(FAKE_SPEAKER_STRING, speaker.companyName.get())
+        assertThat(speaker.companyName.getOrThrow()).isEqualTo(FAKE_SPEAKER_STRING)
     }
 
     @Test
-    fun `speaker company should be absent when mapping null`() {
+    fun `speaker company should be empty when mapping null`() {
         val firestoreSpeaker = aFirestoreSpeaker(companyName = null)
         val speaker = firestoreSpeaker.toSpeaker(checksum)
-        Assert.assertFalse(speaker.companyName.isPresent)
+        assertThat(speaker.companyName.isEmpty()).isTrue()
     }
 
     @Test
     fun `speaker company url should match when mapped`() {
         val firestoreSpeaker = aFirestoreSpeaker(companyUrl = FAKE_SPEAKER_STRING)
         val speaker = firestoreSpeaker.toSpeaker(checksum)
-        Assert.assertEquals(FAKE_SPEAKER_STRING, speaker.companyUrl.get())
+        assertThat(speaker.companyUrl.getOrThrow()).isEqualTo(FAKE_SPEAKER_STRING)
     }
 
     @Test
-    fun `speaker company url should be absent when mapping null`() {
+    fun `speaker company url should be empty when mapping null`() {
         val firestoreSpeaker = aFirestoreSpeaker(companyUrl = null)
         val speaker = firestoreSpeaker.toSpeaker(checksum)
-        Assert.assertFalse(speaker.companyUrl.isPresent)
+        assertThat(speaker.companyUrl.isEmpty()).isTrue()
     }
 
     @Test
     fun `speaker url should match when mapped`() {
         val firestoreSpeaker = aFirestoreSpeaker(personalUrl = FAKE_SPEAKER_STRING)
         val speaker = firestoreSpeaker.toSpeaker(checksum)
-        Assert.assertEquals(FAKE_SPEAKER_STRING, speaker.personalUrl.get())
+        assertThat(speaker.personalUrl.getOrThrow()).isEqualTo(FAKE_SPEAKER_STRING)
     }
 
     @Test
-    fun `speaker url should be absent when mapping null`() {
+    fun `speaker url should be empty when mapping null`() {
         val firestoreSpeaker = aFirestoreSpeaker(personalUrl = null)
         val speaker = firestoreSpeaker.toSpeaker(checksum)
-        Assert.assertFalse(speaker.personalUrl.isPresent)
+        assertThat(speaker.personalUrl.isEmpty()).isTrue()
     }
 
     @Test
     fun `speaker twitter username should match when mapped`() {
         val firestoreSpeaker = aFirestoreSpeaker(twitterUsername = FAKE_SPEAKER_STRING)
         val speaker = firestoreSpeaker.toSpeaker(checksum)
-        Assert.assertEquals(FAKE_SPEAKER_STRING, speaker.twitterUsername.get())
+        assertThat(speaker.twitterUsername.getOrThrow()).isEqualTo(FAKE_SPEAKER_STRING)
     }
 
     @Test
-    fun `speaker twitter username should be absent when mapping null`() {
+    fun `speaker twitter username should be empty when mapping null`() {
         val firestoreSpeaker = aFirestoreSpeaker(twitterUsername = null)
         val speaker = firestoreSpeaker.toSpeaker(checksum)
-        Assert.assertFalse(speaker.twitterUsername.isPresent)
+        assertThat(speaker.twitterUsername.isEmpty()).isTrue()
     }
 
     @Test
     fun `speaker photo url should match when mapped`() {
         val firestoreSpeaker = aFirestoreSpeaker(personalUrl = FAKE_SPEAKER_STRING)
         val speaker = firestoreSpeaker.toSpeaker(checksum)
-        Assert.assertEquals(FAKE_SPEAKER_STRING, speaker.personalUrl.get())
+        assertThat(speaker.personalUrl.getOrThrow()).isEqualTo(FAKE_SPEAKER_STRING)
     }
 
     @Test
-    fun `speaker photo url should be absent when mapping null`() {
+    fun `speaker photo url should be empty when mapping null`() {
         val firestoreSpeaker = aFirestoreSpeaker(personalUrl = null)
         val speaker = firestoreSpeaker.toSpeaker(checksum)
-        Assert.assertFalse(speaker.personalUrl.isPresent)
+        assertThat(speaker.personalUrl.isEmpty()).isTrue()
     }
 }

@@ -4,7 +4,8 @@ import io.reactivex.Observable
 import net.squanchy.favorites.view.FavoritesItem
 import net.squanchy.schedule.ScheduleService
 import net.squanchy.schedule.domain.view.Event
-import net.squanchy.service.firebase.FirebaseAuthService
+import net.squanchy.service.repository.AuthService
+import net.squanchy.support.lang.or
 
 interface FavoritesService {
 
@@ -14,7 +15,7 @@ interface FavoritesService {
 }
 
 internal class FirestoreFavoritesService(
-    private val authService: FirebaseAuthService,
+    private val authService: AuthService,
     private val scheduleService: ScheduleService
 ) : FavoritesService {
 

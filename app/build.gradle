@@ -46,8 +46,8 @@ android {
 
         resValueString 'app_name', applicationProps['applicationName'].or("Squanchy")
 
-        resValueString 'api_value_twitter_api_key', secretsProps['twitterApiKey'].or(envVars['TWITTER_API_KEY'])
-        resValueString 'api_value_twitter_secret', secretsProps['twitterSecret'].or(envVars['TWITTER_SECRET'])
+        resValueString 'algolia_application_id', applicationProps['algoliaId'].or(envVars['ALGOLIA_APPLICATION_ID'])
+        resValueString 'algolia_api_key', secretsProps['algoliaApiKey'].or(envVars['ALGOLIA_API_KEY'])
 
         resValueString 'social_query', applicationProps['socialQuery'].or("#AndroidDev")
         resValueString 'deeplink_scheme', applicationProps['deeplinkScheme'].or("squanchy")
@@ -127,12 +127,9 @@ dependencies {
     implementation project(':renderthread')
 
     implementation libraries.app.androidKtx
+    implementation libraries.app.arrowCore
 
     implementation libraries.app.crashlytics
-    implementation(libraries.app.findbugsAnnotations) {
-        exclude group: 'net.jcip'
-        exclude group: 'com.google.code.findbugs'
-    }
     implementation(libraries.app.firebase) {
         exclude group: 'com.android.support'
     }
@@ -150,7 +147,6 @@ dependencies {
 
     implementation libraries.app.flexbox
 
-    annotationProcessor libraries.app.glideCompiler
     kapt libraries.app.glideCompiler
     implementation libraries.app.glide
     implementation libraries.app.glideOkHttp3
@@ -167,9 +163,13 @@ dependencies {
     implementation libraries.app.timber
     implementation libraries.app.viewPagerAdapter
 
-    annotationProcessor libraries.app.daggerCompiler
+    implementation libraries.app.moshi
+    implementation libraries.app.moshiKotlin
+
     kapt libraries.app.daggerCompiler
     implementation libraries.app.dagger
+
+    implementation libraries.app.algolia
 
     testImplementation libraries.test.truth
     testImplementation libraries.test.jodaTime

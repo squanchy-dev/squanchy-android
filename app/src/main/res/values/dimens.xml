@@ -55,7 +55,10 @@
   <dimen name="search_card_item_photo_margin_bottom">4dp</dimen>
   <dimen name="search_header_padding">16dp</dimen>
   <dimen name="search_empty_state_text">16sp</dimen>
+  <dimen name="search_compound_drawable_padding">24dp</dimen>
+  <dimen name="search_empty_state_padding">32dp</dimen>
   <dimen name="search_photo">48dp</dimen>
+  <dimen name="search_algolia_logo_padding">8dp</dimen>
 
   <dimen name="event_details_header_padding_start">72dp</dimen>
   <dimen name="event_details_header_padding_end">24dp</dimen>

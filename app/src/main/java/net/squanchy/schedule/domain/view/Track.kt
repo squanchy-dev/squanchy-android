@@ -1,12 +1,12 @@
 package net.squanchy.schedule.domain.view
 
-import net.squanchy.support.lang.Optional
+import arrow.core.Option
 
 data class Track(
     val id: String,
     val numericId: Long,
     val name: String,
-    val accentColor: Optional<String> = Optional.absent(),
-    val textColor: Optional<String> = Optional.absent(),
-    val iconUrl: Optional<String> = Optional.absent()
+    val accentColor: Option<String> = Option.empty(),
+    val textColor: Option<String> = Option.empty(),
+    val iconUrl: Option<String> = Option.empty()
 )

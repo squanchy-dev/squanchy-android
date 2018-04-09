@@ -20,6 +20,9 @@ class RemoteConfig(
 
     fun wifiPassword(): String = firebaseRemoteConfig.getString(KEY_WIFI_PASSWORD)
 
+    fun getBoolean(key: String): Single<Boolean> =
+        getConfigValue { firebaseRemoteConfig.getBoolean(key) }
+
     private fun <T> getConfigValue(action: () -> T): Single<T> {
         return fetchAndActivate(cacheExpiryInSeconds)
             .andThen(Single.fromCallable { action() })

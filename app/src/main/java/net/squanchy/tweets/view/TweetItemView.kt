@@ -19,8 +19,14 @@ class TweetItemView @JvmOverloads constructor(
     defStyleAttr: Int = R.attr.cardViewDefaultStyle
 ) : CardLayout(context, attrs, defStyleAttr) {
 
-    private val component = imageLoaderComponent(unwrapToActivityContext(context))
-    private val imageLoader: ImageLoader = component.imageLoader()
+    private var imageLoader: ImageLoader? = null
+
+    init {
+        if (!isInEditMode) {
+            val activity = context.unwrapToActivityContext()
+            imageLoader = imageLoaderComponent(activity).imageLoader()
+        }
+    }
 
     private val footerFormatter: TwitterFooterFormatter = TwitterFooterFormatter(context)
 
@@ -32,13 +38,17 @@ class TweetItemView @JvmOverloads constructor(
 
     fun updateWith(tweet: TweetViewModel, listener: (TweetLinkInfo) -> Unit) {
         tweetText.text = tweet.spannedText
-        updatePhotoWith(tweet.photoUrl)
+        updatePhotoWith(tweet.photoUrl, imageLoader)
         tweetFooter.updateWith(tweet.user.photoUrl, footerFormatter.footerTextFor(tweet))
 
         setOnClickListener { listener(tweet.linkInfo) }
     }
 
-    private fun updatePhotoWith(photoUrl: String?) {
+    private fun updatePhotoWith(photoUrl: String?, imageLoader: ImageLoader?) {
+        if (imageLoader == null) {
+            throw IllegalStateException("Unable to access the ImageLoader, it hasn't been initialized yet")
+        }
+
         tweetPhoto.setImageDrawable(null)
         if (photoUrl != null) {
             tweetPhoto.visibility = View.VISIBLE

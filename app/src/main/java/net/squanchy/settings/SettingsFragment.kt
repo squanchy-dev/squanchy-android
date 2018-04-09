@@ -11,7 +11,7 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.ListView
-import com.google.firebase.auth.FirebaseUser
+import arrow.core.Option
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import net.squanchy.BuildConfig
@@ -19,9 +19,10 @@ import net.squanchy.R
 import net.squanchy.analytics.Analytics
 import net.squanchy.navigation.Navigator
 import net.squanchy.remoteconfig.RemoteConfig
+import net.squanchy.service.repository.User
 import net.squanchy.signin.SignInOrigin
 import net.squanchy.signin.SignInService
-import net.squanchy.support.lang.Optional
+import net.squanchy.support.lang.getOrThrow
 
 class SettingsFragment : PreferenceFragment() {
 
@@ -52,7 +53,7 @@ class SettingsFragment : PreferenceFragment() {
             removeDebugCategory()
         }
 
-        val activity = activity as AppCompatActivity // TODO UNYOLO
+        val activity = activity as AppCompatActivity
         with(settingsFragmentComponent(activity)) {
             signInService = signInService()
             navigator = navigator()
@@ -89,7 +90,7 @@ class SettingsFragment : PreferenceFragment() {
     private fun displayBuildVersion() {
         val buildVersionKey = getString(R.string.build_version_preference_key)
         val buildVersionPreference = findPreference(buildVersionKey)
-        val buildVersion = String.format(getString(R.string.version_x), BuildConfig.VERSION_NAME)
+        val buildVersion = getString(R.string.version_x, BuildConfig.VERSION_NAME)
         buildVersionPreference.title = buildVersion
     }
 
@@ -136,7 +137,7 @@ class SettingsFragment : PreferenceFragment() {
         subscriptions.add(
             signInService.currentUser()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { onUserChanged(it) }
+                .subscribe(::onUserChanged)
         )
     }
 
@@ -146,17 +147,17 @@ class SettingsFragment : PreferenceFragment() {
         list.dividerHeight = 0
     }
 
-    private fun onUserChanged(user: Optional<FirebaseUser>) {
-        if (user.isPresent && !user.get().isAnonymous) {
-            onSignedInWith(user.get())
+    private fun onUserChanged(user: Option<User>) {
+        if (user.isDefined() && !user.getOrThrow().isAnonymous) {
+            onSignedInWith(user.getOrThrow())
         } else {
             onSignedOut()
         }
     }
 
-    private fun onSignedInWith(firebaseUser: FirebaseUser) {
+    private fun onSignedInWith(user: User) {
         accountCategory.addPreference(accountEmailPreference)
-        accountEmailPreference.title = firebaseUser.email
+        accountEmailPreference.title = user.email
 
         accountSignInSignOutPreference.setTitle(R.string.sign_out_title)
         accountSignInSignOutPreference.setOnPreferenceClickListener {
