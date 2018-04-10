@@ -12,10 +12,10 @@ import net.squanchy.R
 import net.squanchy.imageloader.ImageLoader
 import net.squanchy.imageloader.imageLoaderComponent
 import net.squanchy.schedule.view.EventItemView
-import net.squanchy.search.SearchResult
 import net.squanchy.search.SearchListElement
 import net.squanchy.search.SearchListElement.EventElement
 import net.squanchy.search.SearchListElement.SpeakerElement
+import net.squanchy.search.SearchResult
 import net.squanchy.search.view.SearchItemViewHolder.AlgoliaLogoViewHolder
 import net.squanchy.search.view.SearchItemViewHolder.HeaderViewHolder
 import net.squanchy.search.view.SearchItemViewHolder.SearchEventViewHolder
@@ -99,7 +99,16 @@ internal class SearchAdapter(activity: AppCompatActivity) : ListAdapter<SearchLi
         this.listener = listener
         this.searchResult = searchResult
 
-        submitList(searchResult.elements)
+        super.submitList(searchResult.elements)
+    }
+
+    @Deprecated(
+        message = "Use updateWith() instead",
+        replaceWith = ReplaceWith("updateWith(searchResult, onSearchResultClickListener)"),
+        level = DeprecationLevel.ERROR
+    )
+    override fun submitList(list: MutableList<SearchListElement>?) {
+        throw UnsupportedOperationException("Use updateWith() instead")
     }
 
     companion object {
