@@ -127,7 +127,7 @@
 
   <string name="wifi_config_error_password">Password</string>
   <string name="wifi_config_error_access_point_name">Access point name</string>
-  <string name="wifi_config_error_title">Oh… uh, it didn\'t work</string>
+  <string name="wifi_config_error_title">Oh… uh, it didn’t work</string>
   <string name="wifi_config_error_subtitle">Configure it with these details</string>
   <string name="wifi_config_error_cancel">Cancel</string>
   <string name="wifi_config_error_open_settings">Open settings</string>
