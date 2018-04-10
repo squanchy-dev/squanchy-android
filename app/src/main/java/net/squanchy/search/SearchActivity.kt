@@ -72,7 +72,8 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
         searchTextWatcher = SearchTextWatcher(querySubject)
         searchField.addTextChangedListener(searchTextWatcher)
 
-        val searchSubscription = querySubject.throttleLast(QUERY_DEBOUNCE_TIMEOUT, TimeUnit.MILLISECONDS)
+        val searchSubscription = querySubject.distinctUntilChanged()
+            .debounce(QUERY_DEBOUNCE_TIMEOUT, TimeUnit.MILLISECONDS)
             .doOnNext(::updateSearchActionIcon)
             .startWith(getInitialQuery())
             .flatMap(searchService::find)
