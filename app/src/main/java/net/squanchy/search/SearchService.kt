@@ -51,7 +51,7 @@ class SearchService(
     }
 
     private fun createResultForQueryNotLongEnough(speakers: List<Speaker>): List<SearchListElement> {
-        return listOf(SpeakerHeader) + speakers.map(::SpeakerElement)
+        return listOf(SpeakerHeader) + speakers.map(::SpeakerElement).sortedBy { it.speaker.name }
     }
 
     private fun createResultForSuccessfulSearch(events: List<Event>, speakers: List<Speaker>): List<SearchListElement> {
