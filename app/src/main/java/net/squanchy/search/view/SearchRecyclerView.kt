@@ -12,6 +12,7 @@ import net.squanchy.schedule.domain.view.Event
 import net.squanchy.search.SearchResult
 import net.squanchy.speaker.domain.view.Speaker
 import net.squanchy.support.unwrapToActivityContext
+import net.squanchy.support.view.setAdapterIfNone
 import net.squanchy.support.widget.CardLayout
 
 class SearchRecyclerView @JvmOverloads constructor(
@@ -33,20 +34,16 @@ class SearchRecyclerView @JvmOverloads constructor(
         addItemDecoration(CardOnlySpacingItemDecorator(horizontalSpacing, verticalSpacing))
 
         adapter = SearchAdapter(context.unwrapToActivityContext())
-        setAdapter(adapter)
         clipToPadding = false
     }
 
     fun updateWith(searchResult: SearchResult.Success, listener: OnSearchResultClickListener) {
-        if (getAdapter() == null) {
-            super.setAdapter(adapter)
-        }
+        setAdapterIfNone(adapter)
 
         adapter.updateWith(searchResult, listener)
 
-        val layoutManager = layoutManager as GridLayoutManager
         val spanSizeLookup = adapter.createSpanSizeLookup(COLUMNS_COUNT)
-        layoutManager.spanSizeLookup = spanSizeLookup
+        (layoutManager as GridLayoutManager).spanSizeLookup = spanSizeLookup
     }
 
     interface OnSearchResultClickListener {
