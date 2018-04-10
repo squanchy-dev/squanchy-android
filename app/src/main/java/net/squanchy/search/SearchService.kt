@@ -3,16 +3,16 @@ package net.squanchy.search
 import io.reactivex.Observable
 import io.reactivex.functions.Function3
 import net.squanchy.schedule.domain.view.Event
-import net.squanchy.search.algolia.AlgoliaSearchEngine
-import net.squanchy.search.algolia.model.AlgoliaSearchResult
-import net.squanchy.search.algolia.model.AlgoliaSearchResult.QueryNotLongEnough
-import net.squanchy.search.algolia.model.AlgoliaSearchResult.ErrorSearching
-import net.squanchy.search.algolia.model.AlgoliaSearchResult.Matches
-import net.squanchy.search.SearchListElement.SpeakerHeader
-import net.squanchy.search.SearchListElement.EventHeader
-import net.squanchy.search.SearchListElement.SpeakerElement
 import net.squanchy.search.SearchListElement.AlgoliaLogo
 import net.squanchy.search.SearchListElement.EventElement
+import net.squanchy.search.SearchListElement.EventHeader
+import net.squanchy.search.SearchListElement.SpeakerElement
+import net.squanchy.search.SearchListElement.SpeakerHeader
+import net.squanchy.search.algolia.AlgoliaSearchEngine
+import net.squanchy.search.algolia.model.AlgoliaSearchResult
+import net.squanchy.search.algolia.model.AlgoliaSearchResult.ErrorSearching
+import net.squanchy.search.algolia.model.AlgoliaSearchResult.Matches
+import net.squanchy.search.algolia.model.AlgoliaSearchResult.QueryNotLongEnough
 import net.squanchy.service.repository.AuthService
 import net.squanchy.service.repository.EventRepository
 import net.squanchy.service.repository.SpeakerRepository
@@ -51,7 +51,7 @@ class SearchService(
     }
 
     private fun createResultForQueryNotLongEnough(speakers: List<Speaker>): List<SearchListElement> {
-        return listOf(SpeakerHeader) + speakers.map(::SpeakerElement)
+        return listOf(SpeakerHeader) + speakers.map(::SpeakerElement).sortedBy { it.speaker.name }
     }
 
     private fun createResultForSuccessfulSearch(events: List<Event>, speakers: List<Speaker>): List<SearchListElement> {

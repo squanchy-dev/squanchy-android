@@ -46,12 +46,15 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
     private lateinit var searchTextWatcher: SearchTextWatcher
 
     private var hasQuery: Boolean = false
+    private lateinit var initialQuery: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
         enableLightNavigationBar(this)
         setupToolbar()
+
+        initialQuery = savedInstanceState?.getString(QUERY_KEY) ?: ""
 
         with(searchComponent(this)) {
             searchService = service()
@@ -74,7 +77,7 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
 
         val searchSubscription = querySubject.throttleLast(QUERY_DEBOUNCE_TIMEOUT, TimeUnit.MILLISECONDS)
             .doOnNext(::updateSearchActionIcon)
-            .startWith(getInitialQuery())
+            .startWith(initialQuery)
             .flatMap(searchService::find)
             .distinctUntilChanged()
             .subscribeOn(Schedulers.io())
@@ -91,11 +94,6 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
         }
 
         searchField.requestFocus()
-    }
-
-    private fun getInitialQuery(): String {
-        val text = searchField.text
-        return text?.toString() ?: EMPTY_QUERY
     }
 
     private fun updateSearchActionIcon(query: String) {
@@ -122,9 +120,8 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
         } else {
             emptyView.isInvisible = true
             searchRecyclerView.isVisible = true
-
-            searchRecyclerView.updateWith(searchResult, this)
         }
+        searchRecyclerView.updateWith(searchResult, this)
     }
 
     private fun onSearchError() {
@@ -192,6 +189,11 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle?) {
+        outState?.putString(QUERY_KEY, searchField.text?.toString())
+        super.onSaveInstanceState(outState)
+    }
+
     private fun onVoiceSearchClicked() {
         Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
             putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1)
@@ -245,6 +247,6 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
         private const val SPEECH_REQUEST_CODE = 100
         private const val QUERY_DEBOUNCE_TIMEOUT = 250L
         private const val MIN_QUERY_LENGTH = 2
-        private const val EMPTY_QUERY = ""
+        private const val QUERY_KEY = "SearchActivity.query_key"
     }
 }
