@@ -42,7 +42,7 @@ class SearchRecyclerView @JvmOverloads constructor(
     fun updateWith(searchResult: SearchResult.Success, listener: OnSearchResultClickListener) {
         setAdapterIfNone(adapter)
 
-        adapter.updateWith(searchResult, listener)
+        adapter.updateWith(searchResult.elements, listener)
 
         val spanSizeLookup = adapter.createSpanSizeLookup(columnsCount)
         (layoutManager as GridLayoutManager).spanSizeLookup = spanSizeLookup
