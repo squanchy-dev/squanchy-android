@@ -21,12 +21,14 @@ class SearchRecyclerView @JvmOverloads constructor(
     defStyle: Int = 0
 ) : RecyclerView(context, attrs, defStyle) {
 
+    private val columnsCount = context.resources.getInteger(R.integer.search_columns_count)
+
     private lateinit var adapter: SearchAdapter
 
     override fun onFinishInflate() {
         super.onFinishInflate()
 
-        val gridLayoutManager = GridLayoutManager(context, COLUMNS_COUNT)
+        val gridLayoutManager = GridLayoutManager(context, columnsCount)
         layoutManager = gridLayoutManager
 
         val horizontalSpacing = resources.getDimensionPixelSize(R.dimen.card_horizontal_margin)
@@ -40,9 +42,9 @@ class SearchRecyclerView @JvmOverloads constructor(
     fun updateWith(searchResult: SearchResult.Success, listener: OnSearchResultClickListener) {
         setAdapterIfNone(adapter)
 
-        adapter.updateWith(searchResult, listener)
+        adapter.updateWith(searchResult.elements, listener)
 
-        val spanSizeLookup = adapter.createSpanSizeLookup(COLUMNS_COUNT)
+        val spanSizeLookup = adapter.createSpanSizeLookup(columnsCount)
         (layoutManager as GridLayoutManager).spanSizeLookup = spanSizeLookup
     }
 
@@ -71,10 +73,5 @@ class SearchRecyclerView @JvmOverloads constructor(
 
             outRect.set(horizontalSpacing, topSpacing, horizontalSpacing, bottomSpacing)
         }
-    }
-
-    companion object {
-
-        private const val COLUMNS_COUNT = 4
     }
 }

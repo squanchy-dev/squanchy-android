@@ -17,10 +17,13 @@ class TalkEventItemView @JvmOverloads constructor(
     defStyleAttr: Int = R.attr.cardViewDefaultStyle
 ) : EventItemView(context, attrs, defStyleAttr) {
 
-    override fun updateWith(event: Event, showRoom: Boolean) {
+    private val timeFormatter = DateTimeFormat.shortTime()
+    private val dateFormatter = DateTimeFormat.forPattern("EEE d")
+
+    override fun updateWith(event: Event, showRoom: Boolean, showDay: Boolean) {
         ensureSupportedType(event.type)
 
-        timestamp.text = startTimeAsFormattedString(event)
+        timestamp.text = startTimeAsFormattedString(event, showDay)
         title.text = event.title
         room.apply {
             text = event.place.orNull().toPlaceLabel()
@@ -47,10 +50,14 @@ class TalkEventItemView @JvmOverloads constructor(
         }
     }
 
-    private fun startTimeAsFormattedString(event: Event): String {
-        val formatter = DateTimeFormat.shortTime()
-            .withZone(event.timeZone)
+    private fun startTimeAsFormattedString(event: Event, showDay: Boolean): String {
+        val timeZone = event.timeZone
+        val startDateTime = event.startTime.toDateTime(timeZone)
 
-        return formatter.print(event.startTime.toDateTime())
+        // Note: the space at the end of the template string is not a typo, it separates the date from the time
+        val formattedDate = if (showDay) "${dateFormatter.withZone(timeZone).print(startDateTime)} " else ""
+        val formattedTime = timeFormatter.withZone(timeZone).print(startDateTime)
+
+        return "$formattedDate$formattedTime"
     }
 }
