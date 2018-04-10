@@ -79,7 +79,7 @@ internal class SearchAdapter(activity: AppCompatActivity) : ListAdapter<SearchLi
     }
 
     override fun onBindViewHolder(holder: SearchItemViewHolder, position: Int) {
-        val item = searchResult.elements[position]
+        val item = getItem(position)
         when (item) {
             is SearchListElement.EventHeader -> (holder as HeaderViewHolder).updateWith(HeaderType.EVENTS)
             is SearchListElement.SpeakerHeader -> (holder as HeaderViewHolder).updateWith(HeaderType.SPEAKERS)
@@ -90,8 +90,10 @@ internal class SearchAdapter(activity: AppCompatActivity) : ListAdapter<SearchLi
     }
 
     fun createSpanSizeLookup(columnsCount: Int): GridLayoutManager.SpanSizeLookup {
-        return GridSpanSizeLookup(searchResult.elements, columnsCount)
+        return GridSpanSizeLookup(::getItem, ::isEmpty, columnsCount)
     }
+
+    private fun isEmpty() = itemCount == 0
 
     fun updateWith(searchResult: SearchResult.Success, listener: SearchRecyclerView.OnSearchResultClickListener) {
         this.listener = listener
