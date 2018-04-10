@@ -50,6 +50,7 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_search)
         enableLightNavigationBar(this)
         setupToolbar()
@@ -245,7 +246,7 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
     companion object {
 
         private const val SPEECH_REQUEST_CODE = 100
-        private const val QUERY_DEBOUNCE_TIMEOUT = 250L
+        private const val QUERY_DEBOUNCE_TIMEOUT = 350L
         private const val MIN_QUERY_LENGTH = 2
         private const val QUERY_KEY = "SearchActivity.query_key"
     }

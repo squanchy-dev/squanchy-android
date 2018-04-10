@@ -34,7 +34,7 @@ sealed class SearchItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     class SearchEventViewHolder(itemView: EventItemView) : SearchItemViewHolder(itemView) {
 
         fun updateWith(event: Event, listener: (Event) -> Unit) {
-            (itemView as EventItemView).updateWith(event)
+            (itemView as EventItemView).updateWith(event, showRoom = true, showDay = true)
             itemView.setOnClickListener { listener(event) }
         }
     }

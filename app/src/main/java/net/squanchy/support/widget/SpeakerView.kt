@@ -97,8 +97,9 @@ abstract class SpeakerView @JvmOverloads constructor(
             throw IllegalStateException("Unable to access the ImageLoader, it hasn't been initialized yet")
         }
 
-        photoView.setImageDrawable(null)
         imageLoader.load(photoUrl)
+            .placeholder(R.drawable.ic_avatar_placeholder)
+            .error(R.drawable.ic_no_avatar)
             .into(photoView)
     }
 

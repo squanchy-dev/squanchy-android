@@ -38,7 +38,10 @@ class SearchItemView @JvmOverloads constructor(
 
         val avatarImageURL = speaker.photoUrl
         if (avatarImageURL.isDefined()) {
-            imageLoader.load(avatarImageURL.getOrThrow()).into(speakerPhoto)
+            imageLoader.load(avatarImageURL.getOrThrow())
+                .placeholder(R.drawable.ic_avatar_placeholder)
+                .error(R.drawable.ic_no_avatar)
+                .into(speakerPhoto)
         } else {
             speakerPhoto.setImageResource(R.drawable.ic_no_avatar)
         }

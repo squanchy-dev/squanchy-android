@@ -32,6 +32,10 @@ private class GlideImageRequest(private val request: RequestBuilder<Drawable>) :
         request.apply(RequestOptions.errorOf(errorImageResId))
     }
 
+    override fun placeholder(@DrawableRes placeholderImageResId: Int) = apply {
+        request.apply(RequestOptions.placeholderOf(placeholderImageResId))
+    }
+
     override fun into(target: ImageView) {
         request.into(target)
     }
