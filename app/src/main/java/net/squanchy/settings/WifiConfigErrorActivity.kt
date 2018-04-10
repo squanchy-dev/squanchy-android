@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_wifi_config_error.*
 import net.squanchy.R
+import net.squanchy.remoteconfig.WifiConfiguration
 
 class WifiConfigErrorActivity : AppCompatActivity() {
 
@@ -43,10 +44,10 @@ class WifiConfigErrorActivity : AppCompatActivity() {
         private val EXTRA_WIFI_PASSWORD = WifiConfigErrorActivity::class.java.canonicalName + ".wifi_password"
         private val COPIED_PASSWORD_LABEL = "password"
 
-        fun createIntent(context: Context, ssid: String, password: String) =
+        fun createIntent(context: Context, wifiConfiguration: WifiConfiguration) =
             Intent(context, WifiConfigErrorActivity::class.java).apply {
-                putExtra(EXTRA_WIFI_SSID, ssid)
-                putExtra(EXTRA_WIFI_PASSWORD, password)
+                putExtra(EXTRA_WIFI_SSID, wifiConfiguration.ssid)
+                putExtra(EXTRA_WIFI_PASSWORD, wifiConfiguration.password)
             }
     }
 }

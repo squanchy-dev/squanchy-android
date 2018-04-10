@@ -1,6 +1,7 @@
 package net.squanchy.remoteconfig
 
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -14,13 +15,11 @@ class RemoteConfig(
     private val cacheExpiryInSeconds: Long
         get() = if (debugMode) EXPIRY_IMMEDIATELY else EXPIRY_ONE_HOUR
 
-    fun wifiAutoConfigEnabledNow() = firebaseRemoteConfig.getBoolean(KEY_WIFI_CONFIG_ENABLED)
+    fun getString(key: String): String = firebaseRemoteConfig.getString(key)
 
-    fun wifiSsid(): String = firebaseRemoteConfig.getString(KEY_WIFI_SSID)
+    fun getBoolean(key: String) = firebaseRemoteConfig.getBoolean(key)
 
-    fun wifiPassword(): String = firebaseRemoteConfig.getString(KEY_WIFI_PASSWORD)
-
-    fun getBoolean(key: String): Single<Boolean> =
+    fun getUpdatedBoolean(key: String): Single<Boolean> =
         getConfigValue { firebaseRemoteConfig.getBoolean(key) }
 
     private fun <T> getConfigValue(action: () -> T): Single<T> {
@@ -53,8 +52,5 @@ class RemoteConfig(
 
         private val EXPIRY_IMMEDIATELY = TimeUnit.HOURS.toSeconds(0)
         private val EXPIRY_ONE_HOUR = TimeUnit.HOURS.toSeconds(1)
-        private val KEY_WIFI_CONFIG_ENABLED = "wifi_config_enabled"
-        private val KEY_WIFI_SSID = "wifi_ssid"
-        private val KEY_WIFI_PASSWORD = "wifi_password"
     }
 }

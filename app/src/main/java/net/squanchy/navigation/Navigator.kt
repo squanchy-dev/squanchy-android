@@ -9,7 +9,6 @@ import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP
 import android.net.Uri
 import android.provider.Settings
-import android.support.v4.content.ContextCompat.startActivity
 import net.squanchy.BuildConfig
 import net.squanchy.about.AboutActivity
 import net.squanchy.about.licenses.LicensesActivity
@@ -17,6 +16,7 @@ import net.squanchy.eventdetails.EventDetailsActivity
 import net.squanchy.home.HomeActivity
 import net.squanchy.navigation.firststart.FirstStartWithNoNetworkActivity
 import net.squanchy.onboarding.OnboardingPage
+import net.squanchy.remoteconfig.WifiConfiguration
 import net.squanchy.schedule.tracksfilter.ScheduleTracksFilterActivity
 import net.squanchy.search.SearchActivity
 import net.squanchy.settings.SettingsActivity
@@ -174,8 +174,8 @@ class Navigator(
         startForResult(intent, requestCode)
     }
 
-    fun toWifiConfigError(ssid: String, password: String) {
-        start(WifiConfigErrorActivity.createIntent(activity, ssid, password))
+    fun toWifiConfigError(wifiConfiguration: WifiConfiguration) {
+        start(WifiConfigErrorActivity.createIntent(activity, wifiConfiguration))
     }
 
     fun toWifiSystemSettings() {

@@ -19,6 +19,8 @@ import net.squanchy.R
 import net.squanchy.analytics.Analytics
 import net.squanchy.navigation.Navigator
 import net.squanchy.remoteconfig.RemoteConfig
+import net.squanchy.remoteconfig.obtainVenueWifiConfiguration
+import net.squanchy.remoteconfig.wifiAutoConfigEnabledNow
 import net.squanchy.service.repository.User
 import net.squanchy.signin.SignInOrigin
 import net.squanchy.signin.SignInService
@@ -103,7 +105,7 @@ class SettingsFragment : PreferenceFragment() {
     private fun setupWifiConfigPreference() {
         val wifiPreference = findPreference(getString(R.string.auto_wifi_preference_key))
 
-        if (remoteConfig.wifiAutoConfigEnabledNow()) {
+        if (wifiAutoConfigEnabledNow(remoteConfig)) {
             wifiPreference.setOnPreferenceClickListener { setupWifi(); true }
         } else {
             val settingsCategory = findPreference(getString(R.string.settings_category_key)) as PreferenceCategory
@@ -112,12 +114,11 @@ class SettingsFragment : PreferenceFragment() {
     }
 
     private fun setupWifi() {
-        val ssid = remoteConfig.wifiSsid()
-        val password = remoteConfig.wifiPassword()
-        val wifiConfig = WifiConfiguration()
-        wifiConfig.SSID = "\"$ssid\""
-        wifiConfig.preSharedKey = "\"$password\""
-        val netId = wifiManager.addNetwork(wifiConfig)
+        val wifiConfiguration = obtainVenueWifiConfiguration(remoteConfig)
+        val networkConfig = WifiConfiguration()
+        networkConfig.SSID = "\"${wifiConfiguration.ssid}\""
+        networkConfig.preSharedKey = "\"${wifiConfiguration.password}\""
+        val netId = wifiManager.addNetwork(networkConfig)
         wifiManager.disconnect()
         val networkEnabled = wifiManager.enableNetwork(netId, true)
         wifiManager.reconnect()
@@ -125,7 +126,7 @@ class SettingsFragment : PreferenceFragment() {
         if (networkEnabled) {
             Snackbar.make(viewOrThrow, R.string.settings_message_wifi_success, Snackbar.LENGTH_INDEFINITE).show()
         } else {
-            navigator.toWifiConfigError(ssid, password)
+            navigator.toWifiConfigError(wifiConfiguration)
         }
     }
 
