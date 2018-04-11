@@ -1,5 +1,6 @@
 package net.squanchy.service.firebase.model.schedule
 
+import com.google.firebase.firestore.IgnoreExtraProperties
 import java.util.Date
 
 class FirestoreSchedulePage {
@@ -7,11 +8,13 @@ class FirestoreSchedulePage {
     var events: List<FirestoreEvent> = emptyList()
 }
 
+@IgnoreExtraProperties
 class FirestoreDay {
     lateinit var id: String
     lateinit var date: Date
 }
 
+@IgnoreExtraProperties
 class FirestoreEvent {
     lateinit var id: String
     lateinit var title: String
