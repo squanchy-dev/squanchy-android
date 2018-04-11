@@ -341,15 +341,15 @@
   </style>
 
   <style name="SpeakerDetails.Bio" parent="None">
-    <item name="android:requiresFadingEdge">vertical</item>
-    <item name="android:fadingEdgeLength">64dp</item>
     <item name="android:colorBackgroundCacheHint">@color/white</item>
+    <item name="android:fadingEdgeLength">@dimen/speaker_details_bio_padding_vertical</item>
+    <item name="android:requiresFadingEdge">vertical</item>
   </style>
 
   <style name="SpeakerDetails.Bio.Text" parent="None">
     <item name="android:lineSpacingExtra">@dimen/speaker_details_bio_line_spacing_extra</item>
     <item name="android:lineSpacingMultiplier">1</item>
-    <item name="android:paddingBottom">@dimen/speaker_details_bio_padding</item>
+    <item name="android:paddingBottom">@dimen/speaker_details_bio_padding_vertical</item>
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.SpeakerDetails.Bio</item>
   </style>
 
