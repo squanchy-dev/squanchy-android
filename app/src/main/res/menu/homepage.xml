@@ -3,9 +3,10 @@
   xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <item
-    android:id="@+id/action_settings"
-    android:title="@string/settings_label"
-    android:icon="@drawable/ic_settings"
+    android:id="@+id/action_filter"
+    android:title="@string/filter_schedule"
+    android:icon="@drawable/ic_filter_list"
+    android:visible="false"
     app:showAsAction="ifRoom" />
 
   <item
@@ -15,9 +16,9 @@
     app:showAsAction="ifRoom" />
 
   <item
-    android:id="@+id/action_filter"
-    android:title="@string/filter_schedule"
-    android:icon="@drawable/ic_filter_list"
-    app:showAsAction="ifRoom" />
+    android:id="@+id/action_settings"
+    android:title="@string/settings_label"
+    android:icon="@drawable/ic_settings"
+    app:showAsAction="never" />
 
 </menu>
