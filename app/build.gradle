@@ -153,6 +153,7 @@ dependencies {
 
     implementation libraries.app.jodaTimeAndroid
     implementation libraries.app.kotlin
+    implementation libraries.app.kotlinReflect
 
     implementation libraries.app.playServicesAuth
     implementation libraries.app.rxJava
