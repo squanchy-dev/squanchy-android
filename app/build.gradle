@@ -24,6 +24,11 @@ apply from: 'build-properties.gradle'
 android {
     compileSdkVersion Integer.parseInt(project.COMPILE_SDK_VERSION)
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
     defaultConfig {
         applicationId(applicationProps['applicationId'].or(envVars['APPLICATION_ID']).string)
 
