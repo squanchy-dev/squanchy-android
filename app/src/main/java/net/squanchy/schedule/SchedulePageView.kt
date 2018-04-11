@@ -25,6 +25,7 @@ import net.squanchy.support.text.applyTypeface
 import net.squanchy.support.text.getFontFor
 import net.squanchy.support.text.hasTypefaceSpan
 import net.squanchy.support.unwrapToActivityContext
+import net.squanchy.support.widget.calculateMenuItemCenterCoordinates
 import timber.log.Timber
 
 class SchedulePageView @JvmOverloads constructor(
@@ -64,6 +65,8 @@ class SchedulePageView @JvmOverloads constructor(
     private fun setupToolbar() {
         toolbar.setTitle(R.string.activity_schedule)
         toolbar.inflateMenu(R.menu.homepage)
+        toolbar.menu.findItem(R.id.action_filter).isVisible = true
+
         toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.action_search -> {
@@ -75,7 +78,7 @@ class SchedulePageView @JvmOverloads constructor(
                     true
                 }
                 R.id.action_filter -> {
-                    navigate.toScheduleFiltering(context)
+                    navigate.toScheduleFiltering(toolbar.calculateMenuItemCenterCoordinates(R.id.action_filter))
                     true
                 }
                 else -> false

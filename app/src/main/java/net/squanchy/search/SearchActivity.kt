@@ -211,10 +211,10 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
         searchField.setText("")
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == SPEECH_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            val results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-            searchField.setText(results[0])
+            val results = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+            if (results != null) searchField.setText(results[0])
             return
         }
         super.onActivityResult(requestCode, resultCode, data)

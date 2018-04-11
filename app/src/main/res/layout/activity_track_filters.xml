@@ -28,7 +28,7 @@
       android:layout_marginEnd="@dimen/track_filters_title_margin_horizontal"
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toStartOf="@+id/closeButton" />
+      app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
       android:id="@+id/dialogSubtitle"
@@ -39,15 +39,6 @@
       app:layout_constraintStart_toStartOf="@+id/dialogTitle"
       app:layout_constraintTop_toBottomOf="@+id/dialogTitle"
       app:layout_constraintEnd_toEndOf="@+id/dialogTitle" />
-
-    <ImageButton
-      android:id="@+id/closeButton"
-      style="@style/TrackFilters.Filters.CloseButton"
-      android:layout_width="@dimen/track_filters_close_button_size"
-      android:layout_height="@dimen/track_filters_close_button_size"
-      android:layout_marginTop="@dimen/track_filters_close_button_margin"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.RecyclerView
       android:id="@+id/trackFiltersList"
