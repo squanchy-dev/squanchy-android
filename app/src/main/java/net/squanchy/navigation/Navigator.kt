@@ -1,7 +1,6 @@
 package net.squanchy.navigation
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -62,8 +61,8 @@ class Navigator(
         attemptDeeplinkOrFallback(deeplinkStatusUrl, fallbackStatusUrl)
     }
 
-    fun toScheduleFiltering(ctx: Context) {
-        start(Intent(ctx, ScheduleTracksFilterActivity::class.java))
+    fun toScheduleFiltering() {
+        start(Intent(activity, ScheduleTracksFilterActivity::class.java))
     }
 
     private fun attemptDeeplinkOrFallback(deeplinkUrl: String, fallbackUrl: String) {

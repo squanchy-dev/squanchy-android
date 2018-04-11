@@ -77,7 +77,7 @@ class SchedulePageView @JvmOverloads constructor(
                     true
                 }
                 R.id.action_filter -> {
-                    navigate.toScheduleFiltering(context)
+                    navigate.toScheduleFiltering()
                     true
                 }
                 else -> false
