@@ -64,6 +64,8 @@ class SchedulePageView @JvmOverloads constructor(
     private fun setupToolbar() {
         toolbar.setTitle(R.string.activity_schedule)
         toolbar.inflateMenu(R.menu.homepage)
+        toolbar.menu.findItem(R.id.action_filter).isVisible = true
+
         toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.action_search -> {

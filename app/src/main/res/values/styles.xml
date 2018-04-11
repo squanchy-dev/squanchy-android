@@ -38,6 +38,7 @@
   <style name="Squanchy.Toolbar" parent="Widget.AppCompat.Toolbar">
     <item name="titleTextAppearance">@style/TextAppearance.Squanchy.Toolbar</item>
     <item name="subtitleTextAppearance">@style/TextAppearance.Squanchy.Toolbar</item>
+    <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
   </style>
 
   <style name="TextAppearance.Squanchy.Toolbar" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
