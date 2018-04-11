@@ -113,6 +113,29 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
             }
     }
 
+    private fun prepareAppearAnimation() {
+        appearInterpolator = AnimationUtils.loadInterpolator(this, android.R.interpolator.linear_out_slow_in)
+        filtersRoot.visibility = View.VISIBLE
+
+        val titleDeltaY = resources.getDimension(R.dimen.track_filters_title_appear_delta_y)
+        dialogTitle.apply {
+            translationY = -titleDeltaY
+            alpha = 0F
+        }
+
+        val subtitleDeltaY = resources.getDimension(R.dimen.track_filters_subtitle_appear_delta_y)
+        dialogSubtitle.apply {
+            translationY = -subtitleDeltaY
+            alpha = 0F
+        }
+
+        val tracksDeltaY = resources.getDimension(R.dimen.track_filters_tracks_appear_delta_y)
+        trackFiltersList.apply {
+            translationY = -tracksDeltaY
+            alpha = 0F
+        }
+    }
+
     @Suppress("MagicNumber") // Just animation code… needs a few magic numbers
     private fun animateAppearing() {
         val centerX = closeButton.x + closeButton.width / 2
@@ -145,29 +168,6 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
         .setDuration(duration)
         .setStartDelay(delay)
         .start()
-
-    private fun prepareAppearAnimation() {
-        appearInterpolator = AnimationUtils.loadInterpolator(this, android.R.interpolator.linear_out_slow_in)
-        filtersRoot.visibility = View.VISIBLE
-
-        val titleDeltaY = resources.getDimension(R.dimen.track_filters_title_appear_delta_y)
-        dialogTitle.apply {
-            translationY = -titleDeltaY
-            alpha = 0F
-        }
-
-        val subtitleDeltaY = resources.getDimension(R.dimen.track_filters_subtitle_appear_delta_y)
-        dialogSubtitle.apply {
-            translationY = -subtitleDeltaY
-            alpha = 0F
-        }
-
-        val tracksDeltaY = resources.getDimension(R.dimen.track_filters_tracks_appear_delta_y)
-        trackFiltersList.apply {
-            translationY = -tracksDeltaY
-            alpha = 0F
-        }
-    }
 
     private fun combineIntoCheckableTracks(): BiFunction<List<Track>, Set<Track>, List<CheckableTrack>> {
         return BiFunction { tracks, selectedTracks ->
