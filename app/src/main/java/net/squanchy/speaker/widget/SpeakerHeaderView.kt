@@ -1,9 +1,9 @@
 package net.squanchy.speaker.widget
 
 import android.content.Context
+import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
 import android.view.View
-import android.widget.LinearLayout
 import arrow.core.Option
 import kotlinx.android.synthetic.main.activity_speaker_details.view.*
 import net.squanchy.R
@@ -16,9 +16,8 @@ import net.squanchy.support.unwrapToActivityContext
 class SpeakerHeaderView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet,
-    defStyleAttr: Int = 0,
-    defStyleRes: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr, defStyleRes) {
+    defStyleAttr: Int = 0
+) : ConstraintLayout(context, attrs, defStyleAttr) {
 
     private var imageLoader: ImageLoader? = null
 
@@ -27,12 +26,6 @@ class SpeakerHeaderView @JvmOverloads constructor(
             val activity = context.unwrapToActivityContext()
             imageLoader = imageLoaderComponent(activity).imageLoader()
         }
-
-        super.setOrientation(LinearLayout.HORIZONTAL)
-    }
-
-    override fun setOrientation(orientation: Int): Nothing {
-        throw UnsupportedOperationException("Changing orientation is not supported for SpeakerHeaderView")
     }
 
     fun updateWith(speaker: Speaker) {

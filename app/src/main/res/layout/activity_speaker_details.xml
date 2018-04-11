@@ -4,12 +4,16 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/speakerDetailsLayout"
   android:layout_width="match_parent"
-  android:layout_height="wrap_content">
+  android:layout_height="match_parent">
 
   <android.support.design.widget.AppBarLayout
+    android:id="@+id/appbar"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="@dimen/match_constraint"
+    android:layout_height="wrap_content"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
 
     <android.support.v7.widget.Toolbar
       android:id="@+id/toolbar"
@@ -29,31 +33,30 @@
         style="@style/SpeakerDetails.Header.Speaker.Photo"
         android:layout_width="@dimen/speaker_details_speaker_photo"
         android:layout_height="@dimen/speaker_details_speaker_photo"
-        android:layout_gravity="start|center_vertical"
-        android:layout_marginEnd="@dimen/speaker_details_speaker_photo_margin_end"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:src="?colorAccent" />
 
-      <LinearLayout
-        android:layout_width="match_parent"
+      <TextView
+        android:id="@+id/speakerName"
+        style="@style/SpeakerDetails.Header.Speaker.Name"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="fill_horizontal|center_vertical"
-        android:orientation="vertical">
+        android:layout_marginStart="@dimen/speaker_details_speaker_photo_margin_end"
+        app:layout_constraintTop_toTopOf="@+id/speakerPhoto"
+        app:layout_constraintStart_toEndOf="@+id/speakerPhoto"
+        app:layout_constraintBottom_toTopOf="@+id/speakerCompany"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Qi Qu" />
 
-        <TextView
-          android:id="@+id/speakerName"
-          style="@style/SpeakerDetails.Header.Speaker.Name"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          tools:text="Qi Qu" />
-
-        <TextView
-          android:id="@+id/speakerCompany"
-          style="@style/SpeakerDetails.Header.Speaker.Company"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          tools:text="Novoda" />
-
-      </LinearLayout>
+      <TextView
+        android:id="@+id/speakerCompany"
+        style="@style/SpeakerDetails.Header.Speaker.Company"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/speakerName"
+        app:layout_constraintStart_toStartOf="@+id/speakerName"
+        tools:text="Novoda" />
 
     </net.squanchy.speaker.widget.SpeakerHeaderView>
 
@@ -61,17 +64,19 @@
 
   <android.support.v4.widget.NestedScrollView
     style="@style/SpeakerDetails.Bio"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="@dimen/match_constraint"
+    android:layout_height="@dimen/match_constraint"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/appbar"
+    app:layout_constraintBottom_toBottomOf="parent">
 
     <TextView
       android:id="@+id/speakerBio"
       style="@style/SpeakerDetails.Bio.Text"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginStart="@dimen/speaker_details_bio_padding"
-      android:layout_marginTop="@dimen/speaker_details_bio_padding"
-      android:layout_marginEnd="@dimen/speaker_details_bio_padding"
+      android:padding="@dimen/speaker_details_bio_padding_horizontal"
       tools:text="Now this is a story all about how\nMy life got flipped-turned upside down\nAnd I'd like to take a minute\nJust sit right there\nI'll tell you how I became the prince of a town called Bel-Air" />
 
   </android.support.v4.widget.NestedScrollView>
