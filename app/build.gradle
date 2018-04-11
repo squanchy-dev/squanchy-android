@@ -98,6 +98,8 @@ private static boolean isNotRunningOnCI() {
 
 play {
     jsonFile = teamPropsFile('play-store-keys.json')
+    errorOnSizeLimit = true
+    uploadImages = true
 }
 
 detekt {
