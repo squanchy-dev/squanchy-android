@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable
 import android.support.annotation.ColorInt
 import android.support.annotation.IntRange
 import android.support.v4.view.animation.FastOutLinearInInterpolator
+import androidx.animation.doOnEnd
 import me.eugeniomarletti.renderthread.CanvasProperty
 import me.eugeniomarletti.renderthread.RenderThread
 import kotlin.math.max
@@ -80,6 +81,10 @@ class CircularRevealDrawable : ColorDrawable() {
         radiusAnimator = RenderThread.createFloatAnimator(this, canvas, radiusProperty, targetRadius)
         radiusAnimator.interpolator = interpolator
         radiusAnimator.duration = revealDuration.toLong()
+        radiusAnimator.doOnEnd {
+            color = targetColor
+        }
+
         targetColor = pendingTargetColor
     }
 
