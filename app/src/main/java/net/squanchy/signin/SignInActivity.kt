@@ -92,7 +92,7 @@ class SignInActivity : AppCompatActivity() {
         window.setGravity(Gravity.FILL_HORIZONTAL or Gravity.BOTTOM)
     }
 
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == RC_SIGN_IN) {
