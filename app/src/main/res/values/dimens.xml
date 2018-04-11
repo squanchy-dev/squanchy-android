@@ -205,8 +205,6 @@
   <dimen name="track_filters_tracks_appear_delta_y">22dp</dimen>
   <dimen name="track_filters_item_padding_vertical">8dp</dimen>
   <dimen name="track_filters_item_padding_horizontal">16dp</dimen>
-  <dimen name="track_filters_close_button_size">48dp</dimen>
-  <dimen name="track_filters_close_button_margin">4dp</dimen>
   <dimen name="track_filters_item_corner_radius">200dp</dimen>
   <dimen name="track_filters_item_stroke_width">2dp</dimen>
 

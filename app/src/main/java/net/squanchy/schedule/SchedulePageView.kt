@@ -25,6 +25,7 @@ import net.squanchy.support.text.applyTypeface
 import net.squanchy.support.text.getFontFor
 import net.squanchy.support.text.hasTypefaceSpan
 import net.squanchy.support.unwrapToActivityContext
+import net.squanchy.support.widget.calculateMenuItemCenterCoordinates
 import timber.log.Timber
 
 class SchedulePageView @JvmOverloads constructor(
@@ -77,7 +78,7 @@ class SchedulePageView @JvmOverloads constructor(
                     true
                 }
                 R.id.action_filter -> {
-                    navigate.toScheduleFiltering()
+                    navigate.toScheduleFiltering(toolbar.calculateMenuItemCenterCoordinates(R.id.action_filter))
                     true
                 }
                 else -> false

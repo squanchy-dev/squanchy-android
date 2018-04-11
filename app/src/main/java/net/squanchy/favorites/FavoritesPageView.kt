@@ -80,10 +80,6 @@ class FavoritesPageView @JvmOverloads constructor(
                 showSettings()
                 true
             }
-            R.id.action_filter -> {
-                navigator.toScheduleFiltering(context)
-                true
-            }
             else -> false
         }
     }

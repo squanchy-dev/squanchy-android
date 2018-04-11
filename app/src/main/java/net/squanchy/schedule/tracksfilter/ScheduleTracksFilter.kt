@@ -1,5 +1,7 @@
 package net.squanchy.schedule.tracksfilter
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -21,7 +23,7 @@ import net.squanchy.R
 import net.squanchy.schedule.domain.view.Track
 import net.squanchy.service.repository.TracksRepository
 import net.squanchy.support.view.setAdapterIfNone
-import java.util.concurrent.atomic.AtomicBoolean
+import net.squanchy.support.widget.OriginCoordinates
 import kotlin.math.hypot
 
 class ScheduleTracksFilterActivity : AppCompatActivity() {
@@ -35,7 +37,8 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
     private var subscription: Disposable? = null
     private var checkableTracks: List<CheckableTrack> = emptyList()
 
-    private val needsAppearAnimation: AtomicBoolean = AtomicBoolean(true)
+    private var needsAppearAnimation = true
+    private var appearAnimationOrigin: OriginCoordinates? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,12 +46,13 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
         setContentView(R.layout.activity_track_filters)
 
         savedInstanceState?.apply {
-            val restoredNeedsAppearAnimation = getBoolean(EXTRA_NEEDS_APPEAR_ANIMATION, true)
-            needsAppearAnimation.set(restoredNeedsAppearAnimation)
+            needsAppearAnimation = getBoolean(EXTRA_NEEDS_APPEAR_ANIMATION, true)
+            appearAnimationOrigin = getParcelable(EXTRA_APPEAR_ANIMATION_ORIGIN)
         }
 
-        backgroundDim.setOnClickListener { animateDisappearance() }
-        closeButton.setOnClickListener { animateDisappearance() }
+        appearAnimationOrigin = appearAnimationOrigin ?: intent.getParcelableExtra(EXTRA_APPEAR_ANIMATION_ORIGIN)
+
+        backgroundDim.setOnClickListener { closeFilters() }
 
         val component = tracksFilterComponent(this)
         tracksRepository = component.tracksRepository()
@@ -68,14 +72,18 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
         trackFiltersList.itemAnimator = null
     }
 
-    private fun Set<Track>.addOrRemove(track: Track, selected: Boolean): Set<Track> =
-        if (selected) this + track else this - track
+    private fun closeFilters() {
+        if (appearAnimationOrigin == null) {
+            finish()
+        } else {
+            animateDisappearance(appearAnimationOrigin!!)
+        }
+    }
 
-    private fun animateDisappearance() {
+    private fun animateDisappearance(origin: OriginCoordinates) {
         backgroundDim.isEnabled = false
 
-        val centerX = closeButton.x + closeButton.width / 2
-        val centerY = closeButton.y + closeButton.height / 2
+        val (centerX, centerY) = origin
 
         ViewAnimationUtils.createCircularReveal(
             filtersRoot,
@@ -93,12 +101,16 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
         }.start()
     }
 
+    private fun Set<Track>.addOrRemove(track: Track, selected: Boolean): Set<Track> =
+        if (selected) this + track else this - track
+
     override fun onStart() {
         super.onStart()
 
-        if (needsAppearAnimation.getAndSet(false)) {
+        if (needsAppearAnimation && appearAnimationOrigin != null) {
+            needsAppearAnimation = false
             prepareAppearAnimation()
-            filtersRoot.postOnAnimation { animateAppearing() }
+            filtersRoot.postOnAnimation { animateAppearing(appearAnimationOrigin!!) }
         }
 
         subscription = Observable.combineLatest(tracksRepository.tracks(), tracksFilter.selectedTracks, combineIntoCheckableTracks())
@@ -137,9 +149,8 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
     }
 
     @Suppress("MagicNumber") // Just animation code… needs a few magic numbers
-    private fun animateAppearing() {
-        val centerX = closeButton.x + closeButton.width / 2
-        val centerY = closeButton.y + closeButton.height / 2
+    private fun animateAppearing(origin: OriginCoordinates) {
+        val (centerX, centerY) = origin
 
         ViewAnimationUtils.createCircularReveal(
             filtersRoot,
@@ -177,7 +188,8 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-        outState?.putBoolean(EXTRA_NEEDS_APPEAR_ANIMATION, needsAppearAnimation.get())
+        outState?.putBoolean(EXTRA_NEEDS_APPEAR_ANIMATION, needsAppearAnimation)
+        outState?.putParcelable(EXTRA_APPEAR_ANIMATION_ORIGIN, appearAnimationOrigin)
     }
 
     override fun onStop() {
@@ -187,5 +199,12 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
 
     companion object {
         private const val EXTRA_NEEDS_APPEAR_ANIMATION = "ScheduleTracksFilterActivity.EXTRA_NEEDS_APPEAR_ANIMATION"
+        private const val EXTRA_APPEAR_ANIMATION_ORIGIN = "ScheduleTracksFilterActivity.EXTRA_APPEAR_ANIMATION_ORIGIN"
+
+        fun createIntent(context: Context, originCoordinates: OriginCoordinates?): Intent {
+            return Intent(context, ScheduleTracksFilterActivity::class.java).apply {
+                putExtra(EXTRA_APPEAR_ANIMATION_ORIGIN, originCoordinates)
+            }
+        }
     }
 }

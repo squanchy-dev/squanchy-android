@@ -703,13 +703,6 @@
     <item name="fontFamily">@font/default_typeface_medium</item>
   </style>
 
-  <style name="TrackFilters.Filters.CloseButton" parent="None">
-    <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
-    <item name="android:scaleType">centerInside</item>
-    <item name="android:src">@drawable/ic_close</item>
-    <item name="android:tint">@color/track_filters_close_button_tint</item>
-  </style>
-
   <style name="TrackFilters.Filters.Tracks" parent="None">
     <item name="android:clipToPadding">false</item>
     <item name="android:minHeight">64dp</item>

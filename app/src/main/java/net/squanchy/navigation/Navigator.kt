@@ -20,6 +20,7 @@ import net.squanchy.settings.SettingsActivity
 import net.squanchy.signin.SignInActivity
 import net.squanchy.signin.SignInOrigin
 import net.squanchy.speaker.SpeakerDetailsActivity
+import net.squanchy.support.widget.OriginCoordinates
 import net.squanchy.tweets.domain.TweetLinkInfo
 import net.squanchy.venue.domain.view.Venue
 import timber.log.Timber
@@ -61,8 +62,8 @@ class Navigator(
         attemptDeeplinkOrFallback(deeplinkStatusUrl, fallbackStatusUrl)
     }
 
-    fun toScheduleFiltering() {
-        start(Intent(activity, ScheduleTracksFilterActivity::class.java))
+    fun toScheduleFiltering(originCoordinates: OriginCoordinates?) {
+        start(ScheduleTracksFilterActivity.createIntent(activity, originCoordinates))
     }
 
     private fun attemptDeeplinkOrFallback(deeplinkUrl: String, fallbackUrl: String) {
