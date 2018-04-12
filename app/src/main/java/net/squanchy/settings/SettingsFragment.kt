@@ -155,12 +155,14 @@ class SettingsFragment : PreferenceFragment() {
 
         accountSignInSignOutPreference.setTitle(R.string.sign_out_title)
         accountSignInSignOutPreference.setOnPreferenceClickListener {
-            signInService.signOut()
-                .subscribe {
-                    Snackbar.make(viewOrThrow, R.string.settings_message_signed_out, Snackbar.LENGTH_SHORT).show()
-                    analytics.trackUserNotLoggedIn()
-                }
-            true
+            subscriptions.add(
+                signInService.signOut()
+                    .subscribe {
+                        Snackbar.make(viewOrThrow, R.string.settings_message_signed_out, Snackbar.LENGTH_SHORT).show()
+                        analytics.trackUserNotLoggedIn()
+                    }
+            )
+            return@setOnPreferenceClickListener true
         }
     }
 
