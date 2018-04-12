@@ -40,10 +40,16 @@
       android:order="0"/>
 
     <Preference
+      android:key="@string/auto_wifi_preference_key"
+      android:title="@string/auto_wifi_title"
+      android:icon="@drawable/ic_wifi"
+      android:order="1" />
+
+    <Preference
       android:key="@string/about_preference_key"
       android:title="@string/about_title"
       android:icon="@drawable/ic_about"
-      android:order="1" />
+      android:order="2" />
 
     <Preference
       android:key="@string/build_version_preference_key"

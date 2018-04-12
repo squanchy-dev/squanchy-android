@@ -1,6 +1,7 @@
 package net.squanchy.remoteconfig
 
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -14,7 +15,11 @@ class RemoteConfig(
     private val cacheExpiryInSeconds: Long
         get() = if (debugMode) EXPIRY_IMMEDIATELY else EXPIRY_ONE_HOUR
 
-    fun getBoolean(key: String): Single<Boolean> =
+    fun getString(key: String): String = firebaseRemoteConfig.getString(key)
+
+    fun getBoolean(key: String) = firebaseRemoteConfig.getBoolean(key)
+
+    fun getUpdatedBoolean(key: String): Single<Boolean> =
         getConfigValue { firebaseRemoteConfig.getBoolean(key) }
 
     private fun <T> getConfigValue(action: () -> T): Single<T> {

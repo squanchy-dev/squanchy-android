@@ -47,5 +47,6 @@
   <color name="white">#ffffff</color>
   <color name="white_60">#99ffffff</color>
   <color name="transparent">#0000</color>
+  <color name="grey">#f3f3f3</color>
 
 </resources>

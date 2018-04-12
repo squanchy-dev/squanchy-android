@@ -35,10 +35,11 @@ class OtherEventItemView @JvmOverloads constructor(
     }
 
     private fun startTimeAsFormattedString(event: Event): String {
+        val timeZone = event.timeZone
         val formatter = DateTimeFormat.shortTime()
-            .withZone(event.timeZone)
+            .withZone(timeZone)
 
-        return formatter.print(event.startTime.toDateTime())
+        return formatter.print(event.startTime.toDateTime(timeZone))
     }
 
     @DrawableRes

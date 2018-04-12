@@ -6,6 +6,7 @@ internal object Libraries {
             Library("Squanchy", "the Squanchy Contributors", License.APACHE_2),
             Library("Android", "Google Inc. and the Open Handset Alliance", License.APACHE_2),
             Library("Android Support Library", "Google Inc. and the Open Handset Alliance", License.APACHE_2),
+            Library("Λrrow", "The Arrow Authors", License.APACHE_2),
             Library("Dagger", "the Dagger Authors", License.APACHE_2),
             Library("Checkstyle", "the Checkstyle Authors", License.GNU_LGPL_2_1),
             Library("Detekt", "the Detekt contributors", License.APACHE_2),

@@ -723,4 +723,73 @@
     <item name="android:textSize">12sp</item>
   </style>
 
+  <style name="WifiConfigError" parent="None">
+    <item name="android:background">@color/window_background</item>
+  </style>
+
+  <style name="WifiConfigError.Title" parent="None">
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.WifiConfigError.Title</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.WifiConfigError.Title" parent="None">
+    <item name="android:textColor">@color/primary_text</item>
+    <item name="android:textSize">@dimen/wifi_config_error_title_text</item>
+    <item name="android:textStyle">bold</item>
+    <item name="fontFamily">@font/title_typeface</item>
+  </style>
+
+  <style name="WifiConfigError.Subtitle" parent="None">
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.WifiConfigError.Subtitle</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.WifiConfigError.Subtitle" parent="None">
+    <item name="android:textColor">@color/secondary_text</item>
+    <item name="android:textSize">@dimen/wifi_config_error_subtitle_text</item>
+    <item name="fontFamily">@font/title_typeface</item>
+  </style>
+
+  <style name="WifiConfigError.NetworkValue" parent="None">
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.WifiConfigError.NetworkValue</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.WifiConfigError.NetworkValue" parent="None">
+    <item name="android:textColor">@color/primary_text</item>
+    <item name="android:textSize">@dimen/wifi_config_error_network_value</item>
+    <item name="android:textStyle">bold</item>
+    <item name="fontFamily">@font/title_typeface</item>
+  </style>
+
+  <style name="WifiConfigError.NetworkValue.Label" parent="None">
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.WifiConfigError.NetworkValue.Label</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.WifiConfigError.NetworkValue.Label" parent="None">
+    <item name="android:textColor">@color/tertiary_text</item>
+    <item name="android:textSize">@dimen/wifi_config_error_network_value_label</item>
+    <item name="fontFamily">@font/default_typeface_medium</item>
+  </style>
+
+  <style name="WifiConfigError.CopyPassword" parent="Widget.AppCompat.Button.Borderless.Colored">
+    <item name="android:minWidth">0dp</item>
+    <item name="android:minHeight">0dp</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.WifiConfigError.CopyPassword</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.WifiConfigError.CopyPassword"
+    parent="None">
+    <item name="android:textColor">?colorPrimary</item>
+    <item name="android:textSize">@dimen/wifi_config_error_copy_text</item>
+    <item name="fontFamily">@font/title_typeface</item>
+  </style>
+
+  <style name="WifiConfigError.Button" parent="Button.Colored">
+    <item name="android:backgroundTint">?colorPrimary</item>
+    <item name="android:minHeight">@dimen/wifi_config_error_button_min_height</item>
+    <item name="android:paddingStart">@dimen/wifi_config_error_button_padding_horizontal</item>
+    <item name="android:paddingEnd">@dimen/wifi_config_error_button_padding_horizontal</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.FirstStartWithNoNetwork.Cancel</item>
+  </style>
+
+  <style name="TextAppearance.Squanchy.WifiConfigError.Button" parent="TextAppearance.Squanchy.Button.Colored" />
+
 </resources>
