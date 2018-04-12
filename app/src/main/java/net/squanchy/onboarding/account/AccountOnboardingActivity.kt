@@ -47,9 +47,9 @@ class AccountOnboardingActivity : AppCompatActivity() {
 
         disableUi()
         subscription = signInService.isSignedInToGoogle()
-            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .timeout(SIGNIN_STATE_CHECK_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+            .timeout(SIGNIN_STATE_CHECK_TIMEOUT_SECONDS, TimeUnit.SECONDS, Schedulers.computation())
+            .subscribeOn(Schedulers.io())
             .subscribe(
                 { signedIn ->
                     if (signedIn) {
