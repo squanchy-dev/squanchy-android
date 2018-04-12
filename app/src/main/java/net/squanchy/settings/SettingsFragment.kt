@@ -22,6 +22,7 @@ import net.squanchy.service.repository.User
 import net.squanchy.signin.SignInOrigin
 import net.squanchy.signin.SignInService
 import net.squanchy.support.lang.getOrThrow
+import net.squanchy.wificonfig.WifiConfigOrigin
 import net.squanchy.wificonfig.WifiConfigService
 
 class SettingsFragment : PreferenceFragment() {
@@ -111,7 +112,7 @@ class SettingsFragment : PreferenceFragment() {
     }
 
     private fun setupWifi() {
-        wifiConfigService.setupWifi(callback = object : WifiConfigService.Callback {
+        wifiConfigService.setupWifi(WifiConfigOrigin.SETTINGS, callback = object : WifiConfigService.Callback {
             override fun onSuccess(wifiConfiguration: WifiConfiguration) {
                 Snackbar.make(viewOrThrow, R.string.settings_message_wifi_success, Snackbar.LENGTH_SHORT).show()
             }
