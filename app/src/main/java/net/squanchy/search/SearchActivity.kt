@@ -46,7 +46,7 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
     private lateinit var searchTextWatcher: SearchTextWatcher
 
     private var hasQuery: Boolean = false
-    private lateinit var initialQuery: String
+    private lateinit var query: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +55,7 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
         enableLightNavigationBar(this)
         setupToolbar()
 
-        initialQuery = savedInstanceState?.getString(QUERY_KEY) ?: ""
+        query = savedInstanceState?.getString(QUERY_KEY) ?: ""
 
         with(searchComponent(this)) {
             searchService = service()
@@ -78,7 +78,8 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
 
         val searchSubscription = querySubject.throttleLast(QUERY_DEBOUNCE_TIMEOUT, TimeUnit.MILLISECONDS)
             .doOnNext(::updateSearchActionIcon)
-            .startWith(initialQuery)
+            .startWith(query)
+            .doOnNext { query = it }
             .flatMap(searchService::find)
             .distinctUntilChanged()
             .subscribeOn(Schedulers.io())
@@ -193,6 +194,11 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
     override fun onSaveInstanceState(outState: Bundle?) {
         outState?.putString(QUERY_KEY, searchField.text?.toString())
         super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        query = savedInstanceState?.getString(QUERY_KEY) ?: ""
     }
 
     private fun onVoiceSearchClicked() {
