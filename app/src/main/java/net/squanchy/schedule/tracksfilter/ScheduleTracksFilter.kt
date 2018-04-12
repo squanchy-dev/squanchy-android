@@ -24,6 +24,7 @@ import net.squanchy.schedule.domain.view.Track
 import net.squanchy.service.repository.TracksRepository
 import net.squanchy.support.view.setAdapterIfNone
 import net.squanchy.support.widget.OriginCoordinates
+import timber.log.Timber
 import kotlin.math.hypot
 
 class ScheduleTracksFilterActivity : AppCompatActivity() {
@@ -118,11 +119,14 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
             .distinctUntilChanged()
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { checkableTracks ->
-                trackFiltersList.setAdapterIfNone(trackAdapter)
-                this.checkableTracks = checkableTracks
-                trackAdapter.submitList(checkableTracks)
-            }
+            .subscribe(
+                { checkableTracks ->
+                    trackFiltersList.setAdapterIfNone(trackAdapter)
+                    this.checkableTracks = checkableTracks
+                    trackAdapter.submitList(checkableTracks)
+                },
+                Timber::e
+            )
     }
 
     private fun prepareAppearAnimation() {

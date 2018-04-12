@@ -16,6 +16,7 @@ import net.squanchy.navigation.Navigator
 import net.squanchy.support.text.parseHtml
 import net.squanchy.support.unwrapToActivityContext
 import net.squanchy.venue.domain.view.Venue
+import timber.log.Timber
 
 class VenueInfoPageView @JvmOverloads constructor(
     context: Context,
@@ -66,7 +67,7 @@ class VenueInfoPageView @JvmOverloads constructor(
     override fun startLoading() {
         subscription = service.venue()
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(::updateWith)
+            .subscribe(::updateWith, Timber::e)
     }
 
     private fun updateWith(venue: Venue) {
