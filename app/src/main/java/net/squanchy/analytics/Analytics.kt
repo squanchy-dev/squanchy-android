@@ -8,6 +8,7 @@ import com.crashlytics.android.answers.CustomEvent
 import com.google.firebase.analytics.FirebaseAnalytics
 import net.squanchy.BuildConfig
 import net.squanchy.signin.SignInOrigin
+import net.squanchy.wificonfig.WifiConfigOrigin
 import timber.log.Timber
 import java.util.Locale
 
@@ -101,5 +102,12 @@ class Analytics internal constructor(
 
     private fun setUserLoginProperty(loginStatus: LoginStatus) {
         firebaseAnalytics.setUserProperty("login_status", loginStatus.rawLoginStatus)
+    }
+
+    fun trackWifiConfigurationEvent(isSuccess: Boolean, wifiConfigOrigin: WifiConfigOrigin) {
+        val params = Bundle()
+        params.putString("origin", wifiConfigOrigin.rawOrigin)
+        params.putBoolean("success", isSuccess)
+        firebaseAnalytics.logEvent("wifi_config", params)
     }
 }
