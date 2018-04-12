@@ -24,6 +24,7 @@ import net.squanchy.signin.SignInService
 import net.squanchy.support.lang.getOrThrow
 import net.squanchy.wificonfig.WifiConfigOrigin
 import net.squanchy.wificonfig.WifiConfigService
+import timber.log.Timber
 
 class SettingsFragment : PreferenceFragment() {
 
@@ -131,7 +132,7 @@ class SettingsFragment : PreferenceFragment() {
         subscriptions.add(
             signInService.currentUser()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(::onUserChanged)
+                .subscribe(::onUserChanged, Timber::e)
         )
     }
 
@@ -157,10 +158,13 @@ class SettingsFragment : PreferenceFragment() {
         accountSignInSignOutPreference.setOnPreferenceClickListener {
             subscriptions.add(
                 signInService.signOut()
-                    .subscribe {
-                        Snackbar.make(viewOrThrow, R.string.settings_message_signed_out, Snackbar.LENGTH_SHORT).show()
-                        analytics.trackUserNotLoggedIn()
-                    }
+                    .subscribe(
+                        {
+                            Snackbar.make(viewOrThrow, R.string.settings_message_signed_out, Snackbar.LENGTH_SHORT).show()
+                            analytics.trackUserNotLoggedIn()
+                        },
+                        Timber::e
+                    )
             )
             return@setOnPreferenceClickListener true
         }
