@@ -92,7 +92,8 @@
   <dimen name="speaker_details_speaker_margin_start">32dp</dimen>
   <dimen name="speaker_details_speaker_margin_bottom">8dp</dimen>
   <dimen name="speaker_details_bio">14sp</dimen>
-  <dimen name="speaker_details_bio_padding">32dp</dimen>
+  <dimen name="speaker_details_bio_padding_horizontal">32dp</dimen>
+  <dimen name="speaker_details_bio_padding_vertical">48dp</dimen>
   <dimen name="speaker_details_bio_line_spacing_extra">4sp</dimen>
 
   <dimen name="venue_info_content_padding_horizontal">16dp</dimen>
@@ -205,8 +206,6 @@
   <dimen name="track_filters_tracks_appear_delta_y">22dp</dimen>
   <dimen name="track_filters_item_padding_vertical">8dp</dimen>
   <dimen name="track_filters_item_padding_horizontal">16dp</dimen>
-  <dimen name="track_filters_close_button_size">48dp</dimen>
-  <dimen name="track_filters_close_button_margin">4dp</dimen>
   <dimen name="track_filters_item_corner_radius">200dp</dimen>
   <dimen name="track_filters_item_stroke_width">2dp</dimen>
 

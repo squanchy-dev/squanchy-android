@@ -25,8 +25,8 @@ android {
     compileSdkVersion Integer.parseInt(project.COMPILE_SDK_VERSION)
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
 
     defaultConfig {
@@ -153,6 +153,7 @@ dependencies {
 
     implementation libraries.app.jodaTimeAndroid
     implementation libraries.app.kotlin
+    implementation libraries.app.kotlinReflect
 
     implementation libraries.app.playServicesAuth
     implementation libraries.app.rxJava

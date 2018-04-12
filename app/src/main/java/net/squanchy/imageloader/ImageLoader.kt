@@ -15,5 +15,7 @@ interface ImageRequest {
 
     fun error(@DrawableRes errorImageResId: Int): ImageRequest
 
+    fun placeholder(@DrawableRes placeholderImageResId: Int): ImageRequest
+
     fun into(target: ImageView)
 }

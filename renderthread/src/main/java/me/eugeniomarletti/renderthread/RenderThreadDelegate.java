@@ -285,13 +285,18 @@ class RenderThreadDelegate {
 
     @NonNull
     private Animator createSoftwareFloatAnimator(
-            @Nullable Drawable drawable, @NonNull SoftwareCanvasProperty<Float> property, float targetValue
+            @Nullable final Drawable drawable,
+            @NonNull final SoftwareCanvasProperty<Float> property,
+            float targetValue
     ) {
         ValueAnimator animator = ValueAnimator.ofFloat(property.getValue(), targetValue);
-        animator.addUpdateListener(animation -> {
-            property.setValue((float) animation.getAnimatedValue());
-            if (drawable != null) {
-                drawable.invalidateSelf();
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                property.setValue((float) animation.getAnimatedValue());
+                if (drawable != null) {
+                    drawable.invalidateSelf();
+                }
             }
         });
         return animator;
@@ -299,15 +304,18 @@ class RenderThreadDelegate {
 
     @NonNull
     private Animator createSoftwarePaintAlphaAnimator(
-            @Nullable Drawable drawable,
-            @NonNull SoftwareCanvasProperty<Paint> property,
+            @Nullable final Drawable drawable,
+            @NonNull final SoftwareCanvasProperty<Paint> property,
             @IntRange(from = 0, to = 255) int targetValue
     ) {
         ValueAnimator animator = ValueAnimator.ofInt(property.getValue().getAlpha(), Math.round(targetValue));
-        animator.addUpdateListener(animation -> {
-            property.getValue().setAlpha((int) animation.getAnimatedValue());
-            if (drawable != null) {
-                drawable.invalidateSelf();
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                property.getValue().setAlpha((int) animation.getAnimatedValue());
+                if (drawable != null) {
+                    drawable.invalidateSelf();
+                }
             }
         });
         return animator;
@@ -315,13 +323,18 @@ class RenderThreadDelegate {
 
     @NonNull
     private Animator createSoftwarePaintStrokeWidthAnimator(
-            @Nullable Drawable drawable, @NonNull SoftwareCanvasProperty<Paint> property, float targetValue
+            @Nullable final Drawable drawable,
+            @NonNull final SoftwareCanvasProperty<Paint> property,
+            float targetValue
     ) {
         ValueAnimator animator = ValueAnimator.ofFloat(property.getValue().getStrokeWidth(), targetValue);
-        animator.addUpdateListener(animation -> {
-            property.getValue().setStrokeWidth((float) animation.getAnimatedValue());
-            if (drawable != null) {
-                drawable.invalidateSelf();
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                property.getValue().setStrokeWidth((float) animation.getAnimatedValue());
+                if (drawable != null) {
+                    drawable.invalidateSelf();
+                }
             }
         });
         return animator;

@@ -3,14 +3,22 @@ package net.squanchy.search.view
 import android.support.v7.widget.GridLayoutManager
 import net.squanchy.search.SearchListElement
 
-internal class GridSpanSizeLookup(private val items: List<SearchListElement>, private val columnCount: Int) : GridLayoutManager.SpanSizeLookup() {
+internal class GridSpanSizeLookup(
+    private val itemRetriever: (Int) -> SearchListElement,
+    private val isAdapterEmpty: () -> Boolean,
+    private val columnCount: Int
+) : GridLayoutManager.SpanSizeLookup() {
 
     init {
         super.setSpanIndexCacheEnabled(true)
     }
 
     override fun getSpanSize(position: Int): Int {
-        return if (items.isEmpty()) SINGLE_COLUMN_SPAN_SIZE else getSpanSizeFor(items[position])
+        if (isAdapterEmpty()) {
+            return SINGLE_COLUMN_SPAN_SIZE
+        } else {
+            return getSpanSizeFor(itemRetriever(position))
+        }
     }
 
     private fun getSpanSizeFor(element: SearchListElement): Int =

@@ -41,6 +41,7 @@ ext {
             glideOkHttp3       : "com.github.bumptech.glide:okhttp3-integration:${glideVersion}",
             jodaTimeAndroid    : 'net.danlew:android.joda:2.9.9.3',
             kotlin             : "org.jetbrains.kotlin:kotlin-stdlib-jre7:${kotlinVersion}",
+            kotlinReflect      : "org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}",
             moshi              : "com.squareup.moshi:moshi:${moshiVersion}",
             moshiKotlin        : "com.squareup.moshi:moshi-kotlin:${moshiVersion}",
             playServicesAuth   : "com.google.android.gms:play-services-auth:${playServicesVersion}",
@@ -63,7 +64,7 @@ ext {
     ]
 
     buildScript = [
-        android                   : 'com.android.tools.build:gradle:3.1.0',
+        android                   : 'com.android.tools.build:gradle:3.1.1',
         firebase                  : 'com.google.firebase:firebase-plugins:1.1.5',
         googleServices            : 'com.google.gms:google-services:3.2.0',
         gradleStaticAnalysisPlugin: 'com.novoda:gradle-static-analysis-plugin:0.5.2',

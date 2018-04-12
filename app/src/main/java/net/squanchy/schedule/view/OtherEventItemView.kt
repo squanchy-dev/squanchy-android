@@ -14,7 +14,7 @@ class OtherEventItemView @JvmOverloads constructor(
     defStyleAttr: Int = R.attr.cardViewDefaultStyle
 ) : EventItemView(context, attrs, defStyleAttr) {
 
-    override fun updateWith(event: Event, showRoom: Boolean) {
+    override fun updateWith(event: Event, showRoom: Boolean, showDay: Boolean) {
         event.type.ensureSupported()
 
         timestamp.text = startTimeAsFormattedString(event)
@@ -35,10 +35,11 @@ class OtherEventItemView @JvmOverloads constructor(
     }
 
     private fun startTimeAsFormattedString(event: Event): String {
+        val timeZone = event.timeZone
         val formatter = DateTimeFormat.shortTime()
-            .withZone(event.timeZone)
+            .withZone(timeZone)
 
-        return formatter.print(event.startTime.toDateTime())
+        return formatter.print(event.startTime.toDateTime(timeZone))
     }
 
     @DrawableRes

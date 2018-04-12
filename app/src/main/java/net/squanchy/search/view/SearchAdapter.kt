@@ -12,7 +12,6 @@ import net.squanchy.R
 import net.squanchy.imageloader.ImageLoader
 import net.squanchy.imageloader.imageLoaderComponent
 import net.squanchy.schedule.view.EventItemView
-import net.squanchy.search.SearchResult
 import net.squanchy.search.SearchListElement
 import net.squanchy.search.SearchListElement.EventElement
 import net.squanchy.search.SearchListElement.SpeakerElement
@@ -27,8 +26,6 @@ internal class SearchAdapter(activity: AppCompatActivity) : ListAdapter<SearchLi
     private val activity: Activity
 
     private lateinit var listener: SearchRecyclerView.OnSearchResultClickListener
-
-    private var searchResult = SearchResult.Success(emptyList())
 
     init {
         this.activity = activity
@@ -79,7 +76,7 @@ internal class SearchAdapter(activity: AppCompatActivity) : ListAdapter<SearchLi
     }
 
     override fun onBindViewHolder(holder: SearchItemViewHolder, position: Int) {
-        val item = searchResult.elements[position]
+        val item = getItem(position)
         when (item) {
             is SearchListElement.EventHeader -> (holder as HeaderViewHolder).updateWith(HeaderType.EVENTS)
             is SearchListElement.SpeakerHeader -> (holder as HeaderViewHolder).updateWith(HeaderType.SPEAKERS)
@@ -90,14 +87,23 @@ internal class SearchAdapter(activity: AppCompatActivity) : ListAdapter<SearchLi
     }
 
     fun createSpanSizeLookup(columnsCount: Int): GridLayoutManager.SpanSizeLookup {
-        return GridSpanSizeLookup(searchResult.elements, columnsCount)
+        return GridSpanSizeLookup(::getItem, ::isEmpty, columnsCount)
     }
 
-    fun updateWith(searchResult: SearchResult.Success, listener: SearchRecyclerView.OnSearchResultClickListener) {
-        this.listener = listener
-        this.searchResult = searchResult
+    private fun isEmpty() = itemCount == 0
 
-        submitList(searchResult.elements)
+    fun updateWith(items: List<SearchListElement>, listener: SearchRecyclerView.OnSearchResultClickListener) {
+        this.listener = listener
+        super.submitList(items)
+    }
+
+    @Deprecated(
+        message = "Use updateWith() instead",
+        replaceWith = ReplaceWith("updateWith(items, onSearchResultClickListener)"),
+        level = DeprecationLevel.ERROR
+    )
+    override fun submitList(items: MutableList<SearchListElement>?) {
+        throw UnsupportedOperationException("Use updateWith() instead")
     }
 
     companion object {

@@ -34,7 +34,7 @@
   <string name="bottom_bar_schedule_label">Schedule</string>
   <string name="bottom_bar_favorites_label">Favorites</string>
   <string name="bottom_bar_tweets_label">Tweets</string>
-  <string name="bottom_bar_venue_label">Venue Info</string>
+  <string name="bottom_bar_venue_label">Venue</string>
   <string name="menu_search">Search</string>
   <string name="menu_voice_search">Voice search</string>
   <string name="menu_clear_query">Clear query</string>
@@ -77,7 +77,7 @@
   <string name="settings_debug_category">Debug</string>
   <string name="settings_open_debug_title">Tinker</string>
 
-  <string name="venue_info_label">Information</string>
+  <string name="venue_info_label">Venue</string>
   <string name="venue_about_label">About the venue</string>
   <string name="venue_map_content_description">Map to the venue</string>
 
