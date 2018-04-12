@@ -82,15 +82,12 @@ class EventDetailsActivity : AppCompatActivity() {
             override fun onFavoriteClick() {
                 subscriptions.add(
                     service.toggleFavorite(event)
-                        .subscribe(
-                            onFavouriteStateChange(),
-                            Timber::e
-                        )
+                        .subscribe(::onFavouriteStateChange, Timber::e)
                 )
             }
         }
 
-    private fun onFavouriteStateChange() = { result: EventDetailsService.FavoriteResult ->
+    private fun onFavouriteStateChange(result: EventDetailsService.FavoriteResult) {
         if (result === EventDetailsService.FavoriteResult.MUST_AUTHENTICATE) {
             requestSignIn()
         } else {
