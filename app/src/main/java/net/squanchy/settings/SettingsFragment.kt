@@ -1,8 +1,5 @@
 package net.squanchy.settings
 
-import android.content.Context
-import android.net.wifi.WifiConfiguration
-import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.preference.Preference
 import android.preference.PreferenceCategory
@@ -19,22 +16,23 @@ import net.squanchy.R
 import net.squanchy.analytics.Analytics
 import net.squanchy.navigation.Navigator
 import net.squanchy.remoteconfig.RemoteConfig
-import net.squanchy.remoteconfig.obtainVenueWifiConfiguration
+import net.squanchy.remoteconfig.WifiConfiguration
 import net.squanchy.remoteconfig.wifiAutoConfigEnabledNow
 import net.squanchy.service.repository.User
 import net.squanchy.signin.SignInOrigin
 import net.squanchy.signin.SignInService
 import net.squanchy.support.lang.getOrThrow
+import net.squanchy.wificonfig.WifiConfigService
 
 class SettingsFragment : PreferenceFragment() {
 
     private val subscriptions = CompositeDisposable()
 
-    private lateinit var wifiManager: WifiManager
     private lateinit var signInService: SignInService
     private lateinit var navigator: Navigator
     private lateinit var analytics: Analytics
     private lateinit var remoteConfig: RemoteConfig
+    private lateinit var wifiConfigService: WifiConfigService
 
     private lateinit var accountCategory: PreferenceCategory
     private lateinit var accountEmailPreference: Preference
@@ -61,9 +59,8 @@ class SettingsFragment : PreferenceFragment() {
             navigator = navigator()
             analytics = analytics()
             remoteConfig = remoteConfig()
+            wifiConfigService = wifiConfigService()
         }
-
-        wifiManager = activity.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
 
         accountCategory = findPreference(getString(R.string.account_category_key)) as PreferenceCategory
         accountEmailPreference = findPreference(getString(R.string.account_email_preference_key))
@@ -114,20 +111,15 @@ class SettingsFragment : PreferenceFragment() {
     }
 
     private fun setupWifi() {
-        val wifiConfiguration = obtainVenueWifiConfiguration(remoteConfig)
-        val networkConfig = WifiConfiguration()
-        networkConfig.SSID = "\"${wifiConfiguration.ssid}\""
-        networkConfig.preSharedKey = "\"${wifiConfiguration.password}\""
-        val netId = wifiManager.addNetwork(networkConfig)
-        wifiManager.disconnect()
-        val networkEnabled = wifiManager.enableNetwork(netId, true)
-        wifiManager.reconnect()
+        wifiConfigService.setupWifi(callback = object : WifiConfigService.Callback {
+            override fun onSuccess(wifiConfiguration: WifiConfiguration) {
+                Snackbar.make(viewOrThrow, R.string.settings_message_wifi_success, Snackbar.LENGTH_SHORT).show()
+            }
 
-        if (networkEnabled) {
-            Snackbar.make(viewOrThrow, R.string.settings_message_wifi_success, Snackbar.LENGTH_INDEFINITE).show()
-        } else {
-            navigator.toWifiConfigError(wifiConfiguration)
-        }
+            override fun onFailure(wifiConfiguration: WifiConfiguration) {
+                navigator.toWifiConfigError(wifiConfiguration)
+            }
+        })
     }
 
     override fun onStart() {
