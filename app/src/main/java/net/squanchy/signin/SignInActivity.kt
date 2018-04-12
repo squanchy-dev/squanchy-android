@@ -19,6 +19,7 @@ import net.squanchy.R
 import net.squanchy.analytics.Analytics
 import net.squanchy.google.GoogleClientId
 import net.squanchy.support.config.DialogLayoutParameters
+import timber.log.Timber
 
 class SignInActivity : AppCompatActivity() {
 
@@ -111,11 +112,14 @@ class SignInActivity : AppCompatActivity() {
 
         subscription = service.signInWithGoogle(account)
             .subscribeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                analytics.trackUserLoggedInFrom(getSignInOrigin())
-                setResult(RESULT_OK)
-                finish()
-            }
+            .subscribe(
+                {
+                    analytics.trackUserLoggedInFrom(getSignInOrigin())
+                    setResult(RESULT_OK)
+                    finish()
+                },
+                Timber::e
+            )
     }
 
     private fun getSignInOrigin() = intent.getSerializableExtra(EXTRA_SIGN_IN_ORIGIN) as SignInOrigin

@@ -16,6 +16,7 @@ import net.squanchy.notification.NotificationsIntentService
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.signin.SignInOrigin
 import net.squanchy.speaker.domain.view.Speaker
+import timber.log.Timber
 
 class EventDetailsActivity : AppCompatActivity() {
 
@@ -65,7 +66,10 @@ class EventDetailsActivity : AppCompatActivity() {
         subscriptions.add(
             service.event(eventId)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { event -> eventDetailsRoot.updateWith(event, onEventDetailsClickListener(event)) }
+                .subscribe(
+                    { event -> eventDetailsRoot.updateWith(event, onEventDetailsClickListener(event)) },
+                    Timber::e
+                )
         )
     }
 
@@ -78,16 +82,18 @@ class EventDetailsActivity : AppCompatActivity() {
             override fun onFavoriteClick() {
                 subscriptions.add(
                     service.toggleFavorite(event)
-                        .subscribe { result ->
-                            if (result === EventDetailsService.FavoriteResult.MUST_AUTHENTICATE) {
-                                requestSignIn()
-                            } else {
-                                triggerNotificationService()
-                            }
-                        }
+                        .subscribe(::onFavouriteStateChange, Timber::e)
                 )
             }
         }
+
+    private fun onFavouriteStateChange(result: EventDetailsService.FavoriteResult) {
+        if (result === EventDetailsService.FavoriteResult.MUST_AUTHENTICATE) {
+            requestSignIn()
+        } else {
+            triggerNotificationService()
+        }
+    }
 
     private fun requestSignIn() {
         navigator.toSignInForResult(REQUEST_CODE_SIGNIN, SignInOrigin.EVENT_DETAILS)

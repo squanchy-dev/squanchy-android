@@ -2,9 +2,12 @@ package net.squanchy.service.firebase
 
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.ObservableEmitter
 import net.squanchy.service.firebase.model.conferenceinfo.FirestoreConferenceInfo
 import net.squanchy.service.firebase.model.conferenceinfo.FirestoreVenue
 import net.squanchy.service.firebase.model.schedule.FirestoreEvent
@@ -15,8 +18,6 @@ import net.squanchy.service.firebase.model.schedule.FirestoreTrack
 import net.squanchy.service.firebase.model.twitter.FirestoreTweet
 import org.joda.time.DateTimeZone
 
-// TODO
-// val onCurrentThread = Executors.newSingleThreadExecutor { Thread.currentThread() }
 class FirestoreDbService(private val db: FirebaseFirestore) {
 
     fun scheduleView(): Observable<List<FirestoreSchedulePage>> {
@@ -24,14 +25,7 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
             val registration = view(VIEW_SCHEDULE)
                 .collection(COLLECTION_SCHEDULE_PAGES)
                 .orderBy(DAY_DATE_SORTING)
-                .addSnapshotListener { snapshot, exception ->
-                    if (exception != null) {
-                        subscriber.onError(exception)
-                        return@addSnapshotListener
-                    }
-
-                    subscriber.onNext(snapshot.documents.map { it.toObject(FirestoreSchedulePage::class.java) })
-                }
+                .addSnapshotListener { snapshot, exception -> subscriber.emitSnapshotResult(snapshot, exception) }
 
             subscriber.setCancellable { registration.remove() }
         }
@@ -42,13 +36,7 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
             val registration = db.collection(SOCIAL_STREAM)
                 .document(VIEW_TWITTER)
                 .collection(COLLECTION_TWEETS)
-                .addSnapshotListener { snapshot, exception ->
-                    if (exception != null && subscriber.isDisposed.not()) {
-                        subscriber.onError(exception)
-                        return@addSnapshotListener
-                    }
-                    subscriber.onNext(snapshot.documents.map { it.toObject(FirestoreTweet::class.java) })
-                }
+                .addSnapshotListener { snapshot, exception -> subscriber.emitSnapshotResult(snapshot, exception) }
 
             subscriber.setCancellable { registration.remove() }
         }
@@ -62,13 +50,7 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
         return Observable.create { subscriber ->
             val registration = db.collection(CONFERENCE_INFO)
                 .document(VENUE)
-                .addSnapshotListener { snapshot, exception ->
-                    if (exception != null && subscriber.isDisposed.not()) {
-                        subscriber.onError(exception)
-                        return@addSnapshotListener
-                    }
-                    subscriber.onNext(snapshot.toObject(FirestoreVenue::class.java))
-                }
+                .addSnapshotListener { snapshot, exception -> subscriber.emitSnapshotResult(snapshot, exception) }
 
             subscriber.setCancellable { registration.remove() }
         }
@@ -78,13 +60,7 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
         return Observable.create { subscriber ->
             val registration = db.collection(CONFERENCE_INFO)
                 .document(CONFERENCE)
-                .addSnapshotListener { snapshot, exception ->
-                    if (exception != null && subscriber.isDisposed.not()) {
-                        subscriber.onError(exception)
-                        return@addSnapshotListener
-                    }
-                    subscriber.onNext(snapshot.toObject(FirestoreConferenceInfo::class.java))
-                }
+                .addSnapshotListener { snapshot, exception -> subscriber.emitSnapshotResult(snapshot, exception) }
 
             subscriber.setCancellable { registration.remove() }
         }
@@ -94,13 +70,7 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
         return Observable.create { subscriber ->
             val registration = view(VIEW_SPEAKERS)
                 .collection(COLLECTION_SPEAKER_PAGES)
-                .addSnapshotListener { snapshot, exception ->
-                    if (exception != null && subscriber.isDisposed.not()) {
-                        subscriber.onError(exception)
-                        return@addSnapshotListener
-                    }
-                    subscriber.onNext(snapshot.documents.map { it.toObject(FirestoreSpeaker::class.java) })
-                }
+                .addSnapshotListener { snapshot, exception -> subscriber.emitSnapshotResult(snapshot, exception) }
 
             subscriber.setCancellable { registration.remove() }
         }
@@ -111,13 +81,7 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
             val registration = view(VIEW_SPEAKERS)
                 .collection(COLLECTION_SPEAKER_PAGES)
                 .document(speakerId)
-                .addSnapshotListener { snapshot, exception ->
-                    if (exception != null && subscriber.isDisposed.not()) {
-                        subscriber.onError(exception)
-                        return@addSnapshotListener
-                    }
-                    subscriber.onNext(snapshot.toObject(FirestoreSpeaker::class.java))
-                }
+                .addSnapshotListener { snapshot, exception -> subscriber.emitSnapshotResult(snapshot, exception) }
 
             subscriber.setCancellable { registration.remove() }
         }
@@ -127,13 +91,7 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
         return Observable.create { subscriber ->
             val registration = view(VIEW_EVENT_DETAILS)
                 .collection(COLLECTION_EVENTS)
-                .addSnapshotListener { snapshot, exception ->
-                    if (exception != null && subscriber.isDisposed.not()) {
-                        subscriber.onError(exception)
-                        return@addSnapshotListener
-                    }
-                    subscriber.onNext(snapshot.documents.map { it.toObject(FirestoreEvent::class.java) })
-                }
+                .addSnapshotListener { snapshot, exception -> subscriber.emitSnapshotResult(snapshot, exception) }
 
             subscriber.setCancellable { registration.remove() }
         }
@@ -144,13 +102,7 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
             val registration = view(VIEW_EVENT_DETAILS)
                 .collection(COLLECTION_EVENTS)
                 .document(eventId)
-                .addSnapshotListener { snapshot, exception ->
-                    if (exception != null && subscriber.isDisposed.not()) {
-                        subscriber.onError(exception)
-                        return@addSnapshotListener
-                    }
-                    subscriber.onNext(snapshot.toObject(FirestoreEvent::class.java))
-                }
+                .addSnapshotListener { snapshot, exception -> subscriber.emitSnapshotResult(snapshot, exception) }
 
             subscriber.setCancellable { registration.remove() }
         }
@@ -160,15 +112,7 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
         return Observable.create { subscriber ->
             val registration = view(VIEW_TRACKS)
                 .collection(COLLECTION_TRACKS)
-                .addSnapshotListener { snapshot, exception ->
-                    if (exception != null && subscriber.isDisposed.not()) {
-                        subscriber.onError(exception)
-                        return@addSnapshotListener
-                    }
-                    subscriber.onNext(snapshot.documents.map { trackSnapshot ->
-                        trackSnapshot.toObject(FirestoreTrack::class.java)
-                    })
-                }
+                .addSnapshotListener { snapshot, exception -> subscriber.emitSnapshotResult(snapshot, exception) }
 
             subscriber.setCancellable { registration.remove() }
         }
@@ -181,15 +125,7 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
             val registration = db.collection(USER_DATA)
                 .document(userId)
                 .collection(COLLECTION_FAVORITES)
-                .addSnapshotListener { snapshot, exception ->
-                    if (exception != null && subscriber.isDisposed.not()) {
-                        subscriber.onError(exception)
-                        return@addSnapshotListener
-                    }
-                    subscriber.onNext(snapshot.documents.map { favoriteSnapshot ->
-                        favoriteSnapshot.toObject(FirestoreFavorite::class.java)
-                    })
-                }
+                .addSnapshotListener { snapshot, exception -> subscriber.emitSnapshotResult(snapshot, exception) }
 
             subscriber.setCancellable(registration::remove)
         }
@@ -251,3 +187,50 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
         private const val DAY_DATE_SORTING = "day.date"
     }
 }
+
+private inline fun <reified T> ObservableEmitter<List<T>>.emitSnapshotResult(snapshot: QuerySnapshot?, exception: Exception?) {
+    when {
+        exception != null && isDisposed.not() -> onError(exception)
+        else -> emitQueryResultValues(snapshot)
+    }
+}
+
+@Suppress("TooGenericExceptionCaught") // Firestore doesn't have a strong Exception typing
+private inline fun <reified T> ObservableEmitter<List<T>>.emitQueryResultValues(snapshot: QuerySnapshot?) {
+    try {
+        val modelItems = snapshot?.documents?.map { it.toObject(T::class.java) }
+            ?.filter { it != null }
+            ?: emptyList()
+
+        onNext(modelItems)
+    } catch (e: RuntimeException) {
+        onError(e)
+    }
+}
+
+private inline fun <reified T> ObservableEmitter<T>.emitSnapshotResult(snapshot: DocumentSnapshot?, exception: Exception?) {
+    when {
+        exception != null && isDisposed.not() -> onError(exception)
+        snapshot?.exists() == true -> emitExistingSnapshotValue(snapshot)
+        else -> onError(NonExistingDocumentException(snapshot))
+    }
+}
+
+@Suppress("TooGenericExceptionCaught") // Firestore doesn't have a strong Exception typing
+private inline fun <reified T> ObservableEmitter<T>.emitExistingSnapshotValue(snapshot: DocumentSnapshot) {
+    try {
+        val modelObject = snapshot.toObject(T::class.java)
+
+        if (modelObject == null) {
+            onError(NonExistingDocumentException(snapshot))
+        } else {
+            onNext(modelObject)
+        }
+    } catch (e: RuntimeException) {
+        onError(e)
+    }
+}
+
+private class NonExistingDocumentException(snapshot: DocumentSnapshot?) : RuntimeException(
+    "The specified path does not exist on the DB: ${snapshot?.reference?.path ?: "[null snapshot]"}"
+)

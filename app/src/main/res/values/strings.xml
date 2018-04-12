@@ -8,8 +8,6 @@
 
   <string name="activity_schedule">Schedule</string>
   <string name="activity_favorites">Favorites</string>
-  <string name="event_details">Details</string>
-  <string name="missing_prerequisites_action">Fix it</string>
 
   <string name="experience_level_beginner">Beginner</string>
   <string name="experience_level_intermediate">Intermediate</string>
@@ -40,7 +38,6 @@
   <string name="menu_clear_query">Clear query</string>
   <string name="no_results">No results for this query</string>
   <string name="start_typing_to_search">Start typing to search</string>
-  <string name="search_no_result_found">No result found</string>
   <string name="search_error_message">Error while searching, please check your internet connection</string>
 
   <string name="speaker_list_title">Speakers</string>
@@ -68,9 +65,9 @@
   <string name="settings_notifications_about_to_start_summary_on">Show notifications for favorite events starting soon</string>
   <string name="settings_notifications_about_to_start_summary_off">Do not show notifications for favorite events starting soon</string>
   <string name="settings_message_signed_out">You have been signed out.</string>
-  <string name="settings_message_wifi_success">Wifi network successfully configured</string>
+  <string name="settings_message_wifi_success">Wi-Fi network successfully configured</string>
   <string name="about_title">About</string>
-  <string name="auto_wifi_title">Configure wifi</string>
+  <string name="auto_wifi_title">Configure Wi-Fi</string>
   <string name="settings_account_not_signed_in">Not signed in</string>
   <string name="settings_header_not_signed_in">You’re not signed in</string>
   <string name="version_x">Version: %1$s</string>
