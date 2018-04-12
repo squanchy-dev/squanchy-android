@@ -125,10 +125,11 @@ project.afterEvaluate {
 dependencies {
     implementation project(':renderthread')
 
+    implementation libraries.app.algolia
     implementation libraries.app.androidKtx
     implementation libraries.app.arrowCore
-
     implementation libraries.app.crashlytics
+    implementation libraries.app.dagger
     implementation(libraries.app.firebase) {
         exclude group: 'com.android.support'
     }
@@ -143,33 +144,26 @@ dependencies {
         exclude group: 'com.android.support'
         exclude group: 'com.google.firebase'
     }
-
     implementation libraries.app.flexbox
-
-    kapt libraries.app.glideCompiler
     implementation libraries.app.glide
     implementation libraries.app.glideOkHttp3
-
     implementation libraries.app.jodaTimeAndroid
     implementation libraries.app.kotlin
     implementation libraries.app.kotlinReflect
-
+    implementation libraries.app.moshi
+    implementation libraries.app.moshiKotlin
     implementation libraries.app.playServicesAuth
-    implementation libraries.app.rxJava
     implementation libraries.app.rxAndroid
+    implementation libraries.app.rxJava
+    implementation libraries.app.rxLint
     implementation libraries.app.supportAppCompat
     implementation libraries.app.supportConstraint
     implementation libraries.app.supportDesign
     implementation libraries.app.timber
     implementation libraries.app.viewPagerAdapter
 
-    implementation libraries.app.moshi
-    implementation libraries.app.moshiKotlin
-
     kapt libraries.app.daggerCompiler
-    implementation libraries.app.dagger
-
-    implementation libraries.app.algolia
+    kapt libraries.app.glideCompiler
 
     testImplementation libraries.test.truth
     testImplementation libraries.test.jodaTime
