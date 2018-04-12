@@ -49,7 +49,6 @@ android {
         resValueString 'algolia_application_id', applicationProps['algoliaId'].or(envVars['ALGOLIA_APPLICATION_ID'])
         resValueString 'algolia_api_key', secretsProps['algoliaApiKey'].or(envVars['ALGOLIA_API_KEY'])
 
-        resValueString 'social_query', applicationProps['socialQuery'].or("#AndroidDev")
         resValueString 'deeplink_scheme', applicationProps['deeplinkScheme'].or("squanchy")
     }
 
