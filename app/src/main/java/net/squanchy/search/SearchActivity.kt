@@ -55,7 +55,7 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
         enableLightNavigationBar(this)
         setupToolbar()
 
-        query = savedInstanceState?.getString(QUERY_KEY) ?: ""
+        query = savedInstanceState?.getString(QUERY_KEY) ?: INITIAL_QUERY
 
         with(searchComponent(this)) {
             searchService = service()
@@ -196,11 +196,6 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
         super.onSaveInstanceState(outState)
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
-        super.onRestoreInstanceState(savedInstanceState)
-        query = savedInstanceState?.getString(QUERY_KEY) ?: ""
-    }
-
     private fun onVoiceSearchClicked() {
         Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
             putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1)
@@ -255,5 +250,6 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
         private const val QUERY_DEBOUNCE_TIMEOUT = 350L
         private const val MIN_QUERY_LENGTH = 2
         private const val QUERY_KEY = "SearchActivity.query_key"
+        private const val INITIAL_QUERY = ""
     }
 }
