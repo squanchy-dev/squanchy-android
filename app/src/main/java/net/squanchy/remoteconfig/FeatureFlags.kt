@@ -5,7 +5,7 @@ class FeatureFlags(private val remoteConfig: RemoteConfig) {
     val showEventRoomInSchedule
         get() = isFeatureEnabled(Feature.ShowEventRoomInSchedule)
 
-    private fun isFeatureEnabled(feature: Feature) = remoteConfig.getBoolean(feature.remoteConfigFlagName)
+    private fun isFeatureEnabled(feature: Feature) = remoteConfig.getUpdatedBoolean(feature.remoteConfigFlagName)
 
     private sealed class Feature {
         abstract val remoteConfigFlagName: String

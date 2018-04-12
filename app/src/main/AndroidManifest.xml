@@ -8,6 +8,7 @@
   <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.WAKE_LOCK" />
+  <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
   <application
     android:name="net.squanchy.SquanchyApplication"
@@ -71,6 +72,10 @@
       android:name="net.squanchy.settings.SettingsActivity"
       android:theme="@style/Theme.Squanchy.Settings"
       android:label="@string/settings_label" />
+
+    <activity
+      android:name="net.squanchy.settings.WifiConfigErrorActivity"
+      android:theme="@style/Theme.Squanchy.WifiConfig" />
 
     <activity
       android:name="net.squanchy.about.AboutActivity"

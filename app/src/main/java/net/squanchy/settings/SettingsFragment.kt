@@ -15,10 +15,14 @@ import net.squanchy.BuildConfig
 import net.squanchy.R
 import net.squanchy.analytics.Analytics
 import net.squanchy.navigation.Navigator
+import net.squanchy.remoteconfig.RemoteConfig
+import net.squanchy.remoteconfig.WifiConfiguration
+import net.squanchy.remoteconfig.wifiAutoConfigEnabledNow
 import net.squanchy.service.repository.User
 import net.squanchy.signin.SignInOrigin
 import net.squanchy.signin.SignInService
 import net.squanchy.support.lang.getOrThrow
+import net.squanchy.wificonfig.WifiConfigService
 
 class SettingsFragment : PreferenceFragment() {
 
@@ -27,6 +31,8 @@ class SettingsFragment : PreferenceFragment() {
     private lateinit var signInService: SignInService
     private lateinit var navigator: Navigator
     private lateinit var analytics: Analytics
+    private lateinit var remoteConfig: RemoteConfig
+    private lateinit var wifiConfigService: WifiConfigService
 
     private lateinit var accountCategory: PreferenceCategory
     private lateinit var accountEmailPreference: Preference
@@ -52,6 +58,8 @@ class SettingsFragment : PreferenceFragment() {
             signInService = signInService()
             navigator = navigator()
             analytics = analytics()
+            remoteConfig = remoteConfig()
+            wifiConfigService = wifiConfigService()
         }
 
         accountCategory = findPreference(getString(R.string.account_category_key)) as PreferenceCategory
@@ -74,6 +82,8 @@ class SettingsFragment : PreferenceFragment() {
             }
             true
         }
+
+        setupWifiConfigPreference()
     }
 
     private fun displayBuildVersion() {
@@ -87,6 +97,29 @@ class SettingsFragment : PreferenceFragment() {
         val debugCategoryKey = getString(R.string.debug_category_preference_key)
         val debugCategory = findPreference(debugCategoryKey)
         preferenceScreen.removePreference(debugCategory)
+    }
+
+    private fun setupWifiConfigPreference() {
+        val wifiPreference = findPreference(getString(R.string.auto_wifi_preference_key))
+
+        if (wifiAutoConfigEnabledNow(remoteConfig)) {
+            wifiPreference.setOnPreferenceClickListener { setupWifi(); true }
+        } else {
+            val settingsCategory = findPreference(getString(R.string.settings_category_key)) as PreferenceCategory
+            settingsCategory.removePreference(wifiPreference)
+        }
+    }
+
+    private fun setupWifi() {
+        wifiConfigService.setupWifi(callback = object : WifiConfigService.Callback {
+            override fun onSuccess(wifiConfiguration: WifiConfiguration) {
+                Snackbar.make(viewOrThrow, R.string.settings_message_wifi_success, Snackbar.LENGTH_SHORT).show()
+            }
+
+            override fun onFailure(wifiConfiguration: WifiConfiguration) {
+                navigator.toWifiConfigError(wifiConfiguration)
+            }
+        })
     }
 
     override fun onStart() {

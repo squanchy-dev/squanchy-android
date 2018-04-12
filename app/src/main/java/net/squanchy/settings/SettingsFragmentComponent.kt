@@ -12,6 +12,8 @@ import net.squanchy.navigation.Navigator
 import net.squanchy.remoteconfig.RemoteConfig
 import net.squanchy.signin.SignInModule
 import net.squanchy.signin.SignInService
+import net.squanchy.wificonfig.WifiConfigModule
+import net.squanchy.wificonfig.WifiConfigService
 
 internal fun settingsFragmentComponent(activity: AppCompatActivity) =
     DaggerSettingsFragmentComponent.builder()
@@ -19,10 +21,11 @@ internal fun settingsFragmentComponent(activity: AppCompatActivity) =
         .applicationComponent(activity.applicationComponent)
         .navigationModule(NavigationModule())
         .signInModule(SignInModule())
+        .wifiConfigModule(WifiConfigModule())
         .build()
 
 @ActivityLifecycle
-@Component(modules = [SignInModule::class, NavigationModule::class], dependencies = [ApplicationComponent::class])
+@Component(modules = [SignInModule::class, NavigationModule::class, WifiConfigModule::class], dependencies = [ApplicationComponent::class])
 interface SettingsFragmentComponent {
 
     fun navigator(): Navigator
@@ -32,4 +35,6 @@ interface SettingsFragmentComponent {
     fun analytics(): Analytics
 
     fun remoteConfig(): RemoteConfig
+
+    fun wifiConfigService(): WifiConfigService
 }

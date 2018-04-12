@@ -68,7 +68,9 @@
   <string name="settings_notifications_about_to_start_summary_on">Show notifications for favorite events starting soon</string>
   <string name="settings_notifications_about_to_start_summary_off">Do not show notifications for favorite events starting soon</string>
   <string name="settings_message_signed_out">You have been signed out.</string>
+  <string name="settings_message_wifi_success">Wifi network successfully configured</string>
   <string name="about_title">About</string>
+  <string name="auto_wifi_title">Configure wifi</string>
   <string name="settings_account_not_signed_in">Not signed in</string>
   <string name="settings_header_not_signed_in">You’re not signed in</string>
   <string name="version_x">Version: %1$s</string>
@@ -122,5 +124,14 @@
   <string name="filter_tracks_subtitle">Select the tracks to show in your schedule</string>
 
   <string name="schedule_empty_view_text">Nothing here. Come back soon!</string>
+
+  <string name="wifi_config_error_password">Password</string>
+  <string name="wifi_config_error_access_point_name">Access point name</string>
+  <string name="wifi_config_error_title">Oh… uh, it didn’t work</string>
+  <string name="wifi_config_error_subtitle">Configure it with these details</string>
+  <string name="wifi_config_error_cancel">Cancel</string>
+  <string name="wifi_config_error_open_settings">Open settings</string>
+  <string name="wifi_config_error_copy">COPY</string>
+  <string name="wifi_config_error_password_copied">Network password copied to clipboard</string>
 
 </resources>
