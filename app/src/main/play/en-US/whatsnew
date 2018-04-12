@@ -1,3 +1,5 @@
-• Bugfixes! 🐞
-• Better Android P readiness
-• Reduced apk size by 30%
+• New! The app can configure the conference WiFi for you ✨
+• Fixed some times being displayed in the wrong timezones 🐞
+• Fixed search losing its state when navigating to talk results 🐞
+• Fixed voice search crash on some Samsung 🙄 devices 🐞
+• Added missing FOSS license for Arrow.kt 😅
