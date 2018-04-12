@@ -5,6 +5,7 @@ import android.content.Context
 import android.net.wifi.WifiManager
 import dagger.Module
 import dagger.Provides
+import net.squanchy.analytics.Analytics
 import net.squanchy.injection.ActivityContextModule
 import net.squanchy.remoteconfig.RemoteConfig
 
@@ -17,5 +18,5 @@ internal class WifiConfigModule {
     }
 
     @Provides
-    fun service(wifiManager: WifiManager, remoteConfig: RemoteConfig) = WifiConfigService(wifiManager, remoteConfig)
+    fun service(wifiManager: WifiManager, remoteConfig: RemoteConfig, analytics: Analytics) = WifiConfigService(wifiManager, remoteConfig, analytics)
 }
