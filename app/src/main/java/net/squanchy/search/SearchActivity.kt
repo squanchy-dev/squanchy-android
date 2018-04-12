@@ -46,7 +46,7 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
     private lateinit var searchTextWatcher: SearchTextWatcher
 
     private var hasQuery: Boolean = false
-    private lateinit var initialQuery: String
+    private lateinit var query: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +55,7 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
         enableLightNavigationBar(this)
         setupToolbar()
 
-        initialQuery = savedInstanceState?.getString(QUERY_KEY) ?: ""
+        query = savedInstanceState?.getString(QUERY_KEY) ?: INITIAL_QUERY
 
         with(searchComponent(this)) {
             searchService = service()
@@ -78,7 +78,8 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
 
         val searchSubscription = querySubject.throttleLast(QUERY_DEBOUNCE_TIMEOUT, TimeUnit.MILLISECONDS)
             .doOnNext(::updateSearchActionIcon)
-            .startWith(initialQuery)
+            .startWith(query)
+            .doOnNext { query = it }
             .flatMap(searchService::find)
             .distinctUntilChanged()
             .subscribeOn(Schedulers.io())
@@ -191,7 +192,7 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
-        outState?.putString(QUERY_KEY, searchField.text?.toString())
+        outState?.putString(QUERY_KEY, query)
         super.onSaveInstanceState(outState)
     }
 
@@ -249,5 +250,6 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
         private const val QUERY_DEBOUNCE_TIMEOUT = 350L
         private const val MIN_QUERY_LENGTH = 2
         private const val QUERY_KEY = "SearchActivity.query_key"
+        private const val INITIAL_QUERY = ""
     }
 }
