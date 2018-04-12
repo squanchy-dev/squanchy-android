@@ -775,8 +775,7 @@
     <item name="android:textAppearance">@style/TextAppearance.Squanchy.WifiConfigError.CopyPassword</item>
   </style>
 
-  <style name="TextAppearance.Squanchy.WifiConfigError.CopyPassword"
-    parent="None">
+  <style name="TextAppearance.Squanchy.WifiConfigError.CopyPassword" parent="None">
     <item name="android:textColor">?colorPrimary</item>
     <item name="android:textSize">@dimen/wifi_config_error_copy_text</item>
     <item name="fontFamily">@font/title_typeface</item>
@@ -787,7 +786,7 @@
     <item name="android:minHeight">@dimen/wifi_config_error_button_min_height</item>
     <item name="android:paddingStart">@dimen/wifi_config_error_button_padding_horizontal</item>
     <item name="android:paddingEnd">@dimen/wifi_config_error_button_padding_horizontal</item>
-    <item name="android:textAppearance">@style/TextAppearance.Squanchy.FirstStartWithNoNetwork.Cancel</item>
+    <item name="android:textAppearance">@style/TextAppearance.Squanchy.WifiConfigError.Button</item>
   </style>
 
   <style name="TextAppearance.Squanchy.WifiConfigError.Button" parent="TextAppearance.Squanchy.Button.Colored" />
