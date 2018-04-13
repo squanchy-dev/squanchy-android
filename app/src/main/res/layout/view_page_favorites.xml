@@ -25,25 +25,15 @@
 
   </android.support.design.widget.AppBarLayout>
 
-  <net.squanchy.favorites.view.FavoritesSignedInEmptyLayout
-    android:id="@+id/emptyViewSignedIn"
-    android:layout_width="wrap_content"
+  <include layout="@layout/merge_no_favorites_view"
+    android:layout_width="@dimen/match_constraint"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
     android:layout_marginStart="@dimen/favorites_empty_margin_horizontal"
     android:layout_marginEnd="@dimen/favorites_empty_margin_horizontal"
-    android:visibility="gone"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent">
-
-    <include
-      layout="@layout/merge_no_favorites_view"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content" />
-
-  </net.squanchy.favorites.view.FavoritesSignedInEmptyLayout>
+    app:layout_constraintStart_toStartOf="parent" />
 
   <android.support.constraint.Group
     android:id="@+id/emptyViewSignedOut"
@@ -101,7 +91,7 @@
     app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintBottom_toBottomOf="parent"
-    tools:visibility="gone"/>
+    tools:visibility="gone" />
 
   <net.squanchy.favorites.view.FavoritesListView
     android:id="@+id/favoritesListView"
@@ -112,6 +102,6 @@
     app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintBottom_toBottomOf="parent"
-    tools:visibility="visible"/>
+    tools:visibility="visible" />
 
 </net.squanchy.favorites.FavoritesPageView>
