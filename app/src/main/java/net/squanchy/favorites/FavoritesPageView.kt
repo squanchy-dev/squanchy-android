@@ -1,7 +1,7 @@
 package net.squanchy.favorites
 
 import android.content.Context
-import android.support.design.widget.CoordinatorLayout
+import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
 import android.view.MenuItem
 import androidx.view.isVisible
@@ -10,6 +10,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.merge_no_favorites_view.view.*
 import kotlinx.android.synthetic.main.view_page_favorites.view.*
 import net.squanchy.R
 import net.squanchy.analytics.Analytics
@@ -26,7 +27,7 @@ class FavoritesPageView @JvmOverloads constructor(
     context: Context?,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : CoordinatorLayout(context, attrs, defStyleAttr), Loadable {
+) : ConstraintLayout(context, attrs, defStyleAttr), Loadable {
 
     private lateinit var favoritesService: FavoritesService
     private lateinit var navigator: Navigator
@@ -35,10 +36,12 @@ class FavoritesPageView @JvmOverloads constructor(
     private val disposable = CompositeDisposable()
 
     init {
-        with(favoritesComponent(context.unwrapToActivityContext())) {
-            favoritesService = favoritesService()
-            navigator = navigator()
-            analytics = analytics()
+        if (!isInEditMode) {
+            with(favoritesComponent(context.unwrapToActivityContext())) {
+                favoritesService = favoritesService()
+                navigator = navigator()
+                analytics = analytics()
+            }
         }
     }
 
@@ -98,8 +101,9 @@ class FavoritesPageView @JvmOverloads constructor(
     private fun showFavorites(favorites: List<FavoritesItem>) {
         favoritesListView.updateWith(favorites, ::navigateToEventDetails)
         favoritesListView.isVisible = true
-        emptyViewSignedIn.isVisible = false
+        progressBar.isVisible = false
         emptyViewSignedOut.isVisible = false
+        emptyViewSignedIn.isVisible = false
     }
 
     private fun navigateToEventDetails(event: Event) {
@@ -108,17 +112,17 @@ class FavoritesPageView @JvmOverloads constructor(
     }
 
     private fun promptToSign() {
-        emptyViewSignedOut.isVisible = true
         favoritesListView.isVisible = false
         progressBar.isVisible = false
+        emptyViewSignedOut.isVisible = true
         emptyViewSignedIn.isVisible = false
     }
 
     private fun promptToFavorite() {
-        emptyViewSignedIn.isVisible = true
         favoritesListView.isVisible = false
         progressBar.isVisible = false
         emptyViewSignedOut.isVisible = false
+        emptyViewSignedIn.isVisible = true
     }
 
     private fun showSignIn() {

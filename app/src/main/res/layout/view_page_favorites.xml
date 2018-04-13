@@ -9,88 +9,109 @@
   tools:context="net.squanchy.home.HomeActivity">
 
   <android.support.design.widget.AppBarLayout
+    android:id="@+id/appBarLayout"
     style="@style/Squanchy.Appbar"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="@dimen/match_constraint"
+    android:layout_height="wrap_content"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintEnd_toEndOf="parent">
 
     <android.support.v7.widget.Toolbar
       android:id="@+id/toolbar"
       android:layout_width="match_parent"
-      android:layout_height="?attr/actionBarSize" />
+      android:layout_height="wrap_content" />
 
   </android.support.design.widget.AppBarLayout>
 
-  <FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clipChildren="false"
-    android:clipToPadding="false"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+  <net.squanchy.favorites.view.FavoritesSignedInEmptyLayout
+    android:id="@+id/emptyViewSignedIn"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginStart="@dimen/favorites_empty_margin_horizontal"
+    android:layout_marginEnd="@dimen/favorites_empty_margin_horizontal"
+    android:visibility="gone"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent">
 
-    <net.squanchy.favorites.view.FavoritesSignedInEmptyLayout
-      android:id="@+id/emptyViewSignedIn"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      android:layout_marginStart="@dimen/favorites_empty_margin_horizontal"
-      android:layout_marginEnd="@dimen/favorites_empty_margin_horizontal"
-      android:visibility="gone"
-      tools:visibility="visible">
-
-      <include layout="@layout/merge_no_favorites_view" />
-
-    </net.squanchy.favorites.view.FavoritesSignedInEmptyLayout>
-
-    <LinearLayout
-      android:id="@+id/emptyViewSignedOut"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      android:layout_marginStart="@dimen/favorites_empty_margin_horizontal"
-      android:layout_marginEnd="@dimen/favorites_empty_margin_horizontal"
-      android:clipChildren="false"
-      android:clipToPadding="false"
-      android:gravity="center"
-      android:orientation="vertical"
-      android:visibility="gone">
-
-      <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/favorites_empty_image_margin_bottom"
-        android:contentDescription="@null"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/ic_favorites_empty_not_signed_in" />
-
-      <TextView
-        style="@style/Favorite.Empty.Blurb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/favorites_empty_blurb_margin_bottom"
-        android:text="@string/favorites_empty_state_signed_out_blurb" />
-
-      <Button
-        android:id="@+id/emptyViewSignedOutButton"
-        style="@style/Favorite.Empty.Cta"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/favorites_empty_cta_height"
-        android:text="@string/favorites_empty_state_signed_out_cta" />
-
-    </LinearLayout>
-
-    <ProgressBar
-      android:id="@+id/progressBar"
+    <include
+      layout="@layout/merge_no_favorites_view"
       android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      android:visibility="gone" />
+      android:layout_height="wrap_content" />
 
-    <net.squanchy.favorites.view.FavoritesListView
-      android:id="@+id/favoritesListView"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent" />
+  </net.squanchy.favorites.view.FavoritesSignedInEmptyLayout>
 
-  </FrameLayout>
+  <android.support.constraint.Group
+    android:id="@+id/emptyViewSignedOut"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:visibility="gone"
+    app:constraint_referenced_ids="imageView,textView,emptyViewSignedOutButton" />
+
+  <ImageView
+    android:id="@+id/imageView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/favorites_empty_image_margin_bottom"
+    android:contentDescription="@null"
+    android:scaleType="fitCenter"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintBottom_toTopOf="@+id/textView"
+    app:layout_constraintVertical_chainStyle="packed"
+    app:srcCompat="@drawable/ic_favorites_empty_not_signed_in" />
+
+  <TextView
+    android:id="@+id/textView"
+    style="@style/Favorite.Empty.Blurb"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/favorites_empty_blurb_margin_bottom"
+    android:text="@string/favorites_empty_state_signed_out_blurb"
+    android:paddingStart="@dimen/favorites_empty_margin_horizontal"
+    android:paddingEnd="@dimen/favorites_empty_margin_horizontal"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/imageView"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintBottom_toTopOf="@+id/emptyViewSignedOutButton"
+    app:layout_constraintVertical_chainStyle="packed" />
+
+  <Button
+    android:id="@+id/emptyViewSignedOutButton"
+    style="@style/Favorite.Empty.Cta"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/favorites_empty_state_signed_out_cta"
+    app:layout_constraintStart_toStartOf="@+id/textView"
+    app:layout_constraintTop_toBottomOf="@+id/textView"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="@+id/textView" />
+
+  <ProgressBar
+    android:id="@+id/progressBar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:visibility="visible"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    tools:visibility="gone"/>
+
+  <net.squanchy.favorites.view.FavoritesListView
+    android:id="@+id/favoritesListView"
+    android:layout_width="@dimen/match_constraint"
+    android:layout_height="@dimen/match_constraint"
+    android:visibility="gone"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    tools:visibility="visible"/>
 
 </net.squanchy.favorites.FavoritesPageView>
