@@ -24,6 +24,8 @@
   <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <net.squanchy.favorites.view.FavoritesSignedInEmptyLayout
@@ -47,6 +49,8 @@
       android:layout_gravity="center"
       android:layout_marginStart="@dimen/favorites_empty_margin_horizontal"
       android:layout_marginEnd="@dimen/favorites_empty_margin_horizontal"
+      android:clipChildren="false"
+      android:clipToPadding="false"
       android:gravity="center"
       android:orientation="vertical"
       android:visibility="gone">
