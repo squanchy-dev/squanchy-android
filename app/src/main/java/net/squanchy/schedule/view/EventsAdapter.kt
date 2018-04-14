@@ -17,11 +17,20 @@ internal class EventsAdapter(context: Context) : ListAdapter<Event, EventViewHol
 
     private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
     private var showRoom = false
+    private var showFavorites = false
     private var eventClickListener: OnEventClickListener? = null
 
-    fun updateWith(list: List<Event>, showRoom: Boolean, listener: OnEventClickListener) {
+    fun updateWith(list: List<Event>, showRoom: Boolean, showFavorites: Boolean, listener: OnEventClickListener) {
         this.showRoom = showRoom
         this.eventClickListener = listener
+
+        if (this.showFavorites != showFavorites) {
+            // We want to refresh the favourite visualization too which is not part of the model and thus
+            // would get ignored by the DiffCallback when comparing things. We go nuclear and trigger
+            // a full dataset change notification.
+            this.showFavorites = showFavorites
+            notifyDataSetChanged()
+        }
         super.submitList(list)
     }
 
@@ -52,7 +61,7 @@ internal class EventsAdapter(context: Context) : ListAdapter<Event, EventViewHol
     }
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
-        holder.updateWith(getItem(position), showRoom, eventClickListener)
+        holder.updateWith(getItem(position), showRoom, showFavorites, eventClickListener)
     }
 
     @Deprecated(
@@ -67,8 +76,8 @@ internal class EventsAdapter(context: Context) : ListAdapter<Event, EventViewHol
 
 internal class EventViewHolder(itemView: EventItemView) : RecyclerView.ViewHolder(itemView) {
 
-    fun updateWith(event: Event, showRoom: Boolean, listener: OnEventClickListener?) {
-        (itemView as EventItemView).updateWith(event, showRoom)
+    fun updateWith(event: Event, showRoom: Boolean, showFavorites: Boolean, listener: OnEventClickListener?) {
+        (itemView as EventItemView).updateWith(event, showRoom = showRoom, showFavorite = showFavorites)
         itemView.setOnClickListener { listener?.invoke(event) }
     }
 }

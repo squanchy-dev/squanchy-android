@@ -67,7 +67,8 @@
     <net.squanchy.eventdetails.widget.EventDetailsLayout
       android:id="@+id/eventDetailsLayout"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content" />
+      android:layout_height="wrap_content"
+      android:paddingBottom="@dimen/event_details_body_value_margin_bottom"/>
 
   </android.support.v4.widget.NestedScrollView>
 

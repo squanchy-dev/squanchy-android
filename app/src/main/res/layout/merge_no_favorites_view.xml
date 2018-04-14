@@ -1,10 +1,11 @@
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<net.squanchy.favorites.view.FavoritesSignedInEmptyLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/emptyViewSignedIn"
   android:layout_width="wrap_content"
   android:layout_height="wrap_content"
-  android:layout_gravity="center"
-  android:orientation="vertical"
-  tools:context="net.squanchy.home.HomeActivity"
+  android:visibility="gone"
+  tools:visibility="visible"
   tools:showIn="@layout/view_page_favorites">
 
   <android.support.design.widget.FloatingActionButton
@@ -12,16 +13,23 @@
     style="@style/EventDetails.Fab"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal"
-    android:layout_marginBottom="@dimen/favorites_empty_fab_margin_bottom" />
+    android:layout_marginBottom="@dimen/favorites_empty_fab_margin_bottom"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintBottom_toTopOf="@+id/text"
+    app:layout_constraintVertical_chainStyle="packed" />
 
   <TextView
     android:id="@+id/text"
     style="@style/Favorite.Empty.Blurb"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal"
     android:foreground="@drawable/primary_touch_feedback"
-    android:text="@string/favorites_empty_state_signed_in_blurb" />
+    android:text="@string/favorites_empty_state_signed_in_blurb"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/favoriteFab"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent" />
 
-</merge>
+</net.squanchy.favorites.view.FavoritesSignedInEmptyLayout>

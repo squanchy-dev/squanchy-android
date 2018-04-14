@@ -63,7 +63,7 @@ fun anEvent(
     description = description,
     track = track,
     timeZone = timeZone,
-    favorited = favorited
+    favorite = favorited
 )
 
 fun aPlace(

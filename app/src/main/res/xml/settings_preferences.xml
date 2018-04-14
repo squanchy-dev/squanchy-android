@@ -32,24 +32,31 @@
 
     <SwitchPreference
       android:key="@string/about_to_start_notification_preference_key"
-      android:defaultValue="true"
-      android:icon="@drawable/ic_notifications"
       android:title="@string/settings_notifications_title"
+      android:icon="@drawable/ic_notifications"
+      android:defaultValue="true"
       android:summaryOn="@string/settings_notifications_about_to_start_summary_on"
       android:summaryOff="@string/settings_notifications_about_to_start_summary_off"
       android:order="0"/>
+
+    <SwitchPreference
+      android:key="@string/favorites_in_schedule_preference_key"
+      android:title="@string/favorites_in_schedule_title"
+      android:icon="@drawable/ic_favorite_settings"
+      android:defaultValue="false"
+      android:order="1" />
 
     <Preference
       android:key="@string/auto_wifi_preference_key"
       android:title="@string/auto_wifi_title"
       android:icon="@drawable/ic_wifi"
-      android:order="1" />
+      android:order="2" />
 
     <Preference
       android:key="@string/about_preference_key"
       android:title="@string/about_title"
       android:icon="@drawable/ic_about"
-      android:order="2" />
+      android:order="3" />
 
     <Preference
       android:key="@string/build_version_preference_key"

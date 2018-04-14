@@ -3,30 +3,21 @@ package net.squanchy.favorites.view
 import android.content.Context
 import android.os.Build
 import android.support.annotation.RequiresApi
+import android.support.constraint.ConstraintLayout
 import android.support.design.widget.Snackbar
-import android.text.Html
 import android.util.AttributeSet
 import android.view.View
-import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.merge_no_favorites_view.view.*
 import net.squanchy.R
+import net.squanchy.support.text.parseHtml
 
 class FavoritesSignedInEmptyLayout @JvmOverloads constructor(
     context: Context?,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0,
-    defStyleRes: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr, defStyleRes), FavoritesSignedInEmptyLayoutView {
+    defStyleAttr: Int = 0
+) : ConstraintLayout(context, attrs, defStyleAttr), FavoritesSignedInEmptyLayoutView {
 
     private var counter = 0
-
-    init {
-        super.setOrientation(VERTICAL)
-    }
-
-    override fun setOrientation(orientation: Int): Nothing {
-        throw UnsupportedOperationException("Changing orientation is not supported for ${FavoritesSignedInEmptyLayout::class.java.simpleName}")
-    }
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -44,9 +35,10 @@ class FavoritesSignedInEmptyLayout @JvmOverloads constructor(
         favoriteFab.setImageState(stateSet, true)
     }
 
-    //TODO do we still need this? Also why is it requiring Nougat?
     @RequiresApi(Build.VERSION_CODES.N)
-    override fun showAchievement(message: String) = Snackbar.make(this, readAsHtml(message), Snackbar.LENGTH_LONG).show()
+    override fun showAchievement(message: String) {
+        Snackbar.make(this, message.parseHtml(), Snackbar.LENGTH_LONG).show()
+    }
 
     private val favoriteButtonClickListener = View.OnClickListener {
         presentButtonIcon(counter, this)
@@ -56,7 +48,4 @@ class FavoritesSignedInEmptyLayout @JvmOverloads constructor(
     private fun initialAchieventMessage() = resources.getString(R.string.favorites_achievement_fast_learner)
 
     private fun perseveranceAchievementMessage() = resources.getString(R.string.favorites_achievement_persevering)
-
-    @RequiresApi(Build.VERSION_CODES.N)
-    private fun readAsHtml(message: String): CharSequence = Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY)
 }

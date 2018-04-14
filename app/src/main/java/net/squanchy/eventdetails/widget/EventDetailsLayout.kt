@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.Resources
 import android.support.annotation.AttrRes
 import android.support.annotation.ColorInt
+import android.support.constraint.ConstraintLayout
 import android.support.v4.content.ContextCompat
 import android.text.SpannableStringBuilder
 import android.text.Spanned
@@ -11,7 +12,7 @@ import android.text.style.ForegroundColorSpan
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
-import android.widget.LinearLayout
+import androidx.view.isVisible
 import arrow.core.Option
 import kotlinx.android.synthetic.main.merge_event_details_layout.view.*
 import net.squanchy.R
@@ -20,62 +21,57 @@ import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Place
 import net.squanchy.support.lang.getOrThrow
 import net.squanchy.support.text.parseHtml
+import org.joda.time.DateTimeZone
+import org.joda.time.LocalDateTime
 import org.joda.time.format.DateTimeFormat
 
-// TODO flatten this layout as a ConstraintLayout
 class EventDetailsLayout @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet?,
     defStyle: Int = 0
-) : LinearLayout(context, attrs, defStyle) {
+) : ConstraintLayout(context, attrs, defStyle) {
 
-    init {
-        super.setOrientation(LinearLayout.VERTICAL)
-    }
-
-    override fun setOrientation(orientation: Int) {
-        throw UnsupportedOperationException("Changing orientation is not supported for EventDetailsLayout")
-    }
+    private val dateTimeFormatter = DateTimeFormat.forPattern(WHEN_DATE_TIME_FORMAT)
 
     override fun onFinishInflate() {
         super.onFinishInflate()
 
-        View.inflate(context, R.layout.merge_event_details_layout, this)
+        inflate(context, R.layout.merge_event_details_layout, this)
     }
 
     fun updateWith(event: Event) {
-        updateWhen(event)
-        updateWhere(event)
+        updateWhen(event.startTime, event.timeZone)
+        updateWhere(event.place)
         updateLevel(event.experienceLevel)
         updateDescription(event.description)
     }
 
-    private fun updateWhen(event: Event) {
-        val formatter = DateTimeFormat.forPattern(WHEN_DATE_TIME_FORMAT).withZone(event.timeZone)
-        whenTextView.text = formatter.print(event.startTime.toDateTime())
-        whenContainer.visibility = View.VISIBLE
+    private fun updateWhen(startTime: LocalDateTime, timeZone: DateTimeZone) {
+        val formatter = dateTimeFormatter.withZone(timeZone)
+        whenValue.text = formatter.print(startTime.toDateTime(timeZone))
+        whenGroup.isVisible = true
     }
 
-    private fun updateWhere(event: Event) {
-        if (event.place.isDefined()) {
-            whereContainer.visibility = View.VISIBLE
-            whereTextView.text = placeTextFrom(event.place.getOrThrow())
+    private fun updateWhere(place: Option<Place>) {
+        if (place.isDefined()) {
+            whereGroup.isVisible = true
+            whereValue.text = place.getOrThrow().toPlaceLabel()
         } else {
-            whereContainer.visibility = View.GONE
+            whereGroup.isVisible = false
         }
     }
 
-    private fun placeTextFrom(place: Place): CharSequence {
-        val builder = SpannableStringBuilder(place.name)
-        if (place.floor.isDefined()) {
-            val floorLabel = place.floor.getOrThrow()
+    private fun Place.toPlaceLabel(): CharSequence {
+        val builder = SpannableStringBuilder(name)
+        if (floor.isDefined()) {
+            val floorLabel = floor.getOrThrow()
             builder.append("   ")
                 .append(floorLabel)
                 .setSpan(
-                        createColorSpan(whereTextView, android.R.attr.textColorSecondary),
-                        builder.length - floorLabel.length,
-                        builder.length,
-                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    createColorSpan(whereValue, android.R.attr.textColorSecondary),
+                    builder.length - floorLabel.length,
+                    builder.length,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
         }
         return builder
@@ -83,18 +79,18 @@ class EventDetailsLayout @JvmOverloads constructor(
 
     private fun updateLevel(level: Option<ExperienceLevel>) {
         if (level.isDefined()) {
-            levelContainer.visibility = View.VISIBLE
+            levelGroup.isVisible = true
 
             val experienceLevel = level.getOrThrow()
-            levelTextView.setText(experienceLevel.labelStringResId)
+            levelValue.setText(experienceLevel.labelStringResId)
             tintCompoundDrawableEnd(experienceLevel)
         } else {
-            levelContainer.visibility = View.GONE
+            levelGroup.isVisible = false
         }
     }
 
     private fun tintCompoundDrawableEnd(experienceLevel: ExperienceLevel) {
-        val compoundDrawables = levelTextView.compoundDrawablesRelative
+        val compoundDrawables = levelValue.compoundDrawablesRelative
         val endCompoundDrawable = compoundDrawables[2]
         endCompoundDrawable?.setTint(ContextCompat.getColor(context, experienceLevel.colorResId))
     }
@@ -113,12 +109,10 @@ class EventDetailsLayout @JvmOverloads constructor(
 
     private fun updateDescription(description: Option<String>) {
         if (description.isDefined()) {
-            descriptionHeader.visibility = View.VISIBLE
-            descriptionTextView.visibility = View.VISIBLE
-            descriptionTextView.text = parseHtml(description.getOrThrow())
+            descriptionGroup.isVisible = true
+            descriptionValue.text = description.getOrThrow().parseHtml()
         } else {
-            descriptionHeader.visibility = View.GONE
-            descriptionTextView.visibility = View.GONE
+            descriptionGroup.isVisible = false
         }
     }
 

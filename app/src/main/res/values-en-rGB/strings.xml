@@ -9,5 +9,6 @@
   <string name="licenses_label">Open source licences</string>
   <string name="favorites_empty_state_signed_out_blurb">Pick your favourite talks, synced across devices, and get notifications when they’re about to start.</string>
   <string name="favorites_empty_state_signed_in_blurb">You haven’t picked any favourites yet.\n\n1️⃣ Find a talk you fancy.\n2️⃣ Aim for the big ♥ button.\n3️⃣ That’s it. Really.</string>
+  <string name="favorites_in_schedule_title">Show favourites in schedule</string>
 
 </resources>

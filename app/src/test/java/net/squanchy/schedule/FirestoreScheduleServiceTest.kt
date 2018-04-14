@@ -6,20 +6,20 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import net.squanchy.A_DATE
 import net.squanchy.A_TIMEZONE
+import net.squanchy.FakeAuthService
 import net.squanchy.schedule.domain.view.Track
 import net.squanchy.schedule.domain.view.aSchedule
 import net.squanchy.schedule.domain.view.aSchedulePage
 import net.squanchy.schedule.domain.view.aTrack
 import net.squanchy.schedule.domain.view.anEvent
 import net.squanchy.schedule.tracksfilter.TracksFilter
-import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.firebase.FirestoreDbService
 import net.squanchy.service.firebase.aFirestoreDay
 import net.squanchy.service.firebase.aFirestoreEvent
+import net.squanchy.service.firebase.aFirestoreFavorite
 import net.squanchy.service.firebase.aFirestoreSchedulePage
 import net.squanchy.service.firebase.aFirestoreSpeaker
 import net.squanchy.service.firebase.aFirestoreTrack
-import net.squanchy.service.firebase.model.schedule.FirestoreFavorite
 import net.squanchy.support.checksum.Checksum
 import org.junit.Before
 import org.junit.Rule
@@ -32,6 +32,7 @@ import org.mockito.junit.MockitoRule
 class FirestoreScheduleServiceTest {
 
     companion object {
+        private val UID = "uid"
         private val A_START_TIME = A_DATE
         private val AN_END_TIME = A_START_TIME.plusMinutes(1)
         private val A_LATER_START_TIME = A_START_TIME.plusMinutes(10)
@@ -42,8 +43,7 @@ class FirestoreScheduleServiceTest {
     @JvmField
     var rule: MockitoRule = MockitoJUnit.rule()
 
-    @Mock
-    private lateinit var authService: FirebaseAuthService
+    private var authService = FakeAuthService(UID)
 
     @Mock
     private lateinit var dbService: FirestoreDbService
@@ -61,6 +61,7 @@ class FirestoreScheduleServiceTest {
         scheduleService = FirestoreScheduleService(authService, dbService, tracksFilter, checksum)
         `when`(dbService.timezone()).thenReturn(Observable.just(A_TIMEZONE))
         `when`(checksum.getChecksumOf("speaker_${aFirestoreSpeaker().id}")).thenReturn(5466)
+        `when`(dbService.favorites(UID)).thenReturn(Observable.just(emptyList()))
     }
 
     @Test
@@ -72,7 +73,7 @@ class FirestoreScheduleServiceTest {
         `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
         `when`(checksum.getChecksumOf("event_${aFirestoreEvent().id}")).thenReturn(1234)
 
-        scheduleService.schedule(onlyFavorites = false, observeScheduler = Schedulers.trampoline())
+        scheduleService.schedule(observeScheduler = Schedulers.trampoline())
             .test()
             .assertValue(
                 aSchedule(
@@ -124,7 +125,7 @@ class FirestoreScheduleServiceTest {
         `when`(checksum.getChecksumOf("event_5")).thenReturn(5)
         `when`(checksum.getChecksumOf("event_6")).thenReturn(6)
 
-        scheduleService.schedule(onlyFavorites = false, observeScheduler = Schedulers.trampoline())
+        scheduleService.schedule(observeScheduler = Schedulers.trampoline())
             .test()
             .assertValue(
                 aSchedule(
@@ -183,7 +184,7 @@ class FirestoreScheduleServiceTest {
     }
 
     @Test
-    fun `should not exclude any events from the schedule when not filtering only by favorites`() {
+    fun `should correctly set favourited flag on events from the schedule when user is signed in`() {
         val schedulePage = aFirestoreSchedulePage(
             events = listOf(
                 aFirestoreEvent(id = "1", track = null),
@@ -195,50 +196,19 @@ class FirestoreScheduleServiceTest {
         `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
         `when`(checksum.getChecksumOf("event_1")).thenReturn(1)
         `when`(checksum.getChecksumOf("event_2")).thenReturn(2)
-        `when`(authService.ifUserSignedInThenObservableFrom(dbService::favorites))
-            .thenReturn(Observable.just(listOf(FirestoreFavorite().apply { id = "1" })))
 
-        scheduleService.schedule(onlyFavorites = false, observeScheduler = Schedulers.trampoline())
+        val favorites = listOf(aFirestoreFavorite(id = "2"))
+        `when`(dbService.favorites(UID)).thenReturn(Observable.just(favorites))
+
+        scheduleService.schedule(observeScheduler = Schedulers.trampoline())
             .test()
             .assertValue(
                 aSchedule(
                     pages = listOf(
                         aSchedulePage(
                             events = listOf(
-                                anEvent(id = "1", numericId = 1, track = Option.empty()),
-                                anEvent(id = "2", numericId = 2, track = Option.empty())
-                            )
-                        )
-                    )
-                )
-            )
-    }
-
-    @Test
-    fun `should exclude events that are not favorites when filtering by only favorites`() {
-        val schedulePage = aFirestoreSchedulePage(
-            events = listOf(
-                aFirestoreEvent(id = "A"),
-                aFirestoreEvent(id = "B"),
-                aFirestoreEvent(id = "C")
-            )
-        )
-        `when`(checksum.getChecksumOf("A")).thenReturn(0)
-        `when`(dbService.scheduleView()).thenReturn(Observable.just(listOf(schedulePage)))
-        `when`(authService.ifUserSignedInThenObservableFrom(dbService::favorites))
-            .thenReturn(Observable.just(listOf(FirestoreFavorite().apply { id = "A" })))
-
-        val allowedTracks = setOf(aTrack(id = "a track id"))
-        `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
-
-        scheduleService.schedule(onlyFavorites = true, observeScheduler = Schedulers.trampoline())
-            .test()
-            .assertValue(
-                aSchedule(
-                    pages = listOf(
-                        aSchedulePage(
-                            events = listOf(
-                                anEvent(id = "A", numericId = 0)
+                                anEvent(id = "1", numericId = 1, track = Option.empty(), favorited = false),
+                                anEvent(id = "2", numericId = 2, track = Option.empty(), favorited = true)
                             )
                         )
                     )
@@ -259,7 +229,7 @@ class FirestoreScheduleServiceTest {
         `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
         `when`(checksum.getChecksumOf("event_${aFirestoreEvent().id}")).thenReturn(1)
 
-        scheduleService.schedule(onlyFavorites = false, observeScheduler = Schedulers.trampoline())
+        scheduleService.schedule(observeScheduler = Schedulers.trampoline())
             .test()
             .assertValue(
                 aSchedule(
@@ -288,7 +258,7 @@ class FirestoreScheduleServiceTest {
         `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
         `when`(checksum.getChecksumOf("event_${aFirestoreEvent().id}")).thenReturn(1)
 
-        scheduleService.schedule(onlyFavorites = false, observeScheduler = Schedulers.trampoline())
+        scheduleService.schedule(observeScheduler = Schedulers.trampoline())
             .test()
             .assertValue(
                 aSchedule(
@@ -315,7 +285,7 @@ class FirestoreScheduleServiceTest {
         val allowedTracks = setOf(aTrack(id = "A"), aTrack("C"))
         `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
 
-        scheduleService.schedule(onlyFavorites = false, observeScheduler = Schedulers.trampoline())
+        scheduleService.schedule(observeScheduler = Schedulers.trampoline())
             .test()
             .assertValue(
                 aSchedule(
@@ -339,7 +309,7 @@ class FirestoreScheduleServiceTest {
         `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
         `when`(checksum.getChecksumOf("event_${aFirestoreEvent().id}")).thenReturn(1)
 
-        scheduleService.schedule(onlyFavorites = false, observeScheduler = Schedulers.trampoline())
+        scheduleService.schedule(observeScheduler = Schedulers.trampoline())
             .test()
             .assertValue(
                 aSchedule(
@@ -369,7 +339,7 @@ class FirestoreScheduleServiceTest {
         `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
         `when`(checksum.getChecksumOf("event_${aFirestoreEvent().id}")).thenReturn(1)
 
-        scheduleService.schedule(onlyFavorites = false, observeScheduler = Schedulers.trampoline())
+        scheduleService.schedule(observeScheduler = Schedulers.trampoline())
             .test()
             .assertValue(
                 aSchedule(

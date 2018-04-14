@@ -68,6 +68,8 @@
       android:layout_marginTop="@dimen/card_timestamp_margin_top"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/title"
+      app:layout_constraintEnd_toStartOf="@id/room"
+      app:layout_constraintHorizontal_chainStyle="packed"
       tools:text="12:00" />
 
     <TextView
@@ -79,6 +81,18 @@
       app:layout_constraintTop_toTopOf="@+id/timestamp"
       app:layout_constraintBottom_toBottomOf="@+id/timestamp"
       tools:text=" • Main room"
+      tools:visibility="visible" />
+
+    <ImageView
+      android:id="@+id/favoriteIcon"
+      android:layout_width="@dimen/card_favourite_size"
+      android:layout_height="@dimen/card_favourite_size"
+      android:src="@drawable/ic_favorite_filled"
+      android:tint="?colorPrimary"
+      android:visibility="gone"
+      app:layout_constraintTop_toTopOf="@+id/timestamp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintBottom_toBottomOf="@+id/timestamp"
       tools:visibility="visible" />
 
   </android.support.constraint.ConstraintLayout>
