@@ -21,7 +21,7 @@ class EventDetailsCoordinatorLayout @JvmOverloads constructor(
         eventDetailsLayout.updateWith(event)
 
         if (event.canBeFavorited) {
-            val favoriteImage = if (event.favorited) R.drawable.ic_favorite_filled else R.drawable.ic_favorite_empty
+            val favoriteImage = if (event.favorite) R.drawable.ic_favorite_filled else R.drawable.ic_favorite_empty
             favoriteFab.setImageResource(favoriteImage)
             favoriteFab.setOnClickListener { listener.onFavoriteClick() }
             favoriteFab.isVisible = true

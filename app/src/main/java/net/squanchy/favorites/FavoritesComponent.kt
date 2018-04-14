@@ -9,6 +9,7 @@ import net.squanchy.injection.ApplicationComponent
 import net.squanchy.injection.applicationComponent
 import net.squanchy.navigation.NavigationModule
 import net.squanchy.navigation.Navigator
+import net.squanchy.remoteconfig.FeatureFlags
 
 @ActivityLifecycle
 @Component(modules = [FavoritesModule::class, NavigationModule::class], dependencies = [ApplicationComponent::class])
@@ -19,6 +20,8 @@ internal interface FavoritesComponent {
     fun navigator(): Navigator
 
     fun analytics(): Analytics
+
+    fun featureFlags(): FeatureFlags
 }
 
 internal fun favoritesComponent(activity: AppCompatActivity): FavoritesComponent {
