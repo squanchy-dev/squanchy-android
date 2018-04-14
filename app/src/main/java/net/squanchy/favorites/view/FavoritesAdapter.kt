@@ -64,7 +64,7 @@ internal class FavoritesAdapter(
 
     @Deprecated(
         message = "Use updateWith() instead",
-        replaceWith = ReplaceWith("updateWith(list, showRoom, eventClickListener)"),
+        replaceWith = ReplaceWith("updateWith(list, showRoom, favoriteClickListener)"),
         level = DeprecationLevel.ERROR
     )
     override fun submitList(list: MutableList<FavoritesItem>?) {
