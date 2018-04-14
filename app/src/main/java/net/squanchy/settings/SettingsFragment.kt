@@ -82,6 +82,16 @@ class SettingsFragment : PreferenceFragment() {
             true
         }
 
+        val favoritesInSchedulePreference = findPreference(getString(R.string.favorites_in_schedule_preference_key))
+        favoritesInSchedulePreference.setOnPreferenceChangeListener { _, enabled ->
+            if (enabled as Boolean) {
+                analytics.trackFavoritesInScheduleEnabled()
+            } else {
+                analytics.trackFavoritesInScheduleDisabled()
+            }
+            true
+        }
+
         setupWifiConfigPreference()
     }
 

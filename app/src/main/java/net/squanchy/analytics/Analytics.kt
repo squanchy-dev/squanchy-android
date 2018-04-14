@@ -46,9 +46,10 @@ class Analytics internal constructor(
     }
 
     private fun trackItemSelectedOnFirebaseAnalytics(contentType: ContentType, itemId: String) {
-        val params = Bundle()
-        params.putString(FirebaseAnalytics.Param.CONTENT_TYPE, contentType.rawContentType)
-        params.putString(FirebaseAnalytics.Param.ITEM_ID, itemId)
+        val params = Bundle().apply {
+            putString(FirebaseAnalytics.Param.CONTENT_TYPE, contentType.rawContentType)
+            putString(FirebaseAnalytics.Param.ITEM_ID, itemId)
+        }
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params)
     }
 
@@ -81,11 +82,25 @@ class Analytics internal constructor(
 
     fun trackNotificationsEnabled() {
         firebaseAnalytics.setUserProperty("notifications_status", "enabled")
+        firebaseAnalytics.logEvent("notifications_status_changed", flagEnabled("true"))
     }
 
     fun trackNotificationsDisabled() {
         firebaseAnalytics.setUserProperty("notifications_status", "disabled")
+        firebaseAnalytics.logEvent("notifications_status_changed", flagEnabled("false"))
     }
+
+    fun trackFavoritesInScheduleEnabled() {
+        firebaseAnalytics.setUserProperty("favorites_in_schedule", "enable")
+        firebaseAnalytics.logEvent("favorites_in_schedule_changed", flagEnabled("true"))
+    }
+
+    fun trackFavoritesInScheduleDisabled() {
+        firebaseAnalytics.setUserProperty("favorites_in_schedule", "disabled")
+        firebaseAnalytics.logEvent("favorites_in_schedule_changed", flagEnabled("false"))
+    }
+
+    private fun flagEnabled(value: String) = Bundle().apply { putString("enabled", value) }
 
     fun trackUserNotLoggedIn() {
         setUserLoginProperty(LoginStatus.NOT_LOGGED_IN)
@@ -105,9 +120,10 @@ class Analytics internal constructor(
     }
 
     fun trackWifiConfigurationEvent(isSuccess: Boolean, wifiConfigOrigin: WifiConfigOrigin) {
-        val params = Bundle()
-        params.putString("origin", wifiConfigOrigin.rawOrigin)
-        params.putBoolean("success", isSuccess)
+        val params = Bundle().apply {
+            putString("origin", wifiConfigOrigin.rawOrigin)
+            putBoolean("success", isSuccess)
+        }
         firebaseAnalytics.logEvent("wifi_config", params)
     }
 }
