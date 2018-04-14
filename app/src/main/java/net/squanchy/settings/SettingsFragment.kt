@@ -40,9 +40,6 @@ class SettingsFragment : PreferenceFragment() {
     private lateinit var accountEmailPreference: Preference
     private lateinit var accountSignInSignOutPreference: Preference
 
-    private val viewOrThrow: View
-        get() = this.view ?: throw IllegalStateException("You cannot access the fragment's view when it doesn't exist yet")
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -169,6 +166,9 @@ class SettingsFragment : PreferenceFragment() {
             return@setOnPreferenceClickListener true
         }
     }
+
+    private val viewOrThrow: View
+        get() = this.view ?: throw IllegalStateException("You cannot access the fragment's view when it doesn't exist yet")
 
     private fun onSignedOut() {
         accountCategory.removePreference(accountEmailPreference)
