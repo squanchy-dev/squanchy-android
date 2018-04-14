@@ -82,22 +82,22 @@ class Analytics internal constructor(
 
     fun trackNotificationsEnabled() {
         firebaseAnalytics.setUserProperty("notifications_status", "enabled")
-        firebaseAnalytics.logEvent("notifications_status_changed", flagEnabled("true"))
+        firebaseAnalytics.logEvent("notifications_status_changed", flagEnabled(TRUE))
     }
 
     fun trackNotificationsDisabled() {
         firebaseAnalytics.setUserProperty("notifications_status", "disabled")
-        firebaseAnalytics.logEvent("notifications_status_changed", flagEnabled("false"))
+        firebaseAnalytics.logEvent("notifications_status_changed", flagEnabled(FALSE))
     }
 
     fun trackFavoritesInScheduleEnabled() {
         firebaseAnalytics.setUserProperty("favorites_in_schedule", "enable")
-        firebaseAnalytics.logEvent("favorites_in_schedule_changed", flagEnabled("true"))
+        firebaseAnalytics.logEvent("favorites_in_schedule_changed", flagEnabled(TRUE))
     }
 
     fun trackFavoritesInScheduleDisabled() {
         firebaseAnalytics.setUserProperty("favorites_in_schedule", "disabled")
-        firebaseAnalytics.logEvent("favorites_in_schedule_changed", flagEnabled("false"))
+        firebaseAnalytics.logEvent("favorites_in_schedule_changed", flagEnabled(FALSE))
     }
 
     private fun flagEnabled(value: String) = Bundle().apply { putString("enabled", value) }
@@ -125,5 +125,10 @@ class Analytics internal constructor(
             putBoolean("success", isSuccess)
         }
         firebaseAnalytics.logEvent("wifi_config", params)
+    }
+
+    companion object {
+        private const val TRUE = "true"
+        private const val FALSE = "false"
     }
 }
