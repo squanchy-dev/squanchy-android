@@ -1,7 +1,7 @@
 package net.squanchy.schedule
 
 import android.content.Context
-import android.support.design.widget.CoordinatorLayout
+import android.support.constraint.ConstraintLayout
 import android.support.design.widget.TabLayout
 import android.text.Spanned
 import android.util.AttributeSet
@@ -35,7 +35,7 @@ class SchedulePageView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet,
     defStyleAttr: Int = 0
-) : CoordinatorLayout(context, attrs, defStyleAttr), Loadable {
+) : ConstraintLayout(context, attrs, defStyleAttr), Loadable {
 
     private val viewPagerAdapter: ScheduleViewPagerAdapter
     private val service: ScheduleService
@@ -59,7 +59,7 @@ class SchedulePageView @JvmOverloads constructor(
     override fun onFinishInflate() {
         super.onFinishInflate()
 
-        tabstrip.setupWithViewPager(viewpager)
+        tabstrip.setupWithViewPager(viewPager)
         hackToApplyTypefaces(tabstrip)
 
         setupToolbar()
@@ -107,25 +107,25 @@ class SchedulePageView @JvmOverloads constructor(
     }
 
     private fun updateWith(schedule: Schedule, showRoom: Boolean, showFavorites: Boolean, onEventClicked: (Event) -> Unit) {
-        progressbar.isVisible = false
+        progressBar.isVisible = false
 
         if (schedule.isEmpty) {
-            viewpager.isVisible = false
+            viewPager.isVisible = false
             tabstrip.isVisible = false
             emptyView.isVisible = true
             return
         }
 
-        viewpager.isVisible = true
+        viewPager.isVisible = true
         tabstrip.isVisible = true
         emptyView.isVisible = false
 
         viewPagerAdapter.updateWith(schedule.pages, showRoom, showFavorites, onEventClicked)
-        if (viewpager.adapter == null) {
-            viewpager.adapter = viewPagerAdapter
+        if (viewPager.adapter == null) {
+            viewPager.adapter = viewPagerAdapter
         }
 
-        progressbar.isVisible = false
+        progressBar.isVisible = false
     }
 
     private fun onEventClicked(event: Event) {
