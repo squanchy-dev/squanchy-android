@@ -68,6 +68,7 @@
   <string name="settings_message_wifi_success">Wi-Fi network successfully configured</string>
   <string name="about_title">About</string>
   <string name="auto_wifi_title">Configure Wi-Fi</string>
+  <string name="favorites_in_schedule_title">Show favorites in schedule</string>
   <string name="settings_account_not_signed_in">Not signed in</string>
   <string name="settings_header_not_signed_in">You’re not signed in</string>
   <string name="version_x">Version: %1$s</string>
