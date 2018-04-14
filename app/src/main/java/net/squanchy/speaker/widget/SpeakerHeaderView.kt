@@ -3,7 +3,7 @@ package net.squanchy.speaker.widget
 import android.content.Context
 import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
-import android.view.View
+import androidx.view.isVisible
 import arrow.core.Option
 import kotlinx.android.synthetic.main.activity_speaker_details.view.*
 import net.squanchy.R
@@ -37,9 +37,9 @@ class SpeakerHeaderView @JvmOverloads constructor(
         if (companyName.isDefined()) {
             // TODO support navigating to company website
             speakerCompany.text = companyName.getOrThrow()
-            speakerCompany.visibility = View.VISIBLE
+            speakerCompany.isVisible = true
         } else {
-            speakerCompany.visibility = View.GONE
+            speakerCompany.isVisible = false
         }
     }
 
@@ -49,7 +49,7 @@ class SpeakerHeaderView @JvmOverloads constructor(
         }
 
         if (photoUrl.isDefined()) {
-            speakerPhoto.visibility = View.VISIBLE
+            speakerPhoto.isVisible = true
             imageLoader.load(photoUrl.getOrThrow())
                 .error(R.drawable.ic_no_avatar)
                 .into(speakerPhoto)

@@ -34,7 +34,7 @@ class FavoritesSignedInEmptyLayout @JvmOverloads constructor(
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun showAchievement(message: String) {
-        Snackbar.make(this, parseHtml(message), Snackbar.LENGTH_LONG).show()
+        Snackbar.make(this, message.parseHtml(), Snackbar.LENGTH_LONG).show()
     }
 
     private val favoriteButtonClickListener = View.OnClickListener {

@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Gravity
 import android.view.View
+import androidx.view.isVisible
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -127,7 +128,7 @@ class SignInActivity : AppCompatActivity() {
     private fun showProgress() {
         signInContent.isEnabled = false
         signInContent.alpha = ALPHA_DISABLED
-        progressView.visibility = View.VISIBLE
+        progressView.isVisible = true
     }
 
     private fun showSignInFailedError() {
@@ -138,7 +139,7 @@ class SignInActivity : AppCompatActivity() {
     private fun hideProgress() {
         signInContent.isEnabled = true
         signInContent.alpha = ALPHA_ENABLED
-        progressView.visibility = View.GONE
+        progressView.isVisible = false
     }
 
     private fun signIn() {
