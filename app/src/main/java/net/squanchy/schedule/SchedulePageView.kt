@@ -101,6 +101,28 @@ class SchedulePageView @JvmOverloads constructor(
 
     private fun combineInPair(): BiFunction<Schedule, Boolean, Pair<Schedule, Boolean>> = BiFunction(::Pair)
 
+    private fun updateWith(schedule: Schedule, showRoom: Boolean, onEventClicked: (Event) -> Unit) {
+        progressbar.isVisible = false
+
+        if (schedule.isEmpty) {
+            viewpager.isVisible = false
+            tabstrip.isVisible = false
+            emptyView.isVisible = true
+            return
+        }
+
+        viewpager.isVisible = true
+        tabstrip.isVisible = true
+        emptyView.isVisible = false
+
+        viewPagerAdapter.updateWith(schedule.pages, showRoom, onEventClicked)
+        if (viewpager.adapter == null) {
+            viewpager.adapter = viewPagerAdapter
+        }
+
+        progressbar.isVisible = false
+    }
+
     private fun onEventClicked(event: Event) {
         analytics.trackItemSelected(ContentType.SCHEDULE_ITEM, event.id)
         navigate.toEventDetails(event.id)
@@ -128,26 +150,4 @@ class SchedulePageView @JvmOverloads constructor(
     }
 
     private fun hasTypefaceSpan(text: CharSequence?) = (text as? Spanned)?.hasTypefaceSpan() ?: false
-
-    fun updateWith(schedule: Schedule, showRoom: Boolean, onEventClicked: (Event) -> Unit) {
-        progressbar.isVisible = false
-
-        if (schedule.isEmpty) {
-            viewpager.isVisible = false
-            tabstrip.isVisible = false
-            emptyView.isVisible = true
-            return
-        }
-
-        viewpager.isVisible = true
-        tabstrip.isVisible = true
-        emptyView.isVisible = false
-
-        viewPagerAdapter.updateWith(schedule.pages, showRoom, onEventClicked)
-        if (viewpager.adapter == null) {
-            viewpager.adapter = viewPagerAdapter
-        }
-
-        progressbar.isVisible = false
-    }
 }

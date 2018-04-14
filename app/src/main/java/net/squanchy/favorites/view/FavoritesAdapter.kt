@@ -17,7 +17,8 @@ internal class FavoritesAdapter(
         private const val VIEW_TYPE_HEADER: Int = 2
     }
 
-    lateinit var favoriteClickListener: OnFavoriteClickListener
+    private var favoriteClickListener: OnFavoriteClickListener? = null
+    private var showRoom = false
 
     private val layoutInflater = LayoutInflater.from(context)
 
@@ -50,9 +51,24 @@ internal class FavoritesAdapter(
 
     override fun onBindViewHolder(holder: FavoritesViewHolder<*>, position: Int) {
         when (holder) {
-            is EventViewHolder -> holder.updateWith((getItem(position) as FavoritesItem.Favorite).event, favoriteClickListener)
+            is EventViewHolder -> holder.updateWith((getItem(position) as FavoritesItem.Favorite).event, showRoom, favoriteClickListener)
             is HeaderViewHolder -> holder.updateWith((getItem(position) as FavoritesItem.Header).date)
         }
+    }
+
+    fun updateWith(list: List<FavoritesItem>, showRoom: Boolean, listener: OnFavoriteClickListener) {
+        this.showRoom = showRoom
+        this.favoriteClickListener = listener
+        super.submitList(list)
+    }
+
+    @Deprecated(
+        message = "Use updateWith() instead",
+        replaceWith = ReplaceWith("updateWith(list, showRoom, eventClickListener)"),
+        level = DeprecationLevel.ERROR
+    )
+    override fun submitList(list: MutableList<FavoritesItem>?) {
+        throw UnsupportedOperationException("Use updateWith() instead")
     }
 }
 

@@ -27,10 +27,8 @@ internal class FavoritesListView @JvmOverloads constructor(
         addItemDecoration(CardSpacingItemDecorator(horizontalSpacing, verticalSpacing))
     }
 
-    fun updateWith(newData: List<FavoritesItem>, listener: OnFavoriteClickListener) {
-        adapter.favoriteClickListener = listener
+    fun updateWith(newData: List<FavoritesItem>, showRoom: Boolean, listener: OnFavoriteClickListener) {
         setAdapterIfNone(adapter)
-
-        adapter.submitList(newData)
+        adapter.updateWith(newData, showRoom, listener)
     }
 }
