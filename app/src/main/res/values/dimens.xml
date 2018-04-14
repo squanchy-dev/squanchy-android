@@ -70,10 +70,10 @@
   <dimen name="event_details_speaker_margin_bottom">8dp</dimen>
   <dimen name="event_details_title">24sp</dimen>
   <dimen name="event_details_fab_margin">16dp</dimen>
-  <dimen name="event_details_body_row_height">56dp</dimen>
-  <dimen name="event_details_body_label_width">72dp</dimen>
+  <dimen name="event_details_body_row_margin_top">20dp</dimen>
+  <dimen name="event_details_body_label_min_width">64dp</dimen>
   <dimen name="event_details_body_label_content_padding">16dp</dimen>
-  <dimen name="event_details_body_label_padding_start">@dimen/event_details_body_label_content_padding</dimen>
+  <dimen name="event_details_body_label_margin_start">@dimen/event_details_body_label_content_padding</dimen>
   <dimen name="event_details_body_value_margin_end">@dimen/event_details_body_label_content_padding</dimen>
   <dimen name="event_details_body_value_margin_start">@dimen/event_details_body_label_content_padding</dimen>
   <dimen name="event_details_body_value_margin_bottom">72dp</dimen>
