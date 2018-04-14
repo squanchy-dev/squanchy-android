@@ -40,7 +40,7 @@ class TalkEventItemView @JvmOverloads constructor(
         speaker_container.visibility = if (event.speakers.isEmpty()) View.GONE else View.VISIBLE
         speaker_container.updateWith(event.speakers, null)
 
-        favoriteIcon.isVisible = event.favorited
+        favoriteIcon.isVisible = event.favorite
     }
 
     private fun Place?.toPlaceLabel(): CharSequence? = if (this != null) " • ${this.name}" else null

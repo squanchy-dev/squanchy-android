@@ -75,7 +75,7 @@ class DebugActivity : AppCompatActivity() {
             experienceLevel = Option(ExperienceLevel.ADVANCED),
             speakers = createTalkSpeakers(),
             type = Event.Type.TALK,
-            favorited = true,
+            favorite = true,
             description = Option.empty(),
             track = Option(createTrack()),
             timeZone = DateTimeZone.forID("Europe/Rome")

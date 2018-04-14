@@ -22,7 +22,7 @@ class EventDetailsCoordinatorLayout @JvmOverloads constructor(
 
         if (canBeFavorited(event)) {
             favoriteFab.setImageResource(
-                    if (event.favorited)
+                    if (event.favorite)
                         R.drawable.ic_favorite_filled
                     else R.drawable.ic_favorite_empty
             )

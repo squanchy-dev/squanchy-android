@@ -33,7 +33,7 @@ internal class FirestoreFavoritesService(
 
     private fun SchedulePage.asFavouritesDayViewModel(): List<FavoritesItem> {
         val eventsAsFavoriteItems = this.events
-            .filter { it.favorited }
+            .filter { it.favorite }
             .map { it.toFavoriteItem() }
 
         if (eventsAsFavoriteItems.isNotEmpty()) {

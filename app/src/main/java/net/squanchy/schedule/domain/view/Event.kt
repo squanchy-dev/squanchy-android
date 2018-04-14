@@ -18,7 +18,7 @@ data class Event(
     val speakers: List<Speaker>,
     val experienceLevel: Option<ExperienceLevel>,
     val type: Type,
-    val favorited: Boolean,
+    val favorite: Boolean,
     val description: Option<String>,
     val timeZone: DateTimeZone
 ) {
