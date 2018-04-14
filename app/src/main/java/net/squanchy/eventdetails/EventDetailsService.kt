@@ -33,7 +33,7 @@ internal class EventDetailsService(
     }
 
     private fun toggleFavoriteOn(event: Event): Completable {
-        return if (event.favorited) {
+        return if (event.favorite) {
             removeFavorite(event.id)
         } else {
             favorite(event.id)

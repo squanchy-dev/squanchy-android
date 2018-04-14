@@ -20,7 +20,7 @@ class TalkEventItemView @JvmOverloads constructor(
     private val timeFormatter = DateTimeFormat.shortTime()
     private val dateFormatter = DateTimeFormat.forPattern("EEE d")
 
-    override fun updateWith(event: Event, showRoom: Boolean, showDay: Boolean) {
+    override fun updateWith(event: Event, showRoom: Boolean, showDay: Boolean, showFavorite: Boolean) {
         ensureSupportedType(event.type)
 
         timestamp.text = startTimeAsFormattedString(event, showDay)
@@ -32,13 +32,15 @@ class TalkEventItemView @JvmOverloads constructor(
 
         if (event.experienceLevel.isDefined()) {
             experience_level.setExperienceLevel(event.experienceLevel.getOrThrow())
-            experience_level.visibility = View.VISIBLE
+            experience_level.isVisible = true
         } else {
-            experience_level.visibility = View.INVISIBLE
+            experience_level.isVisible = false
         }
 
         speaker_container.visibility = if (event.speakers.isEmpty()) View.GONE else View.VISIBLE
         speaker_container.updateWith(event.speakers, null)
+
+        favoriteIcon.isVisible = if (showFavorite) event.favorite else false
     }
 
     private fun Place?.toPlaceLabel(): CharSequence? = if (this != null) " • ${this.name}" else null

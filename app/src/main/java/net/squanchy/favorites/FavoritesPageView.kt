@@ -8,7 +8,7 @@ import androidx.view.isVisible
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.functions.BiFunction
+import io.reactivex.functions.Function3
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.merge_no_favorites_view.view.*
 import kotlinx.android.synthetic.main.view_page_favorites.view.*
@@ -19,6 +19,7 @@ import net.squanchy.favorites.view.FavoritesItem
 import net.squanchy.home.HomeActivity
 import net.squanchy.home.Loadable
 import net.squanchy.navigation.Navigator
+import net.squanchy.remoteconfig.FeatureFlags
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.support.unwrapToActivityContext
 import timber.log.Timber
@@ -32,6 +33,7 @@ class FavoritesPageView @JvmOverloads constructor(
     private lateinit var favoritesService: FavoritesService
     private lateinit var navigator: Navigator
     private lateinit var analytics: Analytics
+    private lateinit var featureFlags: FeatureFlags
 
     private val disposable = CompositeDisposable()
 
@@ -41,6 +43,7 @@ class FavoritesPageView @JvmOverloads constructor(
                 favoritesService = favoritesService()
                 navigator = navigator()
                 analytics = analytics()
+                featureFlags = featureFlags()
             }
         }
     }
@@ -66,7 +69,8 @@ class FavoritesPageView @JvmOverloads constructor(
             Observable.combineLatest(
                 favoritesService.favorites(),
                 favoritesService.currentUserIsSignedIn(),
-                BiFunction<List<FavoritesItem>, Boolean, LoadResult>(::LoadResult)
+                featureFlags.showEventRoomInSchedule.toObservable(),
+                Function3<List<FavoritesItem>, Boolean, Boolean, LoadResult>(::LoadResult)
             )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -92,14 +96,14 @@ class FavoritesPageView @JvmOverloads constructor(
 
     private fun handleLoadSchedule(result: LoadResult) {
         when {
-            result.favoriteItems.isNotEmpty() -> showFavorites(result.favoriteItems)
+            result.favoriteItems.isNotEmpty() -> showFavorites(result.favoriteItems, result.showRoom)
             result.signedIn -> promptToFavorite()
             else -> promptToSign()
         }
     }
 
-    private fun showFavorites(favorites: List<FavoritesItem>) {
-        favoritesListView.updateWith(favorites, ::navigateToEventDetails)
+    private fun showFavorites(favorites: List<FavoritesItem>, showRoom: Boolean) {
+        favoritesListView.updateWith(favorites, showRoom, ::navigateToEventDetails)
         favoritesListView.isVisible = true
         progressBar.isVisible = false
         emptyViewSignedOut.isVisible = false
@@ -137,5 +141,5 @@ class FavoritesPageView @JvmOverloads constructor(
 
     private fun showSettings() = navigator.toSettings()
 
-    private data class LoadResult(val favoriteItems: List<FavoritesItem>, val signedIn: Boolean)
+    private data class LoadResult(val favoriteItems: List<FavoritesItem>, val signedIn: Boolean, val showRoom: Boolean)
 }
