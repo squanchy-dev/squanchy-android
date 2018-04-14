@@ -1,98 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   tools:layout_width="match_parent"
   tools:layout_height="match_parent"
-  tools:parentTag="android.widget.LinearLayout"
-  tools:orientation="vertical">
+  tools:parentTag="android.support.constraint.ConstraintLayout">
 
-  <LinearLayout
-    android:id="@+id/whenContainer"
-    style="@style/EventDetails.Body.RowContainer"
-    android:layout_width="match_parent"
+  <android.support.constraint.Barrier
+    android:id="@+id/valuesBarrier"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:visibility="gone"
-    tools:visibility="visible">
+    app:barrierAllowsGoneWidgets="true"
+    app:barrierDirection="end"
+    app:constraint_referenced_ids="whenLabel,whereLabel,levelLabel" />
 
-    <TextView
-      style="@style/EventDetails.Body.Label.When"
-      android:layout_width="@dimen/event_details_body_label_width"
-      android:layout_height="wrap_content" />
-
-    <TextView
-      android:id="@+id/whenTextView"
-      style="@style/EventDetails.Body.Value"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginEnd="@dimen/event_details_body_value_margin_end"
-      tools:text="Tuesday, 6 February at 14:00" />
-
-  </LinearLayout>
-
-  <LinearLayout
-    android:id="@+id/whereContainer"
-    style="@style/EventDetails.Body.RowContainer"
-    android:layout_width="match_parent"
+  <android.support.constraint.Guideline
+    android:id="@+id/labelsStartMargin"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:visibility="gone"
-    tools:visibility="visible">
-
-    <TextView
-      style="@style/EventDetails.Body.Label.Where"
-      android:layout_width="@dimen/event_details_body_label_width"
-      android:layout_height="wrap_content" />
-
-    <TextView
-      android:id="@+id/whereTextView"
-      style="@style/EventDetails.Body.Value"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginEnd="@dimen/event_details_body_value_margin_end"
-      tools:text="Beyond the wall" />
-
-  </LinearLayout>
-
-  <LinearLayout
-    android:id="@+id/levelContainer"
-    style="@style/EventDetails.Body.RowContainer"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:visibility="gone"
-    tools:visibility="visible">
-
-    <TextView
-      style="@style/EventDetails.Body.Label.Level"
-      android:layout_width="@dimen/event_details_body_label_width"
-      android:layout_height="wrap_content" />
-
-    <TextView
-      android:id="@+id/levelTextView"
-      style="@style/EventDetails.Body.Value.Level"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginEnd="@dimen/event_details_body_value_margin_end"
-      tools:text="Beyond the wall" />
-
-  </LinearLayout>
+    android:orientation="vertical"
+    app:layout_constraintGuide_begin="@dimen/event_details_body_label_margin_start" />
 
   <TextView
-    android:id="@+id/descriptionHeader"
-    style="@style/EventDetails.Body.Label.About"
-    android:layout_width="@dimen/event_details_body_label_width"
+    android:id="@+id/whenLabel"
+    style="@style/EventDetails.Body.Label.When"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/event_details_body_row_margin_top"
+    app:layout_constraintStart_toStartOf="@+id/labelsStartMargin"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <TextView
+    android:id="@+id/whenValue"
+    style="@style/EventDetails.Body.Value"
+    android:layout_width="@dimen/match_constraint"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/event_details_body_value_margin_end"
+    app:layout_constraintStart_toEndOf="@+id/valuesBarrier"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintBaseline_toBaselineOf="@+id/whenLabel"
+    tools:text="Tuesday, 6 February at 14:00" />
+
+  <android.support.constraint.Barrier
+    android:id="@+id/whenBarrier"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:barrierDirection="bottom"
+    app:barrierAllowsGoneWidgets="true"
+    app:constraint_referenced_ids="whenLabel,whenValue" />
+
+  <android.support.constraint.Group
+    android:id="@+id/whenGroup"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:visibility="gone"
+    app:constraint_referenced_ids="whenValue,whenLabel"
     tools:visibility="visible" />
 
   <TextView
-    android:id="@+id/descriptionTextView"
+    android:id="@+id/whereLabel"
+    style="@style/EventDetails.Body.Label.Where"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/event_details_body_row_margin_top"
+    app:layout_constraintStart_toStartOf="@+id/labelsStartMargin"
+    app:layout_constraintTop_toBottomOf="@id/whenBarrier" />
+
+  <TextView
+    android:id="@+id/whereValue"
     style="@style/EventDetails.Body.Value"
-    android:layout_width="match_parent"
+    android:layout_width="@dimen/match_constraint"
+    android:layout_height="wrap_content"
+    app:layout_constraintStart_toEndOf="@+id/valuesBarrier"
+    app:layout_constraintEnd_toEndOf="@+id/whenValue"
+    app:layout_constraintBaseline_toBaselineOf="@+id/whereLabel"
+    tools:text="EZ PZ lemon squeezy" />
+
+  <android.support.constraint.Barrier
+    android:id="@+id/whereBarrier"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:barrierDirection="bottom"
+    app:barrierAllowsGoneWidgets="true"
+    app:constraint_referenced_ids="whereLabel,whereValue" />
+
+  <android.support.constraint.Group
+    android:id="@+id/whereGroup"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:visibility="gone"
+    app:constraint_referenced_ids="whereValue,whereLabel"
+    tools:visibility="visible" />
+
+  <TextView
+    android:id="@+id/levelLabel"
+    style="@style/EventDetails.Body.Label.Level"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/event_details_body_row_margin_top"
+    app:layout_constraintStart_toStartOf="@+id/labelsStartMargin"
+    app:layout_constraintTop_toBottomOf="@+id/whereBarrier" />
+
+  <TextView
+    android:id="@+id/levelValue"
+    style="@style/EventDetails.Body.Value.Level"
+    android:layout_width="@dimen/match_constraint"
+    android:layout_height="wrap_content"
+    app:layout_constraintStart_toEndOf="@+id/valuesBarrier"
+    app:layout_constraintEnd_toEndOf="@+id/whenValue"
+    app:layout_constraintBaseline_toBaselineOf="@+id/levelLabel"
+    tools:text="Beyond the wall" />
+
+  <android.support.constraint.Barrier
+    android:id="@+id/levelBarrier"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:barrierDirection="bottom"
+    app:barrierAllowsGoneWidgets="true"
+    app:constraint_referenced_ids="levelLabel,levelValue" />
+
+  <android.support.constraint.Group
+    android:id="@+id/levelGroup"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:visibility="gone"
+    app:constraint_referenced_ids="levelValue,levelLabel"
+    tools:visibility="visible" />
+
+  <TextView
+    android:id="@+id/descriptionLabel"
+    style="@style/EventDetails.Body.Label.About"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/event_details_body_row_margin_top"
+    app:layout_constraintTop_toBottomOf="@id/levelBarrier"
+    app:layout_constraintStart_toStartOf="@+id/labelsStartMargin"
+    tools:visibility="visible" />
+
+  <TextView
+    android:id="@+id/descriptionValue"
+    style="@style/EventDetails.Body.Value"
+    android:layout_width="@dimen/match_constraint"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/event_details_body_value_margin_start"
-    android:layout_marginEnd="@dimen/event_details_body_value_margin_end"
-    android:layout_marginBottom="@dimen/event_details_body_value_margin_bottom"
+    android:layout_marginTop="@dimen/event_details_body_row_margin_top"
     android:visibility="gone"
+    app:layout_constraintTop_toBottomOf="@+id/descriptionLabel"
+    app:layout_constraintEnd_toEndOf="@+id/whenValue"
+    app:layout_constraintStart_toStartOf="parent"
     tools:text="Now this is the story all about how\nMy life got flipped, turned upside down"
+    tools:visibility="visible" />
+
+  <android.support.constraint.Group
+    android:id="@+id/descriptionGroup"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:visibility="gone"
+    app:constraint_referenced_ids="descriptionValue,descriptionLabel"
     tools:visibility="visible" />
 
 </merge>

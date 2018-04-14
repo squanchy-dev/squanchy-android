@@ -73,7 +73,7 @@ class VenueInfoPageView @JvmOverloads constructor(
     private fun updateWith(venue: Venue) {
         venueName.text = venue.name
         venueAddress.text = venue.address
-        venueDescription.text = parseHtml(venue.description)
+        venueDescription.text = venue.description.parseHtml()
         loadMap(venueMap, venue.mapUrl, imageLoader)
         updateMapClickListenerWith(venue)
     }

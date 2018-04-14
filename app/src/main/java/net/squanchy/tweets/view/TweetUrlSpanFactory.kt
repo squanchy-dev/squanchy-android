@@ -90,7 +90,7 @@ class TweetUrlSpanFactory(private val context: Context) {
 
         if (matcher.find()) {
             val matchResult = matcher.toMatchResult()
-            val unescapedEntity = parseHtml(matchResult.group())
+            val unescapedEntity = matchResult.group().parseHtml()
             builder.replace(matchResult.start(), matchResult.end(), unescapedEntity)
             unescapeEntities(builder)
         }

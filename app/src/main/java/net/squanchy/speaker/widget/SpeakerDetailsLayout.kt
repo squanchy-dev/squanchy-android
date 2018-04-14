@@ -11,6 +11,6 @@ class SpeakerDetailsLayout(context: Context, attrs: AttributeSet) : ConstraintLa
 
     fun updateWith(speaker: Speaker) {
         speakerDetailsHeader.updateWith(speaker)
-        speakerBio.text = parseHtml(speaker.bio)
+        speakerBio.text = speaker.bio.parseHtml()
     }
 }
