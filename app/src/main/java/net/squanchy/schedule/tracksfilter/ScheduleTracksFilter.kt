@@ -9,6 +9,7 @@ import android.view.ViewAnimationUtils
 import android.view.animation.AnimationUtils
 import android.view.animation.Interpolator
 import androidx.animation.doOnEnd
+import androidx.view.isInvisible
 import androidx.view.isVisible
 import androidx.view.postOnAnimationDelayed
 import com.google.android.flexbox.FlexDirection

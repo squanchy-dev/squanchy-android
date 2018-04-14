@@ -21,6 +21,8 @@ import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Place
 import net.squanchy.support.lang.getOrThrow
 import net.squanchy.support.text.parseHtml
+import org.joda.time.DateTimeZone
+import org.joda.time.LocalDateTime
 import org.joda.time.format.DateTimeFormat
 
 // TODO flatten this layout as a ConstraintLayout
@@ -34,6 +36,8 @@ class EventDetailsLayout @JvmOverloads constructor(
         super.setOrientation(LinearLayout.VERTICAL)
     }
 
+    private val dateTimeFormatter = DateTimeFormat.forPattern(WHEN_DATE_TIME_FORMAT)
+
     override fun setOrientation(orientation: Int) {
         throw UnsupportedOperationException("Changing orientation is not supported for EventDetailsLayout")
     }
@@ -45,31 +49,31 @@ class EventDetailsLayout @JvmOverloads constructor(
     }
 
     fun updateWith(event: Event) {
-        updateWhen(event)
-        updateWhere(event)
+        updateWhen(event.startTime, event.timeZone)
+        updateWhere(event.place)
         updateLevel(event.experienceLevel)
         updateDescription(event.description)
     }
 
-    private fun updateWhen(event: Event) {
-        val formatter = DateTimeFormat.forPattern(WHEN_DATE_TIME_FORMAT).withZone(event.timeZone)
-        whenTextView.text = formatter.print(event.startTime.toDateTime())
+    private fun updateWhen(startTime: LocalDateTime, timeZone: DateTimeZone) {
+        val formatter = dateTimeFormatter.withZone(timeZone)
+        whenTextView.text = formatter.print(startTime.toDateTime(timeZone))
         whenContainer.isVisible = true
     }
 
-    private fun updateWhere(event: Event) {
-        if (event.place.isDefined()) {
+    private fun updateWhere(place: Option<Place>) {
+        if (place.isDefined()) {
             whereContainer.isVisible = true
-            whereTextView.text = placeTextFrom(event.place.getOrThrow())
+            whereTextView.text = place.getOrThrow().toPlaceLabel()
         } else {
             whereContainer.isVisible = false
         }
     }
 
-    private fun placeTextFrom(place: Place): CharSequence {
-        val builder = SpannableStringBuilder(place.name)
-        if (place.floor.isDefined()) {
-            val floorLabel = place.floor.getOrThrow()
+    private fun Place.toPlaceLabel(): CharSequence {
+        val builder = SpannableStringBuilder(name)
+        if (floor.isDefined()) {
+            val floorLabel = floor.getOrThrow()
             builder.append("   ")
                 .append(floorLabel)
                 .setSpan(
