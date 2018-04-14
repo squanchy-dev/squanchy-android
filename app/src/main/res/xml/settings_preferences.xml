@@ -39,17 +39,17 @@
       android:summaryOff="@string/settings_notifications_about_to_start_summary_off"
       android:order="0"/>
 
-    <Preference
-      android:key="@string/auto_wifi_preference_key"
-      android:title="@string/auto_wifi_title"
-      android:icon="@drawable/ic_wifi"
-      android:order="1" />
-
     <SwitchPreference
       android:key="@string/favorites_in_schedule_preference_key"
       android:title="@string/favorites_in_schedule_title"
       android:icon="@drawable/ic_favorite_settings"
       android:defaultValue="false"
+      android:order="1" />
+
+    <Preference
+      android:key="@string/auto_wifi_preference_key"
+      android:title="@string/auto_wifi_title"
+      android:icon="@drawable/ic_wifi"
       android:order="2" />
 
     <Preference
