@@ -3,7 +3,7 @@ package net.squanchy.tweets.view
 import android.content.Context
 import android.text.method.LinkMovementMethod
 import android.util.AttributeSet
-import android.view.View
+import androidx.view.isVisible
 import kotlinx.android.synthetic.main.item_tweet.view.*
 import net.squanchy.R
 import net.squanchy.imageloader.ImageLoader
@@ -51,10 +51,10 @@ class TweetItemView @JvmOverloads constructor(
 
         tweetPhoto.setImageDrawable(null)
         if (photoUrl != null) {
-            tweetPhoto.visibility = View.VISIBLE
+            tweetPhoto.isVisible = true
             imageLoader.load(photoUrl).into(tweetPhoto)
         } else {
-            tweetPhoto.visibility = View.GONE
+            tweetPhoto.isVisible = false
         }
     }
 }

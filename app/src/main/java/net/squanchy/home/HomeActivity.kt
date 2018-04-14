@@ -12,6 +12,7 @@ import android.support.transition.TransitionManager
 import android.support.v7.app.AppCompatActivity
 import android.util.TypedValue
 import android.view.View
+import androidx.view.isVisible
 import kotlinx.android.synthetic.main.activity_home.*
 import net.squanchy.R
 import net.squanchy.analytics.Analytics
@@ -133,9 +134,9 @@ class HomeActivity : AppCompatActivity() {
 
     private fun swapPageTo(section: BottomNavigationSection) {
         if (::currentSection.isInitialized) {
-            pageViews[currentSection]!!.visibility = View.INVISIBLE
+            pageViews[currentSection]!!.isInvisible = true
         }
-        pageViews[section]!!.visibility = View.VISIBLE
+        pageViews[section]!!.isVisible = true
     }
 
     private fun getThemeFor(section: BottomNavigationSection): Resources.Theme {

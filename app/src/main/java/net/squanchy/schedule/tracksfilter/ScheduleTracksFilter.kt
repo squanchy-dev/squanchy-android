@@ -9,6 +9,7 @@ import android.view.ViewAnimationUtils
 import android.view.animation.AnimationUtils
 import android.view.animation.Interpolator
 import androidx.animation.doOnEnd
+import androidx.view.isVisible
 import androidx.view.postOnAnimationDelayed
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxItemDecoration
@@ -96,7 +97,7 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
             duration = resources.getInteger(R.integer.track_filters_disappear_duration).toLong()
 
             doOnEnd {
-                filtersRoot.visibility = View.INVISIBLE
+                filtersRoot.isInvisible = true
                 finish()
             }
         }.start()
@@ -131,7 +132,7 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
 
     private fun prepareAppearAnimation() {
         appearInterpolator = AnimationUtils.loadInterpolator(this, android.R.interpolator.linear_out_slow_in)
-        filtersRoot.visibility = View.VISIBLE
+        filtersRoot.isVisible = true
 
         val titleDeltaY = resources.getDimension(R.dimen.track_filters_title_appear_delta_y)
         dialogTitle.apply {

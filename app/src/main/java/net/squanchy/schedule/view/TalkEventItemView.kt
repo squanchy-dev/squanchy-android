@@ -32,9 +32,9 @@ class TalkEventItemView @JvmOverloads constructor(
 
         if (event.experienceLevel.isDefined()) {
             experience_level.setExperienceLevel(event.experienceLevel.getOrThrow())
-            experience_level.visibility = View.VISIBLE
+            experience_level.isVisible = true
         } else {
-            experience_level.visibility = View.INVISIBLE
+            experience_level.isInvisible = true
         }
 
         speaker_container.visibility = if (event.speakers.isEmpty()) View.GONE else View.VISIBLE

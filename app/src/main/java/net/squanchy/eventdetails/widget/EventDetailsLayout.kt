@@ -12,6 +12,7 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
 import android.widget.LinearLayout
+import androidx.view.isVisible
 import arrow.core.Option
 import kotlinx.android.synthetic.main.merge_event_details_layout.view.*
 import net.squanchy.R
@@ -53,15 +54,15 @@ class EventDetailsLayout @JvmOverloads constructor(
     private fun updateWhen(event: Event) {
         val formatter = DateTimeFormat.forPattern(WHEN_DATE_TIME_FORMAT).withZone(event.timeZone)
         whenTextView.text = formatter.print(event.startTime.toDateTime())
-        whenContainer.visibility = View.VISIBLE
+        whenContainer.isVisible = true
     }
 
     private fun updateWhere(event: Event) {
         if (event.place.isDefined()) {
-            whereContainer.visibility = View.VISIBLE
+            whereContainer.isVisible = true
             whereTextView.text = placeTextFrom(event.place.getOrThrow())
         } else {
-            whereContainer.visibility = View.GONE
+            whereContainer.isVisible = false
         }
     }
 
@@ -83,13 +84,13 @@ class EventDetailsLayout @JvmOverloads constructor(
 
     private fun updateLevel(level: Option<ExperienceLevel>) {
         if (level.isDefined()) {
-            levelContainer.visibility = View.VISIBLE
+            levelContainer.isVisible = true
 
             val experienceLevel = level.getOrThrow()
             levelTextView.setText(experienceLevel.labelStringResId)
             tintCompoundDrawableEnd(experienceLevel)
         } else {
-            levelContainer.visibility = View.GONE
+            levelContainer.isVisible = false
         }
     }
 
@@ -113,12 +114,12 @@ class EventDetailsLayout @JvmOverloads constructor(
 
     private fun updateDescription(description: Option<String>) {
         if (description.isDefined()) {
-            descriptionHeader.visibility = View.VISIBLE
-            descriptionTextView.visibility = View.VISIBLE
+            descriptionHeader.isVisible = true
+            descriptionTextView.isVisible = true
             descriptionTextView.text = parseHtml(description.getOrThrow())
         } else {
-            descriptionHeader.visibility = View.GONE
-            descriptionTextView.visibility = View.GONE
+            descriptionHeader.isVisible = false
+            descriptionTextView.isVisible = false
         }
     }
 
