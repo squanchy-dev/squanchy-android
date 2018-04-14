@@ -1,15 +1,16 @@
 package net.squanchy.schedule
 
 import android.content.Context
-import android.support.design.widget.CoordinatorLayout
+import android.support.constraint.ConstraintLayout
 import android.support.design.widget.TabLayout
 import android.text.Spanned
 import android.util.AttributeSet
 import androidx.view.isVisible
+import arrow.core.Tuple3
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.functions.BiFunction
+import io.reactivex.functions.Function3
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.view_page_schedule.view.*
 import net.squanchy.R
@@ -21,6 +22,7 @@ import net.squanchy.remoteconfig.FeatureFlags
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Schedule
 import net.squanchy.schedule.view.ScheduleViewPagerAdapter
+import net.squanchy.settings.preferences.showFavoritesInScheduleObservable
 import net.squanchy.support.system.CurrentTime
 import net.squanchy.support.text.applyTypeface
 import net.squanchy.support.text.getFontFor
@@ -33,7 +35,7 @@ class SchedulePageView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet,
     defStyleAttr: Int = 0
-) : CoordinatorLayout(context, attrs, defStyleAttr), Loadable {
+) : ConstraintLayout(context, attrs, defStyleAttr), Loadable {
 
     private val viewPagerAdapter: ScheduleViewPagerAdapter
     private val service: ScheduleService
@@ -57,7 +59,7 @@ class SchedulePageView @JvmOverloads constructor(
     override fun onFinishInflate() {
         super.onFinishInflate()
 
-        tabstrip.setupWithViewPager(viewpager)
+        tabstrip.setupWithViewPager(viewPager)
         hackToApplyTypefaces(tabstrip)
 
         setupToolbar()
@@ -89,38 +91,41 @@ class SchedulePageView @JvmOverloads constructor(
 
     override fun startLoading() {
         subscriptions.add(
-            Observable.combineLatest(service.schedule(), featureFlags.showEventRoomInSchedule.toObservable(), combineInPair())
+            Observable.combineLatest(
+                service.schedule(),
+                featureFlags.showEventRoomInSchedule.toObservable(),
+                showFavoritesInScheduleObservable(context),
+                Function3<Schedule, Boolean, Boolean, Tuple3<Schedule, Boolean, Boolean>>(::Tuple3)
+            )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                    { updateWith(it.first, it.second, ::onEventClicked) },
+                    { updateWith(it.a, it.b, it.c, ::onEventClicked) },
                     Timber::e
                 )
         )
     }
 
-    private fun combineInPair(): BiFunction<Schedule, Boolean, Pair<Schedule, Boolean>> = BiFunction(::Pair)
-
-    private fun updateWith(schedule: Schedule, showRoom: Boolean, onEventClicked: (Event) -> Unit) {
-        progressbar.isVisible = false
+    private fun updateWith(schedule: Schedule, showRoom: Boolean, showFavorites: Boolean, onEventClicked: (Event) -> Unit) {
+        progressBar.isVisible = false
 
         if (schedule.isEmpty) {
-            viewpager.isVisible = false
+            viewPager.isVisible = false
             tabstrip.isVisible = false
             emptyView.isVisible = true
             return
         }
 
-        viewpager.isVisible = true
+        viewPager.isVisible = true
         tabstrip.isVisible = true
         emptyView.isVisible = false
 
-        viewPagerAdapter.updateWith(schedule.pages, showRoom, onEventClicked)
-        if (viewpager.adapter == null) {
-            viewpager.adapter = viewPagerAdapter
+        viewPagerAdapter.updateWith(schedule.pages, showRoom, showFavorites, onEventClicked)
+        if (viewPager.adapter == null) {
+            viewPager.adapter = viewPagerAdapter
         }
 
-        progressbar.isVisible = false
+        progressBar.isVisible = false
     }
 
     private fun onEventClicked(event: Event) {
