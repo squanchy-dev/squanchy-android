@@ -6,6 +6,7 @@ import net.squanchy.service.firebase.model.conferenceinfo.FirestoreConferenceInf
 import net.squanchy.service.firebase.model.conferenceinfo.FirestoreVenue
 import net.squanchy.service.firebase.model.schedule.FirestoreDay
 import net.squanchy.service.firebase.model.schedule.FirestoreEvent
+import net.squanchy.service.firebase.model.schedule.FirestoreFavorite
 import net.squanchy.service.firebase.model.schedule.FirestorePlace
 import net.squanchy.service.firebase.model.schedule.FirestoreSchedulePage
 import net.squanchy.service.firebase.model.schedule.FirestoreSpeaker
@@ -111,6 +112,10 @@ fun aFirestoreEvent(
     this.description = description
     this.experienceLevel = experienceLevel
 }
+
+fun aFirestoreFavorite(
+    id: String = "walrus"
+) = FirestoreFavorite().apply { this.id = id }
 
 fun aFirestoreSchedulePage(
     day: FirestoreDay = aFirestoreDay(),

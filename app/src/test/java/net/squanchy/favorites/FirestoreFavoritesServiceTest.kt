@@ -38,9 +38,54 @@ class FirestoreFavoritesServiceTest {
     }
 
     @Test
+    fun `should exclude events that are not favorites`() {
+        val schedule = aSchedule(
+            pages = listOf(
+                aSchedulePage(
+                    date = aDay().date,
+                    events = listOf(
+                        anEvent(id = "day 1 event 1", favorited = true),
+                        anEvent(id = "day 1 event 2", favorited = false),
+                        anEvent(id = "day 1 event 3", favorited = false)
+                    )
+                ),
+                aSchedulePage(
+                    date = aDay().date.plusDays(1),
+                    events = listOf(
+                        anEvent(id = "day 2 event 1", favorited = false),
+                        anEvent(id = "day 2 event 2", favorited = false),
+                        anEvent(id = "day 2 event 3", favorited = false)
+                    )
+                ),
+                aSchedulePage(
+                    date = aDay().date.plusDays(2),
+                    events = listOf(
+                        anEvent(id = "day 3 event 1", favorited = false),
+                        anEvent(id = "day 3 event 2", favorited = true),
+                        anEvent(id = "day 3 event 3", favorited = true)
+                    )
+                )
+            )
+        )
+        `when`(scheduleService.schedule()).thenReturn(Observable.just(schedule))
+
+        favoritesService.favorites()
+            .test()
+            .assertValue(
+                listOf(
+                    aFavoriteHeaderListItem(aDay().date),
+                    aFavoriteItemListItem(anEvent(id = "day 1 event 1", favorited = true)),
+                    aFavoriteHeaderListItem(aDay().date.plusDays(2)),
+                    aFavoriteItemListItem(anEvent(id = "day 3 event 2", favorited = true)),
+                    aFavoriteItemListItem(anEvent(id = "day 3 event 3", favorited = true))
+                )
+            )
+    }
+
+    @Test
     fun `should return an empty list when there are no favorite events`() {
         val schedule = aSchedule(pages = emptyList())
-        `when`(scheduleService.schedule(onlyFavorites = true)).thenReturn(Observable.just(schedule))
+        `when`(scheduleService.schedule()).thenReturn(Observable.just(schedule))
 
         favoritesService.favorites()
             .test()
@@ -53,25 +98,25 @@ class FirestoreFavoritesServiceTest {
             pages = listOf(
                 aSchedulePage(
                     date = aDay().date,
-                    events = listOf(anEvent(id = "day 1 event 1"), anEvent(id = "day 1 event 2"))
+                    events = listOf(anEvent(id = "day 1 event 1", favorited = true), anEvent(id = "day 1 event 2", favorited = true))
                 ),
                 aSchedulePage(
                     date = aDay().date.plusDays(1),
-                    events = listOf(anEvent(id = "day 2 event 1"))
+                    events = listOf(anEvent(id = "day 2 event 1", favorited = true))
                 )
             )
         )
-        `when`(scheduleService.schedule(onlyFavorites = true)).thenReturn(Observable.just(schedule))
+        `when`(scheduleService.schedule()).thenReturn(Observable.just(schedule))
 
         favoritesService.favorites()
             .test()
             .assertValue(
                 listOf(
                     aFavoriteHeaderListItem(aDay().date),
-                    aFavoriteItemListItem(anEvent(id = "day 1 event 1")),
-                    aFavoriteItemListItem(anEvent(id = "day 1 event 2")),
+                    aFavoriteItemListItem(anEvent(id = "day 1 event 1", favorited = true)),
+                    aFavoriteItemListItem(anEvent(id = "day 1 event 2", favorited = true)),
                     aFavoriteHeaderListItem(aDay().date.plusDays(1)),
-                    aFavoriteItemListItem(anEvent(id = "day 2 event 1"))
+                    aFavoriteItemListItem(anEvent(id = "day 2 event 1", favorited = true))
                 )
             )
     }
@@ -83,7 +128,7 @@ class FirestoreFavoritesServiceTest {
                 aSchedulePage(events = emptyList())
             )
         )
-        `when`(scheduleService.schedule(onlyFavorites = true)).thenReturn(Observable.just(schedule))
+        `when`(scheduleService.schedule()).thenReturn(Observable.just(schedule))
 
         favoritesService.favorites()
             .test()
