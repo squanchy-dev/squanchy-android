@@ -68,10 +68,10 @@ class EventDetailsLayout @JvmOverloads constructor(
             builder.append("   ")
                 .append(floorLabel)
                 .setSpan(
-                        createColorSpan(whereValue, android.R.attr.textColorSecondary),
-                        builder.length - floorLabel.length,
-                        builder.length,
-                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    createColorSpan(whereValue, android.R.attr.textColorSecondary),
+                    builder.length - floorLabel.length,
+                    builder.length,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
         }
         return builder
@@ -110,7 +110,7 @@ class EventDetailsLayout @JvmOverloads constructor(
     private fun updateDescription(description: Option<String>) {
         if (description.isDefined()) {
             descriptionGroup.isVisible = true
-            descriptionValue.text = parseHtml(description.getOrThrow())
+            descriptionValue.text = description.getOrThrow().parseHtml()
         } else {
             descriptionGroup.isVisible = false
         }
