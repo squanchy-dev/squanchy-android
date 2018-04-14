@@ -19,7 +19,7 @@ sealed class FavoritesViewHolder<T : View>(itemView: T) : RecyclerView.ViewHolde
 class EventViewHolder(itemView: EventItemView) : FavoritesViewHolder<EventItemView>(itemView) {
 
     fun updateWith(event: Event, listener: OnEventClickListener?) {
-        (itemView as EventItemView).updateWith(event, false) // TODO import the feature flag here as well
+        (itemView as EventItemView).updateWith(event, showRoom = true, showFavorite = false)
         itemView.setOnClickListener { listener?.invoke(event) }
     }
 }
