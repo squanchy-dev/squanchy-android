@@ -1,6 +1,5 @@
 package net.squanchy.service.firebase.model.schedule
 
-import arrow.core.Option
 import io.reactivex.Observable
 import net.squanchy.schedule.domain.view.aTrack
 import net.squanchy.service.firebase.FirestoreDbService
@@ -54,7 +53,7 @@ class FirestoreTracksRepositoryTest {
         trackService.tracks()
             .test()
             .assertValue(
-                listOf(aTrack(accentColor = Option.empty(), iconUrl = Option.empty(), textColor = Option.empty()))
+                listOf(aTrack(accentColor = null, iconUrl = null, textColor = null))
             )
     }
 

@@ -2,7 +2,6 @@ package net.squanchy.service.firebase
 
 import com.google.common.truth.Truth.assertThat
 import net.squanchy.support.checksum.Checksum
-import net.squanchy.support.lang.getOrThrow
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -50,41 +49,41 @@ class FirestoreTrackMapperTest {
     fun `track url should match when mapped`() {
         val firestoreTrack = aFirestoreTrack(iconUrl = A_NAME)
         val track = firestoreTrack.toTrack(checksum)
-        assertThat(track.iconUrl.getOrThrow()).isEqualTo(A_NAME)
+        assertThat(track.iconUrl).isEqualTo(A_NAME)
     }
 
     @Test
     fun `track url should be empty when mapping null`() {
         val firestoreTrack = aFirestoreTrack(iconUrl = null)
         val track = firestoreTrack.toTrack(checksum)
-        assertThat(track.iconUrl.isEmpty()).isTrue()
+        assertThat(track.iconUrl).isNull()
     }
 
     @Test
     fun `accent color should match when mapped`() {
         val firestoreTrack = aFirestoreTrack(accentColor = A_COLOR)
         val track = firestoreTrack.toTrack(checksum)
-        assertThat(track.accentColor.getOrThrow()).isEqualTo(A_COLOR)
+        assertThat(track.accentColor).isEqualTo(A_COLOR)
     }
 
     @Test
     fun `accent color should be empty when mapping null`() {
         val firestoreTrack = aFirestoreTrack(accentColor = null)
         val track = firestoreTrack.toTrack(checksum)
-        assertThat(track.accentColor.isEmpty()).isTrue()
+        assertThat(track.accentColor).isNull()
     }
 
     @Test
     fun `text color should match when mapped`() {
         val firestoreTrack = aFirestoreTrack(textColor = A_COLOR)
         val track = firestoreTrack.toTrack(checksum)
-        assertThat(track.textColor.getOrThrow()).isEqualTo(A_COLOR)
+        assertThat(track.textColor).isEqualTo(A_COLOR)
     }
 
     @Test
     fun `text color should be empty when mapping null`() {
         val firestoreTrack = aFirestoreTrack(textColor = null)
         val track = firestoreTrack.toTrack(checksum)
-        assertThat(track.textColor.isEmpty()).isTrue()
+        assertThat(track.textColor).isNull()
     }
 }
