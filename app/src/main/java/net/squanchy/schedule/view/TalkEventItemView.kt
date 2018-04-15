@@ -8,8 +8,11 @@ import kotlinx.android.synthetic.main.item_schedule_event_talk.view.*
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Place
+import net.squanchy.support.content.res.getColorFromAttribute
+import net.squanchy.support.graphics.toColorStateList
 import net.squanchy.support.lang.getOrThrow
 import org.joda.time.format.DateTimeFormat
+import java.util.Locale
 
 class TalkEventItemView @JvmOverloads constructor(
     context: Context,
@@ -30,15 +33,21 @@ class TalkEventItemView @JvmOverloads constructor(
             isVisible = showRoom
         }
 
-        if (event.experienceLevel.isDefined()) {
-            experience_level.setExperienceLevel(event.experienceLevel.getOrThrow())
-            experience_level.isVisible = true
-        } else {
-            experience_level.isVisible = false
+        when {
+            event.type == Event.Type.KEYNOTE -> {
+                experienceLevel.text = event.type.name.toLowerCase(Locale.getDefault())
+                experienceLevel.backgroundTintList = context.theme.getColorFromAttribute(R.attr.colorAccent).toColorStateList()
+                experienceLevel.isVisible = true
+            }
+            event.experienceLevel.isDefined() -> {
+                experienceLevel.setExperienceLevel(event.experienceLevel.getOrThrow())
+                experienceLevel.isVisible = true
+            }
+            else -> experienceLevel.isVisible = false
         }
 
-        speaker_container.visibility = if (event.speakers.isEmpty()) View.GONE else View.VISIBLE
-        speaker_container.updateWith(event.speakers, null)
+        speakersContainer.visibility = if (event.speakers.isEmpty()) View.GONE else View.VISIBLE
+        speakersContainer.updateWith(event.speakers, null)
 
         favoriteIcon.isVisible = if (showFavorite) event.favorite else false
     }

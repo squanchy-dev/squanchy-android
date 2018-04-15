@@ -1,16 +1,13 @@
 package net.squanchy.tweets.view
 
 import android.content.Context
-import android.content.res.Resources
-import android.support.annotation.AttrRes
-import android.support.annotation.ColorInt
 import android.text.SpannableStringBuilder
 import android.text.Spanned
-import android.util.TypedValue
 import net.squanchy.R
 import net.squanchy.service.firebase.model.twitter.FirestoreTwitterHashtag
 import net.squanchy.service.firebase.model.twitter.FirestoreTwitterMention
 import net.squanchy.service.firebase.model.twitter.FirestoreTwitterUrl
+import net.squanchy.support.content.res.getColorFromAttribute
 import net.squanchy.support.text.parseHtml
 import java.util.regex.Pattern
 
@@ -55,15 +52,8 @@ class TweetUrlSpanFactory(private val context: Context) {
         spanFactory.createFor("https://twitter.com/search?q=$text")
 
     private fun createFor(url: String): TweetUrlSpan {
-        val linkColor = getColorFromTheme(context.theme, R.attr.tweetLinkTextColor)
+        val linkColor = context.theme.getColorFromAttribute(R.attr.tweetLinkTextColor)
         return TweetUrlSpan(url, linkColor)
-    }
-
-    @ColorInt
-    private fun getColorFromTheme(theme: Resources.Theme, @AttrRes attributeId: Int): Int {
-        val typedValue = TypedValue()
-        theme.resolveAttribute(attributeId, typedValue, true)
-        return typedValue.data
     }
 
     private fun offsetStart(entity: FirestoreTwitterMention, startIndex: Int): FirestoreTwitterMention {

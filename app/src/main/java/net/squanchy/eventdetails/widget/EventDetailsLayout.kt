@@ -4,14 +4,12 @@ import android.content.Context
 import android.content.res.Resources
 import android.graphics.Color
 import android.support.annotation.AttrRes
-import android.support.annotation.ColorInt
 import android.support.constraint.ConstraintLayout
 import android.support.v4.content.ContextCompat
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.util.AttributeSet
-import android.util.TypedValue
 import android.view.View
 import android.widget.TextView
 import androidx.view.isVisible
@@ -21,6 +19,7 @@ import net.squanchy.R
 import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Place
+import net.squanchy.support.content.res.getColorFromAttribute
 import net.squanchy.schedule.domain.view.Track
 import net.squanchy.support.lang.getOrThrow
 import net.squanchy.support.text.parseHtml
@@ -110,6 +109,11 @@ class EventDetailsLayout @JvmOverloads constructor(
         val compoundDrawables = textView.compoundDrawablesRelative
         val endCompoundDrawable = compoundDrawables[2]
         endCompoundDrawable?.setTint(color)
+    }
+
+    private fun createColorSpan(targetView: View, @AttrRes attributeResId: Int): ForegroundColorSpan {
+        val color = targetView.context.theme.getColorFromAttribute(attributeResId)
+        return ForegroundColorSpan(color)
     }
 
     private fun updateTrack(trackOption: Option<Track>) {
