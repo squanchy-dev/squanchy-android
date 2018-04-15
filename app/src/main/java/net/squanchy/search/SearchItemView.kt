@@ -26,7 +26,7 @@ class SearchItemView @JvmOverloads constructor(
     }
 
     fun updateWith(speaker: Speaker, imageLoader: ImageLoader, listener: OnSearchResultClickListener) {
-        speakerName.text = speaker.name
+        speakerNames.text = speaker.name
         updateSpeakerPhotos(speaker, imageLoader)
         setOnClickListener { listener.onSpeakerClicked(speaker) }
     }

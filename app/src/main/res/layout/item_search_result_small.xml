@@ -16,7 +16,7 @@
     tools:src="@mipmap/ic_launcher" />
 
   <TextView
-    android:id="@+id/speakerName"
+    android:id="@+id/speakerNames"
     style="@style/Search.Caption"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
