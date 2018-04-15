@@ -1,5 +1,6 @@
 package net.squanchy.support.graphics
 
+import android.content.res.ColorStateList
 import android.support.annotation.ColorInt
 import android.support.annotation.FloatRange
 import android.support.v4.graphics.ColorUtils
@@ -62,3 +63,5 @@ private var HSLColor.lightness
     set(@FloatRange(from = MIN_LIGHTNESS.toDouble(), to = MAX_LIGHTNESS.toDouble()) value) {
         this[HSL_COMPONENT_LIGHTNESS] = value
     }
+
+internal fun Int.toColorStateList() = ColorStateList.valueOf(this)
