@@ -1,9 +1,9 @@
 package net.squanchy.eventdetails.widget
 
 import android.content.Context
-import android.content.res.Resources
 import android.graphics.Color
 import android.support.annotation.AttrRes
+import android.support.annotation.ColorInt
 import android.support.constraint.ConstraintLayout
 import android.support.v4.content.ContextCompat
 import android.text.SpannableStringBuilder
@@ -19,8 +19,8 @@ import net.squanchy.R
 import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Place
-import net.squanchy.support.content.res.getColorFromAttribute
 import net.squanchy.schedule.domain.view.Track
+import net.squanchy.support.content.res.getColorFromAttribute
 import net.squanchy.support.lang.getOrThrow
 import net.squanchy.support.text.parseHtml
 import org.joda.time.DateTimeZone
@@ -81,15 +81,8 @@ class EventDetailsLayout @JvmOverloads constructor(
     }
 
     private fun createColorSpan(targetView: View, @AttrRes attributeResId: Int): ForegroundColorSpan {
-        val color = getColorFromTheme(targetView.context.theme, attributeResId)
+        val color = targetView.context.theme.getColorFromAttribute(attributeResId)
         return ForegroundColorSpan(color)
-    }
-
-    @ColorInt
-    private fun getColorFromTheme(theme: Resources.Theme, @AttrRes attributeId: Int): Int {
-        val typedValue = TypedValue()
-        theme.resolveAttribute(attributeId, typedValue, true)
-        return typedValue.data
     }
 
     private fun updateLevel(level: Option<ExperienceLevel>) {
@@ -109,11 +102,6 @@ class EventDetailsLayout @JvmOverloads constructor(
         val compoundDrawables = textView.compoundDrawablesRelative
         val endCompoundDrawable = compoundDrawables[2]
         endCompoundDrawable?.setTint(color)
-    }
-
-    private fun createColorSpan(targetView: View, @AttrRes attributeResId: Int): ForegroundColorSpan {
-        val color = targetView.context.theme.getColorFromAttribute(attributeResId)
-        return ForegroundColorSpan(color)
     }
 
     private fun updateTrack(trackOption: Option<Track>) {
