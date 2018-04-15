@@ -39,7 +39,7 @@
         tools:background="?colorAccent" />
 
       <TextView
-        android:id="@+id/speakerName"
+        android:id="@+id/speakerNames"
         style="@style/EventDetails.Header.Speaker.Names"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
