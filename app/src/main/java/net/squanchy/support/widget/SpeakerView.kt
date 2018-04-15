@@ -38,7 +38,7 @@ abstract class SpeakerView @JvmOverloads constructor(
     }
 
     fun updateWith(speakers: List<Speaker>, listener: OnSpeakerClickListener?) {
-        speakerName.text = toCommaSeparatedNames(speakers)
+        speakerNames.text = toCommaSeparatedNames(speakers)
         updateSpeakerPhotos(speakers, listener, imageLoader)
     }
 

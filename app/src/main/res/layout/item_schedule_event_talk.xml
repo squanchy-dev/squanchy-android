@@ -15,7 +15,7 @@
     android:layout_height="wrap_content">
 
     <net.squanchy.schedule.view.ScheduleSpeakerView
-      android:id="@+id/speaker_container"
+      android:id="@+id/speakersContainer"
       android:layout_width="@dimen/match_constraint"
       android:layout_height="wrap_content"
       android:layout_marginBottom="@dimen/card_title_margin_top"
@@ -32,7 +32,7 @@
         tools:background="?colorAccent" />
 
       <TextView
-        android:id="@+id/speakerName"
+        android:id="@+id/speakerNames"
         style="@style/Schedule.Card.Speaker.Names"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
     </net.squanchy.schedule.view.ScheduleSpeakerView>
 
     <net.squanchy.eventdetails.widget.ExperienceLevelView
-      android:id="@+id/experience_level"
+      android:id="@+id/experienceLevel"
       style="@style/Schedule.Card.ExperienceLevel"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/card_title_margin_top"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/speaker_container"
+      app:layout_constraintTop_toBottomOf="@+id/speakersContainer"
       tools:text="Designing for an Android future" />
 
     <TextView

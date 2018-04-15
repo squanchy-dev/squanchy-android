@@ -38,7 +38,7 @@
         tools:src="?colorAccent" />
 
       <TextView
-        android:id="@+id/speakerName"
+        android:id="@+id/speakerNames"
         style="@style/SpeakerDetails.Header.Speaker.Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,8 +54,8 @@
         style="@style/SpeakerDetails.Header.Speaker.Company"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/match_constraint"
-        app:layout_constraintTop_toBottomOf="@+id/speakerName"
-        app:layout_constraintStart_toStartOf="@+id/speakerName"
+        app:layout_constraintTop_toBottomOf="@+id/speakerNames"
+        app:layout_constraintStart_toStartOf="@+id/speakerNames"
         tools:text="Novoda" />
 
     </net.squanchy.speaker.widget.SpeakerHeaderView>

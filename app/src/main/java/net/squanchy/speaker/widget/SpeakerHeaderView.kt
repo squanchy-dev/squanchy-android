@@ -31,7 +31,7 @@ class SpeakerHeaderView @JvmOverloads constructor(
     fun updateWith(speaker: Speaker) {
         updatePhoto(speaker.photoUrl, imageLoader)
 
-        speakerName.text = speaker.name
+        speakerNames.text = speaker.name
 
         val companyName = speaker.companyName
         if (companyName.isDefined()) {

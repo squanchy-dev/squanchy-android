@@ -22,9 +22,9 @@ fun FirestoreTrack.toTrack(checksum: Checksum) = Track(
     id = id,
     numericId = checksum.getChecksumOf("track_$id"),
     name = name,
-    accentColor = accentColor.option(),
-    textColor = textColor.option(),
-    iconUrl = iconUrl.option()
+    accentColor = accentColor,
+    textColor = textColor,
+    iconUrl = iconUrl
 )
 
 fun FirestoreSpeaker.toSpeaker(checksum: Checksum) = Speaker(

@@ -5,12 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
-import android.support.annotation.AttrRes
 import android.support.annotation.ColorInt
 import android.support.transition.Fade
 import android.support.transition.TransitionManager
 import android.support.v7.app.AppCompatActivity
-import android.util.TypedValue
 import android.view.View
 import androidx.view.isInvisible
 import androidx.view.isVisible
@@ -22,6 +20,7 @@ import net.squanchy.home.deeplink.HomeActivityDeepLinkCreator
 import net.squanchy.home.deeplink.HomeActivityIntentParser
 import net.squanchy.navigation.Navigator
 import net.squanchy.signin.SignInOrigin
+import net.squanchy.support.content.res.getColorFromAttribute
 import net.squanchy.support.widget.InterceptingBottomNavigationView
 
 class HomeActivity : AppCompatActivity() {
@@ -108,8 +107,8 @@ class HomeActivity : AppCompatActivity() {
         bottomNavigationView.selectItemAt(section.ordinal)
 
         val theme = getThemeFor(section)
-        bottomNavigationView.setBackgroundColor(getColorFromTheme(theme, android.support.design.R.attr.colorPrimary))
-        window.statusBarColor = getColorFromTheme(theme, android.R.attr.statusBarColor)
+        bottomNavigationView.setBackgroundColor(theme.getColorFromAttribute(android.support.design.R.attr.colorPrimary))
+        window.statusBarColor = theme.getColorFromAttribute(android.R.attr.statusBarColor)
 
         currentSection = section
     }
@@ -125,8 +124,8 @@ class HomeActivity : AppCompatActivity() {
         swapPageTo(section)
 
         val theme = getThemeFor(section)
-        animateStatusBarColorTo(getColorFromTheme(theme, android.R.attr.statusBarColor))
-        bottomNavigationView.colorProvider = { getColorFromTheme(theme, android.support.design.R.attr.colorPrimary) }
+        animateStatusBarColorTo(theme.getColorFromAttribute(android.R.attr.statusBarColor))
+        bottomNavigationView.colorProvider = { theme.getColorFromAttribute(android.support.design.R.attr.colorPrimary) }
 
         currentSection = section
 
@@ -145,13 +144,6 @@ class HomeActivity : AppCompatActivity() {
             setTo(theme)
             applyStyle(section.theme, true)
         }
-    }
-
-    @ColorInt
-    private fun getColorFromTheme(theme: Resources.Theme, @AttrRes attributeId: Int): Int {
-        val typedValue = TypedValue()
-        theme.resolveAttribute(attributeId, typedValue, true)
-        return typedValue.data
     }
 
     private fun animateStatusBarColorTo(@ColorInt color: Int) {

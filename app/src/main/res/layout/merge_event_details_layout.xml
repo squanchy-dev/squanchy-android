@@ -128,12 +128,47 @@
     tools:visibility="visible" />
 
   <TextView
+    android:id="@+id/trackLabel"
+    style="@style/EventDetails.Body.Label.Track"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/event_details_body_row_margin_top"
+    app:layout_constraintStart_toStartOf="@+id/labelsStartMargin"
+    app:layout_constraintTop_toBottomOf="@+id/levelBarrier" />
+
+  <TextView
+    android:id="@+id/trackValue"
+    style="@style/EventDetails.Body.Value.Level"
+    android:layout_width="@dimen/match_constraint"
+    android:layout_height="wrap_content"
+    app:layout_constraintStart_toEndOf="@+id/valuesBarrier"
+    app:layout_constraintEnd_toEndOf="@+id/whenValue"
+    app:layout_constraintBaseline_toBaselineOf="@+id/trackLabel"
+    tools:text="Tools" />
+
+  <android.support.constraint.Barrier
+    android:id="@+id/trackBarrier"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:barrierDirection="bottom"
+    app:barrierAllowsGoneWidgets="true"
+    app:constraint_referenced_ids="trackLabel,trackValue" />
+
+  <android.support.constraint.Group
+    android:id="@+id/trackGroup"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:visibility="gone"
+    app:constraint_referenced_ids="trackValue,trackLabel"
+    tools:visibility="visible" />
+
+  <TextView
     android:id="@+id/descriptionLabel"
     style="@style/EventDetails.Body.Label.About"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/event_details_body_row_margin_top"
-    app:layout_constraintTop_toBottomOf="@id/levelBarrier"
+    app:layout_constraintTop_toBottomOf="@id/trackBarrier"
     app:layout_constraintStart_toStartOf="@+id/labelsStartMargin"
     tools:visibility="visible" />
 

@@ -1,7 +1,7 @@
 package net.squanchy.eventdetails.widget
 
 import android.content.Context
-import android.content.res.Resources
+import android.graphics.Color
 import android.support.annotation.AttrRes
 import android.support.annotation.ColorInt
 import android.support.constraint.ConstraintLayout
@@ -10,8 +10,8 @@ import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.util.AttributeSet
-import android.util.TypedValue
 import android.view.View
+import android.widget.TextView
 import androidx.view.isVisible
 import arrow.core.Option
 import kotlinx.android.synthetic.main.merge_event_details_layout.view.*
@@ -19,6 +19,8 @@ import net.squanchy.R
 import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Place
+import net.squanchy.schedule.domain.view.Track
+import net.squanchy.support.content.res.getColorFromAttribute
 import net.squanchy.support.lang.getOrThrow
 import net.squanchy.support.text.parseHtml
 import org.joda.time.DateTimeZone
@@ -42,7 +44,8 @@ class EventDetailsLayout @JvmOverloads constructor(
     fun updateWith(event: Event) {
         updateWhen(event.startTime, event.timeZone)
         updateWhere(event.place)
-        updateLevel(event.experienceLevel)
+        updateLevel(event.experienceLevel, event.type)
+        updateTrack(event.track)
         updateDescription(event.description)
     }
 
@@ -77,34 +80,48 @@ class EventDetailsLayout @JvmOverloads constructor(
         return builder
     }
 
-    private fun updateLevel(level: Option<ExperienceLevel>) {
-        if (level.isDefined()) {
-            levelGroup.isVisible = true
-
-            val experienceLevel = level.getOrThrow()
-            levelValue.setText(experienceLevel.labelStringResId)
-            tintCompoundDrawableEnd(experienceLevel)
-        } else {
-            levelGroup.isVisible = false
-        }
-    }
-
-    private fun tintCompoundDrawableEnd(experienceLevel: ExperienceLevel) {
-        val compoundDrawables = levelValue.compoundDrawablesRelative
-        val endCompoundDrawable = compoundDrawables[2]
-        endCompoundDrawable?.setTint(ContextCompat.getColor(context, experienceLevel.colorResId))
-    }
-
     private fun createColorSpan(targetView: View, @AttrRes attributeResId: Int): ForegroundColorSpan {
-        val color = getColorFromTheme(targetView.context.theme, attributeResId)
+        val color = targetView.context.theme.getColorFromAttribute(attributeResId)
         return ForegroundColorSpan(color)
     }
 
-    @ColorInt
-    private fun getColorFromTheme(theme: Resources.Theme, @AttrRes attributeId: Int): Int {
-        val typedValue = TypedValue()
-        theme.resolveAttribute(attributeId, typedValue, true)
-        return typedValue.data
+    private fun updateLevel(level: Option<ExperienceLevel>, type: Event.Type) {
+        when {
+            type == Event.Type.KEYNOTE -> {
+                levelGroup.isVisible = false
+            }
+            level.isDefined() -> {
+                levelGroup.isVisible = true
+
+                val experienceLevel = level.getOrThrow()
+                levelValue.setText(experienceLevel.labelStringResId)
+
+                val experienceColor = ContextCompat.getColor(context, experienceLevel.colorResId)
+                levelValue.tintCompoundDrawableEnd(experienceColor)
+            }
+            else -> levelGroup.isVisible = false
+        }
+    }
+
+    private fun updateTrack(trackOption: Option<Track>) {
+        if (trackOption.isDefined()) {
+            trackGroup.isVisible = true
+
+            val track = trackOption.getOrThrow()
+            trackValue.text = track.name
+            track.accentColor?.let {
+                val trackColor = Color.parseColor(it)
+                trackValue.tintCompoundDrawableEnd(trackColor)
+            }
+        } else {
+            trackGroup.isVisible = false
+        }
+    }
+
+    private fun TextView.tintCompoundDrawableEnd(@ColorInt color: Int) {
+        val compoundDrawables = compoundDrawablesRelative
+        val endCompoundDrawable = compoundDrawables[2]
+        endCompoundDrawable?.setTint(color)
     }
 
     private fun updateDescription(description: Option<String>) {
