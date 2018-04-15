@@ -11,8 +11,6 @@ import android.view.ViewGroup
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Track
 import net.squanchy.schedule.tracksfilter.widget.FilterChipView
-import net.squanchy.support.lang.getOrThrow
-import net.squanchy.support.lang.or
 
 internal class TracksFilterAdapter(
     context: Context,
@@ -57,9 +55,11 @@ internal class TrackViewHolder(val item: FilterChipView) : RecyclerView.ViewHold
         item.apply {
             text = track.name
 
-            color = track.accentColor
-                .map { Color.parseColor(track.accentColor.getOrThrow()) }
-                .or(ContextCompat.getColor(context, R.color.chip_default_background_tint))
+            if (track.accentColor != null) {
+                color = Color.parseColor(track.accentColor)
+            } else {
+                color = ContextCompat.getColor(context, R.color.chip_default_background_tint)
+            }
 
             onCheckedChangeListener = { _, checked -> listener.invoke(track, checked) }
             isChecked = selected

@@ -82,9 +82,9 @@ fun aTrack(
     id: String = "a track id",
     numericId: Long = 0,
     name: String = "a track name",
-    accentColor: Option<String> = Option("#ABCDEF"),
-    textColor: Option<String> = Option("#FEDCBA"),
-    iconUrl: Option<String> = Option("www.squanchy.net")
+    accentColor: String? = "#ABCDEF",
+    textColor: String? = "#FEDCBA",
+    iconUrl: String? = "www.squanchy.net"
 ) = Track(
     id = id,
     numericId = numericId,
