@@ -44,7 +44,7 @@ class EventDetailsLayout @JvmOverloads constructor(
     fun updateWith(event: Event) {
         updateWhen(event.startTime, event.timeZone)
         updateWhere(event.place)
-        updateLevel(event.experienceLevel)
+        updateLevel(event.experienceLevel, event.type)
         updateTrack(event.track)
         updateDescription(event.description)
     }
@@ -85,23 +85,22 @@ class EventDetailsLayout @JvmOverloads constructor(
         return ForegroundColorSpan(color)
     }
 
-    private fun updateLevel(level: Option<ExperienceLevel>) {
-        if (level.isDefined()) {
-            levelGroup.isVisible = true
+    private fun updateLevel(level: Option<ExperienceLevel>, type: Event.Type) {
+        when {
+            type == Event.Type.KEYNOTE -> {
+                levelGroup.isVisible = false
+            }
+            level.isDefined() -> {
+                levelGroup.isVisible = true
 
-            val experienceLevel = level.getOrThrow()
-            levelValue.setText(experienceLevel.labelStringResId)
-            val experienceColor = ContextCompat.getColor(context, experienceLevel.colorResId)
-            tintCompoundDrawableEnd(levelValue, experienceColor)
-        } else {
-            levelGroup.isVisible = false
+                val experienceLevel = level.getOrThrow()
+                levelValue.setText(experienceLevel.labelStringResId)
+
+                val experienceColor = ContextCompat.getColor(context, experienceLevel.colorResId)
+                levelValue.tintCompoundDrawableEnd(experienceColor)
+            }
+            else -> levelGroup.isVisible = false
         }
-    }
-
-    private fun tintCompoundDrawableEnd(textView: TextView, @ColorInt color: Int) {
-        val compoundDrawables = textView.compoundDrawablesRelative
-        val endCompoundDrawable = compoundDrawables[2]
-        endCompoundDrawable?.setTint(color)
     }
 
     private fun updateTrack(trackOption: Option<Track>) {
@@ -112,11 +111,17 @@ class EventDetailsLayout @JvmOverloads constructor(
             trackValue.text = track.name
             track.accentColor?.let {
                 val trackColor = Color.parseColor(it)
-                tintCompoundDrawableEnd(trackValue, trackColor)
+                trackValue.tintCompoundDrawableEnd(trackColor)
             }
         } else {
             trackGroup.isVisible = false
         }
+    }
+
+    private fun TextView.tintCompoundDrawableEnd(@ColorInt color: Int) {
+        val compoundDrawables = compoundDrawablesRelative
+        val endCompoundDrawable = compoundDrawables[2]
+        endCompoundDrawable?.setTint(color)
     }
 
     private fun updateDescription(description: Option<String>) {
