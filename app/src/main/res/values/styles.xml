@@ -235,6 +235,10 @@
     <item name="android:text">@string/event_details_body_label_level_text</item>
   </style>
 
+  <style name="EventDetails.Body.Label.Track" parent="EventDetails.Body.Label">
+    <item name="android:text">@string/event_details_body_label_track_text</item>
+  </style>
+
   <style name="EventDetails.Body.Label.About" parent="EventDetails.Body.Label">
     <item name="android:gravity">start|center_vertical</item>
     <item name="android:text">@string/event_details_body_label_about_text</item>
@@ -783,5 +787,4 @@
   </style>
 
   <style name="TextAppearance.Squanchy.WifiConfigError.Button" parent="TextAppearance.Squanchy.Button.Colored" />
-
 </resources>

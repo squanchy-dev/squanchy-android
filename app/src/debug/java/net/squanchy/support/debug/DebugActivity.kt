@@ -108,9 +108,9 @@ class DebugActivity : AppCompatActivity() {
         "0",
         0,
         "UI",
-        Option(generateColor()),
-        Option(generateColor()),
-        Option.empty()
+        generateColor(),
+        generateColor(),
+        null
     )
 
     private fun generateColor(): String {
