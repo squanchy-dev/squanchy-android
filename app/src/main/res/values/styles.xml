@@ -271,7 +271,8 @@
     <item name="backgroundTint">@color/selector_color_primary</item>
     <item name="android:clickable">true</item>
     <item name="android:foreground">@drawable/white_circle_bound_touch_feedback</item>
-    <item name="android:src">@drawable/ic_favorite_empty</item>
+    <item name="android:src">@drawable/animselector_ic_favorite</item>
+    <item name="android:scaleType">center</item>
   </style>
 
   <style name="Tweets.EmptyView" parent="None">
