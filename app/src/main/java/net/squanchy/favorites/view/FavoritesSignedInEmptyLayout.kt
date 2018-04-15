@@ -2,7 +2,6 @@ package net.squanchy.favorites.view
 
 import android.content.Context
 import android.os.Build
-import android.support.annotation.DrawableRes
 import android.support.annotation.RequiresApi
 import android.support.constraint.ConstraintLayout
 import android.support.design.widget.Snackbar
@@ -30,7 +29,11 @@ class FavoritesSignedInEmptyLayout @JvmOverloads constructor(
         this.counter = counter
     }
 
-    override fun setButtonImage(@DrawableRes resId: Int) = favoriteFab.setImageResource(resId)
+    override fun setButtonState(favorited: Boolean) {
+        // Updates the FAB image state to trigger an AVD animation.
+        val stateSet = intArrayOf(android.R.attr.state_checked * if (favorited) 1 else -1)
+        favoriteFab.setImageState(stateSet, true)
+    }
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun showAchievement(message: String) {
@@ -38,13 +41,9 @@ class FavoritesSignedInEmptyLayout @JvmOverloads constructor(
     }
 
     private val favoriteButtonClickListener = View.OnClickListener {
-        presentButtonIcon(counter, this, ::favoritesFilledIconId, ::favoritesEmptyIconId)
+        presentButtonIcon(counter, this)
         presentAchievementMessage(counter, this, ::initialAchieventMessage, ::perseveranceAchievementMessage)
     }
-
-    private fun favoritesFilledIconId() = R.drawable.ic_favorite_filled
-
-    private fun favoritesEmptyIconId() = R.drawable.ic_favorite_empty
 
     private fun initialAchieventMessage() = resources.getString(R.string.favorites_achievement_fast_learner)
 
