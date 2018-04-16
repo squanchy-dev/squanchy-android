@@ -1,4 +1,2 @@
-• Tweak card paddings across the app 💅
-• Fix favourites icon in schedule 🐞
-• Fix "other" items in schedule having too much whitespace 🐞
-• Some tidying up under the hood 🕸️
+• Fix crash on Xiaomi with Android 5.0 🐞
+• Fix crash on pre-M devices 🐞
