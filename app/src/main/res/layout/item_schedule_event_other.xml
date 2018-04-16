@@ -2,6 +2,7 @@
 <!-- We do only want the padding on the start side -->
 <net.squanchy.schedule.view.OtherEventItemView
   xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
@@ -11,42 +12,45 @@
   tools:layout_margin="16dp"
   tools:ignore="RtlSymmetry">
 
-  <LinearLayout
+  <android.support.constraint.ConstraintLayout
+    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:layout_height="wrap_content">
 
-    <LinearLayout
-      android:layout_width="0dp"
+    <TextView
+      android:id="@+id/title"
+      style="@style/Schedule.Card.Title"
+      android:layout_width="@dimen/match_constraint"
       android:layout_height="wrap_content"
-      android:layout_weight="1"
-      android:layout_gravity="center_vertical"
-      android:orientation="vertical">
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="@+id/illustration"
+      app:layout_constraintEnd_toStartOf="@+id/illustration"
+      app:layout_constraintBottom_toTopOf="@+id/timestamp"
+      app:layout_constraintVertical_chainStyle="packed"
+      app:layout_goneMarginEnd="@dimen/card_padding_horizontal"
+      tools:text="Designing for an Android future" />
 
-      <TextView
-        android:id="@+id/title"
-        style="@style/Schedule.Card.Title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="Designing for an Android future" />
-
-      <TextView
-        android:id="@+id/timestamp"
-        style="@style/Schedule.Card.Timestamp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/card_timestamp_margin_top"
-        tools:text="12:00" />
-
-    </LinearLayout>
+    <TextView
+      android:id="@+id/timestamp"
+      style="@style/Schedule.Card.Timestamp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/card_timestamp_margin_top"
+      app:layout_constraintStart_toStartOf="@+id/title"
+      app:layout_constraintTop_toBottomOf="@+id/title"
+      app:layout_constraintBottom_toBottomOf="@+id/illustration"
+      tools:text="12:00" />
 
     <ImageView
       android:id="@+id/illustration"
       android:layout_width="@dimen/card_other_illustration_width"
       android:layout_height="@dimen/card_other_illustration_height"
       android:scaleType="centerInside"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
       tools:src="@drawable/lunch" />
 
-  </LinearLayout>
+  </android.support.constraint.ConstraintLayout>
 
 </net.squanchy.schedule.view.OtherEventItemView>
