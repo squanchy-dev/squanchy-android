@@ -87,7 +87,7 @@
       android:id="@+id/favoriteIcon"
       android:layout_width="@dimen/card_favourite_size"
       android:layout_height="@dimen/card_favourite_size"
-      android:src="@drawable/ic_favorite_filled"
+      android:src="@drawable/ic_favorite_settings"
       android:tint="?colorPrimary"
       android:visibility="gone"
       app:layout_constraintTop_toTopOf="@+id/timestamp"
