@@ -3,6 +3,7 @@ package net.squanchy.schedule.view
 import android.content.Context
 import android.support.annotation.DrawableRes
 import android.util.AttributeSet
+import androidx.view.isVisible
 import kotlinx.android.synthetic.main.item_schedule_event_other.view.*
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Event
@@ -19,7 +20,14 @@ class OtherEventItemView @JvmOverloads constructor(
 
         timestamp.text = startTimeAsFormattedString(event)
         title.text = event.title
-        illustration.setImageResource(illustrationFor(event.type))
+
+        if (event.type != Event.Type.OTHER) {
+            illustration.isVisible = true
+            illustration.setImageResource(illustrationFor(event.type))
+        } else {
+            illustration.isVisible = false
+            illustration.setImageDrawable(null)
+        }
     }
 
     private fun Event.Type.ensureSupported() {
@@ -47,12 +55,7 @@ class OtherEventItemView @JvmOverloads constructor(
         Event.Type.COFFEE_BREAK -> R.drawable.coffee_break
         Event.Type.LUNCH -> R.drawable.lunch
         Event.Type.REGISTRATION -> R.drawable.registration
-        Event.Type.OTHER -> NO_DRAWABLE
         Event.Type.SOCIAL -> R.drawable.social
         else -> throw IllegalArgumentException("Type not supported: ${type.name}")
-    }
-
-    companion object {
-        private const val NO_DRAWABLE = 0
     }
 }
