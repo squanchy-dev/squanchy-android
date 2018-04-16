@@ -198,7 +198,7 @@ class FilterChipView @JvmOverloads constructor(
         }
     }
 
-    override fun getBackgroundTintList(): ColorStateList {
+    override fun getBackgroundTintList(): ColorStateList? {
         return allowOnlyWhileInitializing("Can't obtain the background color of a FilterChipView, use the color property") {
             return@allowOnlyWhileInitializing super.getBackgroundTintList()
         }
