@@ -2,6 +2,7 @@ package net.squanchy.service.firebase
 
 import arrow.core.Option
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.firebase.FirebaseException
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
@@ -78,12 +79,20 @@ class FirebaseAuthService(private val auth: FirebaseAuth) : AuthService {
     }
 
     private fun currentFirebaseUser(): Observable<Option<FirebaseUser>> {
-        return Observable.create { e ->
-            val listener = { firebaseAuth: FirebaseAuth -> e.onNext(firebaseAuth.currentUser.option()) }
-
+        return Observable.create { emitter ->
+            val listener = { firebaseAuth: FirebaseAuth ->
+                try {
+                    if (!emitter.isDisposed) {
+                        emitter.onNext(firebaseAuth.currentUser.option())
+                    }
+                } catch (exception: FirebaseException) {
+                    if (!emitter.isDisposed) {
+                        emitter.onError(exception)
+                    }
+                }
+            }
             auth.addAuthStateListener(listener)
-
-            e.setCancellable { auth.removeAuthStateListener(listener) }
+            emitter.setCancellable { auth.removeAuthStateListener(listener) }
         }
     }
 
