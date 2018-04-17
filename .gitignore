@@ -54,3 +54,6 @@ local.properties
 # ...except for the debug signing configuration
 !/team-props/debugSigningConfig.properties
 !/team-props/signing/debug.keystore
+
+# Ignore Play Store publishing info
+/app/src/main/play/
