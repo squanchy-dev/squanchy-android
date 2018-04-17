@@ -6,9 +6,10 @@ import io.reactivex.schedulers.Schedulers
 import net.squanchy.search.algolia.model.AlgoliaSearchResponse
 import net.squanchy.search.algolia.model.AlgoliaSearchResult
 import net.squanchy.search.algolia.model.AlgoliaSearchResult.ErrorSearching
-import net.squanchy.search.algolia.model.AlgoliaSearchResult.QueryNotLongEnough
 import net.squanchy.search.algolia.model.AlgoliaSearchResult.Matches
+import net.squanchy.search.algolia.model.AlgoliaSearchResult.QueryNotLongEnough
 import timber.log.Timber
+import java.io.IOException
 
 class AlgoliaSearchEngine(
     private val eventIndex: SearchIndex,
@@ -32,7 +33,18 @@ class AlgoliaSearchEngine(
         }
     }
 
-    private fun SearchIndex.searchAsObservable(key: String): Observable<AlgoliaSearchResponse> = Observable.fromCallable { search(key) }
+    private fun SearchIndex.searchAsObservable(key: String): Observable<AlgoliaSearchResponse> = Observable.create { emitter ->
+        try {
+            val result = search(key)
+            if (result != null && !emitter.isDisposed) {
+                emitter.onNext(result)
+            }
+        } catch (exception: IOException) {
+            if (!emitter.isDisposed) {
+                emitter.onError(exception)
+            }
+        }
+    }
 
     private fun combineInPair(): BiFunction<AlgoliaSearchResponse, AlgoliaSearchResponse, Pair<AlgoliaSearchResponse, AlgoliaSearchResponse>> =
         BiFunction(::Pair)
