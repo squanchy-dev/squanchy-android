@@ -2,6 +2,7 @@ package net.squanchy.service.firebase.injection
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreSettings
 import dagger.Module
 import dagger.Provides
 import net.squanchy.injection.ApplicationLifecycle
@@ -16,8 +17,17 @@ class FirestoreModule {
     internal fun firebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
 
     @Provides
-    internal fun firebaseFirestore(): FirebaseFirestore {
-        return FirebaseFirestore.getInstance()
+    internal fun firebaseFirestoreSettings(): FirebaseFirestoreSettings {
+        return FirebaseFirestoreSettings.Builder()
+            .setPersistenceEnabled(true)
+            .build()
+    }
+
+    @Provides
+    internal fun firebaseFirestore(settings: FirebaseFirestoreSettings): FirebaseFirestore {
+        val firebaseFirestore = FirebaseFirestore.getInstance()
+        firebaseFirestore.firestoreSettings = settings
+        return firebaseFirestore
     }
 
     @Provides
