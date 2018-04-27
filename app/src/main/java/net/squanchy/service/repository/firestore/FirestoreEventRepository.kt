@@ -3,7 +3,6 @@ package net.squanchy.service.repository.firestore
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.functions.Function3
-import io.reactivex.schedulers.Schedulers
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.service.firebase.FirestoreDbService
 import net.squanchy.service.firebase.model.conferenceinfo.FirestoreVenue
@@ -29,7 +28,7 @@ class FirestoreEventRepository(
             timeZoneObservable,
             favoritesObservable,
             Function3(::combineIntoEvent)
-        ).subscribeOn(Schedulers.io())
+        )
     }
 
     private fun FirestoreVenue.extractTimeZone() = DateTimeZone.forID(timezone)
