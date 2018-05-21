@@ -1,4 +1,6 @@
 include ':app', ':renderthread',
     ':speaker:speaker-domain',
     ':schedule:schedule-domain',
-    ':schedule:schedule-service'
+    ':schedule:schedule-service',
+    ':schedule:schedule-service-firestore',
+    ':firebase:firestore-db-service'

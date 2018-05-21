@@ -130,6 +130,11 @@ project.afterEvaluate {
 
 dependencies {
     implementation project(':renderthread')
+    implementation project(':speaker:speaker-domain')
+    implementation project(':schedule:schedule-service')
+    implementation project(':schedule:schedule-service')
+    implementation project(':firebase:firestore-db-service')
+
 
     implementation libraries.app.algolia
     implementation libraries.app.androidKtx
@@ -167,7 +172,6 @@ dependencies {
     implementation libraries.app.supportDesign
     implementation libraries.app.timber
     implementation libraries.app.viewPagerAdapter
-    implementation project(':schedule:schedule-service')
 
     kapt libraries.app.daggerCompiler
     kapt libraries.app.glideCompiler
