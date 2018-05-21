@@ -20,11 +20,6 @@ import net.squanchy.support.checksum.Checksum
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDate
 
-interface ScheduleService {
-
-    fun schedule(): Observable<Schedule>
-}
-
 class FirestoreScheduleService(
     private val authService: AuthService,
     private val dbService: FirestoreDbService,

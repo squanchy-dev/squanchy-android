@@ -1,4 +1,4 @@
-package net.squanchy.schedule.domain.view
+package com.squanchy.schedule.domain.view
 
 data class Track(
     val id: String,

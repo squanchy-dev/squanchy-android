@@ -167,6 +167,7 @@ dependencies {
     implementation libraries.app.supportDesign
     implementation libraries.app.timber
     implementation libraries.app.viewPagerAdapter
+    implementation project(':schedule:schedule-service')
 
     kapt libraries.app.daggerCompiler
     kapt libraries.app.glideCompiler

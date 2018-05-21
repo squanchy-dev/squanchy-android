@@ -1,0 +1,34 @@
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+
+    apply from: '../../dependencies.gradle'
+
+    dependencies {
+        classpath buildScript.gradleStaticAnalysisPlugin
+        classpath gradlePlugins.kotlin
+    }
+}
+
+
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+
+
+def teamPropsFile(propsFile) {
+    def teamPropsDir = file('team-props')
+    return new File(teamPropsDir, propsFile)
+}
+
+
+
+dependencies {
+    api libraries.app.joda
+    api libraries.app.arrowCore
+    api project(':speaker:speaker-domain')
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"

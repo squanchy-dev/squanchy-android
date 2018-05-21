@@ -1,4 +1,4 @@
-package net.squanchy.schedule.domain.view
+package com.squanchy.schedule.domain.view
 
 import org.joda.time.LocalDate
 

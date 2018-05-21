@@ -1,1 +1,4 @@
-include ':app', ':renderthread'
+include ':app', ':renderthread',
+    ':speaker:speaker-domain',
+    ':schedule:schedule-domain',
+    ':schedule:schedule-service'
