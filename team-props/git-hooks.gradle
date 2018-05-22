@@ -1,6 +1,88 @@
+static def getOSName() {
+    return System.getProperty('os.name').toLowerCase(Locale.ROOT)
+}
+
+static def isLinux() {
+    def osName = getOSName()
+    return osName.contains('linux')
+} 
+
+static def isMacOS() {
+    def osName = getOSName()
+    return osName.contains('mac os') || osName.contains('macos')
+}
+
 static def isLinuxOrMacOs() {
-    def osName = System.getProperty('os.name').toLowerCase(Locale.ROOT)
-    return osName.contains('linux') || osName.contains('mac os') || osName.contains('macos')
+    return isLinux() || isMacOS()
+}
+
+static def md5Command() {
+    if (isLinux()) {
+        return "md5sum"
+    }
+
+    if (isMacOS()) {
+        return "md5"
+    }
+
+    return null
+}
+
+static def processMD5Sum(String md5Sum) {
+    if (isLinux()) {
+        return md5Sum.split(' ')[0]
+    }
+
+    if (isMacOS()) {
+        return md5Sum.split('=')[1].replaceAll(' ', '')
+    }
+
+    return null
+}
+
+def calculateProjectBundledHookSHAsum = { ->
+    def md5Command = md5Command()
+
+    if (!md5Command) {
+        throw new GradleException('Could not find an md5 tool')
+    }
+
+    def projectBundledSHASum = new ByteArrayOutputStream()
+    exec {
+        commandLine md5Command, "${rootDir}/team-props/git-hooks/pre-commit.sh"
+        standardOutput = projectBundledSHASum
+    }
+    return processMD5Sum(projectBundledSHASum.toString())
+}
+
+def calculateInstalledHookSHAsum = { ->
+    def md5Command = md5Command()
+
+    if (!md5Command) {
+        throw new GradleException('Could not find an md5 tool')
+    }
+
+    def installedSHASum = new ByteArrayOutputStream()
+    exec {
+        commandLine md5Command, "${rootDir}/.git/hooks/pre-commit"
+        standardOutput = installedSHASum
+    }
+    return processMD5Sum(installedSHASum.toString())
+}
+
+def checkHooksFiles = { ->
+    def preCommitNotInstalled = !file("${rootDir}/.git/hooks/pre-commit").exists()
+
+    // When hook is not installed we want to bypass the checksum flow
+    if (preCommitNotInstalled) {
+        return true
+    }
+
+    def projectBundledSHAsum = calculateProjectBundledHookSHAsum()
+    def installedSHASum = calculateInstalledHookSHAsum()
+    def shouldCopyHooks = projectBundledSHAsum != installedSHASum
+
+    return shouldCopyHooks
 }
 
 task copyGitHooks(type: Copy) {
@@ -10,7 +92,7 @@ task copyGitHooks(type: Copy) {
         rename '(.*).sh', '$1'
     }
     into "${rootDir}/.git/hooks"
-    onlyIf { isLinuxOrMacOs() }
+    onlyIf { checkHooksFiles() }
 }
 
 task installGitHooks(type: Exec) {
