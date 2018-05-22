@@ -2,7 +2,6 @@ package net.squanchy.schedule
 
 import arrow.core.Option
 import io.reactivex.Observable
-import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import net.squanchy.A_DATE
 import net.squanchy.A_TIMEZONE
@@ -73,7 +72,7 @@ class FirestoreScheduleServiceTest {
         `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
         `when`(checksum.getChecksumOf("event_${aFirestoreEvent().id}")).thenReturn(1234)
 
-        scheduleService.schedule(observeScheduler = Schedulers.trampoline())
+        scheduleService.schedule()
             .test()
             .assertValue(
                 aSchedule(
@@ -125,7 +124,7 @@ class FirestoreScheduleServiceTest {
         `when`(checksum.getChecksumOf("event_5")).thenReturn(5)
         `when`(checksum.getChecksumOf("event_6")).thenReturn(6)
 
-        scheduleService.schedule(observeScheduler = Schedulers.trampoline())
+        scheduleService.schedule()
             .test()
             .assertValue(
                 aSchedule(
@@ -200,7 +199,7 @@ class FirestoreScheduleServiceTest {
         val favorites = listOf(aFirestoreFavorite(id = "2"))
         `when`(dbService.favorites(UID)).thenReturn(Observable.just(favorites))
 
-        scheduleService.schedule(observeScheduler = Schedulers.trampoline())
+        scheduleService.schedule()
             .test()
             .assertValue(
                 aSchedule(
@@ -229,7 +228,7 @@ class FirestoreScheduleServiceTest {
         `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
         `when`(checksum.getChecksumOf("event_${aFirestoreEvent().id}")).thenReturn(1)
 
-        scheduleService.schedule(observeScheduler = Schedulers.trampoline())
+        scheduleService.schedule()
             .test()
             .assertValue(
                 aSchedule(
@@ -258,7 +257,7 @@ class FirestoreScheduleServiceTest {
         `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
         `when`(checksum.getChecksumOf("event_${aFirestoreEvent().id}")).thenReturn(1)
 
-        scheduleService.schedule(observeScheduler = Schedulers.trampoline())
+        scheduleService.schedule()
             .test()
             .assertValue(
                 aSchedule(
@@ -285,7 +284,7 @@ class FirestoreScheduleServiceTest {
         val allowedTracks = setOf(aTrack(id = "A"), aTrack("C"))
         `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
 
-        scheduleService.schedule(observeScheduler = Schedulers.trampoline())
+        scheduleService.schedule()
             .test()
             .assertValue(
                 aSchedule(
@@ -309,7 +308,7 @@ class FirestoreScheduleServiceTest {
         `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
         `when`(checksum.getChecksumOf("event_${aFirestoreEvent().id}")).thenReturn(1)
 
-        scheduleService.schedule(observeScheduler = Schedulers.trampoline())
+        scheduleService.schedule()
             .test()
             .assertValue(
                 aSchedule(
@@ -339,7 +338,7 @@ class FirestoreScheduleServiceTest {
         `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
         `when`(checksum.getChecksumOf("event_${aFirestoreEvent().id}")).thenReturn(1)
 
-        scheduleService.schedule(observeScheduler = Schedulers.trampoline())
+        scheduleService.schedule()
             .test()
             .assertValue(
                 aSchedule(

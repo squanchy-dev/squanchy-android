@@ -1,13 +1,20 @@
 package net.squanchy.service.firebase
 
+import android.os.Handler
+import android.os.HandlerThread
+import android.os.Looper
+import android.os.Process.THREAD_PRIORITY_BACKGROUND
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
+import io.reactivex.android.schedulers.AndroidSchedulers
 import net.squanchy.service.firebase.model.conferenceinfo.FirestoreConferenceInfo
 import net.squanchy.service.firebase.model.conferenceinfo.FirestoreVenue
 import net.squanchy.service.firebase.model.schedule.FirestoreEvent
@@ -17,29 +24,25 @@ import net.squanchy.service.firebase.model.schedule.FirestoreSpeaker
 import net.squanchy.service.firebase.model.schedule.FirestoreTrack
 import net.squanchy.service.firebase.model.twitter.FirestoreTweet
 import org.joda.time.DateTimeZone
+import java.util.concurrent.Executor
+import java.util.concurrent.Semaphore
 
 class FirestoreDbService(private val db: FirebaseFirestore) {
 
-    fun scheduleView(): Observable<List<FirestoreSchedulePage>> {
-        return Observable.create { subscriber ->
-            val registration = view(VIEW_SCHEDULE)
-                .collection(COLLECTION_SCHEDULE_PAGES)
-                .orderBy(DAY_DATE_SORTING)
-                .addSnapshotListener { snapshot, exception -> subscriber.emitSnapshotResult(snapshot, exception) }
+    private val looper: Looper by lazy { backgroundLooper() }
 
-            subscriber.setCancellable { registration.remove() }
-        }
+    fun scheduleView(): Observable<List<FirestoreSchedulePage>> {
+        return view(VIEW_SCHEDULE)
+            .collection(COLLECTION_SCHEDULE_PAGES)
+            .orderBy(DAY_DATE_SORTING)
+            .observe()
     }
 
     fun twitterView(): Observable<List<FirestoreTweet>> {
-        return Observable.create { subscriber ->
-            val registration = db.collection(SOCIAL_STREAM)
-                .document(VIEW_TWITTER)
-                .collection(COLLECTION_TWEETS)
-                .addSnapshotListener { snapshot, exception -> subscriber.emitSnapshotResult(snapshot, exception) }
-
-            subscriber.setCancellable { registration.remove() }
-        }
+        return db.collection(SOCIAL_STREAM)
+            .document(VIEW_TWITTER)
+            .collection(COLLECTION_TWEETS)
+            .observe()
     }
 
     fun timezone(): Observable<DateTimeZone> = venueInfo()
@@ -47,88 +50,56 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
         .map { DateTimeZone.forID(it) }
 
     fun venueInfo(): Observable<FirestoreVenue> {
-        return Observable.create { subscriber ->
-            val registration = db.collection(CONFERENCE_INFO)
-                .document(VENUE)
-                .addSnapshotListener { snapshot, exception -> subscriber.emitSnapshotResult(snapshot, exception) }
-
-            subscriber.setCancellable { registration.remove() }
-        }
+        return db.collection(CONFERENCE_INFO)
+            .document(VENUE)
+            .observe()
     }
 
     fun conferenceInfo(): Observable<FirestoreConferenceInfo> {
-        return Observable.create { subscriber ->
-            val registration = db.collection(CONFERENCE_INFO)
-                .document(CONFERENCE)
-                .addSnapshotListener { snapshot, exception -> subscriber.emitSnapshotResult(snapshot, exception) }
-
-            subscriber.setCancellable { registration.remove() }
-        }
+        return db.collection(CONFERENCE_INFO)
+            .document(CONFERENCE)
+            .observe()
     }
 
     fun speakers(): Observable<List<FirestoreSpeaker>> {
-        return Observable.create { subscriber ->
-            val registration = view(VIEW_SPEAKERS)
-                .collection(COLLECTION_SPEAKER_PAGES)
-                .addSnapshotListener { snapshot, exception -> subscriber.emitSnapshotResult(snapshot, exception) }
-
-            subscriber.setCancellable { registration.remove() }
-        }
+        return view(VIEW_SPEAKERS)
+            .collection(COLLECTION_SPEAKER_PAGES)
+            .observe()
     }
 
     fun speaker(speakerId: String): Observable<FirestoreSpeaker> {
-        return Observable.create { subscriber ->
-            val registration = view(VIEW_SPEAKERS)
-                .collection(COLLECTION_SPEAKER_PAGES)
-                .document(speakerId)
-                .addSnapshotListener { snapshot, exception -> subscriber.emitSnapshotResult(snapshot, exception) }
-
-            subscriber.setCancellable { registration.remove() }
-        }
+        return view(VIEW_SPEAKERS)
+            .collection(COLLECTION_SPEAKER_PAGES)
+            .document(speakerId)
+            .observe()
     }
 
     fun events(): Observable<List<FirestoreEvent>> {
-        return Observable.create { subscriber ->
-            val registration = view(VIEW_EVENT_DETAILS)
-                .collection(COLLECTION_EVENTS)
-                .addSnapshotListener { snapshot, exception -> subscriber.emitSnapshotResult(snapshot, exception) }
-
-            subscriber.setCancellable { registration.remove() }
-        }
+        return view(VIEW_EVENT_DETAILS)
+            .collection(COLLECTION_EVENTS)
+            .observe()
     }
 
     fun event(eventId: String): Observable<FirestoreEvent> {
-        return Observable.create { subscriber ->
-            val registration = view(VIEW_EVENT_DETAILS)
-                .collection(COLLECTION_EVENTS)
-                .document(eventId)
-                .addSnapshotListener { snapshot, exception -> subscriber.emitSnapshotResult(snapshot, exception) }
-
-            subscriber.setCancellable { registration.remove() }
-        }
+        return view(VIEW_EVENT_DETAILS)
+            .collection(COLLECTION_EVENTS)
+            .document(eventId)
+            .observe()
     }
 
     fun tracks(): Observable<List<FirestoreTrack>> {
-        return Observable.create { subscriber ->
-            val registration = view(VIEW_TRACKS)
-                .collection(COLLECTION_TRACKS)
-                .addSnapshotListener { snapshot, exception -> subscriber.emitSnapshotResult(snapshot, exception) }
-
-            subscriber.setCancellable { registration.remove() }
-        }
+        return view(VIEW_TRACKS)
+            .collection(COLLECTION_TRACKS)
+            .observe()
     }
 
     private fun view(viewName: String) = db.collection(VIEWS).document(viewName)
 
     fun favorites(userId: String): Observable<List<FirestoreFavorite>> {
-        return Observable.create { subscriber ->
-            val registration = db.collection(USER_DATA)
-                .document(userId)
-                .collection(COLLECTION_FAVORITES)
-                .addSnapshotListener { snapshot, exception -> subscriber.emitSnapshotResult(snapshot, exception) }
-
-            subscriber.setCancellable(registration::remove)
-        }
+        return db.collection(USER_DATA)
+            .document(userId)
+            .collection(COLLECTION_FAVORITES)
+            .observe()
     }
 
     fun addFavorite(eventId: String, userId: String): Completable =
@@ -186,6 +157,54 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
 
         private const val DAY_DATE_SORTING = "day.date"
     }
+
+    private inline fun <reified T> Query.observe(): Observable<List<T>> {
+        return Observable.create<List<T>> { subscriber ->
+            val registration = addSnapshotListener(
+                HandlerExecutor(Handler()),
+                EventListener<QuerySnapshot> { snapshot, exception ->
+                    subscriber.emitSnapshotResult(
+                        snapshot,
+                        exception
+                    )
+                }
+            )
+            subscriber.setCancellable { registration.remove() }
+        }.subscribeOn(AndroidSchedulers.from(looper))
+    }
+
+    private inline fun <reified T> DocumentReference.observe(): Observable<T> {
+        return Observable.create<T> { subscriber ->
+            val registration = addSnapshotListener(
+                HandlerExecutor(Handler()),
+                EventListener<DocumentSnapshot> { snapshot, exception ->
+                    subscriber.emitSnapshotResult(
+                        snapshot,
+                        exception
+                    )
+                }
+            )
+            subscriber.setCancellable { registration.remove() }
+        }.subscribeOn(AndroidSchedulers.from(looper))
+    }
+}
+
+private class HandlerExecutor(private val handler: Handler) : Executor {
+    override fun execute(command: Runnable) {
+        handler.post(command)
+    }
+}
+
+fun backgroundLooper(): Looper {
+    val semaphore = Semaphore(0)
+    val handlerThread = object : HandlerThread("Firestore-Looper", THREAD_PRIORITY_BACKGROUND) {
+        override fun onLooperPrepared() {
+            semaphore.release()
+        }
+    }
+    handlerThread.start()
+    semaphore.acquireUninterruptibly()
+    return handlerThread.looper
 }
 
 private inline fun <reified T> ObservableEmitter<List<T>>.emitSnapshotResult(snapshot: QuerySnapshot?, exception: Exception?) {

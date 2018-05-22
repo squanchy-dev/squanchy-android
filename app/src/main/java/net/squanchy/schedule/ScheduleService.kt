@@ -1,10 +1,8 @@
 package net.squanchy.schedule
 
 import io.reactivex.Observable
-import io.reactivex.Scheduler
 import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Function3
-import io.reactivex.schedulers.Schedulers
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Schedule
 import net.squanchy.schedule.domain.view.SchedulePage
@@ -32,11 +30,8 @@ class FirestoreScheduleService(
     private val checksum: Checksum
 ) : ScheduleService {
 
-    override fun schedule(): Observable<Schedule> = schedule(Schedulers.io())
-
-    fun schedule(observeScheduler: Scheduler): Observable<Schedule> {
+    override fun schedule(): Observable<Schedule> {
         val filteredDbSchedulePages = dbService.scheduleView()
-            .observeOn(observeScheduler)
             .filterByTracks(tracksFilter.selectedTracks)
 
         val domainSchedulePages = Observable.combineLatest(
