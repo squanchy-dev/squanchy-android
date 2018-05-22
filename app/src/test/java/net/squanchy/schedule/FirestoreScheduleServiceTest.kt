@@ -12,7 +12,6 @@ import net.squanchy.schedule.domain.view.aSchedule
 import net.squanchy.schedule.domain.view.aSchedulePage
 import net.squanchy.schedule.domain.view.aTrack
 import net.squanchy.schedule.domain.view.anEvent
-import net.squanchy.schedule.tracksfilter.TracksFilter
 import net.squanchy.service.firebase.FirestoreDbService
 import net.squanchy.service.firebase.aFirestoreDay
 import net.squanchy.service.firebase.aFirestoreEvent

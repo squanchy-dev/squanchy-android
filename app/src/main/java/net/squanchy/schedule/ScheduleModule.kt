@@ -2,7 +2,6 @@ package net.squanchy.schedule
 
 import dagger.Module
 import dagger.Provides
-import net.squanchy.schedule.tracksfilter.TracksFilter
 import net.squanchy.service.firebase.FirestoreDbService
 import net.squanchy.service.repository.AuthService
 import net.squanchy.support.checksum.ChecksumModule

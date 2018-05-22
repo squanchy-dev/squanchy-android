@@ -1,20 +1,20 @@
-package net.squanchy.schedule
+package net.squanchy.schedule.firestore
 
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Function3
 import io.reactivex.schedulers.Schedulers
+import net.squanchy.schedule.ScheduleService
+import net.squanchy.schedule.TracksFilter
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Schedule
 import net.squanchy.schedule.domain.view.SchedulePage
 import net.squanchy.schedule.domain.view.Track
-import net.squanchy.schedule.tracksfilter.TracksFilter
 import net.squanchy.service.firebase.FirestoreDbService
 import net.squanchy.service.firebase.model.schedule.FirestoreEvent
 import net.squanchy.service.firebase.model.schedule.FirestoreFavorite
 import net.squanchy.service.firebase.model.schedule.FirestoreSchedulePage
-import net.squanchy.service.firebase.toEvent
 import net.squanchy.service.repository.AuthService
 import net.squanchy.support.checksum.Checksum
 import org.joda.time.DateTimeZone

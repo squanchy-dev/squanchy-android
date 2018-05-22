@@ -1,13 +1,12 @@
 package net.squanchy.service.repository
 
 import arrow.core.Option
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import io.reactivex.Completable
 import io.reactivex.Observable
 
 interface AuthService {
 
-    fun signInWithGoogle(account: GoogleSignInAccount): Completable
+    fun signInWithGoogle(accountIdToken: String): Completable
 
     fun <T> ifUserSignedInThenObservableFrom(observable: (String) -> Observable<T>): Observable<T>
 

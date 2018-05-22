@@ -4,7 +4,7 @@ import io.reactivex.Observable
 import io.reactivex.observers.TestObserver
 import net.squanchy.schedule.domain.view.Track
 import net.squanchy.schedule.domain.view.aTrack
-import net.squanchy.schedule.tracksfilter.InMemoryTracksFilter
+import net.squanchy.schedule.InMemoryTracksFilter
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito

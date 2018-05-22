@@ -134,6 +134,9 @@ dependencies {
     implementation project(':schedule:schedule-service')
     implementation project(':schedule:schedule-service')
     implementation project(':firebase:firestore-db-service')
+    implementation project(':auth:auth-service')
+    implementation project(':support:checksum')
+    implementation project(':support:option')
 
 
     implementation libraries.app.algolia

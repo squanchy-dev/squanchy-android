@@ -1,7 +1,6 @@
 package net.squanchy.service.firebase
 
 import arrow.core.Option
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
@@ -18,11 +17,11 @@ import net.squanchy.support.lang.option
 
 class FirebaseAuthService(private val auth: FirebaseAuth) : AuthService {
 
-    override fun signInWithGoogle(account: GoogleSignInAccount): Completable {
+    override fun signInWithGoogle(accountIdToken: String): Completable {
         return currentFirebaseUser()
             .firstOrError()
             .flatMapCompletable {
-                val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+                val credential = GoogleAuthProvider.getCredential(accountIdToken, null)
                 return@flatMapCompletable if (it.isDefined()) {
                     linkAccountWithGoogleCredential(it.getOrThrow(), credential)
                 } else {

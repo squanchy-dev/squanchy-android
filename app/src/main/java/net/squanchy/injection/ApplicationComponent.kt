@@ -7,7 +7,7 @@ import net.squanchy.analytics.AnalyticsModule
 import net.squanchy.remoteconfig.FeatureFlags
 import net.squanchy.remoteconfig.RemoteConfig
 import net.squanchy.remoteconfig.RemoteConfigModule
-import net.squanchy.schedule.tracksfilter.TracksFilter
+import net.squanchy.schedule.TracksFilter
 import net.squanchy.schedule.tracksfilter.TracksFilterModule
 import net.squanchy.search.algolia.AlgoliaModule
 import net.squanchy.search.algolia.AlgoliaSearchEngine

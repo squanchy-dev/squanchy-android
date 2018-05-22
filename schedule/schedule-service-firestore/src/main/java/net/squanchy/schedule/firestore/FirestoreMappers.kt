@@ -1,10 +1,10 @@
-package net.squanchy.service.firebase
+package net.squanchy.schedule.firestore
 
-import net.squanchy.eventdetails.domain.view.ExperienceLevel
+
 import net.squanchy.schedule.domain.view.Event
+import net.squanchy.schedule.domain.view.ExperienceLevel
 import net.squanchy.schedule.domain.view.Place
 import net.squanchy.schedule.domain.view.Track
-import net.squanchy.service.firebase.model.conferenceinfo.FirestoreVenue
 import net.squanchy.service.firebase.model.schedule.FirestoreEvent
 import net.squanchy.service.firebase.model.schedule.FirestorePlace
 import net.squanchy.service.firebase.model.schedule.FirestoreSpeaker
@@ -12,7 +12,6 @@ import net.squanchy.service.firebase.model.schedule.FirestoreTrack
 import net.squanchy.speaker.domain.view.Speaker
 import net.squanchy.support.checksum.Checksum
 import net.squanchy.support.lang.option
-import net.squanchy.venue.domain.view.Venue
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDateTime
 
@@ -39,15 +38,6 @@ fun FirestoreSpeaker.toSpeaker(checksum: Checksum) = Speaker(
     twitterUsername = twitterUsername.option()
 )
 
-fun FirestoreVenue.toVenue() = Venue(
-    name = name,
-    address = address,
-    latitude = latLon.latitude,
-    longitude = latLon.longitude,
-    description = description,
-    mapUrl = mapUrl,
-    timeZone = DateTimeZone.forID(timezone)
-)
 
 fun FirestoreEvent.toEvent(checksum: Checksum, timeZone: DateTimeZone, isFavorite: Boolean = false) = Event(
     id = id,

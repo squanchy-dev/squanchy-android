@@ -23,11 +23,11 @@ def teamPropsFile(propsFile) {
 }
 
 
-
 dependencies {
+    api project(':speaker:speaker-domain')
+
     api libraries.app.joda
     api libraries.app.arrowCore
-    api project(':speaker:speaker-domain')
 }
 
 sourceCompatibility = "1.7"

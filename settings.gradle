@@ -1,4 +1,7 @@
 include ':app', ':renderthread',
+    ':support:option',
+    ':support:checksum',
+    ':auth:auth-service',
     ':speaker:speaker-domain',
     ':schedule:schedule-domain',
     ':schedule:schedule-service',

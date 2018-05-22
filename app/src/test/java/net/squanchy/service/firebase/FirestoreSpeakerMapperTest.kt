@@ -2,7 +2,6 @@ package net.squanchy.service.firebase
 
 import com.google.common.truth.Truth.assertThat
 import net.squanchy.support.checksum.Checksum
-import net.squanchy.support.lang.getOrThrow
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

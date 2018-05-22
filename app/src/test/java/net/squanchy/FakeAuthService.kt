@@ -1,7 +1,6 @@
 package net.squanchy
 
 import arrow.core.Option
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import io.reactivex.Completable
 import io.reactivex.Observable
 import net.squanchy.service.repository.AuthService
@@ -11,7 +10,7 @@ class FakeAuthService(
     private val uid: String = "uid"
 ) : AuthService {
 
-    override fun signInWithGoogle(account: GoogleSignInAccount): Completable {
+    override fun signInWithGoogle(accountIdToken: String): Completable {
         TODO("not implemented")
     }
 
