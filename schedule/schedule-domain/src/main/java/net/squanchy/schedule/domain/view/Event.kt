@@ -1,7 +1,6 @@
 package net.squanchy.schedule.domain.view
 
 import arrow.core.Option
-import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.speaker.domain.view.Speaker
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDateTime
