@@ -1,6 +1,5 @@
 package net.squanchy.schedule.firestore
 
-
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.ExperienceLevel
 import net.squanchy.schedule.domain.view.Place
@@ -37,7 +36,6 @@ fun FirestoreSpeaker.toSpeaker(checksum: Checksum) = Speaker(
     photoUrl = photoUrl.option(),
     twitterUsername = twitterUsername.option()
 )
-
 
 fun FirestoreEvent.toEvent(checksum: Checksum, timeZone: DateTimeZone, isFavorite: Boolean = false) = Event(
     id = id,

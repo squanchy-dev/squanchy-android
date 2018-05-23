@@ -3,7 +3,6 @@ package net.squanchy.schedule.domain.view
 import arrow.core.Option
 import java.util.Locale
 
-
 enum class ExperienceLevel(
     private val rawLevel: String
 ) {
