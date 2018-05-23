@@ -8,6 +8,7 @@ import net.squanchy.remoteconfig.FeatureFlags
 import net.squanchy.remoteconfig.RemoteConfig
 import net.squanchy.remoteconfig.RemoteConfigModule
 import net.squanchy.schedule.TracksFilter
+import net.squanchy.schedule.TracksRepository
 import net.squanchy.schedule.tracksfilter.TracksFilterModule
 import net.squanchy.search.algolia.AlgoliaModule
 import net.squanchy.search.algolia.AlgoliaSearchEngine
@@ -16,7 +17,6 @@ import net.squanchy.service.firebase.injection.FirestoreModule
 import net.squanchy.service.repository.AuthService
 import net.squanchy.service.repository.EventRepository
 import net.squanchy.service.repository.SpeakerRepository
-import net.squanchy.service.repository.TracksRepository
 import net.squanchy.service.repository.injection.RepositoryModule
 import net.squanchy.support.checksum.ChecksumModule
 import net.squanchy.support.injection.CurrentTimeModule

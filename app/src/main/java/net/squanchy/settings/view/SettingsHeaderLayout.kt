@@ -48,8 +48,9 @@ class SettingsHeaderLayout(context: Context, attrs: AttributeSet?) : AppBarLayou
             throw IllegalStateException("Unable to access the ImageLoader, it hasn't been initialized yet")
         }
 
-        if (userInfo.photoUrl != null) {
-            imageLoader.load(userInfo.photoUrl)
+        val photoUrl = userInfo.photoUrl
+        if (photoUrl != null) {
+            imageLoader.load(photoUrl)
                 .error(R.drawable.ic_no_avatar)
                 .into(userCirclePhotoView)
         } else {

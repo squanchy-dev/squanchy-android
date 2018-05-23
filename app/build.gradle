@@ -132,7 +132,7 @@ dependencies {
     implementation project(':renderthread')
     implementation project(':speaker:speaker-domain')
     implementation project(':schedule:schedule-service')
-    implementation project(':schedule:schedule-service')
+    implementation project(':schedule:schedule-service-firestore')
     implementation project(':firebase:firestore-db-service')
     implementation project(':auth:auth-service')
     implementation project(':support:checksum')

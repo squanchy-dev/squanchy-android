@@ -5,7 +5,9 @@ import android.content.res.ColorStateList
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.AppCompatTextView
 import android.util.AttributeSet
-import net.squanchy.eventdetails.domain.view.ExperienceLevel
+import net.squanchy.eventdetails.domain.view.colorResId
+import net.squanchy.eventdetails.domain.view.labelStringResId
+import net.squanchy.schedule.domain.view.ExperienceLevel
 import java.util.Locale
 
 class ExperienceLevelView @JvmOverloads constructor(

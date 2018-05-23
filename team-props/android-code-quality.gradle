@@ -1,7 +1,10 @@
 
+/*
 task clean(type: Delete, dependsOn: subprojects.collect { p -> "$p.name:clean" }) {
     delete project.buildDir
 }
+
+*/
 
 task check(dependsOn: subprojects.collect { p ->
     "$p.name:check"

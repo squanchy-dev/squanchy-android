@@ -28,6 +28,6 @@ task installGitHooks(type: Exec) {
 
 afterEvaluate {
     // We install the hook at the first occasion
-    tasks['clean'].dependsOn installGitHooks
+   // tasks['clean'].dependsOn installGitHooks
     tasks['assemble'].dependsOn installGitHooks
 }

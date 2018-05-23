@@ -1,8 +1,8 @@
 package net.squanchy.service.repository.firestore
 
 import io.reactivex.Observable
+import net.squanchy.schedule.firestore.toSpeaker
 import net.squanchy.service.firebase.FirestoreDbService
-import net.squanchy.service.firebase.toSpeaker
 import net.squanchy.service.repository.SpeakerRepository
 import net.squanchy.speaker.domain.view.Speaker
 import net.squanchy.support.checksum.Checksum

@@ -5,7 +5,7 @@ import dagger.Provides
 import net.squanchy.injection.ApplicationLifecycle
 import net.squanchy.schedule.InMemoryTracksFilter
 import net.squanchy.schedule.TracksFilter
-import net.squanchy.service.repository.TracksRepository
+import net.squanchy.schedule.TracksRepository
 
 @Module
 class TracksFilterModule {

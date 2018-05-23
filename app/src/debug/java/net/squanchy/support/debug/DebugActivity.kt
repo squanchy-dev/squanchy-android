@@ -8,11 +8,11 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import arrow.core.Option
 import net.squanchy.R
-import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.notification.NotificationCreator
 import net.squanchy.notification.NotificationsIntentService
 import net.squanchy.notification.Notifier
 import net.squanchy.schedule.domain.view.Event
+import net.squanchy.schedule.domain.view.ExperienceLevel
 import net.squanchy.schedule.domain.view.Place
 import net.squanchy.schedule.domain.view.Track
 import net.squanchy.speaker.domain.view.Speaker

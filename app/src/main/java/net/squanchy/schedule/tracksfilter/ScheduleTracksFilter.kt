@@ -23,8 +23,8 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_track_filters.*
 import net.squanchy.R
 import net.squanchy.schedule.TracksFilter
+import net.squanchy.schedule.TracksRepository
 import net.squanchy.schedule.domain.view.Track
-import net.squanchy.service.repository.TracksRepository
 import net.squanchy.support.view.setAdapterIfNone
 import net.squanchy.support.widget.OriginCoordinates
 import timber.log.Timber

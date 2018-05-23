@@ -38,7 +38,7 @@ class SignInService(private val authService: AuthService) {
     }
 
     internal fun signInWithGoogle(account: GoogleSignInAccount): Completable {
-        return authService.signInWithGoogle(account)
+        return authService.signInWithGoogle(account.idToken!!)
             .subscribeOn(Schedulers.io())
     }
 

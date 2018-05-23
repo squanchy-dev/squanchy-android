@@ -6,7 +6,7 @@ import net.squanchy.injection.ActivityLifecycle
 import net.squanchy.injection.ApplicationComponent
 import net.squanchy.injection.applicationComponent
 import net.squanchy.schedule.TracksFilter
-import net.squanchy.service.repository.TracksRepository
+import net.squanchy.schedule.TracksRepository
 
 @ActivityLifecycle
 @Component(dependencies = [ApplicationComponent::class])

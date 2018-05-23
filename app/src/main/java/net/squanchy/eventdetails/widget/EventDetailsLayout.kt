@@ -16,8 +16,10 @@ import androidx.view.isVisible
 import arrow.core.Option
 import kotlinx.android.synthetic.main.merge_event_details_layout.view.*
 import net.squanchy.R
-import net.squanchy.eventdetails.domain.view.ExperienceLevel
+import net.squanchy.eventdetails.domain.view.colorResId
+import net.squanchy.eventdetails.domain.view.labelStringResId
 import net.squanchy.schedule.domain.view.Event
+import net.squanchy.schedule.domain.view.ExperienceLevel
 import net.squanchy.schedule.domain.view.Place
 import net.squanchy.schedule.domain.view.Track
 import net.squanchy.support.content.res.getColorFromAttribute

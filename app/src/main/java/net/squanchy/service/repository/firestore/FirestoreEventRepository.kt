@@ -5,11 +5,11 @@ import io.reactivex.Observable
 import io.reactivex.functions.Function3
 import io.reactivex.schedulers.Schedulers
 import net.squanchy.schedule.domain.view.Event
+import net.squanchy.schedule.firestore.toEvent
 import net.squanchy.service.firebase.FirestoreDbService
 import net.squanchy.service.firebase.model.conferenceinfo.FirestoreVenue
 import net.squanchy.service.firebase.model.schedule.FirestoreEvent
 import net.squanchy.service.firebase.model.schedule.FirestoreFavorite
-import net.squanchy.service.firebase.toEvent
 import net.squanchy.service.repository.EventRepository
 import net.squanchy.support.checksum.Checksum
 import org.joda.time.DateTimeZone
