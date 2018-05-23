@@ -3,9 +3,13 @@ package net.squanchy.service.firebase
 import com.google.common.truth.Truth.assertThat
 import net.squanchy.A_DATE
 import net.squanchy.A_TIMEZONE
-import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.schedule.domain.view.Event
+import net.squanchy.schedule.domain.view.ExperienceLevel
+import net.squanchy.schedule.firestore.toEvent
+import net.squanchy.schedule.firestore.toPlace
+import net.squanchy.schedule.firestore.toTrack
 import net.squanchy.support.checksum.Checksum
+import net.squanchy.support.lang.getOrThrow
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

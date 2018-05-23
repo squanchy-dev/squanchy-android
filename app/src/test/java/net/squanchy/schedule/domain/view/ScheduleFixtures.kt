@@ -3,7 +3,6 @@ package net.squanchy.schedule.domain.view
 import arrow.core.Option
 import net.squanchy.A_DATE
 import net.squanchy.A_TIMEZONE
-import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.speaker.domain.view.Speaker
 import net.squanchy.speaker.domain.view.aSpeaker
 import org.joda.time.DateTimeZone

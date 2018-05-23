@@ -2,6 +2,7 @@ package net.squanchy.service.firebase
 
 import com.google.common.truth.Truth.assertThat
 import com.google.firebase.firestore.GeoPoint
+import net.squanchy.venue.domain.view.toVenue
 import org.junit.Test
 
 private const val A_STRING = "Whatever"

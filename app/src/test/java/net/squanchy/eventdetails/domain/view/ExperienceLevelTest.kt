@@ -1,6 +1,7 @@
 package net.squanchy.eventdetails.domain.view
 
 import com.google.common.truth.Truth.assertThat
+import net.squanchy.schedule.domain.view.ExperienceLevel
 import net.squanchy.support.lang.getOrThrow
 import org.junit.Test
 

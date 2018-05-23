@@ -11,5 +11,3 @@ class FirestoreTracksRepository(private val firestoreDbService: FirestoreDbServi
     override fun tracks(): Observable<List<Track>> = firestoreDbService.tracks()
         .map { firestoreTracks -> firestoreTracks.map { it.toTrack(checksum) } }
 }
-
-
