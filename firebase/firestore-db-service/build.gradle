@@ -50,6 +50,7 @@ dependencies {
     implementation libraries.app.firebaseDb
     implementation libraries.app.firebaseFirestore
     implementation libraries.app.kotlin
+    implementation libraries.app.rxAndroid
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
