@@ -1,0 +1,25 @@
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+
+    apply from: '../../dependencies.gradle'
+
+    dependencies {
+        classpath buildScript.gradleStaticAnalysisPlugin
+        classpath gradlePlugins.kotlin
+    }
+}
+
+
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+
+dependencies {
+    implementation libraries.app.kotlin
+    implementation libraries.app.joda
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"

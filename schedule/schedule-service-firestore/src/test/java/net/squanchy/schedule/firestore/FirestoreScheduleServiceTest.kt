@@ -13,12 +13,6 @@ import net.squanchy.schedule.domain.view.aSchedulePage
 import net.squanchy.schedule.domain.view.aTrack
 import net.squanchy.schedule.domain.view.anEvent
 import net.squanchy.service.firebase.FirestoreDbService
-import net.squanchy.service.firebase.aFirestoreDay
-import net.squanchy.service.firebase.aFirestoreEvent
-import net.squanchy.service.firebase.aFirestoreFavorite
-import net.squanchy.service.firebase.aFirestoreSchedulePage
-import net.squanchy.service.firebase.aFirestoreSpeaker
-import net.squanchy.service.firebase.aFirestoreTrack
 import net.squanchy.support.checksum.Checksum
 import org.junit.Before
 import org.junit.Rule

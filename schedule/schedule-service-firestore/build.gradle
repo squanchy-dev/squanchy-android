@@ -48,8 +48,11 @@ dependencies {
     implementation libraries.app.arrowCore
     implementation libraries.app.firebaseFirestore
 
-
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    testImplementation libraries.test.truth
+    testImplementation libraries.test.jodaTime
+    testImplementation libraries.test.jUnit4
+    testImplementation libraries.test.mockito
+    testImplementation project(':support:date-time-testing')
+    testImplementation project(':schedule:schedule-domain-testing')
+    testImplementation project(':auth:auth-service-testing')
 }

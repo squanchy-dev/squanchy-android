@@ -10,4 +10,5 @@ include ':app', ':renderthread',
     ':schedule:schedule-domain-testing',
     ':schedule:schedule-service',
     ':schedule:schedule-service-firestore',
-    ':firebase:firestore-db-service'
+    ':firebase:firestore-db-service',
+    ':venue:venue-domain'

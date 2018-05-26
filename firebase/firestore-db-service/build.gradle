@@ -42,6 +42,7 @@ dependencies {
     api libraries.app.rxJava
     api libraries.app.joda
 
+    implementation project (':venue:venue-domain')
     implementation(libraries.app.firebase) {
         exclude group: 'com.android.support'
     }

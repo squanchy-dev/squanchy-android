@@ -137,6 +137,7 @@ dependencies {
     implementation project(':auth:auth-service')
     implementation project(':support:checksum')
     implementation project(':support:option')
+    implementation project (':venue:venue-domain')
 
 
     implementation libraries.app.algolia

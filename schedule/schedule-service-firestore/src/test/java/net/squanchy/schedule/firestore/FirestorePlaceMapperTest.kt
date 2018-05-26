@@ -1,8 +1,6 @@
-package net.squanchy.service.firebase
+package net.squanchy.schedule.firestore
 
 import com.google.common.truth.Truth.assertThat
-import net.squanchy.schedule.firestore.aFirestorePlace
-import net.squanchy.schedule.firestore.toPlace
 import net.squanchy.support.lang.getOrThrow
 import org.junit.Test
 
