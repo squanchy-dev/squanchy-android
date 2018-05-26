@@ -25,10 +25,8 @@ def teamPropsFile(propsFile) {
 
 
 dependencies {
-    api libraries.app.rxJava
-    api project(':schedule:schedule-domain')
-    testImplementation libraries.test.jUnit4
-    testImplementation libraries.test.mockito
+    implementation libraries.app.kotlin
+    implementation libraries.app.joda
 }
 
 sourceCompatibility = "1.7"

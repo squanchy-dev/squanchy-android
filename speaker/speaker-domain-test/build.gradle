@@ -17,18 +17,9 @@ apply plugin: 'java-library'
 apply plugin: 'kotlin'
 
 
-def teamPropsFile(propsFile) {
-    def teamPropsDir = file('team-props')
-    return new File(teamPropsDir, propsFile)
-}
-
-
-
 dependencies {
-    api libraries.app.rxJava
-    api project(':schedule:schedule-domain')
-    testImplementation libraries.test.jUnit4
-    testImplementation libraries.test.mockito
+    api project(":speaker:speaker-domain")
+    api libraries.app.arrowCore
 }
 
 sourceCompatibility = "1.7"

@@ -183,6 +183,7 @@ dependencies {
     testImplementation libraries.test.jodaTime
     testImplementation libraries.test.jUnit4
     testImplementation libraries.test.mockito
+    testImplementation project(':support:date-time-testing')
 }
 
 apply plugin: 'com.google.gms.google-services'

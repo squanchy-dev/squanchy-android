@@ -1,11 +1,9 @@
-package net.squanchy.service.repository
+package net.squanchy.schedule
 
 import io.reactivex.Observable
 import io.reactivex.observers.TestObserver
 import net.squanchy.schedule.domain.view.Track
 import net.squanchy.schedule.domain.view.aTrack
-import net.squanchy.schedule.InMemoryTracksFilter
-import net.squanchy.schedule.TracksRepository
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito
@@ -43,7 +41,10 @@ class InMemoryTracksFilterTest {
 
         tracksFilter.updateSelectedTracks(A_SUBSET_OF_TRACKS)
 
-        subscription.assertValues(ALL_TRACKS.toSet(), A_SUBSET_OF_TRACKS)
+        subscription.assertValues(
+            ALL_TRACKS.toSet(),
+            A_SUBSET_OF_TRACKS
+        )
     }
 
     @Test

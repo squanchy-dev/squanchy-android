@@ -1,9 +1,12 @@
 include ':app', ':renderthread',
+    ':support:date-time-testing',
     ':support:option',
     ':support:checksum',
     ':auth:auth-service',
     ':speaker:speaker-domain',
+    ':speaker:speaker-domain-test',
     ':schedule:schedule-domain',
+    ':schedule:schedule-domain-test',
     ':schedule:schedule-service',
     ':schedule:schedule-service-firestore',
     ':firebase:firestore-db-service'
