@@ -27,6 +27,8 @@ def teamPropsFile(propsFile) {
 dependencies {
     api libraries.app.rxJava
     api project(':schedule:schedule-domain')
+
+    testImplementation project(':schedule:schedule-domain-testing')
     testImplementation libraries.test.jUnit4
     testImplementation libraries.test.mockito
 }
