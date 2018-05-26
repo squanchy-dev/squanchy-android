@@ -26,6 +26,8 @@ dependencies {
     testImplementation libraries.test.jUnit4
     testImplementation libraries.test.mockito
     testImplementation libraries.test.truth
+    testImplementation libraries.test.jodaTime
+
 }
 
 sourceCompatibility = "1.7"
