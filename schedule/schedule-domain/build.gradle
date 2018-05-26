@@ -22,7 +22,7 @@ dependencies {
     api libraries.app.joda
     api libraries.app.arrowCore
 
-    testImplementation project(':schedule:schedule-domain-test')
+    testImplementation project(':schedule:schedule-domain-testing')
     testImplementation libraries.test.jUnit4
     testImplementation libraries.test.mockito
     testImplementation libraries.test.truth

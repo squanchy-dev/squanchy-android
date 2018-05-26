@@ -1,4 +1,4 @@
-package net.squanchy.schedule
+package net.squanchy.schedule.firestore
 
 import arrow.core.Option
 import io.reactivex.Observable
@@ -6,12 +6,12 @@ import io.reactivex.subjects.BehaviorSubject
 import net.squanchy.A_DATE
 import net.squanchy.A_TIMEZONE
 import net.squanchy.FakeAuthService
+import net.squanchy.schedule.TracksFilter
 import net.squanchy.schedule.domain.view.Track
 import net.squanchy.schedule.domain.view.aSchedule
 import net.squanchy.schedule.domain.view.aSchedulePage
 import net.squanchy.schedule.domain.view.aTrack
 import net.squanchy.schedule.domain.view.anEvent
-import net.squanchy.schedule.firestore.FirestoreScheduleService
 import net.squanchy.service.firebase.FirestoreDbService
 import net.squanchy.service.firebase.aFirestoreDay
 import net.squanchy.service.firebase.aFirestoreEvent

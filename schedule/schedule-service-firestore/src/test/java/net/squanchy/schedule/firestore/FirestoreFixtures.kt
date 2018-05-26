@@ -1,4 +1,4 @@
-package net.squanchy.service.firebase
+package net.squanchy.schedule.firestore
 
 import com.google.firebase.firestore.GeoPoint
 import net.squanchy.A_DATE

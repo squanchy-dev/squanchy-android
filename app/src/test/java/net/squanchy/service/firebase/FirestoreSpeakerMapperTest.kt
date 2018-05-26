@@ -1,6 +1,7 @@
 package net.squanchy.service.firebase
 
 import com.google.common.truth.Truth.assertThat
+import net.squanchy.schedule.firestore.aFirestoreSpeaker
 import net.squanchy.schedule.firestore.toSpeaker
 import net.squanchy.support.checksum.Checksum
 import net.squanchy.support.lang.getOrThrow

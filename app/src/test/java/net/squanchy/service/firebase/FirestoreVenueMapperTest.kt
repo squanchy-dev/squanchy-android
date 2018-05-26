@@ -2,6 +2,7 @@ package net.squanchy.service.firebase
 
 import com.google.common.truth.Truth.assertThat
 import com.google.firebase.firestore.GeoPoint
+import net.squanchy.schedule.firestore.aFirestoreVenue
 import net.squanchy.venue.domain.view.toVenue
 import org.junit.Test
 

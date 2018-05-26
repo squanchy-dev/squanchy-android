@@ -16,14 +16,6 @@ buildscript {
 apply plugin: 'java-library'
 apply plugin: 'kotlin'
 
-
-def teamPropsFile(propsFile) {
-    def teamPropsDir = file('team-props')
-    return new File(teamPropsDir, propsFile)
-}
-
-
-
 dependencies {
     implementation libraries.app.kotlin
 }
