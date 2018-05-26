@@ -184,6 +184,7 @@ dependencies {
     testImplementation libraries.test.jUnit4
     testImplementation libraries.test.mockito
     testImplementation project(':support:date-time-testing')
+    testImplementation project(':schedule:schedule-domain-test')
 }
 
 apply plugin: 'com.google.gms.google-services'
