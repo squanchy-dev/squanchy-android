@@ -38,21 +38,15 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    api libraries.app.rxJava
-    api libraries.app.joda
+    implementation project(':venue:venue-info-service')
+    implementation project(':firebase:firestore-db-service')
+    implementation project(':auth:auth-service')
 
-    implementation(libraries.app.firebase) {
-        exclude group: 'com.android.support'
-    }
-    implementation libraries.app.firebaseAuth
-    implementation libraries.app.firebaseConfig
-    api libraries.app.firebaseDb
-    api libraries.app.firebaseFirestore
-    implementation libraries.app.kotlin
-    implementation libraries.app.rxAndroid
-
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    testImplementation libraries.test.truth
+    testImplementation libraries.test.jodaTime
+    testImplementation libraries.test.jUnit4
+    testImplementation libraries.test.mockito
+    testImplementation project(':support:date-time-testing')
+    testImplementation project(':schedule:schedule-domain-testing')
+    testImplementation project(':auth:auth-service-testing')
 }

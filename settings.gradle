@@ -11,4 +11,6 @@ include ':app', ':renderthread',
     ':schedule:schedule-service',
     ':schedule:schedule-service-firestore',
     ':firebase:firestore-db-service',
-    ':venue:venue-domain'
+    ':venue:venue-domain',
+    ':venue:venue-info-service-firestore',
+    ':venue:venue-info-service'

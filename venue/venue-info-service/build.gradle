@@ -1,0 +1,26 @@
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+
+    apply from: '../../dependencies.gradle'
+
+    dependencies {
+        classpath buildScript.gradleStaticAnalysisPlugin
+        classpath gradlePlugins.kotlin
+    }
+}
+
+
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+
+dependencies {
+    api project(':venue:venue-domain')
+    implementation libraries.app.kotlin
+    api libraries.app.rxJava
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"

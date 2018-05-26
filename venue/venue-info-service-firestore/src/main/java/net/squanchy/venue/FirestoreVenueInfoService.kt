@@ -7,9 +7,9 @@ import net.squanchy.service.firebase.model.conferenceinfo.toVenue
 import net.squanchy.service.repository.AuthService
 import net.squanchy.venue.domain.view.Venue
 
-internal class VenueInfoService(private val dbService: FirestoreDbService, private val authService: AuthService) {
+class FirestoreVenueInfoService(private val dbService: FirestoreDbService, private val authService: AuthService) : VenueInfoService {
 
-    fun venue(): Observable<Venue> {
+    override fun venue(): Observable<Venue> {
         return authService.ifUserSignedInThenObservableFrom {
             dbService.venueInfo()
                 .map(FirestoreVenue::toVenue)

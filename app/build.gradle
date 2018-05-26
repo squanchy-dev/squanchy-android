@@ -138,6 +138,8 @@ dependencies {
     implementation project(':support:checksum')
     implementation project(':support:option')
     implementation project (':venue:venue-domain')
+    implementation project (':venue:venue-info-service')
+    implementation project (':venue:venue-info-service-firestore')
 
 
     implementation libraries.app.algolia
