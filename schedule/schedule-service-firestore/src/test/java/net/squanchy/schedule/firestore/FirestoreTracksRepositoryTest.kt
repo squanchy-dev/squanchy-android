@@ -1,9 +1,7 @@
-package net.squanchy.service.firebase.model.schedule
+package net.squanchy.schedule.firestore
 
 import io.reactivex.Observable
 import net.squanchy.schedule.domain.view.aTrack
-import net.squanchy.schedule.firestore.FirestoreTracksRepository
-import net.squanchy.schedule.firestore.aFirestoreTrack
 import net.squanchy.service.firebase.FirestoreDbService
 import net.squanchy.support.checksum.Checksum
 import org.junit.Before
