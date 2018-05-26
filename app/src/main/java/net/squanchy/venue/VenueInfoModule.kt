@@ -9,5 +9,8 @@ import net.squanchy.service.repository.AuthService
 internal class VenueInfoModule {
 
     @Provides
-    fun venueInfoService(dbService: FirestoreDbService, authService: AuthService) = FirestoreVenueInfoService(dbService, authService)
+    fun venueInfoService(dbService: FirestoreDbService, authService: AuthService): VenueInfoService = FirestoreVenueInfoService(
+        dbService,
+        authService
+    )
 }
