@@ -3,7 +3,6 @@ package net.squanchy.service.firebase.model.conferenceinfo
 import net.squanchy.venue.domain.view.Venue
 import org.joda.time.DateTimeZone
 
-
 fun FirestoreVenue.toVenue() = Venue(
     name = name,
     address = address,
