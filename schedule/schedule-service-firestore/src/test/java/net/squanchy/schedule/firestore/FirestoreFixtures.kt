@@ -1,9 +1,7 @@
 package net.squanchy.schedule.firestore
 
-import com.google.firebase.firestore.GeoPoint
 import net.squanchy.A_DATE
 import net.squanchy.service.firebase.model.conferenceinfo.FirestoreConferenceInfo
-import net.squanchy.service.firebase.model.conferenceinfo.FirestoreVenue
 import net.squanchy.service.firebase.model.schedule.FirestoreDay
 import net.squanchy.service.firebase.model.schedule.FirestoreEvent
 import net.squanchy.service.firebase.model.schedule.FirestoreFavorite
