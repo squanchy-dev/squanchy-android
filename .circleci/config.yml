@@ -33,7 +33,7 @@ jobs:
       # See https://issuetracker.google.com/issues/62217354 for the parallelism option
       - run:
           name: Run Gradle :check command
-          command: ./gradlew check --continue -Djava.util.concurrent.ForkJoinPool.common.parallelism=2
+          command: ./gradlew check --continue -Pkotlin.incremental=false
 
       # Store all the downloaded dependencies in the CI cache
       - save_cache:
