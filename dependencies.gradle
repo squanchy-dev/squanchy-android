@@ -6,10 +6,6 @@ ext {
     kotlinVersion = '1.2.41'
     moshiVersion = '1.5.0'
 
-    checkstyleVersion = '8.8'
-    findbugsVersion = '3.0.1'
-    pmdVersion = '6.1.0'
-
     ktLintVersion = '0.23.1'
 
     gradlePlugins = [
