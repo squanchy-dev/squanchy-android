@@ -3,30 +3,23 @@ package net.squanchy.schedule.tracksfilter
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.animation.AnimationUtils
 import android.view.animation.Interpolator
-import androidx.animation.doOnEnd
-import androidx.view.isInvisible
-import androidx.view.isVisible
-import androidx.view.postOnAnimationDelayed
-import com.google.android.flexbox.FlexDirection
-import com.google.android.flexbox.FlexboxItemDecoration
-import com.google.android.flexbox.FlexboxLayoutManager
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_track_filters.*
 import net.squanchy.R
+import net.squanchy.R.id.backgroundDim
+import net.squanchy.R.id.dialogSubtitle
+import net.squanchy.R.id.dialogTitle
+import net.squanchy.R.id.filtersRoot
+import net.squanchy.R.id.trackFiltersList
 import net.squanchy.schedule.domain.view.Track
 import net.squanchy.service.repository.TracksRepository
-import net.squanchy.support.view.setAdapterIfNone
 import net.squanchy.support.widget.OriginCoordinates
-import timber.log.Timber
 import kotlin.math.hypot
 
 class ScheduleTracksFilterActivity : AppCompatActivity() {
