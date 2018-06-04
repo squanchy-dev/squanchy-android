@@ -33,7 +33,7 @@ jobs:
       # See https://issuetracker.google.com/issues/62217354 for the parallelism option
       - run:
           name: Run Gradle :check command
-          command: ./gradlew check -Dkotlin.compiler.execution.strategy="in-process" -Dorg.gradle.daemon=false --no-daemon --continue --stacktrace
+          command: ./gradlew check -Dkotlin.compiler.execution.strategy="in-process" -Dorg.gradle.daemon=false --no-daemon --max-workers 2 --continue --stacktrace
 
       # Store all the downloaded dependencies in the CI cache
       - save_cache:
