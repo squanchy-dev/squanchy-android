@@ -34,9 +34,10 @@
     <ignore regexp="okio-(.*?)\.jar" />
   </issue>
 
-  <!-- Ignore Retrofit's usages of java.lang.invoke -->
+  <!-- Ignore Retrofit's usages of java.lang.invoke and GRPC's javax.naming usages -->
   <issue id="InvalidPackage">
     <ignore regexp="retrofit-(.*?)\.jar" />
+    <ignore regexp="grpc-core-(.*?)\.jar" />
   </issue>
 
   <!-- The Google Services JSON plugin generates some API keys even if we don't actually use them -->
