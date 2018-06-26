@@ -32,18 +32,18 @@ subprojects {
     buildscript {
         repositories {
             google()
-            jcenter()
             maven { url 'https://maven.fabric.io/public' }
             maven { url 'http://dl.bintray.com/arturbosch/code-analysis' }
+            jcenter()
         }
     }
 
     repositories {
         google()
-        jcenter()
-        maven { url 'https://jitpack.io' }
         maven { url 'https://maven.fabric.io/public' }
+        jcenter()
         mavenCentral()
+        maven { url 'https://jitpack.io' }
     }
 
     apply plugin: 'com.github.ben-manes.versions'
