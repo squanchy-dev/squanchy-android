@@ -3,7 +3,7 @@ ext {
     glideVersion = '4.6.1'
     supportLibVersion = '27.1.1'
     playServicesVersion = '12.0.1'
-    kotlinVersion = '1.2.41'
+    kotlinVersion = '1.2.50'
     moshiVersion = '1.5.0'
 
     ktLintVersion = '0.24.0'
