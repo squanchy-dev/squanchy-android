@@ -19,7 +19,7 @@ ext {
             algolia            : 'com.algolia:algoliasearch-android:3.23.13',
             androidKtx         : 'androidx.core:core-ktx:0.2',
             arrowCore          : 'io.arrow-kt:arrow-core:0.6.1',
-            crashlytics        : 'com.crashlytics.sdk.android:crashlytics:2.9.1',
+            crashlytics        : 'com.crashlytics.sdk.android:crashlytics:2.9.4',
             dagger             : "com.google.dagger:dagger:${daggerVersion}",
             daggerCompiler     : "com.google.dagger:dagger-compiler:${daggerVersion}",
             firebase           : "com.google.firebase:firebase-core:${playServicesVersion}",
