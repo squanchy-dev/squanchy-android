@@ -18,15 +18,16 @@ test-pattern: # Configure exclusions for test sources
     - 'StringLiteralDuplication'
     - 'SpreadOperator'
     - 'TooManyFunctions'
+    - 'ForEachOnRange'
 
 build:
   maxIssues: 0
 
   weights:
-    complexity: 2
-    formatting: 1
-    LongParameterList: 1
-    comments: 1
+    # complexity: 2
+    # LongParameterList: 1
+    # style: 1
+    # comments: 1
 
 processors:
   active: true
@@ -49,6 +50,7 @@ console-reports:
 output-reports:
   active: true
   exclude:
+  #  - 'HtmlOutputReport'
   #  - 'PlainOutputReport'
   #  - 'XmlOutputReport'
 
@@ -74,7 +76,7 @@ complexity:
   active: true
   ComplexCondition:
     active: true
-    threshold: 3
+    threshold: 4
   ComplexInterface:
     active: false
     threshold: 10
@@ -82,6 +84,7 @@ complexity:
   ComplexMethod:
     active: true
     threshold: 10
+    ignoreSingleWhenExpression: false
   LabeledExpression:
     active: false
   LargeClass:
@@ -92,32 +95,35 @@ complexity:
     threshold: 20
   LongParameterList:
     active: true
-    threshold: 5
+    threshold: 6
     ignoreDefaultParameters: false
   MethodOverloading:
     active: false
-    threshold: 5
+    threshold: 6
   NestedBlockDepth:
     active: true
-    threshold: 3
+    threshold: 4
   StringLiteralDuplication:
     active: false
-    threshold: 2
+    threshold: 3
     ignoreAnnotation: true
     excludeStringsWithLessThan5Characters: true
     ignoreStringsRegex: '$^'
   TooManyFunctions:
     active: false
-    thresholdInFiles: 10
-    thresholdInClasses: 10
-    thresholdInInterfaces: 10
-    thresholdInObjects: 10
-    thresholdInEnums: 10
+    thresholdInFiles: 11
+    thresholdInClasses: 11
+    thresholdInInterfaces: 11
+    thresholdInObjects: 11
+    thresholdInEnums: 11
+    ignoreDeprecated: false
+    ignorePrivate: false
 
 empty-blocks:
   active: true
   EmptyCatchBlock:
     active: true
+    allowedExceptionNameRegex: "^(_|(ignore|expected).*)"
   EmptyClassBlock:
     active: true
   EmptyDefaultConstructor:
@@ -132,6 +138,7 @@ empty-blocks:
     active: true
   EmptyFunctionBlock:
     active: true
+    ignoreOverriddenFunctions: false
   EmptyIfBlock:
     active: true
   EmptyInitBlock:
@@ -168,11 +175,12 @@ exceptions:
     active: false
   ThrowingExceptionsWithoutMessageOrCause:
     active: true
+    exceptions: 'IllegalArgumentException,IllegalStateException,IOException'
   ThrowingNewInstanceOfSameException:
     active: false
   TooGenericExceptionCaught:
     active: true
-    exceptions:
+    exceptionNames:
      - ArrayIndexOutOfBoundsException
      - Error
      - Exception
@@ -183,12 +191,101 @@ exceptions:
      - Throwable
   TooGenericExceptionThrown:
     active: true
-    exceptions:
+    exceptionNames:
      - Error
      - Exception
-     - NullPointerException
      - Throwable
      - RuntimeException
+
+formatting:
+  active: true
+  android: true
+  autoCorrect: true
+  ChainWrapping:
+    active: true
+    autoCorrect: true
+  CommentSpacing:
+    active: true
+    autoCorrect: true
+  Filename:
+    active: true
+  FinalNewline:
+    active: true
+    autoCorrect: true
+  ImportOrdering:
+    active: true
+    autoCorrect: true
+  Indentation:
+    active: true
+    autoCorrect: true
+    indentSize: 4
+    continuationIndentSize: 4
+  MaximumLineLength:
+    active: true
+    maxLineLength: 150
+  ModifierOrdering:
+    active: true
+    autoCorrect: true
+  NoBlankLineBeforeRbrace:
+    active: true
+    autoCorrect: true
+  NoConsecutiveBlankLines:
+    active: true
+    autoCorrect: true
+  NoEmptyClassBody:
+    active: true
+    autoCorrect: true
+  NoItParamInMultilineLambda:
+    active: true
+  NoLineBreakAfterElse:
+    active: true
+    autoCorrect: true
+  NoLineBreakBeforeAssignment:
+    active: true
+    autoCorrect: true
+  NoMultipleSpaces:
+    active: true
+    autoCorrect: true
+  NoSemicolons:
+    active: true
+    autoCorrect: true
+  NoTrailingSpaces:
+    active: true
+    autoCorrect: true
+  NoUnitReturn:
+    active: true
+    autoCorrect: true
+  NoUnusedImports:
+    active: true
+    autoCorrect: true
+  NoWildcardImports:
+    active: true
+    autoCorrect: true
+  ParameterListWrapping:
+    active: true
+    autoCorrect: true
+    indentSize: 4
+  SpacingAroundColon:
+    active: true
+    autoCorrect: true
+  SpacingAroundComma:
+    active: true
+    autoCorrect: true
+  SpacingAroundCurly:
+    active: true
+    autoCorrect: true
+  SpacingAroundKeyword:
+    active: true
+    autoCorrect: true
+  SpacingAroundOperators:
+    active: true
+    autoCorrect: true
+  SpacingAroundRangeOperator:
+    active: true
+    autoCorrect: true
+  StringTemplate:
+    active: true
+    autoCorrect: true
 
 naming:
   active: true
@@ -210,6 +307,7 @@ naming:
   FunctionNaming:
     active: true
     functionPattern: '^([a-z$][a-zA-Z$0-9]*)|(`.*`)$'
+    excludeClassPattern: '$^'
   MatchingDeclarationName:
     active: false
   MemberNameEqualsClassName:
@@ -218,6 +316,7 @@ naming:
   ObjectPropertyNaming:
     active: true
     propertyPattern: '[A-Za-z][_A-Za-z0-9]*'
+    constantPattern: '[A-Za-z][_A-Za-z0-9]*'
   PackageNaming:
     active: true
     packagePattern: '^[a-z]+(\.[a-z][a-z0-9]*)*$'
@@ -236,6 +335,7 @@ naming:
     active: true
     variablePattern: '[a-z][A-Za-z0-9]*'
     privateVariablePattern: '(_)?[a-z][A-Za-z0-9]*'
+    excludeClassPattern: '$^'
 
 performance:
   active: true
@@ -290,6 +390,7 @@ style:
     active: false
   ExpressionBodySyntax:
     active: false
+    includeLineWrapping: false
   ForbiddenComment:
     active: true
     values: 'STOPSHIP'
@@ -313,25 +414,32 @@ style:
     ignoreAnnotation: false
     ignoreNamedArgument: true
     ignoreEnums: false
+  MandatoryBracesIfStatements:
+    active: false
   MaxLineLength:
     active: true
     maxLineLength: 150
     excludePackageStatements: false
     excludeImportStatements: false
+    excludeCommentStatements: false
+  MayBeConst:
+    active: true
   ModifierOrder:
     active: true
   NestedClassesVisibility:
     active: false
   NewLineAtEndOfFile:
     active: true
+  NoTabs:
+    active: true
   OptionalAbstractKeyword:
     active: true
-  OptionalReturnKeyword:
-    active: false
   OptionalUnit:
     active: false
   OptionalWhenBraces:
     active: false
+  PreferToOverPairSyntax:
+    active: true
   ProtectedMemberInFinalClass:
     active: true
   RedundantVisibilityModifierRule:
@@ -349,6 +457,8 @@ style:
   ThrowsCount:
     active: true
     max: 2
+  TrailingWhitespace:
+    active: true
   UnnecessaryAbstractClass:
     active: false
   UnnecessaryInheritance:
@@ -359,6 +469,9 @@ style:
     active: false
   UnusedImports:
     active: false
+  UnusedPrivateMember:
+    active: false
+    allowedNames: "(_|ignored|expected)"
   UseDataClass:
     active: false
     excludeAnnotatedClasses: ""
