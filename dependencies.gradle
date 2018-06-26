@@ -56,7 +56,7 @@ ext {
             truth   : 'com.google.truth:truth:0.41',
             jodaTime: 'joda-time:joda-time:2.10',
             jUnit4  : 'junit:junit:4.12',
-            mockito : 'org.mockito:mockito-inline:2.17.0'
+            mockito : 'org.mockito:mockito-inline:2.19.0'
         ]
     ]
 
