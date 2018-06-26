@@ -136,11 +136,11 @@ dependencies {
     implementation libraries.app.arrowCore
     implementation libraries.app.crashlytics
     implementation libraries.app.dagger
-    implementation(libraries.app.firebase) {
-        exclude group: 'com.android.support'
-    }
     implementation libraries.app.firebaseAuth
     implementation libraries.app.firebaseConfig
+    implementation(libraries.app.firebaseCore) {
+        exclude group: 'com.android.support'
+    }
     implementation libraries.app.firebaseDb
     implementation libraries.app.firebaseFirestore
     implementation libraries.app.firebaseMessaging
