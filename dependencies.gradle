@@ -46,7 +46,7 @@ ext {
             rxLint             : 'nl.littlerobots.rxlint:rxlint:1.6.1',
             supportAnnotations : "com.android.support:support-annotations:${supportLibVersion}",
             supportAppCompat   : "com.android.support:appcompat-v7:${supportLibVersion}",
-            supportConstraint  : 'com.android.support.constraint:constraint-layout:1.1.0',
+            supportConstraint  : 'com.android.support.constraint:constraint-layout:1.1.2',
             supportDesign      : "com.android.support:design:${supportLibVersion}",
             timber             : 'com.jakewharton.timber:timber:4.7.0',
             viewPagerAdapter   : 'com.novoda:view-pager-adapter:1.0.0'
