@@ -158,30 +158,24 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
         private const val DAY_DATE_SORTING = "day.date"
     }
 
-    private inline fun <reified T> Query.observe(): Observable<List<T>> {
+    private inline fun <reified T : Any> Query.observe(): Observable<List<T>> {
         return Observable.create<List<T>> { subscriber ->
             val registration = addSnapshotListener(
                 HandlerExecutor(Handler()),
                 EventListener<QuerySnapshot> { snapshot, exception ->
-                    subscriber.emitSnapshotResult(
-                        snapshot,
-                        exception
-                    )
+                    subscriber.emitSnapshotResult(snapshot, exception)
                 }
             )
             subscriber.setCancellable { registration.remove() }
         }.subscribeOn(AndroidSchedulers.from(looper))
     }
 
-    private inline fun <reified T> DocumentReference.observe(): Observable<T> {
+    private inline fun <reified T : Any> DocumentReference.observe(): Observable<T> {
         return Observable.create<T> { subscriber ->
             val registration = addSnapshotListener(
                 HandlerExecutor(Handler()),
                 EventListener<DocumentSnapshot> { snapshot, exception ->
-                    subscriber.emitSnapshotResult(
-                        snapshot,
-                        exception
-                    )
+                    subscriber.emitSnapshotResult(snapshot, exception)
                 }
             )
             subscriber.setCancellable { registration.remove() }
