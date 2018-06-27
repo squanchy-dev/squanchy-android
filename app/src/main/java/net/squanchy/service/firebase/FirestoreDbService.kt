@@ -207,7 +207,7 @@ fun backgroundLooper(): Looper {
     return handlerThread.looper
 }
 
-private inline fun <reified T> ObservableEmitter<List<T>>.emitSnapshotResult(snapshot: QuerySnapshot?, exception: Exception?) {
+private inline fun <reified T : Any> ObservableEmitter<List<T>>.emitSnapshotResult(snapshot: QuerySnapshot?, exception: Exception?) {
     when {
         exception != null && isDisposed.not() -> onError(exception)
         else -> emitQueryResultValues(snapshot)
@@ -215,11 +215,10 @@ private inline fun <reified T> ObservableEmitter<List<T>>.emitSnapshotResult(sna
 }
 
 @Suppress("TooGenericExceptionCaught") // Firestore doesn't have a strong Exception typing
-private inline fun <reified T> ObservableEmitter<List<T>>.emitQueryResultValues(snapshot: QuerySnapshot?) {
+private inline fun <reified T : Any> ObservableEmitter<List<T>>.emitQueryResultValues(snapshot: QuerySnapshot?) {
     try {
-        val modelItems = snapshot?.documents?.map { it.toObject(T::class.java) }
-            ?.filter { it != null }
-            ?: emptyList()
+        val modelItems: List<T> = snapshot?.documents?.map { it.toObject(T::class.java) }
+            ?.mapNotNull { it as T } ?: emptyList()
 
         onNext(modelItems)
     } catch (e: RuntimeException) {

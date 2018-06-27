@@ -18,13 +18,13 @@ class MaxSizeFrameLayout @JvmOverloads constructor(
     @Px
     private var maxWidth: Int = 0
         set(@Px value) {
-            field = if (maxWidth <= 0) NO_CONSTRAINTS else maxWidth
+            field = if (value <= 0) NO_CONSTRAINTS else value
         }
 
     @Px
     private var maxHeight: Int = 0
-        set(@Px maxHeight) {
-            field = if (maxHeight <= 0) NO_CONSTRAINTS else maxHeight
+        set(@Px value) {
+            field = if (value <= 0) NO_CONSTRAINTS else value
         }
 
     init {

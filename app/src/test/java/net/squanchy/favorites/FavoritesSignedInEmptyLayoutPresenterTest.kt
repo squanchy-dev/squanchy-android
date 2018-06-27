@@ -24,14 +24,14 @@ class FavoritesSignedInEmptyLayoutPresenterTest {
 
     @Test
     fun `first time, return counter as 1, icon should be filled and no message displayed`() {
-        //given
+        // given
         val counter = 0
 
-        //when
+        // when
         presentButtonIcon(counter, view)
         presentAchievementMessage(counter, view, { "" }, { "" })
 
-        //then
+        // then
         verify(view).setButtonState(true)
         verify(view).updateCounter(1)
         verify(view, never()).showAchievement(anyString())
@@ -40,14 +40,14 @@ class FavoritesSignedInEmptyLayoutPresenterTest {
 
     @Test
     fun `when counter is odd, show empty icon`() {
-        //given
+        // given
         val counter = 1
 
-        //when
+        // when
         presentButtonIcon(counter, view)
         presentAchievementMessage(counter, view, { "" }, { "" })
 
-        //then
+        // then
         verify(view).setButtonState(false)
         verify(view).updateCounter(2)
         verify(view, never()).showAchievement(anyString())
@@ -56,15 +56,15 @@ class FavoritesSignedInEmptyLayoutPresenterTest {
 
     @Test
     fun `when counter is 4, show filled icon, show initial achievement`() {
-        //given
+        // given
         val counter = 4
         val initialMessageProvider = { "initial" }
 
-        //when
+        // when
         presentButtonIcon(counter, view)
         presentAchievementMessage(counter, view, initialMessageProvider, { "" })
 
-        //then
+        // then
         verify(view).setButtonState(true)
         verify(view).updateCounter(5)
         verify(view).showAchievement(initialMessageProvider())
@@ -73,15 +73,15 @@ class FavoritesSignedInEmptyLayoutPresenterTest {
 
     @Test
     fun `when counter is 14, show filled icon, show perseverant achievement`() {
-        //given
+        // given
         val counter = 14
         val perseverantMessageProvider = { "perseverant" }
 
-        //when
+        // when
         presentButtonIcon(counter, view)
         presentAchievementMessage(counter, view, { "" }, perseverantMessageProvider)
 
-        //then
+        // then
         verify(view).setButtonState(true)
         verify(view).updateCounter(15)
         verify(view).showAchievement(perseverantMessageProvider())
