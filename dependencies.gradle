@@ -2,7 +2,7 @@ ext {
     daggerVersion = '2.16'
     glideVersion = '4.7.1'
     supportLibVersion = '27.1.1'
-    kotlinVersion = '1.2.50'
+    kotlinVersion = '1.2.51'
     moshiVersion = '1.6.0'
 
     ktLintVersion = '0.24.0'
