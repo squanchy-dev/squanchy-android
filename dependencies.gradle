@@ -25,7 +25,7 @@ ext {
             firebaseConfig    : 'com.google.firebase:firebase-config:16.0.0',
             firebaseCore      : 'com.google.firebase:firebase-core:16.0.1',
             firebaseDb        : 'com.google.firebase:firebase-database:16.0.1',
-            firebaseFirestore : 'com.google.firebase:firebase-firestore:17.0.2',
+            firebaseFirestore : 'com.google.firebase:firebase-firestore:17.0.4',
             firebaseMessaging : 'com.google.firebase:firebase-messaging:17.1.0',
             firebasePerf      : 'com.google.firebase:firebase-perf:16.0.0',
             firebaseStorage   : 'com.google.firebase:firebase-storage:16.0.1',
