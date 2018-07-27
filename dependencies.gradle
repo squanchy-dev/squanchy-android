@@ -5,7 +5,7 @@ ext {
     kotlinVersion = '1.2.51'
     moshiVersion = '1.6.0'
 
-    ktLintVersion = '0.24.0'
+    ktLintVersion = '0.25.1'
 
     gradlePlugins = [
         buildProperties: 'com.novoda:gradle-build-properties-plugin:0.4.1',
