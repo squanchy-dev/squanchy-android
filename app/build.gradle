@@ -40,6 +40,8 @@ android {
         versionCode Integer.parseInt(project.VERSION_CODE)
         versionName project.VERSION_NAME
 
+        vectorDrawables.useSupportLibrary = true
+
         manifestPlaceholders += [
             fabricApiKey: secretsProps['fabricApiKey'].or(envVars['FABRIC_API_KEY']).string
         ]
