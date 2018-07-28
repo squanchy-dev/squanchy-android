@@ -1,8 +1,8 @@
 package net.squanchy.favorites.view
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.view.EventItemView
 import net.squanchy.schedule.view.OnEventClickListener

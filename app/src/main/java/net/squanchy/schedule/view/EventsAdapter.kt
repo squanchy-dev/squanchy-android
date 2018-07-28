@@ -1,11 +1,11 @@
 package net.squanchy.schedule.view
 
 import android.content.Context
-import android.support.v7.recyclerview.extensions.ListAdapter
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Event
 
@@ -83,11 +83,12 @@ internal class EventViewHolder(itemView: EventItemView) : RecyclerView.ViewHolde
 }
 
 private object DiffCallback : DiffUtil.ItemCallback<Event>() {
-    override fun areItemsTheSame(oldItem: Event?, newItem: Event?): Boolean {
-        return oldItem?.numericId == newItem?.numericId
+
+    override fun areItemsTheSame(oldItem: Event, newItem: Event): Boolean {
+        return oldItem.numericId == newItem.numericId
     }
 
-    override fun areContentsTheSame(oldItem: Event?, newItem: Event?): Boolean {
+    override fun areContentsTheSame(oldItem: Event, newItem: Event): Boolean {
         return oldItem == newItem
     }
 }

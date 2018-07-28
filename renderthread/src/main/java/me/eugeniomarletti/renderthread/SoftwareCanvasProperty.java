@@ -1,6 +1,6 @@
 package me.eugeniomarletti.renderthread;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 public final class SoftwareCanvasProperty<T> extends CanvasProperty<T> {
 

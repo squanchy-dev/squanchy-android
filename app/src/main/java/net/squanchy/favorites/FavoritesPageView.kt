@@ -1,10 +1,10 @@
 package net.squanchy.favorites
 
 import android.content.Context
-import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
 import android.view.MenuItem
-import androidx.view.isVisible
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable

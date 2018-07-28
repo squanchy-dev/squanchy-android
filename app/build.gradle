@@ -134,22 +134,19 @@ dependencies {
     implementation project(':renderthread')
 
     implementation libraries.app.algolia
-    implementation libraries.app.androidKtx
+    implementation libraries.app.androidxKtx
     implementation libraries.app.arrowCore
     implementation libraries.app.crashlytics
     implementation libraries.app.dagger
     implementation libraries.app.firebaseAuth
     implementation libraries.app.firebaseConfig
-    implementation(libraries.app.firebaseCore) {
-        exclude group: 'com.android.support'
-    }
+    implementation libraries.app.firebaseCore
     implementation libraries.app.firebaseDb
     implementation libraries.app.firebaseFirestore
     implementation libraries.app.firebaseMessaging
     implementation libraries.app.firebasePerf
     implementation libraries.app.firebaseStorage
     implementation(libraries.app.firebaseUiStorage) {
-        exclude group: 'com.android.support'
         exclude group: 'com.google.firebase'
     }
     implementation libraries.app.flexbox
@@ -164,9 +161,9 @@ dependencies {
     implementation libraries.app.rxAndroid
     implementation libraries.app.rxJava
     implementation libraries.app.rxLint
-    implementation libraries.app.supportAppCompat
-    implementation libraries.app.supportConstraint
-    implementation libraries.app.supportDesign
+    implementation libraries.app.androidxAppCompat
+    implementation libraries.app.androidxConstraintLayout
+    implementation libraries.app.androidxMaterial
     implementation libraries.app.timber
     implementation libraries.app.viewPagerAdapter
 

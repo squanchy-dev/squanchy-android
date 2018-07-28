@@ -1,9 +1,9 @@
 package net.squanchy.support.view
 
 import android.graphics.Rect
-import android.support.annotation.Px
-import android.support.v7.widget.RecyclerView
 import android.view.View
+import androidx.annotation.Px
+import androidx.recyclerview.widget.RecyclerView
 
 class CardSpacingItemDecorator(
     @param:Px @field:Px private val horizontalSpacing: Int,

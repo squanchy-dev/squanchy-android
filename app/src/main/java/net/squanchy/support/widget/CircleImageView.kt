@@ -32,12 +32,11 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.support.annotation.DrawableRes
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewOutlineProvider
 import android.widget.ImageView
-
+import androidx.annotation.DrawableRes
 import timber.log.Timber
 import kotlin.math.min
 

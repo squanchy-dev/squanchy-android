@@ -3,7 +3,7 @@ package net.squanchy.tweets.view
 import android.content.Context
 import android.text.method.LinkMovementMethod
 import android.util.AttributeSet
-import androidx.view.isVisible
+import androidx.core.view.isVisible
 import kotlinx.android.synthetic.main.item_tweet.view.*
 import net.squanchy.R
 import net.squanchy.imageloader.ImageLoader

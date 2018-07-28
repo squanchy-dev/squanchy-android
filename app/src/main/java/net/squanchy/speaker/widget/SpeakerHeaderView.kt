@@ -1,9 +1,9 @@
 package net.squanchy.speaker.widget
 
 import android.content.Context
-import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
-import androidx.view.isVisible
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
 import arrow.core.Option
 import kotlinx.android.synthetic.main.activity_speaker_details.view.*
 import net.squanchy.R

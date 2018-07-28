@@ -1,7 +1,7 @@
 package net.squanchy.eventdetails.domain.view
 
-import android.support.annotation.ColorRes
-import android.support.annotation.StringRes
+import androidx.annotation.ColorRes
+import androidx.annotation.StringRes
 import arrow.core.Option
 import net.squanchy.R
 import timber.log.Timber

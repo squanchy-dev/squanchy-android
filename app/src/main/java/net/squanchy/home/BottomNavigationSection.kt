@@ -1,6 +1,6 @@
 package net.squanchy.home
 
-import android.support.annotation.StyleRes
+import androidx.annotation.StyleRes
 
 import net.squanchy.R
 

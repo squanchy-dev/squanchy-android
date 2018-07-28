@@ -12,7 +12,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
       android:id="@+id/toolbar"
       style="@style/Squanchy.Toolbar"
       android:layout_width="match_parent"
@@ -59,7 +59,7 @@
 
   </net.squanchy.eventdetails.widget.EventDetailsHeaderLayout>
 
-  <android.support.v4.widget.NestedScrollView
+  <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -70,9 +70,9 @@
       android:layout_height="wrap_content"
       android:paddingBottom="@dimen/event_details_body_value_margin_bottom"/>
 
-  </android.support.v4.widget.NestedScrollView>
+  </androidx.core.widget.NestedScrollView>
 
-  <android.support.design.widget.FloatingActionButton
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
     android:id="@+id/favoriteFab"
     style="@style/EventDetails.Fab"
     android:layout_width="wrap_content"

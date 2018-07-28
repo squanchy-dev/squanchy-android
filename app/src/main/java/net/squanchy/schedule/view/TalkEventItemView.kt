@@ -3,7 +3,7 @@ package net.squanchy.schedule.view
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import androidx.view.isVisible
+import androidx.core.view.isVisible
 import kotlinx.android.synthetic.main.item_schedule_event_talk.view.*
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Event

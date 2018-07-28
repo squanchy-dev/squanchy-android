@@ -1,9 +1,9 @@
 package net.squanchy.schedule.view
 
 import android.content.Context
-import android.support.annotation.DrawableRes
 import android.util.AttributeSet
-import androidx.view.isVisible
+import androidx.annotation.DrawableRes
+import androidx.core.view.isVisible
 import kotlinx.android.synthetic.main.item_schedule_event_other.view.*
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Event

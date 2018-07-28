@@ -1,8 +1,8 @@
 package net.squanchy.imageloader
 
 import android.graphics.drawable.Drawable
-import android.support.annotation.DrawableRes
 import android.widget.ImageView
+import androidx.annotation.DrawableRes
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions

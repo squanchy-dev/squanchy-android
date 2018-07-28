@@ -1,7 +1,7 @@
 package net.squanchy.notification
 
 import android.app.Notification
-import android.support.v4.app.NotificationManagerCompat
+import androidx.core.app.NotificationManagerCompat
 
 class Notifier(private val notificationManagerCompat: NotificationManagerCompat) {
 

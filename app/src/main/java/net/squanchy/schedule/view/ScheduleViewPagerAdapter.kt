@@ -1,10 +1,10 @@
 package net.squanchy.schedule.view
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.novoda.viewpageradapter.ViewPagerAdapter
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Event
@@ -34,7 +34,7 @@ class ScheduleViewPagerAdapter(context: Context) : ViewPagerAdapter<ScheduleDayP
 
     override fun createView(container: ViewGroup, position: Int): ScheduleDayPageView {
         val recyclerView = inflater.inflate(R.layout.view_page_schedule_day, container, false) as ScheduleDayPageView
-        recyclerView.recycledViewPool = viewPool
+        recyclerView.setRecycledViewPool(viewPool)
         return recyclerView
     }
 

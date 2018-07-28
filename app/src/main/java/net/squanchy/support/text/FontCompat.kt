@@ -4,9 +4,9 @@ package net.squanchy.support.text
 
 import android.content.Context
 import android.content.res.TypedArray
-import android.support.annotation.FontRes
-import android.support.annotation.StyleRes
-import android.support.v4.content.res.ResourcesCompat
+import androidx.annotation.FontRes
+import androidx.annotation.StyleRes
+import androidx.core.content.res.ResourcesCompat
 import net.squanchy.R
 
 fun Context.getFontFor(@StyleRes styleResId: Int) =

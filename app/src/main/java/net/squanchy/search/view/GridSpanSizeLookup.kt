@@ -1,6 +1,6 @@
 package net.squanchy.search.view
 
-import android.support.v7.widget.GridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import net.squanchy.search.SearchListElement
 
 internal class GridSpanSizeLookup(

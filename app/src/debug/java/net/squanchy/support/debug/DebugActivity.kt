@@ -2,11 +2,11 @@ package net.squanchy.support.debug
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.app.NotificationManagerCompat
-import android.support.v7.app.AppCompatActivity
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationManagerCompat
 import arrow.core.Option
+import com.google.android.material.snackbar.Snackbar
 import net.squanchy.R
 import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.notification.NotificationCreator

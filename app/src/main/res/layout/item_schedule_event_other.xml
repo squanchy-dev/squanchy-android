@@ -12,7 +12,7 @@
   tools:layout_margin="16dp"
   tools:ignore="RtlSymmetry">
 
-  <android.support.constraint.ConstraintLayout
+  <androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -51,6 +51,6 @@
       app:layout_constraintBottom_toBottomOf="parent"
       tools:src="@drawable/lunch" />
 
-  </android.support.constraint.ConstraintLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
 
 </net.squanchy.schedule.view.OtherEventItemView>

@@ -44,6 +44,11 @@ subprojects {
         jcenter()
         mavenCentral()
         maven { url 'https://jitpack.io' }
+
+        maven {     // TODO remove this once Glide 4.8 is released
+            name 'glide-snapshot'
+            url 'http://oss.sonatype.org/content/repositories/snapshots'
+        }
     }
 
     apply plugin: 'com.github.ben-manes.versions'

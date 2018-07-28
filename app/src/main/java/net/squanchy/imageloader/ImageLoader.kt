@@ -1,7 +1,7 @@
 package net.squanchy.imageloader
 
-import android.support.annotation.DrawableRes
 import android.widget.ImageView
+import androidx.annotation.DrawableRes
 import com.google.firebase.storage.StorageReference
 
 interface ImageLoader {

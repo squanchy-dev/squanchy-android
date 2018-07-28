@@ -1,13 +1,13 @@
 package net.squanchy.search.view
 
 import android.app.Activity
-import android.support.annotation.IntDef
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.recyclerview.extensions.ListAdapter
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.IntDef
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ListAdapter
 import net.squanchy.R
 import net.squanchy.imageloader.ImageLoader
 import net.squanchy.imageloader.imageLoaderComponent
@@ -125,7 +125,7 @@ internal class SearchAdapter(activity: AppCompatActivity) : ListAdapter<SearchLi
 }
 
 private object DiffCallback : DiffUtil.ItemCallback<SearchListElement>() {
-    override fun areItemsTheSame(oldItem: SearchListElement?, newItem: SearchListElement?): Boolean {
+    override fun areItemsTheSame(oldItem: SearchListElement, newItem: SearchListElement): Boolean {
         return when {
             oldItem is EventElement && newItem is EventElement -> oldItem.event.numericId == newItem.event.numericId
             oldItem is SpeakerElement && newItem is SpeakerElement -> oldItem.speaker.numericId == newItem.speaker.numericId
@@ -133,7 +133,7 @@ private object DiffCallback : DiffUtil.ItemCallback<SearchListElement>() {
         }
     }
 
-    override fun areContentsTheSame(oldItem: SearchListElement?, newItem: SearchListElement?): Boolean {
+    override fun areContentsTheSame(oldItem: SearchListElement, newItem: SearchListElement): Boolean {
         return oldItem == newItem
     }
 }

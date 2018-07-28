@@ -2,11 +2,11 @@ package net.squanchy.favorites.view
 
 import android.content.Context
 import android.os.Build
-import android.support.annotation.RequiresApi
-import android.support.constraint.ConstraintLayout
-import android.support.design.widget.Snackbar
 import android.util.AttributeSet
 import android.view.View
+import androidx.annotation.RequiresApi
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.merge_no_favorites_view.view.*
 import net.squanchy.R
 import net.squanchy.support.text.parseHtml

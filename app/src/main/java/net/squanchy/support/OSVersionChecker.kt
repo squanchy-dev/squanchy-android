@@ -4,7 +4,7 @@ package net.squanchy.support
 
 import android.annotation.SuppressLint
 import android.os.Build
-import android.support.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting
 
 val android: OSVersionChecker
     @SuppressLint("VisibleForTests") // Accessing it as private would be correct here, probably a Lint bug with Kotlin visibilities

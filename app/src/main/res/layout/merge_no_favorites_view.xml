@@ -8,7 +8,7 @@
   tools:visibility="visible"
   tools:showIn="@layout/view_page_favorites">
 
-  <android.support.design.widget.FloatingActionButton
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
     android:id="@+id/favoriteFab"
     style="@style/EventDetails.Fab"
     android:layout_width="wrap_content"

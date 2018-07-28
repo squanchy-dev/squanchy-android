@@ -2,9 +2,9 @@ package net.squanchy.eventdetails.widget
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.AppCompatTextView
 import android.util.AttributeSet
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.ContextCompat
 import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import java.util.Locale
 

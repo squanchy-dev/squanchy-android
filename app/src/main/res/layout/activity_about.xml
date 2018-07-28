@@ -6,13 +6,13 @@
   android:layout_height="match_parent"
   android:orientation="vertical">
 
-  <android.support.design.widget.AppBarLayout
+  <com.google.android.material.appbar.AppBarLayout
     android:theme="@style/ThemeOverlay.About.AppBar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:elevation="@dimen/about_appbar_elevation">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
       android:id="@+id/toolbar"
       style="@style/MostlyWhite.Toolbar"
       android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
@@ -20,9 +20,9 @@
       android:layout_height="?attr/actionBarSize"
       app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-  </android.support.design.widget.AppBarLayout>
+  </com.google.android.material.appbar.AppBarLayout>
 
-  <android.support.v4.widget.NestedScrollView
+  <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
@@ -104,6 +104,6 @@
 
     </LinearLayout>
 
-  </android.support.v4.widget.NestedScrollView>
+  </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

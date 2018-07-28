@@ -5,7 +5,8 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Build;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 @SuppressLint("ObsoleteSdkInt")     // Borrowed class, with a lower minSdkVersion
 public final class CanvasUtils {

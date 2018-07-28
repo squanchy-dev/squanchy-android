@@ -4,13 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
-import android.support.annotation.ColorInt
-import android.support.annotation.IntRange
-import android.support.design.internal.BottomNavigationMenuView
-import android.support.design.widget.BottomNavigationView
 import android.util.AttributeSet
 import android.view.MenuItem
 import android.view.MotionEvent
+import androidx.annotation.ColorInt
+import androidx.annotation.IntRange
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import net.squanchy.support.graphics.CircularRevealDrawable
 import net.squanchy.support.view.Hotspot
 

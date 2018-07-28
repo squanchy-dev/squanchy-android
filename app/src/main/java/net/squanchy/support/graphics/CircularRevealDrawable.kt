@@ -5,10 +5,10 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
-import android.support.annotation.ColorInt
-import android.support.annotation.IntRange
-import android.support.v4.view.animation.FastOutLinearInInterpolator
-import androidx.animation.doOnEnd
+import androidx.annotation.ColorInt
+import androidx.annotation.IntRange
+import androidx.core.animation.doOnEnd
+import androidx.interpolator.view.animation.FastOutLinearInInterpolator
 import me.eugeniomarletti.renderthread.CanvasProperty
 import me.eugeniomarletti.renderthread.RenderThread
 import kotlin.math.max

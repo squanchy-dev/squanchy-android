@@ -2,10 +2,10 @@
 package net.squanchy.home
 
 import android.annotation.SuppressLint
-import android.support.design.internal.BottomNavigationItemView
-import android.support.design.internal.BottomNavigationMenuView
-import android.support.design.widget.BottomNavigationView
-import androidx.view.children
+import androidx.core.view.children
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import timber.log.Timber
 
 @SuppressLint("RestrictedApi") // This is a hack, not much we can do about it until there is an API for this
@@ -16,9 +16,10 @@ fun BottomNavigationView.disableShiftMode() {
         shiftingMode.isAccessible = true
         shiftingMode.setBoolean(menuView, false)
         shiftingMode.isAccessible = false
+
         for (view in menuView.children) {
             val item = view as BottomNavigationItemView
-            item.setShiftingMode(false)
+            item.setShifting(false)
             item.setChecked(item.itemData.isChecked)
         }
     } catch (e: NoSuchFieldException) {

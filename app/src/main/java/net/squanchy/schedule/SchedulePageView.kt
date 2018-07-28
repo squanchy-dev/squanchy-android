@@ -1,12 +1,12 @@
 package net.squanchy.schedule
 
 import android.content.Context
-import android.support.constraint.ConstraintLayout
-import android.support.design.widget.TabLayout
 import android.text.Spanned
 import android.util.AttributeSet
-import androidx.view.isVisible
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
 import arrow.core.Tuple3
+import com.google.android.material.tabs.TabLayout
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable

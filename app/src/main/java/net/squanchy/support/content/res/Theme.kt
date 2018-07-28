@@ -1,9 +1,9 @@
 package net.squanchy.support.content.res
 
 import android.content.res.Resources
-import android.support.annotation.AttrRes
-import android.support.annotation.ColorInt
 import android.util.TypedValue
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
 
 @ColorInt
 internal fun Resources.Theme.getColorFromAttribute(@AttrRes attributeId: Int): Int {

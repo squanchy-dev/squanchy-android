@@ -5,13 +5,13 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
-import android.support.annotation.ColorInt
-import android.support.transition.Fade
-import android.support.transition.TransitionManager
-import android.support.v7.app.AppCompatActivity
 import android.view.View
-import androidx.view.isInvisible
-import androidx.view.isVisible
+import androidx.annotation.ColorInt
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
+import androidx.transition.Fade
+import androidx.transition.TransitionManager
 import kotlinx.android.synthetic.main.activity_home.*
 import net.squanchy.R
 import net.squanchy.analytics.Analytics
@@ -107,7 +107,7 @@ class HomeActivity : AppCompatActivity() {
         bottomNavigationView.selectItemAt(section.ordinal)
 
         val theme = getThemeFor(section)
-        bottomNavigationView.setBackgroundColor(theme.getColorFromAttribute(android.support.design.R.attr.colorPrimary))
+        bottomNavigationView.setBackgroundColor(theme.getColorFromAttribute(com.google.android.material.R.attr.colorPrimary))
         window.statusBarColor = theme.getColorFromAttribute(android.R.attr.statusBarColor)
 
         currentSection = section
@@ -125,7 +125,7 @@ class HomeActivity : AppCompatActivity() {
 
         val theme = getThemeFor(section)
         animateStatusBarColorTo(theme.getColorFromAttribute(android.R.attr.statusBarColor))
-        bottomNavigationView.colorProvider = { theme.getColorFromAttribute(android.support.design.R.attr.colorPrimary) }
+        bottomNavigationView.colorProvider = { theme.getColorFromAttribute(com.google.android.material.R.attr.colorPrimary) }
 
         currentSection = section
 
