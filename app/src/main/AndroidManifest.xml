@@ -113,15 +113,6 @@
       </intent-filter>
     </service>
 
-    <!-- Firebase Cloud Messaging has no permissions ¯\_(ツ)_/¯ -->
-    <service
-      android:name="net.squanchy.push.PushInstanceIDService"
-      tools:ignore="ExportedService">
-      <intent-filter>
-        <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-      </intent-filter>
-    </service>
-
     <service
       android:name="net.squanchy.notification.NotificationsIntentService"
       android:exported="false" />
