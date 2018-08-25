@@ -55,7 +55,7 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun ensureSignInOriginIsSet() {
-        if (!intent.extras.containsKey(EXTRA_SIGN_IN_ORIGIN)) {
+        if (intent.extras?.containsKey(EXTRA_SIGN_IN_ORIGIN) == false) {
             throw IllegalStateException("Sign in origin extra required but not set")
         }
     }
