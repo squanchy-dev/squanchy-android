@@ -134,13 +134,12 @@ class EventDetailsActivity : AppCompatActivity() {
 
     companion object {
 
-        private val EXTRA_EVENT_ID = EventDetailsActivity::class.java.canonicalName + ".event_id"
+        private val EXTRA_EVENT_ID = "${EventDetailsActivity::class.java.name}.event_id"
         private const val REQUEST_CODE_SIGNIN = 1235
 
-        fun createIntent(context: Context, eventId: String): Intent {
-            return Intent(context, EventDetailsActivity::class.java).apply {
+        fun createIntent(context: Context, eventId: String) =
+            Intent(context, EventDetailsActivity::class.java).apply {
                 putExtra(EXTRA_EVENT_ID, eventId)
             }
-        }
     }
 }

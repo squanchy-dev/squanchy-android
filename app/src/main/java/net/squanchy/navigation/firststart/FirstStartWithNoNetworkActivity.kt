@@ -180,7 +180,7 @@ class FirstStartWithNoNetworkActivity : AppCompatActivity() {
 
     companion object {
 
-        private val EXTRA_CONTINUATION_INTENT = FirstStartWithNoNetworkActivity::class.java.canonicalName + ".continuation_intent"
+        private val EXTRA_CONTINUATION_INTENT = "${FirstStartWithNoNetworkActivity::class.java.name}.continuation_intent"
         private const val DELAY_AFTER_ANIMATIONS_MILLIS: Long = 700
 
         fun createIntentContinuingTo(context: Context, continuationIntent: Intent) =
