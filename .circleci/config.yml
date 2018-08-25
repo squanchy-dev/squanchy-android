@@ -29,11 +29,14 @@ jobs:
           name: Create mock Play Services JSON
           command: .circleci/ci-scripts/ci-mock-google-services-setup.sh
 
-      # Run the main job command, delegating to Gradle
+      # Run the main job commands, delegating to Gradle
       # See https://issuetracker.google.com/issues/62217354 for the parallelism option
       - run:
-          name: Run Gradle :check command
-          command: ./gradlew check --continue -Djava.util.concurrent.ForkJoinPool.common.parallelism=2
+          name: Run static analysis
+          command: ./gradlew evaluateViolations -Djava.util.concurrent.ForkJoinPool.common.parallelism=2
+      - run:
+          name: Run tests
+          command: ./gradlew testRelease -Djava.util.concurrent.ForkJoinPool.common.parallelism=2
 
       # Store all the downloaded dependencies in the CI cache
       - save_cache:
