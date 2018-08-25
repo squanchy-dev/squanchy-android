@@ -102,30 +102,6 @@ play {
 //    track = 'production'
 }
 
-//detekt {
-//    profile = 'main'
-//    version = '1.0.0.RC8'
-//
-//    profile('main') {
-//        input = "$projectDir/src/main/java"
-//        config = teamPropsFile('static-analysis/detekt-config.yml')
-//        filters = '.*test.*,.*/resources/.*,.*/tmp/.*'
-//        output = "$projectDir/build/reports/detekt"
-//    }
-//
-//    idea {
-//        path = "$rootDir/.idea"
-//        codeStyleScheme = "$rootDir/.idea/codeStyles/Project.xml"
-//        inspectionsProfile = "$rootDir/.idea/inspectionProfiles/Squanchy.xml"
-//        report = "$projectDir/build/reports/detekt-idea"
-//        mask = "*.kt,"
-//    }
-//}
-
-//project.afterEvaluate {
-//    check.dependsOn tasks['detektCheck']
-//}
-
 dependencies {
     implementation project(':renderthread')
 

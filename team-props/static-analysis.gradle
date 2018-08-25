@@ -1,5 +1,5 @@
 apply plugin: 'com.novoda.static-analysis'
-//apply plugin: 'io.gitlab.arturbosch.detekt'
+apply plugin: 'io.gitlab.arturbosch.detekt'
 apply plugin: 'org.jlleitschuh.gradle.ktlint'
 
 staticAnalysis {
@@ -14,8 +14,20 @@ staticAnalysis {
 
     ktlint {
         android true
-        version ktLintVersion
+        version ktlintVersion
 //        reporters = [ReporterType.PLAIN_GROUP_BY_FILE, ReporterType.CHECKSTYLE]
         includeVariants { variant -> variant.name == 'release' }
+    }
+
+    detekt {
+        version detektVersion
+
+        defaultProfile {
+            input = "$projectDir/src/"
+            config = teamPropsFile('static-analysis/detekt-config.yml')
+            filters = '.*/test/.*,.*/resources/.*,.*/tmp/.*,.*/build/.*,.*/debug/.*'
+            output = "$projectDir/build/reports/detekt"
+            parallel = true
+        }
     }
 }
