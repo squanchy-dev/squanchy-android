@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
 
-  <!-- Loads of false positives :( -->
-  <issue id="StringFormatInvalid"
+  <!-- Looks like a bug with 3.2 AGP and AndroidX, Lint thinks we're not using AppCompat (but we are) -->
+  <issue id="AppCompatResource"
     severity="ignore" />
 
   <issue id="MissingTranslation"
