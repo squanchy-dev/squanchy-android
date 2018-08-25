@@ -17,13 +17,14 @@
       android:layout_width="match_parent"
       android:layout_height="?attr/actionBarSize">
 
-      <!-- We don't need a label for this text field -->
+      <!-- We don't need a label for this text field, nor is it important for autofill -->
       <EditText
         android:id="@+id/searchField"
         style="@style/Search.EditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:ignore="LabelFor" />
+        android:importantForAutofill="no"
+        tools:ignore="LabelFor,UnusedAttribute" />
 
     </androidx.appcompat.widget.Toolbar>
 

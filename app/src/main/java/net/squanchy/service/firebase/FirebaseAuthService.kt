@@ -9,7 +9,6 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import io.reactivex.Completable
-import io.reactivex.CompletableSource
 import io.reactivex.Observable
 import net.squanchy.service.repository.AuthService
 import net.squanchy.service.repository.User
@@ -36,18 +35,20 @@ class FirebaseAuthService(private val auth: FirebaseAuth) : AuthService {
             .onErrorResumeNext(deleteUserAndSignInWithCredentialIfLinkingFailed(user, credential))
     }
 
-    private fun deleteUserAndSignInWithCredentialIfLinkingFailed(user: FirebaseUser, credential: AuthCredential): (Throwable) -> CompletableSource =
-        {
-            if (!linkingFailed(it)) {
-                Completable.error(it)
-            } else {
-                if (!user.isAnonymous) {
-                    Completable.error(IllegalStateException("Trying to link user with Google with non anonymous user", it))
-                }
+    private fun deleteUserAndSignInWithCredentialIfLinkingFailed(
+        user: FirebaseUser,
+        credential: AuthCredential
+    ): (Throwable) -> Completable = { error ->
+        val linkingFailed = linkingFailed(error)
 
-                deleteUser(user).andThen(signInWithGoogleCredential(credential))
+        when {
+            linkingFailed && user.isAnonymous -> deleteUser(user).andThen(signInWithGoogleCredential(credential))
+            linkingFailed && !user.isAnonymous -> {
+                Completable.error(IllegalStateException("Trying to link user with Google with non anonymous user", error))
             }
+            else -> Completable.error(error)
         }
+    }
 
     private fun linkingFailed(error: Throwable): Boolean {
         return error is FirebaseAuthUserCollisionException
@@ -96,9 +97,9 @@ class FirebaseAuthService(private val auth: FirebaseAuth) : AuthService {
         }
     }
 
-    override fun currentUser(): Observable<Option<User>> {
-        return currentFirebaseUser().map { it.map { it.toUser() } }
-    }
+    override fun currentUser(): Observable<Option<User>> =
+        currentFirebaseUser()
+            .map { user -> user.map { it.toUser() } }
 
     override fun signOut(): Completable {
         auth.signOut()

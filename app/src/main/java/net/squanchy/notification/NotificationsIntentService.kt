@@ -8,6 +8,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.rxkotlin.subscribeBy
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Event
 import org.joda.time.LocalDateTime
@@ -20,12 +22,10 @@ class NotificationsIntentService : IntentService(NotificationsIntentService::cla
     private lateinit var notifier: Notifier
     private lateinit var preferences: SharedPreferences
 
-    private lateinit var subscriptions: CompositeDisposable
+    private val subscriptions = CompositeDisposable()
 
     override fun onCreate() {
         super.onCreate()
-
-        subscriptions = CompositeDisposable()
 
         val component = notificationComponent(this)
         service = component.service()
@@ -41,20 +41,20 @@ class NotificationsIntentService : IntentService(NotificationsIntentService::cla
 
         val now = LocalDateTime()
         if (shouldShowNotifications()) {
-            subscriptions.add(
-                sortedFavourites
-                    .map { events -> events.filter { it.startTime.isAfter(now) } }
-                    .map { events -> events.filter { isBeforeOrEqualTo(it.startTime, notificationIntervalEnd) } }
-                    .map(notificationCreator::createFrom)
-                    .subscribe(notifier::showNotifications)
-            )
+            subscriptions += sortedFavourites
+                .map { events -> events.filter { it.startTime.isAfter(now) } }
+                .map { events -> events.filter { isBeforeOrEqualTo(it.startTime, notificationIntervalEnd) } }
+                .map(notificationCreator::createFrom)
+                .subscribeBy(onNext = notifier::showNotifications, onError = ::logError)
         }
 
-        subscriptions.add(
-            sortedFavourites
-                .map { events -> events.filter { it.startTime.isAfter(notificationIntervalEnd) } }
-                .subscribe(::scheduleNextAlarm)
-        )
+        subscriptions += sortedFavourites
+            .map { events -> events.filter { it.startTime.isAfter(notificationIntervalEnd) } }
+            .subscribeBy(onNext = ::scheduleNextAlarm, onError = ::logError)
+    }
+
+    private fun logError(error: Throwable) {
+        Timber.e(error, "Error in NotificationsIntentService: ${error.javaClass}")
     }
 
     private fun shouldShowNotifications(): Boolean {

@@ -161,6 +161,7 @@ dependencies {
     implementation libraries.app.playServicesAuth
     implementation libraries.app.rxAndroid
     implementation libraries.app.rxJava
+    implementation libraries.app.rxKotlin
     implementation libraries.app.rxLint
     implementation libraries.app.androidxAppCompat
     implementation libraries.app.androidxConstraintLayout
