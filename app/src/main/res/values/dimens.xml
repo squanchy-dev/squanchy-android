@@ -71,6 +71,7 @@
   <dimen name="event_details_speaker_margin_bottom">8dp</dimen>
   <dimen name="event_details_title">24sp</dimen>
   <dimen name="event_details_fab_margin">16dp</dimen>
+  <dimen name="event_details_fab_image_size">48dp</dimen>
   <dimen name="event_details_body_row_margin_top">20dp</dimen>
   <dimen name="event_details_body_label_min_width">64dp</dimen>
   <dimen name="event_details_body_label_content_padding">16dp</dimen>
