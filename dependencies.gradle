@@ -15,7 +15,7 @@ ext {
 
     libraries = [
         app : [
-            algolia                 : 'com.algolia:algoliasearch-android:3.23.13',
+            algolia                 : 'com.algolia:algoliasearch-android:3.26.1',
             androidxAnnotations     : "androidx.annotation:annotation:${androidxVersion}",
             androidxAppCompat       : "androidx.appcompat:appcompat:${androidxVersion}",
             androidxConstraintLayout: 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2',
