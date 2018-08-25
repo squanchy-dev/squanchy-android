@@ -18,7 +18,7 @@ ext {
             algolia                 : 'com.algolia:algoliasearch-android:3.23.13',
             androidxAnnotations     : "androidx.annotation:annotation:${androidxVersion}",
             androidxAppCompat       : "androidx.appcompat:appcompat:${androidxVersion}",
-            androidxConstraintLayout: 'androidx.constraintlayout:constraintlayout:2.0.0-alpha1',
+            androidxConstraintLayout: 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2',
             androidxKtx             : "androidx.core:core-ktx:${androidxVersion}",
             androidxMaterial        : "com.google.android.material:material:${androidxVersion}",
             arrowCore               : 'io.arrow-kt:arrow-core:0.7.2',
