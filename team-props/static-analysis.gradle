@@ -5,10 +5,12 @@ staticAnalysis {
         maxErrors = 0
         maxWarnings = 0
     }
-    
+
     lintOptions {
         lintConfig teamPropsFile('static-analysis/lint-config.xml')
         warningsAsErrors true
+        includeVariants { variant -> variant.name == 'release' }
+        ignoreTestSources true // See https://groups.google.com/forum/#!topic/lint-dev/RGTvK_uHQGQ
     }
 }
 
