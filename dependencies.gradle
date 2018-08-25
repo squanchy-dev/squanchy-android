@@ -64,7 +64,7 @@ ext {
         android                   : 'com.android.tools.build:gradle:3.2.0-rc02',
         firebase                  : 'com.google.firebase:firebase-plugins:1.1.5',
         googleServices            : 'com.google.gms:google-services:3.2.0',
-        gradleStaticAnalysisPlugin: 'com.novoda:gradle-static-analysis-plugin:0.5.2',
+        gradleStaticAnalysisPlugin: 'com.novoda:gradle-static-analysis-plugin:0.6',
         playPublisher             : 'com.github.triplet.gradle:play-publisher:1.2.0'
     ]
 }
