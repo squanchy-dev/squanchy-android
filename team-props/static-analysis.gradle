@@ -15,7 +15,7 @@ staticAnalysis {
     ktlint {
         android true
         version ktlintVersion
-//        reporters = [ReporterType.PLAIN_GROUP_BY_FILE, ReporterType.CHECKSTYLE]
+        reporters = ["PLAIN_GROUP_BY_FILE", "CHECKSTYLE"]
         includeVariants { variant -> variant.name == 'release' }
     }
 
