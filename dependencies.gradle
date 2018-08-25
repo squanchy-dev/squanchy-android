@@ -22,7 +22,7 @@ ext {
             androidxKtx             : "androidx.core:core-ktx:${androidxVersion}",
             androidxMaterial        : "com.google.android.material:material:${androidxVersion}",
             arrowCore               : 'io.arrow-kt:arrow-core:0.7.2',
-            crashlytics             : 'com.crashlytics.sdk.android:crashlytics:2.9.4',
+            crashlytics             : 'com.crashlytics.sdk.android:crashlytics:2.9.5',
             dagger                  : "com.google.dagger:dagger:${daggerVersion}",
             daggerCompiler          : "com.google.dagger:dagger-compiler:${daggerVersion}",
             firebaseAuth            : 'com.google.firebase:firebase-auth:16.0.2',
