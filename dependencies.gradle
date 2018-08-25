@@ -1,7 +1,7 @@
 ext {
     daggerVersion = '2.16'
     glideVersion = '4.8.0'
-    androidxVersion = '1.0.0-beta01'
+    androidxVersion = '1.0.0-rc01'
     kotlinVersion = '1.2.51'
     moshiVersion = '1.6.0'
 
