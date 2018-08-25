@@ -109,6 +109,7 @@ play {
 
 detekt {
     profile = 'main'
+    version = '1.0.0.RC8'
 
     profile('main') {
         input = "$projectDir/src/main/java"
