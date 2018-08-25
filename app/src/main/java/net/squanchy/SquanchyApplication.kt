@@ -1,12 +1,14 @@
 package net.squanchy
 
-import android.annotation.SuppressLint
 import android.app.Application
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
 import com.google.firebase.database.FirebaseDatabase
 import io.fabric.sdk.android.Fabric
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.rxkotlin.subscribeBy
 import net.danlew.android.joda.JodaTimeAndroid
 import net.squanchy.injection.createApplicationComponent
 import timber.log.Timber
@@ -14,6 +16,8 @@ import timber.log.Timber
 class SquanchyApplication : Application() {
 
     val applicationComponent by lazy { createApplicationComponent(this) }
+
+    private val subscriptions = CompositeDisposable()
 
     override fun onCreate() {
         super.onCreate()
@@ -56,24 +60,31 @@ class SquanchyApplication : Application() {
         preloadTracks()
     }
 
-    @SuppressLint("CheckResult") // This is a fire-and-forget operation
     private fun preloadRemoteConfig() {
-        applicationComponent.remoteConfig()
+        subscriptions += applicationComponent.remoteConfig()
             .fetchNow()
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { Timber.i("Remote config prefetched") },
-                { throwable -> Timber.e(throwable, "Unable to preload the remote config") }
+            .subscribeBy(
+                onComplete = { Timber.i("Remote config prefetched") },
+                onError = { throwable -> Timber.e(throwable, "Unable to preload the remote config") }
             )
     }
 
-    @SuppressLint("CheckResult") // This is a fire-and-forget operation
     private fun preloadTracks() {
-        applicationComponent.tracksRepository()
+        subscriptions += applicationComponent.tracksRepository()
             .tracks()
-            .subscribe(
-                { Timber.d("Tracks prefetched: $it") },
-                { throwable -> Timber.e(throwable, "Unable to preload the tracks") }
+            .subscribeBy(
+                onNext = { Timber.d("Tracks prefetched: $it") },
+                onError = { throwable -> Timber.e(throwable, "Unable to preload the tracks") }
             )
+    }
+
+    override fun onTerminate() {
+        super.onTerminate()
+        // Best-effort to clear any outstanding subscriptions — mostly for RxLint's sake, as this method is not
+        // guaranteed to be called (and, in fact, it's almost never). But that's ok as those subscription will
+        // have long terminated (and unsubscribed) by the time the process is killed, and even if they hadn't,
+        // we'd be killing the process anyway, which is the most extreme form of unsubscription ;)
+        subscriptions.clear()
     }
 }

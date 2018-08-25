@@ -667,8 +667,6 @@
     <item name="android:paddingTop">@dimen/preference_header_margin_vertical</item>
   </style>
 
-  <style name="TrackFilters" parent="None" />
-
   <style name="TrackFilters.BackgroundDim" parent="None">
     <item name="android:background">@color/dialog_dim</item>
   </style>
