@@ -1,10 +1,9 @@
 apply plugin: 'com.novoda.static-analysis'
+//apply plugin: 'io.gitlab.arturbosch.detekt'
+apply plugin: 'org.jlleitschuh.gradle.ktlint'
 
 staticAnalysis {
-    penalty {
-        maxErrors = 0
-        maxWarnings = 0
-    }
+    penalty none
 
     lintOptions {
         lintConfig teamPropsFile('static-analysis/lint-config.xml')
@@ -12,6 +11,11 @@ staticAnalysis {
         includeVariants { variant -> variant.name == 'release' }
         ignoreTestSources true // See https://groups.google.com/forum/#!topic/lint-dev/RGTvK_uHQGQ
     }
-}
 
-apply from: teamPropsFile('ktlint.gradle')
+    ktlint {
+        android true
+        version ktLintVersion
+//        reporters = [ReporterType.PLAIN_GROUP_BY_FILE, ReporterType.CHECKSTYLE]
+        includeVariants { variant -> variant.name == 'release' }
+    }
+}
