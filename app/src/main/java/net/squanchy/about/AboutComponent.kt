@@ -1,12 +1,11 @@
 package net.squanchy.about
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
+import dagger.Component
+import net.squanchy.injection.ActivityContextModule
 import net.squanchy.injection.ActivityLifecycle
 import net.squanchy.navigation.NavigationModule
 import net.squanchy.navigation.Navigator
-
-import dagger.Component
-import net.squanchy.injection.ActivityContextModule
 
 fun aboutComponent(activity: AppCompatActivity) =
     DaggerAboutComponent.builder()

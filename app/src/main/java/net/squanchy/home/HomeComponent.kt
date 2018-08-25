@@ -1,6 +1,6 @@
 package net.squanchy.home
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import dagger.Component
 import net.squanchy.analytics.Analytics
 import net.squanchy.injection.ActivityContextModule

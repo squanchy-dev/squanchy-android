@@ -2,12 +2,12 @@ package net.squanchy.schedule.tracksfilter
 
 import android.content.Context
 import android.graphics.Color
-import android.support.v4.content.ContextCompat
-import android.support.v7.recyclerview.extensions.ListAdapter
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Track
 import net.squanchy.schedule.tracksfilter.widget.FilterChipView
@@ -38,11 +38,12 @@ internal class TracksFilterAdapter(
 }
 
 private object DiffCallback : DiffUtil.ItemCallback<CheckableTrack>() {
-    override fun areItemsTheSame(oldItem: CheckableTrack?, newItem: CheckableTrack?): Boolean {
-        return oldItem?.track()?.id == newItem?.track()?.id
+
+    override fun areItemsTheSame(oldItem: CheckableTrack, newItem: CheckableTrack): Boolean {
+        return oldItem.track().id == newItem.track().id
     }
 
-    override fun areContentsTheSame(oldItem: CheckableTrack?, newItem: CheckableTrack?): Boolean {
+    override fun areContentsTheSame(oldItem: CheckableTrack, newItem: CheckableTrack): Boolean {
         return oldItem == newItem
     }
 }

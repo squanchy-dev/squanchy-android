@@ -1,7 +1,7 @@
 package net.squanchy.notification
 
 import android.content.Context
-import android.support.v4.app.NotificationManagerCompat
+import androidx.core.app.NotificationManagerCompat
 import dagger.Module
 import dagger.Provides
 import net.squanchy.injection.ServiceContextModule

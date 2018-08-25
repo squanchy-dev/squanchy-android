@@ -3,13 +3,12 @@ package net.squanchy.support.widget
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Outline
-import android.support.annotation.Px
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewOutlineProvider
 import android.widget.FrameLayout
-import androidx.content.res.use
-
+import androidx.annotation.Px
+import androidx.core.content.res.use
 import net.squanchy.R
 
 open class CardLayout @JvmOverloads constructor(

@@ -1,10 +1,10 @@
 package net.squanchy.venue
 
 import android.content.Context
-import android.support.design.widget.CoordinatorLayout
-import android.support.v7.widget.Toolbar
 import android.util.AttributeSet
 import android.widget.ImageView
+import androidx.appcompat.widget.Toolbar
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.merge_venue_info_layout.view.*

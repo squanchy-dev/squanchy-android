@@ -5,9 +5,6 @@ import android.annotation.SuppressLint;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Build;
-import android.support.annotation.FloatRange;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.lang.reflect.Constructor;
@@ -15,6 +12,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import androidx.annotation.FloatRange;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import me.eugeniomarletti.renderthread.typeannotation.CanvasProperty;
 import me.eugeniomarletti.renderthread.typeannotation.DisplayListCanvas;
 import me.eugeniomarletti.renderthread.typeannotation.RenderNodeAnimator;

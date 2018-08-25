@@ -1,11 +1,10 @@
 package net.squanchy.support.widget
 
 import android.content.Context
-import android.support.annotation.Px
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
-
+import androidx.annotation.Px
 import net.squanchy.R
 
 class MaxSizeFrameLayout @JvmOverloads constructor(

@@ -1,6 +1,6 @@
 package net.squanchy.remoteconfig
 
-import android.support.annotation.XmlRes
+import androidx.annotation.XmlRes
 
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings

@@ -17,6 +17,6 @@ android {
     }
 
     dependencies {
-        implementation libraries.app.supportAnnotations
+        implementation libraries.app.androidxAnnotations
     }
 }

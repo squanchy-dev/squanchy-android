@@ -10,7 +10,7 @@
   android:paddingBottom="@dimen/card_padding_bottom"
   tools:layout_margin="16dp">
 
-  <android.support.constraint.ConstraintLayout
+  <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -95,6 +95,6 @@
       app:layout_constraintBottom_toBottomOf="@+id/timestamp"
       tools:visibility="visible" />
 
-  </android.support.constraint.ConstraintLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
 
 </net.squanchy.schedule.view.TalkEventItemView>

@@ -1,6 +1,6 @@
 package net.squanchy.venue
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import dagger.Component
 import net.squanchy.injection.ActivityContextModule
 import net.squanchy.injection.ActivityLifecycle

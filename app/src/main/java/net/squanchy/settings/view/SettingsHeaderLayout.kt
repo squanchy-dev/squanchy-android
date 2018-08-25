@@ -1,10 +1,10 @@
 package net.squanchy.settings.view
 
 import android.content.Context
-import android.support.design.widget.AppBarLayout
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import arrow.core.Option
+import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.activity_settings.view.*
 import net.squanchy.R
 import net.squanchy.imageloader.ImageLoader

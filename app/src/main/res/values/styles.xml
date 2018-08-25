@@ -269,6 +269,7 @@
 
   <style name="EventDetails.Fab" parent="None">
     <item name="backgroundTint">@color/selector_color_primary</item>
+    <item name="maxImageSize">@dimen/event_details_fab_image_size</item>
     <item name="android:clickable">true</item>
     <item name="android:foreground">@drawable/white_circle_bound_touch_feedback</item>
     <item name="android:src">@drawable/animselector_ic_favorite</item>
@@ -665,8 +666,6 @@
     <item name="android:paddingEnd">?android:attr/listPreferredItemPaddingEnd</item>
     <item name="android:paddingTop">@dimen/preference_header_margin_vertical</item>
   </style>
-
-  <style name="TrackFilters" parent="None" />
 
   <style name="TrackFilters.BackgroundDim" parent="None">
     <item name="android:background">@color/dialog_dim</item>

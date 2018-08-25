@@ -1,33 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
-  <android.support.design.widget.AppBarLayout
+  <com.google.android.material.appbar.AppBarLayout
     style="@style/Search.Appbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
       android:id="@+id/search_toolbar"
       style="@style/Search.Toolbar"
       android:theme="@style/ThemeOverlay.Squanchy.Toolbar.Search"
       android:layout_width="match_parent"
       android:layout_height="?attr/actionBarSize">
 
-      <!-- We don't need a label for this text field -->
+      <!-- We don't need a label for this text field, nor is it important for autofill -->
       <EditText
         android:id="@+id/searchField"
         style="@style/Search.EditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:ignore="LabelFor" />
+        android:importantForAutofill="no"
+        tools:ignore="LabelFor,UnusedAttribute" />
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
-  </android.support.design.widget.AppBarLayout>
+  </com.google.android.material.appbar.AppBarLayout>
 
   <net.squanchy.search.view.SearchRecyclerView
     android:id="@+id/searchRecyclerView"
@@ -54,4 +55,4 @@
       android:textAlignment="center" />
   </FrameLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

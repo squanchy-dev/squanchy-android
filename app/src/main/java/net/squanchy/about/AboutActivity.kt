@@ -1,12 +1,9 @@
 package net.squanchy.about
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import kotlinx.android.synthetic.main.activity_about.fossButton
-import kotlinx.android.synthetic.main.activity_about.githubButton
-import kotlinx.android.synthetic.main.activity_about.websiteButton
-import kotlinx.android.synthetic.main.activity_about.toolbar
+import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_about.*
 import net.squanchy.R
 import net.squanchy.support.view.enableLightNavigationBar
 

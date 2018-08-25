@@ -1,11 +1,10 @@
 package net.squanchy.eventdetails.widget
 
 import android.content.Context
-import android.support.design.widget.CoordinatorLayout
 import android.util.AttributeSet
-import androidx.view.isVisible
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.isVisible
 import kotlinx.android.synthetic.main.activity_event_details.view.*
-import net.squanchy.R
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Event.Type
 import net.squanchy.support.widget.SpeakerView

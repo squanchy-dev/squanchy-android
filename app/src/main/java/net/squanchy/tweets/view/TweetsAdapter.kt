@@ -1,10 +1,10 @@
 package net.squanchy.tweets.view
 
 import android.content.Context
-import android.support.v7.recyclerview.extensions.ListAdapter
-import android.support.v7.util.DiffUtil
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import net.squanchy.R
 import net.squanchy.tweets.domain.TweetLinkInfo
 import net.squanchy.tweets.domain.view.TweetViewModel
@@ -38,11 +38,11 @@ class TweetsAdapter(
 }
 
 private object DiffCallback : DiffUtil.ItemCallback<TweetViewModel>() {
-    override fun areItemsTheSame(oldItem: TweetViewModel?, newItem: TweetViewModel?): Boolean {
-        return oldItem?.id == newItem?.id
+    override fun areItemsTheSame(oldItem: TweetViewModel, newItem: TweetViewModel): Boolean {
+        return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: TweetViewModel?, newItem: TweetViewModel?): Boolean {
+    override fun areContentsTheSame(oldItem: TweetViewModel, newItem: TweetViewModel): Boolean {
         return oldItem == newItem
     }
 }

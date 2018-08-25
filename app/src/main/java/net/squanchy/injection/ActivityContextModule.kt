@@ -1,7 +1,7 @@
 package net.squanchy.injection
 
 import android.app.Activity
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
 import dagger.Module
 import dagger.Provides

@@ -1,7 +1,7 @@
 package net.squanchy.tweets.view
 
 import android.content.Context
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
 import net.squanchy.R
 import net.squanchy.tweets.domain.view.TweetViewModel
 import org.joda.time.DateTime

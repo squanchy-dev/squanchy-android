@@ -2,13 +2,13 @@ package net.squanchy.support.widget
 
 import android.os.Parcel
 import android.os.Parcelable
-import android.support.annotation.IdRes
-import android.support.annotation.Px
-import android.support.v7.widget.ActionMenuView
-import android.support.v7.widget.Toolbar
 import android.view.View
 import android.view.ViewGroup
-import androidx.view.children
+import androidx.annotation.IdRes
+import androidx.annotation.Px
+import androidx.appcompat.widget.ActionMenuView
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.children
 
 fun Toolbar.calculateMenuItemCenterCoordinates(@IdRes menuItemId: Int): OriginCoordinates? {
     val actionMenuView = children.find { it is ActionMenuView } as? ViewGroup

@@ -11,7 +11,7 @@
   tools:ignore="MergeRootFrame">
 
   <!-- This is not accessible to the keyboard by design, it should only stop taps from going through it -->
-  <android.support.constraint.ConstraintLayout
+  <androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/filtersRoot"
     style="@style/TrackFilters.Filters"
     android:layout_width="match_parent"
@@ -40,7 +40,7 @@
       app:layout_constraintTop_toBottomOf="@+id/dialogTitle"
       app:layout_constraintEnd_toEndOf="@+id/dialogTitle" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/trackFiltersList"
       style="@style/TrackFilters.Filters.Tracks"
       android:layout_width="@dimen/match_constraint"
@@ -49,6 +49,6 @@
       app:layout_constraintTop_toBottomOf="@+id/dialogSubtitle"
       app:layout_constraintEnd_toEndOf="parent" />
 
-  </android.support.constraint.ConstraintLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

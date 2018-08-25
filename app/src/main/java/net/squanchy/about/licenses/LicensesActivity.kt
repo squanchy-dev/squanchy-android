@@ -1,11 +1,10 @@
 package net.squanchy.about.licenses
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
-import kotlinx.android.synthetic.main.activity_licenses.librariesList
-import kotlinx.android.synthetic.main.activity_licenses.toolbar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.activity_licenses.*
 import net.squanchy.R
 import net.squanchy.support.view.CardSpacingItemDecorator
 

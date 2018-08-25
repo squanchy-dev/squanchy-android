@@ -1,6 +1,6 @@
 package net.squanchy.about.licenses
 
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
 
 import net.squanchy.R
 

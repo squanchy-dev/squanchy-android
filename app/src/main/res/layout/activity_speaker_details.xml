@@ -6,7 +6,7 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
-  <android.support.design.widget.AppBarLayout
+  <com.google.android.material.appbar.AppBarLayout
     android:id="@+id/appbar"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     android:layout_width="@dimen/match_constraint"
@@ -15,7 +15,7 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintTop_toTopOf="parent">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
       android:id="@+id/toolbar"
       android:layout_width="match_parent"
       android:layout_height="?attr/actionBarSize"
@@ -60,9 +60,9 @@
 
     </net.squanchy.speaker.widget.SpeakerHeaderView>
 
-  </android.support.design.widget.AppBarLayout>
+  </com.google.android.material.appbar.AppBarLayout>
 
-  <android.support.v4.widget.NestedScrollView
+  <androidx.core.widget.NestedScrollView
     style="@style/SpeakerDetails.Bio"
     android:layout_width="@dimen/match_constraint"
     android:layout_height="@dimen/match_constraint"
@@ -79,6 +79,6 @@
       android:padding="@dimen/speaker_details_bio_padding_horizontal"
       tools:text="Now this is a story all about how\nMy life got flipped-turned upside down\nAnd I'd like to take a minute\nJust sit right there\nI'll tell you how I became the prince of a town called Bel-Air" />
 
-  </android.support.v4.widget.NestedScrollView>
+  </androidx.core.widget.NestedScrollView>
 
 </net.squanchy.speaker.widget.SpeakerDetailsLayout>

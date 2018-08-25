@@ -3,16 +3,16 @@ package net.squanchy.signin
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.BottomSheetBehavior
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
 import android.view.Gravity
 import android.view.View
-import androidx.view.isVisible
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.snackbar.Snackbar
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposables
 import kotlinx.android.synthetic.main.activity_signin.*
@@ -55,7 +55,7 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun ensureSignInOriginIsSet() {
-        if (!intent.extras.containsKey(EXTRA_SIGN_IN_ORIGIN)) {
+        if (intent.extras?.containsKey(EXTRA_SIGN_IN_ORIGIN) == false) {
             throw IllegalStateException("Sign in origin extra required but not set")
         }
     }

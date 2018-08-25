@@ -4,7 +4,7 @@ package net.squanchy.support
 
 import android.content.Context
 import android.content.ContextWrapper
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
 tailrec fun Context?.unwrapToActivityContext(): AppCompatActivity =
     when (this) {

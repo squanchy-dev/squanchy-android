@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
 
-  <!-- Loads of false positives :( -->
-  <issue id="StringFormatInvalid"
+  <!-- Looks like a bug with 3.2 AGP and AndroidX, Lint thinks we're not using AppCompat (but we are) -->
+  <issue id="AppCompatResource"
     severity="ignore" />
+
+  <!-- As of RxLint 1.6.x, it's still using the Lint 1 API -->
+  <issue id="ObsoleteLintCustomCheck">
+    <ignore path="*rxlint*" />
+  </issue>
 
   <issue id="MissingTranslation"
     severity="ignore" />
@@ -41,7 +46,8 @@
   </issue>
 
   <!-- The Google Services JSON plugin generates some API keys even if we don't actually use them -->
-  <issue id="UnusedResources" severity="informational">
+  <issue id="UnusedResources"
+    severity="informational">
     <ignore path="*generated/res/google-services/*" />
   </issue>
 

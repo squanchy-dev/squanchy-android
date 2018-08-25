@@ -8,7 +8,7 @@
   android:layout_height="match_parent"
   tools:context="net.squanchy.home.HomeActivity">
 
-  <android.support.design.widget.AppBarLayout
+  <com.google.android.material.appbar.AppBarLayout
     android:id="@+id/appBarLayout"
     style="@style/Squanchy.Appbar"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
@@ -18,12 +18,12 @@
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintEnd_toEndOf="parent">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
       android:id="@+id/toolbar"
       android:layout_width="match_parent"
       android:layout_height="wrap_content" />
 
-  </android.support.design.widget.AppBarLayout>
+  </com.google.android.material.appbar.AppBarLayout>
 
   <include layout="@layout/merge_no_favorites_view"
     android:layout_width="@dimen/match_constraint"
@@ -35,7 +35,7 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent" />
 
-  <android.support.constraint.Group
+  <androidx.constraintlayout.widget.Group
     android:id="@+id/emptyViewSignedOut"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"

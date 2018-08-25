@@ -49,7 +49,6 @@
   <dimen name="favorites_empty_image_margin_bottom">16dp</dimen>
   <dimen name="favorites_empty_blurb_margin_bottom">24dp</dimen>
   <dimen name="favorites_empty_blurb_text">16sp</dimen>
-  <dimen name="favorites_empty_cta_height">56dp</dimen>
   <dimen name="favorites_empty_cta_padding_horizontal">24dp</dimen>
 
   <dimen name="search_card_item_padding">8dp</dimen>
@@ -71,6 +70,7 @@
   <dimen name="event_details_speaker_margin_bottom">8dp</dimen>
   <dimen name="event_details_title">24sp</dimen>
   <dimen name="event_details_fab_margin">16dp</dimen>
+  <dimen name="event_details_fab_image_size">48dp</dimen>
   <dimen name="event_details_body_row_margin_top">20dp</dimen>
   <dimen name="event_details_body_label_min_width">64dp</dimen>
   <dimen name="event_details_body_label_content_padding">16dp</dimen>
@@ -125,7 +125,6 @@
   <dimen name="about_app_name_text">26sp</dimen>
   <dimen name="about_attribution_label_text">12sp</dimen>
   <dimen name="about_powered_by_margin_top">8dp</dimen>
-  <dimen name="about_powered_by_margin_bottom">16dp</dimen>
   <dimen name="about_squanchy_text">48sp</dimen>
   <dimen name="about_squanchy_website_text">12sp</dimen>
   <dimen name="about_squanchy_website_padding">2dp</dimen>
@@ -149,14 +148,12 @@
   <dimen name="onboarding_skip_button_margin_end">12dp</dimen>
 
   <dimen name="onboarding_logo_height">140dp</dimen>
-  <dimen name="onboarding_logo_margin_top">72dp</dimen>
   <dimen name="onboarding_content_margin_horizontal">40dp</dimen>
   <dimen name="onboarding_title_margin_top">80dp</dimen>
   <dimen name="onboarding_title_text">20sp</dimen>
   <dimen name="onboarding_blurb_margin_top">8dp</dimen>
   <dimen name="onboarding_blurb_text">16sp</dimen>
   <dimen name="onboarding_blurb_line_spacing_extra">4dp</dimen>
-  <dimen name="onboarding_cta_height">56dp</dimen>
   <dimen name="onboarding_cta_margin_top">8dp</dimen>
   <dimen name="onboarding_cta_margin_bottom">40dp</dimen>
 
@@ -207,7 +204,6 @@
   <dimen name="track_filters_tracks_appear_delta_y">22dp</dimen>
   <dimen name="track_filters_item_padding_vertical">8dp</dimen>
   <dimen name="track_filters_item_padding_horizontal">16dp</dimen>
-  <dimen name="track_filters_item_corner_radius">200dp</dimen>
   <dimen name="track_filters_item_stroke_width">2dp</dimen>
 
   <dimen name="schedule_empty_view_text_size">16sp</dimen>

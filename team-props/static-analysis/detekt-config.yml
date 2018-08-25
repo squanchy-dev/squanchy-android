@@ -24,10 +24,10 @@ build:
   maxIssues: 0
 
   weights:
-    # complexity: 2
-    # LongParameterList: 1
-    # style: 1
-    # comments: 1
+    complexity: 1
+    formatting: 1
+    LongParameterList: 1
+    comments: 1
 
 processors:
   active: true
@@ -41,11 +41,11 @@ processors:
 console-reports:
   active: true
   exclude:
-  #  - 'ProjectStatisticsReport'
-  #  - 'ComplexityReport'
-  #  - 'NotificationReport'
-  #  - 'FindingsReport'
-  #  - 'BuildFailureReport'
+    - 'ProjectStatisticsReport'
+    - 'ComplexityReport'
+    - 'NotificationReport'
+  #  - 'FindingsReport'         If you exclude this, issues won't show on the console otherwise
+  #  - 'BuildFailureReport'     This NEEDS to be commented out, the build won't fail if we exclude it
 
 output-reports:
   active: true
@@ -84,7 +84,7 @@ complexity:
   ComplexMethod:
     active: true
     threshold: 10
-    ignoreSingleWhenExpression: false
+    ignoreSingleWhenExpression: true
   LabeledExpression:
     active: false
   LargeClass:
@@ -95,7 +95,7 @@ complexity:
     threshold: 20
   LongParameterList:
     active: true
-    threshold: 6
+    threshold: 7
     ignoreDefaultParameters: false
   MethodOverloading:
     active: false
@@ -175,7 +175,6 @@ exceptions:
     active: false
   ThrowingExceptionsWithoutMessageOrCause:
     active: true
-    exceptions: 'IllegalArgumentException,IllegalStateException,IOException'
   ThrowingNewInstanceOfSameException:
     active: false
   TooGenericExceptionCaught:
@@ -199,7 +198,7 @@ exceptions:
 
 formatting:
   active: true
-  android: true
+  android: false
   autoCorrect: true
   ChainWrapping:
     active: true
@@ -222,7 +221,7 @@ formatting:
     continuationIndentSize: 4
   MaximumLineLength:
     active: true
-    maxLineLength: 150
+    maxLineLength: 120
   ModifierOrdering:
     active: true
     autoCorrect: true
@@ -423,7 +422,7 @@ style:
     excludeImportStatements: false
     excludeCommentStatements: false
   MayBeConst:
-    active: true
+    active: false
   ModifierOrder:
     active: true
   NestedClassesVisibility:
@@ -431,7 +430,7 @@ style:
   NewLineAtEndOfFile:
     active: true
   NoTabs:
-    active: true
+    active: false
   OptionalAbstractKeyword:
     active: true
   OptionalUnit:
@@ -439,7 +438,7 @@ style:
   OptionalWhenBraces:
     active: false
   PreferToOverPairSyntax:
-    active: true
+    active: false
   ProtectedMemberInFinalClass:
     active: true
   RedundantVisibilityModifierRule:
@@ -477,6 +476,8 @@ style:
     excludeAnnotatedClasses: ""
   UtilityClassWithPublicConstructor:
     active: false
+  VarCouldBeVal:
+    active: true
   WildcardImport:
     active: true
     excludeImports: 'kotlinx.android.synthetic.*'

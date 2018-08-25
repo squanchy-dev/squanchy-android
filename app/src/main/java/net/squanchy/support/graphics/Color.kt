@@ -1,13 +1,13 @@
 package net.squanchy.support.graphics
 
 import android.content.res.ColorStateList
-import android.support.annotation.ColorInt
-import android.support.annotation.FloatRange
-import android.support.v4.graphics.ColorUtils
-import android.support.v4.graphics.ColorUtils.HSLToColor
-import android.support.v4.graphics.ColorUtils.calculateContrast
-import android.support.v4.graphics.ColorUtils.colorToHSL
-import android.support.v4.graphics.ColorUtils.compositeColors
+import androidx.annotation.ColorInt
+import androidx.annotation.FloatRange
+import androidx.core.graphics.ColorUtils
+import androidx.core.graphics.ColorUtils.HSLToColor
+import androidx.core.graphics.ColorUtils.calculateContrast
+import androidx.core.graphics.ColorUtils.colorToHSL
+import androidx.core.graphics.ColorUtils.compositeColors
 
 @ColorInt
 internal fun Int.pickBestTextColorByContrast(@ColorInt firstTextColor: Int, @ColorInt secondTextColor: Int): Int {

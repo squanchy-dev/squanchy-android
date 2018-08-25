@@ -1,10 +1,10 @@
 package net.squanchy.eventdetails.widget
 
 import android.content.Context
-import android.support.design.widget.AppBarLayout
 import android.util.AttributeSet
 import android.view.View
-import androidx.view.isVisible
+import androidx.core.view.isVisible
+import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.activity_event_details.view.*
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.support.widget.SpeakerView

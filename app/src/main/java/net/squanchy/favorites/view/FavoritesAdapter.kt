@@ -1,10 +1,10 @@
 package net.squanchy.favorites.view
 
 import android.content.Context
-import android.support.v7.recyclerview.extensions.ListAdapter
-import android.support.v7.util.DiffUtil
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Event
 
@@ -73,11 +73,12 @@ internal class FavoritesAdapter(
 }
 
 private object DiffCallback : DiffUtil.ItemCallback<FavoritesItem>() {
-    override fun areItemsTheSame(oldItem: FavoritesItem?, newItem: FavoritesItem?): Boolean {
-        return oldItem?.id == newItem?.id
+
+    override fun areItemsTheSame(oldItem: FavoritesItem, newItem: FavoritesItem): Boolean {
+        return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: FavoritesItem?, newItem: FavoritesItem?): Boolean {
+    override fun areContentsTheSame(oldItem: FavoritesItem, newItem: FavoritesItem): Boolean {
         return oldItem == newItem
     }
 }
