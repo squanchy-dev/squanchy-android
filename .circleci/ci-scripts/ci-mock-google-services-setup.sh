@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-export APP_MODULE_PATH="app"
+export APP_MODULE_PATH="workspace/repo/app"
 export JSON_PATH="$APP_MODULE_PATH/google-services.json"
 
 if [ ! -e ${JSON_PATH} ]; then
