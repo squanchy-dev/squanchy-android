@@ -51,3 +51,4 @@ subprojects {
 }
 
 apply from: teamPropsFile('setup-root-tasks.gradle')
+apply from: teamPropsFile('warm-gradle-caches.gradle')

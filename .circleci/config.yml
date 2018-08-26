@@ -1,62 +1,150 @@
 version: 2
 
+aliases:
+  # Build Tools cache aliases
+  - &restore-build-tools-cache
+    name: Restore Android build tools cache
+    keys:
+      - v3-build-tools-{{ checksum "workspace/repo/.circleci/config.yml" }}-{{ checksum "workspace/repo/gradle.properties" }}-{{ checksum "workspace/repo/dependencies.gradle" }}
+  - &save-build-tools-cache
+    name: Save Android build tools cache
+    paths:
+      - /opt/android/sdk/build-tools
+    key: v3-build-tools-{{ checksum "workspace/repo/.circleci/config.yml" }}-{{ checksum "workspace/repo/gradle.properties" }}-{{ checksum "workspace/repo/dependencies.gradle" }}
+
+  # Gradle cache aliases
+  - &restore-gradle-cache
+    name: Restore Gradle cache
+    keys:
+      - v3-gradle-{{ checksum "workspace/repo/.circleci/config.yml" }}-{{ checksum "workspace/repo/gradle.properties" }}-{{ checksum "workspace/repo/dependencies.gradle" }}
+  - &save-gradle-cache
+    name: Save Gradle cache
+    paths:
+      - ~/.gradle/caches
+      - ~/.gradle/wrapper
+    key: v3-gradle-{{ checksum "workspace/repo/.circleci/config.yml" }}-{{ checksum "workspace/repo/gradle.properties" }}-{{ checksum "workspace/repo/dependencies.gradle" }}
+
+  # Android Gradle build cache aliases
+  - &restore-android-build-cache
+    name: Restore Android Gradle build cache
+    keys:
+      - v3-build-cache-{{ checksum "workspace/repo/.circleci/config.yml" }}-{{ checksum "workspace/repo/gradle.properties" }}-{{ checksum "workspace/repo/dependencies.gradle" }}
+  - &save-android-build-cache
+    name: Save Android Gradle build cache
+    paths:
+      - ~/.android/build-cache
+    key: v3-build-cache-{{ checksum "workspace/repo/.circleci/config.yml" }}-{{ checksum "workspace/repo/gradle.properties" }}-{{ checksum "workspace/repo/dependencies.gradle" }}
+
+  - &ensure-android-sdk-is-ready
+    name: Ensure Android SDK install is up-to-date
+    command: workspace/repo/.circleci/ci-scripts/ensure-sdkmanager.sh
+
+  - &download-gradle-dependencies
+    name: Download Gradle dependencies
+    command: cd workspace/repo/ && ./gradlew downloadDependencies
+
+circle_ci_android_container_config: &circle_ci_android_container_config
+  working_directory: ~/squanchy
+
+  docker:
+   - image: circleci/android:api-28-alpha
+
+  environment:
+   ANDROID_HOME: /opt/android/sdk
+   APPLICATION_ID: net.squanchy.example
+   FABRIC_API_KEY: 0000000000000000000000000000000000000000
+   ALGOLIA_APPLICATION_ID: ABCDEFGH12
+   ALGOLIA_API_KEY: 00000000000000000000000000000000
+
+attach_workspace: &attach_workspace
+  attach_workspace:
+    at: workspace
+
 jobs:
-  build:
-    working_directory: ~/squanchy
-
-    docker:
-      - image: circleci/android:api-27-alpha
-
-    environment:
-      ANDROID_HOME: /opt/android/sdk
-      APPLICATION_ID: net.squanchy.example
-      FABRIC_API_KEY: 0000000000000000000000000000000000000000
-      ALGOLIA_APPLICATION_ID: ABCDEFGH12
-      ALGOLIA_API_KEY: 00000000000000000000000000000000
-
+  checkout:
+    <<: *circle_ci_android_container_config
     steps:
-      - checkout
-
-      # Restore cached dependencies (if any)
-      - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
+      - checkout:
+          path: workspace/repo
 
       # Prepare the container for the build
-      - run:
-          name: Ensure Android SDK install is up-to-date
-          command: .circleci/ci-scripts/ensure-sdkmanager.sh
+      - run: *ensure-android-sdk-is-ready
       - run:
           name: Create mock Play Services JSON
-          command: .circleci/ci-scripts/ci-mock-google-services-setup.sh
+          command: workspace/repo/.circleci/ci-scripts/ci-mock-google-services-setup.sh
 
-      # Run the main job commands, delegating to Gradle
+      # Persist repo code
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - repo
+
+  prepare_for_checks:
+    <<: *circle_ci_android_container_config
+    steps:
+      - *attach_workspace
+      - restore_cache: *restore-gradle-cache
+      - restore_cache: *restore-android-build-cache
+      - restore_cache: *restore-build-tools-cache
+
+      - run: *download-gradle-dependencies
+
+      - save_cache: *save-android-build-cache
+      - save_cache: *save-gradle-cache
+      - save_cache: *save-build-tools-cache
+
+      # Persist built app code
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - repo/app/build
+
+  static_analysis:
+    <<: *circle_ci_android_container_config
+    steps:
+      - *attach_workspace
+      - restore_cache: *restore-gradle-cache
+      - restore_cache: *restore-android-build-cache
+      - restore_cache: *restore-build-tools-cache
+
       # See https://issuetracker.google.com/issues/62217354 for the parallelism option
       - run:
           name: Run static analysis
-          command: ./gradlew evaluateViolations -Djava.util.concurrent.ForkJoinPool.common.parallelism=2
-      - run:
-          name: Run tests
-          command: ./gradlew testRelease -Djava.util.concurrent.ForkJoinPool.common.parallelism=2
-
-      # Store all the downloaded dependencies in the CI cache
-      - save_cache:
-          paths:
-            # Android SDK
-            - /usr/local/android-sdk-linux/tools
-            - /usr/local/android-sdk-linux/platform-tools
-            - /usr/local/android-sdk-linux/build-tools
-            - /usr/local/android-sdk-linux/licenses
-            - /usr/local/android-sdk-linux/extras/google/m2repository
-
-            # Gradle dependencies
-            - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
+          command: cd workspace/repo && ./gradlew evaluateViolations -Djava.util.concurrent.ForkJoinPool.common.parallelism=2
 
       # Collect static analysis reports as build artifacts
       - store_artifacts:
-          path: app/build/reports
+          path: workspace/repo/app/build/reports
           destination: reports
+
+  tests:
+    <<: *circle_ci_android_container_config
+    steps:
+      - *attach_workspace
+      - restore_cache: *restore-gradle-cache
+      - restore_cache: *restore-android-build-cache
+      - restore_cache: *restore-build-tools-cache
+
+      # See https://issuetracker.google.com/issues/62217354 for the parallelism option
+      - run:
+          name: Run unit tests
+          command: cd workspace/repo && ./gradlew testRelease -Djava.util.concurrent.ForkJoinPool.common.parallelism=2
 
       # Collect JUnit test results
       - store_test_results:
-          path: app/build/test-results
+          path: workspace/repo/app/build/test-results
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - checkout
+      - prepare_for_checks:
+          requires:
+            - checkout
+      - static_analysis:
+          requires:
+            - prepare_for_checks
+      - tests:
+          requires:
+            - prepare_for_checks

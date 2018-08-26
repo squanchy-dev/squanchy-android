@@ -1,0 +1,35 @@
+// Adapted from: https://gist.github.com/matthiasbalke/3c9ecccbea1d460ee4c3fbc5843ede4a
+
+task downloadDependencies {
+    dependsOn ':app:androidDependencies'
+    dependsOn 'app:dependencies'
+    doLast {
+        project.rootProject.allprojects.each { subProject ->
+            subProject.buildscript.configurations.each { configuration ->
+                resolveConfiguration(configuration)
+            }
+            subProject.configurations.each { configuration ->
+                resolveConfiguration(configuration)
+            }
+        }
+    }
+}
+
+private static void resolveConfiguration(configuration) {
+    if (isResolveableConfiguration(configuration)) {
+        configuration.resolve()
+    }
+}
+
+private static boolean isResolveableConfiguration(configuration) {
+    if (configuration.isCanBeResolved() == false) {
+        return false
+    }
+
+    def blacklistedConfigurations = [
+        'detekt', 'ktlint', 'apiElements', 'implementation', 'runtimeelements', 'runtimeonly', 'testimplementation', 'testruntimeonly',
+        'generatedimplementation', 'generatedruntimeonly', 'classpath'
+    ]
+    def configurationName = configuration.name.toLowerCase(Locale.US)
+    return !blacklistedConfigurations.any { configurationName.contains(it) }
+}
