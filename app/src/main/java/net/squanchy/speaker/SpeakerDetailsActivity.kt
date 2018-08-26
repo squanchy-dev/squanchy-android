@@ -94,10 +94,8 @@ class SpeakerDetailsActivity : AppCompatActivity() {
         val twitterItem = menu.findItem(R.id.action_speaker_twitter)
         val websiteItem = menu.findItem(R.id.action_speaker_website)
 
-        speaker?.let {
-            twitterItem.isVisible = it.twitterUsername.isDefined()
-            websiteItem.isVisible = it.personalUrl.isDefined()
-        }
+        twitterItem.isVisible = speaker?.twitterUsername?.isDefined() ?: false
+        websiteItem.isVisible = speaker?.personalUrl?.isDefined() ?: false
 
         return super.onPrepareOptionsMenu(menu)
     }
