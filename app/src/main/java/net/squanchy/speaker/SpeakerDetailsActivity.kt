@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_speaker_details.*
 import net.squanchy.R
 import net.squanchy.navigation.Navigator
@@ -20,6 +22,7 @@ import timber.log.Timber
 class SpeakerDetailsActivity : AppCompatActivity() {
 
     private val subscriptions = CompositeDisposable()
+
     private lateinit var service: SpeakerDetailsService
     private lateinit var navigator: Navigator
 
@@ -66,14 +69,13 @@ class SpeakerDetailsActivity : AppCompatActivity() {
     private fun observeSpeakerFrom(intent: Intent) {
         val speakerId = intent.getStringExtra(EXTRA_SPEAKER_ID)
 
-        subscriptions.add(
+        subscriptions +=
             service.speaker(speakerId)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    ::onSpeakerRetrieved,
-                    { e -> Timber.e(e, "Error retrieving the speaker") }
+                .subscribeBy(
+                    onNext = ::onSpeakerRetrieved,
+                    onError = { e -> Timber.e(e, "Error retrieving the speaker") }
                 )
-        )
     }
 
     private fun onSpeakerRetrieved(speaker: Speaker) {
@@ -106,19 +108,16 @@ class SpeakerDetailsActivity : AppCompatActivity() {
                 return true
             }
             R.id.action_speaker_twitter -> {
-                navigator.toTwitterProfile(assumeNonNull(speaker?.twitterUsername?.getOrThrow()))
+                navigator.toTwitterProfile(speaker!!.twitterUsername.getOrThrow())
                 return true
             }
             R.id.action_speaker_website -> {
-                navigator.toExternalUrl(assumeNonNull(speaker?.personalUrl?.getOrThrow()))
+                navigator.toExternalUrl(speaker!!.personalUrl.getOrThrow())
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
         }
     }
-
-    private fun <T> assumeNonNull(value: T?): T =
-        value ?: throw IllegalStateException("Trying to access a null value assuming it was non-nullable")
 
     override fun onStop() {
         super.onStop()
@@ -127,12 +126,11 @@ class SpeakerDetailsActivity : AppCompatActivity() {
 
     companion object {
 
-        private val EXTRA_SPEAKER_ID = SpeakerDetailsActivity::class.java.canonicalName + ".speaker_id"
+        private val EXTRA_SPEAKER_ID = "${SpeakerDetailsActivity::class.java.name}.speaker_id"
 
-        fun createIntent(context: Context, speakerId: String): Intent {
-            val intent = Intent(context, SpeakerDetailsActivity::class.java)
-            intent.putExtra(EXTRA_SPEAKER_ID, speakerId)
-            return intent
-        }
+        fun createIntent(context: Context, speakerId: String) =
+            Intent(context, SpeakerDetailsActivity::class.java).apply {
+                putExtra(EXTRA_SPEAKER_ID, speakerId)
+            }
     }
 }

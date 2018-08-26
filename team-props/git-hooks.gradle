@@ -21,9 +21,7 @@ task installGitHooks(type: Exec) {
     args '-R', '+x', '.git/hooks/'
     dependsOn copyGitHooks
     onlyIf { isLinuxOrMacOs() }
-    doLast {
-        logger.info('Git hook installed successfully.')
-    }
+    doLast { logger.info('Git hook installed successfully.') }
 }
 
 afterEvaluate {

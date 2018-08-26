@@ -84,7 +84,7 @@ class RoutingActivity : AppCompatActivity() {
 
     private fun proceedTo(intent: Intent) {
         if (deepLinkRouter.hasDeepLink(intent)) {
-            val intentUriString = intent.dataString
+            val intentUriString = intent.dataString!!
             Timber.i("Deeplink detected, navigating to $intentUriString")
             deepLinkRouter.navigateTo(intentUriString)
         } else {

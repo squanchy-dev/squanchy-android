@@ -6,11 +6,6 @@ buildscript {
     }
 }
 
-plugins {
-    id 'io.gitlab.arturbosch.detekt'
-    id 'com.github.ben-manes.versions'
-}
-
 apply plugin: 'com.android.application'
 apply plugin: 'com.github.triplet.play'
 apply plugin: 'com.google.firebase.firebase-perf'
@@ -107,30 +102,6 @@ play {
 //    track = 'production'
 }
 
-detekt {
-    profile = 'main'
-    version = '1.0.0.RC8'
-
-    profile('main') {
-        input = "$projectDir/src/main/java"
-        config = teamPropsFile('static-analysis/detekt-config.yml')
-        filters = '.*test.*,.*/resources/.*,.*/tmp/.*'
-        output = "$projectDir/build/reports/detekt"
-    }
-
-    idea {
-        path = "$rootDir/.idea"
-        codeStyleScheme = "$rootDir/.idea/codeStyles/Project.xml"
-        inspectionsProfile = "$rootDir/.idea/inspectionProfiles/Squanchy.xml"
-        report = "$projectDir/build/reports/detekt-idea"
-        mask = "*.kt,"
-    }
-}
-
-project.afterEvaluate {
-    check.dependsOn tasks['detektCheck']
-}
-
 dependencies {
     implementation project(':renderthread')
 
@@ -178,4 +149,5 @@ dependencies {
     testImplementation libraries.test.mockito
 }
 
+apply from: teamPropsFile('static-analysis.gradle')
 apply plugin: 'com.google.gms.google-services'
