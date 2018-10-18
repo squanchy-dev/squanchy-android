@@ -28,8 +28,8 @@ If you wish to commit code that is failing this test for whatever reason, you ca
 that if you don't address the issues before pushing, the CI will fail the build.
 
 
-## License [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsquanchy-dev%2Fsquanchy-android.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsquanchy-dev%2Fsquanchy-android?ref=badge_shield)
+## License [![FOSSA Status](https://app.fossa.io/api/projects/custom%2B6635%2Fgit%40github.com%3Asquanchy-dev%2Fsquanchy-android.git.svg?type=shield)](https://app.fossa.io/projects/custom%2B6635%2Fgit%40github.com%3Asquanchy-dev%2Fsquanchy-android.git?ref=badge_shield)
 
 Squanchy Android is released under Apache 2.0 licence. See the [LICENSE](LICENSE) file.
 
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsquanchy-dev%2Fsquanchy-android.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsquanchy-dev%2Fsquanchy-android?ref=badge_large)
+[![FOSSA Status](https://app.fossa.io/api/projects/custom%2B6635%2Fgit%40github.com%3Asquanchy-dev%2Fsquanchy-android.git.svg?type=large)](https://app.fossa.io/projects/custom%2B6635%2Fgit%40github.com%3Asquanchy-dev%2Fsquanchy-android.git?ref=badge_large)
