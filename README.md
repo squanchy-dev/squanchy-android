@@ -1,6 +1,5 @@
 # Squanchy Android
 [![Master CI](https://img.shields.io/circleci/project/github/squanchy-dev/squanchy-android/develop.svg?style=for-the-badge)](https://circleci.com/gh/squanchy-dev/squanchy-android/tree/develop) [![Apache 2 license](https://img.shields.io/github/license/squanchy-dev/squanchy-android.svg?style=for-the-badge)](https://github.com/squanchy-dev/squanchy-android/blob/develop/LICENSE)
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsquanchy-dev%2Fsquanchy-android.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsquanchy-dev%2Fsquanchy-android?ref=badge_shield)
 
 Squanchy is an open source platform for conferences. The source code for the [Firebase backend](https://github.com/squanchy-dev/squanchy-firebase) and for the [Flutter port of the app](https://github.com/squanchy-dev/squanchy-flutter) is available in other repositories of this organisation.
  
@@ -29,5 +28,8 @@ If you wish to commit code that is failing this test for whatever reason, you ca
 that if you don't address the issues before pushing, the CI will fail the build.
 
 
-## License
+## License [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsquanchy-dev%2Fsquanchy-android.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsquanchy-dev%2Fsquanchy-android?ref=badge_shield)
+
+Squanchy Android is released under Apache 2.0 licence. See the [LICENSE](LICENSE) file.
+
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsquanchy-dev%2Fsquanchy-android.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsquanchy-dev%2Fsquanchy-android?ref=badge_large)
