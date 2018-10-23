@@ -34,10 +34,11 @@ subprojects {
         repositories {
             google()
             maven { url 'https://maven.fabric.io/public' }
-            maven { url 'http://dl.bintray.com/arturbosch/code-analysis' }
             jcenter()
         }
     }
+
+    apply plugin: 'io.gitlab.arturbosch.detekt'
 
     repositories {
         google()

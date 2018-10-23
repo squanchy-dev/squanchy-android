@@ -106,7 +106,7 @@ detekt {
     toolVersion detektVersion
 
     input = files("$projectDir/src/")
-    config = files(teamPropsFile('static-analysis/detekt-config.yml'))
+    config = files("$rootDir/team-props/static-analysis/detekt-config.yml")
     filters = '.*/test/.*,.*/resources/.*,.*/tmp/.*,.*/build/.*,.*/debug/.*'
     reports {
         xml.enabled = true
