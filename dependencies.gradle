@@ -2,7 +2,7 @@ ext {
     daggerVersion = '2.18'
     glideVersion = '4.8.0'
     androidxVersion = '1.0.0'
-    kotlinVersion = '1.2.61'
+    kotlinVersion = '1.2.71'
     moshiVersion = '1.7.0'
 
     detektVersion = '1.0.0.RC8'
@@ -57,7 +57,7 @@ ext {
             truth   : 'com.google.truth:truth:0.42',
             jodaTime: 'joda-time:joda-time:2.10',
             jUnit4  : 'junit:junit:4.12',
-            mockito : 'org.mockito:mockito-inline:2.21.0'
+            mockito : 'org.mockito:mockito-inline:2.23.0'
         ]
     ]
 
