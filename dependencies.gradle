@@ -5,7 +5,7 @@ ext {
     kotlinVersion = '1.2.71'
     moshiVersion = '1.7.0'
 
-    detektVersion = '1.0.0.RC8'
+    detektVersion = '1.0.0.RC9.2'
     ktlintVersion = '0.29.0'
 
     gradlePlugins = [

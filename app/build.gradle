@@ -102,6 +102,19 @@ play {
 //    track = 'production'
 }
 
+detekt {
+    toolVersion detektVersion
+
+    input = files("$projectDir/src/")
+    config = files(teamPropsFile('static-analysis/detekt-config.yml'))
+    filters = '.*/test/.*,.*/resources/.*,.*/tmp/.*,.*/build/.*,.*/debug/.*'
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+    parallel = true
+}
+
 dependencies {
     implementation project(':renderthread')
 

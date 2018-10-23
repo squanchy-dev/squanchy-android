@@ -18,16 +18,4 @@ staticAnalysis {
         reporters = ["PLAIN_GROUP_BY_FILE", "CHECKSTYLE"]
         includeVariants { variant -> variant.name == 'release' }
     }
-
-    detekt {
-        version detektVersion
-
-        defaultProfile {
-            input = "$projectDir/src/"
-            config = teamPropsFile('static-analysis/detekt-config.yml')
-            filters = '.*/test/.*,.*/resources/.*,.*/tmp/.*,.*/build/.*,.*/debug/.*'
-            output = "$projectDir/build/reports/detekt"
-            parallel = true
-        }
-    }
 }
