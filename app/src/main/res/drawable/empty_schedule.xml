@@ -1,8 +1,11 @@
+<!-- It's a static image and we had no issues with it being larger than 200dp -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
   android:width="289dp"
   android:height="118dp"
   android:viewportWidth="289.0"
-  android:viewportHeight="118.0">
+  android:viewportHeight="118.0"
+  tools:ignore="VectorRaster">
 
   <path
     android:pathData="M170,46.21C175.05,44.49 177.65,41.94 177.79,38.54C178.01,33.44 179.56,27.54 185,27.11C190.43,26.67 199.34,27.36 199.53,23.67C199.73,19.98 192.2,18.19 185,18.19C177.79,18.19 171.35,15.73 172.02,10.74C172.69,5.75 179.78,5.48 183.92,5.75C188.07,6.02 191.29,3.91 190.73,2.24C190.35,1.12 189.79,0.57 189.03,0.57C191.61,0.63 192.97,1.4 193.11,2.88C193.32,5.09 192.55,7.95 189.88,9.34C187.21,10.74 186.71,12.28 190.73,12.59C194.75,12.9 203.87,11.99 214.39,18.19C224.91,24.38 227.88,31.58 224.91,35.06C221.93,38.54 215.02,36.37 214.39,41.29C213.96,44.57 215.74,46.21 219.7,46.21L170,46.21Z"

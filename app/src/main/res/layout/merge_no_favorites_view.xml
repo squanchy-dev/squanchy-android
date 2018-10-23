@@ -20,6 +20,7 @@
     app:layout_constraintBottom_toTopOf="@+id/text"
     app:layout_constraintVertical_chainStyle="packed" />
 
+  <!-- On API 21-22 we do without the touch feedback for now -->
   <TextView
     android:id="@+id/text"
     style="@style/Favorite.Empty.Blurb"
@@ -30,6 +31,7 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@id/favoriteFab"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintBottom_toBottomOf="parent" />
+    app:layout_constraintBottom_toBottomOf="parent"
+    tools:targetApi="m" />
 
 </net.squanchy.favorites.view.FavoritesSignedInEmptyLayout>
