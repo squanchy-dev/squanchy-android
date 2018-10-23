@@ -7,5 +7,6 @@ applicationName=Squanchy
 # Scheme used for deeplinks into content
 deeplinkScheme=squanchy
 
-# Algolia App ID (used for search)
-algoliaId=
+# Algolia App ID and indices prefix (used for search)
+algoliaId=ABCDEFGH12
+algoliaIndicesPrefix=squanchy_dev

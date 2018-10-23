@@ -1,6 +1,7 @@
 package net.squanchy.search.algolia
 
 import android.app.Application
+import android.content.Context
 import com.algolia.search.saas.Client
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
@@ -21,12 +22,22 @@ class AlgoliaModule {
     @Provides
     @ApplicationLifecycle
     @Named(EVENT_INDEX)
-    fun algoliaEventIndex(client: Client, parser: ResponseParser<AlgoliaSearchResponse>) = AlgoliaIndex(client.getIndex(EVENT_INDEX), parser)
+    fun algoliaEventIndex(app: Application, client: Client, parser: ResponseParser<AlgoliaSearchResponse>): AlgoliaIndex {
+        val indexName = composeIndexName(app, EVENT_INDEX)
+        return AlgoliaIndex(client.getIndex(indexName), parser)
+    }
 
     @Provides
     @ApplicationLifecycle
     @Named(SPEAKER_INDEX)
-    fun algoliaSpeakerIndex(client: Client, parser: ResponseParser<AlgoliaSearchResponse>) = AlgoliaIndex(client.getIndex(SPEAKER_INDEX), parser)
+    fun algoliaSpeakerIndex(app: Application, client: Client, parser: ResponseParser<AlgoliaSearchResponse>): AlgoliaIndex {
+        val indexName = composeIndexName(app, SPEAKER_INDEX)
+        return AlgoliaIndex(client.getIndex(indexName), parser)
+    }
+    private fun composeIndexName(app: Context, indexName: String): String {
+        val indexPrefix = app.getString(R.string.algolia_indices_prefix)
+        return "$indexPrefix-$indexName"
+    }
 
     @Provides
     @ApplicationLifecycle
@@ -39,7 +50,7 @@ class AlgoliaModule {
 
     @Provides
     @ApplicationLifecycle
-    fun moshi() = Moshi.Builder().build()
+    fun moshi(): Moshi = Moshi.Builder().build()
 
     @Provides
     @ApplicationLifecycle
@@ -49,7 +60,7 @@ class AlgoliaModule {
     fun responseParser(adapter: JsonAdapter<AlgoliaSearchResponse>): ResponseParser<AlgoliaSearchResponse> = MoshiResponseParser(adapter)
 
     companion object {
-        const val EVENT_INDEX = "squanchy_dev-events"
-        const val SPEAKER_INDEX = "squanchy_dev-speakers"
+        const val EVENT_INDEX = "events"
+        const val SPEAKER_INDEX = "speakers"
     }
 }

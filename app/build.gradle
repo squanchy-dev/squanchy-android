@@ -45,6 +45,7 @@ android {
 
         resValueString 'algolia_application_id', applicationProps['algoliaId'].or(envVars['ALGOLIA_APPLICATION_ID'])
         resValueString 'algolia_api_key', secretsProps['algoliaApiKey'].or(envVars['ALGOLIA_API_KEY'])
+        resValueString 'algolia_indices_prefix', applicationProps['algoliaIndicesPrefix'].or(envVars['ALGOLIA_INDICES_PREFIX'])
 
         resValueString 'deeplink_scheme', applicationProps['deeplinkScheme'].or("squanchy")
     }
