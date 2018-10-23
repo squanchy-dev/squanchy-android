@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_onboarding_account.*
 import net.squanchy.R
@@ -47,18 +48,18 @@ class AccountOnboardingActivity : AppCompatActivity() {
 
         disableUi()
         subscription = signInService.isSignedInToGoogle()
-            .observeOn(AndroidSchedulers.mainThread())
             .timeout(SIGNIN_STATE_CHECK_TIMEOUT_SECONDS, TimeUnit.SECONDS, Schedulers.computation())
             .subscribeOn(Schedulers.io())
-            .subscribe(
-                { signedIn ->
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
+                onSuccess = { signedIn ->
                     if (signedIn) {
                         markPageAsSeenAndFinish()
                     } else {
                         enableUi()
                     }
                 },
-                { enableUi() }
+                onError = { enableUi() }
             )
     }
 
