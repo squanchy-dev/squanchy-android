@@ -1,9 +1,11 @@
+<!-- It's a simple static image and we had no issues with it being larger than 200dp -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
   android:width="588dp"
   android:height="442dp"
   android:viewportWidth="588"
-  android:viewportHeight="442">
+  android:viewportHeight="442"
+  tools:ignore="VectorRaster">
 
   <!-- This is a slightly too long vector path but we're ok with it -->
   <path

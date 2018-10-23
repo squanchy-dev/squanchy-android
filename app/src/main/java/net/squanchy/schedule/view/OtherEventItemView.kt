@@ -51,7 +51,7 @@ class OtherEventItemView @JvmOverloads constructor(
     }
 
     @DrawableRes
-    private fun illustrationFor(type: Event.Type) = when (type) {
+    private fun illustrationFor(type: Event.Type): Int = when (type) {
         Event.Type.COFFEE_BREAK -> R.drawable.coffee_break
         Event.Type.LUNCH -> R.drawable.lunch
         Event.Type.REGISTRATION -> R.drawable.registration

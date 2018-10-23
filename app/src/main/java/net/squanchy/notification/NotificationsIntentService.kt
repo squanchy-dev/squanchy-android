@@ -1,5 +1,6 @@
 package net.squanchy.notification
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.IntentService
 import android.app.PendingIntent
@@ -41,6 +42,7 @@ class NotificationsIntentService : IntentService(NotificationsIntentService::cla
 
         val now = LocalDateTime()
         if (shouldShowNotifications()) {
+            @SuppressLint("RxSubscribeOnError") // RxLint does not recognise RxKotlin (yet)
             subscriptions += sortedFavourites
                 .map { events -> events.filter { it.startTime.isAfter(now) } }
                 .map { events -> events.filter { isBeforeOrEqualTo(it.startTime, notificationIntervalEnd) } }
@@ -48,6 +50,7 @@ class NotificationsIntentService : IntentService(NotificationsIntentService::cla
                 .subscribeBy(onNext = notifier::showNotifications, onError = ::logError)
         }
 
+        @SuppressLint("RxSubscribeOnError") // RxLint does not recognise RxKotlin (yet)
         subscriptions += sortedFavourites
             .map { events -> events.filter { it.startTime.isAfter(notificationIntervalEnd) } }
             .subscribeBy(onNext = ::scheduleNextAlarm, onError = ::logError)
