@@ -12,6 +12,7 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.transition.Fade
 import androidx.transition.TransitionManager
+import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import kotlinx.android.synthetic.main.activity_home.*
 import net.squanchy.R
 import net.squanchy.analytics.Analytics
@@ -86,7 +87,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setupBottomNavigation(bottomNavigationView: InterceptingBottomNavigationView) {
-        bottomNavigationView.disableShiftMode()
+        bottomNavigationView.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
         bottomNavigationView.revealDurationMillis = pageFadeDurationMillis
 
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
