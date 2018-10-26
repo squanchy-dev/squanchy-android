@@ -51,6 +51,7 @@ class SettingsHeaderLayout(context: Context, attrs: AttributeSet?) : AppBarLayou
         if (userInfo.photoUrl != null) {
             imageLoader.load(userInfo.photoUrl)
                 .error(R.drawable.ic_no_avatar)
+                .circleCrop()
                 .into(userCirclePhotoView)
         } else {
             userCirclePhotoView.setImageResource(R.drawable.ic_no_avatar)

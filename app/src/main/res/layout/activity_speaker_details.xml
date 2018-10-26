@@ -28,7 +28,7 @@
       android:layout_marginStart="@dimen/speaker_details_speaker_margin_start"
       android:layout_marginBottom="@dimen/speaker_details_speaker_margin_bottom">
 
-      <net.squanchy.support.widget.CircleImageView
+      <ImageView
         android:id="@+id/speakerPhoto"
         style="@style/SpeakerDetails.Header.Speaker.Photo"
         android:layout_width="@dimen/speaker_details_speaker_photo"

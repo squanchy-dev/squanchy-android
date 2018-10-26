@@ -52,6 +52,7 @@ class SpeakerHeaderView @JvmOverloads constructor(
             speakerPhoto.isVisible = true
             imageLoader.load(photoUrl.getOrThrow())
                 .error(R.drawable.ic_no_avatar)
+                .circleCrop()
                 .into(speakerPhoto)
         } else {
             speakerPhoto.setImageResource(R.drawable.ic_no_avatar)

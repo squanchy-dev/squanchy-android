@@ -36,7 +36,7 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/tweet_footer_margin_top">
 
-      <net.squanchy.support.widget.CircleImageView
+      <ImageView
         android:id="@+id/tweetUserPhoto"
         style="@style/Tweet.Photo"
         android:layout_width="@dimen/tweet_footer_user_photo_size"

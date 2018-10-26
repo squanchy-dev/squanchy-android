@@ -6,7 +6,7 @@
   android:layout_height="wrap_content"
   android:padding="@dimen/search_card_item_padding">
 
-  <net.squanchy.support.widget.CircleImageView
+  <ImageView
     android:id="@+id/speakerPhoto"
     style="@style/Schedule.Card.Speaker.Photo"
     android:layout_width="@dimen/search_photo"
