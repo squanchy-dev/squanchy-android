@@ -17,5 +17,7 @@ interface ImageRequest {
 
     fun placeholder(@DrawableRes placeholderImageResId: Int): ImageRequest
 
+    fun circleCrop(): ImageRequest
+
     fun into(target: ImageView)
 }

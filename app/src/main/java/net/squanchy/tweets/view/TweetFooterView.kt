@@ -43,6 +43,7 @@ class TweetFooterView @JvmOverloads constructor(
         tweetUserPhoto.setImageDrawable(null)
         imageLoader.load(url)
             .error(R.drawable.ic_no_avatar)
+            .circleCrop()
             .into(tweetUserPhoto)
     }
 }

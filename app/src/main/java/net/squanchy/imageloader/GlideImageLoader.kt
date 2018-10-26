@@ -28,6 +28,8 @@ class GlideImageLoader(private val requestManager: RequestManager, private val f
 
 private class GlideImageRequest(private val request: RequestBuilder<Drawable>) : ImageRequest {
 
+    private val options = RequestOptions()
+
     override fun error(@DrawableRes errorImageResId: Int) = apply {
         request.apply(RequestOptions.errorOf(errorImageResId))
     }
@@ -36,7 +38,11 @@ private class GlideImageRequest(private val request: RequestBuilder<Drawable>) :
         request.apply(RequestOptions.placeholderOf(placeholderImageResId))
     }
 
+    override fun circleCrop() = apply {
+        options.circleCrop()
+    }
+
     override fun into(target: ImageView) {
-        request.into(target)
+        request.apply(options).into(target)
     }
 }

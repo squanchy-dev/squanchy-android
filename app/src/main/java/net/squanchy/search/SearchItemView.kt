@@ -41,6 +41,7 @@ class SearchItemView @JvmOverloads constructor(
             imageLoader.load(avatarImageURL.getOrThrow())
                 .placeholder(R.drawable.ic_avatar_placeholder)
                 .error(R.drawable.ic_no_avatar)
+                .circleCrop()
                 .into(speakerPhoto)
         } else {
             speakerPhoto.setImageResource(R.drawable.ic_no_avatar)

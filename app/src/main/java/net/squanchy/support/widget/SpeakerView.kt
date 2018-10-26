@@ -100,6 +100,7 @@ abstract class SpeakerView @JvmOverloads constructor(
         imageLoader.load(photoUrl)
             .placeholder(R.drawable.ic_avatar_placeholder)
             .error(R.drawable.ic_no_avatar)
+            .circleCrop()
             .into(photoView)
     }
 

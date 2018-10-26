@@ -26,7 +26,7 @@
       android:layout_width="match_parent"
       android:layout_height="@dimen/settings_header_user_container_height">
 
-      <net.squanchy.support.widget.CircleImageView
+      <ImageView
         android:id="@+id/userCirclePhotoView"
         style="@style/Settings.Header.User.Photo"
         android:layout_width="@dimen/settings_header_user_photo_size"
