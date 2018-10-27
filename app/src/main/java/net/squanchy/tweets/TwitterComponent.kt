@@ -14,8 +14,6 @@ internal fun twitterComponent(activity: AppCompatActivity): TwitterComponent {
     return DaggerTwitterComponent.builder()
         .applicationComponent(activity.applicationComponent)
         .activityContextModule(ActivityContextModule(activity))
-        .twitterModule(TwitterModule())
-        .navigationModule(NavigationModule())
         .build()
 }
 

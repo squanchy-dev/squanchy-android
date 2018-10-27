@@ -11,7 +11,6 @@ import net.squanchy.signin.SignInService
 internal fun settingsActivityComponent(activity: Activity) =
     DaggerSettingsActivityComponent.builder()
         .applicationComponent(activity.applicationComponent)
-        .signInModule(SignInModule())
         .build()
 
 @ActivityLifecycle

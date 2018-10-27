@@ -17,10 +17,7 @@ import net.squanchy.support.system.CurrentTime
 
 internal fun scheduleComponent(activity: AppCompatActivity): ScheduleComponent = DaggerScheduleComponent.builder()
     .applicationComponent(activity.applicationComponent)
-    .scheduleModule(ScheduleModule())
-    .navigationModule(NavigationModule())
     .activityContextModule(ActivityContextModule(activity))
-    .currentTimeModule(CurrentTimeModule())
     .build()
 
 @ActivityLifecycle

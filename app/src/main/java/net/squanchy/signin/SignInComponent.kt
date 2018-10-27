@@ -10,7 +10,6 @@ import net.squanchy.injection.applicationComponent
 fun signInComponent(activity: Activity): SignInComponent =
     DaggerSignInComponent.builder()
         .applicationComponent(activity.applicationComponent)
-        .signInModule(SignInModule())
         .build()
 
 @ActivityLifecycle

@@ -7,10 +7,9 @@ import net.squanchy.injection.ActivityLifecycle
 import net.squanchy.navigation.NavigationModule
 import net.squanchy.navigation.Navigator
 
-fun aboutComponent(activity: AppCompatActivity) =
+fun aboutComponent(activity: AppCompatActivity): AboutComponent =
     DaggerAboutComponent.builder()
         .activityContextModule(ActivityContextModule(activity))
-        .navigationModule(NavigationModule())
         .build()
 
 @ActivityLifecycle

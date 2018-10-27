@@ -11,9 +11,7 @@ import net.squanchy.navigation.Navigator
 internal fun eventDetailsComponent(activity: EventDetailsActivity) =
     DaggerEventDetailsComponent.builder()
         .applicationComponent(activity.applicationComponent)
-        .eventDetailsModule(EventDetailsModule())
         .activityContextModule(ActivityContextModule(activity))
-        .navigationModule(NavigationModule())
         .build()
 
 @ActivityLifecycle

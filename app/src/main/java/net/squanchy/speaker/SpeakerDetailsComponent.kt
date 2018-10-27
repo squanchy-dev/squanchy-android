@@ -12,9 +12,7 @@ import net.squanchy.injection.applicationComponent
 internal fun speakerDetailsComponent(activity: SpeakerDetailsActivity): SpeakerDetailsComponent =
     DaggerSpeakerDetailsComponent.builder()
         .applicationComponent(activity.applicationComponent)
-        .speakerDetailsModule(SpeakerDetailsModule())
         .activityContextModule(ActivityContextModule(activity))
-        .navigationModule(NavigationModule())
         .build()
 
 @ActivityLifecycle
