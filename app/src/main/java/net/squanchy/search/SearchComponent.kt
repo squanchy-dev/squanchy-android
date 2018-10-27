@@ -12,9 +12,7 @@ import net.squanchy.injection.applicationComponent
 internal fun searchComponent(activity: SearchActivity) =
     DaggerSearchComponent.builder()
         .applicationComponent(activity.applicationComponent)
-        .searchModule(SearchModule())
         .activityContextModule(ActivityContextModule(activity))
-        .navigationModule(NavigationModule())
         .build()
 
 @ActivityLifecycle

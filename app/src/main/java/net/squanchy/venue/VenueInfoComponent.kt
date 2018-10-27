@@ -12,8 +12,6 @@ import net.squanchy.navigation.Navigator
 internal fun venueInfoComponent(activity: AppCompatActivity) =
     DaggerVenueInfoComponent.builder()
             .applicationComponent(activity.applicationComponent)
-            .navigationModule(NavigationModule())
-            .venueInfoModule(VenueInfoModule())
             .activityContextModule(ActivityContextModule(activity))
             .build()
 

@@ -19,9 +19,6 @@ internal fun settingsFragmentComponent(activity: AppCompatActivity) =
     DaggerSettingsFragmentComponent.builder()
         .activityContextModule(ActivityContextModule(activity))
         .applicationComponent(activity.applicationComponent)
-        .navigationModule(NavigationModule())
-        .signInModule(SignInModule())
-        .wifiConfigModule(WifiConfigModule())
         .build()
 
 @ActivityLifecycle

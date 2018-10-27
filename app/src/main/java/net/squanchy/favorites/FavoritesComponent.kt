@@ -27,8 +27,6 @@ internal interface FavoritesComponent {
 internal fun favoritesComponent(activity: AppCompatActivity): FavoritesComponent {
     return DaggerFavoritesComponent.builder()
         .applicationComponent(activity.application.applicationComponent)
-        .favoritesModule(FavoritesModule())
-        .navigationModule(NavigationModule())
         .activityContextModule(ActivityContextModule(activity))
         .build()
 }
