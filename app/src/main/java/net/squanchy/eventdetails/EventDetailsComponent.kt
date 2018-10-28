@@ -1,8 +1,7 @@
 package net.squanchy.eventdetails
 
-import android.app.Activity
-import dagger.BindsInstance
 import dagger.Component
+import net.squanchy.injection.BaseActivityComponentBuilder
 import net.squanchy.injection.ActivityLifecycle
 import net.squanchy.injection.ApplicationComponent
 import net.squanchy.injection.applicationComponent
@@ -24,11 +23,5 @@ internal interface EventDetailsComponent {
     fun navigator(): Navigator
 
     @Component.Builder
-    interface Builder {
-        fun applicationComponent(applicationComponent: ApplicationComponent): Builder
-        @BindsInstance
-        fun activity(activity: Activity): Builder
-
-        fun build(): EventDetailsComponent
-    }
+    interface Builder : BaseActivityComponentBuilder<EventDetailsComponent>
 }

@@ -1,10 +1,9 @@
 package net.squanchy.settings
 
-import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
-import dagger.BindsInstance
 import dagger.Component
 import net.squanchy.analytics.Analytics
+import net.squanchy.injection.BaseActivityComponentBuilder
 import net.squanchy.injection.ActivityLifecycle
 import net.squanchy.injection.ApplicationComponent
 import net.squanchy.injection.applicationComponent
@@ -37,11 +36,5 @@ interface SettingsFragmentComponent {
     fun wifiConfigService(): WifiConfigService
 
     @Component.Builder
-    interface Builder {
-        fun applicationComponent(applicationComponent: ApplicationComponent): Builder
-        @BindsInstance
-        fun activity(activity: Activity): Builder
-
-        fun build(): SettingsFragmentComponent
-    }
+    interface Builder : BaseActivityComponentBuilder<SettingsFragmentComponent>
 }

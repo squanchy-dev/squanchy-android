@@ -1,10 +1,9 @@
 package net.squanchy.schedule
 
-import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
-import dagger.BindsInstance
 import dagger.Component
 import net.squanchy.analytics.Analytics
+import net.squanchy.injection.BaseActivityComponentBuilder
 import net.squanchy.injection.ActivityLifecycle
 import net.squanchy.injection.ApplicationComponent
 import net.squanchy.injection.applicationComponent
@@ -16,10 +15,11 @@ import net.squanchy.service.repository.TracksRepository
 import net.squanchy.support.injection.CurrentTimeModule
 import net.squanchy.support.system.CurrentTime
 
-internal fun scheduleComponent(activity: AppCompatActivity): ScheduleComponent = DaggerScheduleComponent.builder()
-    .applicationComponent(activity.applicationComponent)
-    .activity(activity)
-    .build()
+internal fun scheduleComponent(activity: AppCompatActivity): ScheduleComponent =
+    DaggerScheduleComponent.builder()
+        .applicationComponent(activity.applicationComponent)
+        .activity(activity)
+        .build()
 
 @ActivityLifecycle
 @Component(
@@ -43,11 +43,5 @@ internal interface ScheduleComponent {
     fun featureFlags(): FeatureFlags
 
     @Component.Builder
-    interface Builder {
-        fun applicationComponent(applicationComponent: ApplicationComponent): Builder
-        @BindsInstance
-        fun activity(activity: Activity): Builder
-
-        fun build(): ScheduleComponent
-    }
+    interface Builder : BaseActivityComponentBuilder<ScheduleComponent>
 }

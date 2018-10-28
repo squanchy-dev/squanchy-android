@@ -1,9 +1,8 @@
 package net.squanchy.onboarding.account
 
-import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
-import dagger.BindsInstance
 import dagger.Component
+import net.squanchy.injection.BaseActivityComponentBuilder
 import net.squanchy.injection.ActivityLifecycle
 import net.squanchy.injection.ApplicationComponent
 import net.squanchy.injection.applicationComponent
@@ -34,11 +33,5 @@ internal interface AccountOnboardingComponent {
     fun navigator(): Navigator
 
     @Component.Builder
-    interface Builder {
-        fun applicationComponent(applicationComponent: ApplicationComponent): Builder
-        @BindsInstance
-        fun activity(activity: Activity): Builder
-
-        fun build(): AccountOnboardingComponent
-    }
+    interface Builder : BaseActivityComponentBuilder<AccountOnboardingComponent>
 }
