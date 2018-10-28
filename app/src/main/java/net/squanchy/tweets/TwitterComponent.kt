@@ -1,8 +1,9 @@
 package net.squanchy.tweets
 
+import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
+import dagger.BindsInstance
 import dagger.Component
-import net.squanchy.injection.ActivityContextModule
 import net.squanchy.injection.ActivityLifecycle
 import net.squanchy.injection.ApplicationComponent
 import net.squanchy.injection.applicationComponent
@@ -13,7 +14,7 @@ import net.squanchy.tweets.service.TwitterService
 internal fun twitterComponent(activity: AppCompatActivity): TwitterComponent {
     return DaggerTwitterComponent.builder()
         .applicationComponent(activity.applicationComponent)
-        .activityContextModule(ActivityContextModule(activity))
+        .activity(activity)
         .build()
 }
 
@@ -27,4 +28,13 @@ internal interface TwitterComponent {
     fun service(): TwitterService
 
     fun navigator(): Navigator
+
+    @Component.Builder
+    interface Builder {
+        fun applicationComponent(applicationComponent: ApplicationComponent): Builder
+        @BindsInstance
+        fun activity(activity: Activity): Builder
+
+        fun build(): TwitterComponent
+    }
 }

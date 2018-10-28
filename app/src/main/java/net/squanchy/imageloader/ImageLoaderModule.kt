@@ -5,9 +5,8 @@ import com.bumptech.glide.RequestManager
 import com.google.firebase.storage.FirebaseStorage
 import dagger.Module
 import dagger.Provides
-import net.squanchy.injection.ActivityContextModule
 
-@Module(includes = [ActivityContextModule::class])
+@Module
 internal class ImageLoaderModule {
 
     @Provides

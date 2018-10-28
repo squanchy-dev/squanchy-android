@@ -4,9 +4,8 @@ import android.app.Activity
 import android.content.Context
 import dagger.Module
 import dagger.Provides
-import net.squanchy.injection.ActivityContextModule
 
-@Module(includes = [ActivityContextModule::class])
+@Module
 class OnboardingModule {
 
     @Provides

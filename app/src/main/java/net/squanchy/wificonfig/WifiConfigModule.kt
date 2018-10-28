@@ -6,10 +6,9 @@ import android.net.wifi.WifiManager
 import dagger.Module
 import dagger.Provides
 import net.squanchy.analytics.Analytics
-import net.squanchy.injection.ActivityContextModule
 import net.squanchy.remoteconfig.RemoteConfig
 
-@Module(includes = [ActivityContextModule::class])
+@Module
 internal class WifiConfigModule {
 
     @Provides

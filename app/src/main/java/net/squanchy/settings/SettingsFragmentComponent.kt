@@ -1,9 +1,10 @@
 package net.squanchy.settings
 
+import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
+import dagger.BindsInstance
 import dagger.Component
 import net.squanchy.analytics.Analytics
-import net.squanchy.injection.ActivityContextModule
 import net.squanchy.injection.ActivityLifecycle
 import net.squanchy.injection.ApplicationComponent
 import net.squanchy.injection.applicationComponent
@@ -15,10 +16,10 @@ import net.squanchy.signin.SignInService
 import net.squanchy.wificonfig.WifiConfigModule
 import net.squanchy.wificonfig.WifiConfigService
 
-internal fun settingsFragmentComponent(activity: AppCompatActivity) =
+internal fun settingsFragmentComponent(activity: AppCompatActivity): SettingsFragmentComponent =
     DaggerSettingsFragmentComponent.builder()
-        .activityContextModule(ActivityContextModule(activity))
         .applicationComponent(activity.applicationComponent)
+        .activity(activity)
         .build()
 
 @ActivityLifecycle
@@ -34,4 +35,13 @@ interface SettingsFragmentComponent {
     fun remoteConfig(): RemoteConfig
 
     fun wifiConfigService(): WifiConfigService
+
+    @Component.Builder
+    interface Builder {
+        fun applicationComponent(applicationComponent: ApplicationComponent): Builder
+        @BindsInstance
+        fun activity(activity: Activity): Builder
+
+        fun build(): SettingsFragmentComponent
+    }
 }

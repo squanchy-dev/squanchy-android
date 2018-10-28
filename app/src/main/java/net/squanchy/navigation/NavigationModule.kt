@@ -3,9 +3,8 @@ package net.squanchy.navigation
 import android.app.Activity
 import dagger.Module
 import dagger.Provides
-import net.squanchy.injection.ActivityContextModule
 
-@Module(includes = [ActivityContextModule::class])
+@Module
 internal class NavigationModule {
 
     @Provides
