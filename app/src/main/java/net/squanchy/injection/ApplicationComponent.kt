@@ -1,6 +1,7 @@
 package net.squanchy.injection
 
 import android.app.Application
+import dagger.BindsInstance
 import dagger.Component
 import net.squanchy.analytics.Analytics
 import net.squanchy.analytics.AnalyticsModule
@@ -23,14 +24,7 @@ import net.squanchy.support.injection.CurrentTimeModule
 
 fun createApplicationComponent(application: Application): ApplicationComponent {
     return DaggerApplicationComponent.builder()
-        .firestoreModule(FirestoreModule())
-        .repositoryModule(RepositoryModule())
-        .checksumModule(ChecksumModule())
-        .applicationContextModule(ApplicationContextModule(application))
-        .algoliaModule(AlgoliaModule())
-        .analyticsModule(AnalyticsModule(application))
-        .remoteConfigModule(RemoteConfigModule())
-        .tracksFilterModule(TracksFilterModule())
+        .application(application)
         .build()
 }
 
@@ -38,7 +32,6 @@ fun createApplicationComponent(application: Application): ApplicationComponent {
 @Component(
     modules = [
         AlgoliaModule::class,
-        ApplicationContextModule::class,
         FirestoreModule::class,
         ChecksumModule::class,
         RepositoryModule::class,
@@ -71,4 +64,12 @@ interface ApplicationComponent {
     fun application(): Application
 
     fun algoliaSearchEngine(): AlgoliaSearchEngine
+
+    @Component.Builder
+    interface Builder {
+        @BindsInstance
+        fun application(app: Application): Builder
+
+        fun build(): ApplicationComponent
+    }
 }

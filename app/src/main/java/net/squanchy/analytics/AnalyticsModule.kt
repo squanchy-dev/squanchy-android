@@ -8,10 +8,10 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class AnalyticsModule(private val application: Application) {
+class AnalyticsModule {
 
     @Provides
-    internal fun firebaseAnalytics(): FirebaseAnalytics = FirebaseAnalytics.getInstance(application)
+    internal fun firebaseAnalytics(application: Application): FirebaseAnalytics = FirebaseAnalytics.getInstance(application)
 
     @Provides
     internal fun crashlytics(): Crashlytics = Crashlytics.getInstance()
