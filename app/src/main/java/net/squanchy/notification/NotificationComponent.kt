@@ -9,12 +9,11 @@ import net.squanchy.injection.ApplicationComponent
 import net.squanchy.injection.ServiceContextModule
 import net.squanchy.injection.applicationComponent
 
-internal fun notificationComponent(service: Service): NotificationComponent {
-    return DaggerNotificationComponent.builder()
+internal fun notificationComponent(service: Service): NotificationComponent =
+    DaggerNotificationComponent.builder()
         .applicationComponent(service.applicationComponent)
         .serviceContextModule(ServiceContextModule(service))
         .build()
-}
 
 @ActivityLifecycle
 @Component(modules = [NotificationModule::class], dependencies = [ApplicationComponent::class])

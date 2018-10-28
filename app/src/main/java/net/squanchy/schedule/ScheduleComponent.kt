@@ -3,7 +3,7 @@ package net.squanchy.schedule
 import androidx.appcompat.app.AppCompatActivity
 import dagger.Component
 import net.squanchy.analytics.Analytics
-import net.squanchy.injection.ActivityContextModule
+import net.squanchy.injection.BaseActivityComponentBuilder
 import net.squanchy.injection.ActivityLifecycle
 import net.squanchy.injection.ApplicationComponent
 import net.squanchy.injection.applicationComponent
@@ -15,10 +15,11 @@ import net.squanchy.service.repository.TracksRepository
 import net.squanchy.support.injection.CurrentTimeModule
 import net.squanchy.support.system.CurrentTime
 
-internal fun scheduleComponent(activity: AppCompatActivity): ScheduleComponent = DaggerScheduleComponent.builder()
-    .applicationComponent(activity.applicationComponent)
-    .activityContextModule(ActivityContextModule(activity))
-    .build()
+internal fun scheduleComponent(activity: AppCompatActivity): ScheduleComponent =
+    DaggerScheduleComponent.builder()
+        .applicationComponent(activity.applicationComponent)
+        .activity(activity)
+        .build()
 
 @ActivityLifecycle
 @Component(
@@ -40,4 +41,7 @@ internal interface ScheduleComponent {
     fun tracksFilter(): TracksFilter
 
     fun featureFlags(): FeatureFlags
+
+    @Component.Builder
+    interface Builder : BaseActivityComponentBuilder<ScheduleComponent>
 }

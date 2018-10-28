@@ -1,17 +1,25 @@
 package net.squanchy.imageloader
 
+import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
+import dagger.BindsInstance
 import dagger.Component
-import net.squanchy.injection.ActivityContextModule
 
-fun imageLoaderComponent(activity: AppCompatActivity): ImageLoaderComponent =
+internal fun imageLoaderComponent(activity: AppCompatActivity): ImageLoaderComponent =
     DaggerImageLoaderComponent.builder()
-        .activityContextModule(ActivityContextModule(activity))
-        .imageLoaderModule(ImageLoaderModule())
+        .activity(activity)
         .build()
 
 @Component(modules = [ImageLoaderModule::class])
-interface ImageLoaderComponent {
+internal interface ImageLoaderComponent {
 
     fun imageLoader(): ImageLoader
+
+    @Component.Builder
+    interface Builder {
+        @BindsInstance
+        fun activity(activity: Activity): Builder
+
+        fun build(): ImageLoaderComponent
+    }
 }

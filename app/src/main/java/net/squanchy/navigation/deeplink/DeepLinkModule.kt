@@ -4,11 +4,10 @@ import android.app.Activity
 import dagger.Module
 import dagger.Provides
 import net.squanchy.R
-import net.squanchy.injection.ActivityContextModule
 import net.squanchy.navigation.NavigationModule
 import net.squanchy.navigation.Navigator
 
-@Module(includes = [ActivityContextModule::class, NavigationModule::class])
+@Module(includes = [NavigationModule::class])
 class DeepLinkModule {
 
     @Provides
