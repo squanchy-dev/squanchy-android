@@ -62,7 +62,7 @@ android {
     if (isNotRunningOnCI()) {
         signingConfigs {
             debug.from debugSigningConfig
-            release.from releaseSigningConfig
+            release.from debugSigningConfig
         }
 
         buildTypes {
@@ -140,9 +140,7 @@ dependencies {
     implementation libraries.app.glideOkHttp3
     implementation libraries.app.jodaTimeAndroid
     implementation libraries.app.kotlin
-    implementation libraries.app.kotlinReflect
     implementation libraries.app.moshi
-    implementation libraries.app.moshiKotlin
     implementation libraries.app.playServicesAuth
     implementation libraries.app.rxAndroid
     implementation libraries.app.rxJava
