@@ -22,7 +22,7 @@ ext {
             androidxConstraintLayout: 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2',
             androidxKtx             : "androidx.core:core-ktx:${androidxVersion}",
             androidxMaterial        : 'com.google.android.material:material:1.0.0',
-            arrowCore               : 'io.arrow-kt:arrow-core:0.7.3',
+            arrowCore               : 'io.arrow-kt:arrow-core:0.8.1',
             crashlytics             : 'com.crashlytics.sdk.android:crashlytics:2.9.7',
             dagger                  : "com.google.dagger:dagger:${daggerVersion}",
             daggerCompiler          : "com.google.dagger:dagger-compiler:${daggerVersion}",
