@@ -1,3 +1,5 @@
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+
 buildscript {
     dependencies {
         classpath gradlePlugins.buildProperties
@@ -12,6 +14,7 @@ apply plugin: 'io.fabric'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'org.jlleitschuh.gradle.ktlint'
 
 apply from: 'build-properties.gradle'
 
@@ -86,6 +89,12 @@ android {
     sourceSets {
         test.java.srcDirs += 'src/test/kotlin'
     }
+
+    lintOptions {
+        lintConfig teamPropsFile('static-analysis/lint-config.xml')
+        warningsAsErrors true
+        ignoreTestSources true // See https://groups.google.com/forum/#!topic/lint-dev/RGTvK_uHQGQ
+    }
 }
 
 private static boolean isNotRunningOnCI() {
@@ -113,6 +122,13 @@ detekt {
         html.enabled = true
     }
     parallel = true
+}
+
+ktlint {
+    android = true
+    version = ktlintVersion
+    ignoreFailures = true
+    reporters = [ReporterType.PLAIN_GROUP_BY_FILE, ReporterType.CHECKSTYLE]
 }
 
 dependencies {
@@ -160,5 +176,4 @@ dependencies {
     testImplementation libraries.test.mockito
 }
 
-apply from: teamPropsFile('static-analysis.gradle')
 apply plugin: 'com.google.gms.google-services'
