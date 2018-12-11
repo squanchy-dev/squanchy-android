@@ -21,10 +21,12 @@
       android:layout_height="?attr/actionBarSize"
       app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+    <!-- No, we can't replace this with a single TextView. -->
     <LinearLayout
       style="@style/Settings.Header.User.Container"
       android:layout_width="match_parent"
-      android:layout_height="@dimen/settings_header_user_container_height">
+      android:layout_height="@dimen/settings_header_user_container_height"
+      tools:ignore="UseCompoundDrawables">
 
       <ImageView
         android:id="@+id/userCirclePhotoView"

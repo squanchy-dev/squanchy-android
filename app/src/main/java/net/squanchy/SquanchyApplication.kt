@@ -3,7 +3,6 @@ package net.squanchy
 import android.app.Application
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
-import com.google.firebase.database.FirebaseDatabase
 import io.fabric.sdk.android.Fabric
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -55,7 +54,6 @@ class SquanchyApplication : Application() {
     }
 
     private fun initializeFirebase() {
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true)
         preloadRemoteConfig()
         preloadTracks()
     }

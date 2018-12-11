@@ -1,3 +1,5 @@
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+
 buildscript {
     dependencies {
         classpath gradlePlugins.buildProperties
@@ -8,11 +10,11 @@ buildscript {
 
 apply plugin: 'com.android.application'
 apply plugin: 'com.github.triplet.play'
-apply plugin: 'com.google.firebase.firebase-perf'
 apply plugin: 'io.fabric'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'org.jlleitschuh.gradle.ktlint'
 
 apply from: 'build-properties.gradle'
 
@@ -87,6 +89,12 @@ android {
     sourceSets {
         test.java.srcDirs += 'src/test/kotlin'
     }
+
+    lintOptions {
+        lintConfig teamPropsFile('static-analysis/lint-config.xml')
+        warningsAsErrors true
+        ignoreTestSources true // See https://groups.google.com/forum/#!topic/lint-dev/RGTvK_uHQGQ
+    }
 }
 
 private static boolean isNotRunningOnCI() {
@@ -116,6 +124,13 @@ detekt {
     parallel = true
 }
 
+ktlint {
+    android = true
+    version = ktlintVersion
+    ignoreFailures = true
+    reporters = [ReporterType.PLAIN_GROUP_BY_FILE, ReporterType.CHECKSTYLE]
+}
+
 dependencies {
     implementation project(':renderthread')
 
@@ -127,10 +142,8 @@ dependencies {
     implementation libraries.app.firebaseAuth
     implementation libraries.app.firebaseConfig
     implementation libraries.app.firebaseCore
-    implementation libraries.app.firebaseDb
     implementation libraries.app.firebaseFirestore
     implementation libraries.app.firebaseMessaging
-    implementation libraries.app.firebasePerf
     implementation libraries.app.firebaseStorage
     implementation(libraries.app.firebaseUiStorage) {
         exclude group: 'com.google.firebase'
@@ -163,5 +176,4 @@ dependencies {
     testImplementation libraries.test.mockito
 }
 
-apply from: teamPropsFile('static-analysis.gradle')
 apply plugin: 'com.google.gms.google-services'

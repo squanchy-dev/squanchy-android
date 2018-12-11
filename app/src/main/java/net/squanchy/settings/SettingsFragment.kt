@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION") // We need to use the platform PreferenceFragment because the support one doesn't theme well
+
 package net.squanchy.settings
 
 import android.os.Bundle
