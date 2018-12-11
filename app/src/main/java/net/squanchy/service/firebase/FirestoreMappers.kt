@@ -52,8 +52,8 @@ fun FirestoreVenue.toVenue() = Venue(
 fun FirestoreEvent.toEvent(checksum: Checksum, timeZone: DateTimeZone, isFavorite: Boolean = false) = Event(
     id = id,
     numericId = checksum.getChecksumOf("event_$id"),
-    startTime = LocalDateTime(startTime, timeZone),
-    endTime = LocalDateTime(endTime, timeZone),
+    startTime = LocalDateTime(startTime.toDate(), timeZone),
+    endTime = LocalDateTime(endTime.toDate(), timeZone),
     title = title,
     place = place?.toPlace().option(),
     experienceLevel = experienceLevel.toExperienceLevel(),

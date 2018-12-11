@@ -1,7 +1,7 @@
 package net.squanchy.service.firebase.model.schedule
 
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.IgnoreExtraProperties
-import java.util.Date
 
 class FirestoreSchedulePage {
     lateinit var day: FirestoreDay
@@ -11,15 +11,15 @@ class FirestoreSchedulePage {
 @IgnoreExtraProperties
 class FirestoreDay {
     lateinit var id: String
-    lateinit var date: Date
+    lateinit var date: Timestamp
 }
 
 @IgnoreExtraProperties
 class FirestoreEvent {
     lateinit var id: String
     lateinit var title: String
-    lateinit var startTime: Date
-    lateinit var endTime: Date
+    lateinit var startTime: Timestamp
+    lateinit var endTime: Timestamp
     var place: FirestorePlace? = null
     var track: FirestoreTrack? = null
     var speakers: List<FirestoreSpeaker> = emptyList()

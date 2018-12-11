@@ -20,6 +20,7 @@ class FirestoreModule {
     internal fun firebaseFirestoreSettings(): FirebaseFirestoreSettings {
         return FirebaseFirestoreSettings.Builder()
             .setPersistenceEnabled(true)
+            .setTimestampsInSnapshotsEnabled(true)
             .build()
     }
 
