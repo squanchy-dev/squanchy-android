@@ -1,6 +1,6 @@
 package net.squanchy.service.firebase.model.twitter
 
-import java.util.Date
+import com.google.firebase.Timestamp
 import kotlin.properties.Delegates
 
 class FirestoreTweet {
@@ -11,7 +11,7 @@ class FirestoreTweet {
     var inReplyToScreenName: String? = null
     lateinit var entities: FirestoreTwitterEntities
     var displayTextRange: List<Int> = emptyList()
-    lateinit var createdAt: Date
+    lateinit var createdAt: Timestamp
 }
 
 class FirestoreTwitterUser {

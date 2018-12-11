@@ -86,7 +86,7 @@ class FirestoreScheduleService(
         favorites: List<FirestoreFavorite>
     ): SchedulePage = SchedulePage(
         day.id,
-        LocalDate(day.date, timeZone),
+        LocalDate(day.date.toDate(), timeZone),
         events.map { it.toEvent(checksum, timeZone, favorites) }
             .sortedByStartTimeAndRoom()
     )

@@ -1,6 +1,7 @@
 package net.squanchy.service.firebase
 
 import com.google.common.truth.Truth.assertThat
+import com.google.firebase.Timestamp
 import net.squanchy.A_DATE
 import net.squanchy.A_TIMEZONE
 import net.squanchy.eventdetails.domain.view.ExperienceLevel
@@ -44,14 +45,14 @@ class FirestoreEventMapperTest {
 
     @Test
     fun `event start date should match when mapped`() {
-        val firestoreEvent = aFirestoreEvent(startTime = A_DATE.toDate())
+        val firestoreEvent = aFirestoreEvent(startTime = Timestamp(A_DATE.toDate()))
         val event = firestoreEvent.toEvent(checksum, A_TIMEZONE)
         assertThat(event.startTime).isEqualTo(A_DATE.toDateTime(A_TIMEZONE).toLocalDateTime())
     }
 
     @Test
     fun `event end date should match when mapped`() {
-        val firestoreEvent = aFirestoreEvent(endTime = A_DATE.toDate())
+        val firestoreEvent = aFirestoreEvent(endTime = Timestamp(A_DATE.toDate()))
         val event = firestoreEvent.toEvent(checksum, A_TIMEZONE)
         assertThat(event.endTime).isEqualTo(A_DATE.toDateTime(A_TIMEZONE).toLocalDateTime())
     }

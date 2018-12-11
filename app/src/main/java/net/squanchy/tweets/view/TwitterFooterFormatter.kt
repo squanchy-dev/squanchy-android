@@ -2,6 +2,7 @@ package net.squanchy.tweets.view
 
 import android.content.Context
 import androidx.annotation.StringRes
+import com.google.firebase.Timestamp
 import net.squanchy.R
 import net.squanchy.tweets.domain.view.TweetViewModel
 import org.joda.time.DateTime
@@ -21,8 +22,8 @@ internal class TwitterFooterFormatter(private val context: Context) {
     }
 
     private fun timestampFrom(tweet: TweetViewModel): String {
-        val createdAt = LocalDateTime.fromDateFields(tweet.createdAt).toDateTime()
-        val formattedTime = timeFormatter.print(tweet.createdAt.time)
+        val createdAt = tweet.createdAt.toLocalDateTime().toDateTime()
+        val formattedTime = timeFormatter.print(tweet.createdAt.toDate().time)
 
         return when {
             isToday(createdAt) -> formatRecentDay(context, R.string.tweet_date_today, formattedTime)
@@ -53,10 +54,8 @@ internal class TwitterFooterFormatter(private val context: Context) {
 
     private fun formatNormalDay(context: Context, day: String, formattedTime: String) =
         context.getString(R.string.tweet_date_format, day, formattedTime)
+}
 
-    companion object {
-
-        // Sat Mar 14 02:34:20 +0000 2009
-        private const val DATE_PATTERN = "EEE MMM dd HH:mm:ss Z yyyy"
-    }
+private fun Timestamp.toLocalDateTime(): LocalDateTime {
+    return LocalDateTime.fromDateFields(this.toDate())
 }

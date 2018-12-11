@@ -1,5 +1,6 @@
 package net.squanchy.service.firebase
 
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.GeoPoint
 import net.squanchy.A_DATE
 import net.squanchy.service.firebase.model.conferenceinfo.FirestoreConferenceInfo
@@ -11,7 +12,6 @@ import net.squanchy.service.firebase.model.schedule.FirestorePlace
 import net.squanchy.service.firebase.model.schedule.FirestoreSchedulePage
 import net.squanchy.service.firebase.model.schedule.FirestoreSpeaker
 import net.squanchy.service.firebase.model.schedule.FirestoreTrack
-import java.util.Date
 
 fun aFirestoreTrack(
     id: String = "a track id",
@@ -67,7 +67,7 @@ fun aFirestorePlace(
 
 fun aFirestoreDay(
     id: String = "dayId",
-    date: Date = A_DATE.toDate()
+    date: Timestamp = Timestamp(A_DATE.toDate())
 ) = FirestoreDay().apply {
     this.id = id
     this.date = date
@@ -92,8 +92,8 @@ fun aFirestoreVenue(
 fun aFirestoreEvent(
     id: String = "banana",
     title: String = "Hello \uD83C\uDF4C", // Yes, that's a banana emoji. You never know
-    startTime: Date = A_DATE.toDate(),
-    endTime: Date = A_DATE.plusMinutes(1).toDate(),
+    startTime: Timestamp = Timestamp(A_DATE.toDate()),
+    endTime: Timestamp = Timestamp(A_DATE.plusMinutes(1).toDate()),
     place: FirestorePlace? = aFirestorePlace(),
     track: FirestoreTrack? = aFirestoreTrack(),
     speakers: List<FirestoreSpeaker> = listOf(aFirestoreSpeaker()),

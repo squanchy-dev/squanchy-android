@@ -1,6 +1,7 @@
 package net.squanchy.schedule
 
 import arrow.core.Option
+import com.google.firebase.Timestamp
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import net.squanchy.A_DATE
@@ -65,8 +66,8 @@ class FirestoreScheduleServiceTest {
 
     @Test
     fun `should sort schedule pages by date`() {
-        val firstDaySchedulePage = aFirestoreSchedulePage(day = aFirestoreDay(id = "1", date = A_START_TIME.toDate()))
-        val secondDaySchedulePage = aFirestoreSchedulePage(day = aFirestoreDay(id = "2", date = A_START_TIME.plusDays(1).toDate()))
+        val firstDaySchedulePage = aFirestoreSchedulePage(day = aFirestoreDay(id = "1", date = Timestamp(A_START_TIME.toDate())))
+        val secondDaySchedulePage = aFirestoreSchedulePage(day = aFirestoreDay(id = "2", date = Timestamp(A_START_TIME.plusDays(1).toDate())))
         `when`(dbService.scheduleView()).thenReturn(Observable.just(listOf(firstDaySchedulePage, secondDaySchedulePage)))
         val allowedTracks = setOf(aTrack())
         `when`(tracksFilter.selectedTracks).thenReturn(BehaviorSubject.createDefault(allowedTracks))
@@ -87,30 +88,30 @@ class FirestoreScheduleServiceTest {
     @Test
     fun `should sort events in each schedule page by start time`() {
         val firstDaySchedulePage = aFirestoreSchedulePage(
-            day = aFirestoreDay(id = "1", date = A_START_TIME.toDate()),
+            day = aFirestoreDay(id = "1", date = Timestamp(A_START_TIME.toDate())),
             events = listOf(
-                aFirestoreEvent(id = "1", startTime = A_START_TIME.toDate(), endTime = AN_END_TIME.toDate()),
-                aFirestoreEvent(id = "2", startTime = A_LATER_START_TIME.toDate(), endTime = A_LATER_END_TIME.toDate()),
-                aFirestoreEvent(id = "3", startTime = A_START_TIME.toDate(), endTime = AN_END_TIME.toDate())
+                aFirestoreEvent(id = "1", startTime = Timestamp(A_START_TIME.toDate()), endTime = Timestamp(AN_END_TIME.toDate())),
+                aFirestoreEvent(id = "2", startTime = Timestamp(A_LATER_START_TIME.toDate()), endTime = Timestamp(A_LATER_END_TIME.toDate())),
+                aFirestoreEvent(id = "3", startTime = Timestamp(A_START_TIME.toDate()), endTime = Timestamp(AN_END_TIME.toDate()))
             )
         )
         val secondDaySchedulePage = aFirestoreSchedulePage(
-            day = aFirestoreDay(id = "2", date = A_START_TIME.plusDays(1).toDate()),
+            day = aFirestoreDay(id = "2", date = Timestamp(A_START_TIME.plusDays(1).toDate())),
             events = listOf(
                 aFirestoreEvent(
                     id = "4",
-                    startTime = A_START_TIME.plusDays(1).toDate(),
-                    endTime = AN_END_TIME.plusDays(1).toDate()
+                    startTime = Timestamp(A_START_TIME.plusDays(1).toDate()),
+                    endTime = Timestamp(AN_END_TIME.plusDays(1).toDate())
                 ),
                 aFirestoreEvent(
                     id = "6",
-                    startTime = A_LATER_START_TIME.plusDays(1).toDate(),
-                    endTime = A_LATER_END_TIME.plusDays(1).toDate()
+                    startTime = Timestamp(A_LATER_START_TIME.plusDays(1).toDate()),
+                    endTime = Timestamp(A_LATER_END_TIME.plusDays(1).toDate())
                 ),
                 aFirestoreEvent(
                     id = "5",
-                    startTime = A_START_TIME.plusDays(1).toDate(),
-                    endTime = AN_END_TIME.plusDays(1).toDate()
+                    startTime = Timestamp(A_START_TIME.plusDays(1).toDate()),
+                    endTime = Timestamp(AN_END_TIME.plusDays(1).toDate())
                 )
             )
         )
