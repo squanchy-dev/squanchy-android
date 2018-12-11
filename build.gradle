@@ -8,7 +8,6 @@ buildscript {
 
     dependencies {
         classpath buildScript.android
-        classpath buildScript.firebase
         classpath buildScript.googleServices
         classpath buildScript.gradleStaticAnalysisPlugin
         classpath buildScript.playPublisher
