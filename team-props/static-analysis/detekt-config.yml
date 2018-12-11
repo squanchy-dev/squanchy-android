@@ -19,6 +19,8 @@ test-pattern: # Configure exclusions for test sources
     - 'SpreadOperator'
     - 'TooManyFunctions'
     - 'ForEachOnRange'
+    - 'FunctionMaxLength'
+    - 'TooGenericExceptionCaught'
 
 build:
   maxIssues: 0
@@ -163,12 +165,14 @@ exceptions:
     active: false
   SwallowedException:
     active: false
+    ignoredExceptionTypes: 'InterruptedException,NumberFormatException,ParseException,MalformedURLException'
   ThrowingExceptionFromFinally:
     active: false
   ThrowingExceptionInMain:
     active: false
   ThrowingExceptionsWithoutMessageOrCause:
     active: true
+    exceptions: 'IllegalArgumentException,IllegalStateException,IOException'
   ThrowingNewInstanceOfSameException:
     active: false
   TooGenericExceptionCaught:
@@ -335,8 +339,8 @@ naming:
   TopLevelPropertyNaming:
     active: true
     constantPattern: '[A-Z][_A-Z0-9]*'
-    propertyPattern: '[a-z][A-Za-z\d]*'
-    privatePropertyPattern: '(_)?[a-z][A-Za-z0-9]*'
+    propertyPattern: '[A-Za-z][_A-Za-z0-9]*'
+    privatePropertyPattern: '(_)?[A-Za-z][A-Za-z0-9]*'
   VariableMaxLength:
     active: false
     maximumVariableNameLength: 64
@@ -352,6 +356,8 @@ naming:
 
 performance:
   active: true
+  ArrayPrimitive:
+    active: false
   ForEachOnRange:
     active: true
   SpreadOperator:
@@ -400,6 +406,8 @@ style:
     active: false
     conversionFunctionPrefix: 'to'
   EqualsNullCall:
+    active: false
+  EqualsOnSignatureLine:
     active: false
   ExplicitItLambdaParameter:
     active: false
@@ -465,6 +473,8 @@ style:
     active: false
     max: 2
     excludedFunctions: "equals"
+    excludeLabeled: false
+    excludeReturnFromLambda: true
   SafeCast:
     active: true
   SerialVersionUIDInSerializableClass:
@@ -490,6 +500,8 @@ style:
   UntilInsteadOfRangeTo:
     active: false
   UnusedImports:
+    active: false
+  UnusedPrivateClass:
     active: false
   UnusedPrivateMember:
     active: false
