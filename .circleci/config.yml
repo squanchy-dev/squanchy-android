@@ -116,7 +116,7 @@ jobs:
       # See https://issuetracker.google.com/issues/62217354 for the parallelism option
       - run:
           name: Run static analysis
-          command: cd workspace/repo && ./gradlew evaluateViolations -Djava.util.concurrent.ForkJoinPool.common.parallelism=2
+          command: cd workspace/repo && ./gradlew check -Djava.util.concurrent.ForkJoinPool.common.parallelism=2
 
       # Collect static analysis reports as build artifacts
       - store_artifacts:
