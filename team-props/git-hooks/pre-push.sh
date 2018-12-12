@@ -7,7 +7,7 @@ echo "Running static analysis..."
 
 status=$?
 
-if [[ "$status" = 0 ]] ; then
+if [ "$status" = 0 ] ; then
     echo "Static analysis found no issues. Proceeding with push."
     exit 0
 else
