@@ -6,6 +6,7 @@ import com.google.firebase.firestore.FirebaseFirestoreSettings
 import dagger.Module
 import dagger.Provides
 import net.squanchy.injection.ApplicationLifecycle
+import net.squanchy.remoteconfig.RemoteConfig
 import net.squanchy.service.firebase.FirebaseAuthService
 import net.squanchy.service.firebase.FirestoreDbService
 import net.squanchy.service.repository.AuthService
@@ -17,9 +18,11 @@ class FirestoreModule {
     internal fun firebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
 
     @Provides
-    internal fun firebaseFirestoreSettings(): FirebaseFirestoreSettings {
+    internal fun firebaseFirestoreSettings(remoteConfig: RemoteConfig): FirebaseFirestoreSettings {
+        val persistenceEnabled = !remoteConfig.getBoolean(KEY_PERSISTENCE_DISABLED)
+
         return FirebaseFirestoreSettings.Builder()
-            .setPersistenceEnabled(true)
+            .setPersistenceEnabled(persistenceEnabled)
             .setTimestampsInSnapshotsEnabled(true)
             .build()
     }
@@ -39,3 +42,5 @@ class FirestoreModule {
     @Provides
     internal fun firebaseAuthService(firebaseAuth: FirebaseAuth): AuthService = FirebaseAuthService(firebaseAuth)
 }
+
+private const val KEY_PERSISTENCE_DISABLED = "firestore_persistence_disabled"
