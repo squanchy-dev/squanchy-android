@@ -6,13 +6,13 @@ import net.squanchy.A_TIMEZONE
 import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.speaker.domain.view.Speaker
 import net.squanchy.speaker.domain.view.aSpeaker
-import org.joda.time.DateTimeZone
-import org.joda.time.LocalDate
-import org.joda.time.LocalDateTime
+import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.ZoneId
 
 fun aSchedule(
     pages: List<SchedulePage> = listOf(aSchedulePage()),
-    timezone: DateTimeZone = A_TIMEZONE
+    timezone: ZoneId = A_TIMEZONE
 ) = Schedule(
     pages = pages,
     timeZone = timezone
@@ -30,7 +30,7 @@ fun aSchedulePage(
 
 fun aDay(
     id: String = "dayId",
-    date: LocalDate = A_DATE.toDateTime(A_TIMEZONE).toLocalDate()
+    date: LocalDate = A_DATE.withZoneSameInstant(A_TIMEZONE).toLocalDate()
 ) = Day(
     id = id,
     date = date
@@ -39,8 +39,8 @@ fun aDay(
 fun anEvent(
     id: String = "banana",
     numericId: Long = 1234,
-    startTime: LocalDateTime = A_DATE.toDateTime(A_TIMEZONE).toLocalDateTime(),
-    endTime: LocalDateTime = A_DATE.plusMinutes(1).toDateTime(A_TIMEZONE).toLocalDateTime(),
+    startTime: LocalDateTime = A_DATE.withZoneSameInstant(A_TIMEZONE).toLocalDateTime(),
+    endTime: LocalDateTime = A_DATE.plusMinutes(1).withZoneSameInstant(A_TIMEZONE).toLocalDateTime(),
     title: String = "Hello \uD83C\uDF4C", // Yes, that's a banana emoji. You never know
     place: Option<Place> = Option(aPlace()),
     experienceLevel: Option<ExperienceLevel> = Option(ExperienceLevel.BEGINNER),
@@ -48,7 +48,7 @@ fun anEvent(
     type: Event.Type = Event.Type.KEYNOTE,
     description: Option<String> = Option("Now this is the story all about how\nMy life got flipped, turned upside down"),
     track: Option<Track> = Option(aTrack()),
-    timeZone: DateTimeZone = A_TIMEZONE,
+    timeZone: ZoneId = A_TIMEZONE,
     favorited: Boolean = false
 ) = Event(
     id = id,

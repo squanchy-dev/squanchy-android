@@ -23,9 +23,9 @@ import net.squanchy.schedule.domain.view.Track
 import net.squanchy.support.content.res.getColorFromAttribute
 import net.squanchy.support.lang.getOrThrow
 import net.squanchy.support.text.parseHtml
-import org.joda.time.DateTimeZone
-import org.joda.time.LocalDateTime
-import org.joda.time.format.DateTimeFormat
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.ZoneId
+import org.threeten.bp.format.DateTimeFormatter
 
 class EventDetailsLayout @JvmOverloads constructor(
     context: Context,
@@ -33,7 +33,7 @@ class EventDetailsLayout @JvmOverloads constructor(
     defStyle: Int = 0
 ) : ConstraintLayout(context, attrs, defStyle) {
 
-    private val dateTimeFormatter = DateTimeFormat.forPattern(WHEN_DATE_TIME_FORMAT)
+    private val dateTimeFormatter = DateTimeFormatter.ofPattern(WHEN_DATE_TIME_FORMAT)
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -49,9 +49,9 @@ class EventDetailsLayout @JvmOverloads constructor(
         updateDescription(event.description)
     }
 
-    private fun updateWhen(startTime: LocalDateTime, timeZone: DateTimeZone) {
+    private fun updateWhen(startTime: LocalDateTime, timeZone: ZoneId) {
         val formatter = dateTimeFormatter.withZone(timeZone)
-        whenValue.text = formatter.print(startTime.toDateTime(timeZone))
+        whenValue.text = formatter.format(startTime.atZone(timeZone))
         whenGroup.isVisible = true
     }
 

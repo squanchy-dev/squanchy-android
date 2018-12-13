@@ -1,7 +1,9 @@
 package net.squanchy.favorites.view
 
 import net.squanchy.schedule.domain.view.Event
-import org.joda.time.LocalDate
+import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalTime
+import org.threeten.bp.ZoneId
 
 sealed class FavoritesItem {
 
@@ -11,7 +13,11 @@ sealed class FavoritesItem {
 
     data class Header(val date: LocalDate) : FavoritesItem() {
 
-        override val id = date.toDateTimeAtCurrentTime().millis // We're relatively sure this won't clash with event IDs
+        // We're relatively sure this won't clash with event IDs
+        override val id = date.atTime(LocalTime.now())
+                    .atZone(ZoneId.systemDefault())
+                    .toInstant()
+                    .toEpochMilli()
 
         override val type = Type.HEADER
     }

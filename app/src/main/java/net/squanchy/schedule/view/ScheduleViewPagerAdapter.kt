@@ -9,6 +9,7 @@ import com.novoda.viewpageradapter.ViewPagerAdapter
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.SchedulePage
+import net.squanchy.support.time.createWeekDayAndDayFormatter
 import java.util.Locale
 
 class ScheduleViewPagerAdapter(context: Context) : ViewPagerAdapter<ScheduleDayPageView>() {
@@ -19,6 +20,7 @@ class ScheduleViewPagerAdapter(context: Context) : ViewPagerAdapter<ScheduleDayP
 
     private val inflater = LayoutInflater.from(context)
     private val viewPool = RecyclerView.RecycledViewPool()
+    private val titleFormatter = createWeekDayAndDayFormatter()
     private var showRoom: Boolean = false
     private var showFavorites: Boolean = false
 
@@ -45,12 +47,8 @@ class ScheduleViewPagerAdapter(context: Context) : ViewPagerAdapter<ScheduleDayP
 
     override fun getPageTitle(position: Int): CharSequence? {
         val date = pages[position].date
-        return date.toString(TITLE_FORMAT_TEMPLATE).toUpperCase(Locale.getDefault())
+        return date.format(titleFormatter).toUpperCase(Locale.getDefault())
     }
 
     override fun isViewFromObject(view: View, anObject: Any) = view === anObject
-
-    companion object {
-        private const val TITLE_FORMAT_TEMPLATE = "EEE d"
-    }
 }

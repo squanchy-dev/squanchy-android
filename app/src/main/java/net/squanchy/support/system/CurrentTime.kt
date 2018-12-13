@@ -1,14 +1,14 @@
 package net.squanchy.support.system
 
-import org.joda.time.DateTime
+import org.threeten.bp.ZonedDateTime
 
 interface CurrentTime {
 
-    fun currentDateTime(): DateTime
+    fun currentDateTime(): ZonedDateTime
 }
 
 @Suppress("unused") // It's actually used in the release CurrentTimeModule
 class AndroidCurrentTime : CurrentTime {
 
-    override fun currentDateTime(): DateTime = DateTime.now()
+    override fun currentDateTime(): ZonedDateTime = ZonedDateTime.now()
 }

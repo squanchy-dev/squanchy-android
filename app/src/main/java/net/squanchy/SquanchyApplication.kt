@@ -3,12 +3,12 @@ package net.squanchy
 import android.app.Application
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
+import com.jakewharton.threetenabp.AndroidThreeTen
 import io.fabric.sdk.android.Fabric
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
-import net.danlew.android.joda.JodaTimeAndroid
 import net.squanchy.injection.createApplicationComponent
 import timber.log.Timber
 
@@ -21,7 +21,7 @@ class SquanchyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        JodaTimeAndroid.init(this)
+        AndroidThreeTen.init(this)
         setupTracking()
         initializeFirebase()
     }

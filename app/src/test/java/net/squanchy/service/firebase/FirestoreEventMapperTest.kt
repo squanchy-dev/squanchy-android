@@ -8,6 +8,7 @@ import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.support.checksum.Checksum
 import net.squanchy.support.lang.getOrThrow
+import net.squanchy.support.toDate
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -47,14 +48,14 @@ class FirestoreEventMapperTest {
     fun `event start date should match when mapped`() {
         val firestoreEvent = aFirestoreEvent(startTime = Timestamp(A_DATE.toDate()))
         val event = firestoreEvent.toEvent(checksum, A_TIMEZONE)
-        assertThat(event.startTime).isEqualTo(A_DATE.toDateTime(A_TIMEZONE).toLocalDateTime())
+        assertThat(event.startTime).isEqualTo(A_DATE.withZoneSameInstant(A_TIMEZONE).toLocalDateTime())
     }
 
     @Test
     fun `event end date should match when mapped`() {
         val firestoreEvent = aFirestoreEvent(endTime = Timestamp(A_DATE.toDate()))
         val event = firestoreEvent.toEvent(checksum, A_TIMEZONE)
-        assertThat(event.endTime).isEqualTo(A_DATE.toDateTime(A_TIMEZONE).toLocalDateTime())
+        assertThat(event.endTime).isEqualTo(A_DATE.withZoneSameInstant(A_TIMEZONE).toLocalDateTime())
     }
 
     @Test

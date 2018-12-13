@@ -4,7 +4,7 @@ import net.squanchy.favorites.view.FavoritesItem
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.aDay
 import net.squanchy.schedule.domain.view.anEvent
-import org.joda.time.LocalDate
+import org.threeten.bp.LocalDate
 
 fun aFavoriteHeaderListItem(
     date: LocalDate = aDay().date

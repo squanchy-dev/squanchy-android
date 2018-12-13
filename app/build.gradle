@@ -151,7 +151,7 @@ dependencies {
     implementation libraries.app.flexbox
     implementation libraries.app.glide
     implementation libraries.app.glideOkHttp3
-    implementation libraries.app.jodaTimeAndroid
+    implementation libraries.app.threeTenAbp
     implementation libraries.app.kotlin
     implementation libraries.app.kotlinReflect
     implementation libraries.app.moshi
@@ -171,9 +171,9 @@ dependencies {
     kapt libraries.app.glideCompiler
 
     testImplementation libraries.test.truth
-    testImplementation libraries.test.jodaTime
     testImplementation libraries.test.jUnit4
     testImplementation libraries.test.mockito
+    testImplementation libraries.test.threeTenBp
 }
 
 apply plugin: 'com.google.gms.google-services'

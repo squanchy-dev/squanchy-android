@@ -12,9 +12,9 @@ import net.squanchy.service.firebase.model.schedule.FirestoreTrack
 import net.squanchy.speaker.domain.view.Speaker
 import net.squanchy.support.checksum.Checksum
 import net.squanchy.support.lang.option
+import net.squanchy.support.time.toLocalDateTime
 import net.squanchy.venue.domain.view.Venue
-import org.joda.time.DateTimeZone
-import org.joda.time.LocalDateTime
+import org.threeten.bp.ZoneId
 
 fun FirestorePlace.toPlace(): Place = Place(id = id, name = name, floor = floor.option(), position = position)
 
@@ -46,14 +46,14 @@ fun FirestoreVenue.toVenue() = Venue(
     longitude = latLon.longitude,
     description = description,
     mapUrl = mapUrl,
-    timeZone = DateTimeZone.forID(timezone)
+    timeZone = ZoneId.of(timezone)
 )
 
-fun FirestoreEvent.toEvent(checksum: Checksum, timeZone: DateTimeZone, isFavorite: Boolean = false) = Event(
+fun FirestoreEvent.toEvent(checksum: Checksum, timeZone: ZoneId, isFavorite: Boolean = false) = Event(
     id = id,
     numericId = checksum.getChecksumOf("event_$id"),
-    startTime = LocalDateTime(startTime.toDate(), timeZone),
-    endTime = LocalDateTime(endTime.toDate(), timeZone),
+    startTime = startTime.toLocalDateTime(timeZone),
+    endTime = endTime.toLocalDateTime(timeZone),
     title = title,
     place = place?.toPlace().option(),
     experienceLevel = experienceLevel.toExperienceLevel(),

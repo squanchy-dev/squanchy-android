@@ -11,7 +11,7 @@ import net.squanchy.service.firebase.model.schedule.FirestoreFavorite
 import net.squanchy.service.firebase.toEvent
 import net.squanchy.service.repository.EventRepository
 import net.squanchy.support.checksum.Checksum
-import org.joda.time.DateTimeZone
+import org.threeten.bp.ZoneId
 
 class FirestoreEventRepository(
     private val firestoreDbService: FirestoreDbService,
@@ -31,7 +31,7 @@ class FirestoreEventRepository(
         )
     }
 
-    private fun FirestoreVenue.extractTimeZone() = DateTimeZone.forID(timezone)
+    private fun FirestoreVenue.extractTimeZone() = ZoneId.of(timezone)
 
     override fun events(userId: String): Observable<List<Event>> {
         val sessionsObservable = firestoreDbService.events()
@@ -46,10 +46,10 @@ class FirestoreEventRepository(
         )
     }
 
-    private fun combineIntoEvents(events: List<FirestoreEvent>, timeZone: DateTimeZone, favorites: List<FirestoreFavorite>): List<Event> =
+    private fun combineIntoEvents(events: List<FirestoreEvent>, timeZone: ZoneId, favorites: List<FirestoreFavorite>): List<Event> =
         events.map { combineIntoEvent(it, timeZone, favorites.map { it.id }) }
 
-    private fun combineIntoEvent(event: FirestoreEvent, timeZone: DateTimeZone, favoriteIds: List<String>): Event =
+    private fun combineIntoEvent(event: FirestoreEvent, timeZone: ZoneId, favoriteIds: List<String>): Event =
         event.toEvent(checksum, timeZone, favoriteIds.contains(event.id))
 
     override fun addFavorite(eventId: String, userId: String): Completable = firestoreDbService.addFavorite(eventId, userId)

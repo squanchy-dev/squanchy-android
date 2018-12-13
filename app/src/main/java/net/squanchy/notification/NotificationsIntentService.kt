@@ -13,7 +13,9 @@ import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Event
-import org.joda.time.LocalDateTime
+import net.squanchy.support.time.toEpochMilli
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.ZoneId
 import timber.log.Timber
 
 class NotificationsIntentService : IntentService(NotificationsIntentService::class.java.simpleName) {
@@ -36,11 +38,11 @@ class NotificationsIntentService : IntentService(NotificationsIntentService::cla
     }
 
     override fun onHandleIntent(intent: Intent?) {
-        val notificationIntervalEnd = LocalDateTime().plusMinutes(NOTIFICATION_INTERVAL_MINUTES)
+        val notificationIntervalEnd = LocalDateTime.now().plusMinutes(NOTIFICATION_INTERVAL_MINUTES)
 
         val sortedFavourites = service.sortedFavourites()
 
-        val now = LocalDateTime()
+        val now = LocalDateTime.now()
         if (shouldShowNotifications()) {
             @SuppressLint("RxSubscribeOnError") // RxLint does not recognise RxKotlin (yet)
             subscriptions += sortedFavourites
@@ -82,7 +84,7 @@ class NotificationsIntentService : IntentService(NotificationsIntentService::cla
         val pendingIntent = PendingIntent.getService(this, 0, serviceIntent, PendingIntent.FLAG_CANCEL_CURRENT)
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.cancel(pendingIntent)
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, serviceAlarm.toDateTime().millis, pendingIntent)
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, serviceAlarm.toEpochMilli(ZoneId.systemDefault()), pendingIntent)
     }
 
     override fun onDestroy() {
@@ -91,7 +93,7 @@ class NotificationsIntentService : IntentService(NotificationsIntentService::cla
     }
 
     companion object {
-        private const val NOTIFICATION_INTERVAL_MINUTES = 10
+        private const val NOTIFICATION_INTERVAL_MINUTES = 10L
         private const val SHOW_NOTIFICATIONS_DEFAULT = true
     }
 }

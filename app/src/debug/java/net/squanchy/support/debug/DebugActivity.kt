@@ -16,8 +16,8 @@ import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Place
 import net.squanchy.schedule.domain.view.Track
 import net.squanchy.speaker.domain.view.Speaker
-import org.joda.time.DateTimeZone
-import org.joda.time.LocalDateTime
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.ZoneId
 import java.util.ArrayList
 import java.util.Random
 
@@ -63,8 +63,8 @@ class DebugActivity : AppCompatActivity() {
     }
 
     private fun createTestEvent(id: Int): Event {
-        val start = LocalDateTime().plusMinutes(5)
-        val end = LocalDateTime().plusMinutes(45)
+        val start = LocalDateTime.now().plusMinutes(5)
+        val end = LocalDateTime.now().plusMinutes(45)
         return Event(
             id = id.toString(),
             numericId = id.toLong(),
@@ -78,7 +78,7 @@ class DebugActivity : AppCompatActivity() {
             favorite = true,
             description = Option.empty(),
             track = Option(createTrack()),
-            timeZone = DateTimeZone.forID("Europe/Rome")
+            timeZone = ZoneId.of("Europe/Rome")
         )
     }
 

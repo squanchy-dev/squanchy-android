@@ -11,7 +11,8 @@ import net.squanchy.schedule.domain.view.Place
 import net.squanchy.support.content.res.getColorFromAttribute
 import net.squanchy.support.graphics.toColorStateList
 import net.squanchy.support.lang.getOrThrow
-import org.joda.time.format.DateTimeFormat
+import net.squanchy.support.time.createWeekDayAndDayFormatter
+import net.squanchy.support.time.createShortTimeFormatter
 import java.util.Locale
 
 class TalkEventItemView @JvmOverloads constructor(
@@ -20,8 +21,8 @@ class TalkEventItemView @JvmOverloads constructor(
     defStyleAttr: Int = R.attr.cardViewDefaultStyle
 ) : EventItemView(context, attrs, defStyleAttr) {
 
-    private val timeFormatter = DateTimeFormat.shortTime()
-    private val dateFormatter = DateTimeFormat.forPattern("EEE d")
+    private val timeFormatter = createShortTimeFormatter()
+    private val dateFormatter = createWeekDayAndDayFormatter()
 
     override fun updateWith(event: Event, showRoom: Boolean, showDay: Boolean, showFavorite: Boolean) {
         ensureSupportedType(event.type)
@@ -63,11 +64,11 @@ class TalkEventItemView @JvmOverloads constructor(
 
     private fun startTimeAsFormattedString(event: Event, showDay: Boolean): String {
         val timeZone = event.timeZone
-        val startDateTime = event.startTime.toDateTime(timeZone)
+        val startDateTime = event.startTime.atZone(timeZone)
 
         // Note: the space at the end of the template string is not a typo, it separates the date from the time
-        val formattedDate = if (showDay) "${dateFormatter.withZone(timeZone).print(startDateTime)} " else ""
-        val formattedTime = timeFormatter.withZone(timeZone).print(startDateTime)
+        val formattedDate = if (showDay) "${dateFormatter.withZone(timeZone).format(startDateTime)} " else ""
+        val formattedTime = timeFormatter.withZone(timeZone).format(startDateTime)
 
         return "$formattedDate$formattedTime"
     }
