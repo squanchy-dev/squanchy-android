@@ -23,7 +23,7 @@ import net.squanchy.service.firebase.model.schedule.FirestoreSchedulePage
 import net.squanchy.service.firebase.model.schedule.FirestoreSpeaker
 import net.squanchy.service.firebase.model.schedule.FirestoreTrack
 import net.squanchy.service.firebase.model.twitter.FirestoreTweet
-import org.joda.time.DateTimeZone
+import org.threeten.bp.ZoneId
 import java.util.concurrent.Executor
 import java.util.concurrent.Semaphore
 
@@ -45,9 +45,9 @@ class FirestoreDbService(private val db: FirebaseFirestore) {
             .observe()
     }
 
-    fun timezone(): Observable<DateTimeZone> = venueInfo()
+    fun timezone(): Observable<ZoneId> = venueInfo()
         .map { it.timezone }
-        .map { DateTimeZone.forID(it) }
+        .map { ZoneId.of(it) }
 
     fun venueInfo(): Observable<FirestoreVenue> {
         return db.collection(CONFERENCE_INFO)

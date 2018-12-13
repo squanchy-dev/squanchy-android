@@ -7,7 +7,7 @@ import androidx.core.view.isVisible
 import kotlinx.android.synthetic.main.item_schedule_event_other.view.*
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Event
-import org.joda.time.format.DateTimeFormat
+import net.squanchy.support.time.shortTimeFormatter
 
 class OtherEventItemView @JvmOverloads constructor(
     context: Context,
@@ -44,10 +44,10 @@ class OtherEventItemView @JvmOverloads constructor(
 
     private fun startTimeAsFormattedString(event: Event): String {
         val timeZone = event.timeZone
-        val formatter = DateTimeFormat.shortTime()
+        val formatter = shortTimeFormatter()
             .withZone(timeZone)
 
-        return formatter.print(event.startTime.toDateTime(timeZone))
+        return formatter.format(event.startTime.atZone(timeZone))
     }
 
     @DrawableRes

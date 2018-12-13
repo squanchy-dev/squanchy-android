@@ -1,8 +1,8 @@
 package net.squanchy.schedule.domain.view
 
-import org.joda.time.DateTimeZone
+import org.threeten.bp.ZoneId
 
-data class Schedule(val pages: List<SchedulePage>, val timeZone: DateTimeZone) {
+data class Schedule(val pages: List<SchedulePage>, val timeZone: ZoneId) {
 
     val isEmpty: Boolean
         get() = pages.all { it.events.isEmpty() }

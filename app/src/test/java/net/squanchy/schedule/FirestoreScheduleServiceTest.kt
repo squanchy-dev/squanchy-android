@@ -21,6 +21,7 @@ import net.squanchy.service.firebase.aFirestoreSchedulePage
 import net.squanchy.service.firebase.aFirestoreSpeaker
 import net.squanchy.service.firebase.aFirestoreTrack
 import net.squanchy.support.checksum.Checksum
+import net.squanchy.support.toDate
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -78,8 +79,8 @@ class FirestoreScheduleServiceTest {
             .assertValue(
                 aSchedule(
                     pages = listOf(
-                        aSchedulePage(dayId = "1", date = A_START_TIME.toDateTime(A_TIMEZONE).toLocalDate()),
-                        aSchedulePage(dayId = "2", date = A_START_TIME.plusDays(1).toDateTime(A_TIMEZONE).toLocalDate())
+                        aSchedulePage(dayId = "1", date = A_START_TIME.withZoneSameInstant(A_TIMEZONE).toLocalDate()),
+                        aSchedulePage(dayId = "2", date = A_START_TIME.plusDays(1).withZoneSameInstant(A_TIMEZONE).toLocalDate())
                     )
                 )
             )
@@ -132,49 +133,49 @@ class FirestoreScheduleServiceTest {
                     pages = listOf(
                         aSchedulePage(
                             dayId = "1",
-                            date = A_START_TIME.toDateTime(A_TIMEZONE).toLocalDate(),
+                            date = A_START_TIME.withZoneSameInstant(A_TIMEZONE).toLocalDate(),
                             events = listOf(
                                 anEvent(
                                     id = "1",
                                     numericId = 1,
-                                    startTime = A_START_TIME.toDateTime(A_TIMEZONE).toLocalDateTime(),
-                                    endTime = AN_END_TIME.toDateTime(A_TIMEZONE).toLocalDateTime()
+                                    startTime = A_START_TIME.withZoneSameInstant(A_TIMEZONE).toLocalDateTime(),
+                                    endTime = AN_END_TIME.withZoneSameInstant(A_TIMEZONE).toLocalDateTime()
                                 ),
                                 anEvent(
                                     id = "3",
                                     numericId = 3,
-                                    startTime = A_START_TIME.toDateTime(A_TIMEZONE).toLocalDateTime(),
-                                    endTime = AN_END_TIME.toDateTime(A_TIMEZONE).toLocalDateTime()
+                                    startTime = A_START_TIME.withZoneSameInstant(A_TIMEZONE).toLocalDateTime(),
+                                    endTime = AN_END_TIME.withZoneSameInstant(A_TIMEZONE).toLocalDateTime()
                                 ),
                                 anEvent(
                                     id = "2",
                                     numericId = 2,
-                                    startTime = A_LATER_START_TIME.toDateTime(A_TIMEZONE).toLocalDateTime(),
-                                    endTime = A_LATER_END_TIME.toDateTime(A_TIMEZONE).toLocalDateTime()
+                                    startTime = A_LATER_START_TIME.withZoneSameInstant(A_TIMEZONE).toLocalDateTime(),
+                                    endTime = A_LATER_END_TIME.withZoneSameInstant(A_TIMEZONE).toLocalDateTime()
                                 )
                             )
                         ),
                         aSchedulePage(
                             dayId = "2",
-                            date = A_START_TIME.plusDays(1).toDateTime(A_TIMEZONE).toLocalDate(),
+                            date = A_START_TIME.plusDays(1).withZoneSameInstant(A_TIMEZONE).toLocalDate(),
                             events = listOf(
                                 anEvent(
                                     id = "4",
                                     numericId = 4,
-                                    startTime = A_START_TIME.plusDays(1).toDateTime(A_TIMEZONE).toLocalDateTime(),
-                                    endTime = AN_END_TIME.plusDays(1).toDateTime(A_TIMEZONE).toLocalDateTime()
+                                    startTime = A_START_TIME.plusDays(1).withZoneSameInstant(A_TIMEZONE).toLocalDateTime(),
+                                    endTime = AN_END_TIME.plusDays(1).withZoneSameInstant(A_TIMEZONE).toLocalDateTime()
                                 ),
                                 anEvent(
                                     id = "5",
                                     numericId = 5,
-                                    startTime = A_START_TIME.plusDays(1).toDateTime(A_TIMEZONE).toLocalDateTime(),
-                                    endTime = AN_END_TIME.plusDays(1).toDateTime(A_TIMEZONE).toLocalDateTime()
+                                    startTime = A_START_TIME.plusDays(1).withZoneSameInstant(A_TIMEZONE).toLocalDateTime(),
+                                    endTime = AN_END_TIME.plusDays(1).withZoneSameInstant(A_TIMEZONE).toLocalDateTime()
                                 ),
                                 anEvent(
                                     id = "6",
                                     numericId = 6,
-                                    startTime = A_LATER_START_TIME.plusDays(1).toDateTime(A_TIMEZONE).toLocalDateTime(),
-                                    endTime = A_LATER_END_TIME.plusDays(1).toDateTime(A_TIMEZONE).toLocalDateTime()
+                                    startTime = A_LATER_START_TIME.plusDays(1).withZoneSameInstant(A_TIMEZONE).toLocalDateTime(),
+                                    endTime = A_LATER_END_TIME.plusDays(1).withZoneSameInstant(A_TIMEZONE).toLocalDateTime()
                                 )
                             )
                         )

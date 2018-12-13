@@ -6,7 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.view.EventItemView
 import net.squanchy.schedule.view.OnEventClickListener
-import org.joda.time.LocalDate
+import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
 
 fun favoriteItemViewHolderFor(itemView: View) = when (itemView) {
     is EventItemView -> EventViewHolder(itemView)
@@ -27,6 +28,10 @@ class EventViewHolder(itemView: EventItemView) : FavoritesViewHolder<EventItemVi
 class HeaderViewHolder(itemView: TextView) : FavoritesViewHolder<TextView>(itemView) {
 
     fun updateWith(date: LocalDate) {
-        (itemView as TextView).text = date.toString("EEEE d")
+        (itemView as TextView).text = date.format(formatter)
+    }
+
+    companion object {
+        val formatter = DateTimeFormatter.ofPattern("EEEE d")
     }
 }

@@ -2,18 +2,19 @@ package net.squanchy.tweets.view
 
 import android.content.Context
 import androidx.annotation.StringRes
-import com.google.firebase.Timestamp
 import net.squanchy.R
+import net.squanchy.support.time.shortDateFormatter
+import net.squanchy.support.time.shortTimeFormatter
+import net.squanchy.support.time.toZonedDateTime
 import net.squanchy.tweets.domain.view.TweetViewModel
-import org.joda.time.DateTime
-import org.joda.time.LocalDateTime
-import org.joda.time.format.DateTimeFormat
-import org.joda.time.format.DateTimeFormatter
+import org.threeten.bp.LocalDate
+import org.threeten.bp.ZoneId
+import org.threeten.bp.ZonedDateTime
 
 internal class TwitterFooterFormatter(private val context: Context) {
 
-    private val timeFormatter: DateTimeFormatter = DateTimeFormat.shortTime()
-    private val dateFormatter: DateTimeFormatter = DateTimeFormat.shortDate()
+    private val timeFormatter = shortTimeFormatter()
+    private val dateFormatter = shortDateFormatter()
 
     fun footerTextFor(tweet: TweetViewModel): String {
         val username = tweet.user.screenName
@@ -22,8 +23,8 @@ internal class TwitterFooterFormatter(private val context: Context) {
     }
 
     private fun timestampFrom(tweet: TweetViewModel): String {
-        val createdAt = tweet.createdAt.toLocalDateTime().toDateTime()
-        val formattedTime = timeFormatter.print(tweet.createdAt.toDate().time)
+        val createdAt = tweet.createdAt.toZonedDateTime(ZoneId.systemDefault())
+        val formattedTime = timeFormatter.format(createdAt)
 
         return when {
             isToday(createdAt) -> formatRecentDay(context, R.string.tweet_date_today, formattedTime)
@@ -32,14 +33,12 @@ internal class TwitterFooterFormatter(private val context: Context) {
         }
     }
 
-    private fun isToday(instant: DateTime): Boolean {
-        val today = DateTime().withTimeAtStartOfDay()
-        return today.isEqual(instant.withTimeAtStartOfDay())
+    private fun isToday(instant: ZonedDateTime): Boolean {
+        return instant.toLocalDate() == LocalDate.now(instant.zone)
     }
 
-    private fun isYesterday(instant: DateTime): Boolean {
-        val today = DateTime().minusDays(1).withTimeAtStartOfDay()
-        return today.isEqual(instant.withTimeAtStartOfDay())
+    private fun isYesterday(instant: ZonedDateTime): Boolean {
+        return instant.toLocalDate() == LocalDate.now(instant.zone).minusDays(1)
     }
 
     private fun formatRecentDay(context: Context, @StringRes dayRes: Int, formattedTime: String): String {
@@ -47,15 +46,11 @@ internal class TwitterFooterFormatter(private val context: Context) {
         return context.getString(R.string.tweet_date_format, day, formattedTime)
     }
 
-    private fun formatDateAndTime(date: DateTime, formattedTimestamp: String): String {
-        val formattedDate = dateFormatter.print(date)
+    private fun formatDateAndTime(date: ZonedDateTime, formattedTimestamp: String): String {
+        val formattedDate = dateFormatter.format(date)
         return formatNormalDay(context, formattedDate, formattedTimestamp)
     }
 
     private fun formatNormalDay(context: Context, day: String, formattedTime: String) =
         context.getString(R.string.tweet_date_format, day, formattedTime)
-}
-
-private fun Timestamp.toLocalDateTime(): LocalDateTime {
-    return LocalDateTime.fromDateFields(this.toDate())
 }

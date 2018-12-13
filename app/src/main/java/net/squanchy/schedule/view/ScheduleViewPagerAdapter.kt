@@ -9,6 +9,7 @@ import com.novoda.viewpageradapter.ViewPagerAdapter
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.SchedulePage
+import org.threeten.bp.format.DateTimeFormatter
 import java.util.Locale
 
 class ScheduleViewPagerAdapter(context: Context) : ViewPagerAdapter<ScheduleDayPageView>() {
@@ -45,12 +46,12 @@ class ScheduleViewPagerAdapter(context: Context) : ViewPagerAdapter<ScheduleDayP
 
     override fun getPageTitle(position: Int): CharSequence? {
         val date = pages[position].date
-        return date.toString(TITLE_FORMAT_TEMPLATE).toUpperCase(Locale.getDefault())
+        return date.format(TITLE_FORMAT).toUpperCase(Locale.getDefault())
     }
 
     override fun isViewFromObject(view: View, anObject: Any) = view === anObject
 
     companion object {
-        private const val TITLE_FORMAT_TEMPLATE = "EEE d"
+        private val TITLE_FORMAT = DateTimeFormatter.ofPattern("EEE d")
     }
 }

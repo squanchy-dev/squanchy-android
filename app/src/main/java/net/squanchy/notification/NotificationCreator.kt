@@ -21,6 +21,7 @@ import net.squanchy.speaker.domain.view.Speaker
 import net.squanchy.support.android
 import net.squanchy.support.lang.getOrThrow
 import net.squanchy.support.lang.or
+import org.threeten.bp.ZoneId
 
 class NotificationCreator(private val context: Context) {
 
@@ -60,7 +61,7 @@ class NotificationCreator(private val context: Context) {
             .setContentIntent(createPendingIntentForSingleEvent(event.id))
             .setContentTitle(event.title)
             .setColor(getTrackColor(event))
-            .setWhen(event.startTime.toDateTime().millis)
+            .setWhen(event.startTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli())
             .setShowWhen(true)
             .setGroup(GROUP_KEY_NOTIFY_SESSION)
 

@@ -1,6 +1,6 @@
 package net.squanchy.schedule.domain.view
 
-import org.joda.time.LocalDate
+import org.threeten.bp.LocalDate
 
 data class SchedulePage(
     val dayId: String,

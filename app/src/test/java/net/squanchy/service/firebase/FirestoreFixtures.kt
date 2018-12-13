@@ -12,6 +12,7 @@ import net.squanchy.service.firebase.model.schedule.FirestorePlace
 import net.squanchy.service.firebase.model.schedule.FirestoreSchedulePage
 import net.squanchy.service.firebase.model.schedule.FirestoreSpeaker
 import net.squanchy.service.firebase.model.schedule.FirestoreTrack
+import net.squanchy.support.toDate
 
 fun aFirestoreTrack(
     id: String = "a track id",

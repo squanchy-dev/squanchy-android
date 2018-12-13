@@ -15,8 +15,8 @@ import net.squanchy.service.firebase.model.schedule.FirestoreSchedulePage
 import net.squanchy.service.firebase.toEvent
 import net.squanchy.service.repository.AuthService
 import net.squanchy.support.checksum.Checksum
-import org.joda.time.DateTimeZone
-import org.joda.time.LocalDate
+import net.squanchy.support.time.toLocalDate
+import org.threeten.bp.ZoneId
 
 interface ScheduleService {
 
@@ -68,13 +68,13 @@ class FirestoreScheduleService(
         track?.let { eventTrack -> allowedTracks.any { it.id == eventTrack.id } } ?: true
 
     private fun toSortedDomainSchedulePages() =
-        Function3<List<FirestoreSchedulePage>, DateTimeZone, List<FirestoreFavorite>, List<SchedulePage>> { pages, timeZone, favorites ->
+        Function3<List<FirestoreSchedulePage>, ZoneId, List<FirestoreFavorite>, List<SchedulePage>> { pages, timeZone, favorites ->
             pages.toSortedDomainSchedulePages(checksum, timeZone, favorites)
         }
 
     private fun List<FirestoreSchedulePage>.toSortedDomainSchedulePages(
         checksum: Checksum,
-        timeZone: DateTimeZone,
+        timeZone: ZoneId,
         favorites: List<FirestoreFavorite>
     ) =
         map { page -> page.toSortedDomainSchedulePage(checksum, timeZone, favorites) }
@@ -82,16 +82,16 @@ class FirestoreScheduleService(
 
     private fun FirestoreSchedulePage.toSortedDomainSchedulePage(
         checksum: Checksum,
-        timeZone: DateTimeZone,
+        timeZone: ZoneId,
         favorites: List<FirestoreFavorite>
     ): SchedulePage = SchedulePage(
         day.id,
-        LocalDate(day.date.toDate(), timeZone),
+        day.date.toLocalDate(timeZone),
         events.map { it.toEvent(checksum, timeZone, favorites) }
             .sortedByStartTimeAndRoom()
     )
 
-    private fun FirestoreEvent.toEvent(checksum: Checksum, timeZone: DateTimeZone, favorites: List<FirestoreFavorite>) =
+    private fun FirestoreEvent.toEvent(checksum: Checksum, timeZone: ZoneId, favorites: List<FirestoreFavorite>) =
         this.toEvent(checksum, timeZone, favorites.any { favorite -> favorite.id == this.id })
 
     private fun List<Event>.sortedByStartTimeAndRoom() =

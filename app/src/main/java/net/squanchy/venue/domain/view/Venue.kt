@@ -1,6 +1,6 @@
 package net.squanchy.venue.domain.view
 
-import org.joda.time.DateTimeZone
+import org.threeten.bp.ZoneId
 
 @Suppress("LongParameterList") // This is just a big model - TODO refactor this to split it up
 data class Venue(
@@ -10,5 +10,5 @@ data class Venue(
     val longitude: Double,
     val description: String,
     val mapUrl: String,
-    val timeZone: DateTimeZone
+    val timeZone: ZoneId
 )

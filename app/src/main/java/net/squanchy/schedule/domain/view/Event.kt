@@ -3,8 +3,8 @@ package net.squanchy.schedule.domain.view
 import arrow.core.Option
 import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.speaker.domain.view.Speaker
-import org.joda.time.DateTimeZone
-import org.joda.time.LocalDateTime
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.ZoneId
 
 @Suppress("LongParameterList") // This is just a big model - TODO refactor this to split it up
 data class Event(
@@ -20,7 +20,7 @@ data class Event(
     val type: Type,
     val favorite: Boolean,
     val description: Option<String>,
-    val timeZone: DateTimeZone
+    val timeZone: ZoneId
 ) {
 
     fun isHappeningAt(time: LocalDateTime) = time.isAfter(startTime) && time.isBefore(endTime)

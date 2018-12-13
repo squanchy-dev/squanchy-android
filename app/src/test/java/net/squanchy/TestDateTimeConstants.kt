@@ -1,7 +1,7 @@
 package net.squanchy
 
-import org.joda.time.DateTime
-import org.joda.time.DateTimeZone
+import org.threeten.bp.ZoneId
+import org.threeten.bp.ZonedDateTime
 
-val A_DATE = DateTime("2018-04-19T02:20:00Z")
-val A_TIMEZONE = DateTimeZone.forID("Europe/Rome")!!
+val A_DATE: ZonedDateTime = ZonedDateTime.parse("2018-04-19T02:20:00Z")
+val A_TIMEZONE: ZoneId = ZoneId.of("Europe/Rome")
