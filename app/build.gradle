@@ -173,9 +173,7 @@ dependencies {
     testImplementation libraries.test.truth
     testImplementation libraries.test.jUnit4
     testImplementation libraries.test.mockito
-    testImplementation(libraries.test.threeTenBp) {
-        exclude group:'com.jakewharton.threetenabp', module:'threetenabp'
-    }
+    testImplementation libraries.test.threeTenBp
 }
 
 apply plugin: 'com.google.gms.google-services'
