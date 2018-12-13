@@ -8,6 +8,9 @@ import org.threeten.bp.ZoneId
 import org.threeten.bp.ZonedDateTime
 
 fun Timestamp.toInstant(): Instant = Instant.ofEpochMilli(toDate().time)
+
 fun Timestamp.toZonedDateTime(zoneId: ZoneId): ZonedDateTime = toInstant().atZone(zoneId)
+
 fun Timestamp.toLocalDate(zoneId: ZoneId): LocalDate = toZonedDateTime(zoneId).toLocalDate()
+
 fun Timestamp.toLocalDateTime(zoneId: ZoneId): LocalDateTime = toZonedDateTime(zoneId).toLocalDateTime()
