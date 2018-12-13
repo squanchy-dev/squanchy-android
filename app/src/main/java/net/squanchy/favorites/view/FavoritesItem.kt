@@ -13,7 +13,8 @@ sealed class FavoritesItem {
 
     data class Header(val date: LocalDate) : FavoritesItem() {
 
-        override val id = date.atTime(LocalTime.now()).atZone(ZoneId.systemDefault()).toEpochSecond() // We're relatively sure this won't clash with event IDs
+        override val id = date.atTime(LocalTime.now())
+            .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() // We're relatively sure this won't clash with event IDs
 
         override val type = Type.HEADER
     }
