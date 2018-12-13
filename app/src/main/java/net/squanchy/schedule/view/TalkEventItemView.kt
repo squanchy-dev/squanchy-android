@@ -12,7 +12,7 @@ import net.squanchy.support.content.res.getColorFromAttribute
 import net.squanchy.support.graphics.toColorStateList
 import net.squanchy.support.lang.getOrThrow
 import net.squanchy.support.time.createWeekDayAndDayFormatter
-import net.squanchy.support.time.shortTimeFormatter
+import net.squanchy.support.time.createShortTimeFormatter
 import java.util.Locale
 
 class TalkEventItemView @JvmOverloads constructor(
@@ -21,7 +21,7 @@ class TalkEventItemView @JvmOverloads constructor(
     defStyleAttr: Int = R.attr.cardViewDefaultStyle
 ) : EventItemView(context, attrs, defStyleAttr) {
 
-    private val timeFormatter = shortTimeFormatter()
+    private val timeFormatter = createShortTimeFormatter()
     private val dateFormatter = createWeekDayAndDayFormatter()
 
     override fun updateWith(event: Event, showRoom: Boolean, showDay: Boolean, showFavorite: Boolean) {

@@ -3,8 +3,8 @@ package net.squanchy.tweets.view
 import android.content.Context
 import androidx.annotation.StringRes
 import net.squanchy.R
-import net.squanchy.support.time.shortDateFormatter
-import net.squanchy.support.time.shortTimeFormatter
+import net.squanchy.support.time.createShortDateFormatter
+import net.squanchy.support.time.createShortTimeFormatter
 import net.squanchy.support.time.toZonedDateTime
 import net.squanchy.tweets.domain.view.TweetViewModel
 import org.threeten.bp.LocalDate
@@ -13,8 +13,8 @@ import org.threeten.bp.ZonedDateTime
 
 internal class TwitterFooterFormatter(private val context: Context) {
 
-    private val timeFormatter = shortTimeFormatter()
-    private val dateFormatter = shortDateFormatter()
+    private val timeFormatter = createShortTimeFormatter()
+    private val dateFormatter = createShortDateFormatter()
 
     fun footerTextFor(tweet: TweetViewModel): String {
         val username = tweet.user.screenName

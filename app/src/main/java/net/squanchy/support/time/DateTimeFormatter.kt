@@ -2,8 +2,8 @@ package net.squanchy.support.time
 
 import org.threeten.bp.format.DateTimeFormatter
 
-fun shortTimeFormatter(): DateTimeFormatter = DateTimeFormatter.ofPattern("h:mm a")
+fun createShortTimeFormatter(): DateTimeFormatter = DateTimeFormatter.ofPattern("h:mm a")
 
-fun shortDateFormatter(): DateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy")
+fun createShortDateFormatter(): DateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy")
 
 fun createWeekDayAndDayFormatter(): DateTimeFormatter = DateTimeFormatter.ofPattern("EEE d")
