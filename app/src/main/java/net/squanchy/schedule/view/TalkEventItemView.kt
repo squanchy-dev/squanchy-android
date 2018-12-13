@@ -11,8 +11,8 @@ import net.squanchy.schedule.domain.view.Place
 import net.squanchy.support.content.res.getColorFromAttribute
 import net.squanchy.support.graphics.toColorStateList
 import net.squanchy.support.lang.getOrThrow
+import net.squanchy.support.time.createWeekDayAndDayFormatter
 import net.squanchy.support.time.shortTimeFormatter
-import org.threeten.bp.format.DateTimeFormatter
 import java.util.Locale
 
 class TalkEventItemView @JvmOverloads constructor(
@@ -22,7 +22,7 @@ class TalkEventItemView @JvmOverloads constructor(
 ) : EventItemView(context, attrs, defStyleAttr) {
 
     private val timeFormatter = shortTimeFormatter()
-    private val dateFormatter = DateTimeFormatter.ofPattern("EEE d")
+    private val dateFormatter = createWeekDayAndDayFormatter()
 
     override fun updateWith(event: Event, showRoom: Boolean, showDay: Boolean, showFavorite: Boolean) {
         ensureSupportedType(event.type)
