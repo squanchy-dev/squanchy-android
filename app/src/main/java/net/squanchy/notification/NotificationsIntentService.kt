@@ -13,6 +13,7 @@ import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Event
+import net.squanchy.support.time.toEpochMilli
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneId
 import timber.log.Timber
@@ -83,7 +84,7 @@ class NotificationsIntentService : IntentService(NotificationsIntentService::cla
         val pendingIntent = PendingIntent.getService(this, 0, serviceIntent, PendingIntent.FLAG_CANCEL_CURRENT)
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.cancel(pendingIntent)
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, serviceAlarm.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli(), pendingIntent)
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, serviceAlarm.toEpochMilli(ZoneId.systemDefault()), pendingIntent)
     }
 
     override fun onDestroy() {
