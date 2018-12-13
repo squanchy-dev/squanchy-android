@@ -1,9 +1,13 @@
 package net.squanchy.support.time
 
 import org.threeten.bp.format.DateTimeFormatter
+import java.util.Locale
 
-fun createShortTimeFormatter(): DateTimeFormatter = DateTimeFormatter.ofPattern("h:mm a")
+fun createShortTimeFormatter(locale: Locale = Locale.getDefault()): DateTimeFormatter =
+    DateTimeFormatter.ofPattern("h:mm a").withLocale(locale)
 
-fun createShortDateFormatter(): DateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy")
+fun createShortDateFormatter(locale: Locale = Locale.getDefault()): DateTimeFormatter =
+    DateTimeFormatter.ofPattern("MM/dd/yyyy").withLocale(locale)
 
-fun createWeekDayAndDayFormatter(): DateTimeFormatter = DateTimeFormatter.ofPattern("EEE d")
+fun createWeekDayAndDayFormatter(locale: Locale = Locale.getDefault()): DateTimeFormatter =
+    DateTimeFormatter.ofPattern("EEE d").withLocale(locale)
