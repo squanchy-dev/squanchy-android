@@ -30,7 +30,7 @@ class SquanchyApplication : Application() {
         initializeFabric()
 
         with(applicationComponent.analytics()) {
-            enableExceptionLogging()
+            setupExceptionLogging()
             initializeStaticUserProperties()
             trackFirstStartUserNotLoggedIn()
             trackFirstStartNotificationsEnabled()

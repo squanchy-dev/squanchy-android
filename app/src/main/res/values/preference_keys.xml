@@ -12,5 +12,6 @@
   <string name="about_preference_key" translatable="false">about_preference_key</string>
   <string name="debug_category_preference_key" translatable="false">debug_category_preference_key</string>
   <string name="open_debug_preference_key" translatable="false">open_debug_preference_key</string>
+  <string name="disable_analytics_key" translatable="false">disable_analytics_key</string>
 
 </resources>

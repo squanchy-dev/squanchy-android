@@ -46,23 +46,29 @@
       android:defaultValue="false"
       android:order="1" />
 
+    <SwitchPreference
+      android:key="@string/disable_analytics_key"
+      android:title="@string/disable_analytics_title"
+      android:icon="@drawable/ic_analytics"
+      android:order="2" />
+
     <Preference
       android:key="@string/auto_wifi_preference_key"
       android:title="@string/auto_wifi_title"
       android:icon="@drawable/ic_wifi"
-      android:order="2" />
+      android:order="3" />
 
     <Preference
       android:key="@string/about_preference_key"
       android:title="@string/about_title"
       android:icon="@drawable/ic_about"
-      android:order="3" />
+      android:order="4" />
 
     <Preference
       android:key="@string/build_version_preference_key"
       android:selectable="false"
       android:icon="@android:color/transparent"
-      android:order="4"
+      android:order="5"
       tools:title="Version: 1.0.0" />
 
   </PreferenceCategory>

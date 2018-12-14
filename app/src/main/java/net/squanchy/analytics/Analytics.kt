@@ -12,7 +12,7 @@ interface Analytics {
     fun trackItemSelected(contentType: ContentType, itemId: String)
     fun trackItemSelectedOnFirebaseAnalytics(contentType: ContentType, itemId: String)
     fun trackItemSelectedOnCrashlytics(contentType: ContentType, itemId: String)
-    fun enableExceptionLogging()
+    fun setupExceptionLogging()
     fun trackFirstStartUserNotLoggedIn()
     fun trackFirstStartNotificationsEnabled()
     fun trackNotificationsEnabled()

@@ -59,7 +59,7 @@ class EnabledAnalytics internal constructor(
         crashlytics.answers.logCustom(event)
     }
 
-    override fun enableExceptionLogging() {
+    override fun setupExceptionLogging() {
         Timber.plant(CrashlyticsErrorsTree())
     }
 
