@@ -12,27 +12,48 @@ import net.squanchy.wificonfig.WifiConfigOrigin
 import timber.log.Timber
 import java.util.Locale
 
-class Analytics internal constructor(
+interface Analytics {
+    fun initializeStaticUserProperties()
+    fun trackPageView(activity: Activity, screenName: String, screenClassOverride: String? = null)
+    fun trackPageViewOnFirebaseAnalytics(activity: Activity, screenName: String, screenClassOverride: String?)
+    fun trackPageViewOnCrashlytics(screenName: String)
+    fun trackItemSelected(contentType: ContentType, itemId: String)
+    fun trackItemSelectedOnFirebaseAnalytics(contentType: ContentType, itemId: String)
+    fun trackItemSelectedOnCrashlytics(contentType: ContentType, itemId: String)
+    fun enableExceptionLogging()
+    fun trackFirstStartUserNotLoggedIn()
+    fun trackFirstStartNotificationsEnabled()
+    fun trackNotificationsEnabled()
+    fun trackNotificationsDisabled()
+    fun trackFavoritesInScheduleEnabled()
+    fun trackFavoritesInScheduleDisabled()
+    fun flagEnabled(value: String): Bundle
+    fun trackUserNotLoggedIn()
+    fun trackUserLoggedInFrom(signInOrigin: SignInOrigin)
+    fun setUserLoginProperty(loginStatus: LoginStatus)
+    fun trackWifiConfigurationEvent(isSuccess: Boolean, wifiConfigOrigin: WifiConfigOrigin)
+}
+
+class EnabledAnalytics internal constructor(
     private val firebaseAnalytics: FirebaseAnalytics,
     private val crashlytics: Crashlytics,
     private val firstStartDetector: FirstStartDetector
-) {
+) : Analytics {
 
-    fun initializeStaticUserProperties() {
+    override fun initializeStaticUserProperties() {
         firebaseAnalytics.setUserProperty("debug_build", BuildConfig.DEBUG.toString())
     }
 
-    @JvmOverloads
-    fun trackPageView(activity: Activity, screenName: String, screenClassOverride: String? = null) {
+    override fun trackPageView(activity: Activity, screenName: String, screenClassOverride: String?) {
         trackPageViewOnFirebaseAnalytics(activity, screenName, screenClassOverride)
         trackPageViewOnCrashlytics(screenName)
     }
 
-    private fun trackPageViewOnFirebaseAnalytics(activity: Activity, screenName: String, screenClassOverride: String?) {
+    override fun trackPageViewOnFirebaseAnalytics(activity: Activity, screenName: String, screenClassOverride: String?) {
         firebaseAnalytics.setCurrentScreen(activity, screenName, screenClassOverride)
     }
 
-    private fun trackPageViewOnCrashlytics(screenName: String) {
+    override fun trackPageViewOnCrashlytics(screenName: String) {
         val viewEvent = ContentViewEvent()
         viewEvent.putContentName(screenName.toLowerCase(Locale.US))
         viewEvent.putContentId(screenName)
@@ -40,12 +61,12 @@ class Analytics internal constructor(
         crashlytics.answers.logContentView(viewEvent)
     }
 
-    fun trackItemSelected(contentType: ContentType, itemId: String) {
+    override fun trackItemSelected(contentType: ContentType, itemId: String) {
         trackItemSelectedOnFirebaseAnalytics(contentType, itemId)
         trackItemSelectedOnCrashlytics(contentType, itemId)
     }
 
-    private fun trackItemSelectedOnFirebaseAnalytics(contentType: ContentType, itemId: String) {
+    override fun trackItemSelectedOnFirebaseAnalytics(contentType: ContentType, itemId: String) {
         val params = Bundle().apply {
             putString(FirebaseAnalytics.Param.CONTENT_TYPE, contentType.rawContentType)
             putString(FirebaseAnalytics.Param.ITEM_ID, itemId)
@@ -53,18 +74,18 @@ class Analytics internal constructor(
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params)
     }
 
-    private fun trackItemSelectedOnCrashlytics(contentType: ContentType, itemId: String) {
+    override fun trackItemSelectedOnCrashlytics(contentType: ContentType, itemId: String) {
         val event = CustomEvent("item_selected")
         event.putCustomAttribute("content_type", contentType.rawContentType)
         event.putCustomAttribute("item_id", itemId)
         crashlytics.answers.logCustom(event)
     }
 
-    fun enableExceptionLogging() {
+    override fun enableExceptionLogging() {
         Timber.plant(CrashlyticsErrorsTree())
     }
 
-    fun trackFirstStartUserNotLoggedIn() {
+    override fun trackFirstStartUserNotLoggedIn() {
         if (firstStartDetector.isFirstStartNotLoggedInStatusTracked()) {
             return
         }
@@ -72,7 +93,7 @@ class Analytics internal constructor(
         firstStartDetector.setFirstStartNotLoggedInStatusTracked()
     }
 
-    fun trackFirstStartNotificationsEnabled() {
+    override fun trackFirstStartNotificationsEnabled() {
         if (firstStartDetector.isFirstStartNotificationsEnabledTracked()) {
             return
         }
@@ -80,33 +101,33 @@ class Analytics internal constructor(
         firstStartDetector.setFirstStartNotificationsEnabledTracked()
     }
 
-    fun trackNotificationsEnabled() {
+    override fun trackNotificationsEnabled() {
         firebaseAnalytics.setUserProperty("notifications_status", "enabled")
         firebaseAnalytics.logEvent("notifications_status_changed", flagEnabled(TRUE))
     }
 
-    fun trackNotificationsDisabled() {
+    override fun trackNotificationsDisabled() {
         firebaseAnalytics.setUserProperty("notifications_status", "disabled")
         firebaseAnalytics.logEvent("notifications_status_changed", flagEnabled(FALSE))
     }
 
-    fun trackFavoritesInScheduleEnabled() {
+    override fun trackFavoritesInScheduleEnabled() {
         firebaseAnalytics.setUserProperty("favorites_in_schedule", "enable")
         firebaseAnalytics.logEvent("favorites_in_schedule_changed", flagEnabled(TRUE))
     }
 
-    fun trackFavoritesInScheduleDisabled() {
+    override fun trackFavoritesInScheduleDisabled() {
         firebaseAnalytics.setUserProperty("favorites_in_schedule", "disabled")
         firebaseAnalytics.logEvent("favorites_in_schedule_changed", flagEnabled(FALSE))
     }
 
-    private fun flagEnabled(value: String) = Bundle().apply { putString("enabled", value) }
+    override fun flagEnabled(value: String) = Bundle().apply { putString("enabled", value) }
 
-    fun trackUserNotLoggedIn() {
+    override fun trackUserNotLoggedIn() {
         setUserLoginProperty(LoginStatus.NOT_LOGGED_IN)
     }
 
-    fun trackUserLoggedInFrom(signInOrigin: SignInOrigin) {
+    override fun trackUserLoggedInFrom(signInOrigin: SignInOrigin) {
         when (signInOrigin) {
             SignInOrigin.ONBOARDING -> setUserLoginProperty(LoginStatus.LOGGED_IN_ONBOARDING)
             SignInOrigin.FAVORITES -> setUserLoginProperty(LoginStatus.LOGGED_IN_FAVORITES)
@@ -115,11 +136,11 @@ class Analytics internal constructor(
         }
     }
 
-    private fun setUserLoginProperty(loginStatus: LoginStatus) {
+    override fun setUserLoginProperty(loginStatus: LoginStatus) {
         firebaseAnalytics.setUserProperty("login_status", loginStatus.rawLoginStatus)
     }
 
-    fun trackWifiConfigurationEvent(isSuccess: Boolean, wifiConfigOrigin: WifiConfigOrigin) {
+    override fun trackWifiConfigurationEvent(isSuccess: Boolean, wifiConfigOrigin: WifiConfigOrigin) {
         val params = Bundle().apply {
             putString("origin", wifiConfigOrigin.rawOrigin)
             putBoolean("success", isSuccess)

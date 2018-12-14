@@ -28,7 +28,7 @@ class AnalyticsModule {
         crashlytics: Crashlytics,
         firstStartDetector: FirstStartDetector
     ): Analytics {
-        return Analytics(firebaseAnalytics, crashlytics, firstStartDetector)
+        return EnabledAnalytics(firebaseAnalytics, crashlytics, firstStartDetector)
     }
 
     companion object {
