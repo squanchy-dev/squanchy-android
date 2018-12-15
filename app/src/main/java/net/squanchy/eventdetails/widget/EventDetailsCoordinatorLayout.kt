@@ -20,9 +20,7 @@ class EventDetailsCoordinatorLayout @JvmOverloads constructor(
         eventDetailsLayout.updateWith(event)
 
         if (event.canBeFavorited) {
-            // Updates the FAB image state to trigger an AVD animation.
-            val stateSet = intArrayOf(android.R.attr.state_checked * if (event.favorite) 1 else -1)
-            favoriteFab.setImageState(stateSet, true)
+            favoriteFab.isChecked = event.favorite
             favoriteFab.setOnClickListener { listener.onFavoriteClick() }
             favoriteFab.isVisible = true
         } else {
