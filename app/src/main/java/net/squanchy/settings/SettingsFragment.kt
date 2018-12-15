@@ -95,6 +95,15 @@ class SettingsFragment : PreferenceFragment() {
         }
 
         setupWifiConfigPreference()
+
+        val disableAnalyticsPreferences = findPreference(getString(R.string.disable_analytics_key))
+        disableAnalyticsPreferences.setOnPreferenceChangeListener { _, _ ->
+            with(settingsFragmentComponent(activity)) {
+                analytics = analytics()
+            }
+            analytics.setupExceptionLogging()
+            true
+        }
     }
 
     private fun displayBuildVersion() {

@@ -2,10 +2,12 @@ package net.squanchy.analytics
 
 import android.app.Application
 import android.content.Context
+import android.preference.PreferenceManager
 import com.crashlytics.android.Crashlytics
 import com.google.firebase.analytics.FirebaseAnalytics
 import dagger.Module
 import dagger.Provides
+import net.squanchy.R
 
 @Module
 class AnalyticsModule {
@@ -24,11 +26,22 @@ class AnalyticsModule {
 
     @Provides
     internal fun analytics(
+        application: Application,
         firebaseAnalytics: FirebaseAnalytics,
         crashlytics: Crashlytics,
         firstStartDetector: FirstStartDetector
     ): Analytics {
-        return Analytics(firebaseAnalytics, crashlytics, firstStartDetector)
+        if (analyticsDisabledByUser(application)) {
+            return DisabledAnalytics()
+        }
+
+        return EnabledAnalytics(firebaseAnalytics, crashlytics, firstStartDetector)
+    }
+
+    private fun analyticsDisabledByUser(application: Application): Boolean {
+        val preferenceKey = application.getString(R.string.disable_analytics_key)
+        return PreferenceManager.getDefaultSharedPreferences(application)
+            .getBoolean(preferenceKey, false)
     }
 
     companion object {
