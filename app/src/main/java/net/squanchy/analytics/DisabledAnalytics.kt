@@ -21,11 +21,9 @@ class DisabledAnalytics : Analytics {
     override fun trackItemSelectedOnCrashlytics(contentType: ContentType, itemId: String) = Unit
 
     override fun setupExceptionLogging() {
-        Timber.forest().find {
-            it is CrashlyticsErrorsTree
-        }?.let {
-            Timber.uproot(it)
-        }
+        Timber.forest()
+            .find { it is CrashlyticsErrorsTree }
+            ?.let { Timber.uproot(it) }
     }
 
     override fun trackFirstStartUserNotLoggedIn() = Unit
