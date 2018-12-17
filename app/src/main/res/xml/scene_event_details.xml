@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+  <Transition
+    app:constraintSetStart="@id/expanded"
+    app:constraintSetEnd="@id/collapsed"
+    >
+    <OnSwipe
+      app:dragDirection="dragUp"
+      app:touchAnchorId="@id/eventDetailsScrollView"
+      app:touchAnchorSide="top" />
+  </Transition>
+
+  <ConstraintSet
+    android:id="@+id/expanded">
+    <Constraint
+      android:id="@id/eventDetailsHeaderLayout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      />
+    <Constraint
+      android:id="@id/favoriteFab"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="@dimen/event_details_fab_margin"
+      android:layout_marginBottom="@dimen/event_details_fab_margin"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      />
+
+  </ConstraintSet>
+
+  <ConstraintSet
+    android:id="@+id/collapsed">
+    <Constraint
+      android:id="@id/eventDetailsHeaderLayout"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      />
+    <Constraint
+      android:id="@id/favoriteFab"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="@dimen/event_details_fab_margin"
+      android:layout_marginBottom="@dimen/event_details_fab_margin"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      />
+  </ConstraintSet>
+</MotionScene>

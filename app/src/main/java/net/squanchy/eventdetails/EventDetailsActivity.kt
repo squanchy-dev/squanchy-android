@@ -10,7 +10,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_event_details.*
 import net.squanchy.R
-import net.squanchy.eventdetails.widget.EventDetailsCoordinatorLayout
+import net.squanchy.eventdetails.widget.EventDetailsRootLayout
 import net.squanchy.navigation.Navigator
 import net.squanchy.notification.NotificationsIntentService
 import net.squanchy.schedule.domain.view.Event
@@ -73,8 +73,8 @@ class EventDetailsActivity : AppCompatActivity() {
         )
     }
 
-    private fun onEventDetailsClickListener(event: Event): EventDetailsCoordinatorLayout.OnEventDetailsClickListener =
-        object : EventDetailsCoordinatorLayout.OnEventDetailsClickListener {
+    private fun onEventDetailsClickListener(event: Event): EventDetailsRootLayout.OnEventDetailsClickListener =
+        object : EventDetailsRootLayout.OnEventDetailsClickListener {
             override fun onSpeakerClicked(speaker: Speaker) {
                 navigator.toSpeakerDetails(speaker.id)
             }
