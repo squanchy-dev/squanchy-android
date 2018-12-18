@@ -16,7 +16,6 @@ import net.squanchy.notification.scheduleNotificationWork
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.signin.SignInOrigin
 import net.squanchy.speaker.domain.view.Speaker
-import org.threeten.bp.LocalDateTime
 import timber.log.Timber
 
 class EventDetailsActivity : AppCompatActivity() {
@@ -102,7 +101,7 @@ class EventDetailsActivity : AppCompatActivity() {
     }
 
     private fun triggerNotificationService() {
-        scheduleNotificationWork(LocalDateTime.now())
+        scheduleNotificationWork()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -127,7 +127,7 @@ class DebugActivity : AppCompatActivity() {
     }
 
     private fun testService() {
-        scheduleNotificationWork(LocalDateTime.now())
+        scheduleNotificationWork()
     }
 
     private fun resetOnboarding() {

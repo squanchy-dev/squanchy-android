@@ -3,8 +3,6 @@ package net.squanchy.notification
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import org.threeten.bp.LocalDateTime
-
 import timber.log.Timber
 
 class NotificationAlarmReceiver : BroadcastReceiver() {
@@ -15,6 +13,6 @@ class NotificationAlarmReceiver : BroadcastReceiver() {
             return
         }
 
-        scheduleNotificationWork(LocalDateTime.now())
+        scheduleNotificationWork()
     }
 }

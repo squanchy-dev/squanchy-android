@@ -5,6 +5,8 @@ import dagger.Component
 import net.squanchy.injection.ActivityLifecycle
 import net.squanchy.injection.ApplicationComponent
 import net.squanchy.injection.applicationComponent
+import net.squanchy.support.injection.CurrentTimeModule
+import net.squanchy.support.system.CurrentTime
 
 internal fun notificationComponent(context: Context): NotificationComponent =
     DaggerNotificationComponent.builder()
@@ -12,7 +14,7 @@ internal fun notificationComponent(context: Context): NotificationComponent =
         .build()
 
 @ActivityLifecycle
-@Component(modules = [NotificationModule::class], dependencies = [ApplicationComponent::class])
+@Component(modules = [NotificationModule::class, CurrentTimeModule::class], dependencies = [ApplicationComponent::class])
 internal interface NotificationComponent {
 
     fun service(): NotificationService
@@ -20,4 +22,6 @@ internal interface NotificationComponent {
     fun notificationCreator(): NotificationCreator
 
     fun notifier(): Notifier
+
+    fun currentTime(): CurrentTime
 }

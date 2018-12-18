@@ -10,6 +10,7 @@ import io.reactivex.Single
 import io.reactivex.functions.BiFunction
 import net.squanchy.R
 import net.squanchy.schedule.domain.view.Event
+import net.squanchy.support.system.CurrentTime
 import org.threeten.bp.Duration
 import org.threeten.bp.LocalDateTime
 import timber.log.Timber
@@ -20,6 +21,7 @@ class NotificationWorker(context: Context, parameters: WorkerParameters) : RxWor
     private val service: NotificationService
     private val notificationCreator: NotificationCreator
     private val notifier: Notifier
+    private val currentTime: CurrentTime
     private val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 
     init {
@@ -27,15 +29,16 @@ class NotificationWorker(context: Context, parameters: WorkerParameters) : RxWor
             service = service()
             notificationCreator = notificationCreator()
             notifier = notifier()
+            currentTime = currentTime()
         }
     }
 
     override fun createWork(): Single<Result> {
-        val notificationIntervalEnd = LocalDateTime.now().plusMinutes(NOTIFICATION_INTERVAL_MINUTES)
+        val now = currentTime.currentDateTime().toLocalDateTime()
+
+        val notificationIntervalEnd = now.plusMinutes(NOTIFICATION_INTERVAL_MINUTES)
 
         val sortedFavourites = service.sortedFavourites()
-
-        val now = LocalDateTime.now()
 
         val showNotification = if (shouldShowNotifications()) {
             sortedFavourites
@@ -99,7 +102,10 @@ class NotificationWorker(context: Context, parameters: WorkerParameters) : RxWor
 
         Timber.d("Next alarm scheduled for %s", serviceAlarm.toString())
 
-        scheduleNotificationWork(serviceAlarm)
+        scheduleNotificationWork(Duration.between(
+            currentTime.currentDateTime(),
+            serviceAlarm
+        ))
     }
 
     companion object {
@@ -108,14 +114,10 @@ class NotificationWorker(context: Context, parameters: WorkerParameters) : RxWor
     }
 }
 
-fun scheduleNotificationWork(targetTime: LocalDateTime) {
-    val delay = Duration.between(
-        LocalDateTime.now(),
-        targetTime
-    ).seconds
 
+fun scheduleNotificationWork(delay: Duration = Duration.ZERO) {
     val request = OneTimeWorkRequestBuilder<NotificationWorker>()
-        .setInitialDelay(delay, TimeUnit.SECONDS)
+        .setInitialDelay(delay.seconds, TimeUnit.SECONDS)
         .build()
 
     WorkManager.getInstance().enqueue(request)
