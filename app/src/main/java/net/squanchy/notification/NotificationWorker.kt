@@ -47,12 +47,8 @@ class NotificationWorker(context: Context, parameters: WorkerParameters) : RxWor
                 .map(notificationCreator::createFrom)
                 .doOnSuccess(notifier::showNotifications)
                 .doOnError(::logError)
-                .map {
-                    Result.success()
-                }
-                .onErrorReturn { error ->
-                    Result.failure()
-                }
+                .map { Result.success() }
+                .onErrorReturnItem(Result.failure())
         } else {
             Single.just(Result.success())
         }
@@ -68,7 +64,6 @@ class NotificationWorker(context: Context, parameters: WorkerParameters) : RxWor
             showNotification,
             scheduleNext,
             BiFunction<Result, Result, Result> { notificationResult, scheduleResult ->
-                Timber.d("XXX $notificationResult $scheduleResult")
                 if (notificationResult is Result.Failure || scheduleResult is Result.Failure) {
                     Result.failure()
                 } else {
