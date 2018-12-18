@@ -5,25 +5,29 @@
   android:id="@+id/tweetsContentRoot"
   android:theme="@style/Theme.Squanchy.Tweets"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
+  android:layout_height="match_parent"
+  >
 
   <com.google.android.material.appbar.AppBarLayout
     style="@style/Squanchy.Appbar"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
 
     <androidx.appcompat.widget.Toolbar
       android:id="@+id/toolbar"
       android:layout_width="match_parent"
-      android:layout_height="?attr/actionBarSize" />
+      android:layout_height="?attr/actionBarSize"
+      />
 
   </com.google.android.material.appbar.AppBarLayout>
 
   <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    >
 
     <TextView
       android:id="@+id/tweetEmptyView"
@@ -33,12 +37,14 @@
       android:layout_gravity="center"
       android:layout_margin="@dimen/tweet_empty_view_margin"
       android:text="@string/no_tweets_for_query"
-      tools:visibility="visible" />
+      tools:visibility="visible"
+      />
 
     <net.squanchy.tweets.view.TweetFeedView
       android:id="@+id/tweetFeed"
       android:layout_width="match_parent"
-      android:layout_height="match_parent" />
+      android:layout_height="match_parent"
+      />
 
   </FrameLayout>
 

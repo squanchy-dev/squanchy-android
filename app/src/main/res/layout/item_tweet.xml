@@ -7,12 +7,14 @@
   android:paddingTop="@dimen/card_padding_top"
   android:paddingRight="@dimen/card_padding_horizontal"
   android:paddingBottom="@dimen/card_padding_bottom"
-  tools:layout_margin="16dp">
+  tools:layout_margin="16dp"
+  >
 
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
     <TextView
       android:id="@+id/tweetText"
@@ -20,21 +22,24 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:bufferType="spannable"
-      tools:text="This is a tweet I wrote to show how it looks" />
+      tools:text="This is a tweet I wrote to show how it looks"
+      />
 
     <ImageView
       android:id="@+id/tweetPhoto"
       style="@style/Tweet.Photo"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/tweet_photo_margin_top" />
+      android:layout_marginTop="@dimen/tweet_photo_margin_top"
+      />
 
     <net.squanchy.tweets.view.TweetFooterView
       android:id="@+id/tweetFooter"
       style="@style/Tweet.Footer"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/tweet_footer_margin_top">
+      android:layout_marginTop="@dimen/tweet_footer_margin_top"
+      >
 
       <ImageView
         android:id="@+id/tweetUserPhoto"
@@ -42,14 +47,16 @@
         android:layout_width="@dimen/tweet_footer_user_photo_size"
         android:layout_height="@dimen/tweet_footer_user_photo_size"
         android:layout_margin="@dimen/tweet_footer_user_photo_margin"
-        tools:src="@drawable/avatar_not_signed_in" />
+        tools:src="@drawable/avatar_not_signed_in"
+        />
 
       <TextView
         android:id="@+id/tweetFooterText"
         style="@style/Tweet.Footer.Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Posted today at 16:54 PM" />
+        tools:text="Posted today at 16:54 PM"
+        />
 
     </net.squanchy.tweets.view.TweetFooterView>
   </LinearLayout>

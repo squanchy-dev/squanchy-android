@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
-  android:shape="rectangle">
+  android:shape="rectangle"
+  >
   <!-- We set an enormous corner radius so the edges are always 100% rounded -->
   <corners android:radius="10000dp" />
   <solid android:color="@color/white" />
   <stroke
     android:color="@color/white"
-    android:width="@dimen/track_filters_item_stroke_width" />
+    android:width="@dimen/track_filters_item_stroke_width"
+    />
 </shape>

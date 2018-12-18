@@ -3,19 +3,22 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
+  android:layout_height="match_parent"
+  >
 
   <com.google.android.material.appbar.AppBarLayout
     style="@style/Search.Appbar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
 
     <androidx.appcompat.widget.Toolbar
       android:id="@+id/search_toolbar"
       style="@style/Search.Toolbar"
       android:theme="@style/ThemeOverlay.Squanchy.Toolbar.Search"
       android:layout_width="match_parent"
-      android:layout_height="?attr/actionBarSize">
+      android:layout_height="?attr/actionBarSize"
+      >
 
       <!-- We don't need a label for this text field, nor is it important for autofill -->
       <EditText
@@ -24,7 +27,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:importantForAutofill="no"
-        tools:ignore="LabelFor,UnusedAttribute" />
+        tools:ignore="LabelFor,UnusedAttribute"
+        />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -34,7 +38,8 @@
     android:id="@+id/searchRecyclerView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    />
 
   <FrameLayout
     android:id="@+id/emptyView"
@@ -42,7 +47,8 @@
     android:layout_height="match_parent"
     android:visibility="invisible"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:visibility="visible">
+    tools:visibility="visible"
+    >
 
     <TextView
       android:id="@+id/emptyViewMessage"
@@ -52,7 +58,8 @@
       android:layout_gravity="center"
       android:padding="@dimen/search_empty_state_padding"
       android:drawablePadding="@dimen/search_compound_drawable_padding"
-      android:textAlignment="center" />
+      android:textAlignment="center"
+      />
   </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

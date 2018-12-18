@@ -5,4 +5,5 @@
   style="@style/TrackFilters.Filters.Tracks.Item"
   android:layout_width="wrap_content"
   android:layout_height="wrap_content"
-  tools:text="Track name" />
+  tools:text="Track name"
+  />

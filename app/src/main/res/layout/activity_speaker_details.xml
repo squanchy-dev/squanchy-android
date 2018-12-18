@@ -4,7 +4,8 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/speakerDetailsLayout"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
+  android:layout_height="match_parent"
+  >
 
   <com.google.android.material.appbar.AppBarLayout
     android:id="@+id/appbar"
@@ -13,20 +14,23 @@
     android:layout_height="wrap_content"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    app:layout_constraintTop_toTopOf="parent"
+    >
 
     <androidx.appcompat.widget.Toolbar
       android:id="@+id/toolbar"
       android:layout_width="match_parent"
       android:layout_height="?attr/actionBarSize"
-      app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+      app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+      />
 
     <net.squanchy.speaker.widget.SpeakerHeaderView
       android:id="@+id/speakerDetailsHeader"
       android:layout_width="wrap_content"
       android:layout_height="@dimen/speaker_details_speaker_height"
       android:layout_marginStart="@dimen/speaker_details_speaker_margin_start"
-      android:layout_marginBottom="@dimen/speaker_details_speaker_margin_bottom">
+      android:layout_marginBottom="@dimen/speaker_details_speaker_margin_bottom"
+      >
 
       <ImageView
         android:id="@+id/speakerPhoto"
@@ -35,7 +39,8 @@
         android:layout_height="@dimen/speaker_details_speaker_photo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="?colorAccent" />
+        tools:src="?colorAccent"
+        />
 
       <TextView
         android:id="@+id/speakerNames"
@@ -47,7 +52,8 @@
         app:layout_constraintStart_toEndOf="@+id/speakerPhoto"
         app:layout_constraintBottom_toTopOf="@+id/speakerCompany"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:text="Qi Qu" />
+        tools:text="Qi Qu"
+        />
 
       <TextView
         android:id="@+id/speakerCompany"
@@ -56,7 +62,8 @@
         android:layout_height="@dimen/match_constraint"
         app:layout_constraintTop_toBottomOf="@+id/speakerNames"
         app:layout_constraintStart_toStartOf="@+id/speakerNames"
-        tools:text="Novoda" />
+        tools:text="Novoda"
+        />
 
     </net.squanchy.speaker.widget.SpeakerHeaderView>
 
@@ -69,7 +76,8 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/appbar"
-    app:layout_constraintBottom_toBottomOf="parent">
+    app:layout_constraintBottom_toBottomOf="parent"
+    >
 
     <TextView
       android:id="@+id/speakerBio"
@@ -77,7 +85,8 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:padding="@dimen/speaker_details_bio_padding_horizontal"
-      tools:text="Now this is a story all about how\nMy life got flipped-turned upside down\nAnd I'd like to take a minute\nJust sit right there\nI'll tell you how I became the prince of a town called Bel-Air" />
+      tools:text="Now this is a story all about how\nMy life got flipped-turned upside down\nAnd I'd like to take a minute\nJust sit right there\nI'll tell you how I became the prince of a town called Bel-Air"
+      />
 
   </androidx.core.widget.NestedScrollView>
 

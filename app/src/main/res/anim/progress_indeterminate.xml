@@ -8,7 +8,8 @@
     android:repeatCount="-1"
     android:valueFrom="0"
     android:valueTo="0.75"
-    android:valueType="floatType" />
+    android:valueType="floatType"
+    />
 
   <objectAnimator
     android:duration="1333"
@@ -17,7 +18,8 @@
     android:repeatCount="-1"
     android:valueFrom="0"
     android:valueTo="0.75"
-    android:valueType="floatType" />
+    android:valueType="floatType"
+    />
 
   <objectAnimator
     android:duration="1333"
@@ -26,6 +28,7 @@
     android:repeatCount="-1"
     android:valueFrom="0"
     android:valueTo="0.25"
-    android:valueType="floatType" />
+    android:valueType="floatType"
+    />
 
 </set>

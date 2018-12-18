@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
-  package="net.squanchy">
+  package="net.squanchy"
+  >
 
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -17,11 +18,13 @@
     android:fullBackupContent="false"
     android:icon="@mipmap/ic_launcher"
     android:label="@string/app_name"
-    android:supportsRtl="true">
+    android:supportsRtl="true"
+    >
 
     <activity
       android:name="net.squanchy.navigation.RoutingActivity"
-      android:theme="@style/Theme.Squanchy.Transparent">
+      android:theme="@style/Theme.Squanchy.Transparent"
+      >
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
@@ -39,66 +42,79 @@
     <activity
       android:name="net.squanchy.onboarding.account.AccountOnboardingActivity"
       android:theme="@style/Theme.Squanchy.Onboarding"
-      android:label="@string/onboarding_account_label" />
+      android:label="@string/onboarding_account_label"
+      />
 
     <activity
       android:name="net.squanchy.home.HomeActivity"
       android:theme="@style/Theme.Squanchy.Home"
-      android:launchMode="singleTask" />
+      android:launchMode="singleTask"
+      />
 
     <activity
       android:name="net.squanchy.schedule.tracksfilter.ScheduleTracksFilterActivity"
-      android:theme="@style/Theme.Squanchy.ScheduleTracksFilter" />
+      android:theme="@style/Theme.Squanchy.ScheduleTracksFilter"
+      />
 
     <activity
       android:name="net.squanchy.eventdetails.EventDetailsActivity"
-      android:theme="@style/Theme.Squanchy.EventDetails" />
+      android:theme="@style/Theme.Squanchy.EventDetails"
+      />
 
     <activity
       android:name="net.squanchy.speaker.SpeakerDetailsActivity"
-      android:theme="@style/Theme.Squanchy.SpeakerDetails" />
+      android:theme="@style/Theme.Squanchy.SpeakerDetails"
+      />
 
     <activity
       android:name="net.squanchy.signin.SignInActivity"
-      android:theme="@style/Theme.Squanchy.SignIn" />
+      android:theme="@style/Theme.Squanchy.SignIn"
+      />
 
     <activity
       android:name="net.squanchy.search.SearchActivity"
       android:theme="@style/Theme.Squanchy.Search"
       android:windowSoftInputMode="adjustResize"
-      android:launchMode="singleTop" />
+      android:launchMode="singleTop"
+      />
 
     <activity
       android:name="net.squanchy.settings.SettingsActivity"
       android:theme="@style/Theme.Squanchy.Settings"
-      android:label="@string/settings_label" />
+      android:label="@string/settings_label"
+      />
 
     <activity
       android:name="net.squanchy.settings.WifiConfigErrorActivity"
-      android:theme="@style/Theme.Squanchy.WifiConfig" />
+      android:theme="@style/Theme.Squanchy.WifiConfig"
+      />
 
     <activity
       android:name="net.squanchy.about.AboutActivity"
       android:theme="@style/Theme.Squanchy.About"
-      android:label="@string/about_label" />
+      android:label="@string/about_label"
+      />
 
     <activity
       android:name="net.squanchy.about.licenses.LicensesActivity"
       android:theme="@style/Theme.Squanchy.Licenses"
-      android:label="@string/licenses_label" />
+      android:label="@string/licenses_label"
+      />
 
     <activity
       android:name="net.squanchy.navigation.firststart.FirstStartWithNoNetworkActivity"
       android:theme="@style/Theme.Squanchy.FirstStartWithNoNetwork"
       android:label="@string/first_start_with_no_network_label"
       android:excludeFromRecents="true"
-      android:noHistory="true" />
+      android:noHistory="true"
+      />
 
     <!-- We're ok with "directBootAware" only being used where Direct Boot exists (API 24+) -->
     <receiver
       android:name="net.squanchy.notification.NotificationAlarmReceiver"
       android:directBootAware="true"
-      tools:ignore="UnusedAttribute">
+      tools:ignore="UnusedAttribute"
+      >
       <intent-filter>
         <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
       </intent-filter>
@@ -107,7 +123,8 @@
     <!-- Firebase Cloud Messaging has no permissions ¯\_(ツ)_/¯ -->
     <service
       android:name="net.squanchy.push.PushMessagingService"
-      tools:ignore="ExportedService">
+      tools:ignore="ExportedService"
+      >
       <intent-filter>
         <action android:name="com.google.firebase.MESSAGING_EVENT" />
       </intent-filter>
@@ -115,19 +132,23 @@
 
     <service
       android:name="net.squanchy.notification.NotificationsIntentService"
-      android:exported="false" />
+      android:exported="false"
+      />
 
     <meta-data
       android:name="com.google.android.gms.version"
-      android:value="@integer/google_play_services_version" />
+      android:value="@integer/google_play_services_version"
+      />
 
     <meta-data
       android:name="io.fabric.ApiKey"
-      android:value="${fabricApiKey}" />
+      android:value="${fabricApiKey}"
+      />
 
     <meta-data
       android:name="preloaded_fonts"
-      android:resource="@array/preloaded_fonts" />
+      android:resource="@array/preloaded_fonts"
+      />
 
   </application>
 

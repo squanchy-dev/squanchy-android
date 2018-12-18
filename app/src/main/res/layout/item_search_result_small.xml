@@ -4,7 +4,8 @@
   style="@style/Search.GenericItem"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:padding="@dimen/search_card_item_padding">
+  android:padding="@dimen/search_card_item_padding"
+  >
 
   <ImageView
     android:id="@+id/speakerPhoto"
@@ -13,7 +14,8 @@
     android:layout_height="@dimen/search_photo"
     android:layout_gravity="center_horizontal"
     android:layout_marginBottom="@dimen/search_card_item_photo_margin_bottom"
-    tools:src="@mipmap/ic_launcher" />
+    tools:src="@mipmap/ic_launcher"
+    />
 
   <TextView
     android:id="@+id/speakerNames"
@@ -21,5 +23,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center"
-    tools:text="Speaker Name" />
+    tools:text="Speaker Name"
+    />
 </net.squanchy.search.SearchItemView>

@@ -1,42 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-  <item android:state_pressed="true"
-    android:state_enabled="true">
+  <item
+    android:state_pressed="true"
+    android:state_enabled="true"
+    >
     <set>
-      <objectAnimator android:propertyName="translationZ"
+      <objectAnimator
+        android:propertyName="translationZ"
         android:duration="@android:integer/config_shortAnimTime"
         android:valueTo="@dimen/normally_resting_pressed_z_translation"
-        android:valueType="floatType" />
-      <objectAnimator android:propertyName="elevation"
+        android:valueType="floatType"
+        />
+      <objectAnimator
+        android:propertyName="elevation"
         android:duration="0"
         android:valueTo="@dimen/normally_resting_elevation_active"
-        android:valueType="floatType" />
+        android:valueType="floatType"
+        />
     </set>
   </item>
   <!-- base state -->
   <item android:state_enabled="true">
     <set>
-      <objectAnimator android:propertyName="translationZ"
+      <objectAnimator
+        android:propertyName="translationZ"
         android:duration="@android:integer/config_shortAnimTime"
         android:valueTo="0"
         android:startDelay="@android:integer/config_shortAnimTime"
-        android:valueType="floatType" />
-      <objectAnimator android:propertyName="elevation"
+        android:valueType="floatType"
+        />
+      <objectAnimator
+        android:propertyName="elevation"
         android:duration="0"
         android:valueTo="@dimen/normally_resting_elevation"
-        android:valueType="floatType" />
+        android:valueType="floatType"
+        />
     </set>
   </item>
   <item>
     <set>
-      <objectAnimator android:propertyName="translationZ"
+      <objectAnimator
+        android:propertyName="translationZ"
         android:duration="0"
         android:valueTo="0"
-        android:valueType="floatType" />
-      <objectAnimator android:propertyName="elevation"
+        android:valueType="floatType"
+        />
+      <objectAnimator
+        android:propertyName="elevation"
         android:duration="0"
         android:valueTo="0"
-        android:valueType="floatType" />
+        android:valueType="floatType"
+        />
     </set>
   </item>
 </selector>

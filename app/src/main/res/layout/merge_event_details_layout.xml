@@ -4,7 +4,8 @@
   xmlns:tools="http://schemas.android.com/tools"
   tools:layout_width="match_parent"
   tools:layout_height="match_parent"
-  tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+  tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
+  >
 
   <androidx.constraintlayout.widget.Barrier
     android:id="@+id/valuesBarrier"
@@ -12,14 +13,16 @@
     android:layout_height="wrap_content"
     app:barrierAllowsGoneWidgets="true"
     app:barrierDirection="end"
-    app:constraint_referenced_ids="whenLabel,whereLabel,levelLabel" />
+    app:constraint_referenced_ids="whenLabel,whereLabel,levelLabel"
+    />
 
   <androidx.constraintlayout.widget.Guideline
     android:id="@+id/labelsStartMargin"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    app:layout_constraintGuide_begin="@dimen/event_details_body_label_margin_start" />
+    app:layout_constraintGuide_begin="@dimen/event_details_body_label_margin_start"
+    />
 
   <!-- region WHEN -->
 
@@ -30,7 +33,8 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/event_details_body_row_margin_top"
     app:layout_constraintStart_toStartOf="@+id/labelsStartMargin"
-    app:layout_constraintTop_toTopOf="parent" />
+    app:layout_constraintTop_toTopOf="parent"
+    />
 
   <TextView
     android:id="@+id/whenValue"
@@ -41,7 +45,8 @@
     app:layout_constraintStart_toEndOf="@+id/valuesBarrier"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintBaseline_toBaselineOf="@+id/whenLabel"
-    tools:text="Tuesday, 6 February at 14:00" />
+    tools:text="Tuesday, 6 February at 14:00"
+    />
 
   <androidx.constraintlayout.widget.Barrier
     android:id="@+id/whenBarrier"
@@ -49,7 +54,8 @@
     android:layout_height="wrap_content"
     app:barrierDirection="bottom"
     app:barrierAllowsGoneWidgets="true"
-    app:constraint_referenced_ids="whenLabel,whenValue" />
+    app:constraint_referenced_ids="whenLabel,whenValue"
+    />
 
   <androidx.constraintlayout.widget.Group
     android:id="@+id/whenGroup"
@@ -57,7 +63,8 @@
     android:layout_height="wrap_content"
     android:visibility="gone"
     app:constraint_referenced_ids="whenValue,whenLabel"
-    tools:visibility="visible" />
+    tools:visibility="visible"
+    />
 
   <!-- endregion -->
 
@@ -70,7 +77,8 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/event_details_body_row_margin_top"
     app:layout_constraintStart_toStartOf="@+id/labelsStartMargin"
-    app:layout_constraintTop_toBottomOf="@id/whenBarrier" />
+    app:layout_constraintTop_toBottomOf="@id/whenBarrier"
+    />
 
   <TextView
     android:id="@+id/whereValue"
@@ -79,7 +87,8 @@
     android:layout_height="wrap_content"
     app:layout_constraintStart_toEndOf="@+id/valuesBarrier"
     app:layout_constraintBaseline_toBaselineOf="@+id/whereLabel"
-    tools:text="EZ PZ lemon squeezy" />
+    tools:text="EZ PZ lemon squeezy"
+    />
 
   <androidx.constraintlayout.widget.Barrier
     android:id="@+id/whereBarrier"
@@ -87,7 +96,8 @@
     android:layout_height="wrap_content"
     app:barrierDirection="bottom"
     app:barrierAllowsGoneWidgets="true"
-    app:constraint_referenced_ids="whereLabel,whereValue" />
+    app:constraint_referenced_ids="whereLabel,whereValue"
+    />
 
   <androidx.constraintlayout.widget.Group
     android:id="@+id/whereGroup"
@@ -95,7 +105,8 @@
     android:layout_height="wrap_content"
     android:visibility="gone"
     app:constraint_referenced_ids="whereValue,whereLabel"
-    tools:visibility="visible" />
+    tools:visibility="visible"
+    />
 
   <!-- endregion -->
 
@@ -108,7 +119,8 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/event_details_body_row_margin_top"
     app:layout_constraintStart_toStartOf="@+id/labelsStartMargin"
-    app:layout_constraintTop_toBottomOf="@+id/whereBarrier" />
+    app:layout_constraintTop_toBottomOf="@+id/whereBarrier"
+    />
 
   <TextView
     android:id="@+id/levelValue"
@@ -118,7 +130,8 @@
     app:layout_constraintStart_toEndOf="@+id/valuesBarrier"
     app:layout_constraintEnd_toEndOf="@+id/whenValue"
     app:layout_constraintBaseline_toBaselineOf="@+id/levelLabel"
-    tools:text="Beyond the wall" />
+    tools:text="Beyond the wall"
+    />
 
   <androidx.constraintlayout.widget.Barrier
     android:id="@+id/levelBarrier"
@@ -126,7 +139,8 @@
     android:layout_height="wrap_content"
     app:barrierDirection="bottom"
     app:barrierAllowsGoneWidgets="true"
-    app:constraint_referenced_ids="levelLabel,levelValue" />
+    app:constraint_referenced_ids="levelLabel,levelValue"
+    />
 
   <androidx.constraintlayout.widget.Group
     android:id="@+id/levelGroup"
@@ -134,7 +148,8 @@
     android:layout_height="wrap_content"
     android:visibility="gone"
     app:constraint_referenced_ids="levelValue,levelLabel"
-    tools:visibility="visible" />
+    tools:visibility="visible"
+    />
 
   <!-- endregion -->
 
@@ -147,7 +162,8 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/event_details_body_row_margin_top"
     app:layout_constraintStart_toStartOf="@+id/labelsStartMargin"
-    app:layout_constraintTop_toBottomOf="@+id/levelBarrier" />
+    app:layout_constraintTop_toBottomOf="@+id/levelBarrier"
+    />
 
   <TextView
     android:id="@+id/trackValue"
@@ -157,7 +173,8 @@
     app:layout_constraintStart_toEndOf="@+id/valuesBarrier"
     app:layout_constraintEnd_toEndOf="@+id/whenValue"
     app:layout_constraintBaseline_toBaselineOf="@+id/trackLabel"
-    tools:text="Tools" />
+    tools:text="Tools"
+    />
 
   <androidx.constraintlayout.widget.Barrier
     android:id="@+id/trackBarrier"
@@ -165,7 +182,8 @@
     android:layout_height="wrap_content"
     app:barrierDirection="bottom"
     app:barrierAllowsGoneWidgets="true"
-    app:constraint_referenced_ids="trackLabel,trackValue" />
+    app:constraint_referenced_ids="trackLabel,trackValue"
+    />
 
   <androidx.constraintlayout.widget.Group
     android:id="@+id/trackGroup"
@@ -173,7 +191,8 @@
     android:layout_height="wrap_content"
     android:visibility="gone"
     app:constraint_referenced_ids="trackValue,trackLabel"
-    tools:visibility="visible" />
+    tools:visibility="visible"
+    />
 
   <!-- endregion -->
 
@@ -187,7 +206,8 @@
     android:layout_marginTop="@dimen/event_details_body_row_margin_top"
     app:layout_constraintTop_toBottomOf="@id/trackBarrier"
     app:layout_constraintStart_toStartOf="@+id/labelsStartMargin"
-    tools:visibility="visible" />
+    tools:visibility="visible"
+    />
 
   <TextView
     android:id="@+id/descriptionValue"
@@ -201,7 +221,8 @@
     app:layout_constraintEnd_toEndOf="@+id/whenValue"
     app:layout_constraintStart_toStartOf="parent"
     tools:text="Now this is the story all about how\nMy life got flipped, turned upside down"
-    tools:visibility="visible" />
+    tools:visibility="visible"
+    />
 
   <androidx.constraintlayout.widget.Group
     android:id="@+id/descriptionGroup"
@@ -209,7 +230,8 @@
     android:layout_height="wrap_content"
     android:visibility="gone"
     app:constraint_referenced_ids="descriptionValue,descriptionLabel"
-    tools:visibility="visible" />
+    tools:visibility="visible"
+    />
 
   <!-- endregion -->
 

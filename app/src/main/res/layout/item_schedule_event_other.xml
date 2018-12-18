@@ -10,12 +10,14 @@
   android:paddingTop="@dimen/card_padding_top"
   android:paddingBottom="@dimen/card_padding_bottom"
   tools:layout_margin="16dp"
-  tools:ignore="RtlSymmetry">
+  tools:ignore="RtlSymmetry"
+  >
 
   <androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
 
     <TextView
       android:id="@+id/title"
@@ -28,7 +30,8 @@
       app:layout_constraintBottom_toTopOf="@+id/timestamp"
       app:layout_constraintVertical_chainStyle="packed"
       app:layout_goneMarginEnd="@dimen/card_padding_horizontal"
-      tools:text="Designing for an Android future" />
+      tools:text="Designing for an Android future"
+      />
 
     <TextView
       android:id="@+id/timestamp"
@@ -39,7 +42,8 @@
       app:layout_constraintStart_toStartOf="@+id/title"
       app:layout_constraintTop_toBottomOf="@+id/title"
       app:layout_constraintBottom_toBottomOf="@+id/illustration"
-      tools:text="12:00" />
+      tools:text="12:00"
+      />
 
     <ImageView
       android:id="@+id/illustration"
@@ -49,7 +53,8 @@
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintBottom_toBottomOf="parent"
-      tools:src="@drawable/lunch" />
+      tools:src="@drawable/lunch"
+      />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 

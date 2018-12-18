@@ -3,7 +3,8 @@
   android:insetLeft="@dimen/color_button_inset_horizontal"
   android:insetTop="@dimen/color_button_inset_vertical"
   android:insetRight="@dimen/color_button_inset_horizontal"
-  android:insetBottom="@dimen/color_button_inset_vertical">
+  android:insetBottom="@dimen/color_button_inset_vertical"
+  >
 
   <ripple android:color="?colorControlHighlight">
     <item>
@@ -18,7 +19,8 @@
               android:left="@dimen/color_button_padding_horizontal"
               android:top="@dimen/color_button_padding_vertical"
               android:right="@dimen/color_button_padding_horizontal"
-              android:bottom="@dimen/color_button_padding_vertical" />
+              android:bottom="@dimen/color_button_padding_vertical"
+              />
           </shape>
         </item>
         <item>
@@ -29,7 +31,8 @@
               android:left="@dimen/color_button_padding_horizontal"
               android:top="@dimen/color_button_padding_vertical"
               android:right="@dimen/color_button_padding_horizontal"
-              android:bottom="@dimen/color_button_padding_vertical" />
+              android:bottom="@dimen/color_button_padding_vertical"
+              />
           </shape>
         </item>
       </selector>

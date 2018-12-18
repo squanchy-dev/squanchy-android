@@ -6,20 +6,24 @@
   <item
     android:id="@+id/liked"
     android:drawable="@drawable/ic_favorite_filled"
-    android:state_checked="true"/>
+    android:state_checked="true"
+    />
 
   <item
     android:id="@+id/not_liked"
-    android:drawable="@drawable/ic_favorite_empty"/>
+    android:drawable="@drawable/ic_favorite_empty"
+    />
 
   <transition
     android:drawable="@drawable/avd_ic_favorite_fill"
     android:fromId="@id/not_liked"
-    android:toId="@id/liked"/>
+    android:toId="@id/liked"
+    />
 
   <transition
     android:drawable="@drawable/avd_ic_favorite_break"
     android:fromId="@id/liked"
-    android:toId="@id/not_liked"/>
+    android:toId="@id/not_liked"
+    />
 
 </animated-selector>

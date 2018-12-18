@@ -6,4 +6,5 @@
   android:layout_width="@dimen/card_speaker_photo"
   android:layout_height="@dimen/card_speaker_photo"
   android:layout_marginEnd="@dimen/card_speaker_margin_end"
-  tools:src="?colorAccent" />
+  tools:src="?colorAccent"
+  />

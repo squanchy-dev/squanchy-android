@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
-  tools:context="net.squanchy.settings.SettingsActivity">
+  tools:context="net.squanchy.settings.SettingsActivity"
+  >
 
   <PreferenceCategory
     android:key="@string/account_category_key"
     android:title="@string/account_category_label"
     android:layout="@layout/preference_category_header"
-    android:orderingFromXml="true">
+    android:orderingFromXml="true"
+    >
 
     <Preference
       android:key="@string/account_email_preference_key"
       android:title="@string/settings_account_not_signed_in"
       android:icon="@drawable/ic_email"
       android:order="0"
-      android:selectable="false" />
+      android:selectable="false"
+      />
 
     <Preference
       android:key="@string/account_signin_signout_preference_key"
       android:title="@string/sign_in_title"
       android:icon="@drawable/ic_signin_signout"
-      android:order="1" />
+      android:order="1"
+      />
 
   </PreferenceCategory>
 
@@ -28,7 +32,8 @@
     android:key="@string/settings_category_key"
     android:title="@string/settings_and_help_title"
     android:layout="@layout/preference_category_header"
-    android:orderingFromXml="true">
+    android:orderingFromXml="true"
+    >
 
     <SwitchPreference
       android:key="@string/about_to_start_notification_preference_key"
@@ -37,51 +42,59 @@
       android:defaultValue="true"
       android:summaryOn="@string/settings_notifications_about_to_start_summary_on"
       android:summaryOff="@string/settings_notifications_about_to_start_summary_off"
-      android:order="0"/>
+      android:order="0"
+      />
 
     <SwitchPreference
       android:key="@string/favorites_in_schedule_preference_key"
       android:title="@string/favorites_in_schedule_title"
       android:icon="@drawable/ic_favorite_settings"
       android:defaultValue="false"
-      android:order="1" />
+      android:order="1"
+      />
 
     <SwitchPreference
       android:key="@string/disable_analytics_key"
       android:title="@string/disable_analytics_title"
       android:icon="@drawable/ic_analytics"
-      android:order="2" />
+      android:order="2"
+      />
 
     <Preference
       android:key="@string/auto_wifi_preference_key"
       android:title="@string/auto_wifi_title"
       android:icon="@drawable/ic_wifi"
-      android:order="3" />
+      android:order="3"
+      />
 
     <Preference
       android:key="@string/about_preference_key"
       android:title="@string/about_title"
       android:icon="@drawable/ic_about"
-      android:order="4" />
+      android:order="4"
+      />
 
     <Preference
       android:key="@string/build_version_preference_key"
       android:selectable="false"
       android:icon="@android:color/transparent"
       android:order="5"
-      tools:title="Version: 1.0.0" />
+      tools:title="Version: 1.0.0"
+      />
 
   </PreferenceCategory>
 
   <PreferenceCategory
     android:key="@string/debug_category_preference_key"
     android:title="@string/settings_debug_category"
-    android:layout="@layout/preference_category_header">
+    android:layout="@layout/preference_category_header"
+    >
 
     <Preference
       android:key="@string/open_debug_preference_key"
       android:title="@string/settings_open_debug_title"
-      android:icon="@android:color/transparent">
+      android:icon="@android:color/transparent"
+      >
 
       <intent android:action="net.squanchy.DebugActivity" />
 

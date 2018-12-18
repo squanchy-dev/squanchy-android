@@ -6,7 +6,8 @@
   android:theme="@style/Theme.Squanchy.Favorites"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context="net.squanchy.home.HomeActivity">
+  tools:context="net.squanchy.home.HomeActivity"
+  >
 
   <com.google.android.material.appbar.AppBarLayout
     android:id="@+id/appBarLayout"
@@ -16,16 +17,19 @@
     android:layout_height="wrap_content"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintEnd_toEndOf="parent">
+    app:layout_constraintEnd_toEndOf="parent"
+    >
 
     <androidx.appcompat.widget.Toolbar
       android:id="@+id/toolbar"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content" />
+      android:layout_height="wrap_content"
+      />
 
   </com.google.android.material.appbar.AppBarLayout>
 
-  <include layout="@layout/merge_no_favorites_view"
+  <include
+    layout="@layout/merge_no_favorites_view"
     android:layout_width="@dimen/match_constraint"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/favorites_empty_margin_horizontal"
@@ -33,14 +37,16 @@
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent" />
+    app:layout_constraintStart_toStartOf="parent"
+    />
 
   <androidx.constraintlayout.widget.Group
     android:id="@+id/emptyViewSignedOut"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:visibility="gone"
-    app:constraint_referenced_ids="imageView,textView,emptyViewSignedOutButton" />
+    app:constraint_referenced_ids="imageView,textView,emptyViewSignedOutButton"
+    />
 
   <ImageView
     android:id="@+id/imageView"
@@ -54,7 +60,8 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintBottom_toTopOf="@+id/textView"
     app:layout_constraintVertical_chainStyle="packed"
-    app:srcCompat="@drawable/ic_favorites_empty_not_signed_in" />
+    app:srcCompat="@drawable/ic_favorites_empty_not_signed_in"
+    />
 
   <TextView
     android:id="@+id/textView"
@@ -69,7 +76,8 @@
     app:layout_constraintTop_toBottomOf="@+id/imageView"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintBottom_toTopOf="@+id/emptyViewSignedOutButton"
-    app:layout_constraintVertical_chainStyle="packed" />
+    app:layout_constraintVertical_chainStyle="packed"
+    />
 
   <Button
     android:id="@+id/emptyViewSignedOutButton"
@@ -80,7 +88,8 @@
     app:layout_constraintStart_toStartOf="@+id/textView"
     app:layout_constraintTop_toBottomOf="@+id/textView"
     app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="@+id/textView" />
+    app:layout_constraintEnd_toEndOf="@+id/textView"
+    />
 
   <ProgressBar
     android:id="@+id/progressBar"
@@ -91,7 +100,8 @@
     app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintBottom_toBottomOf="parent"
-    tools:visibility="gone" />
+    tools:visibility="gone"
+    />
 
   <net.squanchy.favorites.view.FavoritesListView
     android:id="@+id/favoritesListView"
@@ -102,6 +112,7 @@
     app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintBottom_toBottomOf="parent"
-    tools:visibility="visible" />
+    tools:visibility="visible"
+    />
 
 </net.squanchy.favorites.FavoritesPageView>

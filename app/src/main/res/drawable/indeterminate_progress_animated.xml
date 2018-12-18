@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:drawable="@drawable/indeterminate_progress">
+  android:drawable="@drawable/indeterminate_progress"
+  >
 
-    <target
-        android:name="progressBar"
-        android:animation="@anim/progress_indeterminate" />
+  <target
+    android:name="progressBar"
+    android:animation="@anim/progress_indeterminate"
+    />
 
-    <target
-        android:name="root"
-        android:animation="@anim/progress_indeterminate_rotation" />
+  <target
+    android:name="root"
+    android:animation="@anim/progress_indeterminate_rotation"
+    />
 
 </animated-vector>

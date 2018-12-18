@@ -5,7 +5,8 @@
   android:height="442dp"
   android:viewportWidth="588"
   android:viewportHeight="442"
-  tools:ignore="VectorRaster">
+  tools:ignore="VectorRaster"
+  >
 
   <!-- This is a slightly too long vector path but we're ok with it -->
   <path
@@ -15,5 +16,6 @@
     android:strokeWidth="1"
     android:strokeLineJoin="round"
     android:strokeMiterLimit="1.4142"
-    tools:ignore="VectorPath" />
+    tools:ignore="VectorPath"
+    />
 </vector>

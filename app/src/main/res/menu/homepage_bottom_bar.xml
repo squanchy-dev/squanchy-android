@@ -1,33 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  >
 
   <item
     android:id="@+id/action_schedule"
     android:enabled="true"
     android:icon="@drawable/ic_schedule"
     android:title="@string/bottom_bar_schedule_label"
-    app:showAsAction="ifRoom" />
+    app:showAsAction="ifRoom"
+    />
 
   <item
     android:id="@+id/action_favorites"
     android:enabled="true"
     android:icon="@drawable/ic_favorites"
     android:title="@string/bottom_bar_favorites_label"
-    app:showAsAction="ifRoom" />
+    app:showAsAction="ifRoom"
+    />
 
   <item
     android:id="@+id/action_tweets"
     android:enabled="true"
     android:icon="@drawable/ic_twitter"
     android:title="@string/bottom_bar_tweets_label"
-    app:showAsAction="ifRoom" />
+    app:showAsAction="ifRoom"
+    />
 
   <item
     android:id="@+id/action_venue"
     android:enabled="true"
     android:icon="@drawable/ic_venue"
     android:title="@string/bottom_bar_venue_label"
-    app:showAsAction="ifRoom" />
+    app:showAsAction="ifRoom"
+    />
 
 </menu>

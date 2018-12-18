@@ -6,13 +6,15 @@
     android:duration="0"
     android:propertyName="trimPathEnd"
     android:valueFrom="0"
-    android:valueTo="0"/>
+    android:valueTo="0"
+    />
 
   <objectAnimator
     android:duration="0"
     android:propertyName="strokeAlpha"
     android:valueFrom="0.4"
-    android:valueTo="0.4"/>
+    android:valueTo="0.4"
+    />
 
   <!-- Now trim-reveal & fade in the heart path. -->
   <objectAnimator
@@ -21,7 +23,8 @@
     android:propertyName="trimPathEnd"
     android:startOffset="400"
     android:valueFrom="0"
-    android:valueTo="1"/>
+    android:valueTo="1"
+    />
 
   <objectAnimator
     android:duration="300"
@@ -29,6 +32,7 @@
     android:propertyName="strokeAlpha"
     android:startOffset="400"
     android:valueFrom="0.4"
-    android:valueTo="1"/>
+    android:valueTo="1"
+    />
 
 </set>

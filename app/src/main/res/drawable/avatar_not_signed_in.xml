@@ -4,7 +4,8 @@
   android:width="56dp"
   android:height="56dp"
   android:viewportWidth="56"
-  android:viewportHeight="56">
+  android:viewportHeight="56"
+  >
 
   <!-- This has slightly too long vector paths but we're ok with it -->
   <group tools:ignore="VectorPath">
@@ -69,6 +70,7 @@ C33.377,35.393,33.301,35.337,33.232,35.268
 C33.182,35.217,33.138,35.163,33.1,35.106
 C31.782,33.95,30.104,33.196,28.256,33.033 C28.684,33.146,29,33.537,29,34
 C29,34.552,28.552,35,28,35 S27,34.552,27,34
-C27,33.491,27.381,33.071,27.873,33.008 Z" />
+C27,33.491,27.381,33.071,27.873,33.008 Z"
+      />
   </group>
 </vector>

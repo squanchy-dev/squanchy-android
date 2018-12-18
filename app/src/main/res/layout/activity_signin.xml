@@ -2,12 +2,14 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
+  android:layout_height="match_parent"
+  >
 
   <View
     android:id="@+id/touchOutside"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    android:layout_height="match_parent"
+    />
 
   <net.squanchy.support.widget.MaxSizeFrameLayout
     android:id="@+id/bottomSheet"
@@ -16,14 +18,16 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-    tools:layout_width="match_parent">
+    tools:layout_width="match_parent"
+    >
 
     <RelativeLayout
       android:id="@+id/signInContent"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="vertical"
-      android:padding="@dimen/sign_in_bottom_sheet_content_padding">
+      android:padding="@dimen/sign_in_bottom_sheet_content_padding"
+      >
 
       <ImageView
         android:id="@+id/google_logo"
@@ -34,7 +38,8 @@
         android:layout_marginBottom="@dimen/sign_in_logo_margin_bottom"
         android:layout_marginEnd="@dimen/sign_in_logo_margin_end"
         android:src="@drawable/google_primary"
-        android:contentDescription="@null" />
+        android:contentDescription="@null"
+        />
 
       <TextView
         android:id="@+id/title_text"
@@ -44,13 +49,15 @@
         android:layout_alignTop="@id/google_logo"
         android:layout_alignBottom="@id/google_logo"
         android:layout_toEndOf="@id/google_logo"
-        android:text="@string/sign_in_label" />
+        android:text="@string/sign_in_label"
+        />
 
       <com.google.android.gms.common.SignInButton
         android:id="@+id/signInButton"
         android:layout_width="match_parent"
         android:layout_height="@dimen/color_button_height"
-        android:layout_below="@id/google_logo" />
+        android:layout_below="@id/google_logo"
+        />
 
     </RelativeLayout>
 
@@ -60,7 +67,8 @@
       android:layout_height="wrap_content"
       android:layout_gravity="center"
       android:visibility="gone"
-      tools:visibility="visible" />
+      tools:visibility="visible"
+      />
 
   </net.squanchy.support.widget.MaxSizeFrameLayout>
 

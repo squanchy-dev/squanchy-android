@@ -4,4 +4,5 @@
   style="@style/Squanchy.PreferenceListHeader"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:layout_marginBottom="@dimen/preference_header_margin_vertical" />
+  android:layout_marginBottom="@dimen/preference_header_margin_vertical"
+  />

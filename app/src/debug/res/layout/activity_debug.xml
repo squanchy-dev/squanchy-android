@@ -4,12 +4,14 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:padding="@dimen/debug_content_padding"
-  android:clipToPadding="false">
+  android:clipToPadding="false"
+  >
 
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
     <TextView
       android:layout_width="match_parent"
@@ -18,14 +20,16 @@
       android:layout_marginBottom="@dimen/debug_header_margin_bottom"
       android:text="@string/debug_test_notifications"
       android:textAppearance="@style/TextAppearance.Squanchy.EventDetails.Body.Label"
-      android:textSize="@dimen/debug_header_text" />
+      android:textSize="@dimen/debug_header_text"
+      />
 
     <LinearLayout
       style="?android:attr/buttonBarStyle"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="horizontal"
-      android:gravity="fill_horizontal|center_vertical">
+      android:gravity="fill_horizontal|center_vertical"
+      >
 
       <Button
         android:id="@+id/button_test_single_notification"
@@ -34,7 +38,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="@string/debug_activity_button_single_notification"
-        android:textAppearance="@style/TextAppearance.Squanchy.Card.Title" />
+        android:textAppearance="@style/TextAppearance.Squanchy.Card.Title"
+        />
 
       <Button
         android:id="@+id/button_test_multiple_notifications"
@@ -43,7 +48,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="@string/debug_activity_button_multiple_notifications"
-        android:textAppearance="@style/TextAppearance.Squanchy.Card.Title" />
+        android:textAppearance="@style/TextAppearance.Squanchy.Card.Title"
+        />
 
       <Button
         android:id="@+id/button_test_service"
@@ -52,7 +58,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="@string/debug_activity_button_service"
-        android:textAppearance="@style/TextAppearance.Squanchy.Card.Title" />
+        android:textAppearance="@style/TextAppearance.Squanchy.Card.Title"
+        />
 
     </LinearLayout>
 
@@ -64,7 +71,8 @@
       android:clickable="true"
       android:focusable="true"
       android:orientation="horizontal"
-      android:gravity="fill_horizontal|center_vertical">
+      android:gravity="fill_horizontal|center_vertical"
+      >
 
       <TextView
         android:layout_width="0dp"
@@ -72,7 +80,8 @@
         android:layout_weight="1"
         android:text="@string/debug_reset_onboarding"
         android:textAppearance="@style/TextAppearance.Squanchy.EventDetails.Body.Label"
-        android:textSize="@dimen/debug_header_text" />
+        android:textSize="@dimen/debug_header_text"
+        />
 
       <Button
         android:id="@+id/button_reset_onboarding"
@@ -80,7 +89,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/debug_reset_onboarding_button"
-        android:textAppearance="@style/TextAppearance.Squanchy.Card.Title" />
+        android:textAppearance="@style/TextAppearance.Squanchy.Card.Title"
+        />
 
     </LinearLayout>
 

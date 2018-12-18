@@ -3,29 +3,35 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:orientation="vertical">
+  android:orientation="vertical"
+  >
 
   <FrameLayout
     android:id="@+id/pageContainer"
     android:layout_width="match_parent"
     android:layout_height="0dp"
-    android:layout_weight="1">
+    android:layout_weight="1"
+    >
 
     <include
       layout="@layout/view_page_schedule"
-      android:visibility="invisible" />
+      android:visibility="invisible"
+      />
 
     <include
       layout="@layout/view_page_favorites"
-      android:visibility="invisible" />
+      android:visibility="invisible"
+      />
 
     <include
       layout="@layout/view_page_tweets"
-      android:visibility="invisible" />
+      android:visibility="invisible"
+      />
 
     <include
       layout="@layout/view_page_venue"
-      android:visibility="invisible" />
+      android:visibility="invisible"
+      />
 
   </FrameLayout>
 
@@ -38,6 +44,7 @@
     android:descendantFocusability="beforeDescendants"
     app:itemIconTint="@color/bottom_navigation_item"
     app:itemTextColor="@color/bottom_navigation_item"
-    app:menu="@menu/homepage_bottom_bar" />
+    app:menu="@menu/homepage_bottom_bar"
+    />
 
 </LinearLayout>

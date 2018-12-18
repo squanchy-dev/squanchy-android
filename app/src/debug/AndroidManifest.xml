@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="net.squanchy">
+  package="net.squanchy"
+  >
 
   <application
     android:allowBackup="false"
-    android:fullBackupContent="false">
+    android:fullBackupContent="false"
+    >
 
     <activity
       android:name="net.squanchy.support.debug.DebugActivity"
       android:theme="@style/Theme.Squanchy.PrimaryStatusBar"
       android:label="@string/debug_activity_title"
-      android:taskAffinity="net.squanchy.debug">
+      android:taskAffinity="net.squanchy.debug"
+      >
 
       <intent-filter>
         <action android:name="net.squanchy.DebugActivity" />

@@ -3,4 +3,5 @@
   app:fontProviderAuthority="com.google.android.gms.fonts"
   app:fontProviderPackage="com.google.android.gms"
   app:fontProviderQuery="name=Quicksand&amp;weight=500"
-  app:fontProviderCerts="@array/com_google_android_gms_fonts_certs" />
+  app:fontProviderCerts="@array/com_google_android_gms_fonts_certs"
+  />

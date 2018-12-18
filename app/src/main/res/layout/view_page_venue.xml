@@ -4,18 +4,21 @@
   android:id="@+id/venueContentRoot"
   android:theme="@style/Theme.Squanchy.VenueInfo"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
+  android:layout_height="match_parent"
+  >
 
   <com.google.android.material.appbar.AppBarLayout
     style="@style/Squanchy.Appbar"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
 
     <androidx.appcompat.widget.Toolbar
       android:id="@+id/toolbar"
       android:layout_width="match_parent"
-      android:layout_height="?attr/actionBarSize" />
+      android:layout_height="?attr/actionBarSize"
+      />
 
   </com.google.android.material.appbar.AppBarLayout>
 
@@ -25,7 +28,8 @@
     android:clipToPadding="false"
     android:paddingBottom="@dimen/venue_info_content_padding_bottom"
     android:background="@color/white"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    >
 
     <include layout="@layout/merge_venue_info_layout" />
 

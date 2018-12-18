@@ -2,7 +2,9 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
   <item>
     <shape
-      android:shape="oval" android:tint="@color/selector_color_primary" />
+      android:shape="oval"
+      android:tint="@color/selector_color_primary"
+      />
   </item>
   <item android:drawable="@drawable/animselector_ic_favorite" />
 </layer-list>

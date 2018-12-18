@@ -8,11 +8,13 @@
   android:paddingTop="@dimen/card_padding_top"
   android:paddingRight="@dimen/card_padding_horizontal"
   android:paddingBottom="@dimen/card_padding_bottom"
-  tools:layout_margin="16dp">
+  tools:layout_margin="16dp"
+  >
 
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
 
     <net.squanchy.schedule.view.ScheduleSpeakerView
       android:id="@+id/speakersContainer"
@@ -21,7 +23,8 @@
       android:layout_marginBottom="@dimen/card_title_margin_top"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintEnd_toEndOf="parent">
+      app:layout_constraintEnd_toEndOf="parent"
+      >
 
       <LinearLayout
         android:id="@+id/speakerPhotosContainer"
@@ -29,14 +32,16 @@
         android:layout_height="@dimen/card_speaker_photo"
         android:orientation="horizontal"
         tools:layout_width="@dimen/card_speaker_photo"
-        tools:background="?colorAccent" />
+        tools:background="?colorAccent"
+        />
 
       <TextView
         android:id="@+id/speakerNames"
         style="@style/Schedule.Card.Speaker.Names"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Qi Qu" />
+        tools:text="Qi Qu"
+        />
 
     </net.squanchy.schedule.view.ScheduleSpeakerView>
 
@@ -48,7 +53,8 @@
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       tools:text="@string/experience_level_beginner"
-      tools:backgroundTint="@color/experience_level_beginner" />
+      tools:backgroundTint="@color/experience_level_beginner"
+      />
 
     <TextView
       android:id="@+id/title"
@@ -58,7 +64,8 @@
       android:layout_marginTop="@dimen/card_title_margin_top"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/speakersContainer"
-      tools:text="Designing for an Android future" />
+      tools:text="Designing for an Android future"
+      />
 
     <TextView
       android:id="@+id/timestamp"
@@ -70,7 +77,8 @@
       app:layout_constraintTop_toBottomOf="@+id/title"
       app:layout_constraintEnd_toStartOf="@id/room"
       app:layout_constraintHorizontal_chainStyle="packed"
-      tools:text="12:00" />
+      tools:text="12:00"
+      />
 
     <TextView
       android:id="@+id/room"
@@ -81,7 +89,8 @@
       app:layout_constraintTop_toTopOf="@+id/timestamp"
       app:layout_constraintBottom_toBottomOf="@+id/timestamp"
       tools:text=" • Main room"
-      tools:visibility="visible" />
+      tools:visibility="visible"
+      />
 
     <ImageView
       android:id="@+id/favoriteIcon"
@@ -93,7 +102,8 @@
       app:layout_constraintTop_toTopOf="@+id/timestamp"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintBottom_toBottomOf="@+id/timestamp"
-      tools:visibility="visible" />
+      tools:visibility="visible"
+      />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 

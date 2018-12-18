@@ -6,4 +6,5 @@
   android:layout_width="@dimen/event_details_speaker_photo"
   android:layout_height="@dimen/event_details_speaker_photo"
   android:layout_marginEnd="@dimen/event_details_speaker_photo_margin_end"
-  tools:src="?colorAccent" />
+  tools:src="?colorAccent"
+  />
