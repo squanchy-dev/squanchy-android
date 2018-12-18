@@ -111,7 +111,6 @@ class NotificationWorker(context: Context, parameters: WorkerParameters) : RxWor
     }
 }
 
-
 fun scheduleNotificationWork(delay: Duration = Duration.ZERO) {
     val request = OneTimeWorkRequestBuilder<NotificationWorker>()
         .setInitialDelay(delay.seconds, TimeUnit.SECONDS)
