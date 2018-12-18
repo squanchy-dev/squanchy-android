@@ -97,10 +97,12 @@ class NotificationWorker(context: Context, parameters: WorkerParameters) : RxWor
 
         Timber.d("Next alarm scheduled for %s", serviceAlarm.toString())
 
-        scheduleNotificationWork(Duration.between(
-            currentTime.currentDateTime(),
-            serviceAlarm
-        ))
+        scheduleNotificationWork(
+            Duration.between(
+                currentTime.currentDateTime(),
+                serviceAlarm
+            )
+        )
     }
 
     companion object {
