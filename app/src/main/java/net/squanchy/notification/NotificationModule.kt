@@ -1,15 +1,18 @@
 package net.squanchy.notification
 
+import android.app.Application
 import android.content.Context
 import androidx.core.app.NotificationManagerCompat
 import dagger.Module
 import dagger.Provides
-import net.squanchy.injection.ServiceContextModule
 import net.squanchy.service.repository.AuthService
 import net.squanchy.service.repository.EventRepository
 
-@Module(includes = [ServiceContextModule::class])
+@Module
 internal class NotificationModule {
+
+    @Provides
+    fun context(application: Application): Context = application
 
     @Provides
     fun favoritesService(authService: AuthService, eventRepository: EventRepository): NotificationService {

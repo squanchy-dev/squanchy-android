@@ -12,10 +12,11 @@ import kotlinx.android.synthetic.main.activity_event_details.*
 import net.squanchy.R
 import net.squanchy.eventdetails.widget.EventDetailsRootLayout
 import net.squanchy.navigation.Navigator
-import net.squanchy.notification.NotificationsIntentService
+import net.squanchy.notification.scheduleNotificationWork
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.signin.SignInOrigin
 import net.squanchy.speaker.domain.view.Speaker
+import org.threeten.bp.LocalDateTime
 import timber.log.Timber
 
 class EventDetailsActivity : AppCompatActivity() {
@@ -101,8 +102,7 @@ class EventDetailsActivity : AppCompatActivity() {
     }
 
     private fun triggerNotificationService() {
-        val serviceIntent = Intent(this, NotificationsIntentService::class.java)
-        startService(serviceIntent)
+        scheduleNotificationWork(LocalDateTime.now())
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
