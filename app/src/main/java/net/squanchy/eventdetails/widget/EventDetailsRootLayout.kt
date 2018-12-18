@@ -2,18 +2,18 @@ package net.squanchy.eventdetails.widget
 
 import android.content.Context
 import android.util.AttributeSet
-import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.view.isVisible
 import kotlinx.android.synthetic.main.activity_event_details.view.*
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Event.Type
 import net.squanchy.support.widget.SpeakerView
 
-class EventDetailsCoordinatorLayout @JvmOverloads constructor(
+class EventDetailsRootLayout @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet,
     defStyleAttr: Int = 0
-) : CoordinatorLayout(context, attrs, defStyleAttr) {
+) : MotionLayout(context, attrs, defStyleAttr) {
 
     internal fun updateWith(event: Event, listener: OnEventDetailsClickListener) {
         eventDetailsHeaderLayout.updateWith(event, listener)
