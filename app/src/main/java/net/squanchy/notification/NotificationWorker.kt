@@ -89,7 +89,7 @@ class NotificationWorker(context: Context, parameters: WorkerParameters) : RxWor
 
     private fun scheduleNextAlarm(events: List<Event>) {
         if (events.isEmpty()) {
-            Timber.d("no events")
+            Timber.d("No future events to schedule an alarm for.")
             return
         }
         val startTime = events[0].startTime
