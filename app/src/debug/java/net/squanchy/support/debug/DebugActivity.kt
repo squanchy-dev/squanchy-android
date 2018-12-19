@@ -1,7 +1,10 @@
 package net.squanchy.support.debug
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationManagerCompat
 import arrow.core.Option
@@ -15,8 +18,11 @@ import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Place
 import net.squanchy.schedule.domain.view.Track
 import net.squanchy.speaker.domain.view.Speaker
+import net.squanchy.support.system.DebugCurrentTime
+import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneId
+import org.threeten.bp.ZonedDateTime
 import java.util.ArrayList
 import java.util.Random
 
@@ -41,6 +47,9 @@ class DebugActivity : AppCompatActivity() {
         buttonResetOnboarding.setOnClickListener { resetOnboarding() }
 
         notificationCreator = NotificationCreator(this)
+
+        findViewById<Button>(R.id.freezeTime).setOnClickListener { freezeTime() }
+        findViewById<Button>(R.id.unfreezeTime).setOnClickListener { unfreezeTime() }
     }
 
     private fun testSingleNotification() {
@@ -133,5 +142,35 @@ class DebugActivity : AppCompatActivity() {
     private fun resetOnboarding() {
         OnboardingResetter(this).resetOnboarding()
         Snackbar.make(findViewById<View>(R.id.debug_root), "It's daaaawnnnn", Snackbar.LENGTH_SHORT).show()
+    }
+
+    private fun freezeTime() {
+        val now = DebugCurrentTime(applicationContext).currentDateTime()
+
+        pickDate(now)
+    }
+
+    private fun pickDate(now: ZonedDateTime) {
+        val datePickerDialog = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+            pickTime(now, LocalDate.of(year, month, dayOfMonth))
+        }, now.year, now.monthValue + 1, now.dayOfMonth)
+
+        datePickerDialog.show()
+    }
+
+    private fun pickTime(now: ZonedDateTime, frozenDate: LocalDate) {
+        val timePickerDialog = TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+            freezeAt(frozenDate.atTime(hourOfDay, minute).atZone(ZoneId.systemDefault()))
+        }, now.hour, now.minute, true)
+
+        timePickerDialog.show()
+    }
+
+    private fun freezeAt(frozenDateTime: ZonedDateTime) {
+        DebugCurrentTime.freeze(this, frozenDateTime)
+    }
+
+    private fun unfreezeTime() {
+        DebugCurrentTime.unfreeze(this)
     }
 }
