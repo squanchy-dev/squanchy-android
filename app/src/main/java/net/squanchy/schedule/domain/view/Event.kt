@@ -5,6 +5,7 @@ import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.speaker.domain.view.Speaker
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneId
+import org.threeten.bp.ZonedDateTime
 
 @Suppress("LongParameterList") // This is just a big model - TODO refactor this to split it up
 data class Event(
@@ -23,7 +24,8 @@ data class Event(
     val timeZone: ZoneId
 ) {
 
-    fun isHappeningAt(time: LocalDateTime) = time.isAfter(startTime) && time.isBefore(endTime)
+    val zonedStartTime: ZonedDateTime
+        get() = startTime.atZone(timeZone)
 
     enum class Type(private val rawType: String) {
         REGISTRATION("registration"),
