@@ -1,6 +1,5 @@
 package net.squanchy.support.debug
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -10,8 +9,8 @@ import com.google.android.material.snackbar.Snackbar
 import net.squanchy.R
 import net.squanchy.eventdetails.domain.view.ExperienceLevel
 import net.squanchy.notification.NotificationCreator
-import net.squanchy.notification.NotificationsIntentService
 import net.squanchy.notification.Notifier
+import net.squanchy.notification.scheduleNotificationWork
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Place
 import net.squanchy.schedule.domain.view.Track
@@ -128,8 +127,7 @@ class DebugActivity : AppCompatActivity() {
     }
 
     private fun testService() {
-        val serviceIntent = Intent(this, NotificationsIntentService::class.java)
-        startService(serviceIntent)
+        scheduleNotificationWork()
     }
 
     private fun resetOnboarding() {

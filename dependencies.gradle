@@ -2,6 +2,7 @@ ext {
     daggerVersion = '2.19'
     glideVersion = '4.8.0'
     androidxVersion = '1.0.1'
+    workManagerVersion = "1.0.0-alpha13"
     kotlinVersion = '1.3.11'
     moshiVersion = '1.8.0'
 
@@ -22,6 +23,8 @@ ext {
             androidxConstraintLayout: 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2',
             androidxKtx             : "androidx.core:core-ktx:${androidxVersion}",
             androidxMaterial        : 'com.google.android.material:material:1.0.0',
+            androidxWorkManager     : "android.arch.work:work-runtime-ktx:$workManagerVersion",
+            androidxWorkManagerRx   : "android.arch.work:work-rxjava2:$workManagerVersion",
             arrowCore               : 'io.arrow-kt:arrow-core:0.8.1',
             crashlytics             : 'com.crashlytics.sdk.android:crashlytics:2.9.7',
             dagger                  : "com.google.dagger:dagger:${daggerVersion}",

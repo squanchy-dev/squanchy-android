@@ -163,6 +163,8 @@ dependencies {
     implementation libraries.app.rxLint
     implementation libraries.app.androidxAppCompat
     implementation libraries.app.androidxConstraintLayout
+    implementation libraries.app.androidxWorkManager
+    implementation libraries.app.androidxWorkManagerRx
     implementation libraries.app.androidxMaterial
     implementation libraries.app.timber
     implementation libraries.app.viewPagerAdapter

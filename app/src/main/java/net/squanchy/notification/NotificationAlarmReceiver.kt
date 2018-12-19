@@ -3,7 +3,6 @@ package net.squanchy.notification
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-
 import timber.log.Timber
 
 class NotificationAlarmReceiver : BroadcastReceiver() {
@@ -14,7 +13,6 @@ class NotificationAlarmReceiver : BroadcastReceiver() {
             return
         }
 
-        val serviceIntent = Intent(context, NotificationsIntentService::class.java)
-        context.startService(serviceIntent)
+        scheduleNotificationWork()
     }
 }
