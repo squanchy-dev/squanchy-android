@@ -11,6 +11,7 @@ class UpcomingEventsService(
     private val currentTime: CurrentTime,
     private val notificationInterval: Duration
 ) {
+
     fun upcomingEvents(): Single<List<Event>> {
         val now = currentTime.currentDateTime()
         val notificationIntervalEnd = now.plus(notificationInterval)
