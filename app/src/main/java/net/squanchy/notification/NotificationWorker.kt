@@ -12,36 +12,31 @@ import net.squanchy.R
 import net.squanchy.schedule.domain.view.Event
 import net.squanchy.support.system.CurrentTime
 import org.threeten.bp.Duration
-import org.threeten.bp.ZonedDateTime
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 class NotificationWorker(context: Context, parameters: WorkerParameters) : RxWorker(context, parameters) {
 
-    private val service: NotificationService
     private val notificationCreator: NotificationCreator
     private val notifier: Notifier
     private val currentTime: CurrentTime
     private val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+    private val service: UpcomingEventsService
+    private val notificationInterval: Duration
 
     init {
         notificationComponent(context).run {
-            service = service()
             notificationCreator = notificationCreator()
             notifier = notifier()
             currentTime = currentTime()
+            service = upcomingEventsService()
+            notificationInterval = notificationInterval()
         }
     }
 
     override fun createWork(): Single<Result> {
-        val now = currentTime.currentDateTime()
-
-        val notificationIntervalEnd = now.plusMinutes(NOTIFICATION_INTERVAL_MINUTES)
-
         val showNotification = if (shouldShowNotifications()) {
-            service.sortedFavourites()
-                .map { events -> events.filter { it.zonedStartTime.isAfter(now) } }
-                .map { events -> events.filter { isBeforeOrEqualTo(it.zonedStartTime, notificationIntervalEnd) } }
+            service.upcomingEvents()
                 .map(notificationCreator::createFrom)
                 .doOnSuccess(notifier::showNotifications)
                 .doOnError(::logError)
@@ -51,8 +46,7 @@ class NotificationWorker(context: Context, parameters: WorkerParameters) : RxWor
             Single.just(Result.success())
         }
 
-        val scheduleNext = service.sortedFavourites()
-            .map { events -> events.filter { it.zonedStartTime.isAfter(notificationIntervalEnd) } }
+        val scheduleNext = service.nextEvents()
             .doOnSuccess(::scheduleNextAlarm)
             .doOnError(::logError)
             .map { Result.success() }
@@ -81,17 +75,13 @@ class NotificationWorker(context: Context, parameters: WorkerParameters) : RxWor
         return preferences.getBoolean(notificationPreferenceKey, SHOW_NOTIFICATIONS_DEFAULT)
     }
 
-    private fun isBeforeOrEqualTo(start: ZonedDateTime, notificationIntervalEnd: ZonedDateTime): Boolean {
-        return start.isBefore(notificationIntervalEnd) || start.isEqual(notificationIntervalEnd)
-    }
-
     private fun scheduleNextAlarm(events: List<Event>) {
         if (events.isEmpty()) {
             Timber.d("No future events to schedule an alarm for.")
             return
         }
         val startTime = events[0].zonedStartTime
-        val serviceAlarm = startTime.minusMinutes(NOTIFICATION_INTERVAL_MINUTES)
+        val serviceAlarm = startTime.minus(notificationInterval)
 
         Timber.d("Next alarm scheduled for %s", serviceAlarm.toString())
 
@@ -104,7 +94,6 @@ class NotificationWorker(context: Context, parameters: WorkerParameters) : RxWor
     }
 
     companion object {
-        private const val NOTIFICATION_INTERVAL_MINUTES = 10L
         private const val SHOW_NOTIFICATIONS_DEFAULT = true
     }
 }
