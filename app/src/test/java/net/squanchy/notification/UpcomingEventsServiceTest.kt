@@ -5,10 +5,12 @@ import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.anEvent
 import net.squanchy.support.system.TestCurrentTime
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.MockitoAnnotations
+import org.mockito.junit.MockitoJUnit
+import org.mockito.junit.MockitoRule
 import org.threeten.bp.Duration
 import org.threeten.bp.ZoneId
 import org.threeten.bp.ZoneOffset
@@ -16,6 +18,9 @@ import org.threeten.bp.ZonedDateTime
 
 class UpcomingEventsServiceTest {
 
+    @get:Rule
+    val mockitoRule: MockitoRule = MockitoJUnit.rule()
+    
     @Mock
     lateinit var service: NotificationService
 
@@ -25,7 +30,6 @@ class UpcomingEventsServiceTest {
 
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
         upcomingEventsService = UpcomingEventsService(
             service,
             currentTime,
