@@ -18,12 +18,11 @@ class UpcomingEventsService(
 
         return service.sortedFavourites()
             .map { events -> events.filter { it.zonedStartTime.isAfter(now) } }
-            .map { events -> events.filter { isBeforeOrEqualTo(it.zonedStartTime, notificationIntervalEnd) } }
+            .map { events -> events.filter { it.zonedStartTime.isBeforeOrEqualTo(notificationIntervalEnd) } }
     }
 
-    private fun isBeforeOrEqualTo(start: ZonedDateTime, notificationIntervalEnd: ZonedDateTime): Boolean {
-        return start.isBefore(notificationIntervalEnd) || start.isEqual(notificationIntervalEnd)
-    }
+    private fun ZonedDateTime.isBeforeOrEqualTo(other: ZonedDateTime) =
+        isBefore(other) || isEqual(other)
 
     fun nextEvents(): Single<List<Event>> {
         val now = currentTime.currentDateTime()
