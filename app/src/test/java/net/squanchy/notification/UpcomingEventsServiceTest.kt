@@ -115,6 +115,7 @@ class UpcomingEventsServiceTest {
             endTime = NOW.plusHours(4).toLocalDateTime(),
             timeZone = USER_ZONE_ID
         )
+        
         val AFTER_NOW_INSIDE_INTERVAL_OTHER_TIMEZONE = anEvent(
             title = "After now inside interval other timezone",
             startTime = NOW.plusHours(1).plus(INTERVAL.dividedBy(2)).toLocalDateTime(),
