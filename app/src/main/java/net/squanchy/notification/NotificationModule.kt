@@ -7,6 +7,9 @@ import dagger.Module
 import dagger.Provides
 import net.squanchy.service.repository.AuthService
 import net.squanchy.service.repository.EventRepository
+import net.squanchy.support.system.CurrentTime
+import org.threeten.bp.Duration
+import javax.inject.Named
 
 @Module
 internal class NotificationModule {
@@ -32,5 +35,26 @@ internal class NotificationModule {
     @Provides
     fun notifier(notificationManagerCompat: NotificationManagerCompat): Notifier {
         return Notifier(notificationManagerCompat)
+    }
+
+    @Provides
+    @Named(UPCOMING_EVENT_THRESHOLD)
+    fun provideUpcomingEventThreshold(): Duration = Duration.ofMinutes(10)
+
+    @Provides
+    fun upcomingEventsService(
+        notificationService: NotificationService,
+        currentTime: CurrentTime,
+        @Named(UPCOMING_EVENT_THRESHOLD) upcomingEventThreshold: Duration
+    ): UpcomingEventsService {
+        return UpcomingEventsService(
+            notificationService,
+            currentTime,
+            upcomingEventThreshold
+        )
+    }
+
+    companion object {
+        const val UPCOMING_EVENT_THRESHOLD = "UPCOMING_EVENT_THRESHOLD"
     }
 }
