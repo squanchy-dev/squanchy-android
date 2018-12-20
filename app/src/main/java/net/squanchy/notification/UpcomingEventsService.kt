@@ -9,16 +9,16 @@ import org.threeten.bp.ZonedDateTime
 class UpcomingEventsService(
     private val service: NotificationService,
     private val currentTime: CurrentTime,
-    private val notificationInterval: Duration
+    private val upcomingEventThreshold: Duration
 ) {
 
     fun upcomingEvents(): Single<List<Event>> {
         val now = currentTime.currentDateTime()
-        val notificationIntervalEnd = now.plus(notificationInterval)
+        val notificationEndTime = now.plus(upcomingEventThreshold)
 
         return service.sortedFavourites()
             .map { events -> events.filter { it.zonedStartTime.isAfter(now) } }
-            .map { events -> events.filter { it.zonedStartTime.isBeforeOrEqualTo(notificationIntervalEnd) } }
+            .map { events -> events.filter { it.zonedStartTime.isBeforeOrEqualTo(notificationEndTime) } }
     }
 
     private fun ZonedDateTime.isBeforeOrEqualTo(other: ZonedDateTime) =
@@ -26,9 +26,9 @@ class UpcomingEventsService(
 
     fun nextEvents(): Single<List<Event>> {
         val now = currentTime.currentDateTime()
-        val notificationIntervalEnd = now.plus(notificationInterval)
+        val notificationEndTime = now.plus(upcomingEventThreshold)
 
         return service.sortedFavourites()
-            .map { events -> events.filter { it.zonedStartTime.isAfter(notificationIntervalEnd) } }
+            .map { events -> events.filter { it.zonedStartTime.isAfter(notificationEndTime) } }
     }
 }

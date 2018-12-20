@@ -38,23 +38,23 @@ internal class NotificationModule {
     }
 
     @Provides
-    @Named(NOTIFICATION_INTERVAL)
-    fun provideNotificationInterval(): Duration = Duration.ofMinutes(10)
+    @Named(UPCOMING_EVENT_THRESHOLD)
+    fun provideUpcomingEventThreshold(): Duration = Duration.ofMinutes(10)
 
     @Provides
     fun upcomingEventsService(
         notificationService: NotificationService,
         currentTime: CurrentTime,
-        @Named(NOTIFICATION_INTERVAL) notificationInterval: Duration
+        @Named(UPCOMING_EVENT_THRESHOLD) upcomingEventThreshold: Duration
     ): UpcomingEventsService {
         return UpcomingEventsService(
             notificationService,
             currentTime,
-            notificationInterval
+            upcomingEventThreshold
         )
     }
 
     companion object {
-        const val NOTIFICATION_INTERVAL = "NOTIFICATION_INTERVAL"
+        const val UPCOMING_EVENT_THRESHOLD = "UPCOMING_EVENT_THRESHOLD"
     }
 }

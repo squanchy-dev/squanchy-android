@@ -33,7 +33,7 @@ class UpcomingEventsServiceTest {
         upcomingEventsService = UpcomingEventsService(
             service,
             currentTime,
-            INTERVAL
+            UPCOMING_EVENT_THRESHOLD
         )
     }
 
@@ -93,7 +93,7 @@ class UpcomingEventsServiceTest {
             USER_ZONE_ID
         )
 
-        val INTERVAL: Duration = Duration.ofMinutes(30)
+        val UPCOMING_EVENT_THRESHOLD: Duration = Duration.ofMinutes(30)
 
         val BEFORE_NOW = anEvent(
             title = "Before now",
@@ -111,28 +111,28 @@ class UpcomingEventsServiceTest {
 
         val AFTER_NOW_INSIDE_INTERVAL = anEvent(
             title = "After now inside interval",
-            startTime = NOW.plus(INTERVAL.dividedBy(2)).toLocalDateTime(),
+            startTime = NOW.plus(UPCOMING_EVENT_THRESHOLD.dividedBy(2)).toLocalDateTime(),
             endTime = NOW.plusHours(4).toLocalDateTime(),
             timeZone = USER_ZONE_ID
         )
         
         val AFTER_NOW_INSIDE_INTERVAL_OTHER_TIMEZONE = anEvent(
             title = "After now inside interval other timezone",
-            startTime = NOW.plusHours(1).plus(INTERVAL.dividedBy(2)).toLocalDateTime(),
+            startTime = NOW.plusHours(1).plus(UPCOMING_EVENT_THRESHOLD.dividedBy(2)).toLocalDateTime(),
             endTime = NOW.plusHours(4).toLocalDateTime(),
             timeZone = ONE_HOUR_EARLIER_ZONE_ID
         )
 
         val AFTER_NOW_OUTSIDE_INTERVAL = anEvent(
             title = "After now outside interval",
-            startTime = NOW.plus(INTERVAL.multipliedBy(2)).toLocalDateTime(),
+            startTime = NOW.plus(UPCOMING_EVENT_THRESHOLD.multipliedBy(2)).toLocalDateTime(),
             endTime = NOW.plusHours(4).toLocalDateTime(),
             timeZone = USER_ZONE_ID
         )
 
         val AFTER_NOW_OUTSIDE_INTERVAL_OTHER_TIMEZONE = anEvent(
             title = "After now outside interval other timezone",
-            startTime = NOW.plusHours(1).plus(INTERVAL.multipliedBy(2)).toLocalDateTime(),
+            startTime = NOW.plusHours(1).plus(UPCOMING_EVENT_THRESHOLD.multipliedBy(2)).toLocalDateTime(),
             endTime = NOW.plusHours(4).toLocalDateTime(),
             timeZone = ONE_HOUR_EARLIER_ZONE_ID
         )

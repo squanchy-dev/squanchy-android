@@ -5,7 +5,7 @@ import dagger.Component
 import net.squanchy.injection.ActivityLifecycle
 import net.squanchy.injection.ApplicationComponent
 import net.squanchy.injection.applicationComponent
-import net.squanchy.notification.NotificationModule.Companion.NOTIFICATION_INTERVAL
+import net.squanchy.notification.NotificationModule.Companion.UPCOMING_EVENT_THRESHOLD
 import net.squanchy.support.injection.CurrentTimeModule
 import net.squanchy.support.system.CurrentTime
 import org.threeten.bp.Duration
@@ -28,6 +28,6 @@ internal interface NotificationComponent {
 
     fun upcomingEventsService(): UpcomingEventsService
 
-    @Named(NOTIFICATION_INTERVAL)
-    fun notificationInterval(): Duration
+    @Named(UPCOMING_EVENT_THRESHOLD)
+    fun upcomingEventThreshold(): Duration
 }

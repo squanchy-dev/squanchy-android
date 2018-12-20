@@ -22,7 +22,7 @@ class NotificationWorker(context: Context, parameters: WorkerParameters) : RxWor
     private val currentTime: CurrentTime
     private val preferences = PreferenceManager.getDefaultSharedPreferences(context)
     private val service: UpcomingEventsService
-    private val notificationInterval: Duration
+    private val upcomingEventThreshold: Duration
 
     init {
         notificationComponent(context).run {
@@ -30,7 +30,7 @@ class NotificationWorker(context: Context, parameters: WorkerParameters) : RxWor
             notifier = notifier()
             currentTime = currentTime()
             service = upcomingEventsService()
-            notificationInterval = notificationInterval()
+            upcomingEventThreshold = upcomingEventThreshold()
         }
     }
 
@@ -81,7 +81,7 @@ class NotificationWorker(context: Context, parameters: WorkerParameters) : RxWor
             return
         }
         val startTime = events[0].zonedStartTime
-        val serviceAlarm = startTime.minus(notificationInterval)
+        val serviceAlarm = startTime.minus(upcomingEventThreshold)
 
         Timber.d("Next alarm scheduled for %s", serviceAlarm.toString())
 
