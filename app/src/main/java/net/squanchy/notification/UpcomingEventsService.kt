@@ -16,9 +16,7 @@ class UpcomingEventsService(
         val notificationIntervalEnd = now.plus(notificationInterval)
 
         return service.sortedFavourites()
-            .map { events -> events.filter {
-                it.zonedStartTime.isAfter(now)
-            } }
+            .map { events -> events.filter { it.zonedStartTime.isAfter(now) } }
             .map { events -> events.filter { isBeforeOrEqualTo(it.zonedStartTime, notificationIntervalEnd) } }
     }
 
