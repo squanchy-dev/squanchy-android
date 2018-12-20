@@ -6,7 +6,7 @@ import net.squanchy.schedule.domain.view.Event
 import net.squanchy.service.repository.AuthService
 import net.squanchy.service.repository.EventRepository
 
-internal class NotificationService(private val authService: AuthService, private val eventRepository: EventRepository) {
+class NotificationService(private val authService: AuthService, private val eventRepository: EventRepository) {
 
     fun sortedFavourites(): Single<List<Event>> {
         return authService.ifUserSignedInThenObservableFrom { userId ->
