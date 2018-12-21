@@ -24,9 +24,7 @@ class FreezableCurrentTime(context: Context) : CurrentTime {
         preferences.edit { remove(KEY_FROZEN_TIME) }
     }
 
-    fun isTimeFrozen(): Boolean {
-        return preferences.contains(KEY_FROZEN_TIME)
-    }
+    fun isTimeFrozen() = preferences.contains(KEY_FROZEN_TIME)
 
     companion object {
         private const val KEY_FROZEN_TIME = "FROZEN_TIME"
