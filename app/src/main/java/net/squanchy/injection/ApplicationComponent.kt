@@ -21,6 +21,7 @@ import net.squanchy.service.repository.TracksRepository
 import net.squanchy.service.repository.injection.RepositoryModule
 import net.squanchy.support.checksum.ChecksumModule
 import net.squanchy.support.injection.CurrentTimeModule
+import net.squanchy.support.system.CurrentTime
 
 fun createApplicationComponent(application: Application): ApplicationComponent {
     return DaggerApplicationComponent.builder()
@@ -64,6 +65,8 @@ interface ApplicationComponent {
     fun application(): Application
 
     fun algoliaSearchEngine(): AlgoliaSearchEngine
+
+    fun currentTime(): CurrentTime
 
     @Component.Builder
     interface Builder {

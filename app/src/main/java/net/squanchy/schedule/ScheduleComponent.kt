@@ -3,16 +3,15 @@ package net.squanchy.schedule
 import androidx.appcompat.app.AppCompatActivity
 import dagger.Component
 import net.squanchy.analytics.Analytics
-import net.squanchy.injection.BaseActivityComponentBuilder
 import net.squanchy.injection.ActivityLifecycle
 import net.squanchy.injection.ApplicationComponent
+import net.squanchy.injection.BaseActivityComponentBuilder
 import net.squanchy.injection.applicationComponent
 import net.squanchy.navigation.NavigationModule
 import net.squanchy.navigation.Navigator
 import net.squanchy.remoteconfig.FeatureFlags
 import net.squanchy.schedule.tracksfilter.TracksFilter
 import net.squanchy.service.repository.TracksRepository
-import net.squanchy.support.injection.CurrentTimeModule
 import net.squanchy.support.system.CurrentTime
 
 internal fun scheduleComponent(activity: AppCompatActivity): ScheduleComponent =
@@ -23,7 +22,7 @@ internal fun scheduleComponent(activity: AppCompatActivity): ScheduleComponent =
 
 @ActivityLifecycle
 @Component(
-    modules = [ScheduleModule::class, NavigationModule::class, CurrentTimeModule::class],
+    modules = [ScheduleModule::class, NavigationModule::class],
     dependencies = [ApplicationComponent::class]
 )
 internal interface ScheduleComponent {

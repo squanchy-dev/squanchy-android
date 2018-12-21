@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/debug_root"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
@@ -81,6 +82,46 @@
         android:layout_height="wrap_content"
         android:text="@string/debug_reset_onboarding_button"
         android:textAppearance="@style/TextAppearance.Squanchy.Card.Title" />
+
+    </LinearLayout>
+
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/debug_header_margin_top"
+      android:layout_marginBottom="@dimen/debug_header_margin_bottom"
+      android:text="@string/debug_header_time"
+      android:textAppearance="@style/TextAppearance.Squanchy.EventDetails.Body.Label"
+      android:textSize="@dimen/debug_header_text" />
+
+    <TextView
+      android:id="@+id/timeFrozenIndicator"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      tools:text="Time frozen at 15/02/18 15:30 AM"/>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+
+      <Button
+        android:id="@+id/freezeTime"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textAppearance="@style/TextAppearance.Squanchy.Card.Title"
+        android:text="@string/debug_freeze_time" />
+
+      <Button
+        android:id="@+id/unfreezeTime"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textAppearance="@style/TextAppearance.Squanchy.Card.Title"
+        android:text="@string/debug_unfreeze_time" />
 
     </LinearLayout>
 
