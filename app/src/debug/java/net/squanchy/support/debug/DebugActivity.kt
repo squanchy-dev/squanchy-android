@@ -152,11 +152,15 @@ class DebugActivity : AppCompatActivity() {
 
     private fun pickDate(now: ZonedDateTime) {
         val datePickerDialog = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            pickTime(now, LocalDate.of(year, month, dayOfMonth))
-        }, now.year, now.monthValue + 1, now.dayOfMonth)
+            pickTime(now, LocalDate.of(year, month.to1Based(), dayOfMonth))
+        }, now.year, now.monthValue.to0Based(), now.dayOfMonth)
 
         datePickerDialog.show()
     }
+
+    private fun Int.to1Based() = this + 1
+
+    private fun Int.to0Based() = this - 1
 
     private fun pickTime(now: ZonedDateTime, frozenDate: LocalDate) {
         val timePickerDialog = TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
