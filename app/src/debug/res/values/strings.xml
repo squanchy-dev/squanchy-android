@@ -11,5 +11,7 @@
   <string name="debug_header_time">Time</string>
   <string name="debug_freeze_time">Freeze time</string>
   <string name="debug_unfreeze_time">Unfreeze time</string>
+  <string name="debug_time_frozen_at">Time frozen at %1$s</string>
+  <string name="debug_time_not_frozen">Time not frozen</string>
 
 </resources>
