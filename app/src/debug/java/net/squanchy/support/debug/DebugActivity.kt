@@ -62,15 +62,6 @@ class DebugActivity : AppCompatActivity() {
         updateFrozenTimeLabel()
     }
 
-    private fun updateFrozenTimeLabel() {
-        findViewById<TextView>(R.id.timeFrozenIndicator).text = if (currentTime.isTimeFrozen()) {
-            val time = currentTime.currentDateTime().format(DateTimeFormatter.ofPattern("MM/dd/yyyy h:mm a"))
-            getString(R.string.debug_time_frozen_at, time)
-        } else {
-            getString(R.string.debug_time_not_frozen)
-        }
-    }
-
     private fun testSingleNotification() {
         createAndNotifyTalksCount(1)
     }
@@ -208,5 +199,14 @@ class DebugActivity : AppCompatActivity() {
     private fun unfreezeTime() {
         currentTime.unfreeze()
         updateFrozenTimeLabel()
+    }
+
+    private fun updateFrozenTimeLabel() {
+        findViewById<TextView>(R.id.timeFrozenIndicator).text = if (currentTime.isTimeFrozen()) {
+            val time = currentTime.currentDateTime().format(DateTimeFormatter.ofPattern("MM/dd/yyyy h:mm a"))
+            getString(R.string.debug_time_frozen_at, time)
+        } else {
+            getString(R.string.debug_time_not_frozen)
+        }
     }
 }
