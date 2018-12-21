@@ -151,9 +151,15 @@ class DebugActivity : AppCompatActivity() {
     }
 
     private fun pickDate(now: ZonedDateTime) {
-        val datePickerDialog = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            pickTime(now, LocalDate.of(year, month.to1Based(), dayOfMonth))
-        }, now.year, now.monthValue.to0Based(), now.dayOfMonth)
+        val datePickerDialog = DatePickerDialog(
+            this,
+            DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+                pickTime(now, LocalDate.of(year, month.to1Based(), dayOfMonth))
+            },
+            now.year,
+            now.monthValue.to0Based(),
+            now.dayOfMonth
+        )
 
         datePickerDialog.show()
     }
@@ -163,9 +169,15 @@ class DebugActivity : AppCompatActivity() {
     private fun Int.to0Based() = this - 1
 
     private fun pickTime(now: ZonedDateTime, frozenDate: LocalDate) {
-        val timePickerDialog = TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-            freezeAt(frozenDate.atTime(hourOfDay, minute).atZone(ZoneId.systemDefault()))
-        }, now.hour, now.minute, true)
+        val timePickerDialog = TimePickerDialog(
+            this,
+            TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+                freezeAt(frozenDate.atTime(hourOfDay, minute).atZone(ZoneId.systemDefault()))
+            },
+            now.hour,
+            now.minute,
+            true
+        )
 
         timePickerDialog.show()
     }
