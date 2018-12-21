@@ -39,8 +39,8 @@ class DebugActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_debug)
 
-        createApplicationComponent(application).run {
-            currentTime = currentTime() as FreezableCurrentTime
+        createApplicationComponent(application).also {
+            currentTime = it.currentTime() as FreezableCurrentTime
         }
 
         val buttonSingleNotification = findViewById<View>(R.id.button_test_single_notification)
