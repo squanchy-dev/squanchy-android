@@ -8,5 +8,8 @@
   <string name="debug_test_notifications">Test Notifications</string>
   <string name="debug_reset_onboarding">Reset onboarding</string>
   <string name="debug_reset_onboarding_button">DEWWEEETTT</string>
+  <string name="debug_header_time">Time</string>
+  <string name="debug_freeze_time">Freeze time</string>
+  <string name="debug_unfreeze_time">Unfreeze time</string>
 
 </resources>

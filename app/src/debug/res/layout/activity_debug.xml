@@ -84,6 +84,15 @@
 
     </LinearLayout>
 
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/debug_header_margin_top"
+      android:layout_marginBottom="@dimen/debug_header_margin_bottom"
+      android:text="@string/debug_header_time"
+      android:textAppearance="@style/TextAppearance.Squanchy.EventDetails.Body.Label"
+      android:textSize="@dimen/debug_header_text" />
+
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -91,18 +100,21 @@
 
       <Button
         android:id="@+id/freezeTime"
-        android:layout_width="wrap_content"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Freeze time" />
-
+        android:layout_weight="1"
+        android:textAppearance="@style/TextAppearance.Squanchy.Card.Title"
+        android:text="@string/debug_freeze_time" />
 
       <Button
         android:id="@+id/unfreezeTime"
-        android:layout_width="wrap_content"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Unfreeze time"/>
-
-
+        android:layout_weight="1"
+        android:textAppearance="@style/TextAppearance.Squanchy.Card.Title"
+        android:text="@string/debug_unfreeze_time" />
 
     </LinearLayout>
 
