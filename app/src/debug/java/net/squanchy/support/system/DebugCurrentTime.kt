@@ -22,16 +22,12 @@ class DebugCurrentTime(context: Context) : CurrentTime {
 
         fun freeze(context: Context, frozenDateTime: ZonedDateTime) {
             PreferenceManager.getDefaultSharedPreferences(context)
-                .edit {
-                    putString(KEY_FROZEN_TIME, frozenDateTime.format(DATE_TIME_FORMATTER))
-                }
+                .edit { putString(KEY_FROZEN_TIME, frozenDateTime.format(DATE_TIME_FORMATTER)) }
         }
 
         fun unfreeze(context: Context) {
             PreferenceManager.getDefaultSharedPreferences(context)
-                .edit {
-                    remove(KEY_FROZEN_TIME)
-                }
+                .edit { remove(KEY_FROZEN_TIME) }
         }
     }
 }
