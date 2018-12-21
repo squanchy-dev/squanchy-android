@@ -18,7 +18,7 @@ import net.squanchy.schedule.domain.view.Event
 import net.squanchy.schedule.domain.view.Place
 import net.squanchy.schedule.domain.view.Track
 import net.squanchy.speaker.domain.view.Speaker
-import net.squanchy.support.system.DebugCurrentTime
+import net.squanchy.support.system.FreezableCurrentTime
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneId
@@ -145,7 +145,7 @@ class DebugActivity : AppCompatActivity() {
     }
 
     private fun freezeTime() {
-        val now = DebugCurrentTime(applicationContext).currentDateTime()
+        val now = FreezableCurrentTime(applicationContext).currentDateTime()
 
         pickDate(now)
     }
@@ -183,10 +183,10 @@ class DebugActivity : AppCompatActivity() {
     }
 
     private fun freezeAt(frozenDateTime: ZonedDateTime) {
-        DebugCurrentTime.freeze(this, frozenDateTime)
+        FreezableCurrentTime.freeze(this, frozenDateTime)
     }
 
     private fun unfreezeTime() {
-        DebugCurrentTime.unfreeze(this)
+        FreezableCurrentTime.unfreeze(this)
     }
 }

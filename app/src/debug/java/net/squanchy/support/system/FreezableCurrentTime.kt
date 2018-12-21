@@ -6,7 +6,7 @@ import androidx.core.content.edit
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
 
-class DebugCurrentTime(context: Context) : CurrentTime {
+class FreezableCurrentTime(context: Context) : CurrentTime {
 
     private val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 
