@@ -24,7 +24,7 @@ ext {
             androidxMaterial        : 'com.google.android.material:material:1.1.0-alpha02',
             androidxWorkManager     : "android.arch.work:work-runtime-ktx:$workManagerVersion",
             androidxWorkManagerRx   : "android.arch.work:work-rxjava2:$workManagerVersion",
-            arrowCore               : 'io.arrow-kt:arrow-core:0.8.1',
+            arrowCore               : 'io.arrow-kt:arrow-core:0.8.2',
             crashlytics             : 'com.crashlytics.sdk.android:crashlytics:2.9.8',
             dagger                  : "com.google.dagger:dagger:${daggerVersion}",
             daggerCompiler          : "com.google.dagger:dagger-compiler:${daggerVersion}",
