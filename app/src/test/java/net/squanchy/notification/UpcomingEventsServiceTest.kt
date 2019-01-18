@@ -20,13 +20,13 @@ class UpcomingEventsServiceTest {
 
     @get:Rule
     val mockitoRule: MockitoRule = MockitoJUnit.rule()
-    
+
     @Mock
     lateinit var service: NotificationService
 
     private val currentTime = TestCurrentTime(NOW)
 
-    lateinit var upcomingEventsService: UpcomingEventsService
+    private lateinit var upcomingEventsService: UpcomingEventsService
 
     @Before
     fun setUp() {
@@ -49,10 +49,12 @@ class UpcomingEventsServiceTest {
         )
 
         upcomingEventsService.upcomingEvents().test()
-            .assertValue(listOf(
-                AFTER_NOW_INSIDE_INTERVAL,
-                AFTER_NOW_INSIDE_INTERVAL_OTHER_TIMEZONE
-            ))
+            .assertValue(
+                listOf(
+                    AFTER_NOW_INSIDE_INTERVAL,
+                    AFTER_NOW_INSIDE_INTERVAL_OTHER_TIMEZONE
+                )
+            )
     }
 
     @Test
@@ -67,10 +69,12 @@ class UpcomingEventsServiceTest {
         )
 
         upcomingEventsService.nextEvents().test()
-            .assertValue(listOf(
-                AFTER_NOW_OUTSIDE_INTERVAL,
-                AFTER_NOW_OUTSIDE_INTERVAL_OTHER_TIMEZONE
-            ))
+            .assertValue(
+                listOf(
+                    AFTER_NOW_OUTSIDE_INTERVAL,
+                    AFTER_NOW_OUTSIDE_INTERVAL_OTHER_TIMEZONE
+                )
+            )
     }
 
     private fun givenServiceWillReturn(vararg events: Event) {
@@ -115,7 +119,7 @@ class UpcomingEventsServiceTest {
             endTime = NOW.plusHours(4).toLocalDateTime(),
             timeZone = USER_ZONE_ID
         )
-        
+
         val AFTER_NOW_INSIDE_INTERVAL_OTHER_TIMEZONE = anEvent(
             title = "After now inside interval other timezone",
             startTime = NOW.plusHours(1).plus(UPCOMING_EVENT_THRESHOLD.dividedBy(2)).toLocalDateTime(),
