@@ -192,10 +192,10 @@ class ScheduleTracksFilterActivity : AppCompatActivity() {
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState?.putBoolean(EXTRA_NEEDS_APPEAR_ANIMATION, needsAppearAnimation)
-        outState?.putParcelable(EXTRA_APPEAR_ANIMATION_ORIGIN, appearAnimationOrigin)
+        outState.putBoolean(EXTRA_NEEDS_APPEAR_ANIMATION, needsAppearAnimation)
+        outState.putParcelable(EXTRA_APPEAR_ANIMATION_ORIGIN, appearAnimationOrigin)
     }
 
     override fun onStop() {

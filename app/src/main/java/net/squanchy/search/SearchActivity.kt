@@ -191,8 +191,8 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
-        outState?.putString(QUERY_KEY, query)
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString(QUERY_KEY, query)
         super.onSaveInstanceState(outState)
     }
 
