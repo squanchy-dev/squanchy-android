@@ -45,7 +45,7 @@ ext {
             moshiKotlin             : "com.squareup.moshi:moshi-kotlin:${moshiVersion}",
             playServicesAuth        : 'com.google.android.gms:play-services-auth:16.0.1',
             rxAndroid               : 'io.reactivex.rxjava2:rxandroid:2.1.0',
-            rxJava                  : 'io.reactivex.rxjava2:rxjava:2.2.5',
+            rxJava                  : 'io.reactivex.rxjava2:rxjava:2.2.6',
             rxKotlin                : 'io.reactivex.rxjava2:rxkotlin:2.3.0',
             rxLint                  : 'nl.littlerobots.rxlint:rxlint:1.7.2',
             threeTenAbp             : 'com.jakewharton.threetenabp:threetenabp:1.1.1',
