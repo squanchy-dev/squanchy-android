@@ -41,11 +41,6 @@ subprojects {
     repositories {
         google()
         maven { url 'https://maven.fabric.io/public' }
-        maven {
-            // TODO remove once Google restores all the stuff they've nuked from JCenter :facepalm:
-            // See https://issuetracker.google.com/issues/120759347#comment36
-            url "https://google.bintray.com/flexbox-layout"
-        }
         mavenCentral()
         jcenter()
         maven { url 'https://jitpack.io' }
