@@ -16,7 +16,7 @@ buildscript {
 plugins {
     id 'com.github.ben-manes.versions' version '0.20.0'
     id 'io.gitlab.arturbosch.detekt' version '1.0.0-RC12'
-    id 'org.jlleitschuh.gradle.ktlint' version '6.3.1'
+    id 'org.jlleitschuh.gradle.ktlint' version '7.0.0'
 }
 
 def teamPropsFile(propsFile) {
@@ -41,11 +41,6 @@ subprojects {
     repositories {
         google()
         maven { url 'https://maven.fabric.io/public' }
-        maven {
-            // TODO remove once Google restores all the stuff they've nuked from JCenter :facepalm:
-            // See https://issuetracker.google.com/issues/120759347#comment36
-            url "https://google.bintray.com/flexbox-layout"
-        }
         mavenCentral()
         jcenter()
         maven { url 'https://jitpack.io' }
