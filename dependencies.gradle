@@ -44,14 +44,14 @@ ext {
             kotlinReflect           : "org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}",
             moshi                   : "com.squareup.moshi:moshi:${moshiVersion}",
             moshiKotlin             : "com.squareup.moshi:moshi-kotlin:${moshiVersion}",
-            playServicesAuth        : 'com.google.android.gms:play-services-auth:16.0.1',
-            rxAndroid               : 'io.reactivex.rxjava2:rxandroid:2.1.1',
-            rxJava                  : 'io.reactivex.rxjava2:rxjava:2.2.6',
-            rxKotlin                : 'io.reactivex.rxjava2:rxkotlin:2.3.0',
-            rxLint                  : 'nl.littlerobots.rxlint:rxlint:1.7.3',
-            threeTenAbp             : 'com.jakewharton.threetenabp:threetenabp:1.2.0',
-            timber                  : 'com.jakewharton.timber:timber:4.7.1',
-            viewPagerAdapter        : 'com.novoda:view-pager-adapter:1.0.0'
+            playServicesAuth             : 'com.google.android.gms:play-services-auth:16.0.1',
+            rxAndroid                    : 'io.reactivex.rxjava2:rxandroid:2.1.1',
+            rxJava                       : 'io.reactivex.rxjava2:rxjava:2.2.7',
+            rxKotlin                     : 'io.reactivex.rxjava2:rxkotlin:2.3.0',
+            rxLint                       : 'nl.littlerobots.rxlint:rxlint:1.7.3',
+            threeTenAbp                  : 'com.jakewharton.threetenabp:threetenabp:1.2.0',
+            timber rxjava[2.2.6 -> 2.2.7]: 'com.jakewharton.timber:timber:4.7.1',
+            viewPagerAdapter             : 'com.novoda:view-pager-adapter:1.0.0'
         ],
 
         test: [
