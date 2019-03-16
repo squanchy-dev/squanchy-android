@@ -24,7 +24,6 @@ test-pattern: # Configure exclusions for test sources
 
 build:
   maxIssues: 0
-
   weights:
     complexity: 1
     formatting: 1
@@ -46,7 +45,7 @@ console-reports:
     - 'ProjectStatisticsReport'
     - 'ComplexityReport'
     - 'NotificationReport'
-  #  - 'FindingsReport'         If you exclude this, issues won't show on the console otherwise
+  #  - 'FindingsReport'         If you exclude this, issues won't show on the console
   #  - 'BuildFailureReport'     This NEEDS to be commented out, the build won't fail if we exclude it
 
 comments:
@@ -172,7 +171,7 @@ exceptions:
     active: false
   ThrowingExceptionsWithoutMessageOrCause:
     active: true
-    exceptions: 'IllegalArgumentException,IllegalStateException,IOException'
+    exceptions: ''
   ThrowingNewInstanceOfSameException:
     active: false
   TooGenericExceptionCaught:
@@ -324,7 +323,7 @@ naming:
     excludeClassPattern: '$^'
     ignoreOverriddenFunctions: true
   MatchingDeclarationName:
-    active: false
+    active: true
   MemberNameEqualsClassName:
     active: false
     ignoreOverriddenFunction: true
