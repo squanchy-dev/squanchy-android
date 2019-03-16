@@ -22,7 +22,6 @@ ext {
             androidxConstraintLayout: 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3',
             androidxKtx             : 'androidx.core:core-ktx:1.1.0-alpha05',
             androidxMaterial        : 'com.google.android.material:material:1.1.0-alpha04',
-            androidxNavigation      : 'com.google.android.material:material:1.1.0-alpha03',
             androidxWorkManager     : "android.arch.work:work-runtime-ktx:$workManagerVersion",
             androidxWorkManagerRx   : "android.arch.work:work-rxjava2:$workManagerVersion",
             arrowCore               : 'io.arrow-kt:arrow-core:0.8.2',
