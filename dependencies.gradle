@@ -26,7 +26,7 @@ ext {
             androidxWorkManager     : "android.arch.work:work-runtime-ktx:$workManagerVersion",
             androidxWorkManagerRx   : "android.arch.work:work-rxjava2:$workManagerVersion",
             arrowCore               : 'io.arrow-kt:arrow-core:0.8.2',
-            crashlytics             : 'com.crashlytics.sdk.android:crashlytics:2.9.8',
+            crashlytics             : 'com.crashlytics.sdk.android:crashlytics:2.9.9',
             dagger                  : "com.google.dagger:dagger:${daggerVersion}",
             daggerCompiler          : "com.google.dagger:dagger-compiler:${daggerVersion}",
             firebaseAuth            : 'com.google.firebase:firebase-auth:16.1.0',
