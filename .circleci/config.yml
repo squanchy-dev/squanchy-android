@@ -40,17 +40,25 @@ commands:
   restore_gradle_cache:
     steps:
       - restore_cache:
-          name: Restore Gradle cache
+          name: Restore Gradle dependencies cache
           keys:
-            - v3-gradle-{{ checksum "workspace/repo/.circleci/config.yml" }}-{{ checksum "workspace/repo/gradle.properties" }}-{{ checksum "workspace/repo/dependencies.gradle" }}
+            - v1-gradle-dependencies-{{ checksum "workspace/repo/.circleci/config.yml" }}-{{ checksum "workspace/repo/gradle.properties" }}-{{ checksum "workspace/repo/dependencies.gradle" }}
+      - restore_cache:
+          name: Restore Gradle wrapper cache
+          keys:
+            - v1-gradle-wrapper-{{ checksum "workspace/repo/.circleci/config.yml" }}-{{ checksum "workspace/repo/gradle/wrapper/gradle-wrapper.properties" }}
   save_gradle_cache:
     steps:
       - save_cache:
-          name: Save Gradle cache
+          name: Save Gradle dependencies cache
           paths:
             - ~/.gradle/caches
+          key: v1-gradle-dependencies-{{ checksum "workspace/repo/.circleci/config.yml" }}-{{ checksum "workspace/repo/gradle.properties" }}-{{ checksum "workspace/repo/dependencies.gradle" }}
+      - save_cache:
+          name: Save Gradle wrapper cache
+          paths:
             - ~/.gradle/wrapper
-          key: v3-gradle-{{ checksum "workspace/repo/.circleci/config.yml" }}-{{ checksum "workspace/repo/gradle.properties" }}-{{ checksum "workspace/repo/dependencies.gradle" }}
+          key: v1-gradle-wrapper-{{ checksum "workspace/repo/.circleci/config.yml" }}-{{ checksum "workspace/repo/gradle/wrapper/gradle-wrapper.properties" }}
 
   # Android Gradle build cache aliases
   restore_android_build_cache:
