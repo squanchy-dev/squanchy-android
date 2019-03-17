@@ -1,53 +1,5 @@
 version: 2.1
 
-aliases:
-  # FOSSA CLI install
-  - &install-fossa-cli
-    name: Install FOSSA CLI
-    command: workspace/repo/.circleci/ci-scripts/install-fossa.sh
-
-  # Build Tools cache aliases
-  - &restore-build-tools-cache
-    name: Restore Android build tools cache
-    keys:
-      - v3-build-tools-{{ checksum "workspace/repo/.circleci/config.yml" }}-{{ checksum "workspace/repo/gradle.properties" }}-{{ checksum "workspace/repo/dependencies.gradle" }}
-  - &save-build-tools-cache
-    name: Save Android build tools cache
-    paths:
-      - /opt/android/sdk/build-tools
-    key: v3-build-tools-{{ checksum "workspace/repo/.circleci/config.yml" }}-{{ checksum "workspace/repo/gradle.properties" }}-{{ checksum "workspace/repo/dependencies.gradle" }}
-
-  # Gradle cache aliases
-  - &restore-gradle-cache
-    name: Restore Gradle cache
-    keys:
-      - v3-gradle-{{ checksum "workspace/repo/.circleci/config.yml" }}-{{ checksum "workspace/repo/gradle.properties" }}-{{ checksum "workspace/repo/dependencies.gradle" }}
-  - &save-gradle-cache
-    name: Save Gradle cache
-    paths:
-      - ~/.gradle/caches
-      - ~/.gradle/wrapper
-    key: v3-gradle-{{ checksum "workspace/repo/.circleci/config.yml" }}-{{ checksum "workspace/repo/gradle.properties" }}-{{ checksum "workspace/repo/dependencies.gradle" }}
-
-  # Android Gradle build cache aliases
-  - &restore-android-build-cache
-    name: Restore Android Gradle build cache
-    keys:
-      - v3-build-cache-{{ checksum "workspace/repo/.circleci/config.yml" }}-{{ checksum "workspace/repo/gradle.properties" }}-{{ checksum "workspace/repo/dependencies.gradle" }}
-  - &save-android-build-cache
-    name: Save Android Gradle build cache
-    paths:
-      - ~/.android/build-cache
-    key: v3-build-cache-{{ checksum "workspace/repo/.circleci/config.yml" }}-{{ checksum "workspace/repo/gradle.properties" }}-{{ checksum "workspace/repo/dependencies.gradle" }}
-
-  - &ensure-android-sdk-is-ready
-    name: Ensure Android SDK install is up-to-date
-    command: workspace/repo/.circleci/ci-scripts/ensure-sdkmanager.sh
-
-  - &download-gradle-dependencies
-    name: Download Gradle dependencies
-    command: cd workspace/repo/ && ./gradlew downloadDependencies
-
 executors:
   android:
     working_directory: ~/squanchy
@@ -61,9 +13,76 @@ executors:
       ALGOLIA_API_KEY: 00000000000000000000000000000000
       ALGOLIA_INDICES_PREFIX: squanchy_dev
 
-attach_workspace: &attach_workspace
-  attach_workspace:
-    at: workspace
+commands:
+  # FOSSA CLI install
+  install_fossa_cli:
+    steps:
+      - run:
+          name: Install FOSSA CLI
+          command: workspace/repo/.circleci/ci-scripts/install-fossa.sh
+
+  # Build Tools cache aliases
+  restore_build_tools_cache:
+    steps:
+      - restore_cache:
+          name: Restore Android build tools cache
+          keys:
+            - v3-build-tools-{{ checksum "workspace/repo/.circleci/config.yml" }}-{{ checksum "workspace/repo/gradle.properties" }}-{{ checksum "workspace/repo/dependencies.gradle" }}
+  save_build_tools_cache:
+    steps:
+      - save_cache:
+          name: Save Android build tools cache
+          paths:
+            - /opt/android/sdk/build-tools
+          key: v3-build-tools-{{ checksum "workspace/repo/.circleci/config.yml" }}-{{ checksum "workspace/repo/gradle.properties" }}-{{ checksum "workspace/repo/dependencies.gradle" }}
+
+  # Gradle cache aliases
+  restore_gradle_cache:
+    steps:
+      - restore_cache:
+          name: Restore Gradle cache
+          keys:
+            - v3-gradle-{{ checksum "workspace/repo/.circleci/config.yml" }}-{{ checksum "workspace/repo/gradle.properties" }}-{{ checksum "workspace/repo/dependencies.gradle" }}
+  save_gradle_cache:
+    steps:
+      - save_cache:
+          name: Save Gradle cache
+          paths:
+            - ~/.gradle/caches
+            - ~/.gradle/wrapper
+          key: v3-gradle-{{ checksum "workspace/repo/.circleci/config.yml" }}-{{ checksum "workspace/repo/gradle.properties" }}-{{ checksum "workspace/repo/dependencies.gradle" }}
+
+  # Android Gradle build cache aliases
+  restore_android_build_cache:
+    steps:
+      - restore_cache:
+          name: Restore Android Gradle build cache
+          keys:
+            - v3-build-cache-{{ checksum "workspace/repo/.circleci/config.yml" }}-{{ checksum "workspace/repo/gradle.properties" }}-{{ checksum "workspace/repo/dependencies.gradle" }}
+  save_android_build_cache:
+    steps:
+      - save_cache:
+          name: Save Android Gradle build cache
+          paths:
+            - ~/.android/build-cache
+          key: v3-build-cache-{{ checksum "workspace/repo/.circleci/config.yml" }}-{{ checksum "workspace/repo/gradle.properties" }}-{{ checksum "workspace/repo/dependencies.gradle" }}
+
+  ensure_android_sdk_is_ready:
+    steps:
+      - run:
+          name: Ensure Android SDK install is up-to-date
+          command: workspace/repo/.circleci/ci-scripts/ensure-sdkmanager.sh
+
+  download_gradle_dependencies:
+    steps:
+      - run:
+          name: Download Gradle dependencies
+          command: cd workspace/repo/ && ./gradlew downloadDependencies
+
+  restore_workspace:
+    steps:
+      - attach_workspace:
+          at: workspace
 
 jobs:
   checkout:
@@ -73,7 +92,7 @@ jobs:
           path: workspace/repo
 
       # Prepare the container for the build
-      - run: *ensure-android-sdk-is-ready
+      - ensure_android_sdk_is_ready
       - run:
           name: Create mock Play Services JSON
           command: workspace/repo/.circleci/ci-scripts/ci-mock-google-services-setup.sh
@@ -87,16 +106,16 @@ jobs:
   prepare_for_checks:
     executor: android
     steps:
-      - *attach_workspace
-      - restore_cache: *restore-gradle-cache
-      - restore_cache: *restore-android-build-cache
-      - restore_cache: *restore-build-tools-cache
+      - restore_workspace
+      - restore_gradle_cache
+      - restore_android_build_cache
+      - restore_build_tools_cache
 
-      - run: *download-gradle-dependencies
+      - download_gradle_dependencies
 
-      - save_cache: *save-android-build-cache
-      - save_cache: *save-gradle-cache
-      - save_cache: *save-build-tools-cache
+      - save_android_build_cache
+      - save_gradle_cache
+      - save_build_tools_cache
 
       # Persist built app code
       - persist_to_workspace:
@@ -107,10 +126,10 @@ jobs:
   static_analysis:
     executor: android
     steps:
-      - *attach_workspace
-      - restore_cache: *restore-gradle-cache
-      - restore_cache: *restore-android-build-cache
-      - restore_cache: *restore-build-tools-cache
+      - restore_workspace
+      - restore_gradle_cache
+      - restore_android_build_cache
+      - restore_build_tools_cache
 
       # See https://issuetracker.google.com/issues/62217354 for the parallelism option
       - run:
@@ -125,10 +144,10 @@ jobs:
   tests:
     executor: android
     steps:
-      - *attach_workspace
-      - restore_cache: *restore-gradle-cache
-      - restore_cache: *restore-android-build-cache
-      - restore_cache: *restore-build-tools-cache
+      - restore_workspace
+      - restore_gradle_cache
+      - restore_android_build_cache
+      - restore_build_tools_cache
 
       # See https://issuetracker.google.com/issues/62217354 for the parallelism option
       - run:
@@ -142,12 +161,12 @@ jobs:
   license_checks:
     executor: android
     steps:
-      - *attach_workspace
-      - restore_cache: *restore-gradle-cache
-      - restore_cache: *restore-android-build-cache
-      - restore_cache: *restore-build-tools-cache
+      - restore_workspace
+      - restore_gradle_cache
+      - restore_android_build_cache
+      - restore_build_tools_cache
 
-      - run: *install-fossa-cli
+      - install_fossa_cli
 
       - run:
           name: Run FOSSA license check
