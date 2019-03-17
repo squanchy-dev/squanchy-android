@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 
 aliases:
   # FOSSA CLI install
@@ -48,19 +48,18 @@ aliases:
     name: Download Gradle dependencies
     command: cd workspace/repo/ && ./gradlew downloadDependencies
 
-circle_ci_android_container_config: &circle_ci_android_container_config
-  working_directory: ~/squanchy
-
-  docker:
-   - image: circleci/android:api-28-alpha
-
-  environment:
-   ANDROID_HOME: /opt/android/sdk
-   APPLICATION_ID: net.squanchy.example
-   FABRIC_API_KEY: 0000000000000000000000000000000000000000
-   ALGOLIA_APPLICATION_ID: ABCDEFGH12
-   ALGOLIA_API_KEY: 00000000000000000000000000000000
-   ALGOLIA_INDICES_PREFIX: squanchy_dev
+executors:
+  android:
+    working_directory: ~/squanchy
+    docker:
+      - image: circleci/android:api-28-alpha
+    environment:
+      ANDROID_HOME: /opt/android/sdk
+      APPLICATION_ID: net.squanchy.example
+      FABRIC_API_KEY: 0000000000000000000000000000000000000000
+      ALGOLIA_APPLICATION_ID: ABCDEFGH12
+      ALGOLIA_API_KEY: 00000000000000000000000000000000
+      ALGOLIA_INDICES_PREFIX: squanchy_dev
 
 attach_workspace: &attach_workspace
   attach_workspace:
@@ -68,7 +67,7 @@ attach_workspace: &attach_workspace
 
 jobs:
   checkout:
-    <<: *circle_ci_android_container_config
+    executor: android
     steps:
       - checkout:
           path: workspace/repo
@@ -86,7 +85,7 @@ jobs:
             - repo
 
   prepare_for_checks:
-    <<: *circle_ci_android_container_config
+    executor: android
     steps:
       - *attach_workspace
       - restore_cache: *restore-gradle-cache
@@ -106,7 +105,7 @@ jobs:
             - repo/app/build
 
   static_analysis:
-    <<: *circle_ci_android_container_config
+    executor: android
     steps:
       - *attach_workspace
       - restore_cache: *restore-gradle-cache
@@ -124,7 +123,7 @@ jobs:
           destination: reports
 
   tests:
-    <<: *circle_ci_android_container_config
+    executor: android
     steps:
       - *attach_workspace
       - restore_cache: *restore-gradle-cache
@@ -141,7 +140,7 @@ jobs:
           path: workspace/repo/app/build/test-results
 
   license_checks:
-    <<: *circle_ci_android_container_config
+    executor: android
     steps:
       - *attach_workspace
       - restore_cache: *restore-gradle-cache
