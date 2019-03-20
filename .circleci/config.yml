@@ -21,7 +21,7 @@ commands:
           name: Install FOSSA CLI
           command: workspace/repo/.circleci/ci-scripts/install-fossa.sh
 
-  # Build Tools cache aliases
+  # Build Tools cache commands
   restore_build_tools_cache:
     steps:
       - restore_cache:
@@ -36,7 +36,7 @@ commands:
             - /opt/android/sdk/build-tools
           key: v3-build-tools-{{ checksum "workspace/repo/.circleci/config.yml" }}-{{ checksum "workspace/repo/gradle.properties" }}-{{ checksum "workspace/repo/dependencies.gradle" }}
 
-  # Gradle cache aliases
+  # Gradle cache commands
   restore_gradle_cache:
     steps:
       - restore_cache:
@@ -60,7 +60,7 @@ commands:
             - ~/.gradle/wrapper
           key: v1-gradle-wrapper-{{ checksum "workspace/repo/.circleci/config.yml" }}-{{ checksum "workspace/repo/gradle/wrapper/gradle-wrapper.properties" }}
 
-  # Android Gradle build cache aliases
+  # Android Gradle build cache commands
   restore_android_build_cache:
     steps:
       - restore_cache:
