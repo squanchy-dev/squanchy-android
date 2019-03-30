@@ -4,7 +4,7 @@ executors:
   android:
     working_directory: ~/squanchy
     docker:
-      - image: circleci/android:api-28-alpha
+      - image: circleci/android:api-28
     environment:
       ANDROID_HOME: /opt/android/sdk
       APPLICATION_ID: net.squanchy.example
