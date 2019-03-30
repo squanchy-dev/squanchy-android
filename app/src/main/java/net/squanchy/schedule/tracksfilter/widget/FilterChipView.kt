@@ -19,7 +19,6 @@ import net.squanchy.R
 import net.squanchy.support.graphics.darkenToEnsureTextContrasts
 import net.squanchy.support.graphics.pickBestTextColorByContrast
 
-@Suppress("LargeClass") // There's a lot of unavoidable overriding boilertplate here
 class FilterChipView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet,
@@ -180,7 +179,7 @@ class FilterChipView @JvmOverloads constructor(
         }
     }
 
-    @Suppress("DEPRECATION", "OverridingDeprecatedMember") // We're just preventing others from messing with this, not really using it
+    @Suppress("deprecation") // We're just preventing others from messing with this, not really using it
     override fun setBackgroundDrawable(background: Drawable?) {
         allowOnlyWhileInitializing("Can't interact with a FilterChipView's background directly") {
             super.setBackgroundDrawable(background)

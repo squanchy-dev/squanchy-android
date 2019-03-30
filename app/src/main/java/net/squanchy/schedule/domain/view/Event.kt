@@ -7,7 +7,6 @@ import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneId
 import org.threeten.bp.ZonedDateTime
 
-@Suppress("LongParameterList") // This is just a big model - TODO refactor this to split it up
 data class Event(
     val id: String,
     val numericId: Long,

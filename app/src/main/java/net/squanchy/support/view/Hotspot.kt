@@ -3,8 +3,7 @@ package net.squanchy.support.view
 import android.view.MotionEvent
 import android.view.View
 
-@Suppress("DataClassPrivateConstructor")
-data class Hotspot private constructor(val x: Float, val y: Float) {
+data class Hotspot constructor(val x: Float, val y: Float) {
 
     fun offsetToParent(parent: View) = Hotspot(x + parent.x, y + parent.y)
 
