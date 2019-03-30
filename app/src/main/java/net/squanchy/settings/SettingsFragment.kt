@@ -68,42 +68,12 @@ class SettingsFragment : PreferenceFragment() {
         accountCategory.removePreference(accountEmailPreference)
         accountSignInSignOutPreference = findPreference(getString(R.string.account_signin_signout_preference_key))
 
-        val aboutPreference = findPreference(getString(R.string.about_preference_key))
-        aboutPreference.setOnPreferenceClickListener {
-            navigator.toAboutSquanchy()
-            true
-        }
+        setupAboutPreference()
 
-        val notificationsPreference = findPreference(getString(R.string.about_to_start_notification_preference_key))
-        notificationsPreference.setOnPreferenceChangeListener { _, enabled ->
-            if (enabled as Boolean) {
-                analytics.trackNotificationsEnabled()
-            } else {
-                analytics.trackNotificationsDisabled()
-            }
-            true
-        }
-
-        val favoritesInSchedulePreference = findPreference(getString(R.string.favorites_in_schedule_preference_key))
-        favoritesInSchedulePreference.setOnPreferenceChangeListener { _, enabled ->
-            if (enabled as Boolean) {
-                analytics.trackFavoritesInScheduleEnabled()
-            } else {
-                analytics.trackFavoritesInScheduleDisabled()
-            }
-            true
-        }
-
+        setupAboutToStartNotificationPreference()
+        setupFavoritesInSchedulePreference()
+        setupAnalyticsOptOutPreference(activity)
         setupWifiConfigPreference()
-
-        val disableAnalyticsPreferences = findPreference(getString(R.string.disable_analytics_key))
-        disableAnalyticsPreferences.setOnPreferenceChangeListener { _, _ ->
-            with(settingsFragmentComponent(activity)) {
-                analytics = analytics()
-            }
-            analytics.setupExceptionLogging()
-            true
-        }
     }
 
     private fun displayBuildVersion() {
@@ -119,11 +89,57 @@ class SettingsFragment : PreferenceFragment() {
         preferenceScreen.removePreference(debugCategory)
     }
 
+    private fun setupAboutPreference() {
+        findPreference(getString(R.string.about_preference_key))
+            .setOnPreferenceClickListener {
+                navigator.toAboutSquanchy()
+                true
+            }
+    }
+
+    private fun setupAboutToStartNotificationPreference() {
+        findPreference(getString(R.string.about_to_start_notification_preference_key))
+            .setOnPreferenceChangeListener { _, enabled ->
+                if (enabled as Boolean) {
+                    analytics.trackNotificationsEnabled()
+                } else {
+                    analytics.trackNotificationsDisabled()
+                }
+                true
+            }
+    }
+
+    private fun setupFavoritesInSchedulePreference() {
+        findPreference(getString(R.string.favorites_in_schedule_preference_key))
+            .setOnPreferenceChangeListener { _, enabled ->
+                if (enabled as Boolean) {
+                    analytics.trackFavoritesInScheduleEnabled()
+                } else {
+                    analytics.trackFavoritesInScheduleDisabled()
+                }
+                true
+            }
+    }
+
+    private fun setupAnalyticsOptOutPreference(activity: AppCompatActivity) {
+        findPreference(getString(R.string.disable_analytics_key))
+            .setOnPreferenceChangeListener { _, _ ->
+                with(settingsFragmentComponent(activity)) {
+                    analytics = analytics()
+                }
+                analytics.setupExceptionLogging()
+                true
+            }
+    }
+
     private fun setupWifiConfigPreference() {
         val wifiPreference = findPreference(getString(R.string.auto_wifi_preference_key))
 
         if (wifiAutoConfigEnabledNow(remoteConfig)) {
-            wifiPreference.setOnPreferenceClickListener { setupWifi(); true }
+            wifiPreference.setOnPreferenceClickListener {
+                setupWifi()
+                true
+            }
         } else {
             val settingsCategory = findPreference(getString(R.string.settings_category_key)) as PreferenceCategory
             settingsCategory.removePreference(wifiPreference)

@@ -39,6 +39,7 @@ internal class NotificationModule {
 
     @Provides
     @Named(UPCOMING_EVENT_THRESHOLD)
+    @Suppress("MagicNumber") // It's not a magic number in this case, this is equivalent to a constant declaration
     fun provideUpcomingEventThreshold(): Duration = Duration.ofMinutes(10)
 
     @Provides

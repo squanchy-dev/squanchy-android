@@ -19,6 +19,7 @@ import net.squanchy.R
 import net.squanchy.support.graphics.darkenToEnsureTextContrasts
 import net.squanchy.support.graphics.pickBestTextColorByContrast
 
+@Suppress("LargeClass") // There's a lot of unavoidable overriding boilertplate here
 class FilterChipView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet,

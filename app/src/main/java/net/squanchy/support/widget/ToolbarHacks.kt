@@ -1,3 +1,5 @@
+@file:Suppress("MatchingDeclarationName") // See https://github.com/arturbosch/detekt/issues/1500
+
 package net.squanchy.support.widget
 
 import android.os.Parcel
