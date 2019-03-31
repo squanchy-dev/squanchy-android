@@ -179,7 +179,7 @@ class FilterChipView @JvmOverloads constructor(
         }
     }
 
-    @Suppress("DEPRECATION", "OverridingDeprecatedMember") // We're just preventing others from messing with this, not really using it
+    @Suppress("deprecation") // We're just preventing others from messing with this, not really using it
     override fun setBackgroundDrawable(background: Drawable?) {
         allowOnlyWhileInitializing("Can't interact with a FilterChipView's background directly") {
             super.setBackgroundDrawable(background)

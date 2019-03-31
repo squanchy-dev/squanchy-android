@@ -2,7 +2,7 @@
 
 task downloadDependencies {
     dependsOn ':app:androidDependencies'
-    dependsOn 'app:dependencies'
+    dependsOn ':app:dependencies'
     doLast {
         project.rootProject.allprojects.each { subProject ->
             subProject.buildscript.configurations.each { configuration ->

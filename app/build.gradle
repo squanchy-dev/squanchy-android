@@ -121,6 +121,7 @@ detekt {
         html.enabled = true
     }
     parallel = true
+    buildUponDefaultConfig = true
 }
 
 ktlint {

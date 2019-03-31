@@ -35,7 +35,6 @@ import net.squanchy.support.view.enableLightNavigationBar
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-// Might use some refactoring later on to extract some collaborator
 class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultClickListener {
 
     private val subscriptions = CompositeDisposable()
@@ -228,28 +227,25 @@ class SearchActivity : AppCompatActivity(), SearchRecyclerView.OnSearchResultCli
     override fun onEventClicked(event: Event) {
         navigator.toEventDetails(event.id)
     }
+}
 
-    private class SearchTextWatcher(private val querySubject: PublishSubject<String>) : TextWatcher {
+private class SearchTextWatcher(private val querySubject: PublishSubject<String>) : TextWatcher {
 
-        override fun beforeTextChanged(query: CharSequence, start: Int, count: Int, after: Int) {
-            // No-op
-        }
-
-        override fun onTextChanged(query: CharSequence?, start: Int, before: Int, count: Int) {
-            query?.let { querySubject.onNext(it.toString()) }
-        }
-
-        override fun afterTextChanged(query: Editable) {
-            // No-op
-        }
+    override fun beforeTextChanged(query: CharSequence, start: Int, count: Int, after: Int) {
+        // No-op
     }
 
-    companion object {
+    override fun onTextChanged(query: CharSequence?, start: Int, before: Int, count: Int) {
+        query?.let { querySubject.onNext(it.toString()) }
+    }
 
-        private const val SPEECH_REQUEST_CODE = 100
-        private const val QUERY_DEBOUNCE_TIMEOUT = 350L
-        private const val MIN_QUERY_LENGTH = 2
-        private const val QUERY_KEY = "SearchActivity.query_key"
-        private const val INITIAL_QUERY = ""
+    override fun afterTextChanged(query: Editable) {
+        // No-op
     }
 }
+
+private const val SPEECH_REQUEST_CODE = 100
+private const val QUERY_DEBOUNCE_TIMEOUT = 350L
+private const val MIN_QUERY_LENGTH = 2
+private const val QUERY_KEY = "SearchActivity.query_key"
+private const val INITIAL_QUERY = ""

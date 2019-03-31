@@ -2,7 +2,6 @@ package net.squanchy.speaker.domain.view
 
 import arrow.core.Option
 
-@Suppress("LongParameterList") // This is just a big model - TODO refactor this to split it up
 data class Speaker(
     val numericId: Long,
     val id: String,

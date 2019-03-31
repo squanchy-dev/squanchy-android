@@ -11,7 +11,7 @@ internal fun String.parseHtml(): Spanned {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         Html.fromHtml(this, Html.FROM_HTML_MODE_LEGACY)
     } else {
-        @Suppress("DEPRECATION") // This is a "compat" method call, we only use this on pre-N
+        @Suppress("deprecation") // This is a "compat" method call, we only use this on pre-N
         Html.fromHtml(this)
     }
 }
