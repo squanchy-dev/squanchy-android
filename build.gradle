@@ -16,7 +16,7 @@ buildscript {
 plugins {
     id 'com.github.ben-manes.versions' version '0.20.0'
     id 'io.gitlab.arturbosch.detekt' version '1.0.0-RC14'
-    id 'org.jlleitschuh.gradle.ktlint' version '7.0.0'
+    id 'org.jlleitschuh.gradle.ktlint' version '7.2.1'
 }
 
 def teamPropsFile(propsFile) {
