@@ -1,5 +1,5 @@
 ext {
-    daggerVersion = '2.21'
+    daggerVersion = '2.22.1'
     glideVersion = '4.9.0'
     workManagerVersion = '1.0.1-rc01'
     kotlinVersion = '1.3.21'
