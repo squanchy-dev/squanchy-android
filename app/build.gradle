@@ -104,6 +104,7 @@ play {
     // TODO uncomment these lines if you want to be able to publish to the Play Store, but *ONLY* do it
     // on a release branch or you'll risk shipping random stuff to the Store (don't ask)
 
+    enabled = false // Enable to allow publishing to Google Play
 //    jsonFile = teamPropsFile('play-store-keys.json')
 //    errorOnSizeLimit = true
 //    uploadImages = true
