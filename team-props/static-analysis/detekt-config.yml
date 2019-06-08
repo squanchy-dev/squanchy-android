@@ -1,29 +1,5 @@
 autoCorrect: true
 
-test-pattern: # Configure exclusions for test sources
-  active: true
-  patterns: # Test file regexes
-    - '.*/test/.*'
-    - '.*/androidTest/.*'
-    - '.*Test.kt'
-    - '.*Spec.kt'
-    - '.*Spek.kt'
-  exclude-rule-sets:
-    - 'comments'
-  exclude-rules:
-    - 'NamingRules'
-    - 'WildcardImport'
-    - 'MagicNumber'
-    - 'MaxLineLength'
-    - 'LateinitUsage'
-    - 'StringLiteralDuplication'
-    - 'SpreadOperator'
-    - 'TooManyFunctions'
-    - 'ForEachOnRange'
-    - 'FunctionMaxLength'
-    - 'TooGenericExceptionCaught'
-    - 'InstanceOfCheckForException'
-
 build:
   maxIssues: 0
   weights:
@@ -88,3 +64,7 @@ style:
     active: true
   WildcardImport:
     excludeImports: 'kotlinx.android.synthetic.*'
+
+empty-blocks:
+  EmptyFunctionBlock:
+    active: false # It's bugged, see https://github.com/arturbosch/detekt/issues/1684

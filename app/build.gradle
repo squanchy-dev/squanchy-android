@@ -114,9 +114,8 @@ play {
 detekt {
     toolVersion detektVersion
 
-    input = files("$projectDir/src/")
+    input = files("$projectDir/src/main", "$projectDir/src/release")
     config = files("$rootDir/team-props/static-analysis/detekt-config.yml")
-    filters = '.*/test/.*,.*/resources/.*,.*/tmp/.*,.*/build/.*,.*/debug/.*'
     reports {
         xml.enabled = true
         html.enabled = true

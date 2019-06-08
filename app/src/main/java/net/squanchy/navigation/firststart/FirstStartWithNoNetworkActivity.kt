@@ -122,8 +122,8 @@ class FirstStartWithNoNetworkActivity : AppCompatActivity() {
         val scaleY = Property.of(View::class.java, Float::class.java, "scaleY")
         val animator = AnimatorSet()
         animator.playTogether(
-                ObjectAnimator.ofFloat(view, scaleX, *values),
-                ObjectAnimator.ofFloat(view, scaleY, *values)
+            ObjectAnimator.ofFloat(view, scaleX, *values),
+            ObjectAnimator.ofFloat(view, scaleY, *values)
         )
         animator.interpolator = interpolator
         return animator
@@ -132,19 +132,20 @@ class FirstStartWithNoNetworkActivity : AppCompatActivity() {
     private fun animate(view: View, animationProducer: (View) -> Animator, endAction: () -> Unit): Animator {
         val animator = animationProducer.invoke(view)
         animator.addListener(
-                object : AnimationEndListener {
-                    override fun onAnimationEnd(animation: Animator) = endAction()
-                }
+            object : AnimationEndListener {
+                override fun onAnimationEnd(animation: Animator) = endAction()
+            }
         )
         return animator
     }
 
     private fun continueToScheduleAfterDelay() {
         firstStartProgress.postDelayed(
-                {
-                    startActivity(continuationIntent) // We don't use the navigator here, we basically want to restart the whole flow
-                    finish()
-                }, DELAY_AFTER_ANIMATIONS_MILLIS
+            {
+                // We don't use the navigator here, we basically want to restart the whole flow
+                startActivity(continuationIntent)
+                finish()
+            }, DELAY_AFTER_ANIMATIONS_MILLIS
         )
     }
 
