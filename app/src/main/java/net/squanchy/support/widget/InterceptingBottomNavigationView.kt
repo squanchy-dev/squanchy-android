@@ -11,6 +11,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.IntRange
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.shape.MaterialShapeDrawable
 import net.squanchy.support.graphics.CircularRevealDrawable
 import net.squanchy.support.view.Hotspot
 
@@ -21,7 +22,7 @@ class InterceptingBottomNavigationView @JvmOverloads constructor(
 ) : BottomNavigationView(context, attrs, defStyleAttr) {
 
     private var lastUpEvent: MotionEvent? = null
-    private var listener: BottomNavigationView.OnNavigationItemSelectedListener? = null
+    private var listener: OnNavigationItemSelectedListener? = null
     var colorProvider: (() -> Int)? = null
 
     var revealDurationMillis: Int
@@ -89,12 +90,18 @@ class InterceptingBottomNavigationView @JvmOverloads constructor(
     }
 
     override fun setBackground(background: Drawable?) {
-        if (background is ColorDrawable) {
-            val currentBackground = getBackground()
-            val newColor = background.color
-            updateBackgroundColor(currentBackground, newColor)
-        } else {
-            throw IllegalArgumentException("Only ColorDrawables are supported")
+        when (background) {
+            is ColorDrawable -> {
+                val currentBackground = getBackground()
+                val newColor = background.color
+                updateBackgroundColor(currentBackground, newColor)
+            }
+            is MaterialShapeDrawable -> {
+                val currentBackground = getBackground()
+                val newColor = background.fillColor?.defaultColor!!
+                updateBackgroundColor(currentBackground, newColor)
+            }
+            else -> throw IllegalArgumentException("Only ColorDrawables and MaterialShapeDrawable are supported")
         }
     }
 
@@ -112,7 +119,7 @@ class InterceptingBottomNavigationView @JvmOverloads constructor(
         (background as? CircularRevealDrawable)?.cancelTransitions()
     }
 
-    override fun setOnNavigationItemSelectedListener(listener: BottomNavigationView.OnNavigationItemSelectedListener?) {
+    override fun setOnNavigationItemSelectedListener(listener: OnNavigationItemSelectedListener?) {
         this.listener = listener
     }
 

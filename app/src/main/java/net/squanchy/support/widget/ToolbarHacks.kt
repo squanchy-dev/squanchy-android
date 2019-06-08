@@ -7,7 +7,6 @@ import android.os.Parcelable
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.IdRes
-import androidx.annotation.Px
 import androidx.appcompat.widget.ActionMenuView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.children
@@ -24,7 +23,7 @@ fun Toolbar.calculateMenuItemCenterCoordinates(@IdRes menuItemId: Int): OriginCo
     )
 }
 
-data class OriginCoordinates(@Px val x: Float, @Px val y: Float) : Parcelable {
+data class OriginCoordinates(val x: Float, val y: Float) : Parcelable {
 
     constructor(parcel: Parcel) : this(parcel.readFloat(), parcel.readFloat())
 

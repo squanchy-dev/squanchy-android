@@ -1,5 +1,6 @@
 package net.squanchy.favorites.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -78,6 +79,7 @@ private object DiffCallback : DiffUtil.ItemCallback<FavoritesItem>() {
         return oldItem.id == newItem.id
     }
 
+    @SuppressLint("DiffUtilEquals") // Bug of the Lint rule with sealed classes (https://issuetracker.google.com/issues/132234925, @ 3.4.1)
     override fun areContentsTheSame(oldItem: FavoritesItem, newItem: FavoritesItem): Boolean {
         return oldItem == newItem
     }
