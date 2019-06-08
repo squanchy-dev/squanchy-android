@@ -54,7 +54,7 @@ ext {
         ],
 
         test: [
-            truth     : 'com.google.truth:truth:0.44',
+            truth     : 'com.google.truth:truth:0.45',
             jUnit4    : 'junit:junit:4.12',
             mockito   : 'org.mockito:mockito-inline:2.26.0',
             threeTenBp: 'org.threeten:threetenbp:1.3.8'
