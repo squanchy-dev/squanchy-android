@@ -19,7 +19,7 @@ ext {
             algolia                 : 'com.algolia:algoliasearch-android:3.27.0',
             androidxAnnotations     : 'androidx.annotation:annotation:1.1.0-beta01',
             androidxAppCompat       : 'androidx.appcompat:appcompat:1.1.0-beta01',
-            androidxConstraintLayout: 'androidx.constraintlayout:constraintlayout:2.0.0-alpha4',
+            androidxConstraintLayout: 'androidx.constraintlayout:constraintlayout:2.0.0-beta1',
             androidxKtx             : 'androidx.core:core-ktx:1.1.0-alpha05',
             androidxMaterial        : 'com.google.android.material:material:1.1.0-alpha05',
             androidxWorkManager     : "android.arch.work:work-runtime-ktx:$workManagerVersion",
