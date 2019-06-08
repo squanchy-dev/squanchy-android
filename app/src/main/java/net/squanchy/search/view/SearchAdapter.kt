@@ -1,5 +1,6 @@
 package net.squanchy.search.view
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -133,6 +134,7 @@ private object DiffCallback : DiffUtil.ItemCallback<SearchListElement>() {
         }
     }
 
+    @SuppressLint("DiffUtilEquals") // Bug of the Lint rule with sealed classes (https://issuetracker.google.com/issues/132234925, @ 3.4.1)
     override fun areContentsTheSame(oldItem: SearchListElement, newItem: SearchListElement): Boolean {
         return oldItem == newItem
     }
