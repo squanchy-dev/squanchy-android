@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.transition.TransitionManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_event_details.*
@@ -66,11 +67,13 @@ class EventDetailsActivity : AppCompatActivity() {
         subscriptions.add(
             service.event(eventId)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { event -> eventDetailsRoot.updateWith(event, onEventDetailsClickListener(event)) },
-                    Timber::e
-                )
+                .subscribe(this@EventDetailsActivity::onDataReceived, Timber::e)
         )
+    }
+
+    private fun onDataReceived(event: Event) {
+        TransitionManager.beginDelayedTransition(eventDetailsRoot)
+        eventDetailsRoot.updateWith(event, onEventDetailsClickListener(event))
     }
 
     private fun onEventDetailsClickListener(event: Event): EventDetailsRootLayout.OnEventDetailsClickListener =
