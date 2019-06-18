@@ -73,7 +73,7 @@
       android:id="@+id/eventDetailsLayout"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:paddingBottom="@dimen/event_details_body_value_margin_bottom"/>
+      android:paddingBottom="@dimen/event_details_body_value_margin_bottom" />
 
   </androidx.core.widget.NestedScrollView>
 
@@ -83,9 +83,9 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/event_details_fab_margin"
+    android:visibility="gone"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintBottom_toBottomOf="parent"
-    android:visibility="gone"
     tools:visibility="visible" />
 
 </net.squanchy.eventdetails.widget.EventDetailsRootLayout>
