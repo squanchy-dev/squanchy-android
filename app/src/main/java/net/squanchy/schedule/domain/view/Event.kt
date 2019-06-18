@@ -26,8 +26,6 @@ data class Event(
     val zonedStartTime: ZonedDateTime
         get() = startTime.atZone(timeZone)
 
-    override fun toString(): String = "Event [id: '$id', title: '$title', startTime: '$startTime']"
-
     enum class Type(private val rawType: String) {
         REGISTRATION("registration"),
         TALK("talk"),
