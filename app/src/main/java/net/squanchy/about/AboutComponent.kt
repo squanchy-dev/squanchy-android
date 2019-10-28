@@ -5,11 +5,13 @@ import dagger.Component
 import net.squanchy.injection.BaseActivityComponentBuilder
 import net.squanchy.injection.ActivityLifecycle
 import net.squanchy.injection.ApplicationComponent
+import net.squanchy.injection.applicationComponent
 import net.squanchy.navigation.NavigationModule
 import net.squanchy.navigation.Navigator
 
 fun aboutComponent(activity: AppCompatActivity): AboutComponent =
     DaggerAboutComponent.builder()
+        .applicationComponent(activity.applicationComponent)
         .activity(activity)
         .build()
 
