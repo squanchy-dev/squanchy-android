@@ -1,5 +1,7 @@
-# Squanchy Android
+# Squanchy Android [ARCHIVED]
 [![Master CI](https://img.shields.io/circleci/project/github/squanchy-dev/squanchy-android/develop.svg?style=for-the-badge)](https://circleci.com/gh/squanchy-dev/squanchy-android/tree/develop) [![Apache 2 license](https://img.shields.io/github/license/squanchy-dev/squanchy-android.svg?style=for-the-badge)](https://github.com/squanchy-dev/squanchy-android/blob/develop/LICENSE)
+
+**Note:** this project has been archived an put in read-only mode. No further features nor fixes are coming. If you're interested in taking over as maintainer please get in touch [on Twitter](https://twitter.com/seebrock3r).
 
 Squanchy is an open source platform for conferences. The source code for the [Firebase backend](https://github.com/squanchy-dev/squanchy-firebase) and for the [Flutter port of the app](https://github.com/squanchy-dev/squanchy-flutter) is available in other repositories of this organisation.
  
